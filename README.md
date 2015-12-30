@@ -1,4 +1,3 @@
-# opp
-Object Pascal Programming
+# Object Pascal Programming
 
-Material gratuito do Blog.
+Material gratuito do Blog http://objectpascalprogramming.com
