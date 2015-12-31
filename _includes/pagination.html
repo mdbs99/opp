@@ -1,0 +1,20 @@
+<div class="pagination clearfix mb1 mt4">
+  <div class="left">
+    {% if paginator.previous_page %}
+      {% if paginator.page == 2 %}
+        <a class="pagination-item" href="{{ site.baseurl }}/">Novos</a>
+      {% else %}
+        <a class="pagination-item" href="{{ site.baseurl }}/page{{paginator.previous_page}}/">Novos</a>
+      {% endif %}
+    {% else %}
+      <span class="pagination-item disabled">Novos</span>
+    {% endif %}
+  </div>
+  <div class="right">
+    {% if paginator.next_page %}
+      <a class="pagination-item" href="{{ site.baseurl }}/page{{paginator.next_page}}/">Antigos</a>
+    {% else %}
+      <span class="pagination-item disabled">Antigos</span>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,79 @@
+# Site settings
+name: Object Pascal Programming
+title: Object Pascal Programming
+author: Marcos Douglas
+email: opp@delfire.net
+timezone: America/Sao_Paulo
+copyright: "(c) Marcos Douglas, 2016"
+encoding: utf-8
+description: > # this means to ignore newlines until "baseurl:"
+  Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+baseurl: "/opp"
+url: "http://objectpascalprogramming.com"
+date_format: "%b %-d, %Y"
+destination: ../site
+
+# Build settings
+highlighter: rouge
+permalink: /posts/:title
+excerpt_separator: <!--more-->
+paginate: 5
+markdown: kramdown
+redcarpet:
+  extensions: ['smart', 'tables', 'with_toc_data']
+sass:
+  compressed: true
+  
+gems:
+  # - jekyll-mentions
+  - jemoji
+  - jekyll-redirect-from
+  - jekyll-paginate
+
+# Google services
+google_analytics:
+google_verification:
+
+# Optional features
+animated: true
+show_related_posts: true
+show_post_footers: false
+show_social_icons: true
+ajaxify_contact_form: true
+
+# Disqus post comments
+disqus_shortname: objectpascalprogramming
+
+# Facebook Comments plugin
+facebook_comments: 
+facebook_appid: 
+facebook_comments_number: 10
+
+# Social icons
+github_username: mdbs99
+bitbucket_username: mdbs99
+stackoverflow_id:
+facebook_site: objectpascalprogramming
+twitter_username: mdbs99
+facebook_username: objectpascalprogramming
+google_plus_id:
+linkedin_username:
+angellist_username:
+medium_id:
+bitcoin_url:
+paypal_url:
+flattr_button:
+
+# Post sharing icons
+show_sharing_icons: true
+share_text: 'Compartilhe'
+# Change to 'true' to enable individual icons
+share_facebook: true
+share_twitter: true
+share_googleplus: true
+share_linkedin: true
+share_digg: false
+share_tumblr: false
+share_reddit: true
+share_stumbleupon: false
+share_hackernews: true
