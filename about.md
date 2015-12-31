@@ -4,8 +4,6 @@ title: Sobre
 permalink: /about/
 ---
 
-#O Blog
-
 O Blog incentiva o uso da programação Orientada a Objetos
 utilizando a linguagem Object Pascal.
 
@@ -16,7 +14,7 @@ ser aplicados na maioria das linguagens com suporte a OO.
 ___________________
 </center>
 <p />
-Marcos Douglas é Pós graduado em Engenharia de Software.
+<a href="http://github.com/mdbs99/" target="_blank">Marcos Douglas</a> é Pós graduado em Engenharia de Software.
 
 Especialista em Análise e Implementação de
 Projetos utilizando Orientação a Objetos e Object Pascal.
