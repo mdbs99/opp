@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Object Pascal Programming</title>
+    <description>Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+</description>
+    <link>http://objectpascalprogramming.com/</link>
+    <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Você sabe, com certeza, o que é Orientação a Objetos?</title>
+        <description>&lt;h2 id=&quot;um-pouco-de-histria&quot;&gt;Um pouco de História&lt;/h2&gt;
+
+&lt;p&gt;Muitos programadores, ao menos uma vez na vida, já devem ter pesquisado 
+o que significa &lt;strong&gt;Orientação a Objetos&lt;/strong&gt;, quando o termo foi cunhado e por quem.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Há vários sites hoje em dia contendo essas informações, então não vou 
+replicá-las aqui… bem, só pra lembrar rapidamente: o criador do termo foi Alan Kay, 
+o mesmo criador da linguagem Smalltalk — uma linguagem puramente 
+Orientada a Objetos — no entanto, mesmo antes do termo ter sido criado, 
+ideias conceituais sobre Orientação a Objetos já estavam sendo aplicadas 
+na linguagem Simula 67 (1967).&lt;/p&gt;
+
+&lt;p&gt;Linguagens de programação foram desenhadas com base nesse paradigma; centenas ou milhares de livros foram escritos; milhões de sites na Internet falam desse assunto. Então porque, após todos esses anos, a maioria dos programadores ainda não sabem o que é programar Orientado a Objetos?&lt;/p&gt;
+
+&lt;h2 id=&quot;um-objeto-no--um-balde-de-funes-e-dados&quot;&gt;Um Objeto não é um “balde” de Funções e Dados&lt;/h2&gt;
+
+&lt;p&gt;Ok, &lt;ins&gt;tecnicamente&lt;/ins&gt; ele é um “balde” de funções e dados.
+Quando um objeto é criado ele possui uma estrutura de dados em memória; cada função recebe um ponteiro implícito para essa estrutura; as funções podem utilizar esses dados como se fossem variáveis locais… basicamente é isso.&lt;/p&gt;
+
+&lt;p&gt;Mas se você não for um projetista de compiladores, pouco importa saber como um Objeto é gerenciado internamente pelo compilador — muitos programadores Java nem sabem o que é um ponteiro :)&lt;/p&gt;
+
+&lt;p&gt;Então funções e dados ganharam novos nomes: funções são chamadas de Métodos e dados são chamados de Atributos ou Propriedades.&lt;/p&gt;
+
+&lt;p&gt;Utilizar as palavras Métodos e Atributos já é um grande passo para entender o que são Objetos, mas eu prefiro dizer que um Objeto tem &lt;strong&gt;Comportamento&lt;/strong&gt; e &lt;strong&gt;Estado&lt;/strong&gt;, respectivamente.&lt;/p&gt;
+
+&lt;p&gt;E qual a diferença (teórica) entre &lt;ins&gt;Métodos vs Comportamentos&lt;/ins&gt; e &lt;ins&gt;Atributos vs Estado&lt;/ins&gt;?
+Se você “executa sequencialmente os métodos” de um Objeto e/ou “atualiza seus atributos”, você utiliza &lt;strong&gt;Programação Procedural&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;É assunto para outro post explicar as diferenças sutis de nomenclatura, assim como as afirmações que fiz acima, mas se for possível para você apenas aceitar tais definições por enquanto, continue lendo.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;
+    “A orientação a objetos é um modelo de análise,
+    projeto e programação de sistemas de software baseado
+    na composição e interação entre diversas unidades de
+    software chamadas de objetos.” 
+  &lt;/p&gt;
+  &lt;footer&gt;&lt;cite title=&quot;Wikipedia&quot;&gt;— Wikipedia&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Objetos podem ser &lt;strong&gt;compostos&lt;/strong&gt; por outros Objetos e eles &lt;strong&gt;interagem&lt;/strong&gt; entre si.&lt;/p&gt;
+
+&lt;p&gt;Funções são executadas. Objetos interagem entre si.&lt;/p&gt;
+
+&lt;p&gt;Nunca pensem em Objetos em termos de funções e dados. Nunca.&lt;/p&gt;
+
+&lt;p&gt;Para nós, de agora em diante, um Objeto representa uma entidade, criatura ou qualquer coisa fora do contexto do programa.&lt;/p&gt;
+
+&lt;p&gt;Alguns dizem, também, que um Objeto representa uma entidade na “vida real”. A definição está correta, porém pode gerar confusão, por exemplo:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Um cachorro é uma entidade na vida real? Sim.&lt;/li&gt;
+  &lt;li&gt;Uma pessoa é uma entidade na vida real? Sim.&lt;/li&gt;
+  &lt;li&gt;Um arquivo de computador é uma entidade na vida real? Sim.&lt;/li&gt;
+  &lt;li&gt;Um pixel é uma entidade na vida real? Sim.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Se você não notou diferença entre os exemplos, parabéns. Mas se ficou em dúvida a respeito dos itens #3 e #4, tudo bem, muitos tem a mesma dúvida. Por isso eu digo que um Objeto é qualquer coisa fora do contexto do programa. Definir como “vida real” também está certo e tem a vantagem de ser mais rápido pra escrever 😉&lt;/p&gt;
+
+&lt;h2 id=&quot;os-programadores-no-utilizam-orientao-a-objetos&quot;&gt;Os programadores não utilizam Orientação a Objetos&lt;/h2&gt;
+
+&lt;p&gt;Estou afirmando com base na minha experiência pessoal com o mercado brasileiro, livros e inúmeros post lidos por mim no decorrer dos anos.&lt;/p&gt;
+
+&lt;p&gt;Você pode entender isso como uma coisa boa ou ruim. Depende do ponto de vista. Existe a Programação Funcional e muitas (grandes) empresas a utilizam. Programação Funcional não tem nada haver com Orientação a Objetos e, tudo bem.&lt;/p&gt;
+
+&lt;p&gt;O ruim, na minha opinião, é você achar que programa utilizando o paradigma da Orientação a Objetos só porque utiliza &lt;strong&gt;Classes&lt;/strong&gt;, &lt;strong&gt;Herança&lt;/strong&gt;, &lt;strong&gt;Encapsulamento&lt;/strong&gt; e, talvez, &lt;strong&gt;Polimorfismo&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não somos diferentes. Eu pensava que programava Orientado a Objetos por usar e aplicar — ou achar que estava aplicando — esses conceitos chave da Orientação a Objetos que nos ensinaram no meio acadêmico. Mas não foi o bastante.&lt;/p&gt;
+
+&lt;p&gt;Esqueceram de nos ensinar como &lt;strong&gt;Pensar Orientado a Objetos&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas isso é assunto para um próximo post.&lt;/p&gt;
+
+&lt;p&gt;Não deixem de se inscrever na &lt;a href=&quot;/lista-vip/&quot;&gt;Lista VIP&lt;/a&gt;!&lt;/p&gt;
+</description>
+        <pubDate>Sun, 27 Dec 2015 15:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/o-que-e-orientacao-a-objetos</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/o-que-e-orientacao-a-objetos</guid>
+      </item>
+    
+  </channel>
+</rss>
