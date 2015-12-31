@@ -194,7 +194,7 @@ input[type="email"]{
     font-family: 'proxima_nova';
     color: #616161;
     font-size: 16px;
-    list-style-image: url('/opp/images/bullet-1.png');
+    list-style-image: url('images/bullet-1.png');
 }
 
 .page-download-1{
@@ -546,7 +546,7 @@ a.btn{
 }
 .confirme-inscricao-2 .overlay, .page-entrega-video-1 .overlay{
     content: '';
-    background: transparent url(/opp/images/pattern.png) repeat top left;
+    background: transparent url(images/pattern.png) repeat top left;
     position: fixed;
     width: 100%;
     height: 100%;
@@ -649,7 +649,7 @@ img{
 }
 
 del{
-    background: url('/opp/images/highlight.png');
+    background: url('/images/highlight.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     font-weight: bold;
@@ -660,7 +660,7 @@ del{
 }
 
 .highlight {
-    background: url('/opp/images/highlight.png');
+    background: url('images/highlight.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     font-weight: bold;
@@ -671,22 +671,22 @@ del{
 }
 
 .highlight-green {
-    background: url('/opp/images/highlight-green.png');
+    background: url('images/highlight-green.png');
     background-size: 100% 100%;
 }
 
 .highlight-blue {
-    background: url('/opp/images/highlight-blue.png');
+    background: url('images/highlight-blue.png');
     background-size: 100% 100%;
 }
 
 .highlight-orange {
-    background: url('/opp/images/highlight-orange.png');
+    background: url('images/highlight-orange.png');
     background-size: 100% 100%;
 }
 
 .highlight-white {
-    background: url('/opp/images/highlight-white.png');
+    background: url('images/highlight-white.png');
     background-size: 100% 100%;
 }
 
@@ -951,7 +951,7 @@ button, a.btn {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background-image: url(/opp/images/noise.jpg);
+    background-image: url(images/noise.jpg);
     height: 100%;
 }
 
