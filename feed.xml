@@ -4,8 +4,8 @@
     <title>Object Pascal Programming</title>
     <description>Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 </description>
-    <link>http://objectpascalprogramming.com/</link>
-    <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
+    <link>http://objectpascalprogramming.com/opp/</link>
+    <atom:link href="http://objectpascalprogramming.com/opp/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
         <title>Você sabe, com certeza, o que é Orientação a Objetos?</title>
@@ -86,8 +86,8 @@ Se você “executa sequencialmente os métodos” de um Objeto e/ou “atualiza
 &lt;p&gt;Não deixem de se inscrever na &lt;a href=&quot;/lista-vip/&quot;&gt;Lista VIP&lt;/a&gt;!&lt;/p&gt;
 </description>
         <pubDate>Sun, 27 Dec 2015 15:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/o-que-e-orientacao-a-objetos</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/o-que-e-orientacao-a-objetos</guid>
+        <link>http://objectpascalprogramming.com/opp/posts/o-que-e-orientacao-a-objetos</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/opp/posts/o-que-e-orientacao-a-objetos</guid>
       </item>
     
   </channel>
