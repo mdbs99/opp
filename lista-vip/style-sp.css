@@ -1,0 +1,1592 @@
+.area-form-sp-video{
+    background: #f1f1f1;
+    padding: 10px 0px 30px 0px;
+}
+.form{
+    margin: 0 15px;
+    padding-bottom: 20px;
+}
+
+.text-box{
+    -webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0px 0px 2px 0px inset;
+    -webkit-font-smoothing: antialiased;
+    background-color: rgb(250, 250, 250);
+    background-position: 100% 50%;
+    background-repeat: no-repeat;
+    border-bottom-color: rgb(219, 219, 219);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-image-outset: 0px;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-left-color: rgb(219, 219, 219);
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: rgb(219, 219, 219);
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-top-color: rgb(219, 219, 219);
+    border-top-style: solid;
+    border-top-width: 1px;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 0px 2px 0px inset;
+    box-sizing: content-box;
+    color: rgb(104, 104, 104);
+    display: block;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    height: 20px;
+    line-height: 21px;
+    margin-bottom: 15px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    text-align: center;
+    vertical-align: baseline;
+    zoom: 1;
+}
+
+input[type=email], input[type=text]{
+    -webkit-appearance: none;
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    -webkit-font-smoothing: auto;
+    -webkit-rtl-ordering: logical;
+    -webkit-user-select: text;
+    -webkit-writing-mode: horizontal-tb;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 100% 50%;
+    background-repeat: no-repeat;
+    background-size: auto;
+    border-bottom-color: rgb(119, 119, 119);
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-style: none;
+    border-bottom-width: 0px;
+    border-image-outset: 0px;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-left-color: rgb(119, 119, 119);
+    border-left-style: none;
+    border-left-width: 0px;
+    border-right-color: rgb(119, 119, 119);
+    border-right-style: none;
+    border-right-width: 0px;
+    border-top-color: rgb(119, 119, 119);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-top-style: none;
+    border-top-width: 0px;
+    box-sizing: border-box;
+    color: rgb(119, 119, 119);
+    cursor: auto;
+    display: block;
+    font-family: HelveticaNeue, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    height: 20px;
+    letter-spacing: normal;
+    line-height: normal;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    max-width: 100%;
+    outline-color: rgb(119, 119, 119);
+    outline-style: none;
+    outline-width: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 33px;
+    padding-top: 0px;
+    text-align: start;
+    text-indent: 0px;
+    text-shadow: none;
+    text-transform: none;
+    width: 100%;
+    word-spacing: 0px;
+    writing-mode: lr-tb;
+    zoom: 1;
+}
+
+input[type="email"]{
+   
+}
+.icon-mail{
+    float: right;
+    margin-top: -17px;
+    margin-right: 10px;
+    color: black;
+}
+
+.btn{
+    width: 100%;
+    padding: 15px;
+}
+
+.btn .text{
+    font-size: 20px;
+    color: #ffffff;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.sp-video h1, .lp-vendas-video-1 h1, .sp-ebook-1 h1, .sp-ebook-2 h1, .page-download-1 h1, .page-download-2 h1, .confirme-inscricao-2 h1, .calendario, .sp-palestrante-1 h1, .politicas h1{
+    font-family: 'proxima_nova';
+    color: #c22019;
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.politicas h1{
+    color: black;
+    text-align: left;
+}
+
+.sp-palestrante-1 h1{
+    margin: 30px 0px;
+}
+
+.page-download-2 h1, .page-download-2 h2, .page-download-2 h3, .confirme-inscricao-2 h1{
+    color: white;
+    font-family: 'proxima_nova';
+}
+
+.sp-video h2, .sp-ebook-1 h2, .sp-ebook-1 h3, .sp-ebook-1 h4, .sp-ebook-2 h2, .page-download-1 h2, .page-download-1 h3, .page-download-1 h4{
+    font-family: 'proxima_nova';
+    color: #616161;
+    font-size: 20px;
+    text-align: center;
+    font-weight: normal;
+}
+
+.sp-ebook-1 h3{
+    margin-top: 0px;
+    text-align: left;
+    color: black;
+    font-weight: bold;
+}
+
+.sp-ebook-1 h4{
+    text-align: left;
+    color: black;
+    font-size: 16px;
+}
+
+.sp-ebook-1 ul li{
+    font-family: 'proxima_nova';
+    color: #616161;
+    font-size: 16px;
+    list-style-image: url('/opp/images/bullet-1.png');
+}
+
+.page-download-1{
+    background: #eee;
+}
+
+.page-download-1 h1{
+    color: black;
+    background: #eee;
+    margin: 0px;
+    padding: 20px;
+}
+
+.page-download-1 h2{
+    background: #121212;
+    color: #fff;
+    font-weight: bold;
+    margin: 0px;
+    padding: 15px;
+}
+
+.page-download-1 h3{
+    font-weight: bold;
+    font-size: 24px;
+    text-align: left;
+}
+
+.page-download-1 h4{
+    text-align: justify;
+    font-size: 18px;
+    margin: 20px 0px;
+}
+a.btn{
+    font-size: 28px;
+    font-family: 'proxima_nova';
+    font-weight: bold;
+}
+
+.sp-padrao h1, .sp-back-animado h1, .sp-video-background h1, .page-entrega-video-1 h1, .page-entrega-video-1 h2, .funil-1 h1, .pagina-texto-1 h1{
+    font-family: 'proxima_nova';
+    color: white;
+    font-size: 32px;
+    text-align: center;
+}
+
+.pagina-texto-1 h1{
+    color: #000;
+}
+
+.page-entrega-video-1{
+    padding-bottom: 40px;
+}
+
+.page-entrega-video-1 h1{
+    font-weight: bold;
+    font-size: 36px;
+}
+
+.page-entrega-video-1 h2{
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.page-entrega-video-1 .video{
+    text-align: center;
+    margin-top: 30px;
+    
+}
+.page-entrega-video-1 .video iframe{
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.page-entrega-video-1 .row{
+    text-align: center;
+}
+
+
+.head-form{
+    font-weight: bold;
+    font-size: 16px;
+    padding: 15px 10px;
+}
+
+.sp-padrao .head-form, .sp-back-animado .head-form, .sp-video-background .head-form{
+    color: white;
+    text-align: center;
+}
+
+.privacy{
+    padding: 10px 0px;
+    font-size: 13px;
+    color: #666;
+}
+
+.privacy i{
+    font-size: 15px;
+}
+
+.sp-padrao .privacy, .sp-back-animado .privacy, .sp-video-background .privacy{
+    color: white;
+    text-align: center;
+}
+
+.sp-video-background #form-out{
+    margin-top: 40px;
+}
+
+
+.sp-padrao, .confirme-inscricao-2, .page-entrega-video-1, .funil-1, .pagina-texto-1{
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin-top: 40px;
+}
+.funil-1, .pagina-texto-1{
+    margin-top: 0px;
+}
+
+.pagina-texto-1{
+    color: #000;
+}
+
+.page-entrega-video-1{
+    margin-top: 10px;
+}
+
+
+.confirme-inscricao-2{
+    margin-top: 20px;
+}
+
+.sp-back-animado{
+    margin-top: 20px;
+}
+
+.area-form-sp-padrao{
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.8) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.8)), color-stop(100%,rgba(0,0,0,0.8))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#cc000000',GradientType=0 ); /* IE6-9 */
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+}
+
+.pagina-texto-1 .area-form-sp-padrao{
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    background: -moz-linear-gradient(top,  rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.8) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.8)), color-stop(100%,rgba(255,255,255,0.8))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.8) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.8) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.8) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.8) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ccffffff', endColorstr='#ccffffff',GradientType=0 ); /* IE6-9 */
+
+}
+
+.area-form-trans, .modal-content{
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.8) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.8)), color-stop(100%,rgba(0,0,0,0.8))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#cc000000',GradientType=0 ); /* IE6-9 */
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+}
+.modal-content{
+    -webkit-box-shadow: 0px 0px 40px 0px rgba(207, 207, 207, 1);
+    -moz-box-shadow:    0px 0px 40px 0px rgba(207, 207, 207, 1);
+    box-shadow:         0px 0px 40px 0px rgba(207, 207, 207, 1);
+}
+
+.modal-dialog{
+    margin-top: 100px;
+}
+
+.confirme-inscricao-1, .registro-webinario{
+    background: #e9e9e9;
+}
+.confirme-inscricao-1 .inside, .registro-webinario .inside{
+    padding: 20px 0px;
+    background: #fff;
+}
+
+.confirme-inscricao-1 #header, .registro-webinario #header{
+    background: #191d48;
+    text-align: center;
+    padding: 20px 0px;
+    color: white;
+    font-family: 'proxima_nova';
+}
+.registro-webinario #header{
+    background-color: #0099CC;
+}
+
+.webinario .container{
+    text-align: center;
+}
+
+#webinario-video{
+    margin: 20px 0px;
+}
+
+.div-share{
+    text-align: center;
+}
+
+#atualizar-comentarios{
+    padding: 10px 0px;
+    margin-bottom: 10px;
+}
+
+.share-popup{
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.247059) 0px -2px 0px 0px inset;
+    -webkit-font-smoothing: antialiased;
+    -webkit-transition-delay: 0s;
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: background;
+    -webkit-transition-timing-function: ease;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgb(50, 92, 153);
+    background-image: none;
+    background-origin: padding-box;
+    background-size: auto;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-collapse: separate;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px -2px 0px 0px inset;
+    box-sizing: content-box;
+    color: white;
+    font-family: 'proxima_nova', Arial;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    height: 20px;
+    letter-spacing: normal;
+    line-height: 12px;
+    margin: 0px;
+    outline-color: rgb(62, 169, 9);
+    outline-style: none;
+    outline-width: 0px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 6px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition-delay: 0s;
+    transition-duration: 0.3s;
+    transition-property: background;
+    transition-timing-function: ease;
+    width: 90px;
+    margin-right: 10px;
+}
+.share-popup:hover{
+    background-color:#284a85;
+    text-decoration: none;
+    color: white;
+}
+.twitter{
+    background: rgb(2, 172, 236);
+}
+
+.twitter:hover{
+    background: #029be8;
+}
+
+.google-plus{
+    background: rgb(221, 75, 57);
+}
+
+.google-plus:hover{
+    background: #d63c2e;
+}
+
+.share-popup i {
+    margin-right: 5px;
+}
+
+.confirme-inscricao-1 #header h1, .registro-webinario #header h1{
+    font-weight: bold;
+}
+
+.registro-webinario .head-form{
+    text-align: center;
+}
+
+.step-1{
+    float: left;
+    display: block;
+    height: 80px;
+    width: 80px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+    background-color: #004a80;
+    text-align: center;
+    color: white;
+    font-family: 'proxima_nova';
+    font-size: 40px;
+    padding-top: 12px;
+}
+
+.title-step{
+    font-family: proxima_nova;
+    font-size: 30px;
+    padding: 0px 0px 0px 95px;
+}
+
+.subtitle-step{
+    font-family: proxima_nova;
+    padding: 0px 0px 0px 95px;
+    font-size: 19px;
+}
+.provedores{
+    margin-top: 20px;
+}
+.link-mail{
+    text-align: center;
+    font-size: 16px;
+    font-family: 'proxima_nova', arial;
+    font-weight: bold;
+}
+.confirme-inscricao-2 .overlay, .page-entrega-video-1 .overlay{
+    content: '';
+    background: transparent url(/opp/images/pattern.png) repeat top left;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: -10;
+}
+.confirme-inscricao-2 #header{
+    text-align: center;
+    color: white;
+    margin: 20px 0px 30px 0px;
+    text-shadow: 1px 1px 2px #000000;
+    z-index: 999;
+}
+.confirme-inscricao-2 #header h1{
+    font-size: 50px;
+    font-weight: bold;
+}   
+.page-download-2 #header h2{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.page-download-2 h3{
+    color: white !important;
+    font-size: 23px;
+}
+
+.page-download-2 .btn{
+    margin-top: 20px;
+}
+
+.confirme-inscricao-2 .step{
+    background: -moz-linear-gradient(top,  rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.8) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.8)), color-stop(100%,rgba(255,255,255,0.8))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.8) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.8) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.8) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.8) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ccffffff', endColorstr='#ccffffff',GradientType=0 ); /* IE6-9 */
+
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    padding: 10px;
+    color: black;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.confirme-inscricao-2 .step-1{
+    padding: 5px;
+    width: 70px;
+    height: 70px;
+    padding-top: 8px;
+    background: none;
+    font-weight: bold;
+    color: black;
+    font-size: 50px;
+    padding-top: 0px;
+}
+.confirme-inscricao-2 .mail{
+    margin-top: 20px;
+}
+
+img{
+    max-width: 100%;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0; overflow: hidden;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: relative;
+    top: 44%;
+    transform: translateY(-46%); 
+}
+
+
+.margin-20{
+    margin-top: 20px;
+}
+
+.img-seta{
+    margin: 30px 0px 0px 10px;
+}
+
+.sp-ebook-1 .descritivo{
+    margin-top: 20px;
+}
+
+del{
+    background: url('/opp/images/highlight.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 15px;
+    text-decoration: none;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.77);
+}
+
+.highlight {
+    background: url('/opp/images/highlight.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 15px;
+    text-decoration: none;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.77);
+}
+
+.highlight-green {
+    background: url('/opp/images/highlight-green.png');
+    background-size: 100% 100%;
+}
+
+.highlight-blue {
+    background: url('/opp/images/highlight-blue.png');
+    background-size: 100% 100%;
+}
+
+.highlight-orange {
+    background: url('/opp/images/highlight-orange.png');
+    background-size: 100% 100%;
+}
+
+.highlight-white {
+    background: url('/opp/images/highlight-white.png');
+    background-size: 100% 100%;
+}
+
+.powered{
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 116px;
+    height: 38px;
+    z-index: 10000;
+    display: block;
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.8) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.8)), color-stop(100%,rgba(0,0,0,0.8))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#cc000000',GradientType=0 ); /* IE6-9 */
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    -webkit-border-top-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    border-top-left-radius: 5px;
+    padding: 7px;
+}
+
+.redes-sociais{
+    margin: 10px 0px 20px 0px;
+    text-align: center;
+    height: 25px;
+}
+
+.redes-sociais .facebook{
+    margin-top: 2px;
+}
+
+.redes-sociais .social{
+    float: left;
+    margin-right: 10px;
+    text-align: center;
+    width: 130px;
+}
+#DateCountdown{
+    height: 100px;
+    float: right;
+    margin-right: 50px;
+    color: #fff;
+}
+#DateCountdown h4{
+    font-size: 9px !important;
+    margin-bottom: 12px;
+}
+#titulo-contador{
+    float:right;
+    margin-right: 35px;
+    color: #fff;
+    font-size: 32px;
+    margin-top: 30px;
+    font-family: 'proxima_nova';
+    font-weight: bold;
+}
+#barra-contador{
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.8) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.8)), color-stop(100%,rgba(0,0,0,0.8))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#cc000000',GradientType=0 ); /* IE6-9 */
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+}
+
+
+#form-out {
+    animation-duration: 2s;
+    animation-delay: 1s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 1s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 1s;
+    -moz-animation-iteration-count: 1;
+}
+button, a.btn {
+    animation-duration: 2s;
+    animation-delay: 5s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 5s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 5s;
+    -moz-animation-iteration-count: 1;
+}
+.redes-sociais {
+    animation-duration: 1s;
+    animation-delay: 4s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-delay: 4s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 1s;
+    -moz-animation-delay: 4s;
+    -moz-animation-iteration-count: 1;
+}
+#video {
+    animation-duration: 2s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 0s;
+    -moz-animation-iteration-count: 1;
+}
+#form-out-video {
+    animation-duration: 3s;
+    animation-delay: 3s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-delay: 3s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 3s;
+    -moz-animation-delay: 3s;
+    -moz-animation-iteration-count: 1;
+}
+#form-out-video button {
+    animation-duration: 2s;
+    animation-delay: 8s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 8s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 8s;
+    -moz-animation-iteration-count: 1;
+}
+#form-out-video .redes-sociais {
+    animation-duration: 1s;
+    animation-delay: 6s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-delay: 6s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 1s;
+    -moz-animation-delay: 6s;
+    -moz-animation-iteration-count: 1;
+}
+#ebook, .mail{
+    animation-duration: 2s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 0s;
+    -moz-animation-iteration-count: 1;
+}
+#seta-form{
+    animation-duration: 2s;
+    animation-delay: 2s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 2s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 2s;
+    -moz-animation-iteration-count: 1;
+}
+#form-out-ebook{
+    animation-duration: 2s;
+    animation-delay: 2s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 2s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 2s;
+    -moz-animation-iteration-count: 1;
+}
+.descritivo{
+    animation-duration: 2s;
+    animation-delay: 2s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 2s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 2s;
+    -moz-animation-iteration-count: 1;
+}
+#step1{
+    animation-duration: 2s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 0s;
+    -moz-animation-iteration-count: 1;
+}
+#step2{
+    animation-duration: 2s;
+    animation-delay: 2s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 2s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 2s;
+    -moz-animation-iteration-count: 1;
+}
+#step3{
+    animation-duration: 2s;
+    animation-delay: 4s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 4s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 4s;
+    -moz-animation-iteration-count: 1;
+}
+#step4{
+    animation-duration: 2s;
+    animation-delay: 6s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 6s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 6s;
+    -moz-animation-iteration-count: 1;
+}
+.modal-dialog {
+    animation-duration: 2s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 0s;
+    -moz-animation-iteration-count: 1;
+}
+
+.sp-ebook-2{
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-image: url(/opp/images/noise.jpg);
+    height: 100%;
+}
+
+.sp-ebook-2 #form-out-ebook{
+    background: #eee;
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 50px 30px;
+}
+
+.lp-video-vendas-1{
+    background: #f1f1f1;
+}
+
+#botao-compra{
+    margin-top: 20px;
+    margin-bottom: 120px;
+}
+
+.video-vendas{
+    text-align: center;
+}
+
+.video-vendas iframe{
+     max-width: 100%;
+}
+
+.calendario{
+    text-align: center;
+}
+
+.mes{
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin: 0;
+    padding: 10px 0;
+    line-height: 1em;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    -webkit-box-shadow: 0 1px 0 0 rgba(0,0,0,.5),0 2px 1px 0 rgba(0,0,0,.15);
+    -moz-box-shadow: 0 1px 0 0 rgba(0,0,0,.5),0 2px 1px 0 rgba(0,0,0,.15);
+    box-shadow: 0 1px 0 0 rgba(0,0,0,.5),0 2px 1px 0 rgba(0,0,0,.15);
+    background-image: -moz-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,.1) 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(0,0,0,0)),color-stop(100%,rgba(0,0,0,.1)));
+    background-image: -webkit-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,.1) 100%);
+    background-image: -o-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,.1) 100%);
+    background-image: -ms-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,.1) 100%);
+    background-image: linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,.1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000', GradientType=0);
+    background-color: #d90000;
+}
+
+.dia{
+    display: block;
+margin: 0;
+padding: 10px 0;
+font-size: 90px;
+line-height: 1em;
+font-weight: 700;
+color: #333;
+background-image: -moz-linear-gradient(top,rgba(0,0,0,.05) 0,rgba(0,0,0,0) 100%);
+background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(0,0,0,.05)),color-stop(100%,rgba(0,0,0,0)));
+background-image: -webkit-linear-gradient(top,rgba(0,0,0,.05) 0,rgba(0,0,0,0) 100%);
+background-image: -o-linear-gradient(top,rgba(0,0,0,.05) 0,rgba(0,0,0,0) 100%);
+background-image: -ms-linear-gradient(top,rgba(0,0,0,.05) 0,rgba(0,0,0,0) 100%);
+background-image: linear-gradient(to bottom,rgba(0,0,0,.05) 0,rgba(0,0,0,0) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0d000000', endColorstr='#00000000', GradientType=0);
+background-color: #fff;
+}
+
+.modal-dialog .head-form{
+    font-size: 18px;
+    color: white;
+}
+
+.menu li:hover ul, .menu li.over ul{display:block;}
+
+.btn i{margin-left: 10px;}
+.btn:hover i{margin-left: 15px;}
+
+.registro-webinario .data-chamada{
+    background: #353535;
+    padding: 20px 0px;
+}
+
+.registro-webinario .head-form{
+    color: white
+}
+.data-extenso{
+    color: white;
+    font-size: 16px;
+}
+
+.registro-webinario .atencao-inscritos{
+    background: #F4733D;
+    color: white;
+    font-family: 'proxima_nova';
+    font-size: 24px;
+    text-align: center;
+    padding: 20px 10px;
+}
+.registro-webinario h2, .registro-webinario h3, .registro-webinario h4{
+    font-family: 'proxima_nova', arial;
+    font-weight: bold;
+}
+
+.registro-webinario .assunto-foto{
+    background: #eee;
+    padding: 20px 0px;
+}
+.registro-webinario .espaco-palestrante{
+    text-align: center;
+}
+.registro-webinario .palestrante{
+   border: 1px solid #bbb;
+   padding: 3px;
+   max-width: 150px;
+}
+
+.text_abaixo_form{
+    text-align: center;
+    color: white;
+    margin-top: 10px;
+}
+.text_abaixo_form a{
+    color: white;
+}
+.black, .black a{
+    color: black;
+}
+
+.page-agradecimento-1 .div-redes-sociais{
+    background: -moz-linear-gradient(top,  rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.9) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.9)), color-stop(100%,rgba(255,255,255,0.9))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,0.9) 0%,rgba(255,255,255,0.9) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,0.9) 0%,rgba(255,255,255,0.9) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,0.9) 0%,rgba(255,255,255,0.9) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,0.9) 0%,rgba(255,255,255,0.9) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#cc000000',GradientType=0 ); /* IE6-9 */
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+}
+
+.div-redes-sociais h3{
+    color: black !important;
+    margin: 30px 10px;
+    font-weight: bold;
+}
+
+.div-redes-sociais a.btn{
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.funil-1 .navigation{
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.4) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.4))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.4) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.4) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.4) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.4) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#cc000000',GradientType=0 ); /* IE6-9 */
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    padding: 20px 0px 10px 0px;
+}
+
+.funil-1 .navigation h2{
+    font-size: 14px;
+    color: white;
+    font-family: 'proxima_nova';
+    margin: 5px 0px;
+    text-align: center;
+}
+
+.funil-1 .video{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.funil-1 .video iframe{
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.funil-1 .form{
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.funil-1 .text-box{
+    width: 60%;
+    float: left;
+}
+
+.funil-1 button{
+    width: 35% !important; 
+    float: right;  
+    padding: 12px;
+}
+
+.funil-1 #atualizar-comentarios{
+     width: 100% !important;
+}
+
+.funil-1 .em-breve{
+    opacity: 0.5;
+}
+
+.funil-1 .navigation .nav:hover{
+    opacity: 0.8;
+}
+
+.funil-1 .navigation .em-breve:hover{
+    opacity: 0.5;
+}
+
+.funil-1 .navigation a{
+    text-decoration: none;
+}
+
+.titulo-comentarios{
+    text-align: center;
+}
+.div-comentarios{
+    text-align: center;
+}
+
+.congresso-palestrantes-1, .congresso-palestrantes-2{
+    margin-top: 0px;
+}
+
+.congresso-palestrantes-1 #DateCountdown{
+    margin-right: 13px;
+}
+
+#barra-topo-congresso{
+    width: 100%;
+    top: 0px;
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.6)), color-stop(100%,rgba(0,0,0,0.6))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#cc000000',GradientType=0 ); /* IE6-9 */
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+    padding: 15px 0px;
+}
+#barra-topo-congresso .redes-sociais{
+    float: right;
+    margin: 20px 0px 0px 0px;
+}
+
+#conteudo-congresso{
+    
+}
+
+#conteudo-congresso h1{
+    text-align: center;
+    line-height: 67px;
+}
+
+#conteudo-congresso h1 span{
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.5))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#cc000000',GradientType=0 ); /* IE6-9 */
+    padding: 10px;
+}
+
+#conteudo-congresso h2, #informacoes-palestras h2{
+    margin-top: 30px;
+    text-align: center;
+    font-size: 22px;
+    color: white;
+    margin-bottom: 20px;
+    font-family: 'proxima_nova';
+}
+
+#informacoes-palestras h2{
+    font-size: 32px;
+}
+
+#conteudo-congresso h2 span.subtitulo{
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.5))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#cc000000',GradientType=0 ); /* IE6-9 */
+    padding: 10px;
+    line-height: 47px;
+}
+
+#conteudo-congresso iframe{
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+#conteudo-congresso .head-form h3{
+    
+}
+
+#informacoes-palestras{
+    background: rgba(0,0,0,0.7);
+    padding: 10px 0px 30px 0px;
+    margin: 15px 0px;
+}
+
+#informacoes-palestras .palestra{
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+#informacoes-palestras .palestra-2{
+    padding: 20px;
+    background: none;
+}
+
+#informacoes-palestras .palestra-inner{
+    background-color: black;
+    padding: 10px;
+}
+
+.palestra .foto-palestrante{
+    background: rgba(255,255,255,0.2);
+    padding: 5px;
+    -webkit-border-radius: 200px;
+    -moz-border-radius: 200px;
+    border-radius: 200px;
+}
+
+.palestra .foto-palestrante img{
+    -webkit-border-radius: 200px;
+    -moz-border-radius: 200px;
+    border-radius: 200px;
+    z-index: 1;
+}
+
+.palestra .nome, .palestra .biografia, .palestra .tema, .palestra .datahora{
+    font-family: 'proxima_nova';
+    color: white;
+}
+
+.palestra .datahora{
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    margin: -20px 20px 0px 20px;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    z-index: 999;
+    position: relative;
+    background: rgba(255,255,255,0.6);
+}
+.palestra .nome{
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.palestra .biografia{
+    font-size: 16px;
+}
+
+.palestra .tema{
+    font-size: 22px;
+}
+
+.palestra-2 .nome{
+    line-height: 26px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.palestra-2 .biografia{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.titulo-dia{
+    color: white;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    font-family: 'proxima_nova';
+    margin: 30px 0px;
+}
+
+.form-entre-datas .text-box{
+    width: 50%;
+    float: left;
+    margin-top: 5px;
+}
+
+.form-entre-datas button[type=submit]{
+    width: 43%;
+    float: left;
+    margin-left: 10px;
+}
+
+.head-form-entre-datas{
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.head-form-entre-datas > :first-child{
+    margin-top: 0px;
+}
+
+footer#footer-congresso{
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 25px;
+}
+
+.omega{
+    padding-right: 0px;
+}
+
+.texto_lp_vendas{
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.cta-embed{
+    text-align: center;
+}
+.alignright{
+    float: right;
+    margin-left: 50px;
+    margin-bottom: 50px;
+}
+#texto_explicativo{
+    padding: 50px 0px;
+}
+
+#cabecalho{
+    padding: 10px 0px;
+}
+
+#menu-superior{
+    text-align: right;
+}
+
+#menu-superior ul{
+    float: right;
+    margin-top: 30px;
+}
+
+#menu-superior li{
+    list-style: none;
+    float: left;
+    margin: 0px 10px;
+}
+
+#menu-superior li a{
+    padding: 13px 15px;
+    color: black;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+#menu-superior li a:hover{
+    background-color: #eee;
+    text-decoration: none;
+}
+
+#footer{
+    padding: 20px 0px;
+}
+
+#depoimentos{
+    padding: 30px 0px;
+}
+
+#depoimentos .depoimento{
+    border: 1px solid #ddd;
+    padding: 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.depoimento .foto{
+    -webkit-border-radius: 500px;
+    -moz-border-radius: 500px;
+    border-radius: 500px;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+.depoimento .nome{
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.depoimento .empresa{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.depoimento .texto{
+    font-size: 14px;
+}
+
+.politicas .container{
+    margin-top: 5px;
+    width: 970px;
+}
+
+.politicas .texto{
+    margin-top: 30px;
+}
+
+.border{
+    height: 5px;
+    float: left;
+    background-color: #ddd;
+    width: 25%;
+    display: inline-block;
+}
+
+.border.blue{
+    background-color: #2980b9;
+}
+
+.border.red{
+    background-color: #c0392b;
+}
+.border.green{
+    background-color: #27ae60;
+}
+.border.yellow{
+    background-color: #f1c40f;
+}
+
+.codigo_embed{
+    margin-top: 15px;
+}
+
+@font-face {
+    font-family: 'proxima_nova';
+    src: url('fonts/proximanova-light-webfont.eot');
+    src: url('fonts/proximanova-light-webfont.eot?#iefix') format('embedded-opentype'),
+        url('fonts/proximanova-light-webfont.woff') format('woff'),
+        url('fonts/proximanova-light-webfont.ttf') format('truetype'),
+        url('fonts/proximanova-light-webfont.svg#proxima_novalight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'proxima_nova';
+    src: url('fonts/proximanova-bold-webfont.eot');
+    src: url('fonts/proximanova-bold-webfont.eot?#iefix') format('embedded-opentype'),
+        url('fonts/proximanova-bold-webfont.woff') format('woff'),
+        url('fonts/proximanova-bold-webfont.ttf') format('truetype'),
+        url('fonts/proximanova-bold-webfont.svg#proxima_nova_rgbold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@media (max-width: 998px) {
+    .congresso-palestrantes-1 #form-out{
+        padding-bottom: 40px;
+        margin-top: 20px;
+    }
+    #barra-contador-inner{
+        display: none;
+    }
+}
+
+@media (max-width: 910px) {
+  #titulo-contador {
+    display: none;
+  }
+}
+
+@media (max-width: 633px) {
+    .form-entre-datas .text-box{
+        width: 90%;
+    }
+    .form-entre-datas button[type=submit]{
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+  #barra-contador {
+    display: none;
+  }
+}
+

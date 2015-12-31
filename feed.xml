@@ -56,9 +56,11 @@ Se você “executa sequencialmente os métodos” de um Objeto e/ou “atualiza
 
 &lt;p&gt;Nunca pensem em Objetos em termos de funções e dados. Nunca.&lt;/p&gt;
 
-&lt;p&gt;Para nós, de agora em diante, um Objeto representa uma entidade, criatura ou qualquer coisa fora do contexto do programa.&lt;/p&gt;
+&lt;p&gt;Para nós, de agora em diante, um Objeto representa uma entidade, 
+criatura ou qualquer coisa fora do contexto do programa.&lt;/p&gt;
 
-&lt;p&gt;Alguns dizem, também, que um Objeto representa uma entidade na “vida real”. A definição está correta, porém pode gerar confusão, por exemplo:&lt;/p&gt;
+&lt;p&gt;Alguns dizem, também, que um Objeto representa uma entidade na “vida real”. 
+A definição está correta, porém pode gerar confusão, por exemplo:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Um cachorro é uma entidade na vida real? Sim.&lt;/li&gt;
@@ -67,17 +69,27 @@ Se você “executa sequencialmente os métodos” de um Objeto e/ou “atualiza
   &lt;li&gt;Um pixel é uma entidade na vida real? Sim.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Se você não notou diferença entre os exemplos, parabéns. Mas se ficou em dúvida a respeito dos itens #3 e #4, tudo bem, muitos tem a mesma dúvida. Por isso eu digo que um Objeto é qualquer coisa fora do contexto do programa. Definir como “vida real” também está certo e tem a vantagem de ser mais rápido pra escrever 😉&lt;/p&gt;
+&lt;p&gt;Se você não notou diferença entre os exemplos, parabéns. Mas se ficou em dúvida a 
+respeito dos itens #3 e #4, tudo bem, muitos tem a mesma dúvida. Por isso eu digo 
+que um Objeto é qualquer coisa fora do contexto do programa. Definir como “vida real” 
+também está certo e tem a vantagem de ser mais rápido pra escrever 😉&lt;/p&gt;
 
 &lt;h2 id=&quot;os-programadores-no-utilizam-orientao-a-objetos&quot;&gt;Os programadores não utilizam Orientação a Objetos&lt;/h2&gt;
 
-&lt;p&gt;Estou afirmando com base na minha experiência pessoal com o mercado brasileiro, livros e inúmeros post lidos por mim no decorrer dos anos.&lt;/p&gt;
+&lt;p&gt;Estou afirmando com base na minha experiência pessoal com o mercado brasileiro, 
+livros e inúmeros post lidos por mim no decorrer dos anos.&lt;/p&gt;
 
-&lt;p&gt;Você pode entender isso como uma coisa boa ou ruim. Depende do ponto de vista. Existe a Programação Funcional e muitas (grandes) empresas a utilizam. Programação Funcional não tem nada haver com Orientação a Objetos e, tudo bem.&lt;/p&gt;
+&lt;p&gt;Você pode entender isso como uma coisa boa ou ruim. Depende do ponto de vista. 
+Existe a Programação Funcional e muitas (grandes) empresas a utilizam. 
+Programação Funcional não tem nada haver com Orientação a Objetos e, tudo bem.&lt;/p&gt;
 
-&lt;p&gt;O ruim, na minha opinião, é você achar que programa utilizando o paradigma da Orientação a Objetos só porque utiliza &lt;strong&gt;Classes&lt;/strong&gt;, &lt;strong&gt;Herança&lt;/strong&gt;, &lt;strong&gt;Encapsulamento&lt;/strong&gt; e, talvez, &lt;strong&gt;Polimorfismo&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Mas, atenção. Não pense que você programa Orientado a Objetos só 
+porque utiliza &lt;strong&gt;Classes&lt;/strong&gt;, &lt;strong&gt;Herança&lt;/strong&gt;, &lt;strong&gt;Encapsulamento&lt;/strong&gt; e, talvez, 
+&lt;strong&gt;Polimorfismo&lt;/strong&gt;. Esse é a base, mas não é tudo.&lt;/p&gt;
 
-&lt;p&gt;Não somos diferentes. Eu pensava que programava Orientado a Objetos por usar e aplicar — ou achar que estava aplicando — esses conceitos chave da Orientação a Objetos que nos ensinaram no meio acadêmico. Mas não foi o bastante.&lt;/p&gt;
+&lt;p&gt;Não somos diferentes. Eu pensava que programava Orientado a Objetos por 
+usar e aplicar — ou achar que estava aplicando — esses conceitos básicos da 
+Orientação a Objetos que nos ensinaram no meio acadêmico. Mas não foi o bastante.&lt;/p&gt;
 
 &lt;p&gt;Esqueceram de nos ensinar como &lt;strong&gt;Pensar Orientado a Objetos&lt;/strong&gt;.&lt;/p&gt;
 
