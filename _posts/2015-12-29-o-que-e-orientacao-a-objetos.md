@@ -51,26 +51,38 @@ Funções são executadas. Objetos interagem entre si.
 
 Nunca pensem em Objetos em termos de funções e dados. Nunca.
 
-Para nós, de agora em diante, um Objeto representa uma entidade, criatura ou qualquer coisa fora do contexto do programa.
+Para nós, de agora em diante, um Objeto representa uma entidade, 
+criatura ou qualquer coisa fora do contexto do programa.
 
-Alguns dizem, também, que um Objeto representa uma entidade na “vida real”. A definição está correta, porém pode gerar confusão, por exemplo:
+Alguns dizem, também, que um Objeto representa uma entidade na “vida real”. 
+A definição está correta, porém pode gerar confusão, por exemplo:
 
   1. Um cachorro é uma entidade na vida real? Sim.
   2. Uma pessoa é uma entidade na vida real? Sim.
   3. Um arquivo de computador é uma entidade na vida real? Sim.
   4. Um pixel é uma entidade na vida real? Sim.
 
-Se você não notou diferença entre os exemplos, parabéns. Mas se ficou em dúvida a respeito dos itens #3 e #4, tudo bem, muitos tem a mesma dúvida. Por isso eu digo que um Objeto é qualquer coisa fora do contexto do programa. Definir como “vida real” também está certo e tem a vantagem de ser mais rápido pra escrever 😉
+Se você não notou diferença entre os exemplos, parabéns. Mas se ficou em dúvida a 
+respeito dos itens #3 e #4, tudo bem, muitos tem a mesma dúvida. Por isso eu digo 
+que um Objeto é qualquer coisa fora do contexto do programa. Definir como “vida real” 
+também está certo e tem a vantagem de ser mais rápido pra escrever 😉
 
 ##Os programadores não utilizam Orientação a Objetos
 
-Estou afirmando com base na minha experiência pessoal com o mercado brasileiro, livros e inúmeros post lidos por mim no decorrer dos anos.
+Estou afirmando com base na minha experiência pessoal com o mercado brasileiro, 
+livros e inúmeros post lidos por mim no decorrer dos anos.
 
-Você pode entender isso como uma coisa boa ou ruim. Depende do ponto de vista. Existe a Programação Funcional e muitas (grandes) empresas a utilizam. Programação Funcional não tem nada haver com Orientação a Objetos e, tudo bem.
+Você pode entender isso como uma coisa boa ou ruim. Depende do ponto de vista. 
+Existe a Programação Funcional e muitas (grandes) empresas a utilizam. 
+Programação Funcional não tem nada haver com Orientação a Objetos e, tudo bem.
 
-O ruim, na minha opinião, é você achar que programa utilizando o paradigma da Orientação a Objetos só porque utiliza __Classes__, __Herança__, __Encapsulamento__ e, talvez, __Polimorfismo__.
+Mas, atenção. Não pense que você programa Orientado a Objetos só 
+porque utiliza __Classes__, __Herança__, __Encapsulamento__ e, talvez, 
+__Polimorfismo__. Esse é a base, mas não é tudo.
 
-Não somos diferentes. Eu pensava que programava Orientado a Objetos por usar e aplicar — ou achar que estava aplicando — esses conceitos chave da Orientação a Objetos que nos ensinaram no meio acadêmico. Mas não foi o bastante.
+Não somos diferentes. Eu pensava que programava Orientado a Objetos por 
+usar e aplicar — ou achar que estava aplicando — esses conceitos básicos da 
+Orientação a Objetos que nos ensinaram no meio acadêmico. Mas não foi o bastante.
 
 Esqueceram de nos ensinar como __Pensar Orientado a Objetos__.
 

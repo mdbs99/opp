@@ -4,6 +4,7 @@ title: Object Pascal Programming
 author: Marcos Douglas
 email: opp@delfire.net
 timezone: America/Sao_Paulo
+locale: pt_BR
 copyright: "(c) Marcos Douglas, 2016"
 encoding: utf-8
 description: > # this means to ignore newlines until "baseurl:"

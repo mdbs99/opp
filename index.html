@@ -15,7 +15,7 @@ layout: default
           {% else %}
             {{ post.excerpt }}
             <p>
-              <a href="{{ post.url }}">
+              <a href="{{ post.url | prepend: site.baseurl }}">
               Mais...
               </a>
             </p>
