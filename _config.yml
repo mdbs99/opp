@@ -9,7 +9,7 @@ copyright: "(c) Marcos Douglas, 2016"
 encoding: utf-8
 description: > # this means to ignore newlines until "baseurl:"
   Sacadas sobre Programação Orientada a Objetos e Object Pascal.
-baseurl: "/opp"
+baseurl: ""
 url: "http://objectpascalprogramming.com"
 date_format: "%b %-d, %Y"
 destination: ../site
