@@ -8,6 +8,32 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Pensando em Objetos</title>
+        <description>&lt;p&gt;O que seria Pensar em Objetos? Bem, é uma ótima pergunta e não há uma resposta simples.&lt;/p&gt;
+
+&lt;p&gt;Os ambientes Pascal — Delphi, Lazarus e outros — sempre tiveram uma pegada RAD.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;
+    “Rapid Application Development (RAD) ou Desenvolvimento Rápido de Aplicação (em português), 
+    é um modelo de processo de desenvolvimento de software interativo e incremental que enfatiza 
+    um ciclo de desenvolvimento extremamente curto (entre 60 e 90 dias).”
+  &lt;/p&gt;
+  &lt;footer&gt;&lt;cite title=&quot;Wikipedia&quot;&gt;— Wikipedia&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.amazon.com/Object-Thinking-Developer-Reference-David/dp/0735619654&quot;&gt;&lt;img src=&quot;/images/object-thinking-book.jpg&quot; alt=&quot;Object Thinking&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Não deixem de se inscrever na &lt;a href=&quot;/lista-vip/&quot;&gt;Lista VIP&lt;/a&gt;!&lt;/p&gt;
+</description>
+        <pubDate>Fri, 01 Jan 2016 09:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/pensando-em-objetos/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/pensando-em-objetos/</guid>
+      </item>
+    
+      <item>
         <title>Você sabe, com certeza, o que é Orientação a Objetos?</title>
         <description>&lt;h2 id=&quot;um-pouco-de-histria&quot;&gt;Um pouco de História&lt;/h2&gt;
 
