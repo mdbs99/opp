@@ -14,13 +14,13 @@ layout: default
             {{ post.summary }}
           {% else %}
             {{ post.excerpt }}
-            <p>
-              <a href="{{ post.url | prepend: site.baseurl }}">
-              Mais...
-              </a>
-            </p>
           {% endif %}
-        </p>
+          <p>
+            <a href="{{ post.url | prepend: site.baseurl }}">
+            Continue...
+            </a>
+          </p>
+          </p>
       </div>
     {% endfor %}
   </div>

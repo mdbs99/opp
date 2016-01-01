@@ -1,8 +1,11 @@
 ---
 layout: post
 title: "Você sabe, com certeza, o que é Orientação a Objetos?"
+redirect_from:
+  - /o-que-e-orientacao-a-objetos/
 date: 2015-12-27 15:00:00
 categories: oop
+summary: Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo...
 ---
 ##Um pouco de História
 
