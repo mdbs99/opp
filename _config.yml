@@ -16,7 +16,7 @@ destination: ../site
 
 # Build settings
 highlighter: rouge
-permalink: /posts/:title
+permalink: /posts/:title/
 excerpt_separator: <!--more-->
 paginate: 5
 markdown: kramdown
