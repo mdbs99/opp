@@ -13,6 +13,9 @@ keywords:
   - poo
   - object oriented
 ---
+
+![Rochas](/images/photo-1451340124423-6311db67a5d9.jpg)
+
 ##Um pouco de História
 
 Muitos programadores, ao menos uma vez na vida, já devem ter pesquisado 

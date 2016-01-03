@@ -22,7 +22,7 @@ Aqui vai uma resposta simples e direta:
 
 <!--more-->
 
-![Pensando](/images/photo-thinking.jpg)
+![Pensando](/images/photo-1446511437394-36cdff3ae1b3.jpg)
 
 Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em 
 linguagens procedurais como C, ASM ou Pascal e não conseguiu — ou nunca quis — mudar o *mindset*
@@ -48,7 +48,8 @@ E em cada horário alguns métodos serão executados, em outros não.
 
 Como é automatizado, precisamos de um `Log`. Em texto mesmo. Um `Log` que grave a execução, método, horário, usuário/senha, exeções, etc.
 
-O cliente também quer testar o WebService utilizando um Form (GUI) para ver se está tudo funcionando, mostrando na tela o XML recebido.
+O cliente também quer testar o WebService utilizando um Form (GUI) para ver se está tudo funcionando, mostrando na tela o XML recebido
+de acordo com o método a ser executado, escolhido numa `ComboBox`.
 Quando o Form é utilizado o sistema não precisa criar `Log`, mas precisa mostrar exceções na tela. 
 Mas quando em execução em `batch`, ele precisa gravar o `Log` de execução e de exceções.
 
@@ -65,17 +66,17 @@ Aqui está o código **Procedural** para consumir o WebService:
 **Atenção**: Eu digitei a `procedure` diretamente no post, sem teste de compilação, então podem haver erros de sintaxe.
 
 {% highlight pascal %}
-procedure TDpvatAction.Act(const WebMethodName: string);
+procedure TDpvAction.Act(const WebMethodName: string);
 var
-  Client: TDpvatService;
-  Mapping: TDpvatXMLMappingInTable;
+  Client: TDpvService;
+  Mapping: TDpvXMLMappingInTable;
   XML: string;
   XMLIterable: TXMLIterable; 
 begin
   // FFileConfig é um atributo da classe
   
-  Client := TDpvatService.Create;
-  Mapping := TDpvatXMLMappingInTable.Create;
+  Client := TDpvService.Create;
+  Mapping := TDpvXMLMappingInTable.Create;
   XMLIterable := TXMLIterable.Create; 
   try
     // Configura a URL do WebService
@@ -138,38 +139,42 @@ Nesse tipo de código, a cada manutenção, você se preocupa em quebrar alguma 
 Para não quebrar nada você precisa:
 
   * Chamar os métodos na sequência correta
-  * Chamar os SetXXX na sequência correta
+  * Chamar os `SetXXX` na sequência correta
   * Ter cuidado com as variáveis, suas inicializações e reutilização
   * Instanciar os objetos na sequência correta
   * Etc.
 
-Não tome cuidado e... BUMM! Quebrou o código. Debugg. Checagem dos `flags` na sequência exata. Perda de tempo.
+Não tome cuidado e... BUMM! Quebrou o código. Debugg. Checagem das atribuições na sequência exata. Perda de tempo.
 
 Não? Você sabe que é verdade :)
 
-O código apresentado é 100% procedural, mesmo utilizando classes!
+O código apresentado é 100% Procedural, mesmo utilizando classes!
 Você poderia usar mais classes e até mesmo Herança entre elas,
 mas o código continuaria Procedural. Você não tem objetos, você tem **funções agrupadas**
 em blocos (classes) para fazer ações para o **orquestrador**, você!
 
+E como estes mesmos requisitos poderiam ser codificados utilizando Orientação a Objetos,
+sem um orquestrador, utilizando "objetos vivos" com **encapsulamento** perfeito, minimizando a quebra de código
+em manutenções futuras e com um código muito mais **elegante**?
+
 Aqui está o código **Orientado a Objetos** para consumir o mesmo WebService:
 
 {% highlight objectpascal %}
-function TDpvatAction.Act(const WebMethodName: string): IActionResult;
+function TDpvAction.Act(const WebMethodName: string): IActionResult;
 begin
-  Result := TDpvatXMLMappingInTable.New(
+  Result := TDpvXMLMappingInTable.New(
     FFileConfig.ReadString('MethodsVsTables', WebMethodName),
-    TDpvatXMLIterable.New(
+    TDpvXMLIterable.New(
       FFileConfig.ReadString('XMLNodes', WebMethodName),
-      TDpvatServiceWithLogging.New(
-        TDpvatServiceWithChecking.New(
-          TDpvatService.New(
+      TDpvServiceWithLogging.New(
+        TDpvServiceWithChecking.New(
+          TDpvService.New(
             FFileConfig.ReadString('WebService', 'URL')
           )
         )
       )
       .Call(
-        TDpvatMethod.New(
+        TDpvMethod.New(
           WebMethodName,
           TWebAuthorization.New(
             FFileConfig.ReadString('WebService', 'User'),
@@ -182,8 +187,8 @@ begin
 end;
 {% endhighlight text %}
 
-Esse é um código Orientado a Objetos. Não dizemos ao computador linha-a-linha sobre o que fazer.
-Nossos Objetos sabem o que fazer! Eles não precisam de um **orquestrador** pra dizer o que fazer a cada momento.
+Esse é um código verdadeiramente Orientado a Objetos. Não dizemos ao computador linha-a-linha sobre o que fazer.
+Os Objetos sabem o que fazer! Eles não precisam de um **orquestrador** lhes dizendo o que fazer a cada momento.
 Crie-os já configurados e deixe-os conversarem entre si. Eles sabem os métodos a chamar e **quando** chamá-los.
 Eles podem criar objetos internamente ou não e isso é irrelevante para o código chamador. Eles são como uma
 caixa preta, ninguém sabe o que há dentro deles. Você, o programador, só precisa saber o **contrato** que o
@@ -196,10 +201,10 @@ Ao invés de uma `procedure` agora temos uma `function` que retorna um `IActionR
 não faz coisas demais. Essa função é como um grande objeto ou uma composição deles — vou falar mais sobre isso em futuros posts.
 
 Se todas as instâncias são do tipo `interface`, então não preciso desalocar nada manualmente
-deixando o código mais `clean` sem try-finally e sem `memleaks`.
+deixando o código mais `clean` sem try-finally e sem `memleaks` (caso esqueça algum .Free).
 
 Todos os objetos são **imutáveis**, ou seja, após criados não há nenhum `SetXXX` que altere seu **estado interno**.
-Então não configuro meu *Client* — e nenhum outro objeto — utilizando métodos `SetXXX` para ele trabalhar com `Log` 
+Então não configuro meu *Client*, e nenhum outro objeto, utilizando métodos `SetXXX` para ele trabalhar com `Log` 
 ou com checagem de exceções.
 
 ---
@@ -209,10 +214,10 @@ ou com checagem de exceções.
 Eu uso `Decorators` ao invés de `properties` ou `SetXXX` para ligar/desligar `flags` (atributos).
 Assim não preciso **completar** a(s) classe(s) numa sequência correta de chamadas dos métodos.
 
-Se eu não preciso do `Log`, não utilizo o `decorator` do `Service` de `Log` que chamei de `TDpvatServiceWithLogging`;
-o mesmo para a checagem de Exceções, que chamei de `TDpvatServiceWithChecking`.
+Se eu não preciso do `Log`, não utilizo o `decorator` do `Service` de `Log` que chamei de `TDpvServiceWithLogging`;
+o mesmo para a checagem de Exceções, que chamei de `TDpvServiceWithChecking`.
 
-O método de chamada no WebService é uma classe separada, que chamei de `TDpvatMethod`.
+O método de chamada no WebService é uma classe separada, que chamei de `TDpvMethod`.
 Cada autorização (usuário/senha) também é uma classe, que chamei de `TWebAuthorization`... enfim.
 
 Viu as diferenças?
