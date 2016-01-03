@@ -9,13 +9,29 @@ copyright: "(c) Marcos Douglas, 2016"
 encoding: utf-8
 description: > # this means to ignore newlines until "baseurl:"
   Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+keywords:
+  - pascal
+  - object pascal
+  - delphi
+  - freepascal
+  - fpc
+  - lazarus
+  - marcos douglas blog
+  - orientação a objetos
+  - oop
+  - poo
+  - software development blog
+  - programming blog
+  - quality of software
+  - software blog
+  - high quality programming
 baseurl: ""
 url: "http://objectpascalprogramming.com"
 date_format: "%b %-d, %Y"
 destination: ../site
 
 # Build settings
-highlighter: rouge
+highlighter: pygments
 permalink: /posts/:title/
 excerpt_separator: <!--more-->
 paginate: 5
@@ -26,24 +42,24 @@ sass:
   compressed: true
   
 gems:
-  # - jekyll-mentions
-  - jemoji
   - jekyll-redirect-from
-  - jekyll-paginate
-
-# Google services
-google_analytics:
-google_verification:
-
+  - jekyll-paginate  
+  
 # Optional features
 animated: true
 show_related_posts: true
-show_post_footers: false
+show_post_footers: true
 show_social_icons: true
 ajaxify_contact_form: true
 
+# Google services
+google_enabled: true
+google_analytics:
+google_verification:
+
 # Disqus post comments
 disqus_shortname: objectpascalprogramming
+disqus_enabled: true
 
 # Facebook Comments plugin
 facebook_comments: 
