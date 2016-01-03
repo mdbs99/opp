@@ -8,8 +8,240 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Pensando em Objetos</title>
+        <description>&lt;p&gt;Como Pensar em Objetos?&lt;/p&gt;
+
+&lt;p&gt;Aqui vai uma resposta simples e direta:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Pensar em Objetos significa &lt;strong&gt;não&lt;/strong&gt; implementar uma tarefa na forma de instruções passo-a-passo para o computador.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1446511437394-36cdff3ae1b3.jpg&quot; alt=&quot;Pensando&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em 
+linguagens procedurais como C, ASM ou Pascal e não conseguiu — ou nunca quis — mudar o &lt;em&gt;mindset&lt;/em&gt;
+para entender como programar Orientado a Objetos.&lt;/p&gt;
+
+&lt;p&gt;A tempos aprendemos sobre Herança, Encapsulamento e Polimorfismo, mas eu acho que todos nós — inclusive eu, no passado —
+não entendemos a transição do Procedural para o paradigma Orientado a Objetos.&lt;/p&gt;
+
+&lt;h2 id=&quot;programando-orientado-a-objetos&quot;&gt;Programando Orientado a Objetos&lt;/h2&gt;
+
+&lt;p&gt;Nada melhor do que um exemplo prático para começarmos a entender as diferenças entre programação Procedural e Orientada a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Um cliente nos contratou. Um WebService está disponível e precisamos construir um &lt;em&gt;Client&lt;/em&gt; para consumi-lo.&lt;/p&gt;
+
+&lt;p&gt;Eu não quero utilizar um gerador automatizado de código para ler o WSDL e gerar uma classe
+— existe essa opção no Delphi e no Lazarus instalando um &lt;code&gt;package&lt;/code&gt; específico.&lt;/p&gt;
+
+&lt;p&gt;Então, hipoteticamente falando, temos um WebService simples com 5 métodos. Cada método tem os mesmos argumentos: usuário e senha.&lt;/p&gt;
+
+&lt;p&gt;As configurações do WebService como Usuário, Senha, URL, métodos do WebService que deverão ser executados, horário de execução, etc.
+estão num arquivo de configurações. Porque isso? Bem, esse WebService será executado em &lt;code&gt;batch&lt;/code&gt; automaticamente em horários pré-programados.
+E em cada horário alguns métodos serão executados, em outros não.&lt;/p&gt;
+
+&lt;p&gt;Como é automatizado, precisamos de um &lt;code&gt;Log&lt;/code&gt;. Em texto mesmo. Um &lt;code&gt;Log&lt;/code&gt; que grave a execução, método, horário, usuário/senha, exeções, etc.&lt;/p&gt;
+
+&lt;p&gt;O cliente também quer testar o WebService utilizando um Form (GUI) para ver se está tudo funcionando, mostrando na tela o XML recebido
+de acordo com o método a ser executado, escolhido numa &lt;code&gt;ComboBox&lt;/code&gt;.
+Quando o Form é utilizado o sistema não precisa criar &lt;code&gt;Log&lt;/code&gt;, mas precisa mostrar exceções na tela. 
+Mas quando em execução em &lt;code&gt;batch&lt;/code&gt;, ele precisa gravar o &lt;code&gt;Log&lt;/code&gt; de execução e de exceções.&lt;/p&gt;
+
+&lt;p&gt;Vejam que esse &lt;em&gt;Client&lt;/em&gt; é para o pessoal de Infra então é sem frescura mesmo: &lt;code&gt;Log&lt;/code&gt; em texto, roda em &lt;code&gt;batch&lt;/code&gt; e não tem tela bonita.&lt;/p&gt;
+
+&lt;p&gt;Para cada requisição, o &lt;em&gt;Client&lt;/em&gt; precisa:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Trazer o XML;&lt;/li&gt;
+  &lt;li&gt;Fazer um &lt;em&gt;parser&lt;/em&gt; nos dados;&lt;/li&gt;
+  &lt;li&gt;Fazer uma persistência com os dados obtidos;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Aqui está o código &lt;strong&gt;Procedural&lt;/strong&gt; para consumir o WebService:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Atenção&lt;/strong&gt;: Eu digitei a &lt;code&gt;procedure&lt;/code&gt; diretamente no post, sem teste de compilação, então podem haver erros de sintaxe.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TDpvAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Act&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WebMethodName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDpvService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Mapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDpvXMLMappingInTable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;XMLIterable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TXMLIterable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// FFileConfig é um atributo da classe&lt;/span&gt;
+  
+  &lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDpvService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Mapping&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDpvXMLMappingInTable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;XMLIterable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TXMLIterable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
+  &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Configura a URL do WebService&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SetURL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FFileConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;WebService&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;URL&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+   
+    &lt;span class=&quot;c1&quot;&gt;// Configura com verificação de exceção&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WithCheck&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Configura para gerar Log&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WithLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Client executa o método&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExecuteMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;FFileConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;WebService&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;User&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;FFileConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;WebService&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;Password&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;WebMethodName&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Obtém as configurações necessárias&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;XMLIterable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SetXMLNodes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FFileConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;XMLNodes&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WebMethodName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Configura o XML gerado&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;XMLIterable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SetXML&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Executa e gera outro XML (sim, reutilizei a mesma variável)  :)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;XMLIterable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Executa a persistência&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Mapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SetXML&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Mapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Não pode esquecer de desalocar tudo&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Mapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;XMLIterable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;É um código Procedural e funciona (teoricamente).&lt;/p&gt;
+
+&lt;p&gt;Parece fácil de ler, mas o código tem complexidade onde não deveria.
+As classes tem funções demais — mesmo separando em classes, continua procedural.&lt;/p&gt;
+
+&lt;p&gt;Reparou nas &lt;strong&gt;linhas em branco&lt;/strong&gt; para “facilitar a leitura”? Fiz isso propositalmente por 2 motivos:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Queria destacar cada linha para você ter mais contexto do problema;&lt;/li&gt;
+  &lt;li&gt;Ainda não sei como alterar as configurações do &lt;code&gt;highlight&lt;/code&gt; para deixar o código menos poluído quando eu usar comentários :(&lt;/li&gt;
+  &lt;li&gt;Todo mundo faz isso para facilitar a leitura… certo? :)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Mas quando vocês programarem Orientado a Objetos, não haverá mais motivos para pular linhas dentro de um método, Ok?&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;Dica:&lt;/strong&gt; Pular linhas dentro de um método é um &lt;strong&gt;“mal cheiro”&lt;/strong&gt; no código.
+Pode significar que você está fazendo coisas demais num único método.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Nesse tipo de código, a cada manutenção, você se preocupa em quebrar alguma coisa.&lt;/p&gt;
+
+&lt;p&gt;Para não quebrar nada você precisa:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Chamar os métodos na sequência correta&lt;/li&gt;
+  &lt;li&gt;Chamar os &lt;code&gt;SetXXX&lt;/code&gt; na sequência correta&lt;/li&gt;
+  &lt;li&gt;Ter cuidado com as variáveis, suas inicializações e reutilização&lt;/li&gt;
+  &lt;li&gt;Instanciar os objetos na sequência correta&lt;/li&gt;
+  &lt;li&gt;Etc.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Não tome cuidado e… BUMM! Quebrou o código. Debugg. Checagem das atribuições na sequência exata. Perda de tempo.&lt;/p&gt;
+
+&lt;p&gt;Não? Você sabe que é verdade :)&lt;/p&gt;
+
+&lt;p&gt;O código apresentado é 100% Procedural, mesmo utilizando classes!
+Você poderia usar mais classes e até mesmo Herança entre elas,
+mas o código continuaria Procedural. Você não tem objetos, você tem &lt;strong&gt;funções agrupadas&lt;/strong&gt;
+em blocos (classes) para fazer ações para o &lt;strong&gt;orquestrador&lt;/strong&gt;, você!&lt;/p&gt;
+
+&lt;p&gt;E como estes mesmos requisitos poderiam ser codificados utilizando Orientação a Objetos,
+sem um orquestrador, utilizando “objetos vivos” com &lt;strong&gt;encapsulamento&lt;/strong&gt; perfeito, minimizando a quebra de código
+em manutenções futuras e com um código muito mais &lt;strong&gt;elegante&lt;/strong&gt;?&lt;/p&gt;
+
+&lt;p&gt;Aqui está o código &lt;strong&gt;Orientado a Objetos&lt;/strong&gt; para consumir o mesmo WebService:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objectpascal&quot; data-lang=&quot;objectpascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TDpvAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Act&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WebMethodName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IActionResult&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDpvXMLMappingInTable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FFileConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;MethodsVsTables&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WebMethodName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;TDpvXMLIterable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;FFileConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;XMLNodes&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WebMethodName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;TDpvServiceWithLogging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;TDpvServiceWithChecking&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;TDpvService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;FFileConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;WebService&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;URL&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;TDpvMethod&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;WebMethodName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;TWebAuthorization&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;FFileConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;WebService&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;User&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;FFileConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;WebService&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;Password&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Act&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Esse é um código verdadeiramente Orientado a Objetos. Não dizemos ao computador linha-a-linha sobre o que fazer.
+Os Objetos sabem o que fazer! Eles não precisam de um &lt;strong&gt;orquestrador&lt;/strong&gt; lhes dizendo o que fazer a cada momento.
+Crie-os já configurados e deixe-os conversarem entre si. Eles sabem os métodos a chamar e &lt;strong&gt;quando&lt;/strong&gt; chamá-los.
+Eles podem criar objetos internamente ou não e isso é irrelevante para o código chamador. Eles são como uma
+caixa preta, ninguém sabe o que há dentro deles. Você, o programador, só precisa saber o &lt;strong&gt;contrato&lt;/strong&gt; que o
+objeto deverá cumprir. Esse contrato chamamos de &lt;code&gt;interface&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não dá pra ver no código por motivos de simplificação, mas cada instância é do tipo de uma &lt;code&gt;interface&lt;/code&gt;, por isso temos os métodos &lt;code&gt;New&lt;/code&gt; — um padrão
+que eu defini para meus projetos para contornar uma &lt;code&gt;feature&lt;/code&gt; do compilador mas só irei falar a respeito em outros posts.&lt;/p&gt;
+
+&lt;p&gt;Ao invés de uma &lt;code&gt;procedure&lt;/code&gt; agora temos uma &lt;code&gt;function&lt;/code&gt; que retorna um &lt;code&gt;IActionResult&lt;/code&gt; e o fato de ter apenas um &lt;code&gt;Result&lt;/code&gt; é um ótimo sinal de que a função
+não faz coisas demais. Essa função é como um grande objeto ou uma composição deles — vou falar mais sobre isso em futuros posts.&lt;/p&gt;
+
+&lt;p&gt;Se todas as instâncias são do tipo &lt;code&gt;interface&lt;/code&gt;, então não preciso desalocar nada manualmente
+deixando o código mais &lt;code&gt;clean&lt;/code&gt; sem try-finally e sem &lt;code&gt;memleaks&lt;/code&gt; (caso esqueça algum .Free).&lt;/p&gt;
+
+&lt;p&gt;Todos os objetos são &lt;strong&gt;imutáveis&lt;/strong&gt;, ou seja, após criados não há nenhum &lt;code&gt;SetXXX&lt;/code&gt; que altere seu &lt;strong&gt;estado interno&lt;/strong&gt;.
+Então não configuro meu &lt;em&gt;Client&lt;/em&gt;, e nenhum outro objeto, utilizando métodos &lt;code&gt;SetXXX&lt;/code&gt; para ele trabalhar com &lt;code&gt;Log&lt;/code&gt; 
+ou com checagem de exceções.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;Dica:&lt;/strong&gt; Toda classe deveria ser imutável, a não ser que tenha uma ótima razão para não ser.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Eu uso &lt;code&gt;Decorators&lt;/code&gt; ao invés de &lt;code&gt;properties&lt;/code&gt; ou &lt;code&gt;SetXXX&lt;/code&gt; para ligar/desligar &lt;code&gt;flags&lt;/code&gt; (atributos).
+Assim não preciso &lt;strong&gt;completar&lt;/strong&gt; a(s) classe(s) numa sequência correta de chamadas dos métodos.&lt;/p&gt;
+
+&lt;p&gt;Se eu não preciso do &lt;code&gt;Log&lt;/code&gt;, não utilizo o &lt;code&gt;decorator&lt;/code&gt; do &lt;code&gt;Service&lt;/code&gt; de &lt;code&gt;Log&lt;/code&gt; que chamei de &lt;code&gt;TDpvServiceWithLogging&lt;/code&gt;;
+o mesmo para a checagem de Exceções, que chamei de &lt;code&gt;TDpvServiceWithChecking&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;O método de chamada no WebService é uma classe separada, que chamei de &lt;code&gt;TDpvMethod&lt;/code&gt;.
+Cada autorização (usuário/senha) também é uma classe, que chamei de &lt;code&gt;TWebAuthorization&lt;/code&gt;… enfim.&lt;/p&gt;
+
+&lt;p&gt;Viu as diferenças?&lt;/p&gt;
+
+&lt;p&gt;Espero que você tenha visto as vantagens de programar Orientado a Objetos, mesmo com esse exemplo simples.&lt;/p&gt;
+
+&lt;p&gt;Tá gostando? Alguma dúvida? Não concorda? Posta aí nos comentários.&lt;/p&gt;
+
+&lt;p&gt;Vejo você no próximo post.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;Dica:&lt;/strong&gt; Sugiro a leitura do livro Object Thinking de David West. Leia-o com a mente aberta e começará a entender mais sobre o &lt;strong&gt;Pensamento Objeto&lt;/strong&gt;.
+&lt;a href=&quot;http://www.amazon.com/Object-Thinking-Developer-Reference-David/dp/0735619654&quot;&gt;&lt;img src=&quot;/images/object-thinking-book.jpg&quot; alt=&quot;Object Thinking&quot; title=&quot;Object Thinking by David West&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 03 Jan 2016 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/pensando-em-objetos/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/pensando-em-objetos/</guid>
+      </item>
+    
+      <item>
         <title>Você sabe, com certeza, o que é Orientação a Objetos?</title>
-        <description>&lt;h2 id=&quot;um-pouco-de-histria&quot;&gt;Um pouco de História&lt;/h2&gt;
+        <description>&lt;p&gt;&lt;img src=&quot;/images/photo-1451340124423-6311db67a5d9.jpg&quot; alt=&quot;Rochas&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;um-pouco-de-histria&quot;&gt;Um pouco de História&lt;/h2&gt;
 
 &lt;p&gt;Muitos programadores, ao menos uma vez na vida, já devem ter pesquisado 
 o que significa &lt;strong&gt;Orientação a Objetos&lt;/strong&gt;, quando o termo foi cunhado e por quem.&lt;/p&gt;
@@ -94,8 +326,6 @@ Orientação a Objetos que nos ensinaram no meio acadêmico. Mas não foi o bast
 &lt;p&gt;Esqueceram de nos ensinar como &lt;strong&gt;Pensar Orientado a Objetos&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Mas isso é assunto para um próximo post.&lt;/p&gt;
-
-&lt;p&gt;Não deixem de se inscrever na &lt;a href=&quot;/lista-vip/&quot;&gt;Lista VIP&lt;/a&gt;!&lt;/p&gt;
 </description>
         <pubDate>Sun, 27 Dec 2015 15:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/o-que-e-orientacao-a-objetos/</link>

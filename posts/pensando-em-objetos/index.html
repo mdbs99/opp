@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pensando em Objetos &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="oop">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/pensando-em-objetos/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201601032303" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Pensando em Objetos">
+    <meta property="og:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/pensando-em-objetos/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Pensando em Objetos" />
+    <meta name="twitter:description" content="Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/pensando-em-objetos/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-right">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <hr size="1" width="100%" align="center" noshade>
+        
+
+
+<div class="post-header mb2">
+  <h1>Pensando em Objetos</h1>
+  <span class="post-meta">Jan 3, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    7 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Como Pensar em Objetos?</p>
+
+<p>Aqui vai uma resposta simples e direta:</p>
+
+<blockquote>
+  <p>Pensar em Objetos significa <strong>não</strong> implementar uma tarefa na forma de instruções passo-a-passo para o computador.</p>
+</blockquote>
+
+<!--more-->
+
+<p><img src="/images/photo-1446511437394-36cdff3ae1b3.jpg" alt="Pensando" /></p>
+
+<p>Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em 
+linguagens procedurais como C, ASM ou Pascal e não conseguiu — ou nunca quis — mudar o <em>mindset</em>
+para entender como programar Orientado a Objetos.</p>
+
+<p>A tempos aprendemos sobre Herança, Encapsulamento e Polimorfismo, mas eu acho que todos nós — inclusive eu, no passado —
+não entendemos a transição do Procedural para o paradigma Orientado a Objetos.</p>
+
+<h2 id="programando-orientado-a-objetos">Programando Orientado a Objetos</h2>
+
+<p>Nada melhor do que um exemplo prático para começarmos a entender as diferenças entre programação Procedural e Orientada a Objetos.</p>
+
+<p>Um cliente nos contratou. Um WebService está disponível e precisamos construir um <em>Client</em> para consumi-lo.</p>
+
+<p>Eu não quero utilizar um gerador automatizado de código para ler o WSDL e gerar uma classe
+— existe essa opção no Delphi e no Lazarus instalando um <code>package</code> específico.</p>
+
+<p>Então, hipoteticamente falando, temos um WebService simples com 5 métodos. Cada método tem os mesmos argumentos: usuário e senha.</p>
+
+<p>As configurações do WebService como Usuário, Senha, URL, métodos do WebService que deverão ser executados, horário de execução, etc.
+estão num arquivo de configurações. Porque isso? Bem, esse WebService será executado em <code>batch</code> automaticamente em horários pré-programados.
+E em cada horário alguns métodos serão executados, em outros não.</p>
+
+<p>Como é automatizado, precisamos de um <code>Log</code>. Em texto mesmo. Um <code>Log</code> que grave a execução, método, horário, usuário/senha, exeções, etc.</p>
+
+<p>O cliente também quer testar o WebService utilizando um Form (GUI) para ver se está tudo funcionando, mostrando na tela o XML recebido
+de acordo com o método a ser executado, escolhido numa <code>ComboBox</code>.
+Quando o Form é utilizado o sistema não precisa criar <code>Log</code>, mas precisa mostrar exceções na tela. 
+Mas quando em execução em <code>batch</code>, ele precisa gravar o <code>Log</code> de execução e de exceções.</p>
+
+<p>Vejam que esse <em>Client</em> é para o pessoal de Infra então é sem frescura mesmo: <code>Log</code> em texto, roda em <code>batch</code> e não tem tela bonita.</p>
+
+<p>Para cada requisição, o <em>Client</em> precisa:</p>
+
+<ol>
+  <li>Trazer o XML;</li>
+  <li>Fazer um <em>parser</em> nos dados;</li>
+  <li>Fazer uma persistência com os dados obtidos;</li>
+</ol>
+
+<p>Aqui está o código <strong>Procedural</strong> para consumir o WebService:</p>
+
+<p><strong>Atenção</strong>: Eu digitei a <code>procedure</code> diretamente no post, sem teste de compilação, então podem haver erros de sintaxe.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nc">TDpvAction</span><span class="o">.</span><span class="nf">Act</span><span class="p">(</span><span class="k">const</span> <span class="n">WebMethodName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
+<span class="k">var</span>
+  <span class="n">Client</span><span class="o">:</span> <span class="n">TDpvService</span><span class="o">;</span>
+  <span class="n">Mapping</span><span class="o">:</span> <span class="n">TDpvXMLMappingInTable</span><span class="o">;</span>
+  <span class="n">XML</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+  <span class="n">XMLIterable</span><span class="o">:</span> <span class="n">TXMLIterable</span><span class="o">;</span> 
+<span class="k">begin</span>
+  <span class="c1">// FFileConfig é um atributo da classe</span>
+  
+  <span class="n">Client</span> <span class="o">:=</span> <span class="n">TDpvService</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
+  <span class="n">Mapping</span> <span class="o">:=</span> <span class="n">TDpvXMLMappingInTable</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
+  <span class="n">XMLIterable</span> <span class="o">:=</span> <span class="n">TXMLIterable</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span> 
+  <span class="k">try</span>
+    <span class="c1">// Configura a URL do WebService</span>
+    <span class="n">Client</span><span class="o">.</span><span class="n">SetURL</span><span class="p">(</span><span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;WebService&#39;</span><span class="o">,</span> <span class="s">&#39;URL&#39;</span><span class="p">))</span><span class="o">;</span>
+   
+    <span class="c1">// Configura com verificação de exceção</span>
+    <span class="n">Client</span><span class="o">.</span><span class="n">WithCheck</span><span class="p">(</span><span class="k">True</span><span class="p">)</span><span class="o">;</span>
+
+    <span class="c1">// Configura para gerar Log</span>
+    <span class="n">Client</span><span class="o">.</span><span class="n">WithLog</span><span class="p">(</span><span class="k">True</span><span class="p">)</span><span class="o">;</span>
+
+    <span class="c1">// Client executa o método</span>
+    <span class="n">XML</span> <span class="o">:=</span> <span class="n">Client</span><span class="o">.</span><span class="n">ExecuteMethod</span><span class="p">(</span>
+      <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;WebService&#39;</span><span class="o">,</span> <span class="s">&#39;User&#39;</span><span class="p">)</span><span class="o">,</span>
+      <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;WebService&#39;</span><span class="o">,</span> <span class="s">&#39;Password&#39;</span><span class="p">)</span><span class="o">,</span>
+      <span class="n">WebMethodName</span>
+    <span class="p">)</span><span class="o">;</span>
+
+    <span class="c1">// Obtém as configurações necessárias</span>
+    <span class="n">XMLIterable</span><span class="o">.</span><span class="n">SetXMLNodes</span><span class="p">(</span><span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;XMLNodes&#39;</span><span class="o">,</span> <span class="n">WebMethodName</span><span class="p">))</span><span class="o">;</span>
+
+    <span class="c1">// Configura o XML gerado</span>
+    <span class="n">XMLIterable</span><span class="o">.</span><span class="n">SetXML</span><span class="p">(</span><span class="n">XML</span><span class="p">)</span><span class="o">;</span>
+
+    <span class="c1">// Executa e gera outro XML (sim, reutilizei a mesma variável)  :)</span>
+    <span class="n">XML</span> <span class="o">:=</span> <span class="n">XMLIterable</span><span class="o">.</span><span class="n">Execute</span><span class="o">;</span>
+
+    <span class="c1">// Executa a persistência</span>
+    <span class="n">Mapping</span><span class="o">.</span><span class="n">SetXML</span><span class="p">(</span><span class="n">XML</span><span class="p">)</span><span class="o">;</span>
+    <span class="n">Mapping</span><span class="o">.</span><span class="n">Execute</span><span class="o">;</span>
+  <span class="k">finally</span>
+    <span class="c1">// Não pode esquecer de desalocar tudo</span>
+    <span class="n">Client</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+    <span class="n">Mapping</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+    <span class="n">XMLIterable</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>É um código Procedural e funciona (teoricamente).</p>
+
+<p>Parece fácil de ler, mas o código tem complexidade onde não deveria.
+As classes tem funções demais — mesmo separando em classes, continua procedural.</p>
+
+<p>Reparou nas <strong>linhas em branco</strong> para “facilitar a leitura”? Fiz isso propositalmente por 2 motivos:</p>
+
+<ol>
+  <li>Queria destacar cada linha para você ter mais contexto do problema;</li>
+  <li>Ainda não sei como alterar as configurações do <code>highlight</code> para deixar o código menos poluído quando eu usar comentários :(</li>
+  <li>Todo mundo faz isso para facilitar a leitura… certo? :)</li>
+</ol>
+
+<p>Mas quando vocês programarem Orientado a Objetos, não haverá mais motivos para pular linhas dentro de um método, Ok?</p>
+
+<hr />
+<p><strong>Dica:</strong> Pular linhas dentro de um método é um <strong>“mal cheiro”</strong> no código.
+Pode significar que você está fazendo coisas demais num único método.</p>
+
+<hr />
+<p>Nesse tipo de código, a cada manutenção, você se preocupa em quebrar alguma coisa.</p>
+
+<p>Para não quebrar nada você precisa:</p>
+
+<ul>
+  <li>Chamar os métodos na sequência correta</li>
+  <li>Chamar os <code>SetXXX</code> na sequência correta</li>
+  <li>Ter cuidado com as variáveis, suas inicializações e reutilização</li>
+  <li>Instanciar os objetos na sequência correta</li>
+  <li>Etc.</li>
+</ul>
+
+<p>Não tome cuidado e… BUMM! Quebrou o código. Debugg. Checagem das atribuições na sequência exata. Perda de tempo.</p>
+
+<p>Não? Você sabe que é verdade :)</p>
+
+<p>O código apresentado é 100% Procedural, mesmo utilizando classes!
+Você poderia usar mais classes e até mesmo Herança entre elas,
+mas o código continuaria Procedural. Você não tem objetos, você tem <strong>funções agrupadas</strong>
+em blocos (classes) para fazer ações para o <strong>orquestrador</strong>, você!</p>
+
+<p>E como estes mesmos requisitos poderiam ser codificados utilizando Orientação a Objetos,
+sem um orquestrador, utilizando “objetos vivos” com <strong>encapsulamento</strong> perfeito, minimizando a quebra de código
+em manutenções futuras e com um código muito mais <strong>elegante</strong>?</p>
+
+<p>Aqui está o código <strong>Orientado a Objetos</strong> para consumir o mesmo WebService:</p>
+
+<figure class="highlight"><pre><code class="language-objectpascal" data-lang="objectpascal"><span class="k">function</span> <span class="nc">TDpvAction</span><span class="o">.</span><span class="nf">Act</span><span class="p">(</span><span class="k">const</span> <span class="n">WebMethodName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IActionResult</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TDpvXMLMappingInTable</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+    <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;MethodsVsTables&#39;</span><span class="o">,</span> <span class="n">WebMethodName</span><span class="p">)</span><span class="o">,</span>
+    <span class="n">TDpvXMLIterable</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+      <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;XMLNodes&#39;</span><span class="o">,</span> <span class="n">WebMethodName</span><span class="p">)</span><span class="o">,</span>
+      <span class="n">TDpvServiceWithLogging</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+        <span class="n">TDpvServiceWithChecking</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+          <span class="n">TDpvService</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+            <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;WebService&#39;</span><span class="o">,</span> <span class="s">&#39;URL&#39;</span><span class="p">)</span>
+          <span class="p">)</span>
+        <span class="p">)</span>
+      <span class="p">)</span>
+      <span class="o">.</span><span class="n">Call</span><span class="p">(</span>
+        <span class="n">TDpvMethod</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+          <span class="n">WebMethodName</span><span class="o">,</span>
+          <span class="n">TWebAuthorization</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+            <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;WebService&#39;</span><span class="o">,</span> <span class="s">&#39;User&#39;</span><span class="p">)</span><span class="o">,</span>
+            <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;WebService&#39;</span><span class="o">,</span> <span class="s">&#39;Password&#39;</span><span class="p">)</span>
+          <span class="p">)</span>
+        <span class="p">)</span>
+      <span class="p">)</span><span class="o">.</span><span class="n">XML</span>
+    <span class="p">)</span>
+  <span class="p">)</span><span class="o">.</span><span class="n">Act</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Esse é um código verdadeiramente Orientado a Objetos. Não dizemos ao computador linha-a-linha sobre o que fazer.
+Os Objetos sabem o que fazer! Eles não precisam de um <strong>orquestrador</strong> lhes dizendo o que fazer a cada momento.
+Crie-os já configurados e deixe-os conversarem entre si. Eles sabem os métodos a chamar e <strong>quando</strong> chamá-los.
+Eles podem criar objetos internamente ou não e isso é irrelevante para o código chamador. Eles são como uma
+caixa preta, ninguém sabe o que há dentro deles. Você, o programador, só precisa saber o <strong>contrato</strong> que o
+objeto deverá cumprir. Esse contrato chamamos de <code>interface</code>.</p>
+
+<p>Não dá pra ver no código por motivos de simplificação, mas cada instância é do tipo de uma <code>interface</code>, por isso temos os métodos <code>New</code> — um padrão
+que eu defini para meus projetos para contornar uma <code>feature</code> do compilador mas só irei falar a respeito em outros posts.</p>
+
+<p>Ao invés de uma <code>procedure</code> agora temos uma <code>function</code> que retorna um <code>IActionResult</code> e o fato de ter apenas um <code>Result</code> é um ótimo sinal de que a função
+não faz coisas demais. Essa função é como um grande objeto ou uma composição deles — vou falar mais sobre isso em futuros posts.</p>
+
+<p>Se todas as instâncias são do tipo <code>interface</code>, então não preciso desalocar nada manualmente
+deixando o código mais <code>clean</code> sem try-finally e sem <code>memleaks</code> (caso esqueça algum .Free).</p>
+
+<p>Todos os objetos são <strong>imutáveis</strong>, ou seja, após criados não há nenhum <code>SetXXX</code> que altere seu <strong>estado interno</strong>.
+Então não configuro meu <em>Client</em>, e nenhum outro objeto, utilizando métodos <code>SetXXX</code> para ele trabalhar com <code>Log</code> 
+ou com checagem de exceções.</p>
+
+<hr />
+<p><strong>Dica:</strong> Toda classe deveria ser imutável, a não ser que tenha uma ótima razão para não ser.</p>
+
+<hr />
+<p>Eu uso <code>Decorators</code> ao invés de <code>properties</code> ou <code>SetXXX</code> para ligar/desligar <code>flags</code> (atributos).
+Assim não preciso <strong>completar</strong> a(s) classe(s) numa sequência correta de chamadas dos métodos.</p>
+
+<p>Se eu não preciso do <code>Log</code>, não utilizo o <code>decorator</code> do <code>Service</code> de <code>Log</code> que chamei de <code>TDpvServiceWithLogging</code>;
+o mesmo para a checagem de Exceções, que chamei de <code>TDpvServiceWithChecking</code>.</p>
+
+<p>O método de chamada no WebService é uma classe separada, que chamei de <code>TDpvMethod</code>.
+Cada autorização (usuário/senha) também é uma classe, que chamei de <code>TWebAuthorization</code>… enfim.</p>
+
+<p>Viu as diferenças?</p>
+
+<p>Espero que você tenha visto as vantagens de programar Orientado a Objetos, mesmo com esse exemplo simples.</p>
+
+<p>Tá gostando? Alguma dúvida? Não concorda? Posta aí nos comentários.</p>
+
+<p>Vejo você no próximo post.</p>
+
+<hr />
+<p><strong>Dica:</strong> Sugiro a leitura do livro Object Thinking de David West. Leia-o com a mente aberta e começará a entender mais sobre o <strong>Pensamento Objeto</strong>.
+<a href="http://www.amazon.com/Object-Thinking-Developer-Reference-David/dp/0735619654"><img src="/images/object-thinking-book.jpg" alt="Object Thinking" title="Object Thinking by David West" /></a></p>
+
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/pensando-em-objetos/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Pensando em Objetos&via=mdbs99;url=http://objectpascalprogramming.com/posts/pensando-em-objetos/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/pensando-em-objetos/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/pensando-em-objetos/&title=Pensando em Objetos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/pensando-em-objetos/&title=Pensando em Objetos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/pensando-em-objetos/&t=Pensando em Objetos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <!--<img src="/images/me.jpeg" alt="John Otander" class="avatar" /> -->
+  <hr />
+  <p>
+   Inscreva-se na minha Lista VIP para se manter atualizado de todas as minhas publicações.<br>
+   Você receberá dicas valiosas que vão te fazer pensar diferente<br> 
+   sobre Object Pascal e Orientação a Objetos! 
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <h4 class="post-title">Pensando em Objetos</h4>
+        <p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
+        <h4 class="post-title">Você sabe, com certeza, o que é Orientação a Objetos?</h4>
+        <p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo...</p>
+      </a>
+    </div>
+  
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
