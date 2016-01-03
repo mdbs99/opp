@@ -6,6 +6,12 @@ redirect_from:
 date: 2015-12-27 15:00:00
 categories: oop
 summary: Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo...
+tags: oop
+keywords:
+  - orientação a objetos
+  - oop
+  - poo
+  - object oriented
 ---
 ##Um pouco de História
 
@@ -90,5 +96,3 @@ Orientação a Objetos que nos ensinaram no meio acadêmico. Mas não foi o bast
 Esqueceram de nos ensinar como __Pensar Orientado a Objetos__.
 
 Mas isso é assunto para um próximo post.
-
-Não deixem de se inscrever na [Lista VIP](/lista-vip/)!
