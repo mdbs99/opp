@@ -16,8 +16,8 @@ ___________________
 <p />
 <a href="http://github.com/mdbs99/" target="_blank">Marcos Douglas</a> é Pós graduado em Engenharia de Software.
 
-Especialista em Análise e Implementação de
-Projetos utilizando Orientação a Objetos e Object Pascal.
+Especialista em Análise e Implementação de Projetos utilizando Orientação a Objetos a mais de 15 anos.
 
-Sócio-Diretor da Delfire, empresa de consultoria e
-desenvolvimento de software criada em 2005.
+Consultor e diretor da Delfire, desde 2005.
+
+Criador e idealizador do Blog www.ObjectPascalProgramming.com com a missão de disseminar conhecimento sobre Orientação a Objetos utilizando Object Pascal.
