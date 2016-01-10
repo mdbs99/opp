@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Interfaces e o Método estático New &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="oop">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201601101957" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Interfaces e o Método estático New">
+    <meta property="og:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Interfaces e o Método estático New" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-right">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <hr size="1" width="100%" align="center" noshade>
+        
+
+
+<div class="post-header mb2">
+  <h1>Interfaces e o Método estático New</h1>
+  <span class="post-meta">Jan 10, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    4 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>No <a href="/posts/pensando-em-objetos/">post anterior</a> eu mostrei um código
+Orientado a Objetos onde os Objetos eram instanciados utilizando um Método estático chamado <code>New</code>.</p>
+
+<p>Este método <code>New</code> não é padrão da linguagem Object Pascal. Ele também não é um <code>constructor</code>.
+Ele é um <strong>Método de classe</strong> que retorna a mesma Interface que a classe implementa.</p>
+
+<p>A utilização do Método <code>New</code> é um padrão que defini para todos os meus projetos.</p>
+
+<!--more-->
+
+<h2 id="object-pascal-e-seu-garbage-collector">Object Pascal e seu “<em>Garbage Collector</em>”</h2>
+
+<p>Ok. Object Pascal não tem <em>garbage collector</em> como no Java ou C# — e isso é ótimo quando precisamos de performance —
+porém temos algo parecido quando utilizamos Interfaces.</p>
+
+<p>Toda variável que tem uma Interface como seu tipo, por padrão, será desalocada da memória assim que
+sair do escopo de execução. Vamos chamar essas variáveis de <strong>variável-interface</strong>.</p>
+
+<p>No momento que o compilador sabe que a variável-interface não será mais utilizada, ele desaloca a memória
+chamando o <code>destructor</code> da instância.</p>
+
+<p>Isso é ótimo para a programação Orientada a Objetos.</p>
+
+<p>Significa que, se eu fizer isso corretamente, poderei criar Objetos dentro de Objetos, encadear chamadas de Objetos,
+criar novas instâncias <code>inline</code> para utilizar em argumentos e muito mais… assim como fazem no Java ou C#.</p>
+
+<h2 id="o-problema">O problema</h2>
+
+<p>Existe um grande problema em utilizar Interfaces:</p>
+
+<p>A falta da variável-interface.</p>
+
+<p>Se não implementar da forma correta, você terá algumas violações de acesso (<code>Access Violation</code>)
+e/ou vazamentos de memória (<code>memleaks</code>).</p>
+
+<p>Para que o <em>garbage colletor</em> funcione corretamente você precisa ter uma variável-interface para receber a instância, sempre.</p>
+
+<p>Considere o código abaixo:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">function</span> <span class="nc">TFoo</span><span class="o">.</span><span class="nf">Execute</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TAction</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">TTask</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Name</span><span class="p">))</span><span class="o">.</span><span class="n">Execute</span><span class="o">.</span><span class="n">ToString</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<ol>
+  <li>TTask é uma classe que recebe uma <code>string</code> no construtor;</li>
+  <li>TTask implementa ITask, uma Interface;</li>
+  <li>TAction é uma classe que recebe uma <strong>interface</strong> ITask no construtor;</li>
+  <li>TAction implementa IAction, uma Interface;</li>
+  <li>TAction tem um método Execute que retorna uma interface IResult;</li>
+  <li>IResult tem um método ToString que retorna o resultado no formato <code>string</code>;</li>
+</ol>
+
+<p>Quantos vazamentos de memória teremos: 0, 1 ou 2?</p>
+
+<p>A resposta é 1.</p>
+
+<p>Porque?</p>
+
+<p>O compilador fará o seguinte (mais ou menos, em termos leigos):</p>
+
+<ol>
+  <li>Executar TTask.Create(Name), criando a instância;</li>
+  <li>A instância criada irá ser passada no argumento, que é do tipo ITask, do construtor de TAction;</li>
+  <li>TAction irá criar uma instância de IResult quando chamar Execute;</li>
+  <li>Utilizando a instância de IResult, o método ToString é chamado e uma <code>string</code> é retornada;</li>
+</ol>
+
+<p>Onde está o erro?</p>
+
+<p>Na chamada <code>TAction.Create</code> porque a instância não é referenciada por nenhuma variável-interface!</p>
+
+<p>O compilador não tem uma referência, então ele não sabe se deve desalocar a memória.</p>
+
+<p>Na chamada <code>TTask.Create(Name)</code> não há problema. O argumento de <code>TAction</code> recebe uma <code>ITask</code>, então o compilador
+sabe que deverá desalocar essa instância logo que não precisar mais dela.</p>
+
+<p>Então vamos acertar o código:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">function</span> <span class="nc">TFoo</span><span class="o">.</span><span class="nf">Execute</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+<span class="k">var</span>
+  <span class="n">A</span><span class="o">:</span> <span class="n">IAction</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">A</span> <span class="o">:=</span> <span class="n">TAction</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">TTask</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Name</span><span class="p">))</span><span class="o">;</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">A</span><span class="o">.</span><span class="n">Execute</span><span class="o">.</span><span class="n">ToString</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Agora não haverá <code>memleaks</code> porque agora o compilador tem a referência <code>A</code> para <code>TAction</code>. No fim do método
+<code>TFoo.Execute</code> a instância em <code>A</code> será liberada automaticamente.</p>
+
+<p>Se não me falha a memória isso foi implementado no Delphi
+a partir da versão 3 (me corrijam se eu estiver errado).</p>
+
+<p>Tem muito material sobre isso na Internet se quiserem mais detalhes, mas acredito que você já sabia disso
+ou ao menos já leu sobre isso alguma vez.</p>
+
+<h2 id="o-mtodo-new">O método New</h2>
+
+<p>Se você prestou atenção nos códigos acima, vai reparar que está na mão do programador saber quando utilizar
+uma variável-interface para “dizer” ao compilador que a instância deverá ser liberada automaticamente…</p>
+
+<p>E é claro que você vai esquecer disso quando estiver programando… várias vezes! Aconteceu comigo. Centenas de vezes.</p>
+
+<p>Nem precisa ser esquecimento, basta o código mudar numa parte para começar a ter <code>memleaks</code>, exemplo:</p>
+
+<p>Se o argumento é do tipo Interface, não há problema em criar uma instância <code>inline</code>, mas e se o código for
+alterado para receber uma classe concreta (mudou de IAction para TAction o argumento)? 
+O código pode continuar funcionando, porém haverá <code>memleaks</code> porque
+o compilador não irá mais desalocar a instância criada no argumento por não ser mais do tipo Interface.</p>
+
+<p>Ora podemos criar <code>inline</code>, ora não… isso é muito chato!</p>
+
+<h3 id="a-soluo">A Solução</h3>
+
+<p>Todas as novas instâncias terão uma variável-interface para receber a referência.</p>
+
+<p>Eu implemento essa “mágica” de forma muito simples utilizando o método <code>New</code>.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TAction</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IAction</span><span class="p">)</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Task</span><span class="o">:</span> <span class="n">ITask</span><span class="p">)</span><span class="o">;</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">Task</span><span class="o">:</span> <span class="n">ITask</span><span class="p">)</span><span class="o">:</span> <span class="n">IAction</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Execute</span><span class="o">:</span> <span class="n">IResult</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+<span class="k">class</span> <span class="k">function</span> <span class="nc">TAction</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Task</span><span class="o">:</span> <span class="n">ITask</span><span class="p">)</span><span class="o">:</span> <span class="n">IAction</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TAction</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Task</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>  
+
+<span class="cm">{ Implementação de Create e Execute... irrelevantes }</span>  
+
+<span class="cm">{ Implementação do método New também para TTask... }</span>
+
+<span class="cm">{...}</span>  
+  
+<span class="k">function</span> <span class="nc">TFoo</span><span class="o">.</span><span class="nf">Execute</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TAction</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">TTask</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Name</span><span class="p">))</span><span class="o">.</span><span class="n">Execute</span><span class="o">.</span><span class="n">ToString</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Agora nós estamos chamando <code>TAction.New</code> ao invés de <code>TAction.Create</code>.</p>
+
+<p>O método <code>New</code> irá retornar uma instância de <code>IAction</code> (interface) diferentemente do construtor
+<code>Create</code> que iria retornar uma instância de <code>TAction</code> (classe).</p>
+
+<ul>
+  <li>Sem problemas de <code>memleaks</code></li>
+  <li>Código mais limpo, sem variáveis locais</li>
+  <li>Código mais limpo, sem try-finally para desalocar variáveis locais</li>
+</ul>
+
+<p>Utilize o método <code>New</code> em todas as suas classes e nunca mais chame o construtor diretamente.
+Assim você não terá o problema da falta da variável-interface, seja por esquecimento ou por
+mudanças no código.</p>
+
+<p>Tá gostando? Alguma dúvida? Não concorda? Posta aí nos comentários.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Interfaces e o Método estático New&via=mdbs99;url=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/&title=Interfaces e o Método estático New" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/&title=Interfaces e o Método estático New" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/&t=Interfaces e o Método estático New" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <hr />
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Orientação a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/interfaces-e-o-metodo-estatico-new';
+      var disqus_title      = 'Interfaces e o Método estático New';
+
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <h4 class="post-title">Pensando em Objetos</h4>
+        <p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
+        <h4 class="post-title">Você sabe, com certeza, o que é Orientação a Objetos?</h4>
+        <p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo...</p>
+      </a>
+    </div>
+  
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
