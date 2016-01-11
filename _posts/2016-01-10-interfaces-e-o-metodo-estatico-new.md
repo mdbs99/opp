@@ -24,6 +24,8 @@ A utilização do Método `New` é um padrão que defini para todos os meus proj
 
 <!--more-->
 
+![Pensando](/images/829d24cf.jpg)
+
 ##Object Pascal e seu "*Garbage Collector*"
 
 Ok. Object Pascal não tem *garbage collector* como no Java ou C# — e isso é ótimo quando precisamos de performance —
