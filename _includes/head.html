@@ -33,7 +33,9 @@
     <meta property="og:description" content="{% if page.description %}{{ page.description | xml_escape }}{% else %}{{ site.description | xml_escape }}{% endif %}">
     <meta property="og:url" content="{{ site.url }}{{ page.url }}">
     <meta property="og:site_name" content="{{ site.title | xml_escape }}">
-
+    {% if page.image %}
+    <meta property="og:image"content="{{ site.url }}{{ page.image }}" >
+    {% endif %}
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     {% if site.twitter_username %}

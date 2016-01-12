@@ -5,6 +5,7 @@ redirect_from:
   - /o-que-e-orientacao-a-objetos/
 date: 2015-12-27 15:00:00
 categories: oop
+image: /images/photo-1451340124423-6311db67a5d9.jpg
 summary: Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo...
 tags: oop
 keywords:

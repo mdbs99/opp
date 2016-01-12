@@ -4,6 +4,7 @@ title: "Interfaces e o Método estático New"
 date: 2016-01-10
 categories: oop
 description:
+image: /images/829d24cf.jpg
 summary:
 tags:
   - oop
