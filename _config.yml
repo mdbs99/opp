@@ -54,7 +54,7 @@ ajaxify_contact_form: true
 
 # Google services
 google_enabled: true
-google_analytics:
+google_analytics: UA-72532239-1
 google_verification:
 
 # Disqus post comments

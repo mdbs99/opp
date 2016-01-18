@@ -1,14 +1,13 @@
 ---
 layout: post
 title: "Interfaces em todo lugar"
-date: 2016-01-16
+date: 2016-01-18
 categories: oop
 description:
 image: /images/photo-1452776145041-517a74be1f14.jpg
 summary:
 tags:
   - oop
-  - object pascal
 keywords:
   - oop
   - object pascal
@@ -68,7 +67,7 @@ Isso é Polimorfismo. Se eu quiser mudar de Synapse para [lNet](https://lnet.wor
 poderia fazê-lo em apenas um lugar e tudo continuaria funcionando perfeitamente.
 
 Eu tenho um projeto OpenSource codificado em FreePascal chamado [AWS Lib](https://github.com/mdbs99/AWS).
-Ele é um `client` para o  serviço [Amazon S3](http://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html) que também utiliza Synapse
+Ele é um *client* para o  serviço [Amazon S3](http://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html) que também utiliza Synapse
 para as chamadas `HTTP`.
 Este projeto mostra de forma bem simples o que eu quero dizer. Sugiro "passear" pelos fontes e descobrir você mesmo
 onde é instanciado o(s) Objeto(s) do Synapse.  
@@ -82,7 +81,7 @@ utilizando a nomenclatura correta para o paradigma Orientado a Objetos.
 Utilizando Interfaces em todas as suas instâncias você ganha o benefício do **Polimorfismo** pois qualquer classe — mesmo
 aquelas fora do seu sistema — poderão executar o trabalho de acordo com o contrato. Favorece baixo acoplamento
 porque as classes não estarão conectadas entre si, mas sim por Interfaces. Outra vantagem é facilitar a codificação de testes
-automatizados, pois podemos criar implementações `fake` para qualquer Interface... assunto para outro post.
+automatizados, pois podemos criar implementações *fake* para qualquer Interface... assunto para outro post.
 
 ---
 **Dica:** A utilização de tipos primitivos como Integer, TDateTime ou `string` em variáveis sempre será em
