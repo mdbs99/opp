@@ -18,7 +18,7 @@ Variáveis não devem ser do tipo Classe.
 
 Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.
 
-Porque?
+Por que?
 
 <!--more-->
 
