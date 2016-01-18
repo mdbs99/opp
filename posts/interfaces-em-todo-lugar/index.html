@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Interfaces em todo lugar &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="oop">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201601180021" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Interfaces em todo lugar">
+    <meta property="og:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1452776145041-517a74be1f14.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Interfaces em todo lugar" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      <!-- 
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-72532239-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+      -->
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-right">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <hr size="1" width="100%" align="center" noshade>
+        
+
+
+<div class="post-header mb2">
+  <h1>Interfaces em todo lugar</h1>
+  <span class="post-meta">Jan 18, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    3 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Variáveis não devem ser do tipo Classe.</p>
+
+<p>Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>
+
+<p>Porque?</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1452776145041-517a74be1f14.jpg" alt="Pensando" /></p>
+
+<h2 id="interfaces-so-contratos">Interfaces são Contratos</h2>
+
+<p>Vou contar uma história.</p>
+
+<p>Carlos é um empreendedor. Ele tem um Café chamado “Instância do Café” :)</p>
+
+<p>Seus negócios estão indo muito bem mas seus clientes estão ficando cada vez mais exigentes… ele
+precisa contratar um barista mais experiente.</p>
+
+<p>Ele paga por um anúncio para achar o melhor barista que ele puder pagar. Ele não sabe quem será o novo
+contratado, ele só espera que o pretendente tenha as qualificações necessárias para fazer o trabalho que
+lhe for designado.</p>
+
+<p>Carlos não está procurando especificamente um João, Amanda ou um Xavier… suas exigências são apenas
+sobre as qualificações de barista. Ele não quer saber se o novo pretendente será homem ou mulher. Não importa
+a cor do cabelo e muito menos sobre seu gosto musical. Ele precisa de um profissional, e só.</p>
+
+<p>O pretendente com as melhores qualificações terá um <strong>contrato</strong> com Carlos, seja ele/ela quem for.</p>
+
+<p>Na Orientação a Objetos, a <strong>Interface</strong> é o contrato firmado entre dois ou mais Objetos.</p>
+
+<h2 id="interfaces-definem-o-trabalho-no-as-implementaes">Interfaces definem o trabalho, não as Implementações</h2>
+
+<p>Assim como Carlos, você não deve ser “preconceituoso” ao definir trabalho para Classes específicas.</p>
+
+<p>Defina o contrato do trabalho ou função utilizando Interfaces.</p>
+
+<p>Toda classe que implementar esse contrato será uma pretendente em potencial.</p>
+
+<p>Por isso que toda Variável deve ser do tipo Interface — essa é a resposta ao “Porque” no início do post.</p>
+
+<p>Se você utilizar tipos de Classes em vez de tipos de Interfaces,
+você estará restringindo quem fará o trabalho. Isso é preconceito. Seu sistema ficará dependende dessas Classes e 
+não poderá deixá-las nunca mais. Não faça isso!</p>
+
+<p>Exemplo. Eu utilizo <a href="http://synapse.ararat.cz/doku.php/download">Synapse</a> para protocolos de rede como <code>HTTP</code>, <code>FTP</code>, etc. 
+Mas meus sistemas não conhecem a implementação do Synapse, com exeção de um único módulo onde as classes específicas de Synapse são instânciadas.
+Todos os outros módulos/classes só conhecem os contratos, ou seja, as Interfaces para os protocolos de rede, 
+mas não se importam em saber quem irá executar o trabalho.
+Isso é Polimorfismo. Se eu quiser mudar de Synapse para <a href="https://lnet.wordpress.com/">lNet</a> ou <a href="http://www.indyproject.org/index.en.aspx">Indy</a>, 
+poderia fazê-lo em apenas um lugar e tudo continuaria funcionando perfeitamente.</p>
+
+<p>Eu tenho um projeto OpenSource codificado em FreePascal chamado <a href="https://github.com/mdbs99/AWS">AWS Lib</a>.
+Ele é um <em>client</em> para o  serviço <a href="http://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html">Amazon S3</a> que também utiliza Synapse
+para as chamadas <code>HTTP</code>.
+Este projeto mostra de forma bem simples o que eu quero dizer. Sugiro “passear” pelos fontes e descobrir você mesmo
+onde é instanciado o(s) Objeto(s) do Synapse.</p>
+
+<p>A <a href="https://github.com/mdbs99/AWS">AWS Lib</a> também mostra conceitos sobre <strong>imutabilidade</strong> que irei
+explicar em futuros posts.</p>
+
+<p>Argumentos e atributos também são variáveis. Então vamos nos referir aos três apenas como <strong>instância</strong> de agora em diante,
+utilizando a nomenclatura correta para o paradigma Orientado a Objetos.</p>
+
+<p>Utilizando Interfaces em todas as suas instâncias você ganha o benefício do <strong>Polimorfismo</strong> pois qualquer classe — mesmo
+aquelas fora do seu sistema — poderão executar o trabalho de acordo com o contrato. Favorece baixo acoplamento
+porque as classes não estarão conectadas entre si, mas sim por Interfaces. Outra vantagem é facilitar a codificação de testes
+automatizados, pois podemos criar implementações <em>fake</em> para qualquer Interface… assunto para outro post.</p>
+
+<hr />
+<p><strong>Dica:</strong> A utilização de tipos primitivos como Integer, TDateTime ou <code>string</code> em variáveis sempre será em
+função da performance em detrimento ao melhor design. Priorize as Interfaces. Só utilize tipos 
+primitivos em métodos locais — você poderá alterar quando quiser sem complicações — ou em casos bem específicos onde o 
+ganho de performace é muito maior do que o benefício do Polimorfismo ao utilizar Interfaces.</p>
+
+<hr />
+
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Interfaces em todo lugar&via=mdbs99;url=http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/&title=Interfaces em todo lugar" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/&title=Interfaces em todo lugar" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/&t=Interfaces em todo lugar" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <hr />
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/interfaces-em-todo-lugar';
+      var disqus_title      = 'Interfaces em todo lugar';
+
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-o-metodo-estatico-new/" class="post-link">
+        <h4 class="post-title">Interfaces e o Método estático New</h4>
+        <p class="post-summary"></p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
+        <h4 class="post-title">Você sabe, com certeza, o que é Orientação a Objetos?</h4>
+        <p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo...</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <h4 class="post-title">Pensando em Objetos</h4>
+        <p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>
+      </a>
+    </div>
+  
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
