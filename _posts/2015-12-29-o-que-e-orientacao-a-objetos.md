@@ -4,9 +4,10 @@ title: "Você sabe, com certeza, o que é Orientação a Objetos?"
 redirect_from:
   - /o-que-e-orientacao-a-objetos/
 date: 2015-12-27 15:00:00
-categories: oop
+description: Orientação a Objetos é muito mais do que Herança, Encapsulamento e Polimorfismo
+summary: Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.
 image: /images/photo-1451340124423-6311db67a5d9.jpg
-summary: Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo...
+categories: oop
 tags: oop
 keywords:
   - orientação a objetos
@@ -15,14 +16,16 @@ keywords:
   - object oriented
 ---
 
+Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.
+
+<!--more-->
+
 ![Rochas](/images/photo-1451340124423-6311db67a5d9.jpg)
 
 ##Um pouco de História
 
 Muitos programadores, ao menos uma vez na vida, já devem ter pesquisado 
 o que significa __Orientação a Objetos__, quando o termo foi cunhado e por quem.
-
-<!--more-->
 
 Há vários sites hoje em dia contendo essas informações, então não vou 
 replicá-las aqui… bem, só pra lembrar rapidamente: o criador do termo foi Alan Kay, 

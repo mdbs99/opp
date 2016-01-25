@@ -2,10 +2,10 @@
 layout: post
 title: "Interfaces e o Método estático New"
 date: 2016-01-10
-categories: oop
-description:
+description: Como implementar seu Garbage Collector no Object Pascal de forma segura
+summary: Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.
 image: /images/829d24cf.jpg
-summary:
+categories: oop
 tags:
   - oop
   - object pascal
@@ -16,12 +16,12 @@ keywords:
 ---
 
 No [post anterior]({% post_url 2016-01-03-pensando-em-objetos %}) eu mostrei um código
-Orientado a Objetos onde os Objetos eram instanciados utilizando um Método estático chamado `New`.
+Orientado a Objetos onde os Objetos eram instanciados utilizando um Método estático chamado *New*.
 
-Este método `New` não é padrão da linguagem Object Pascal. Ele também não é um `constructor`.
+Este método *New* não é padrão da linguagem Object Pascal. Ele também não é um `constructor`.
 Ele é um **Método de classe** que retorna a mesma Interface que a classe implementa.
 
-A utilização do Método `New` é um padrão que defini para todos os meus projetos.
+A utilização do Método *New* é um padrão que defini para todos os meus projetos.
 
 <!--more-->
 
@@ -133,7 +133,7 @@ Ora podemos criar `inline`, ora não... isso é muito chato!
 
 Todas as novas instâncias terão uma variável-interface para receber a referência. 
 
-Eu implemento essa "mágica" de forma muito simples utilizando o método `New`.
+Eu implemento essa "mágica" de forma muito simples utilizando o método *New*.
 
 {% highlight pascal %}
 type
@@ -163,14 +163,14 @@ end;
 
 Agora nós estamos chamando `TAction.New` ao invés de `TAction.Create`.
 
-O método `New` irá retornar uma instância de `IAction` (interface) diferentemente do construtor
+O método *New* irá retornar uma instância de `IAction` (interface) diferentemente do construtor
 `Create` que iria retornar uma instância de `TAction` (classe).
 
   * Sem problemas de `memleaks`
   * Código mais limpo, sem variáveis locais
   * Código mais limpo, sem try-finally para desalocar variáveis locais
 
-Utilize o método `New` em todas as suas classes e nunca mais chame o construtor diretamente.
+Utilize o método *New* em todas as suas classes e nunca mais chame o construtor diretamente.
 Assim você não terá o problema da falta da variável-interface, seja por esquecimento ou por
 mudanças no código.
 

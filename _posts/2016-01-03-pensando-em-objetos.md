@@ -2,10 +2,10 @@
 layout: post
 title: "Pensando em Objetos"
 date: 2016-01-03
-categories: oop
-description:
-image: /images/photo-1446511437394-36cdff3ae1b3.jpg
+description: 
 summary: Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.
+image: /images/photo-1446511437394-36cdff3ae1b3.jpg
+categories: oop
 tags:
   - oop
   - object pascal

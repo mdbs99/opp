@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Interfaces em todo lugar"
+title: "Interfaces em Todo Lugar"
 date: 2016-01-18
-categories: oop
-description:
+description: Todas as variáveis devem ser do tipo Interface
+summary: Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.
 image: /images/photo-1452776145041-517a74be1f14.jpg
-summary:
+categories: oop
 tags:
   - oop
 keywords:
@@ -87,7 +87,7 @@ automatizados, pois podemos criar implementações *fake* para qualquer Interfac
 **Dica:** A utilização de tipos primitivos como Integer, TDateTime ou `string` em variáveis sempre será em
 função da performance em detrimento ao melhor design. Priorize as Interfaces. Só utilize tipos 
 primitivos em métodos locais — você poderá alterar quando quiser sem complicações — ou em casos bem específicos onde o 
-ganho de performace é muito maior do que o benefício do Polimorfismo ao utilizar Interfaces.  
+ganho de performance é muito maior do que o benefício do Polimorfismo ao utilizar Interfaces.  
 
 ---
 

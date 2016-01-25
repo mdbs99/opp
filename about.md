@@ -20,4 +20,4 @@ Especialista em Análise e Implementação de Projetos utilizando Orientação a
 
 Consultor e diretor da Delfire, desde 2005.
 
-Criador e idealizador do Blog www.ObjectPascalProgramming.com com a missão de disseminar conhecimento sobre Orientação a Objetos utilizando Object Pascal.
+Criador e idealizador do Blog www.ObjectPascalProgramming.com com a missão de disseminar conhecimento sobre Orientação a Objetos e Object Pascal.
