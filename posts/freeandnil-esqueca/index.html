@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FreeAndNil... Esqueça &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Não utilize FreeAndNil na programação Orientada a Objetos.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="oop, object pascal">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/freeandnil-esqueca/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201601250116" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="FreeAndNil... Esqueça">
+    <meta property="og:description" content="Não utilize FreeAndNil na programação Orientada a Objetos">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/freeandnil-esqueca/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1452942000102-9c4c7aaeac81.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="FreeAndNil... Esqueça" />
+    <meta name="twitter:description" content="Não utilize FreeAndNil na programação Orientada a Objetos." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/freeandnil-esqueca/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      <!-- 
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-72532239-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+      -->
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-right">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <hr size="1" width="100%" align="center" noshade>
+        
+
+
+<div class="post-header mb2">
+  <h1>FreeAndNil... Esqueça</h1>
+  <span class="post-meta">Jan 25, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    10 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Se você utiliza o paradigma da Orientação a Objetos corretamente, você não precisa utilizar
+<em>FreeAndNil</em>… você não precisa nem mesmo utilizar o método <em>Free</em>!</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1452942000102-9c4c7aaeac81.jpg" alt="Antigo pensamento" /></p>
+
+<h2 id="introduo">Introdução</h2>
+
+<p>Já existe muitas controvérsias e discussões na Internet em torno do uso do <em>FreeAndNil</em>, se é “certo” ou
+“errado” utilizá-lo.</p>
+
+<p>Dizem que o código fica mais seguro, previne vazamentos de memória… será mesmo?</p>
+
+<p>As coisas mudam. Nem sempre o que aprendemos no passado será verdade no futuro.</p>
+
+<p>Por exemplo. Muitos programadores aprenderam Pascal utilizando variáveis globais — a IDE Delphi/Lazarus adiciona 
+automaticamente uma variável global na <em>unit</em> do <em>Form</em> — e alguns mantém esse aprendizado até hoje como uma
+verdade, como correto. Outro exemplo do antigo aprendizado é o uso do <em>FreeAndNil</em>. Para muitos programadores 
+seu uso é incontestável.</p>
+
+<p>Então não quero tornar esse post mais um debate sem fim, mas apenas mostrar porque <strong>eu</strong> não
+utilizo <em>FreeAndNil</em> em 99.9% dos casos e explicar porque considero errado utilizá-lo — mesmo quando sou 
+obrigado a utilizá-lo — mas deixo à você leitor, o veredicto final.</p>
+
+<h2 id="programao-imperativa-ou-estruturada">Programação Imperativa ou Estruturada</h2>
+
+<p>A Linguagem Pascal é realmente surpreendente. Até hoje seus desenvolvedores conseguem suportar
+vários tipos de paradigmas de desenvolvimento dentro da mesma linguagem.</p>
+
+<p>Infelizmente (meu ponto de vista) o paradigma mais utilizado pelas comunidades Pascal — e também Java, 
+C#, PHP… sim, eles também — é o Imperativo ou Estruturado. Para mim ambos são equivalentes e se complementam.
+O paradigma Estruturado só melhorou o Imperativo, adicionando estruturas de sequência, decisão e iteração.</p>
+
+<p>Eu me refiro a ambos como Imperativo.</p>
+
+<blockquote>
+  <p>
+    Na Ciência da Computação, programação imperativa é um paradigma de programação que descreve 
+    a computação como ações, enunciados ou comandos que mudam o estado (variáveis) de um programa.
+    Muito parecido com o comportamento imperativo das linguagens naturais que expressam ordens, 
+    programas imperativos são uma sequência de comandos para o computador executar.
+  </p>
+  <footer><cite title="Wikipedia">— Wikipedia</cite></footer>
+</blockquote>
+
+<p>As diferenças entre o paradigma Imperativo comparado ao paradigma Orientado a Objetos podem ser bem
+sutis ou muito explícitos, dependendo do caso.</p>
+
+<p>No paradigma Imperativo o programador diz ao computador para seguir uma sequência de ações passo-a-passo,
+enquanto que no paradigma Orientado a Objetos são <strong>os objetos que determinam a sequência de ações</strong>.</p>
+
+<p><img src="/images/photo-1442458370899-ae20e367c5d8.jpg" alt="??!" /></p>
+
+<p>Pode parecer muito estranho afirmar isso, pois mesmo objetos tem códigos sequênciais em seus métodos, mas essa
+<a href="/posts/pensando-em-objetos/">diferença sutil de mindset</a> pode determinar se uma aplicação
+é mais ou menos Orientada a Objetos.</p>
+
+<p>O uso de <em>FreeAndNil</em> remete ao código Imperativo. Significa que você tem uma variável global — ou um atributo
+num objeto — que está sendo recriada várias vezes. Isso é o que eu penso quando encontro um <em>FreeAndNil</em> no código.
+E isso é péssimo. Primeiro que instâncias deveriam ser <strong>imutáveis</strong>, pois a mutabilidade é um dos fatores que
+trazem complexidade para o código e segundo, se você está reutilizando uma variável, o <em>design</em> do seu código
+está errado, na maioria dos casos.</p>
+
+<p>Sobre o uso do <em>FreeAndNil</em>, Nick Hodges <a href="http://www.nickhodges.com/post/Using-FreeAndNil.aspx">escreveu</a>:</p>
+
+<blockquote>
+  <p>“When should I use FreeAndNil?” is “never”, or at least “Almost never, and if you must use it, make sure that there is a really, really good reason to do so and that you clearly document that reason”.</p>
+</blockquote>
+
+<p>A opinião dele é <strong>nunca</strong>, ou quase nunca, utilizar <em>FreeAndNil</em> a não ser que tenha uma ótima razão para fazê-lo.
+Seu post data de Dezembro de 2011. É um post antigo que fala de um assunto mais antigo ainda… mas que 
+continuamos a falar sobre isso em 2016. Triste.</p>
+
+<p>Para quem não sabe, Nick Hodges é programador Delphi de longa data e autor de <a href="http://www.amazon.com/gp/product/1941266037/ref=as_li_ss_il?ie=UTF8&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1941266037&amp;linkCode=as2&amp;tag=nickhodgeshomepa">Coding in Delphi</a>.</p>
+
+<h2 id="tentando-achar-motivos-para-usar-freeandnil">Tentando achar motivos para usar <em>FreeAndNil</em></h2>
+
+<p>Vou tentar dar alguns exemplos do uso de <em>FreeAndNil</em> para depois mostrar o que eu considero ser
+a forma correta, utilizando o paradigma Orientado a Objetos.</p>
+
+<p>Vamos codificar um acesso hipotético ao serviço da Amazon S3 para obter um arquivo e salvá-lo no HD.</p>
+
+<h3 id="exemplo-1">Exemplo 1</h3>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">SaveButtonClick</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
+<span class="k">var</span>
+  <span class="n">Credentials</span><span class="o">:</span> <span class="n">TAWSCredentials</span><span class="o">;</span>
+  <span class="n">Client</span><span class="o">:</span> <span class="n">TAWSClient</span><span class="o">;</span>
+  <span class="n">Rgn</span><span class="o">:</span> <span class="n">TS3Region</span><span class="o">;</span>
+  <span class="n">Bucket</span><span class="o">:</span> <span class="n">TS3Bucket</span><span class="o">;</span>
+  <span class="n">Obj</span><span class="o">:</span> <span class="n">TS3Object</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">Credentials</span> <span class="o">:=</span> <span class="n">TAWSCredentials</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s">&#39;access_key&#39;</span><span class="o">,</span> <span class="s">&#39;secret_key&#39;</span><span class="o">,</span> <span class="k">True</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">Client</span> <span class="o">:=</span> <span class="n">TAWSClient</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Credentials</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">Rgn</span> <span class="o">:=</span> <span class="n">TS3Region</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">Bucket</span> <span class="o">:=</span> <span class="k">nil</span><span class="o">;</span>
+  <span class="n">Obj</span> <span class="o">:=</span> <span class="k">nil</span><span class="o">;</span>
+  <span class="k">try</span>
+    <span class="n">Bucket</span> <span class="o">:=</span> <span class="n">Rgn</span><span class="o">.</span><span class="n">GetBucket</span><span class="p">(</span><span class="s">&#39;mybucket&#39;</span><span class="p">)</span><span class="o">;</span>
+    <span class="n">Obj</span> <span class="o">:=</span> <span class="n">Bucket</span><span class="o">.</span><span class="n">GetObject</span><span class="p">(</span><span class="s">&#39;foo.txt&#39;</span><span class="p">)</span><span class="o">;</span>
+    <span class="n">Obj</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="s">&#39;./foo.txt&#39;</span><span class="p">)</span><span class="o">;</span>
+  <span class="k">finally</span>
+    <span class="n">Obj</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+    <span class="n">Bucket</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+    <span class="n">Rgn</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+    <span class="n">Client</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+    <span class="n">Credentials</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>  
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>O programador teve que informar a sequência de ações passo-a-passo para o compilador. Mas o código parece bem “simples”, não?</p>
+
+<p>Criamos uma credencial, um client, uma região, inicializamos <em>Bucket</em> e <em>Obj</em> com <code>nil</code> (?!!).</p>
+
+<p>Depois <em>Rgn</em> chama <em>GetBucket</em> para obter uma nova instância de <em>TS3Bucket</em> e este chama <em>GetObject</em> para
+obtermos uma nova instância de <em>TS3Object</em>.</p>
+
+<p>Por que, neste exemplo, <strong>precisamos</strong> inicializar <em>Bucket</em> e <em>Obj</em> com <code>nil</code>? O motivo é porque dentro 
+do <em>try-finally</em>, pode ocorrer uma <em>Exception</em> (acesso a Internet, HTTP, login, etc) nestas linhas</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal">    <span class="n">Bucket</span> <span class="o">:=</span> <span class="n">Rgn</span><span class="o">.</span><span class="n">GetBucket</span><span class="p">(</span><span class="s">&#39;mybucket&#39;</span><span class="p">)</span><span class="o">;</span>
+    <span class="n">Obj</span> <span class="o">:=</span> <span class="n">Bucket</span><span class="o">.</span><span class="n">GetObject</span><span class="p">(</span><span class="s">&#39;foo.txt&#39;</span><span class="p">)</span><span class="o">;</span></code></pre></figure>
+
+<p>e se ocorrer uma exceção a variável <em>Bucket</em> e/ou <em>Obj</em> nunca serão inicializadas e no fim ocorrerá uma 
+violação de acesso quando o compilador tentar liberar a memória utilizando <em>.Free</em>.</p>
+
+<p>Bem, na minha opinião, esse código é muito errado. Tem mais código de infraestrutura para o computador do que código para 
+resolver meu requisito, que é salvar o arquivo no meu computador.</p>
+
+<p>Mas, talvez, o <em>FreeAndNil</em> possa nos ajudar com esse problema… não é?</p>
+
+<hr />
+<p><strong>Dica:</strong> Você não deve criar um objeto em A (<em>Rgn.GetBucket</em>) e destruí-lo B (<em>TForm1.SaveButtonClick</em>).
+Isso é errado para linguagens com liberação manual de memória. Sempre crie e libere seus objetos dentro de um mesmo contexto.
+Não siga o <em>design</em> do exemplo acima, é apenas um exemplo.</p>
+
+<hr />
+<p>Continuando…</p>
+
+<p>Escrevemos demais num único método (evento, na verdade). Melhor seria refatorar esse código para a reutilização dos objetos,
+para podermos chamar os métodos de <em>Bucket</em> ou <em>Obj</em> em outros botões ou formulários.</p>
+
+<h4 id="refatorando">Refatorando</h4>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TForm1</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TForm</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FCredentials</span><span class="o">:</span> <span class="n">TAWSCredentials</span><span class="o">;</span>
+    <span class="n">FClient</span><span class="o">:</span> <span class="n">TAWSClient</span><span class="o">;</span>
+    <span class="n">FRgn</span><span class="o">:</span> <span class="n">TS3Region</span><span class="o">;</span>
+    <span class="n">FBucket</span><span class="o">:</span> <span class="n">TS3Bucket</span><span class="o">;</span> 
+    <span class="n">FObj</span><span class="o">:</span> <span class="n">TS3Object</span><span class="o">;</span>
+    <span class="c1">// ...</span>
+  <span class="k">end</span><span class="o">;</span>
+
+<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">FormCreate</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">FCredentials</span> <span class="o">:=</span> <span class="n">TAWSCredentials</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s">&#39;access_key&#39;</span><span class="o">,</span> <span class="s">&#39;secret_key&#39;</span><span class="o">,</span> <span class="k">True</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">FClient</span> <span class="o">:=</span> <span class="n">TAWSClient</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Credentials</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">FRgn</span> <span class="o">:=</span> <span class="n">TS3Region</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">FormDestroy</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">FCredentials</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+  <span class="n">FClient</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+  <span class="n">FRgn</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+  <span class="n">FBucket</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+  <span class="n">FObj</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">SaveButtonClick</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">try</span>
+    <span class="n">FBucket</span> <span class="o">:=</span> <span class="n">FRgn</span><span class="o">.</span><span class="n">GetBucket</span><span class="p">(</span><span class="s">&#39;mybucket&#39;</span><span class="p">)</span><span class="o">;</span>
+    <span class="n">FObj</span> <span class="o">:=</span> <span class="n">FBucket</span><span class="o">.</span><span class="n">GetObject</span><span class="p">(</span><span class="s">&#39;foo.txt&#39;</span><span class="p">)</span><span class="o">;</span>
+    <span class="n">FObj</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="s">&#39;./foo.txt&#39;</span><span class="p">)</span><span class="o">;</span>
+  <span class="k">finally</span>
+    <span class="nb">FreeAndNil</span><span class="p">(</span><span class="n">Obj</span><span class="p">)</span><span class="o">;</span>
+    <span class="nb">FreeAndNil</span><span class="p">(</span><span class="n">FBucket</span><span class="p">)</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>  
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Agora o código esta menor e continua “seguro”. Se houver uma exceção, as variáveis <em>FBucket</em> e <em>FObj</em> ainda
+serão liberadas no fim do programa, no envento <em>FormDestroy</em>, sem violação de acesso porque o <em>FreeAndNil</em>
+irá garantir isso.</p>
+
+<p>Agora ficou muito melhor? Eu acho que não:</p>
+
+<ol>
+  <li>Apenas movemos o problema para outro lugar;</li>
+  <li><em>Form1</em> não deveria saber quem é <em>Bucket</em>, <em>Region</em>, <em>Credentials</em>, etc apenas porque queremos reutilizar suas instâncias;</li>
+  <li>Se <em>FBucket</em> e <em>FObj</em> são recriados toda hora, qual a vantagem de termos eles como atributos de <em>Form1</em>?</li>
+  <li><em>Form1</em> agora é um objeto inchado porque “sabe demais”;</li>
+  <li>Você ainda precisa se preocupar com a liberação de memória no <em>FormDestroy</em> e utilizando <em>try-finally</em>.</li>
+</ol>
+
+<h3 id="exemplo-2">Exemplo 2</h3>
+
+<p>Se o exemplo anterior foi simples demais, veja este outro <a href="https://github.com/mdbs99/Greyhound/blob/0524b1f61e9ef267d17544ae1fc9dfa82683d64c/src/ghsql.pas#L1170">aqui</a>.</p>
+
+<p>Este código faz parte do <a href="https://github.com/mdbs99/Greyhound/">Greyhound</a>, um projeto OpenSource codificado em FreePascal por mim.</p>
+
+<p>Isso mesmo, estou lhe dizendo que usei <em>FreeAndNil</em> em um dos meus projetos.</p>
+
+<p>Eu utilizo <em>FreeAndNil</em> 3 vezes em todo o projeto (nesta mesma <em>unit</em>, pode procurar). E sim, continuo achando errado. Mas esse
+projeto tem uma complexidade muito maior do que o simples exemplo anterior.</p>
+
+<h4 id="explicando-o-uso-do-freeandnil-no-projeto-greyhound">Explicando o uso do <em>FreeAndNil</em> no Projeto Greyhound</h4>
+<p><em>FData</em> é um atributo do tipo <em>TDataSet</em>. A instância de <em>TghSQLTable</em>, que contem <em>FData</em>, não sabe como o <em>DataSet</em> é criado.
+Ela depende de outro objeto para criar o <em>DataSet</em>, que depende dos filtros setados e também
+do tipo de <em>Lib</em> utilizada para conexão ao SGBD. Então, neste caso, foi <strong>mais fácil</strong> destruir e pedir uma nova instância.</p>
+
+<p>Mas esse design <ins>não está correto</ins> assim como eu não estou 100% satisfeito com ele. Motivos esses que me farão
+reescrever toda a Lib — na verdade já estou reescrevendo a algum tempo, porém privadamente.</p>
+
+<h2 id="freeandnil-na-programao-orientada-a-objetos"><em>FreeAndNil</em> na Programação Orientada a Objetos</h2>
+
+<p>É claro que <em>FreeAndNil</em> não existe aqui. Nenhuma <em>procedure</em> ou <em>function</em> deveriam existir.</p>
+
+<p>Apenas Objetos com Estado e Comportamento, interagindo entre si e manipulando dados.</p>
+
+<p>No início do post eu falei que não há necessidade de usar <em>FreeAndNil</em> ou mesmo <em>Free</em>. É claro que estou falando do uso de 
+<em>Interfaces</em> em conjunto com a técnica que expliquei <a href="/posts/interfaces-e-o-metodo-estatico-new/">aqui sobre o Método <em>New</em></a>.</p>
+
+<p>Utilizando <em>Interfaces</em> para usufruir do <a href="/posts/interfaces-e-o-metodo-estatico-new/"><em>“Garbage Collector”</em></a> do compilador, 
+não precisaremos utilizar <em>Free</em> e muito menos <em>FreeAndNil</em>.</p>
+
+<p>Então como seria a codificação do exemplo acima utilizando Orientação a Objetos?</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">SaveButtonClick</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">TS3Region</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+    <span class="n">TAWSClient</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+      <span class="n">TAWSCredentials</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;access_key&#39;</span><span class="o">,</span> <span class="s">&#39;secret_key&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+  <span class="p">)</span>
+  <span class="o">.</span><span class="n">Buckets</span>
+  <span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">&#39;mybucket&#39;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">Objects</span>
+  <span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">&#39;foo.txt&#39;</span><span class="o">,</span> <span class="s">&#39;/&#39;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">Stream</span>
+  <span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="s">&#39;./foo.txt&#39;</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">.</span></code></pre></figure>
+
+<p>Não é a melhor <em>design</em>, mas melhorou 100% comparado aos exemplos anteriores.</p>
+
+<p>Não tenho variáveis, nem mutabilidade, nem código de infraestrutura como <em>try-finally</em> para desalocação de memória. É
+menor, mais simples, mais direto.</p>
+
+<p>Mas ainda haverá duplicação de código toda vez que for utilizar os métodos de um <em>S3Bucket</em> ou <em>S3Object</em> em outros lugares.
+Então como faríamos se quiséssemos reutilizar o código sem ter que especificar a <em>Credentials</em> e <em>Client</em> todas as vezes?</p>
+
+<p>Uma das opções é codificar sua própria implementação de <em>IS3Region</em>, a <em>interface</em> que <em>TS3Region</em> implementa.
+No construtor da nova implementação (ex: <em>TMyRegion</em>) você poderá inicializar <em>Credentials</em> e <em>Client</em>.</p>
+
+<h4 id="refatorando-1">Refatorando</h4>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TMyRegion</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IS3Region</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FOrigin</span><span class="o">:</span> <span class="n">IS3Region</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">IS3Region</span><span class="p">)</span><span class="o">;</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="o">:</span> <span class="nf">IS3Region</span><span class="o">;</span>    
+    <span class="c1">// IS3Region methods...</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+<span class="k">constructor</span> <span class="nc">TMyRegion</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">IS3Region</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FOrigin</span> <span class="o">:=</span> <span class="n">Origin</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">class</span> <span class="k">function</span> <span class="nc">TMyRegion</span><span class="o">.</span><span class="k">New</span><span class="o">:</span> <span class="nf">IS3Region</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TMyRegion</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span>
+    <span class="n">TS3Region</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+      <span class="n">TAWSClient</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+        <span class="n">TAWSCredentials</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;access_key&#39;</span><span class="o">,</span> <span class="s">&#39;secret_key&#39;</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="p">)</span>  
+  <span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>    
+
+<span class="c1">//....</span>
+  
+<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">SaveButtonClick</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">TMyRegion</span><span class="o">.</span><span class="k">New</span>
+  <span class="o">.</span><span class="n">Buckets</span>
+  <span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">&#39;mybucket&#39;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">Objects</span>
+  <span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">&#39;foo.txt&#39;</span><span class="o">,</span> <span class="s">&#39;/&#39;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">Stream</span>
+  <span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="s">&#39;./foo.txt&#39;</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">.</span></code></pre></figure>
+
+<p>A instância <em>FOrigin</em> será utilizada dentro de cada implementação para cada método de <em>IS3Region</em>.
+A implementação <em>TMyRegion</em> é um <em>Decorator</em> implícito.</p>
+
+<p>O código ficou ainda menor e mais robusto, pois agora qualquer modificação em <em>Credentials</em> e/ou <em>Client</em> serão
+modificados em apenas um lugar, a classe <em>TMyRegion</em>.</p>
+
+<p>É claro que o código das <em>classes</em> e <em>interfaces</em> somados podem ser maiores que a quantidade de código do modelo Imperativo.
+Mas isso é irrelevante quando você consegue codificar de forma mais segura e consistente, após implementar as <em>interfaces</em>
+e <em>classes</em>. Se implementá-los bem, você só precisa fazer isso uma vez, enquanto que no modelo Imperativo a qualquer momento
+você pode quebrar o código devido a sua mutabilidade e <strong>acoplamento temporal</strong> — assunto para outro post.</p>
+
+<h2 id="concluso">Conclusão</h2>
+
+<p>Para dizer se é “certo” ou “errado” utilizar <em>FreeAndNil</em> é necessário saber o contexto e o paradigma utilizado para
+codificar o sistema.</p>
+
+<p>Sistemas antigos com muito código Imperativo o utilizam. Sem problemas.</p>
+
+<p>Mesmo em sistemas Orientado a Objetos poderemos encontrar <em>FreeAndNil</em> devido a alguns motivos bem particulares como, 
+por exemplo, utilização de código legado, uso de DLL/SO, uso de <em>lib</em> de terceiros ou até mesmo por simplicidade em alguns casos.</p>
+
+<p>O importante, no entanto, é estarmos conscientes do seu uso e do <strong>motivo</strong> de estarmos utilizando-o. Não tome como uma regra 
+quando dizem que é melhor utilizar <em>FreeAndNil</em> em todos os casos ou que “não faz mal utilizar”… <em>FreeAndNil</em> pode não
+fazer mal diretamente, mas tem potencial para fazer mal indiretamente quando ajuda a deixar seu código com um péssimo <em>design</em>.</p>
+
+<p>Sempre pesquise sobre o real motivo de utilizar qualquer função, classe, estrutura e todo o resto… e tire suas próprias conclusões.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/freeandnil-esqueca/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=FreeAndNil... Esqueça&via=mdbs99;url=http://objectpascalprogramming.com/posts/freeandnil-esqueca/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/freeandnil-esqueca/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/freeandnil-esqueca/&title=FreeAndNil... Esqueça" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/freeandnil-esqueca/&title=FreeAndNil... Esqueça" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/freeandnil-esqueca/&t=FreeAndNil... Esqueça" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <hr />
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/freeandnil-esqueca';
+      var disqus_title      = 'FreeAndNil... Esqueça';
+
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <h4 class="post-title">Pensando em Objetos</h4>
+        <p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-o-metodo-estatico-new/" class="post-link">
+        <h4 class="post-title">Interfaces e o Método estático New</h4>
+        <p class="post-summary">Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
+        <h4 class="post-title">Você sabe, com certeza, o que é Orientação a Objetos?</h4>
+        <p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-em-todo-lugar/" class="post-link">
+        <h4 class="post-title">Interfaces em Todo Lugar</h4>
+        <p class="post-summary">Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>
+      </a>
+    </div>
+  
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
