@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Interfaces e a Referência Circular entre Objetos &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="oop, object pascal">
+    <meta name="keywords" content="interfaces, referencia circular, circular reference, weak reference">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/interfaces-e-a-referencia-circular-entre-objetos/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201602010854" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Interfaces e a Referência Circular entre Objetos">
+    <meta property="og:description" content="Interfaces e a Referência Circular entre Objetos">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/interfaces-e-a-referencia-circular-entre-objetos/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1447600514716-ca6f3974c346.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Interfaces e a Referência Circular entre Objetos" />
+    <meta name="twitter:description" content="Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/interfaces-e-a-referencia-circular-entre-objetos/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-right">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <hr size="1" width="100%" align="center" noshade>
+        
+
+
+<div class="post-header mb2">
+  <h1>Interfaces e a Referência Circular entre Objetos</h1>
+  <span class="post-meta">Feb 1, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    10 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Um Autor escreveu um Livro. Um Livro tem um Autor… que escreveu um Livro, que tem um Autor…</p>
+
+<p>Um <strong>Objeto A</strong> aponta para um <strong>Objeto B</strong> e este aponta para o <strong>Objeto A</strong>. Esses Objetos,
+baseados em <em>Interfaces</em> com contagem de referência, nunca serão desalocados da memória automaticamente pelo compilador.</p>
+
+<p>O nome desse problema é denominado <strong>Referência Circular</strong> e ele não ocorre apenas no <em>Object Pascal</em>.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1447600514716-ca6f3974c346.jpg" alt="Circular Reference" /></p>
+
+<h2 id="introduo">Introdução</h2>
+
+<p>Sabemos que o <em>Object Pascal</em> não possui <em>Garbage Collector</em>, mas temos <em>Interfaces</em> com contagem de referência
+que diz ao compilador quando desalocar um objeto da memória quando não há mais referências para ele.</p>
+
+<p>Esse método de gerenciamento de memória é simples e eficiente, porém não é perfeito.</p>
+
+<p>Funciona assim. Toda vez que uma variável aponta para uma instância, o contador de referência é incrementado.
+Toda vez que uma variável sai do escopo ou lhe é atribuída <em>nil</em>, o contador de referência é decrementado.</p>
+
+<p>Mas quando Objetos apontam um para o outro (associação bidirecional) como no exemplo entre os Objetos A e B no início desse post, nenhuma 
+variável sai do escopo porque os Objetos “seguram uns aos outros” na memória, pois ambos estão numa Referência Circular.</p>
+
+<blockquote>
+  <p>
+    ...bidirectional associations are problematic in a design.
+  </p>
+  <footer><cite title="Eric Evans">— Domain-Driven Design Tackling Complexity in the Heart of Software by Eric Evans</cite></footer>
+</blockquote>
+
+<p>Eu diria para <strong>evitar</strong> a associação bidirecional sempre que puder. Mas sabemos que em muitos casos ela é necessária.</p>
+
+<p>Nesses casos a solução para a <strong>Referência Circular</strong> é usar <strong>Referência Fraca</strong>.</p>
+
+<h2 id="referncia-fraca">Referência Fraca</h2>
+
+<blockquote>
+  <p>
+    In computer programming, a weak reference is a reference that does not protect the referenced object from collection by 
+    a garbage collector, unlike a strong reference. An object referenced only by weak references – meaning "every chain of 
+    references that reaches the object includes at least one weak reference as a link" – is considered weakly reachable, and 
+    can be treated as unreachable and so may be collected at any time. Some garbage-collected languages feature or support 
+    various levels of weak references, such as Java, C#, Python, Perl and Lisp.
+  </p>
+  <footer><cite title="Wikipedia">— Wikipedia</cite></footer>
+</blockquote>
+
+<p>Em <em>Object Pascal</em> se você tem um ponteiro para uma instância, mas não houve incremento na contagem de referência, você tem uma
+Referência Fraca.</p>
+
+<p>Aqueles que programam em linguagens que fazem o uso de Virtual Machines quase nunca pensam nesse problema porque acham 
+que estão seguros e que a Virtual Machine cuidará de tudo.</p>
+
+<h2 id="virtual-machines">Virtual Machines</h2>
+
+<p>Interessante dizer que o problema da Referência Circular também ocorre em Virtual Machines(VM) com <em>Garbage Collector</em> mas, 
+devido a toda inteligência que e as VM’s atuais possuem, elas dão um jeito de não haver vazamentos de memória (será?).</p>
+
+<p>No entanto, mesmo que a VM cuide dos vazamentos de memória, você deveria estar ciente deste problema pois seu sistema poderá acabar
+com a memória RAM disponível rapidamente.</p>
+
+<p>E a solução aqui é a mesma. Utilizar Referências Fracas.</p>
+
+<p>A classe <a href="https://msdn.microsoft.com/en-us/library/system.weakreference(v=vs.110).aspx">WeakReference de C#</a>, assim como a 
+classe <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/ref/WeakReference.html">WeakReference de Java</a>, foram criadas com esse objetivo.</p>
+
+<p>Essas classes devem ser utilizadas internamente ou por <em>frameworks</em>.</p>
+
+<p>Vejam que não há mágica.</p>
+
+<h2 id="object-pascal-e-a-referncia-fraca">Object Pascal e a Referência Fraca</h2>
+
+<p>Felizmente não temos o <em>overhead</em> de uma VM deixando nossos sistemas lentos a cada passada do <em>Garbage Collector</em>, mas também 
+significa dizer que não temos ajuda para resolver o problema.</p>
+
+<p>A boa notícia é que já existem algumas implementações com possíveis soluções.</p>
+
+<p>A melhor fonte de explicação e resolução para esse problema foi <a href="http://blog.synopse.info/post/2012/06/18/Circular-reference-and-zeroing-weak-pointers">postado no Blog Synopse</a>.</p>
+
+<p>Eles mostram uma implementação própria e também apresentam três outras propostas de outros autores, cada uma com seus prós e contras.</p>
+
+<p>Escolho a solução da Synopse, a solução mais simples na minha opinião:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nf">SetWeak</span><span class="p">(</span><span class="n">aInterfaceField</span><span class="o">:</span> <span class="n">PIInterface</span><span class="o">;</span> 
+  <span class="k">const</span> <span class="n">aValue</span><span class="o">:</span> <span class="n">IInterface</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="kt">PPointer</span><span class="p">(</span><span class="n">aInterfaceField</span><span class="p">)</span><span class="o">^</span> <span class="o">:=</span> <span class="kt">Pointer</span><span class="p">(</span><span class="n">aValue</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Apenas uma <em>procedure</em> que é utilizada para atribuição de instância a uma variável.</p>
+
+<p>Funciona perfeitamente mas eu vejo um problema: Quando saber se devo utilizar a Referência Fraca?</p>
+
+<p>Por exemplo. Considere o seguinte:</p>
+
+<ol>
+  <li><em>Book</em> tem um <em>Author</em>;</li>
+  <li><em>Author</em> tem uma lista de livros;</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">var</span>
+  <span class="n">Book</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">Book</span> <span class="o">:=</span> <span class="n">TBook</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+    <span class="s">&#39;Object Pascal&#39;</span><span class="o">,</span>     <span class="c1">// name</span>
+    <span class="s">&#39;About Interfaces&#39;</span><span class="o">,</span>  <span class="c1">// text</span>
+    <span class="n">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;Jeff&#39;</span><span class="p">)</span>   <span class="c1">// author</span>
+  <span class="p">)</span><span class="o">;</span>
+  <span class="n">ShowMessage</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">Author</span><span class="o">.</span><span class="n">Books</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Para que o código acima funcione, no construtor de <em>TBook</em> haverá uma chamada para <em>Author.Books.Add(Self)</em>, adicionando
+a nova instância de <em>Book</em> na lista de livros do <em>Author</em>.</p>
+
+<p>Então teremos uma Referência Circular.</p>
+
+<ol>
+  <li><em>Book</em> -&gt; <em>Author</em></li>
+  <li><em>Author.Books</em> -&gt; <em>Book</em></li>
+</ol>
+
+<p>O <em>Author</em> nunca será liberado enquanto houver <em>Books</em> assim como o <em>Book</em> nunca será liberado enquanto houver o <em>Author</em> com 
+sua lista de livros.</p>
+
+<p>Onde deveria estar a Referência Fraca?</p>
+
+<p>A resposta é, depende.</p>
+
+<p>Bem, se um <em>Book</em> nunca pudesse ser instânciado diretamente no código pelo programaor, mas somente internamente através da lista 
+de livros, não haveria problema. Bastava utilizar <em>SetWeak</em> dentro do construtor de <em>Book</em> para utilizar uma Referência Fraca entre
+ele e a lista de livros do <em>Author</em>.</p>
+
+<p>Mas eu quero ter a possibilidade de instanciar somente <em>Book</em>. Nesse caso a referência para <em>Author</em> no construtor de
+<em>Book</em> não deveria ser fraca porque, se assim fosse, tão logo a instância de <em>Author</em> fosse passada no construtor de <em>Book</em>, ela
+seria desalocada pelo compilador por não haver ninguém referenciando o <em>Author</em>. Tendo <em>Book</em> uma Referência Fraca para <em>Author</em>, não
+haveria incremento no contador de referência da <em>Interface</em>.</p>
+
+<p>Não existe uma solução única e nenhuma delas será perfeita. A <em>procedure SetWeak</em> resolve a Referência Circular mas o código não 
+pode depender do programador saber qual o momento certo para utilizar a <em>SetWeak</em>. Caso a <em>procedure</em> seja utilizada num momento errado
+alguns ponteiros poderão ficar órfãos antes do tempo e violações de acesso irão ocorrer.</p>
+
+<p>Esse problema foi explicado no mesmo <a href="http://blog.synopse.info/post/2012/06/18/Circular-reference-and-zeroing-weak-pointers">post</a>:</p>
+<blockquote>
+  <p>
+    But there are still some cases where it is not enough. Under normal circumstances, a class instance should not be deallocated 
+    if there are still outstanding references to it. But since weak references don't contribute to an interface reference count, 
+    a class instance can be released when there are outstanding weak references to it. Some memory leak or even random access 
+    violations could occur. A debugging nightmare...
+  </p>
+</blockquote>
+
+<p>Complicado?</p>
+
+<p>Então eles implementaram uma outra <em>procedure</em>, muito mais complexa, denominada <em>SetWeakZero</em>.</p>
+
+<p>Basicamente essa <em>procedure</em> irá setar <em>nil</em> nas Referências Fracas quando o Objeto referenciado for liberado. Assim o programador
+poderá testar se a variável está associada a alguma instância válida.</p>
+
+<p>Mas <em>nil</em> ou <em>NULL</em> é um <strong>grande problema</strong> para a Orientação a Objetos (lembra?). Então, pra mim, também não é uma solução perfeita.</p>
+
+<h2 id="implementando-a-referncia-fraca-utilizando-composio-e-imutabilidade">Implementando a Referência Fraca utilizando Composição e Imutabilidade</h2>
+
+<p>A solução que irei apresentar agora pode parecer loucura num primeiro momento, pois ainda não falei sobre Imutabilidade neste Blog. Se
+você não está familiarizado com o termo pode ser difícil de aceitar. Sugiro pesquisar sobre o assunto enquanto não falo sobre Imutabilidade
+por aqui.</p>
+
+<p>Mantenha a mente aberta.</p>
+
+<p>Abaixo eu implemento uma solução para a Referência Fraca utilizando uma abordagem mais
+Orientada a Objetos sem que o programador tenha que se preocupar quando deverá ou não utilizar a Referência Fraca. Em todo
+o código as mesmas classes com os mesmos argumentos podem ser utilizados sem nenhuma preocupação.</p>
+
+<p>O código implementa o exemplo do início do post, sobre <em>Author</em>, <em>Book</em> e <em>Books</em>.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">unit</span> <span class="n">Unit1</span><span class="o">;</span>
+
+<span class="cm">{$mode objfpc}{$H+}</span>
+
+<span class="k">interface</span>
+
+<span class="k">uses</span>
+  <span class="n">Classes</span><span class="o">,</span> <span class="n">SysUtils</span><span class="o">,</span> <span class="n">Forms</span><span class="o">,</span> <span class="n">Controls</span><span class="o">,</span> <span class="n">StdCtrls</span><span class="o">,</span> <span class="n">Dialogs</span><span class="o">;</span>
+
+<span class="k">type</span>
+  <span class="n">IAuthor</span> <span class="o">=</span> <span class="k">interface</span><span class="o">;</span>
+  <span class="n">IBook</span> <span class="o">=</span> <span class="k">interface</span><span class="o">;</span>
+  <span class="n">IBooks</span> <span class="o">=</span> <span class="k">interface</span><span class="o">;</span>
+
+  <span class="n">IAuthor</span> <span class="o">=</span> <span class="k">interface</span>
+  <span class="p">[</span><span class="s">&#39;{5F7AC8EF-4C81-4F88-8915-8319B506291F}&#39;</span><span class="p">]</span>
+    <span class="k">function</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Books</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+  <span class="n">IBook</span> <span class="o">=</span> <span class="k">interface</span>
+  <span class="p">[</span><span class="s">&#39;{02582B1D-F608-4800-9702-2E5B75CD1264}&#39;</span><span class="p">]</span>
+    <span class="k">function</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Write</span><span class="p">(</span><span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+  <span class="n">IBooks</span> <span class="o">=</span> <span class="k">interface</span>
+  <span class="p">[</span><span class="s">&#39;{55E4D43B-8DC8-4A01-AA90-97F08A6F3F1A}&#39;</span><span class="p">]</span>
+    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="n">Book</span><span class="o">:</span> <span class="n">IBook</span><span class="p">)</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Get</span><span class="p">(</span><span class="kp">Index</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Count</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ Classes }</span>
+
+  <span class="n">TAuthor</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IAuthor</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FName</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="n">FBooks</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
+    <span class="k">function</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Books</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+  <span class="n">TBook</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IBook</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FName</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="n">FText</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="n">FAuthor</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
+      <span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">;</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
+      <span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
+      <span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
+    <span class="k">function</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Write</span><span class="p">(</span><span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+  <span class="n">TBooks</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IBooks</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FList</span><span class="o">:</span> <span class="n">TInterfaceList</span><span class="o">;</span>
+    <span class="n">FAuthor</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">;</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
+    <span class="k">destructor</span> <span class="nf">Destroy</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="n">Book</span><span class="o">:</span> <span class="n">IBook</span><span class="p">)</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Get</span><span class="p">(</span><span class="kp">Index</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Count</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+  <span class="n">TForm1</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TForm</span><span class="p">)</span>
+    <span class="n">Button1</span><span class="o">:</span> <span class="n">TButton</span><span class="o">;</span>
+    <span class="k">procedure</span> <span class="nf">Button1Click</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+<span class="k">var</span>
+  <span class="n">Form1</span><span class="o">:</span> <span class="n">TForm1</span><span class="o">;</span>
+
+<span class="k">implementation</span>
+
+<span class="cm">{$R *.lfm}</span>
+
+<span class="k">procedure</span> <span class="nf">SetWeak</span><span class="p">(</span><span class="n">aInterfaceField</span><span class="o">:</span> <span class="n">PInterface</span><span class="o">;</span> 
+  <span class="k">const</span> <span class="n">aValue</span><span class="o">:</span> <span class="n">IInterface</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="kt">PPointer</span><span class="p">(</span><span class="n">aInterfaceField</span><span class="p">)</span><span class="o">^</span> <span class="o">:=</span> <span class="kt">Pointer</span><span class="p">(</span><span class="n">aValue</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TAuthor }</span>
+
+<span class="k">constructor</span> <span class="nc">TAuthor</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FName</span> <span class="o">:=</span> <span class="n">Name</span><span class="o">;</span>
+  <span class="n">FBooks</span> <span class="o">:=</span> <span class="n">TBooks</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">Self</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">class</span> <span class="k">function</span> <span class="nc">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TAuthor</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Name</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TAuthor</span><span class="o">.</span><span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="nf">FName</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TAuthor</span><span class="o">.</span><span class="nf">Books</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FBooks</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TBook }</span>
+
+<span class="k">constructor</span> <span class="nc">TBook</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
+  <span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FName</span> <span class="o">:=</span> <span class="n">Name</span><span class="o">;</span>
+  <span class="n">FText</span> <span class="o">:=</span> <span class="n">Text</span><span class="o">;</span>
+  <span class="k">if</span> <span class="nb">Assigned</span><span class="p">(</span><span class="n">Author</span><span class="p">)</span> <span class="k">then</span>
+    <span class="n">FAuthor</span> <span class="o">:=</span> <span class="n">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Author</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">FAuthor</span> <span class="o">:=</span> <span class="n">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;Undefined&#39;</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">class</span> <span class="k">function</span> <span class="nc">TBook</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
+  <span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TBook</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Name</span><span class="o">,</span> <span class="n">Text</span><span class="o">,</span> <span class="n">Author</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">class</span> <span class="k">function</span> <span class="nc">TBook</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
+  <span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">New</span><span class="p">(</span><span class="n">Name</span><span class="o">,</span> <span class="n">Text</span><span class="o">,</span> <span class="k">nil</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TBook</span><span class="o">.</span><span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="nf">FName</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TBook</span><span class="o">.</span><span class="nf">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FAuthor</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TBook</span><span class="o">.</span><span class="nf">Write</span><span class="p">(</span><span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FText</span> <span class="o">+=</span> <span class="n">Text</span> <span class="o">+</span> <span class="sc">#13</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TBook</span><span class="o">.</span><span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FText</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TBooks }</span>
+
+<span class="k">constructor</span> <span class="nc">TBooks</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FList</span> <span class="o">:=</span> <span class="n">TInterfaceList</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
+  <span class="n">SetWeak</span><span class="p">(</span><span class="o">@</span><span class="n">FAuthor</span><span class="o">,</span> <span class="n">Author</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">class</span> <span class="k">function</span> <span class="nc">TBooks</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TBooks</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Author</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">destructor</span> <span class="nc">TBooks</span><span class="o">.</span><span class="nf">Destroy</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">FList</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+  <span class="k">inherited</span> <span class="n">Destroy</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TBooks</span><span class="o">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Book</span><span class="o">:</span> <span class="n">IBook</span><span class="p">)</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FList</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span>
+    <span class="n">TBook</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+      <span class="n">Book</span><span class="o">.</span><span class="n">Name</span><span class="o">,</span>
+      <span class="n">Book</span><span class="o">.</span><span class="n">Text</span><span class="o">,</span>
+      <span class="n">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">FAuthor</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span>
+    <span class="p">)</span>
+  <span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TBooks</span><span class="o">.</span><span class="nf">Get</span><span class="p">(</span><span class="kp">Index</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FList</span><span class="o">.</span><span class="n">Items</span><span class="p">[</span><span class="kp">Index</span><span class="p">]</span> <span class="k">as</span> <span class="n">IBook</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TBooks</span><span class="o">.</span><span class="nf">Count</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FList</span><span class="o">.</span><span class="n">Count</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TForm1 }</span>
+
+<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">Button1Click</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">ShowMessage</span><span class="p">(</span>
+    <span class="n">TBook</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+      <span class="s">&#39;Object Pascal&#39;</span><span class="o">,</span>
+      <span class="s">&#39;Strong Reference&#39;</span><span class="o">,</span>
+      <span class="n">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;Jeff&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">Author</span><span class="o">.</span><span class="n">Name</span>
+  <span class="p">)</span><span class="o">;</span>
+
+  <span class="n">ShowMessage</span><span class="p">(</span>
+    <span class="n">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;Marcos&#39;</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">Books</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span>
+        <span class="n">TBook</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+          <span class="s">&#39;Object Pascal&#39;</span><span class="o">,</span>
+          <span class="s">&#39;Weak Reference&#39;</span>
+        <span class="p">)</span>
+      <span class="p">)</span>
+      <span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">Author</span><span class="o">.</span><span class="n">Name</span>
+  <span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">end</span><span class="o">.</span></code></pre></figure>
+
+<p>A <em>procedure SetWeak</em> é utilizada somente uma vez, na chamada do construtor de <em>Books</em>. O motivo é que o <em>Author</em> cria, internamente, 
+uma instância de <em>Books</em> e esta mantém a referência do seu criador, o <em>Author</em>.</p>
+
+<p>No código de execução <em>TForm1.Button1Click</em> há dois exemplos:</p>
+
+<ol>
+  <li>Um <em>Book</em> é criado já com um <em>Author</em>, que é acessado através da <em>Interface</em> de <em>Book</em>;</li>
+  <li>Um <em>Author</em> é criado, um <em>Book</em> é adicionado e depois acessado através de <em>Books</em>;</li>
+</ol>
+
+<p>Não há vazamentos de memória nem violações de acessos. Mas se você prestar atenção no código verá que Objetos de <em>Author</em> e <em>Book</em> são 
+recriados em alguns momentos.
+Isso quer dizer que os “filhos” não mantém a referência real para os “pais”, mas sim para <em>clones</em> deles.</p>
+
+<p>Essa abordagem não funcionaria com Objetos Mutáveis, pois se você alterasse uma propriedade do “pai” a referência no “filho” iria
+estar apontando para o Objeto antigo, com valores de propriedades diferentes antes das alterações.</p>
+
+<p>No entanto, se utilizarmos <strong>Objetos Imutáveis</strong>, não teríamos esse problema pois suas propriedades nunca irão mudar após eles 
+terem sido criados. Poderíamos utilizar <em>clones</em> de <em>clones</em> de <em>clones</em> e sempre iríamos ver as mesmas propriedades.</p>
+
+<p>A classe <em>Books</em> é mutável por motivo de simplicidade, mas isso não afeta o exemplo.</p>
+
+<p>Sim, haverá um <em>overhead</em> devido a recriação dos Objetos porém o benefício será muito maior.</p>
+
+<p>Basta mantermos nossas classes tão pequenas quanto possível; não fazer nenhum processamento nos construtores a não ser atribuições;
+implementar o princípio da responsabilidade única; e você verá que esse <em>overhead</em> praticamente será imperceptível.</p>
+
+<h2 id="concluso">Conclusão</h2>
+
+<p>Infelizmente não podemos codificar apenas <a href="/posts/pensando-em-objetos/">Pensando em Objetos</a>, pois sempre teremos
+problemas técnicos à resolver.</p>
+
+<p>Nenhuma linguagem ou plataforma serão perfeitos. Mas podemos evitar ou contornar esses problemas.</p>
+
+<p>Evite a Referência Circular e fique longe dos problemas relacionados a alocação e desalocação de memória pelo compilador.
+Só utilize-a se for absolutamente necessário e tenha certeza de ter codificado <strong>Testes Automatizados</strong> para 
+todas as formas de contruir esses Objetos. Só assim você terá plena certeza de que nenhum vazamento de memória foi introduzido 
+quando fizer manutenção no código.</p>
+
+<p>Até logo.</p>
+
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/interfaces-e-a-referencia-circular-entre-objetos/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Interfaces e a Referência Circular entre Objetos&via=mdbs99;url=http://objectpascalprogramming.com/posts/interfaces-e-a-referencia-circular-entre-objetos/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/interfaces-e-a-referencia-circular-entre-objetos/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/interfaces-e-a-referencia-circular-entre-objetos/&title=Interfaces e a Referência Circular entre Objetos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/interfaces-e-a-referencia-circular-entre-objetos/&title=Interfaces e a Referência Circular entre Objetos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/interfaces-e-a-referencia-circular-entre-objetos/&t=Interfaces e a Referência Circular entre Objetos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <hr />
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/interfaces-e-a-referencia-circular-entre-objetos';
+      var disqus_title      = 'Interfaces e a Referência Circular entre Objetos';
+
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <h4 class="post-title">FreeAndNil... Esqueça</h4>
+        <p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-o-metodo-estatico-new/" class="post-link">
+        <h4 class="post-title">Interfaces e o Método estático New</h4>
+        <p class="post-summary">Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <h4 class="post-title">Pensando em Objetos</h4>
+        <p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
+        <h4 class="post-title">Você sabe, com certeza, o que é Orientação a Objetos?</h4>
+        <p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.</p>
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-em-todo-lugar/" class="post-link">
+        <h4 class="post-title">Interfaces em Todo Lugar</h4>
+        <p class="post-summary">Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>
+      </a>
+    </div>
+  
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
