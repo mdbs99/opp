@@ -138,7 +138,7 @@ sua lista de livros.&lt;/p&gt;
 
 &lt;p&gt;A resposta é, depende.&lt;/p&gt;
 
-&lt;p&gt;Bem, se um &lt;em&gt;Book&lt;/em&gt; nunca pudesse ser instânciado diretamente no código pelo programaor, mas somente internamente através da lista 
+&lt;p&gt;Bem, se um &lt;em&gt;Book&lt;/em&gt; nunca pudesse ser instânciado diretamente no código pelo programador, mas somente internamente através da lista 
 de livros, não haveria problema. Bastava utilizar &lt;em&gt;SetWeak&lt;/em&gt; dentro do construtor de &lt;em&gt;Book&lt;/em&gt; para utilizar uma Referência Fraca entre
 ele e a lista de livros do &lt;em&gt;Author&lt;/em&gt;.&lt;/p&gt;
 
