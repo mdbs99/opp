@@ -87,6 +87,8 @@ E a solução aqui é a mesma. Utilizar Referências Fracas.
 A classe [WeakReference de C#](https://msdn.microsoft.com/en-us/library/system.weakreference(v=vs.110).aspx), assim como a 
 classe [WeakReference de Java](https://docs.oracle.com/javase/7/docs/api/java/lang/ref/WeakReference.html), foram criadas com esse objetivo.
 
+Essas classes devem ser utilizadas internamente ou por *frameworks*.
+
 Vejam que não há mágica.  
 
 ##Object Pascal e a Referência Fraca
@@ -147,7 +149,7 @@ Onde deveria estar a Referência Fraca?
 
 A resposta é, depende.
 
-Bem, se um *Book* nunca pudesse ser instânciado diretamente no código pelo programaor, mas somente internamente através da lista 
+Bem, se um *Book* nunca pudesse ser instânciado diretamente no código pelo programador, mas somente internamente através da lista 
 de livros, não haveria problema. Bastava utilizar *SetWeak* dentro do construtor de *Book* para utilizar uma Referência Fraca entre
 ele e a lista de livros do *Author*.
 
@@ -177,11 +179,13 @@ Então eles implementaram uma outra *procedure*, muito mais complexa, denominada
 Basicamente essa *procedure* irá setar *nil* nas Referências Fracas quando o Objeto referenciado for liberado. Assim o programador
 poderá testar se a variável está associada a alguma instância válida.
 
-Mas *nil* ou *NULL* é um **grande problema** para a Orientação a Objetos (lembra?). Então, pra mim, esta ainda não é uma solução completa.
+Mas *nil* ou *NULL* é um **grande problema** para a Orientação a Objetos (lembra?). Então, pra mim, também não é uma solução perfeita.
 
 ##Implementando a Referência Fraca utilizando Composição e Imutabilidade
 
-A solução que irei apresentar agora pode parecer loucura num primeiro momento, pois ainda não falei sobre Imutabilidade neste Blog.
+A solução que irei apresentar agora pode parecer loucura num primeiro momento, pois ainda não falei sobre Imutabilidade neste Blog. Se
+você não está familiarizado com o termo pode ser difícil de aceitar. Sugiro pesquisar sobre o assunto enquanto não falo sobre Imutabilidade
+por aqui.
 
 Mantenha a mente aberta.
 
@@ -448,6 +452,8 @@ estar apontando para o Objeto antigo, com valores de propriedades diferentes ant
 
 No entanto, se utilizarmos **Objetos Imutáveis**, não teríamos esse problema pois suas propriedades nunca irão mudar após eles 
 terem sido criados. Poderíamos utilizar *clones* de *clones* de *clones* e sempre iríamos ver as mesmas propriedades.
+
+A classe *Books* é mutável por motivo de simplicidade, mas isso não afeta o exemplo.
 
 Sim, haverá um *overhead* devido a recriação dos Objetos porém o benefício será muito maior.
 
