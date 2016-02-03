@@ -582,7 +582,7 @@ hr {
   padding: 2rem; }
 
 .py3 {
-  padding-top: 2rem;
+  padding-top: 0.5rem;
   padding-bottom: 2rem; }
 
 .px3 {
@@ -849,7 +849,8 @@ sup {
   background-image: none; }
 
 .site-header .site-title {
-  font-size: 1.5rem; }
+  font-size: 2.998rem;
+  text-align: center; }
 
 .site-nav {
   margin-top: 1rem; }
@@ -986,6 +987,10 @@ footer {
   text-align: center;
   float: none; }
 
+.social-icons-center {
+  text-align: center;
+  float: none; }
+
 .social-icons {
   font-size: 1.25rem;
   padding: 0.5em 0 0 0;
@@ -1074,12 +1079,11 @@ blockquote footer {
     font-size: 1rem; }
 
   .site-header .site-title {
-    font-size: 1.25rem;
+    font-size: 2.998rem;
     float: left; }
 
   .site-header .site-nav {
-    float: right;
-    margin-top: .25rem; }
+    margin: 3.75rem auto 20px; }
 
   blockquote {
     margin-left: 2rem;
