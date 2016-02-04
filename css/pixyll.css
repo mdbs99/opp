@@ -160,7 +160,7 @@ blockquote p {
 
 h1,
 .h1 {
-  font-size: 2.998rem; }
+  font-size: 1.998rem; }
 
 h2,
 .h2 {
@@ -849,7 +849,7 @@ sup {
   background-image: none; }
 
 .site-header .site-title {
-  font-size: 2.998rem;
+  font-size: 1.998rem;
   text-align: center; }
 
 .site-nav {
@@ -1037,7 +1037,6 @@ blockquote footer {
 
 .post-link .post-title {
   margin-top: 0;
-  font-size: 38px;
   font-weight: 600;
   color: #333; }
 
@@ -1068,7 +1067,7 @@ blockquote footer {
 
   h1,
   .h1 {
-    font-size: 2.998rem; }
+    font-size: 1.998rem; }
 
   .site-header {
     text-align: left; }
