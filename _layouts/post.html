@@ -34,6 +34,18 @@ layout: default
   {% include post_footer.html %}
 {% endif %}
 
+{% if site.show_related_posts %}
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  {% for post in site.related_posts %}
+    <div class="post ml2">
+      <a href="{{ post.url | prepend: site.baseurl }}" class="post-link">
+        <h4 class="post-title">{{ post.title }}</h4>
+        <!--<p class="post-summary">{{ post.summary }}</p>-->
+      </a>
+    </div>
+  {% endfor %}
+{% endif %}
+
 {% if site.disqus_enabled %}
   {% if site.disqus_shortname %}
     <div id="disqus_thread"></div>
@@ -41,7 +53,6 @@ layout: default
       var disqus_shortname  = '{{ site.disqus_shortname }}';
       var disqus_identifier = '{{ page.id }}';
       var disqus_title      = '{{ page.title }}';
-
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
@@ -54,16 +65,4 @@ layout: default
 
 {% if site.facebook_comments %}
   <div class="fb-comments" data-href="{{ site.url }}{{ page.url }}" data-width="100%" data-numposts="{{ site.facebook_comments_number }}"></div>
-{% endif %}
-
-{% if site.show_related_posts %}
-  <h3 class="related-post-title">Posts Relacionados</h3>
-  {% for post in site.related_posts %}
-    <div class="post ml2">
-      <a href="{{ post.url | prepend: site.baseurl }}" class="post-link">
-        <h4 class="post-title">{{ post.title }}</h4>
-        <p class="post-summary">{{ post.summary }}</p>
-      </a>
-    </div>
-  {% endfor %}
 {% endif %}
