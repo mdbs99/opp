@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Não utilize Métodos Estáticos &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="oop, object pascal">
+    <meta name="keywords" content="método estático">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/nao-utilize-metodos-estaticos/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201602150854" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Não utilize Métodos Estáticos">
+    <meta property="og:description" content="Não utilize Métodos Estáticos ou Classes Utilitárias">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/nao-utilize-metodos-estaticos/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1444208393177-b2a88904ed8d.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Não utilize Métodos Estáticos" />
+    <meta name="twitter:description" content="Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/nao-utilize-metodos-estaticos/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Não utilize Métodos Estáticos</h1>
+  <span class="post-meta">Feb 15, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    7 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Objetos são representações de Entidades vivas. Quando solicitamos uma tarefa a um Objeto, 
+ele mesmo irá executar ou repassar a tarefa à outro Objeto.</p>
+
+<p>Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum. A tarefa será
+executada pelo Método Estático da Classe e nenhum Objeto estará envolvido.</p>
+
+<p>Método Estático é uma herança da programação Procedural.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1444208393177-b2a88904ed8d.jpg" alt="Circular Reference" /></p>
+
+<h2 id="introduo">Introdução</h2>
+
+<p>Há pequenas exceções na utilização de Métodos Estáticos, mas todos eles são em benefício
+da performance ou algum <a href="/posts/interfaces-e-o-metodo-estatico-new/">recurso tecnológico</a>.
+Métodos Estáticos simplesmente não existem no mundo Orientado a Objetos.</p>
+
+<p>Linguagens populares como Java, C# ou Object Pascal utilizam Métodos Estáticos, muitas vezes em
+Classes Utilitárias. São classes onde todos os seus métodos são estáticos.</p>
+
+<p>Vou lhe mostrar porque não devemos utilizar Métodos Estáticos – na maioria dos casos – e qual seria
+a alternativa Orientada a Objetos.</p>
+
+<h2 id="mtodos-estticos-ou-procedural-disfarado">Métodos Estáticos ou Procedural disfarçado</h2>
+
+<p>Os Métodos Estáticos executam uma tarefa sem estarem vinculados a um Objeto. Se não existe
+Objeto vinculado, tais métodos não trabalham com atributos de uma instância. Eles são imperativos, procedurais e
+não Orientados a Objetos.</p>
+
+<p>Mas a verdade é que ainda precisamos deles em pouquíssimos casos.</p>
+
+<p>Vejamos alguns exemplos:</p>
+
+<ul>
+  <li>O padrão do <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a> é um caso de necessidade, 
+mais do que estilo de codificação. Ele não é um método de negócio. É utilizado como um construtor.</li>
+  <li>Se necessitarmos de extrema performance, utilizar um Método Estático – ou mesmo uma <em>procedure</em> ou <em>function</em> – terá 
+uma performance melhor do que ter o <em>overhead</em> da criação de um Objeto porém você não estará perdendo todos os benefícios 
+da Programação Orientada a Objetos. Será que vale a pena?</li>
+  <li>Várias linguagens tem disponíveis classes – ou funções – para trabalhar no nível básico e genérico que todo programa
+poderia querer utilizar. Classes para cálculos Matemáticos, manipulação de Arquivos, API do Sistema Operacional, etc. Se 
+você precisa lidar com esses problemas não tem que reinventar a roda, apenas utilize o que já existe.</li>
+</ul>
+
+<p>O Método Estático em si não é o (grande) problema. O real problema é você utilizá-lo para modelar seus Objetos de Negócios.</p>
+
+<p>Então a Regra de Ouro que deixo à você é:</p>
+
+<blockquote>
+  <p>Não implemente Métodos de Negócio utilizando Métodos Estáticos.</p>
+</blockquote>
+
+<p>Exemplo:</p>
+
+<p>A) Se você precisa apenas gravar um arquivo de Log, pode utilizar alguma rotina que trabalhe com arquivos e tudo bem.</p>
+
+<p>B) Mas se fizer parte das <strong>Regras de Negócio</strong> do sistema, por exemplo, ter que gerar um XML e compactar antes de enviar a um serviço REST,
+você <strong>NÃO</strong> deve utilizar rotinas que manipulam esses problemas diretamente. É necessário que você crie classes <a href="https://en.wikipedia.org/wiki/Adapter_pattern">adaptadoras ou invólucros</a>
+para encapsular as regras de negócio que irão utilizar essas rotinas.</p>
+
+<p>Faz sentido?</p>
+
+<p>São coisas diferentes. Gerar um arquivo de Log não é algo intrínsico das Regras de Negócio – ao menos no meu exemplo –
+porém se o seu sistema foi feito para integrar dados entre outros sistemas, faz parte das Regras de Negócio trabalhar com 
+arquivos. Então você precisa de Objetos reais e não de rotinas ou Métodos Estáticos.</p>
+
+<h2 id="classes-utilitrias">Classes Utilitárias</h2>
+
+<p>Enquanto Métodos Estáticos são considerados apenas uma má prática, as Classes Utilitárias representam o <strong>mal</strong> para 
+a Orientação a Objetos.</p>
+
+<p>Sim, várias linguagens disponibilizam essas Classes Utilitárias, como falei acima, mas elas servem para serem utilizadas <strong>dentro</strong> 
+das suas Classes de Negócio.</p>
+
+<p>De acordo com Nick Malik nesse <a href="http://blogs.msdn.com/b/nickmalik/archive/2005/09/06/461404.aspx">artigo</a>, na maioria das 
+vezes a definição e implementação de Classes Utilitárias é apenas preguiça. Eu concordo.</p>
+
+<p>Essas classes já existem. Você pode utilizá-las mas não precisa replicá-las ou copiá-las. Não aumente o problema!
+Crie Objetos, não rotinas procedurais.</p>
+
+<p>Objetos tem <a href="/posts/o-que-e-orientacao-a-objetos/">Comportamento e Estado</a>. Os métodos representam
+o comportamento de um Objeto. É valido dizer que todo método de um Objeto deverá fazer uso de pelo menos um atributo
+dele mesmo, do contrário tal método pode estar na classe errada.</p>
+
+<p>Um canditado a Método Estático é um desses métodos que não faz uso de atributos.</p>
+
+<p>Por exemplo:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TMath</span> <span class="o">=</span> <span class="k">class</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="nf">Max</span><span class="p">(</span><span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+<span class="k">implementation</span>
+
+<span class="k">class</span> <span class="k">function</span> <span class="nc">TMath</span><span class="o">.</span><span class="nf">Max</span><span class="p">(</span><span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">if</span> <span class="n">A</span> <span class="o">&gt;</span> <span class="n">B</span> <span class="k">then</span>
+    <span class="bp">Result</span> <span class="o">:=</span> <span class="n">A</span>
+  <span class="k">else</span>
+    <span class="bp">Result</span> <span class="o">:=</span> <span class="n">B</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>A classe <em>TMath</em> é bem simples. Possui um método que verifica qual é o maior número dentre 2 possíveis.</p>
+
+<p>Um exemplo de uso:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">var</span>
+  <span class="n">V</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">V</span> <span class="o">:=</span> <span class="n">TMath</span><span class="o">.</span><span class="n">Max</span><span class="p">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">15</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">ShowMessage</span><span class="p">(</span><span class="nb">IntToStr</span><span class="p">(</span><span class="n">V</span><span class="p">))</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Você consegue ver algum problema no <em>design</em> desse código?</p>
+
+<p>Se você está acostumado a utilizar Classes Utilitárias como essa, provavelmente não vê problema algum. O
+código é simples de entender, é rápido, não cria “objetos desnecessários” e… funciona.</p>
+
+<p>Então qual é o problema?</p>
+
+<p>Bem, vamos incrementar com um exemplo um pouco mais complexo:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">class</span> <span class="k">function</span> <span class="nc">TMathA</span><span class="o">.</span><span class="nf">Compute</span><span class="p">(</span><span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="o">:</span> <span class="kt">Double</span><span class="p">)</span><span class="o">:</span> <span class="kt">Double</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TMathC</span><span class="o">.</span><span class="n">Sum</span><span class="p">(</span><span class="n">TMathB</span><span class="o">.</span><span class="n">Max</span><span class="p">(</span><span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="p">)</span><span class="o">,</span> <span class="n">A</span><span class="o">*</span><span class="mi">2</span><span class="o">,</span> <span class="n">B</span><span class="o">*</span><span class="n">B</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{...}</span>
+
+<span class="k">var</span>
+  <span class="n">V</span><span class="o">:</span> <span class="kt">Double</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">V</span> <span class="o">:=</span> <span class="n">TMathA</span><span class="o">.</span><span class="n">Max</span><span class="p">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">15</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">ShowMessage</span><span class="p">(</span><span class="nb">IntToStr</span><span class="p">(</span><span class="n">V</span><span class="p">))</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>O código não está completo mas dá para entender perfeitamente:</p>
+
+<ol>
+  <li>Existem as classes <em>TMathA</em>, <em>TMathB</em> e <em>TMathC</em>.</li>
+  <li><em>TMathA</em> tem uma dependência física com as outras classes.</li>
+  <li>Todas as classes possuem Métodos Estáticos.</li>
+</ol>
+
+<p>O cálculo é irrelevante. Pura invenção. Escrevi o que veio a minha mente.</p>
+
+<p>Tente enxergar os <strong>problemas</strong> dessa abordagem, considerando o paradigma da Orientação a Objetos.</p>
+
+<p>Aqui estão alguns problemas:</p>
+
+<ol>
+  <li>Não dá para substituir nenhuma classe no código, pois elas não <a href="/posts/interfaces-em-todo-lugar/">implementam uma <em>Interface</em></a>.</li>
+  <li>Se não consigo <strong>substituir</strong> nenhuma implementação, então não consigo testar essas classes isoladamente.</li>
+  <li>Se não consigo <strong>testar</strong> cada classe isoladamente, o sistema de testes terá que processar todos os Métodos Estáticos.
+  Se esses métodos demoram muito para calcular, seria uma perda de tempo toda vez que executasse os testes. E também
+  teríamos que lidar com outros acoplamentos que tais classes poderiam ter se fosse um exemplo mais complexo.</li>
+  <li>Temos um <strong>acoplamento forte</strong> entre nosso código e todas essas classes estáticas, além do acoplamento entre elas.</li>
+</ol>
+
+<h2 id="soluo">Solução?</h2>
+
+<p>Vou tentar reescrever o mesmo exemplo acima utilizando uma abordagem mais Orientada a Objetos.</p>
+
+<p>Primeiramente sempre temos que ter uma <a href="/posts/interfaces-em-todo-lugar/">Interface que represente uma abstração</a>,
+que neste exemplo aqui é <em>Math</em>.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span> 
+  <span class="n">IMath</span> <span class="o">=</span> <span class="k">interface</span>
+    <span class="k">function</span> <span class="nf">Compute</span><span class="p">(</span><span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="o">:</span> <span class="kt">Double</span><span class="p">)</span><span class="o">:</span> <span class="kt">Double</span>
+    <span class="k">function</span> <span class="nf">Sum</span><span class="p">(</span><span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="o">,</span> <span class="n">C</span><span class="o">:</span> <span class="kt">Double</span><span class="p">)</span><span class="o">:</span> <span class="kt">Double</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Max</span><span class="p">(</span><span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="o">:</span> <span class="kt">Double</span><span class="p">)</span><span class="o">:</span> <span class="kt">Double</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Então vamos codificar <em>TMathA</em>, <em>TMathB</em> e <em>TMathC</em>.</p>
+
+<p>Para simplificação do código, só irei implementar os métodos relevantes para o entendimento:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TMathA</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IMath</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FMC</span><span class="o">:</span> <span class="n">IMath</span><span class="o">;</span>
+    <span class="n">FMB</span><span class="o">:</span> <span class="n">IMath</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">MC</span><span class="o">,</span> <span class="n">MB</span><span class="o">:</span> <span class="n">IMath</span><span class="p">)</span><span class="o">;</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">MC</span><span class="o">,</span> <span class="n">MB</span><span class="o">:</span> <span class="n">IMath</span><span class="p">)</span><span class="o">:</span> <span class="n">IMath</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Compute</span><span class="p">(</span><span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="o">:</span> <span class="kt">Double</span><span class="p">)</span><span class="o">:</span> <span class="kt">Double</span><span class="o">;</span>
+    <span class="c1">//...function Sum(A, B, C: Double): Double;</span>
+    <span class="c1">//...function Max(A, B: Double): Double;</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+  <span class="n">TMathB</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IMath</span><span class="p">)</span>
+  <span class="kp">public</span>
+    <span class="c1">//...function Compute(A, B: Double): Double</span>
+    <span class="c1">//...function Sum(A, B, C: Double): Double;</span>
+    <span class="c1">//...function Max(A, B: Double): Double;</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+  <span class="n">TMathC</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IMath</span><span class="p">)</span>
+  <span class="kp">public</span>
+    <span class="c1">//...function Compute(A, B: Double): Double</span>
+    <span class="c1">//...function Sum(A, B, C: Double): Double;</span>
+    <span class="c1">//...function Max(A, B: Double): Double;</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+<span class="k">implementation</span>
+
+<span class="k">constructor</span> <span class="nc">TMathA</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">MC</span><span class="o">,</span> <span class="n">MB</span><span class="o">:</span> <span class="n">IMath</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FMC</span> <span class="o">:=</span> <span class="n">MC</span><span class="o">;</span>
+  <span class="n">FMB</span> <span class="o">:=</span> <span class="n">MB</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">class</span> <span class="k">function</span> <span class="nc">TMathA</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">MC</span><span class="o">,</span> <span class="n">MB</span><span class="o">:</span> <span class="n">IMath</span><span class="p">)</span><span class="o">:</span> <span class="n">IMath</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TMathA</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">MC</span><span class="o">,</span> <span class="n">MB</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TMathA</span><span class="o">.</span><span class="nf">Compute</span><span class="p">(</span><span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="o">:</span> <span class="kt">Double</span><span class="p">)</span><span class="o">:</span> <span class="kt">Double</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FMC</span><span class="o">.</span><span class="n">Sum</span><span class="p">(</span><span class="n">FMB</span><span class="o">.</span><span class="n">Max</span><span class="p">(</span><span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="p">)</span><span class="o">,</span> <span class="n">A</span><span class="o">*</span><span class="mi">2</span><span class="o">,</span> <span class="n">B</span><span class="o">*</span><span class="n">B</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">end</span><span class="o">;</span>  </code></pre></figure>
+
+<p>E então reescrevo o mesmo teste, mas agora utilizando instâncias em vez de Métodos Estáticos:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">var</span>
+  <span class="n">V</span><span class="o">:</span> <span class="kt">Double</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">V</span> <span class="o">:=</span> <span class="n">TMathA</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+    <span class="n">TMathC</span><span class="o">.</span><span class="k">New</span><span class="p">()</span><span class="o">,</span>
+    <span class="n">TMathB</span><span class="o">.</span><span class="k">New</span><span class="p">()</span>
+  <span class="p">)</span><span class="o">.</span><span class="n">Max</span><span class="p">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">15</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">ShowMessage</span><span class="p">(</span><span class="nb">IntToStr</span><span class="p">(</span><span class="n">V</span><span class="p">))</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>No código acima utilizei <a href="https://en.wikipedia.org/wiki/Dependency_injection">Injeção de Dependência</a>
+na inicialização de <em>TMathA</em>. Por esse motivo <em>TMathA</em> não tem conhecimento da existencia
+de <em>TMathB</em> ou <em>TMathC</em>. O código fica desacoplado e ainda ganhamos nos testes.</p>
+
+<p>Por exemplo:</p>
+
+<p>Imagine que <em>TMathB</em> e <em>TMathC</em> são classes que tem um processamento muito demorado. Mas nós queremos apenas
+testar a funcionalidade de <em>TMathA</em>. O que podemos fazer?</p>
+
+<p>Criar Objetos Falsos.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">var</span>
+  <span class="n">V</span><span class="o">:</span> <span class="kt">Double</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">V</span> <span class="o">:=</span> <span class="n">TMathA</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+    <span class="n">TFakeMathC</span><span class="o">.</span><span class="k">New</span><span class="p">()</span><span class="o">,</span>
+    <span class="n">TFakeMathB</span><span class="o">.</span><span class="k">New</span><span class="p">()</span>
+  <span class="p">)</span><span class="o">.</span><span class="n">Max</span><span class="p">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">15</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">ShowMessage</span><span class="p">(</span><span class="nb">IntToStr</span><span class="p">(</span><span class="n">V</span><span class="p">))</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>As classes <em>TFakeMathC</em> e <em>TFakeMathB</em> não tem código de produção. A implementação nem precisa calcular nada,
+apenas retornar números válidos para passar nos testes automatizados.</p>
+
+<p>Viu as vantagens?</p>
+
+<h2 id="concluso">Conclusão</h2>
+
+<p>Métodos Estáticos não fazem parte do paradigma da Orientação a Objetos. Podem ainda ser necessários devido a
+natureza e herança procedural das linguagens. No entanto devem ser evitados.</p>
+
+<p>Para Classes de Negócio é altamente desencorajado utilizar Métodos Estáticos para evitar todos os problemas
+relatados acima.</p>
+
+<p>Classes Utilitárias… esqueça-as. É um conceito errado. Não permita que nenhuma Classe Utilitária seja criada
+no seu código.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/nao-utilize-metodos-estaticos/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Não utilize Métodos Estáticos&via=mdbs99;url=http://objectpascalprogramming.com/posts/nao-utilize-metodos-estaticos/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/nao-utilize-metodos-estaticos/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/nao-utilize-metodos-estaticos/&title=Não utilize Métodos Estáticos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/nao-utilize-metodos-estaticos/&title=Não utilize Métodos Estáticos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/nao-utilize-metodos-estaticos/&t=Não utilize Métodos Estáticos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-o-metodo-estatico-new/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e o Método estático New</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Você sabe, com certeza, o que é Orientação a Objetos?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-em-todo-lugar/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces em Todo Lugar</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/nao-utilize-metodos-estaticos';
+      var disqus_title      = 'Não utilize Métodos Estáticos';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
