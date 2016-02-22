@@ -98,7 +98,8 @@ pode-se ver na imagem, mais irei demostrar a implementação de apenas um deles.
 
 &lt;h3 id=&quot;um-datamodule--um-singleton&quot;&gt;Um &lt;em&gt;DataModule&lt;/em&gt; é um &lt;em&gt;Singleton&lt;/em&gt;&lt;/h3&gt;
 
-&lt;p&gt;Quando você instancia um &lt;em&gt;DataModule&lt;/em&gt; ele se torna um &lt;em&gt;Singleton&lt;/em&gt; global para todo projeto. Isso quer dizer
+&lt;p&gt;Quando você instancia um &lt;em&gt;DataModule&lt;/em&gt; ele se torna um &lt;em&gt;Singleton&lt;/em&gt; global para todo projeto. Não importa se
+você está utilizando a variável global que a IDE adiciona automaticamente ou qualquer outra variável. Isso quer dizer
 que se eu tenho 2 &lt;em&gt;Forms&lt;/em&gt; que tem componentes “apontando” para componentes num &lt;em&gt;DataModule&lt;/em&gt;, ambos os &lt;em&gt;Forms&lt;/em&gt; 
 estarão utilizando a mesma instância do &lt;em&gt;DataModule&lt;/em&gt;, compartilhando os mesmos componentes.&lt;/p&gt;
 
@@ -211,8 +212,10 @@ relatório específico: &lt;code&gt;FModule.AvisosReport&lt;/code&gt;.&lt;/p&gt;
 métodos da Interface &lt;code&gt;IReport&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Dessa maneira o restante do código não precisa se preocupar em inicializar variáveis, campos calculados, cores,
-abrir &lt;em&gt;queries&lt;/em&gt;, etc pois tudo que o sistema precisa é utilizar uma instância de &lt;code&gt;TDividaAtivaMedicoAvisosReport&lt;/code&gt; e
-essa classe pode ter sua implementação alterada no futuro sem termos que reescrever nenhum código que a utilize.&lt;/p&gt;
+abrir &lt;em&gt;queries&lt;/em&gt;, etc pois tudo que o sistema precisa é utilizar uma instância de &lt;code&gt;TDividaAtivaMedicoAvisosReport&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Essa classe poderia ter sua implementação alterada, no futuro, sem termos que reescrever código que a utilize, pois o
+relatório, dados e parâmetros estão encapsulados dentro dela.&lt;/p&gt;
 
 &lt;h2 id=&quot;concluso&quot;&gt;Conclusão&lt;/h2&gt;
 

@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201602220919" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201602222120" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -255,7 +255,8 @@ pode-se ver na imagem, mais irei demostrar a implementação de apenas um deles.
 
 <h3 id="um-datamodule--um-singleton">Um <em>DataModule</em> é um <em>Singleton</em></h3>
 
-<p>Quando você instancia um <em>DataModule</em> ele se torna um <em>Singleton</em> global para todo projeto. Isso quer dizer
+<p>Quando você instancia um <em>DataModule</em> ele se torna um <em>Singleton</em> global para todo projeto. Não importa se
+você está utilizando a variável global que a IDE adiciona automaticamente ou qualquer outra variável. Isso quer dizer
 que se eu tenho 2 <em>Forms</em> que tem componentes “apontando” para componentes num <em>DataModule</em>, ambos os <em>Forms</em> 
 estarão utilizando a mesma instância do <em>DataModule</em>, compartilhando os mesmos componentes.</p>
 
@@ -368,8 +369,10 @@ relatório específico: <code>FModule.AvisosReport</code>.</p>
 métodos da Interface <code>IReport</code>.</p>
 
 <p>Dessa maneira o restante do código não precisa se preocupar em inicializar variáveis, campos calculados, cores,
-abrir <em>queries</em>, etc pois tudo que o sistema precisa é utilizar uma instância de <code>TDividaAtivaMedicoAvisosReport</code> e
-essa classe pode ter sua implementação alterada no futuro sem termos que reescrever nenhum código que a utilize.</p>
+abrir <em>queries</em>, etc pois tudo que o sistema precisa é utilizar uma instância de <code>TDividaAtivaMedicoAvisosReport</code>.</p>
+
+<p>Essa classe poderia ter sua implementação alterada, no futuro, sem termos que reescrever código que a utilize, pois o
+relatório, dados e parâmetros estão encapsulados dentro dela.</p>
 
 <h2 id="concluso">Conclusão</h2>
 
@@ -458,20 +461,20 @@ Orientado a Objetos.</p>
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
-        </ul>
-        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/freeandnil-esqueca/" class="post-link">
         <ul>
           <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
         </ul>
         <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
       </a>
     </div>
   
