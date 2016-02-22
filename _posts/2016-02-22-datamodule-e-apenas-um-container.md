@@ -225,8 +225,10 @@ A implementação da classe, a partir daí, apenas repassa as solicitações par
 métodos da Interface <code>IReport</code>.
 
 Dessa maneira o restante do código não precisa se preocupar em inicializar variáveis, campos calculados, cores,
-abrir *queries*, etc pois tudo que o sistema precisa é utilizar uma instância de <code>TDividaAtivaMedicoAvisosReport</code> e
-essa classe pode ter sua implementação alterada no futuro sem termos que reescrever nenhum código que a utilize. 
+abrir *queries*, etc pois tudo que o sistema precisa é utilizar uma instância de <code>TDividaAtivaMedicoAvisosReport</code>.
+
+Essa classe poderia ter sua implementação alterada, no futuro, sem termos que reescrever código que a utilize, pois o
+relatório, dados e parâmetros estão encapsulados dentro dela.
 
 ##Conclusão
 
