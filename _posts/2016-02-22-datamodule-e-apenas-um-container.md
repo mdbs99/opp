@@ -106,7 +106,8 @@ pode-se ver na imagem, mais irei demostrar a implementação de apenas um deles.
 
 ###Um *DataModule* é um *Singleton*
 
-Quando você instancia um *DataModule* ele se torna um *Singleton* global para todo projeto. Isso quer dizer
+Quando você instancia um *DataModule* ele se torna um *Singleton* global para todo projeto. Não importa se
+você está utilizando a variável global que a IDE adiciona automaticamente ou qualquer outra variável. Isso quer dizer
 que se eu tenho 2 *Forms* que tem componentes "apontando" para componentes num *DataModule*, ambos os *Forms* 
 estarão utilizando a mesma instância do *DataModule*, compartilhando os mesmos componentes.
 
