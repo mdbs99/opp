@@ -20,8 +20,7 @@ keywords:
 Tudo que existe fora do Contexto do software é uma Entidade que existe na vida 
 real e deve ser representada por um Objeto dentro do programa.
 
-Defina Classes que correspondam as abstrações de Entidades reais, do contrário
-você não está programando Orientado a Objetos.
+Defina Classes que correspondam as abstrações de Entidades reais.
 
 <!--more-->
 
