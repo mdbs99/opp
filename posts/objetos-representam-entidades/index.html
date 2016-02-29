@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Objetos devem representar Entidades reais &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="oop, object pascal">
+    <meta name="keywords" content="entidade, entidade real, entity, real entity, criatura, contexto">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/objetos-representam-entidades/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201602290913" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Objetos devem representar Entidades reais">
+    <meta property="og:description" content="Um Objeto representa uma entidade, criatura ou qualquer coisa fora do contexto do programa.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/objetos-representam-entidades/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/matrix20.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Objetos devem representar Entidades reais" />
+    <meta name="twitter:description" content="Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/objetos-representam-entidades/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Objetos devem representar Entidades reais</h1>
+  <span class="post-meta">Feb 29, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    6 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Tudo que existe fora do Contexto do software é uma Entidade que existe na vida 
+real e deve ser representada por um Objeto dentro do programa.</p>
+
+<p>Defina Classes que implementem abstrações de Entidades reais.</p>
+
+<!--more-->
+
+<p><img src="/images/matrix20.jpg" alt="Matrix®" /></p>
+
+<blockquote>
+  <p>
+    "O que é real? Como você define o 'real'? Se você está falando
+    sobre o que você pode sentir, o que você pode cheirar, o que você
+    pode saborear e ver, o real são simplesmente sinais elétricos
+    interpretados pelo seu cérebro"
+  </p>
+  <footer><cite title="Morpheus, Matrix">— Morpheus, Matrix</cite></footer>
+</blockquote>
+
+<h2 id="o-que-e-uma-entidade">O que é uma Entidade?</h2>
+
+<p>Não pense em Entidade somente como criaturas vivas ou objetos palpáveis ao nosso redor. Um
+arquivo de computador, um pixel no monitor, um carro, uma pessoa, uma molécula… tudo
+que existe fora do <strong>Contexto do Software</strong> é uma Entidade que existe na vida real.</p>
+
+<p>No código uma Entidade é <strong>representada ou abstraída</strong> por Interfaces e implementada por Classes. Sim, no plural.</p>
+
+<p>Uma única Interface pode ser suficiente para abstrair uma Entidade, mas há muitos casos que uma mesma 
+Entidade pode ter dezenas de Interfaces representando-a em dezenas de Contextos diferentes. Ainda mais comum
+é termos dezenas de Classes que implementam uma única Interface.</p>
+
+<p>Gostaria de ver um simples exemplo? Vamos lá.</p>
+
+<p>Bem, imagine um sistema que tem a Entidade Cliente.</p>
+
+<p>Nesse <strong>simples</strong> sistema eu preciso saber:</p>
+
+<ol>
+  <li>Seus dados pessoais básicos;</li>
+  <li>Seu endereço;</li>
+  <li>Seu <em>status</em> (ativo, cancelado ou suspenso);</li>
+  <li>Seu Cartão de Crédito;</li>
+</ol>
+
+<p>Como implementar Cliente?</p>
+
+<h3 id="exemplo-1-clssica-implementao-tudo-em-um">Exemplo 1: Clássica implementação “Tudo em um”</h3>
+
+<p>A maioria das pessoas iriam definir <strong>todos</strong> os campos (atributos) 
+em uma única Classe, mais ou menos assim:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TCustomer</span> <span class="o">=</span> <span class="k">class</span>
+  <span class="kp">private</span>
+    <span class="n">FName</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="n">FBirthday</span><span class="o">:</span> <span class="kt">TDateTime</span><span class="o">;</span>
+    <span class="n">FEmail</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="n">FAddress</span><span class="o">:</span> <span class="n">TAddress</span><span class="o">;</span>
+    <span class="n">FStatus</span><span class="o">:</span> <span class="n">TStatus</span><span class="o">;</span>
+    <span class="n">FCreditCard</span><span class="o">:</span> <span class="n">TCreditCard</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="o">;</span>
+    <span class="k">destructor</span> <span class="nf">Destroy</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
+    <span class="k">property</span> <span class="py">Name</span><span class="o">:</span> <span class="k">string</span> <span class="kp">read</span> <span class="nf">FName</span> <span class="kp">write</span> <span class="nf">FName</span><span class="o">;</span> 
+    <span class="k">property</span> <span class="py">Birthday</span><span class="o">:</span> <span class="kt">TDateTime</span> <span class="kp">read</span> <span class="nf">FBirthday</span> <span class="kp">write</span> <span class="nf">FBirthday</span><span class="o">;</span> 
+    <span class="k">property</span> <span class="py">Email</span><span class="o">:</span> <span class="k">string</span> <span class="kp">read</span> <span class="nf">FEmail</span> <span class="kp">write</span> <span class="nf">FEmail</span><span class="o">;</span> 
+    <span class="k">property</span> <span class="py">Address</span><span class="o">:</span> <span class="n">TAddress</span> <span class="kp">read</span> <span class="nf">FAddress</span><span class="o">;</span> 
+    <span class="k">property</span> <span class="py">Status</span><span class="o">:</span> <span class="n">TStatus</span> <span class="kp">read</span> <span class="nf">FStatus</span> <span class="kp">write</span> <span class="nf">FStatus</span><span class="o">;</span> 
+    <span class="k">property</span> <span class="py">CreditCard</span><span class="o">:</span> <span class="n">TCreditCard</span> <span class="kp">read</span> <span class="nf">FCreditCard</span><span class="o">;</span> 
+  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Num sistema real de médio ou grande porte sabemos que um
+Cliente poderia ter muitos outros atributos, certo? Essa Classe iria crescer e crescer…</p>
+
+<p>O que há de “errado”?</p>
+
+<p>A resposta simples é: A Classe é <strong>complexa</strong> demais.</p>
+
+<p>Nesta implementação, a Classe expõe publicamente 4 atributos – lembre-se que poderia ser muito mais! – que não faz parte
+da <strong>abstração mais simples</strong> de um Cliente.</p>
+
+<p>Não concorda? Não achou complexo?</p>
+
+<p>Acho que faltou definir o que é um Cliente:</p>
+
+<blockquote>
+  <p>“Um Cliente representa uma pessoa para qual vendemos serviços/produtos através do nosso site”.</p>
+</blockquote>
+
+<p>Por definição geral todo cliente tem um Nome e, talvez, ele queira nos dizer sua data de nascimento.
+Mas não citei <em>Email</em>, <em>Address</em>, <em>Status</em> ou <em>CreditCard</em>.</p>
+
+<p>Não adianta implementar uma Interface <em>ICustomer</em> nessa Classe e dizer que está programando 
+Orientado a Objetos. Uma Interface que cresce a cada novo requisito não é uma Interface muito útil.</p>
+
+<p>Essa Classe foi definida pensando mais nas tabelas – que
+porventura esse sistema venha a ter – do que na real abstração de um Cliente.</p>
+
+<p>Será que todo Cliente é igual, em todos os sistemas? Tenho certeza que não.</p>
+
+<p>Então como reutilizamos essa Classe?
+Não reutilizamos. Ela foi <strong>codificada rigidamente</strong>, utilizando atributos e conceitos para apenas 1 sistema e mesmo assim, 
+está errada!</p>
+
+<p>Errada?!</p>
+
+<p>Bem… respire por um momento.</p>
+
+<p>Espero que você já tenha lido meus outros posts. Espero que você já tenha entendido que quando digo ERRADO ou CERTO é porque 
+eu quero que você raciocine porque estou dizendo isso.</p>
+
+<p>Não há CERTO ou ERRADO <strong>absolutamente</strong> na programação. Orientação a Objetos não é uma ciência exata – na verdade programação, 
+seja qual for o tipo, não é uma ciência exata. Mas temos nossas convicções, nossa experiência, o que deu certo ou errado no passado…</p>
+
+<p><img src="/images/e3c71ca4993ce03a8e48256fcfa3343b.jpg" alt="Free your mind" /></p>
+
+<p>Quando estou afirmando alguma coisa, gostaria que você deixasse de lado, por um momento, suas convicções pessoais mantendo sua mente aberta,
+para tentar entender meus motivos de escrever tais afirmações.</p>
+
+<p>Eu estou lhe mostrando uma porta, mas só você poderá abrí-la.</p>
+
+<h3 id="exemplo-2-pensamento-objeto">Exemplo 2: Pensamento Objeto</h3>
+
+<p>Pense.</p>
+
+<p><strong>Contexto #1:</strong>
+Você quer fazer uma assinatura online de uma revista “Object Pascal Programming”. Precisa preencher um cadastro contendo
+seus dados pessoais, seu endereço, além do seu cartão de crédito.</p>
+
+<p><strong>Contexto #2:</strong>
+O setor financeiro do site no qual você fez a assinatura precisa saber se o seu cartão de crédito é válido.</p>
+
+<p><strong>Contexto #3:</strong>
+O setor de <em>marketing</em> precisa enviar, por e-mail, qual serão as próximas matérias da próxima edição.</p>
+
+<p>Percebeu que cada contexto necessita de informações distintas?</p>
+
+<p>No Contexto #1 é necessário o Endereço e Cartão de Crédito. No #2 somente o cartão é necessário. No #3 o e-mail e
+o <em>Status</em> são necessários para enviar e-mails somente aos clientes ativos.</p>
+
+<p>Então temos, de uma forma bem sucinta, a definição das Interfaces:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">ICustomer</span> <span class="o">=</span> <span class="k">interface</span>
+    <span class="k">function</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Birthday</span><span class="o">:</span> <span class="kt">TDateTime</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+  <span class="n">IEmail</span> <span class="o">=</span> <span class="k">interface</span>
+    <span class="k">function</span> <span class="nf">Value</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+  <span class="n">IAddress</span> <span class="o">=</span> <span class="k">interface</span>
+    <span class="k">function</span> <span class="nf">Address</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Number</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+  <span class="n">IStatus</span> <span class="o">=</span> <span class="k">interface</span>
+    <span class="k">function</span> <span class="nf">Value</span><span class="o">:</span> <span class="kt">Integer</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+  <span class="n">ICreditCard</span> <span class="o">=</span> <span class="k">interface</span>
+    <span class="k">function</span> <span class="nf">Number</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">ExpiresIn</span><span class="o">:</span> <span class="kt">TDateTime</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Abaixo as possíveis implementações para cada contexto relacionado com Cliente:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="c1">// Contexto #1</span>
+<span class="k">type</span> 
+  <span class="n">TCustomer</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">ICustomer</span><span class="p">)</span>
+  <span class="kp">public</span>  
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Id</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">;</span>
+    <span class="cm">{...}</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+  <span class="n">TCustomerAddress</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IAddress</span><span class="p">)</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Customer</span><span class="o">:</span> <span class="n">ICustomer</span><span class="p">)</span><span class="o">;</span>
+    <span class="cm">{...}</span>
+  <span class="k">end</span><span class="o">;</span>
+
+<span class="c1">// Contexto #1 e #2</span>
+<span class="k">type</span>
+  <span class="n">TCustomerCreditCard</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">ICreditCard</span><span class="p">)</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Customer</span><span class="o">:</span> <span class="n">ICustomer</span><span class="p">)</span><span class="o">;</span>
+    <span class="cm">{...}</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+<span class="c1">// Contexto #3</span>
+<span class="k">type</span>
+  <span class="n">TCustomerStatus</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IStatus</span><span class="p">)</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Customer</span><span class="o">:</span> <span class="n">ICustomer</span><span class="p">)</span><span class="o">;</span>
+    <span class="cm">{...}</span>
+  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Então se queremos saber o cartão de crédito de um determinado Cliente, basta codificar:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">begin</span>
+  <span class="n">ShowMessage</span><span class="p">(</span>
+    <span class="n">TCustomerCreditCard</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+      <span class="n">TCustomer</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+        <span class="mi">123</span>
+      <span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">Number</span>
+  <span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Dica: Veja mais sobre o <strong>Método New</strong> <a href="/posts/interfaces-e-o-metodo-estatico-new/">aqui</a>.</p>
+
+<p>No Exemplo #2 eu tenho:</p>
+
+<ol>
+  <li>Possível <strong>reutilização de código</strong> em vários sistemas;</li>
+  <li>Interfaces e Classes <strong>pequenas, simples e coesas</strong>;</li>
+  <li><strong>Manutenção fácil</strong>;</li>
+  <li>Interfaces e Implementações para cada Entidade distinta.</li>
+</ol>
+
+<p>Se você ainda está pensando:</p>
+
+<ol>
+  <li>Escreve demais</li>
+  <li>É mais complexo que o primeiro exemplo</li>
+  <li>Dá mais trabalho</li>
+  <li>[Escolha sua desculpa]</li>
+</ol>
+
+<p>Bem… sugiro pensar novamente.</p>
+
+<p>Você tem que <a href="/posts/pensando-em-objetos/">pensar em Objetos</a>. Tem que pensar no longo prazo. Tem que pensar na manutenção. Tem que pensar na
+verdadeira reutilização de código. Tem que pensar em Contextos.</p>
+
+<ul>
+  <li>Se você vai a praia, não precisa levar um comprovante de endereço de sua residência com você;</li>
+  <li>Se você vai ao mercado, precisa levar dinhero ou cartão, caso queira levar alguma coisa de lá;</li>
+  <li>Se você vai ao trabalho precisa ter algum cartão que o identifique – na maioria dos casos;</li>
+  <li>Se está em casa, preparando um jantar romântico para você e sua esposa, vocês só precisam de si mesmos;</li>
+</ul>
+
+<p>São <strong>contextos diferentes</strong> de você mesmo!</p>
+
+<p>Você não precisa de tudo que é relacionado com você em todos os momentos, em todos os contextos. Assim são com os Objetos.</p>
+
+<p>Aplique essa “regra” para não ter Classes gigantescas em seu código, crescendo a cada dia.</p>
+
+<h2 id="concluso">Conclusão</h2>
+
+<p>Cada Entidade deverá ter uma Interface ou Interfaces que a definiam, assim como poderá ter várias implementações.</p>
+
+<p>Cada Objeto deverá representar uma Entidade num determinado momento para um determinado Contexto.</p>
+
+<p>Esse é o segredo de um bom código Orientado a Objetos. Mantenha suas Interfaces e Classes pequenas, coesas e simples.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/objetos-representam-entidades/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Objetos devem representar Entidades reais&via=mdbs99;url=http://objectpascalprogramming.com/posts/objetos-representam-entidades/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/objetos-representam-entidades/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/objetos-representam-entidades/&title=Objetos devem representar Entidades reais" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/objetos-representam-entidades/&title=Objetos devem representar Entidades reais" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/objetos-representam-entidades/&t=Objetos devem representar Entidades reais" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+        </ul>
+        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Você sabe, com certeza, o que é Orientação a Objetos?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-o-metodo-estatico-new/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e o Método estático New</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-em-todo-lugar/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces em Todo Lugar</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/objetos-representam-entidades';
+      var disqus_title      = 'Objetos devem representar Entidades reais';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

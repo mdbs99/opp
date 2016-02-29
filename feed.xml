@@ -8,6 +8,272 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Objetos devem representar Entidades reais</title>
+        <description>&lt;p&gt;Tudo que existe fora do Contexto do software é uma Entidade que existe na vida 
+real e deve ser representada por um Objeto dentro do programa.&lt;/p&gt;
+
+&lt;p&gt;Defina Classes que implementem abstrações de Entidades reais.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/matrix20.jpg&quot; alt=&quot;Matrix®&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;
+    &quot;O que é real? Como você define o &#39;real&#39;? Se você está falando
+    sobre o que você pode sentir, o que você pode cheirar, o que você
+    pode saborear e ver, o real são simplesmente sinais elétricos
+    interpretados pelo seu cérebro&quot;
+  &lt;/p&gt;
+  &lt;footer&gt;&lt;cite title=&quot;Morpheus, Matrix&quot;&gt;— Morpheus, Matrix&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;o-que-e-uma-entidade&quot;&gt;O que é uma Entidade?&lt;/h2&gt;
+
+&lt;p&gt;Não pense em Entidade somente como criaturas vivas ou objetos palpáveis ao nosso redor. Um
+arquivo de computador, um pixel no monitor, um carro, uma pessoa, uma molécula… tudo
+que existe fora do &lt;strong&gt;Contexto do Software&lt;/strong&gt; é uma Entidade que existe na vida real.&lt;/p&gt;
+
+&lt;p&gt;No código uma Entidade é &lt;strong&gt;representada ou abstraída&lt;/strong&gt; por Interfaces e implementada por Classes. Sim, no plural.&lt;/p&gt;
+
+&lt;p&gt;Uma única Interface pode ser suficiente para abstrair uma Entidade, mas há muitos casos que uma mesma 
+Entidade pode ter dezenas de Interfaces representando-a em dezenas de Contextos diferentes. Ainda mais comum
+é termos dezenas de Classes que implementam uma única Interface.&lt;/p&gt;
+
+&lt;p&gt;Gostaria de ver um simples exemplo? Vamos lá.&lt;/p&gt;
+
+&lt;p&gt;Bem, imagine um sistema que tem a Entidade Cliente.&lt;/p&gt;
+
+&lt;p&gt;Nesse &lt;strong&gt;simples&lt;/strong&gt; sistema eu preciso saber:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Seus dados pessoais básicos;&lt;/li&gt;
+  &lt;li&gt;Seu endereço;&lt;/li&gt;
+  &lt;li&gt;Seu &lt;em&gt;status&lt;/em&gt; (ativo, cancelado ou suspenso);&lt;/li&gt;
+  &lt;li&gt;Seu Cartão de Crédito;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Como implementar Cliente?&lt;/p&gt;
+
+&lt;h3 id=&quot;exemplo-1-clssica-implementao-tudo-em-um&quot;&gt;Exemplo 1: Clássica implementação “Tudo em um”&lt;/h3&gt;
+
+&lt;p&gt;A maioria das pessoas iriam definir &lt;strong&gt;todos&lt;/strong&gt; os campos (atributos) 
+em uma única Classe, mais ou menos assim:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;TCustomer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FBirthday&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TDateTime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FEmail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FAddress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAddress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FCreditCard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TCreditCard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;destructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;override&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FName&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;write&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;Birthday&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TDateTime&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FBirthday&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;write&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FBirthday&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;Email&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FEmail&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;write&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FEmail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;Address&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAddress&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FAddress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;Status&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TStatus&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FStatus&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;write&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;CreditCard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TCreditCard&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FCreditCard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Num sistema real de médio ou grande porte sabemos que um
+Cliente poderia ter muitos outros atributos, certo? Essa Classe iria crescer e crescer…&lt;/p&gt;
+
+&lt;p&gt;O que há de “errado”?&lt;/p&gt;
+
+&lt;p&gt;A resposta simples é: A Classe é &lt;strong&gt;complexa&lt;/strong&gt; demais.&lt;/p&gt;
+
+&lt;p&gt;Nesta implementação, a Classe expõe publicamente 4 atributos – lembre-se que poderia ser muito mais! – que não faz parte
+da &lt;strong&gt;abstração mais simples&lt;/strong&gt; de um Cliente.&lt;/p&gt;
+
+&lt;p&gt;Não concorda? Não achou complexo?&lt;/p&gt;
+
+&lt;p&gt;Acho que faltou definir o que é um Cliente:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Um Cliente representa uma pessoa para qual vendemos serviços/produtos através do nosso site”.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Por definição geral todo cliente tem um Nome e, talvez, ele queira nos dizer sua data de nascimento.
+Mas não citei &lt;em&gt;Email&lt;/em&gt;, &lt;em&gt;Address&lt;/em&gt;, &lt;em&gt;Status&lt;/em&gt; ou &lt;em&gt;CreditCard&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não adianta implementar uma Interface &lt;em&gt;ICustomer&lt;/em&gt; nessa Classe e dizer que está programando 
+Orientado a Objetos. Uma Interface que cresce a cada novo requisito não é uma Interface muito útil.&lt;/p&gt;
+
+&lt;p&gt;Essa Classe foi definida pensando mais nas tabelas – que
+porventura esse sistema venha a ter – do que na real abstração de um Cliente.&lt;/p&gt;
+
+&lt;p&gt;Será que todo Cliente é igual, em todos os sistemas? Tenho certeza que não.&lt;/p&gt;
+
+&lt;p&gt;Então como reutilizamos essa Classe?
+Não reutilizamos. Ela foi &lt;strong&gt;codificada rigidamente&lt;/strong&gt;, utilizando atributos e conceitos para apenas 1 sistema e mesmo assim, 
+está errada!&lt;/p&gt;
+
+&lt;p&gt;Errada?!&lt;/p&gt;
+
+&lt;p&gt;Bem… respire por um momento.&lt;/p&gt;
+
+&lt;p&gt;Espero que você já tenha lido meus outros posts. Espero que você já tenha entendido que quando digo ERRADO ou CERTO é porque 
+eu quero que você raciocine porque estou dizendo isso.&lt;/p&gt;
+
+&lt;p&gt;Não há CERTO ou ERRADO &lt;strong&gt;absolutamente&lt;/strong&gt; na programação. Orientação a Objetos não é uma ciência exata – na verdade programação, 
+seja qual for o tipo, não é uma ciência exata. Mas temos nossas convicções, nossa experiência, o que deu certo ou errado no passado…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/e3c71ca4993ce03a8e48256fcfa3343b.jpg&quot; alt=&quot;Free your mind&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Quando estou afirmando alguma coisa, gostaria que você deixasse de lado, por um momento, suas convicções pessoais mantendo sua mente aberta,
+para tentar entender meus motivos de escrever tais afirmações.&lt;/p&gt;
+
+&lt;p&gt;Eu estou lhe mostrando uma porta, mas só você poderá abrí-la.&lt;/p&gt;
+
+&lt;h3 id=&quot;exemplo-2-pensamento-objeto&quot;&gt;Exemplo 2: Pensamento Objeto&lt;/h3&gt;
+
+&lt;p&gt;Pense.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Contexto #1:&lt;/strong&gt;
+Você quer fazer uma assinatura online de uma revista “Object Pascal Programming”. Precisa preencher um cadastro contendo
+seus dados pessoais, seu endereço, além do seu cartão de crédito.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Contexto #2:&lt;/strong&gt;
+O setor financeiro do site no qual você fez a assinatura precisa saber se o seu cartão de crédito é válido.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Contexto #3:&lt;/strong&gt;
+O setor de &lt;em&gt;marketing&lt;/em&gt; precisa enviar, por e-mail, qual serão as próximas matérias da próxima edição.&lt;/p&gt;
+
+&lt;p&gt;Percebeu que cada contexto necessita de informações distintas?&lt;/p&gt;
+
+&lt;p&gt;No Contexto #1 é necessário o Endereço e Cartão de Crédito. No #2 somente o cartão é necessário. No #3 o e-mail e
+o &lt;em&gt;Status&lt;/em&gt; são necessários para enviar e-mails somente aos clientes ativos.&lt;/p&gt;
+
+&lt;p&gt;Então temos, de uma forma bem sucinta, a definição das Interfaces:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;ICustomer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Birthday&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TDateTime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  
+  &lt;span class=&quot;n&quot;&gt;IEmail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  
+  &lt;span class=&quot;n&quot;&gt;IAddress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Address&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  
+  &lt;span class=&quot;n&quot;&gt;IStatus&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  
+  &lt;span class=&quot;n&quot;&gt;ICreditCard&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ExpiresIn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TDateTime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Abaixo as possíveis implementações para cada contexto relacionado com Cliente:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Contexto #1&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;TCustomer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ICustomer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;  
+    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;{...}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  
+  &lt;span class=&quot;n&quot;&gt;TCustomerAddress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IAddress&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ICustomer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;{...}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Contexto #1 e #2&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;TCustomerCreditCard&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ICreditCard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ICustomer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;{...}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  
+&lt;span class=&quot;c1&quot;&gt;// Contexto #3&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;TCustomerStatus&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IStatus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ICustomer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;{...}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Então se queremos saber o cartão de crédito de um determinado Cliente, basta codificar:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;ShowMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;TCustomerCreditCard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;TCustomer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;mi&quot;&gt;123&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Number&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Dica: Veja mais sobre o &lt;strong&gt;Método New&lt;/strong&gt; &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;No Exemplo #2 eu tenho:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Possível &lt;strong&gt;reutilização de código&lt;/strong&gt; em vários sistemas;&lt;/li&gt;
+  &lt;li&gt;Interfaces e Classes &lt;strong&gt;pequenas, simples e coesas&lt;/strong&gt;;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Manutenção fácil&lt;/strong&gt;;&lt;/li&gt;
+  &lt;li&gt;Interfaces e Implementações para cada Entidade distinta.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Se você ainda está pensando:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Escreve demais&lt;/li&gt;
+  &lt;li&gt;É mais complexo que o primeiro exemplo&lt;/li&gt;
+  &lt;li&gt;Dá mais trabalho&lt;/li&gt;
+  &lt;li&gt;[Escolha sua desculpa]&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Bem… sugiro pensar novamente.&lt;/p&gt;
+
+&lt;p&gt;Você tem que &lt;a href=&quot;/posts/pensando-em-objetos/&quot;&gt;pensar em Objetos&lt;/a&gt;. Tem que pensar no longo prazo. Tem que pensar na manutenção. Tem que pensar na
+verdadeira reutilização de código. Tem que pensar em Contextos.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Se você vai a praia, não precisa levar um comprovante de endereço de sua residência com você;&lt;/li&gt;
+  &lt;li&gt;Se você vai ao mercado, precisa levar dinhero ou cartão, caso queira levar alguma coisa de lá;&lt;/li&gt;
+  &lt;li&gt;Se você vai ao trabalho precisa ter algum cartão que o identifique – na maioria dos casos;&lt;/li&gt;
+  &lt;li&gt;Se está em casa, preparando um jantar romântico para você e sua esposa, vocês só precisam de si mesmos;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;São &lt;strong&gt;contextos diferentes&lt;/strong&gt; de você mesmo!&lt;/p&gt;
+
+&lt;p&gt;Você não precisa de tudo que é relacionado com você em todos os momentos, em todos os contextos. Assim são com os Objetos.&lt;/p&gt;
+
+&lt;p&gt;Aplique essa “regra” para não ter Classes gigantescas em seu código, crescendo a cada dia.&lt;/p&gt;
+
+&lt;h2 id=&quot;concluso&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Cada Entidade deverá ter uma Interface ou Interfaces que a definiam, assim como poderá ter várias implementações.&lt;/p&gt;
+
+&lt;p&gt;Cada Objeto deverá representar uma Entidade num determinado momento para um determinado Contexto.&lt;/p&gt;
+
+&lt;p&gt;Esse é o segredo de um bom código Orientado a Objetos. Mantenha suas Interfaces e Classes pequenas, coesas e simples.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 29 Feb 2016 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/objetos-representam-entidades/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-representam-entidades/</guid>
+      </item>
+    
+      <item>
         <title>DataModule é apenas um recipiente, e só isso</title>
         <description>&lt;p&gt;Não utilize um &lt;em&gt;DataModule&lt;/em&gt; como uma Classe de Negócio, implementando métodos públicos e utilizando-o como um
 &lt;em&gt;Singleton&lt;/em&gt;. Isso é errado. Você deixará seu sistema acoplado a esta única implementação e não será possível
@@ -1329,7 +1595,7 @@ fazer mal diretamente, mas tem potencial para fazer mal indiretamente quando aju
 
 &lt;p&gt;&lt;img src=&quot;/images/photo-1452776145041-517a74be1f14.jpg&quot; alt=&quot;Pensando&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;interfaces-so-contratos&quot;&gt;Interfaces são Contratos&lt;/h2&gt;
+&lt;h2 id=&quot;interfaces-sao-contratos&quot;&gt;Interfaces são Contratos&lt;/h2&gt;
 
 &lt;p&gt;Vou contar uma história.&lt;/p&gt;
 
@@ -1822,7 +2088,7 @@ na linguagem Simula 67 (1967).&lt;/p&gt;
 
 &lt;p&gt;Linguagens de programação foram desenhadas com base nesse paradigma; centenas ou milhares de livros foram escritos; milhões de sites na Internet falam desse assunto. Então porque, após todos esses anos, a maioria dos programadores ainda não sabem o que é programar Orientado a Objetos?&lt;/p&gt;
 
-&lt;h2 id=&quot;um-objeto-no--um-balde-de-funes-e-dados&quot;&gt;Um Objeto não é um “balde” de Funções e Dados&lt;/h2&gt;
+&lt;h2 id=&quot;objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;Um Objeto não é um “balde” de Funções e Dados&lt;/h2&gt;
 
 &lt;p&gt;Ok, &lt;ins&gt;tecnicamente&lt;/ins&gt; ele é um “balde” de funções e dados.
 Quando um objeto é criado ele possui uma estrutura de dados em memória; cada função recebe um ponteiro implícito para essa estrutura; as funções podem utilizar esses dados como se fossem variáveis locais… basicamente é isso.&lt;/p&gt;
