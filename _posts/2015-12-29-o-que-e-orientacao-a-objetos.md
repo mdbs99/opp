@@ -36,7 +36,7 @@ na linguagem Simula 67 (1967).
 
 Linguagens de programação foram desenhadas com base nesse paradigma; centenas ou milhares de livros foram escritos; milhões de sites na Internet falam desse assunto. Então porque, após todos esses anos, a maioria dos programadores ainda não sabem o que é programar Orientado a Objetos?
 
-##Um Objeto não é um “balde” de Funções e Dados
+##Um Objeto não é um “balde” de Funções e Dados {#objeto-nao-e-um-balde-de-funcoes-e-dados}
 
 Ok, <ins>tecnicamente</ins> ele é um “balde” de funções e dados.
 Quando um objeto é criado ele possui uma estrutura de dados em memória; cada função recebe um ponteiro implícito para essa estrutura; as funções podem utilizar esses dados como se fossem variáveis locais… basicamente é isso.

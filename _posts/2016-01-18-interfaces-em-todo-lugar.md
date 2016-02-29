@@ -24,7 +24,7 @@ Por que?
 
 ![Pensando](/images/photo-1452776145041-517a74be1f14.jpg)
 
-##Interfaces são Contratos
+##Interfaces são Contratos {#interfaces-sao-contratos}
 
 Vou contar uma história. 
 
