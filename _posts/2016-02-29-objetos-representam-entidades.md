@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Objetos devem representar Entidades reais"
-date: 2016-02-28
+date: 2016-02-29
 description: Um Objeto representa uma entidade, criatura ou qualquer coisa fora do contexto do programa.
 summary: Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.
 image: /images/matrix20.jpg
