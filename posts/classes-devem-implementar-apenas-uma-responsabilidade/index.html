@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Classes devem Implementar apenas uma Responsabilidade &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="oo">
+    <meta name="keywords" content="responsability">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/classes-devem-implementar-apenas-uma-responsabilidade/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201603070930" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Classes devem Implementar apenas uma Responsabilidade">
+    <meta property="og:description" content="Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/classes-devem-implementar-apenas-uma-responsabilidade/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1445783426434-670f9b34e183.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Classes devem Implementar apenas uma Responsabilidade" />
+    <meta name="twitter:description" content="Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/classes-devem-implementar-apenas-uma-responsabilidade/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Classes devem Implementar apenas uma Responsabilidade</h1>
+  <span class="post-meta">Mar 6, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    8 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>O Princípio da Responsabilidade Única (Single Responsibility Principle) afirma que, se tivermos 
+mais de uma razão para mudar a implementação de uma Classe, devemos dividir o comportamento em 
+duas ou mais Classes.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1445783426434-670f9b34e183.jpg" alt="Funcionalidades" /></p>
+
+<h2 id="unica-responsabilidade">Uma única responsabilidade</h2>
+
+<p>A implementação de uma Classe deve ser o mais Simples possível.
+Classes com mais de uma Responsabilidade são Complexas.</p>
+
+<p>Não confunda Objeto com Classe. Objetos podem ser <strong>Complexos</strong> e ter mais de uma
+Responsabilidade devido ao uso da <strong>Composição e Decoração de Objetos</strong>, no
+entanto as Classes que compõem esses Objetos devem implementar apenas uma única
+Responsabilidade.</p>
+
+<blockquote>
+  <p>“Uma Classe com apenas uma Responsabilidade é Simples para usar, modificar e reutilizar”</p>
+</blockquote>
+
+<p>Mas como é possível ter Objetos que são mais complexos enquanto suas Classes são simples?</p>
+
+<p>Bem, vamos implementar um módulo simples de <em>Log</em> para responder a esta pergunta. 
+Primeiro vamos utilizar a <strong>Programação Procedural</strong> com Classes do tipo “tudo em um” e depois a <strong>Orientada a Objetos</strong>, 
+com Classes simples utilizando <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator Design Pattern</a>,
+dividindo as funcionalidades em Classes menores e mais reutilizáveis.</p>
+
+<p>Um sistema hipotético necessita salvar um <em>Log</em> com tudo o que foi processado.</p>
+
+<p>Este <em>Log</em> deverá implementar os requisitos a seguir:</p>
+
+<ol>
+  <li>Possibilidade de salvar a informação em Arquivo Texto</li>
+  <li>Possibilidade de salvar a informação em Banco de Dados</li>
+  <li>Possibilidade de enviar o <em>Log</em> por e-mail</li>
+</ol>
+
+<h3 id="implementao-tradicional-e-procedural">1-Implementação “Tradicional” e Procedural</h3>
+
+<p><img src="/images/photo-1453560814059-d646dffd32fd.jpg" alt="Procedural e antiga" /></p>
+
+<p>De acordo com os requisitos acima, <strong>parece muito simples</strong> pensar numa única Classe com “apenas” 4 métodos.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TLog</span> <span class="o">=</span> <span class="k">class</span>
+  <span class="kp">private</span>
+    <span class="n">FInfo</span><span class="o">:</span> <span class="n">TStrings</span><span class="o">;</span>
+    <span class="n">FMail</span><span class="o">:</span> <span class="n">TMail</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="o">;</span>
+    <span class="k">destructor</span> <span class="nf">Destroy</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">SaveToFile</span><span class="p">(</span><span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">SaveToDB</span><span class="p">(</span><span class="n">DB</span><span class="o">:</span> <span class="n">IDatabase</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">SendMail</span><span class="p">(</span><span class="k">const</span> <span class="n">From</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+<span class="k">implementation</span>
+
+<span class="k">constructor</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">Create</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FInfo</span> <span class="o">:=</span> <span class="n">TStringList</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
+  <span class="n">FMail</span> <span class="o">:=</span> <span class="n">TMail</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">destructor</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">Destroy</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">FInfo</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+  <span class="n">FMail</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+  <span class="k">inherited</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FInfo</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">SaveToFile</span><span class="p">(</span><span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FInfo</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="n">FileName</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">FInfo</span><span class="o">.</span><span class="n">Clear</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">SaveToDB</span><span class="p">(</span><span class="n">DB</span><span class="o">:</span> <span class="n">IDatabase</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">DB</span><span class="o">.</span><span class="n">Query</span><span class="p">(</span>
+    <span class="s">&#39;insert into Log (info) values (:info)&#39;</span><span class="o">,</span>
+    <span class="n">TSQLParams</span><span class="o">.</span><span class="k">New</span>
+      <span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#39;info&#39;</span><span class="o">,</span> <span class="n">ftString</span><span class="o">,</span> <span class="n">FInfo</span><span class="o">.</span><span class="n">Text</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="o">.</span><span class="n">Execute</span><span class="o">;</span> 
+  <span class="n">FInfo</span><span class="o">.</span><span class="n">Clear</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">SendMail</span><span class="p">(</span><span class="k">const</span> <span class="n">From</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FMail</span><span class="o">.</span><span class="n">Send</span><span class="p">(</span><span class="n">From</span><span class="o">,</span> <span class="n">FInfo</span><span class="o">.</span><span class="n">Text</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">FInfo</span><span class="o">.</span><span class="n">Clear</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">end</span><span class="o">.</span></code></pre></figure>
+
+<p><strong>Observações</strong>:</p>
+
+<ol>
+  <li>Considere <code>DB: IDatabase</code> como uma instância de uma conexão com o Banco de Dados.</li>
+  <li>Considere <code>FMail.Send(From, FInfo.Text)</code> uma instrução que envia para um destinatário a informação no corpo do e-mail.</li>
+</ol>
+
+<p>Para utilizar a Classe não há dúvidas. Faz-se uma instância de <code>TLog</code> para chamar cada método. Seu uso é simples, mas…</p>
+
+<p>Quais são os problemas dessa implementação?</p>
+
+<p>Muitos problemas:</p>
+
+<ol>
+  <li>A Classe é “complexa” demais porque lida com muitas responsabilidades e consequentemente muito mais propensa a alterações e bugs.</li>
+  <li>A classe tem uma instância concreta de <em>TMail</em>, não sendo possível utilizarmos <em>libs</em> diferentes para o envio de e-mail.</li>
+  <li>Sua interface possui muitos métodos com contextos diferentes.</li>
+  <li>Cada novo requisito irá gerar um novo método. A Classe não para de crescer.</li>
+</ol>
+
+<p>Já vi implementações como a Classe acima, mas também já encontrei outras muito piores.</p>
+
+<p>Trabalhei num sistema onde existia uma Classe de <em>Log</em> que tinha +20 métodos! Método para salvar em arquivo e no Banco de Dados; 
+gerar XML; enviar por e-mail; excluir arquivos antigos; e muito mais. Era uma grande <strong>Classe Utilitária</strong> composta somente 
+de <a href="/posts/nao-utilize-metodos-estaticos/">Métodos Estáticos</a>.</p>
+
+<h3 id="implementao-orientada-a-objetos">2-Implementação Orientada a Objetos</h3>
+
+<p><img src="/images/photo-1457257495536-67f31bc9773d.jpg" alt="Orientada a Objetos" /></p>
+
+<p>É claro que a <a href="/posts/interfaces-em-todo-lugar/">primeira coisa a fazer</a> é definirmos uma abstração para <em>Log</em>. Precisamos de uma Interface.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">ILog</span> <span class="o">=</span> <span class="k">interface</span>
+    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Apenas isso.</p>
+
+<p>Um <em>Log</em> precisa registrar a informação, informar e salvar em <strong>algum lugar</strong>.</p>
+
+<p>Agora podemos implementar cada Classe, cada uma com uma responsabilidade bem distinta e única.</p>
+
+<p>Primeiro uma Classe para implementar o <em>Log</em> apenas em memória — pode ser utilizado em <em>UnitTests</em>.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TLogInMemory</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">ILog</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FInfo</span><span class="o">:</span> <span class="n">TStrings</span><span class="o">;</span>  
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
+    <span class="c1">//class function New...</span>
+    <span class="k">destructor</span> <span class="nf">Destroy</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+<span class="k">implementation</span>
+
+<span class="k">constructor</span> <span class="nc">TLogInMemory</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FInfo</span> <span class="o">:=</span> <span class="n">TStringList</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
+  <span class="n">FInfo</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">destructor</span> <span class="nc">TLogInMemory</span><span class="o">.</span><span class="nf">Destroy</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">FInfo</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+  <span class="k">inherited</span> <span class="n">Destroy</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLogInMemory</span><span class="o">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FInfo</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLogInMemory</span><span class="o">.</span><span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FInfo</span><span class="o">.</span><span class="n">Text</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLogInMemory</span><span class="o">.</span><span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FInfo</span><span class="o">.</span><span class="n">Clear</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>No método <code>Save</code> não há nada para registrar pois o <em>Log</em> só trabalha em memória.</p>
+
+<p>Teremos outra Classe para fazer o <em>Log</em> num Arquivo Texto:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TLogToFile</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">ILog</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FOrigin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+    <span class="n">FFileStream</span><span class="o">:</span> <span class="n">TFileStream</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> <span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
+    <span class="c1">//class function New...</span>
+    <span class="k">destructor</span> <span class="nf">Destroy</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+<span class="k">implementation</span>
+
+<span class="k">constructor</span> <span class="nc">TLogToFile</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> 
+  <span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FOrigin</span> <span class="o">:=</span> <span class="n">Origin</span><span class="o">;</span>
+  <span class="n">FFileStream</span> <span class="o">:=</span> <span class="n">TFileStream</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">FileName</span><span class="o">,</span> <span class="n">fmOpenWrite</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">destructor</span> <span class="nc">TLogToFile</span><span class="o">.</span><span class="nf">Destroy</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">FFileStream</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+  <span class="k">inherited</span> <span class="n">Destroy</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLogToFile</span><span class="o">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FOrigin</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">FFileStream</span><span class="o">.</span><span class="n">Write</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLogToFile</span><span class="o">.</span><span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FOrigin</span><span class="o">.</span><span class="n">Text</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLogToFile</span><span class="o">.</span><span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FInfo</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="n">FFileName</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">FOrigin</span><span class="o">.</span><span class="n">Save</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Repare que há um parâmetro <code>Origin</code>. Isso significa que essa classe
+irá gerar Objetos que trabalham “decorando” outros Objetos que se originaram em outro momento.</p>
+
+<p>Da mesma forma teremos outra Classe para fazer o <em>Log</em> no Banco de Dados:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TLogToDB</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">ILog</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FOrigin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+    <span class="n">FDB</span><span class="o">:</span> <span class="n">IDatabase</span><span class="o">;</span>  
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> <span class="n">DB</span><span class="o">:</span> <span class="n">IDatabase</span><span class="p">)</span><span class="o">;</span>
+    <span class="c1">//class function New...</span>
+    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+<span class="k">implementation</span>
+
+<span class="k">constructor</span> <span class="nc">TLogToDB</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> 
+  <span class="n">DB</span><span class="o">:</span> <span class="n">IDatabase</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FOrigin</span> <span class="o">:=</span> <span class="n">Origin</span><span class="o">;</span> 
+  <span class="n">FDB</span> <span class="o">:=</span> <span class="n">DB</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLogToDB</span><span class="o">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FOrigin</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLogToDB</span><span class="o">.</span><span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FOrigin</span><span class="o">.</span><span class="n">Text</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLogToDB</span><span class="o">.</span><span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">DB</span><span class="o">.</span><span class="n">Query</span><span class="p">(</span>
+    <span class="s">&#39;insert into Log (info) values (:info)&#39;</span><span class="o">,</span>
+    <span class="n">TSQLParams</span><span class="o">.</span><span class="k">New</span>
+      <span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#39;info&#39;</span><span class="o">,</span> <span class="n">ftString</span><span class="o">,</span> <span class="k">Self</span><span class="o">.</span><span class="n">Text</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="o">.</span><span class="n">Execute</span><span class="o">;</span> 
+  <span class="n">FOrigin</span><span class="o">.</span><span class="n">Save</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p><strong>Observação</strong>:</p>
+
+<p>Você pode pensar: Por que <code>TLogToFile</code> não <strong>herda</strong> de <code>TLogInMemory</code> para reaproveitar
+o código que trabalha com a instância de <em>FInfo</em>?</p>
+
+<p>Eu poderia, mas não devo. Falarei sobre herança em próximos posts. Por enquanto vamos deixar as coisas simples 
+e prosseguir com o exemplo.</p>
+
+<p>Falta a Classe de <em>Log</em> que envia e-mails, sem esquecer de Injetar a Dependência de <code>Mail</code> no <em>construtor</em>:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TLogToMail</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">ILog</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FOrigin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> 
+    <span class="n">FMail</span><span class="o">:</span> <span class="n">IMail</span><span class="o">;</span>  
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> <span class="n">Mail</span><span class="o">:</span> <span class="n">IMail</span><span class="p">)</span><span class="o">;</span>
+    <span class="c1">//class function New...</span>
+    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+<span class="k">implementation</span>
+
+<span class="k">constructor</span> <span class="nc">TLogToMail</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> 
+  <span class="n">Mail</span><span class="o">:</span> <span class="n">IMail</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FOrigin</span> <span class="o">:=</span> <span class="n">Origin</span><span class="o">;</span> 
+  <span class="n">FMail</span> <span class="o">:=</span> <span class="n">Mail</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLogToMail</span><span class="o">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FOrigin</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLogToMail</span><span class="o">.</span><span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FOrigin</span><span class="o">.</span><span class="n">Text</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TLogToMail</span><span class="o">.</span><span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FMail</span><span class="o">.</span><span class="n">Send</span><span class="p">(</span><span class="n">From</span><span class="o">,</span> <span class="k">Self</span><span class="o">.</span><span class="n">Text</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">FOrigin</span><span class="o">.</span><span class="n">Save</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Cada Classe tem apenas uma única responsabilidade e todas as Classes seguem o <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contrato</a>
+de uma única Interface, simples e coesa.</p>
+
+<p>E agora, e o mais legal! Podemos ter um único Objeto que implementa tudo, mas o código que irá utilizar esse Objeto
+ignora completamente sua implementação, ou seja, o código não irá chamar um procedimento específico para salvar a informação em determinado
+lugar, como na Implementação Procedural.</p>
+
+<p>Não entendeu? Vamos lá.</p>
+
+<p>Por exemplo. Se os requisitos mudarem e seu cliente pedir para gravar o <em>Log</em> num Arquivo Texto e também no Banco de Dados, o que seria preciso fazer?</p>
+
+<p>Bem, na implementação Procedural do primeiro exemplo, o programador teria que <ins>criar um novo método</ins> porque ele não consegue
+reutilizar os métodos existentes para fazer algo que seria simples!</p>
+
+<p>Por que ele não consegue? Repare que em cada método <code>SaveXxx</code> há uma chamada de <code>FInfo.Clear</code>. Então ele não pode executar
+os métodos assim:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">begin</span>
+  <span class="n">Log</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="s">&#39;/path/file.log&#39;</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">Log</span><span class="o">.</span><span class="n">SaveToDB</span><span class="p">(</span><span class="n">DB</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Na primeira chamada a informação do <em>Log</em> será perdida.</p>
+
+<p>Sei que você pode pensar em inúmeras outras implementações para que isso não aconteça, mas o <strong>fato</strong> é que você precisa
+alterar a Classe para fazer algo que seria simples. Talvez você tenha lido o código da primeira vez e não viu nada de errado. Isso acontece
+todo tempo com Classes complexas e muito mais com aquelas que utilizam herança.</p>
+
+<p>Mas, continuando.</p>
+
+<p>Então vou escolher uma das possíveis implementações: Adicionar um novo método.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">function</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">SaveToFileAndDB</span><span class="p">(</span><span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
+  <span class="n">DB</span><span class="o">:</span> <span class="n">IDatabase</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="n">FInfo</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="n">FileName</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">SaveToDB</span><span class="p">(</span><span class="n">DB</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>UAU! HORRÍVEL!</p>
+
+<p>Está claro que essa não é uma solução elegante…</p>
+
+<p>Esqueçam isso e vamos para a implementação <strong>correta</strong>, Orientada a Objetos, <strong>simples</strong> e <strong>reutilizável</strong>.</p>
+
+<p>Para um novo requisito você não precisa alterar um código que já estava funcionando. Não precisa quebrar nada, nem sobrescrever nada.
+Basta criar um <ins>novo Objeto</ins> que encapsule os Objetos que já sabem fazer o serviço.</p>
+
+<p>Com apenas uma única Interface e várias implementações, é possível criar um único Objeto que contenha todo tipo de comportamento
+referente a <em>Log</em>.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">begin</span>
+  <span class="n">TLogToMail</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+    <span class="n">TLogToDB</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+      <span class="n">TLogToFile</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+        <span class="n">TLogInMemory</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;First info&#39;</span><span class="p">)</span><span class="o">,</span>
+        <span class="s">&#39;/path/file.log&#39;</span>
+      <span class="p">)</span><span class="o">,</span>
+      <span class="n">DB</span>
+    <span class="p">)</span><span class="o">,</span>
+    <span class="n">Mail</span>
+  <span class="p">)</span>
+  <span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#39;Second info&#39;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#39;Final info&#39;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">Save</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Para o código-geral não há diferença se o <em>Log</em> está sendo gravado num Arquivo, Banco de Dados ou sendo enviado por e-mail.</p>
+
+<p>Só há uma Interface <em>ILog</em> com apenas alguns poucos métodos. Cada Classe tem sua própria implementação, simples e limpa.</p>
+
+<p>No fim temos uma única instância de um Objeto mais Complexo que é capaz de fazer todo o tipo de <em>Log</em>, mas sua Interface
+não cresce junto com os requisitos.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/classes-devem-implementar-apenas-uma-responsabilidade/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Classes devem Implementar apenas uma Responsabilidade&via=mdbs99;url=http://objectpascalprogramming.com/posts/classes-devem-implementar-apenas-uma-responsabilidade/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/classes-devem-implementar-apenas-uma-responsabilidade/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/classes-devem-implementar-apenas-uma-responsabilidade/&title=Classes devem Implementar apenas uma Responsabilidade" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/classes-devem-implementar-apenas-uma-responsabilidade/&title=Classes devem Implementar apenas uma Responsabilidade" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/classes-devem-implementar-apenas-uma-responsabilidade/&t=Classes devem Implementar apenas uma Responsabilidade" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-representam-entidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+        </ul>
+        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+        </ul>
+        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-o-metodo-estatico-new/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e o Método estático New</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-em-todo-lugar/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces em Todo Lugar</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Você sabe, com certeza, o que é Orientação a Objetos?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/classes-devem-implementar-apenas-uma-responsabilidade';
+      var disqus_title      = 'Classes devem Implementar apenas uma Responsabilidade';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
