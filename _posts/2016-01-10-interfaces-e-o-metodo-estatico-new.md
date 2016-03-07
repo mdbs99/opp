@@ -5,7 +5,8 @@ date: 2016-01-10
 description: Como implementar seu Garbage Collector no Object Pascal de forma segura
 summary: Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.
 image: /images/829d24cf.jpg
-categories: oop
+categories: 
+  - oo
 tags:
   - oop
   - object pascal

@@ -6,13 +6,13 @@ description: Não utilize DataModules para implementar regras de negócio
 summary: DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.
 image: /images/photo-1455487890814-f11ab4eaec4b.jpg
 categories: 
-  - oop
-  - object pascal
+  - componentes
 tags:
-  - datamodule
+  - componentes
 keywords:
   - datamodule
   - container
+  - components
 ---
 
 Não utilize um *DataModule* como uma Classe de Negócio, implementando métodos públicos e utilizando-o como um

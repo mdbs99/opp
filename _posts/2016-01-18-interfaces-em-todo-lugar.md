@@ -5,13 +5,16 @@ date: 2016-01-18
 description: Todas as variáveis devem ser do tipo Interface
 summary: Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.
 image: /images/photo-1452776145041-517a74be1f14.jpg
-categories: oop
+categories: 
+  - oo
 tags:
-  - oop
+  - oo
+  - interfaces
 keywords:
   - oop
   - object pascal
   - orientação a objetos
+  - object-oriented
 ---
 
 Variáveis não devem ser do tipo Classe.

@@ -7,13 +7,15 @@ date: 2015-12-27 15:00:00
 description: Orientação a Objetos é muito mais do que Herança, Encapsulamento e Polimorfismo
 summary: Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.
 image: /images/photo-1451340124423-6311db67a5d9.jpg
-categories: oop
-tags: oop
+categories: 
+  - oo
+tags: 
+  - oo
 keywords:
   - orientação a objetos
+  - object oriented
   - oop
   - poo
-  - object oriented
 ---
 
 Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.

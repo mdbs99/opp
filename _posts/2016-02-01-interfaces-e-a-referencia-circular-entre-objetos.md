@@ -6,18 +6,17 @@ description: Interfaces e a Referência Circular entre Objetos
 summary: Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.
 image: /images/photo-1447600514716-ca6f3974c346.jpg
 categories: 
-  - oop
-  - object pascal
+  - compilador
 tags:
-  - oop
-  - object pascal
   - interfaces
-  - circular reference
+  - compilador
 keywords:
   - interfaces
   - referencia circular
   - circular reference
   - weak reference
+  - compiler
+  - compilador
 ---
 
 Um Autor escreveu um Livro. Um Livro tem um Autor... que escreveu um Livro, que tem um Autor...
