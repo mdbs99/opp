@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Classes devem Implementar apenas uma Responsabilidade"
-date: 2016-03-06
+date: 2016-03-07
 description: Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.
 summary: Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.
 image: /images/photo-1445783426434-670f9b34e183.jpg
