@@ -8,6 +8,189 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Objetos pensam e tomam decisões</title>
+        <description>&lt;p&gt;Se você &lt;a href=&quot;/posts/pensando-em-objetos/&quot;&gt;Pensar em Objetos&lt;/a&gt; ou invés de pensar em procedimentos e funções
+conseguirá implementar um código onde os Objetos conversam entre si ao invés de utilizar Programação Procedural que instrui o 
+compilador sobre o que fazer linha-a-linha.&lt;/p&gt;
+
+&lt;p&gt;Não fazemos isso na Orientação a Objetos. Seu Objeto sabe o que fazer. 
+Ele não precisa de um “controlador” (você) para lhe dizer o que fazer. Ele sabe.
+Ele foi &lt;a href=&quot;/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos&quot;&gt;contratado&lt;/a&gt; pra isso. Deixe-o trabalhar.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1456406644174-8ddd4cd52a06.jpg&quot; alt=&quot;Pense&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;pense-em-objetos&quot;&gt;Pense em Objetos, não em procedimentos&lt;/h2&gt;
+
+&lt;p&gt;Um Objeto deve ter uma identidade bem definida.
+Sua Classe deve &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;implementar apenas uma responsabilidade&lt;/a&gt;.
+Essa responsabilidade é determinada por um &lt;a href=&quot;/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos&quot;&gt;contrato&lt;/a&gt; que 
+representa uma possível abstração de alguma Entidade.&lt;/p&gt;
+
+&lt;p&gt;Mas como saber se seu Objeto representa uma Entidade ou se ele é apenas um 
+&lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;balde de funções e dados&lt;/a&gt;?&lt;/p&gt;
+
+&lt;p&gt;Algumas classes são mais difíceis de perceber enquanto outras são tão claras como a água. Veja:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;TDataModule1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TDataModule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;{ fields, components...}&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;AddNewCustomer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TCustomer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;AddNewUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;GetCustomer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TCustomer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;GetEmployeeSalary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EmployeeId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Currency&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;{ more...}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;O exemplo acima, apesar de ser codificado como uma Classe, ter a sintaxe de uma Classe, se comportar como uma Classe etc, na verdade,
+não representa nenhuma abstração de uma Entidade sendo, portanto, um &lt;strong&gt;código procedural&lt;/strong&gt;, ou seja, um 
+&lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;balde de funções e dados&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Quando &lt;a href=&quot;/posts/datamodule-e-apenas-um-container/&quot;&gt;postei sobre &lt;em&gt;DataModules&lt;/em&gt;&lt;/a&gt; imaginei que muitos programadores
+poderiam não entender — num primeiro momento — meu motivo em dizer que &lt;em&gt;DataModules&lt;/em&gt; são apenas recipientes e que não devem conter regras de negócio
+e muito menos serem utilizados como instâncias de &lt;strong&gt;Classes de Negócio&lt;/strong&gt;. Para minha surpresa o post foi muito bem recebido pela maioria dos leitores.&lt;/p&gt;
+
+&lt;p&gt;Acho que o exemplo de código acima deixa bem claro o que eu quis dizer.&lt;/p&gt;
+
+&lt;p&gt;Ora, um &lt;em&gt;DataModule&lt;/em&gt;, na grande maioria das vezes, não representa uma Entidade
+por não ter uma identidade bem definida. Após 10 minutos e 5 componentes adicionados, 
+ele vira um &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;balde de funções e dados&lt;/a&gt;, ou seja,
+uma Classe utilitária.&lt;/p&gt;
+
+&lt;h2 id=&quot;objetos-pensam-como&quot;&gt;Objetos pensam… como?&lt;/h2&gt;
+
+&lt;p&gt;Você deve fazer com que as decisões de negócio ou sistema devam ser tomadas pelos próprios objetos e não por um “controlador”.&lt;/p&gt;
+
+&lt;p&gt;Vamos inventar um exemplo.&lt;/p&gt;
+
+&lt;p&gt;Imagine um &lt;em&gt;Form&lt;/em&gt; onde temos um &lt;em&gt;TButton&lt;/em&gt; para mostrar ao usuário qual o valor da comissão, neste mês, de um determinado empregado selecionado.
+Cada funcionário tem um salário fixo e, talvez, uma comissão que é determinada pelo tipo de registro em seu cadastro. Os tipos 1 e 2 tem um cálculo completamente
+diferente e para todos os outros a comissão será de 2%.&lt;/p&gt;
+
+&lt;h3 id=&quot;versao-procedural&quot;&gt;A Versão Procedural:&lt;/h3&gt;
+
+&lt;p&gt;Nessa versão do código tudo é feito num único lugar, no evento do botão.&lt;/p&gt;
+
+&lt;p&gt;É claro que você poderá me dizer como reescrever o código. Dividir em partes. Criar outros “métodos”, etc. Mas o ponto aqui é comparar um Código
+Procedural com um Orientado a Objetos de verdade.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TForm1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Button1Click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sender&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;EmployeeType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Salary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Currency&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SelectedEmployeeId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ParamByName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Open&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  
+  &lt;span class=&quot;n&quot;&gt;Salary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FieldByName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;salary&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AsCurrency&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
+  
+  &lt;span class=&quot;n&quot;&gt;EmployeeType&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FieldByName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;etype&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AsInteger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EmployeeType&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;of&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Salary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Salary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CalcCommission1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;{parameters}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Salary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Salary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CalcCommission2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;{parameters}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Salary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Salary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Salary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.02&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;ShowMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Total Salary = &amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;CurrToStr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Salary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Quem nunca fez um código parecido com esse em todos esses anos de &lt;em&gt;Object Pascal&lt;/em&gt;? Eu já. Muito mais do que eu gostaria.&lt;/p&gt;
+
+&lt;p&gt;No clique de um único botão:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Utilizei uma &lt;em&gt;query&lt;/em&gt; global;&lt;/li&gt;
+  &lt;li&gt;Utilizei 3 variáveis locais;&lt;/li&gt;
+  &lt;li&gt;Utilizei 2 funções para cálculo de comissão;&lt;/li&gt;
+  &lt;li&gt;Fiz um cálculo de comissão diretamente no código do evento(!)&lt;/li&gt;
+  &lt;li&gt;Apresentei o valor calculado ao usuário.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Esse código é Procedural, &lt;strong&gt;muito acoplado&lt;/strong&gt; e impossível de ser utilizado em &lt;em&gt;UnitTests&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Melhor vermos uma outra opção.&lt;/p&gt;
+
+&lt;h3 id=&quot;versao-orientada-a-objetos&quot;&gt;A Versão Orientada a Objetos:&lt;/h3&gt;
+
+&lt;p&gt;Para essa versão, é claro, temos que ter as Interfaces que representam cada Entidade do nosso domínio.
+Mesmo um Valor ou Salário &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;também são Entidades&lt;/a&gt;!&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;ICurrencyValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Currency&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;AsString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;ISalary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ICurencyValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  
+  &lt;span class=&quot;n&quot;&gt;IEmployee&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;{ ... }&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Com as Interfaces definidas, não fica difícil implementar as Classes utilizando o 
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Decorator_pattern&quot;&gt;Decorator Design Pattern&lt;/a&gt;,
+o mesmo utilizado &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo&quot;&gt;aqui&lt;/a&gt;. Mas o código
+das Classes são irrelevantes para o entendimento do problema. E é assim mesmo que deve ser! Não precisamos saber o código interno de uma 
+Classe para podermos utilizá-la. Apenas a sua Interface é suficiente.&lt;/p&gt;
+
+&lt;p&gt;Então o código do evento no botão fica assim:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TForm1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Button1Click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sender&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;ShowMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&amp;#39;Total Salary = &amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; 
+      &lt;span class=&quot;n&quot;&gt;TEmployeeSalaryWithCommission&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;TEmployeeSalary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;TEmployee&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SelectedEmployeeId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AsString&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Mesmo sem o código das Classes — apenas para não “poluir” demais o post — acredito que dá pra entender perfeitamente o que seria implementado:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;A classe &lt;em&gt;TEmployee&lt;/em&gt; implementa &lt;em&gt;IEmployee&lt;/em&gt;;&lt;/li&gt;
+  &lt;li&gt;A classe &lt;em&gt;TEmployeeSalary&lt;/em&gt; e &lt;em&gt;TEmployeeSalaryWithCommission&lt;/em&gt; implementam &lt;em&gt;ISalary&lt;/em&gt;;&lt;/li&gt;
+  &lt;li&gt;A classe &lt;em&gt;TEmployeeSalaryWithCommission&lt;/em&gt; é um &lt;em&gt;decorator&lt;/em&gt; para &lt;em&gt;TEmployeeSalary&lt;/em&gt;;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Diferentemente do primeiro exemplo, no clique de um único botão:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Instanciei &lt;em&gt;TEmployee&lt;/em&gt;;&lt;/li&gt;
+  &lt;li&gt;Instanciei &lt;em&gt;TEmployeeSalary&lt;/em&gt;;&lt;/li&gt;
+  &lt;li&gt;Decorei a instancia de &lt;em&gt;TEmployeeSalary&lt;/em&gt; com &lt;em&gt;TEmployeeSalaryWithCommission&lt;/em&gt;;&lt;/li&gt;
+  &lt;li&gt;Chamada para &lt;em&gt;Value&lt;/em&gt; — uma instancia de &lt;em&gt;ISalary&lt;/em&gt; — e depois para o método &lt;em&gt;AsString&lt;/em&gt;;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Não há condicionais, cálculos ou Regras de Negócio “espalhadas” no código. Apenas objetos “conversando”.&lt;/p&gt;
+
+&lt;p&gt;Claro que uma &lt;em&gt;query&lt;/em&gt; será executada em algum lugar — talvez encapsulado dentro de &lt;em&gt;TEmployee&lt;/em&gt; — assim como os cálculos de comissões terão que 
+ser implementados em &lt;em&gt;TEmployeeSalary&lt;/em&gt; ou em algum outro objeto. Mas isso não é mover o problema para outro lugar… não! Isso é encapsular
+o problema em objetos e deixá-los trabalhar livremente.&lt;/p&gt;
+
+&lt;p&gt;Nessa versão você não vê as regras, os cálculos. Você, como utilizador dessas Classes, não precisa
+pensar em procedimentos e na ordem de chamada entre eles. &lt;strong&gt;Deixe que os Objetos pensem por você.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 14 Mar 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/</guid>
+      </item>
+    
+      <item>
         <title>Classes devem Implementar apenas uma Responsabilidade</title>
         <description>&lt;p&gt;O Princípio da Responsabilidade Única (Single Responsibility Principle) afirma que, se tivermos 
 mais de uma razão para mudar a implementação de uma Classe, devemos dividir o comportamento em 
@@ -48,7 +231,7 @@ dividindo as funcionalidades em Classes menores e mais reutilizáveis.&lt;/p&gt;
   &lt;li&gt;Possibilidade de enviar o &lt;em&gt;Log&lt;/em&gt; por e-mail&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h3 id=&quot;implementao-tradicional-e-procedural&quot;&gt;1-Implementação “Tradicional” e Procedural&lt;/h3&gt;
+&lt;h3 id=&quot;implementacao-tradicional&quot;&gt;1-Implementação “Tradicional” e Procedural&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/photo-1453560814059-d646dffd32fd.jpg&quot; alt=&quot;Procedural e antiga&quot; /&gt;&lt;/p&gt;
 
@@ -144,7 +327,7 @@ dividindo as funcionalidades em Classes menores e mais reutilizáveis.&lt;/p&gt;
 gerar XML; enviar por e-mail; excluir arquivos antigos; e muito mais. Era uma grande &lt;strong&gt;Classe Utilitária&lt;/strong&gt; composta somente 
 de &lt;a href=&quot;/posts/nao-utilize-metodos-estaticos/&quot;&gt;Métodos Estáticos&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&quot;implementao-orientada-a-objetos&quot;&gt;2-Implementação Orientada a Objetos&lt;/h3&gt;
+&lt;h3 id=&quot;implementacao-oo&quot;&gt;2-Implementação Orientada a Objetos&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/photo-1457257495536-67f31bc9773d.jpg&quot; alt=&quot;Orientada a Objetos&quot; /&gt;&lt;/p&gt;
 
@@ -2504,103 +2687,6 @@ Cada autorização (usuário/senha) também é uma classe, que chamei de &lt;cod
         <pubDate>Sun, 03 Jan 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/pensando-em-objetos/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/pensando-em-objetos/</guid>
-      </item>
-    
-      <item>
-        <title>Você sabe, com certeza, o que é Orientação a Objetos?</title>
-        <description>&lt;p&gt;Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1451340124423-6311db67a5d9.jpg&quot; alt=&quot;Rochas&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;um-pouco-de-histria&quot;&gt;Um pouco de História&lt;/h2&gt;
-
-&lt;p&gt;Muitos programadores, ao menos uma vez na vida, já devem ter pesquisado 
-o que significa &lt;strong&gt;Orientação a Objetos&lt;/strong&gt;, quando o termo foi cunhado e por quem.&lt;/p&gt;
-
-&lt;p&gt;Há vários sites hoje em dia contendo essas informações, então não vou 
-replicá-las aqui… bem, só pra lembrar rapidamente: o criador do termo foi Alan Kay, 
-o mesmo criador da linguagem Smalltalk — uma linguagem puramente 
-Orientada a Objetos — no entanto, mesmo antes do termo ter sido criado, 
-ideias conceituais sobre Orientação a Objetos já estavam sendo aplicadas 
-na linguagem Simula 67 (1967).&lt;/p&gt;
-
-&lt;p&gt;Linguagens de programação foram desenhadas com base nesse paradigma; centenas ou milhares de livros foram escritos; milhões de sites na Internet falam desse assunto. Então porque, após todos esses anos, a maioria dos programadores ainda não sabem o que é programar Orientado a Objetos?&lt;/p&gt;
-
-&lt;h2 id=&quot;objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;Um Objeto não é um “balde” de Funções e Dados&lt;/h2&gt;
-
-&lt;p&gt;Ok, &lt;ins&gt;tecnicamente&lt;/ins&gt; ele é um “balde” de funções e dados.
-Quando um objeto é criado ele possui uma estrutura de dados em memória; cada função recebe um ponteiro implícito para essa estrutura; as funções podem utilizar esses dados como se fossem variáveis locais… basicamente é isso.&lt;/p&gt;
-
-&lt;p&gt;Mas se você não for um projetista de compiladores, pouco importa saber como um Objeto é gerenciado internamente pelo compilador — muitos programadores Java nem sabem o que é um ponteiro :)&lt;/p&gt;
-
-&lt;p&gt;Então funções e dados ganharam novos nomes: funções são chamadas de Métodos e dados são chamados de Atributos ou Propriedades.&lt;/p&gt;
-
-&lt;p&gt;Utilizar as palavras Métodos e Atributos já é um grande passo para entender o que são Objetos, mas eu prefiro dizer que um Objeto tem &lt;strong&gt;Comportamento&lt;/strong&gt; e &lt;strong&gt;Estado&lt;/strong&gt;, respectivamente.&lt;/p&gt;
-
-&lt;p&gt;E qual a diferença (teórica) entre &lt;ins&gt;Métodos vs Comportamentos&lt;/ins&gt; e &lt;ins&gt;Atributos vs Estado&lt;/ins&gt;?
-Se você “executa sequencialmente os métodos” de um Objeto e/ou “atualiza seus atributos”, você utiliza &lt;strong&gt;Programação Procedural&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;É assunto para outro post explicar as diferenças sutis de nomenclatura, assim como as afirmações que fiz acima, mas se for possível para você apenas aceitar tais definições por enquanto, continue lendo.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;
-    “A orientação a objetos é um modelo de análise,
-    projeto e programação de sistemas de software baseado
-    na composição e interação entre diversas unidades de
-    software chamadas de objetos.” 
-  &lt;/p&gt;
-  &lt;footer&gt;&lt;cite title=&quot;Wikipedia&quot;&gt;— Wikipedia&lt;/cite&gt;&lt;/footer&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Objetos podem ser &lt;strong&gt;compostos&lt;/strong&gt; por outros Objetos e eles &lt;strong&gt;interagem&lt;/strong&gt; entre si.&lt;/p&gt;
-
-&lt;p&gt;Funções são executadas. Objetos interagem entre si.&lt;/p&gt;
-
-&lt;p&gt;Nunca pensem em Objetos em termos de funções e dados. Nunca.&lt;/p&gt;
-
-&lt;p&gt;Para nós, de agora em diante, um Objeto representa uma entidade, 
-criatura ou qualquer coisa fora do contexto do programa.&lt;/p&gt;
-
-&lt;p&gt;Alguns dizem, também, que um Objeto representa uma entidade na “vida real”. 
-A definição está correta, porém pode gerar confusão, por exemplo:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Um cachorro é uma entidade na vida real? Sim.&lt;/li&gt;
-  &lt;li&gt;Uma pessoa é uma entidade na vida real? Sim.&lt;/li&gt;
-  &lt;li&gt;Um arquivo de computador é uma entidade na vida real? Sim.&lt;/li&gt;
-  &lt;li&gt;Um pixel é uma entidade na vida real? Sim.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Se você não notou diferença entre os exemplos, parabéns. Mas se ficou em dúvida a 
-respeito dos itens #3 e #4, tudo bem, muitos tem a mesma dúvida. Por isso eu digo 
-que um Objeto é qualquer coisa fora do contexto do programa. Definir como “vida real” 
-também está certo e tem a vantagem de ser mais rápido pra escrever 😉&lt;/p&gt;
-
-&lt;h2 id=&quot;os-programadores-no-utilizam-orientao-a-objetos&quot;&gt;Os programadores não utilizam Orientação a Objetos&lt;/h2&gt;
-
-&lt;p&gt;Estou afirmando com base na minha experiência pessoal com o mercado brasileiro, 
-livros e inúmeros post lidos por mim no decorrer dos anos.&lt;/p&gt;
-
-&lt;p&gt;Você pode entender isso como uma coisa boa ou ruim. Depende do ponto de vista. 
-Existe a Programação Funcional e muitas (grandes) empresas a utilizam. 
-Programação Funcional não tem nada haver com Orientação a Objetos e, tudo bem.&lt;/p&gt;
-
-&lt;p&gt;Mas, atenção. Não pense que você programa Orientado a Objetos só 
-porque utiliza &lt;strong&gt;Classes&lt;/strong&gt;, &lt;strong&gt;Herança&lt;/strong&gt;, &lt;strong&gt;Encapsulamento&lt;/strong&gt; e, talvez, 
-&lt;strong&gt;Polimorfismo&lt;/strong&gt;. Esse é a base, mas não é tudo.&lt;/p&gt;
-
-&lt;p&gt;Não somos diferentes. Eu pensava que programava Orientado a Objetos por 
-usar e aplicar — ou achar que estava aplicando — esses conceitos básicos da 
-Orientação a Objetos que nos ensinaram no meio acadêmico. Mas não foi o bastante.&lt;/p&gt;
-
-&lt;p&gt;Esqueceram de nos ensinar como &lt;strong&gt;Pensar Orientado a Objetos&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Mas isso é assunto para um próximo post.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 27 Dec 2015 15:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/o-que-e-orientacao-a-objetos/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/o-que-e-orientacao-a-objetos/</guid>
       </item>
     
   </channel>
