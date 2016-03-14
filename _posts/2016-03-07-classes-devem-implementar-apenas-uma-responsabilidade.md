@@ -50,7 +50,7 @@ Este *Log* deverá implementar os requisitos a seguir:
   3. Possibilidade de enviar o *Log* por e-mail
 
 
-###1-Implementação "Tradicional" e Procedural
+###1-Implementação "Tradicional" e Procedural {#implementacao-tradicional}
   
 ![Procedural e antiga](/images/photo-1453560814059-d646dffd32fd.jpg)
 
@@ -144,7 +144,7 @@ Trabalhei num sistema onde existia uma Classe de *Log* que tinha +20 métodos! M
 gerar XML; enviar por e-mail; excluir arquivos antigos; e muito mais. Era uma grande **Classe Utilitária** composta somente 
 de [Métodos Estáticos]({% post_url 2016-02-15-nao-utilize-metodos-estaticos %}).
   
-###2-Implementação Orientada a Objetos
+###2-Implementação Orientada a Objetos {#implementacao-oo}
 
 ![Orientada a Objetos](/images/photo-1457257495536-67f31bc9773d.jpg)
 
