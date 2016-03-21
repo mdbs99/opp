@@ -77,7 +77,7 @@ São coisas diferentes. Gerar um arquivo de Log não é algo intrínsico das Reg
 porém se o seu sistema foi feito para integrar dados entre outros sistemas, faz parte das Regras de Negócio trabalhar com 
 arquivos. Então você precisa de Objetos reais e não de rotinas ou Métodos Estáticos.
 
-##Classes Utilitárias
+##Classes Utilitárias {#classes-utilitarias}
 
 Enquanto Métodos Estáticos são considerados apenas uma má prática, as Classes Utilitárias representam o **mal** para 
 a Orientação a Objetos.

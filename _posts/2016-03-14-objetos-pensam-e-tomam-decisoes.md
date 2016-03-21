@@ -195,5 +195,3 @@ Nessa versão você não vê as regras, os cálculos. Você, como utilizador des
 pensar em procedimentos e na ordem de chamada entre eles. **Deixe que os Objetos pensem por você.**
 
 Até logo.
-
-
