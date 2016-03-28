@@ -6,7 +6,7 @@ description: Objetos pensam e tomam decisões. Eles não precisam de um controla
 summary: Objetos pensam e tomam decisões. Eles não precisam de um controlador.
 image: /images/photo-1456406644174-8ddd4cd52a06.jpg
 categories: 
-  - oop
+  - OO
 tags:
   - oo
   - interfaces

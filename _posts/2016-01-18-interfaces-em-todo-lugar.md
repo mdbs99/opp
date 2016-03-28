@@ -6,7 +6,7 @@ description: Todas as variáveis devem ser do tipo Interface
 summary: Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.
 image: /images/photo-1452776145041-517a74be1f14.jpg
 categories: 
-  - oo
+  - OO
 tags:
   - oo
   - interfaces

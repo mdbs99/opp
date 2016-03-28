@@ -6,7 +6,7 @@ description: Não utilize FreeAndNil na programação Orientada a Objetos
 summary: Não utilize FreeAndNil na programação Orientada a Objetos.
 image: /images/photo-1452942000102-9c4c7aaeac81.jpg
 categories: 
-  - compilador
+  - Pascal
 tags:
   - compilador
 keywords:

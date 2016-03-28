@@ -8,7 +8,7 @@ description: Orientação a Objetos é muito mais do que Herança, Encapsulament
 summary: Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.
 image: /images/photo-1451340124423-6311db67a5d9.jpg
 categories: 
-  - oo
+  - OO
 tags: 
   - oo
 keywords:

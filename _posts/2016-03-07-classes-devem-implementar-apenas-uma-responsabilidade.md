@@ -6,7 +6,7 @@ description: Uma Classe com apenas uma Responsabilidade é simples para usar, mo
 summary: Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.
 image: /images/photo-1445783426434-670f9b34e183.jpg
 categories: 
-  - oo
+  - OO
 tags:
   - classe
   - responsabilidade

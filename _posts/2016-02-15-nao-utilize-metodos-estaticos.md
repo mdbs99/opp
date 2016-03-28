@@ -6,7 +6,7 @@ description: Não utilize Métodos Estáticos ou Classes Utilitárias
 summary: Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.
 image: /images/photo-1444208393177-b2a88904ed8d.jpg
 categories: 
-  - oo
+  - Pascal
 tags:
   - método estático
 keywords:

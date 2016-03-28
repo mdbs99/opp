@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Herança é (ou pode ser) o mal"
-date: 2016-03-14
+date: 2016-03-18
 description: Não faça da Herança a sua primeira escolha para reutilizar código.
 summary: Não faça da Herança a sua primeira escolha para reutilizar código.
 image: /

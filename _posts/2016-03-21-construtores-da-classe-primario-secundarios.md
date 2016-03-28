@@ -6,7 +6,7 @@ description: Como Utilizar Construtores Primários e Secundários.
 summary: Como Utilizar Construtores Primários e Secundários.
 image: /images/photo-1457803097035-3ace37af34a7.jpg
 categories: 
-  - oo
+  - Pascal
 tags:
   - construtor
 keywords:

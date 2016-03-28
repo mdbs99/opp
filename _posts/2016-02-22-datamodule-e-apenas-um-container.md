@@ -6,7 +6,7 @@ description: Não utilize DataModules para implementar regras de negócio
 summary: DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.
 image: /images/photo-1455487890814-f11ab4eaec4b.jpg
 categories: 
-  - componentes
+  - Componentes
 tags:
   - componentes
 keywords:
