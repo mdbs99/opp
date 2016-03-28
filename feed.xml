@@ -8,6 +8,182 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>AWS Lib: A História e o novo suporte a SES</title>
+        <description>&lt;p&gt;Você já conhece o projeto OpenSource &lt;a href=&quot;https://github.com/mdbs99/aws&quot;&gt;AWS Lib&lt;/a&gt;?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;AWS Lib&lt;/strong&gt; é uma implementação minimalista para &lt;strong&gt;Amazon Web Services (AWS)&lt;/strong&gt;. Inicialmente
+foi implementada somente a API para a utilização de apenas um dos serviços, o &lt;strong&gt;Amazon S3&lt;/strong&gt;,
+até agora…&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-awsList.png&quot; alt=&quot;Amazon Web Services List&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;como-tudo-comeou&quot;&gt;Como Tudo Começou&lt;/h2&gt;
+
+&lt;p&gt;A três anos atrás fui contratado para a fazer a análise, arquitetura e implementação de alguns módulos 
+de um sistema.&lt;/p&gt;
+
+&lt;p&gt;Apesar desse sistema utilizar outras linguagens, implementei os módulos utilizando a linguagem &lt;strong&gt;Object Pascal&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Esses módulos eram, na verdade, &lt;strong&gt;ferramentas&lt;/strong&gt; para um grande sistema muito maior.&lt;/p&gt;
+
+&lt;p&gt;Um dos requisitos desse grande sistema era a utilização do serviço Amazon S3. Os motivos ou 
+como eles utilizam o S3 são propriedade privada e não são relevantes aqui neste blog.&lt;/p&gt;
+
+&lt;p&gt;Esse requisito chegou até mim por último. Os módulos ou ferramentas já estávam quase terminados, 
+mas agora tinha um novo requisito e eu não sabia nada sobre os serviços da Amazon.&lt;/p&gt;
+
+&lt;p&gt;Eu tinha apenas mais 1 semana para entregar o sistema.&lt;/p&gt;
+
+&lt;p&gt;Então fiz uma rápida pesquisa na Internet sobre possíveis implementações em Object Pascal para a 
+&lt;strong&gt;API Amazon S3&lt;/strong&gt; e não encontrei nada que pudesse utilizar. Lembro que existia alguma coisa em &lt;strong&gt;Delphi&lt;/strong&gt;
+mas o código era confuso e eu não estava utilizando Delphi mas sim, &lt;strong&gt;FreePascal&lt;/strong&gt; (FPC) e &lt;strong&gt;Lazarus&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então, mesmo que funcionasse em Delphi, eu não iria copiar o código alheio, converter para FPC e
+depois cobrar por isso. É claro que não.&lt;/p&gt;
+
+&lt;p&gt;Então só havia uma coisa a fazer. Teria que codificar minha própria implementação.&lt;/p&gt;
+
+&lt;p&gt;Descobri que não era tão difícil mas tive dificuldades para implementar a parte de autenticação do serviço.&lt;/p&gt;
+
+&lt;p&gt;Quase terminando o prazo consegui resolver o problema fazendo uma classe &lt;strong&gt;simples&lt;/strong&gt;, &lt;strong&gt;suja&lt;/strong&gt; e 
+totalmente &lt;strong&gt;procedural&lt;/strong&gt;. Mas funcionava. O projeto foi entregue e foi um sucesso.&lt;/p&gt;
+
+&lt;p&gt;Esse módulo que utilizava o Amazon S3 era apenas 5% de tudo que tinha que entregar.&lt;/p&gt;
+
+&lt;p&gt;Depois de alguns dias resolvi publicar no &lt;a href=&quot;https://github.com/mdbs99/aws&quot;&gt;Github&lt;/a&gt; apenas essa classe
+como projeto OpenSource, pois sabia que haveria outras pessoas com o mesmo problema que tive, ou seja, não
+havia nenhuma implementação dos serviços AWS para Object Pascal — e pelo que sei ainda não há — especificamente
+para FPC.&lt;/p&gt;
+
+&lt;p&gt;O tempo passou e o projeto ficou esquecido. Até que um dia um amigo me lembrou:&lt;/p&gt;
+&lt;pre&gt;
+— Você não tem vergonha daquele código publicado no Github? — ele disse.
+— Que código? — perguntei.
+— A implementação do Amazon S3...
+— Err, sei... tá ruim aquele código e...
+— Tá horrível! Você fala de Orientação a Objetos, é aquilo lá?
+— Está bem, vou dar uma olhada no código.
+— Acho melhor refazer tudo — ele disse.
+&lt;/pre&gt;
+
+&lt;p&gt;E ele estava certo.&lt;/p&gt;
+
+&lt;p&gt;Então eu refiz tudo. Trabalhei no código até que as prioridades mudarem novamente, ou seja, novos Projetos.&lt;/p&gt;
+
+&lt;p&gt;Mas ficou 100% melhor do que estava antes.&lt;/p&gt;
+
+&lt;p&gt;Defini alguns princípios para o projeto:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;todas as classes são &lt;em&gt;sealed&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;todos os métodos retornam uma interface ou um tipo primitivo&lt;/li&gt;
+  &lt;li&gt;todos os métodos públicos são implementações de métodos de uma interface&lt;/li&gt;
+  &lt;li&gt;todas as instâncias são imutáveis&lt;/li&gt;
+  &lt;li&gt;a alocação de memória é liberada automaticamente&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Nada mal, eu acho.&lt;/p&gt;
+
+&lt;h2 id=&quot;amazon-ses-um-novo-servio&quot;&gt;Amazon SES, um Novo Serviço&lt;/h2&gt;
+
+&lt;p&gt;Pela imagem acima tem-se uma ideia de que a Amazon, para quem não conhece, tem dezenas de serviços. Um deles
+é o &lt;a href=&quot;https://aws.amazon.com/pt/ses/&quot;&gt;Amazon Simple Email Service&lt;/a&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;
+    O Amazon Simple Email Service (Amazon SES)  é um serviço de e-mails econômico criado na infraestrutura 
+    confiável e escalável que a Amazon.com desenvolveu para atender à sua própria base de clientes. 
+  &lt;/p&gt;
+  &lt;footer&gt;&lt;cite title=&quot;Amazon SES&quot;&gt;— Amazon SES&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Na semana passada retornei ao projeto.&lt;/p&gt;
+
+&lt;p&gt;Comecei refatorando todos os construtores para utilizar 
+o padrão do &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New()&lt;/a&gt;. O motivo
+é que estou preparando o código para a implementação de um novo serviço, o &lt;strong&gt;Amazon Simple Email Service (SES)&lt;/strong&gt; e,
+felizmente, não estou sozinho nessa empreitada.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.facebook.com/andre.medeiros.5458?fref=ts&quot;&gt;André Medeiros&lt;/a&gt; entrou em contato comigo em 2015 para 
+falar sobre meu outro projeto, o &lt;a href=&quot;https://github.com/mdbs99/Greyhound&quot;&gt;Greyhound&lt;/a&gt;, e assim nos tornamos amigos.&lt;/p&gt;
+
+&lt;p&gt;O tempo passou e em 12 de Março recebo um e-mail do André que falava, dentre outras coisas, o seguinte:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Nos últimos dias precisei fazer uma integração com a API do SES, e pensei em usar a sua base para isso, já que ela esta muito bem feita.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Mais uma vez, não sabia que serviço era esse.&lt;/p&gt;
+
+&lt;p&gt;O próprio André resumiu o que é o SES e como ele quer utilizar esse serviço na empresa dele. Achei bem interessante.&lt;/p&gt;
+
+&lt;p&gt;Alguém, além de mim, estava utilizando o AWS Lib em projetos reais e agora estava querendo extender seu uso para outros
+serviços… Legal!&lt;/p&gt;
+
+&lt;p&gt;O AWS Lib foi feito com esse pensamento. A princípio seria só a implementação do S3, porém seu nome não é “AWS S3 Lib” 
+mas sim, &lt;strong&gt;AWS Lib&lt;/strong&gt; que é um nome genérico para compor todos as implementações possíveis de fazer com Object Pascal.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;…nosso desejo é fazer com que a sua AWS Lib possa nos acompanhar, 
+e tenho certeza que com nosso conhecimento em AWS podemos contribuir bastante para seu projeto&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Então vamos lá, falei, vamos fazer isso!&lt;/p&gt;
+
+&lt;h2 id=&quot;problema-na-autenticao&quot;&gt;Problema na Autenticação&lt;/h2&gt;
+
+&lt;p&gt;A autenticação padrão do AWS Lib não estava funcionando com o novo serviço, o SES.&lt;/p&gt;
+
+&lt;p&gt;Novamente problemas com a autenticação, pensei…&lt;/p&gt;
+
+&lt;p&gt;Ora, fiz a unit &lt;em&gt;aws_client&lt;/em&gt; separada justamente pensando nessa reutilização de autenticação em todas as outras 
+implementações de outros serviços… mas não estava funcionando.&lt;/p&gt;
+
+&lt;p&gt;Felizmente o André apresentou a solução 2 dias depois:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;O problema não era a forma de assinar, e sim a forma de declarar o tipo de assinatura para AWS.
+As autenticações se dividem em versões, e cada serviço da AWS suporta 1 ou mais tipos de autenticação&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;O SES suporta as autenticações das versões 3 e 4. Ele implementou a versão 3 e funcionou!&lt;/p&gt;
+
+&lt;p&gt;Mas…&lt;/p&gt;
+
+&lt;h2 id=&quot;refatorando-o-cdigo-voc-vai-gostar-disso&quot;&gt;Refatorando o código, Você vai Gostar disso&lt;/h2&gt;
+
+&lt;p&gt;Ontem eu atualizei os fontes do projeto no Github utilizando a implementação do André, ou seja, a unit &lt;em&gt;aws_ses&lt;/em&gt;
+assim como a pequena modificação na unit &lt;em&gt;aws_client&lt;/em&gt; que ele precisou fazer para tudo funcionar.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Acredito que você vai melhorar esta codificação, mas já é possível enviar email pelo SES e interagir com o S3 usando o AWS Lib.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;André é leitor do blog. Ele sabe… bem, ambos sabemos que o código não está no “padrão”. Mas mesmo assim
+eu atualizei os fontes.&lt;/p&gt;
+
+&lt;p&gt;O motivo é simples: Vou utilizar esse &lt;em&gt;Case&lt;/em&gt; para fazer refatorações e lhe explicar — você leitor — os motivos de tais
+alterações. E, é claro, tais refatorações serão feitas tendo sempre em mente a verdadeira &lt;strong&gt;Orientação a Objetos&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Neste &lt;a href=&quot;https://github.com/mdbs99/aws/commit/c5d990f4d55b4565035327705e2e33999d4f9126&quot;&gt;&lt;em&gt;commit&lt;/em&gt;&lt;/a&gt; você poderá ver o código novo. 
+Funciona, mas não está como gostaríamos.&lt;/p&gt;
+
+&lt;p&gt;Vou utilizar os ensinamentos aqui expostos para direcionar a refatoração do código. O objetivo final é termos uma suíte
+de componentes 100% codificado em Object Pascal que implementa a maioria dos serviços da Amazon.&lt;/p&gt;
+
+&lt;p&gt;Fique ligado!&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 28 Mar 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/awslib-a-historia-e-o-novo-suporte-a-ses/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/awslib-a-historia-e-o-novo-suporte-a-ses/</guid>
+      </item>
+    
+      <item>
         <title>Construtores da Classe, Primário e Secundários</title>
         <description>&lt;p&gt;Você pode implementar dezenas de Construtores para uma única Classe, porém apenas um deles 
 deverá ser o &lt;strong&gt;Primário&lt;/strong&gt; enquanto os demais deverão ser apenas &lt;strong&gt;Secundários&lt;/strong&gt;.&lt;/p&gt;
@@ -2418,174 +2594,6 @@ ganho de performance é muito maior do que o benefício do Polimorfismo ao utili
         <pubDate>Mon, 18 Jan 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/</guid>
-      </item>
-    
-      <item>
-        <title>Interfaces e o Método estático New</title>
-        <description>&lt;p&gt;No &lt;a href=&quot;/posts/pensando-em-objetos/&quot;&gt;post anterior&lt;/a&gt; eu mostrei um código
-Orientado a Objetos onde os Objetos eram instanciados utilizando um Método estático chamado &lt;em&gt;New&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Este método &lt;em&gt;New&lt;/em&gt; não é padrão da linguagem Object Pascal. Ele também não é um &lt;code&gt;constructor&lt;/code&gt;.
-Ele é um &lt;strong&gt;Método de classe&lt;/strong&gt; que retorna a mesma Interface que a classe implementa.&lt;/p&gt;
-
-&lt;p&gt;A utilização do Método &lt;em&gt;New&lt;/em&gt; é um padrão que defini para todos os meus projetos.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/829d24cf.jpg&quot; alt=&quot;Pensando&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;object-pascal-e-seu-garbage-collector&quot;&gt;Object Pascal e seu “&lt;em&gt;Garbage Collector&lt;/em&gt;”&lt;/h2&gt;
-
-&lt;p&gt;Ok. Object Pascal não tem &lt;em&gt;garbage collector&lt;/em&gt; como no Java ou C# — e isso é ótimo quando precisamos de performance —
-porém temos algo parecido quando utilizamos Interfaces.&lt;/p&gt;
-
-&lt;p&gt;Toda variável que tem uma Interface como seu tipo, por padrão, será desalocada da memória assim que
-sair do escopo de execução. Vamos chamar essas variáveis de &lt;strong&gt;variável-interface&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;No momento que o compilador sabe que a variável-interface não será mais utilizada, ele desaloca a memória
-chamando o &lt;code&gt;destructor&lt;/code&gt; da instância.&lt;/p&gt;
-
-&lt;p&gt;Isso é ótimo para a programação Orientada a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Significa que, se eu fizer isso corretamente, poderei criar Objetos dentro de Objetos, encadear chamadas de Objetos,
-criar novas instâncias &lt;code&gt;inline&lt;/code&gt; para utilizar em argumentos e muito mais… assim como fazem no Java ou C#.&lt;/p&gt;
-
-&lt;h2 id=&quot;o-problema&quot;&gt;O problema&lt;/h2&gt;
-
-&lt;p&gt;Existe um grande problema em utilizar Interfaces:&lt;/p&gt;
-
-&lt;p&gt;A falta da variável-interface.&lt;/p&gt;
-
-&lt;p&gt;Se não implementar da forma correta, você terá algumas violações de acesso (&lt;code&gt;Access Violation&lt;/code&gt;)
-e/ou vazamentos de memória (&lt;code&gt;memleaks&lt;/code&gt;).&lt;/p&gt;
-
-&lt;p&gt;Para que o &lt;em&gt;garbage colletor&lt;/em&gt; funcione corretamente você precisa ter uma variável-interface para receber a instância, sempre.&lt;/p&gt;
-
-&lt;p&gt;Considere o código abaixo:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TFoo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TTask&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;TTask é uma classe que recebe uma &lt;code&gt;string&lt;/code&gt; no construtor;&lt;/li&gt;
-  &lt;li&gt;TTask implementa ITask, uma Interface;&lt;/li&gt;
-  &lt;li&gt;TAction é uma classe que recebe uma &lt;strong&gt;interface&lt;/strong&gt; ITask no construtor;&lt;/li&gt;
-  &lt;li&gt;TAction implementa IAction, uma Interface;&lt;/li&gt;
-  &lt;li&gt;TAction tem um método Execute que retorna uma interface IResult;&lt;/li&gt;
-  &lt;li&gt;IResult tem um método ToString que retorna o resultado no formato &lt;code&gt;string&lt;/code&gt;;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Quantos vazamentos de memória teremos: 0, 1 ou 2?&lt;/p&gt;
-
-&lt;p&gt;A resposta é 1.&lt;/p&gt;
-
-&lt;p&gt;Porque?&lt;/p&gt;
-
-&lt;p&gt;O compilador fará o seguinte (mais ou menos, em termos leigos):&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Executar TTask.Create(Name), criando a instância;&lt;/li&gt;
-  &lt;li&gt;A instância criada irá ser passada no argumento, que é do tipo ITask, do construtor de TAction;&lt;/li&gt;
-  &lt;li&gt;TAction irá criar uma instância de IResult quando chamar Execute;&lt;/li&gt;
-  &lt;li&gt;Utilizando a instância de IResult, o método ToString é chamado e uma &lt;code&gt;string&lt;/code&gt; é retornada;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Onde está o erro?&lt;/p&gt;
-
-&lt;p&gt;Na chamada &lt;code&gt;TAction.Create&lt;/code&gt; porque a instância não é referenciada por nenhuma variável-interface!&lt;/p&gt;
-
-&lt;p&gt;O compilador não tem uma referência, então ele não sabe se deve desalocar a memória.&lt;/p&gt;
-
-&lt;p&gt;Na chamada &lt;code&gt;TTask.Create(Name)&lt;/code&gt; não há problema. O argumento de &lt;code&gt;TAction&lt;/code&gt; recebe uma &lt;code&gt;ITask&lt;/code&gt;, então o compilador
-sabe que deverá desalocar essa instância logo que não precisar mais dela.&lt;/p&gt;
-
-&lt;p&gt;Então vamos acertar o código:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TFoo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TTask&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Agora não haverá &lt;code&gt;memleaks&lt;/code&gt; porque agora o compilador tem a referência &lt;code&gt;A&lt;/code&gt; para &lt;code&gt;TAction&lt;/code&gt;. No fim do método
-&lt;code&gt;TFoo.Execute&lt;/code&gt; a instância em &lt;code&gt;A&lt;/code&gt; será liberada automaticamente.&lt;/p&gt;
-
-&lt;p&gt;Se não me falha a memória isso foi implementado no Delphi
-a partir da versão 3 (me corrijam se eu estiver errado).&lt;/p&gt;
-
-&lt;p&gt;Tem muito material sobre isso na Internet se quiserem mais detalhes, mas acredito que você já sabia disso
-ou ao menos já leu sobre isso alguma vez.&lt;/p&gt;
-
-&lt;h2 id=&quot;o-mtodo-new&quot;&gt;O método New&lt;/h2&gt;
-
-&lt;p&gt;Se você prestou atenção nos códigos acima, vai reparar que está na mão do programador saber quando utilizar
-uma variável-interface para “dizer” ao compilador que a instância deverá ser liberada automaticamente…&lt;/p&gt;
-
-&lt;p&gt;E é claro que você vai esquecer disso quando estiver programando… várias vezes! Aconteceu comigo. Centenas de vezes.&lt;/p&gt;
-
-&lt;p&gt;Nem precisa ser esquecimento, basta o código mudar numa parte para começar a ter &lt;code&gt;memleaks&lt;/code&gt;, exemplo:&lt;/p&gt;
-
-&lt;p&gt;Se o argumento é do tipo Interface, não há problema em criar uma instância &lt;code&gt;inline&lt;/code&gt;, mas e se o código for
-alterado para receber uma classe concreta (mudou de IAction para TAction o argumento)? 
-O código pode continuar funcionando, porém haverá &lt;code&gt;memleaks&lt;/code&gt; porque
-o compilador não irá mais desalocar a instância criada no argumento por não ser mais do tipo Interface.&lt;/p&gt;
-
-&lt;p&gt;Ora podemos criar &lt;code&gt;inline&lt;/code&gt;, ora não… isso é muito chato!&lt;/p&gt;
-
-&lt;h3 id=&quot;a-soluo&quot;&gt;A Solução&lt;/h3&gt;
-
-&lt;p&gt;Todas as novas instâncias terão uma variável-interface para receber a referência.&lt;/p&gt;
-
-&lt;p&gt;Eu implemento essa “mágica” de forma muito simples utilizando o método &lt;em&gt;New&lt;/em&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TAction&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IAction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Task&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ITask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Task&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ITask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IResult&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Task&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ITask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
-
-&lt;span class=&quot;cm&quot;&gt;{ Implementação de Create e Execute... irrelevantes }&lt;/span&gt;  
-
-&lt;span class=&quot;cm&quot;&gt;{ Implementação do método New também para TTask... }&lt;/span&gt;
-
-&lt;span class=&quot;cm&quot;&gt;{...}&lt;/span&gt;  
-  
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TFoo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TTask&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Agora nós estamos chamando &lt;code&gt;TAction.New&lt;/code&gt; ao invés de &lt;code&gt;TAction.Create&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;O método &lt;em&gt;New&lt;/em&gt; irá retornar uma instância de &lt;code&gt;IAction&lt;/code&gt; (interface) diferentemente do construtor
-&lt;code&gt;Create&lt;/code&gt; que iria retornar uma instância de &lt;code&gt;TAction&lt;/code&gt; (classe).&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Sem problemas de &lt;code&gt;memleaks&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Código mais limpo, sem variáveis locais&lt;/li&gt;
-  &lt;li&gt;Código mais limpo, sem try-finally para desalocar variáveis locais&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Utilize o método &lt;em&gt;New&lt;/em&gt; em todas as suas classes e nunca mais chame o construtor diretamente.
-Assim você não terá o problema da falta da variável-interface, seja por esquecimento ou por
-mudanças no código.&lt;/p&gt;
-
-&lt;p&gt;Tá gostando? Alguma dúvida? Não concorda? Posta aí nos comentários.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 10 Jan 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/</guid>
       </item>
     
   </channel>
