@@ -8,6 +8,104 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Objetos sem Estado</title>
+        <description>&lt;p&gt;Por que sempre deveríamos criar nossas Classes com pelo menos um argumento no construtor principal afim de 
+não deixar nossos Objetos &lt;strong&gt;“vazios de estado”&lt;/strong&gt;?&lt;/p&gt;
+
+&lt;p&gt;Porque construtores sem argumentos é um anti-padrão.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1455641064490-74f5f8dbf598.jpg&quot; alt=&quot;Vazio&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Para criamos instância de objetos utilizamos os Construtores de Classes 
+&lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;Primários e Secundários&lt;/a&gt;
+ou indiretamente, através do padrão chamado &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New()&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Um bom construtor sempre tem argumentos para a inicialização do Objeto.&lt;/p&gt;
+
+&lt;p&gt;Não utilizar argumentos é visto como uma má prática na Orientação a Objetos porque um Objeto deve encapsular
+atributos privados, ou seja, seu &lt;strong&gt;Estado&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se um Objeto não tem Estado então ele pode ser visto como uma instância de uma 
+&lt;a href=&quot;/posts/nao-utilize-metodos-estaticos/#classes-utilitarias&quot;&gt;Classe Utilitária&lt;/a&gt;,
+o que é um anti-padrão na programação Orientada a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Infelizmente o senso comum da maioria dos programadores Object Pascal — e também de outras linguagens Orientada a Objetos —
+é sempre ter apenas um &lt;strong&gt;construtor sem parâmetros&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Essa prática é comum desde… sempre.&lt;/p&gt;
+
+&lt;p&gt;A VCL/LCL, a RTL, todos os descendentes de &lt;code&gt;TComponent&lt;/code&gt;, a maioria dos códigos que tenho visto em 
+várias empresas e, é claro, em muitos dos meus códigos
+— projetos antigos cujo o custo para fazer tais alterações seria muito alto — 
+todos utilizam construtores sem argumentos, na maioria das Classes.&lt;/p&gt;
+
+&lt;p&gt;Por que codificamos dessa maneira?&lt;/p&gt;
+
+&lt;p&gt;Porque é mais &lt;strong&gt;fácil&lt;/strong&gt; codificar dessa maneira.&lt;/p&gt;
+
+&lt;p&gt;Após a inicialização do Objeto com um construtor sem argumentos basta utilizar as &lt;em&gt;properties&lt;/em&gt; ou métodos &lt;code&gt;SetXxx(Value)&lt;/code&gt; para inicializar ou
+injetar algum valor.&lt;/p&gt;
+
+&lt;p&gt;Fácil.&lt;/p&gt;
+
+&lt;p&gt;Essa prática é &lt;strong&gt;simples e conveniente&lt;/strong&gt;, no entanto dizem que “na Engenharia nada é de graça”, ou seja, essa facilidade tem um preço.&lt;/p&gt;
+
+&lt;p&gt;Essa &lt;strong&gt;falsa simplicidade&lt;/strong&gt; trás consigo:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;“Código-espaguete”: Classes mutáveis, crescentes, são quase sempre o início do caos.&lt;/li&gt;
+  &lt;li&gt;Complexidade: Classes gigantes e complexas com dezenas de métodos e propriedades.&lt;/li&gt;
+  &lt;li&gt;Desperdícios: De memória devido a alocação desnecessária de “objetos filhos”; 
+  de tempo devido ao tempo perdido para entender, implementar ou resolver problemas.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Sério.&lt;/p&gt;
+
+&lt;p&gt;Não concorda?&lt;/p&gt;
+
+&lt;p&gt;Então me diga quando foi a última vez que você utilizou todas as propriedades e métodos de um componente? Não lembra, quase nunca ou o mais provável, nunca.&lt;/p&gt;
+
+&lt;p&gt;Um Objeto deve ser fácil de criar, mas você precisa no mínimo raciocinar sobre o motivo de instânciá-lo e isso é feito 
+através dos argumentos passados em seu construtor. Você deve instanciar um Objeto que
+&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;represente uma Entidade&lt;/a&gt; para fazer algum trabalho num
+momento específico no tempo.&lt;/p&gt;
+
+&lt;p&gt;Sem um construtor adequado é fácil adicionar mais e mais propriedades 
+e métodos aos Objetos.&lt;/p&gt;
+
+&lt;p&gt;O problema é que esses Objetos não param de crescer ou já são grandes o bastante para ninguém mais entendê-los ou não ter a coragem para 
+refatorar seu código.&lt;/p&gt;
+
+&lt;p&gt;No fim você terá um monstro em suas mãos e é justamente isso que queremos evitar!&lt;/p&gt;
+
+&lt;p&gt;O outro motivo desses monstros aparecerem é devido ao fato desses Objetos não serem &lt;a href=&quot;https://en.wikipedia.org/wiki/Immutable_object&quot;&gt;imutáveis&lt;/a&gt;.
+Codificar utilizando imutabilidade irá restringí-lo num primeiro momento, no entanto essa restrição irá fazê-lo pensar num
+design melhor para suas Classes.&lt;/p&gt;
+
+&lt;p&gt;Num mundo perfeito, todo construtor deveria prover informação necessária para um Objeto encapsular algum Estado. Essa informação
+é concedida através dos argumentos.&lt;/p&gt;
+
+&lt;p&gt;Bem, acho que ainda não é possível criar componentes para a IDE sem que apenas um construtor único e sem argumentos seja utilizado
+para instanciar o Objeto. Fizeram a arquitetura dessa forma e não temos como mudar. É assim no Delphi e Lazarus, mas também 
+ocorre no Java ou C# onde muitos &lt;em&gt;frameworks&lt;/em&gt; exigem um construtor sem argumentos.&lt;/p&gt;
+
+&lt;p&gt;Então vamos deixar os componentes de lado e focar apenas nas &lt;strong&gt;Classes de Negócio&lt;/strong&gt;, porque podemos implementar essas Classes 
+da maneira que quisermos sem nos preocuparmos em integrá-las com &lt;em&gt;frameworks&lt;/em&gt; ou IDE’s.&lt;/p&gt;
+
+&lt;p&gt;Antes de criar uma Classe, não pense nas funções. Pense no que ela representa e quais os argumentos que seus Objetos irão precisar
+para fazer o trabalho.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 04 Apr 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/objetos-sem-estado/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-sem-estado/</guid>
+      </item>
+    
+      <item>
         <title>AWS Lib: A História e o novo suporte a SES</title>
         <description>&lt;p&gt;Você já conhece o projeto OpenSource &lt;a href=&quot;https://github.com/mdbs99/aws&quot;&gt;AWS Lib&lt;/a&gt;?&lt;/p&gt;
 
@@ -2509,91 +2607,6 @@ fazer mal diretamente, mas tem potencial para fazer mal indiretamente quando aju
         <pubDate>Mon, 25 Jan 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/freeandnil-esqueca/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/freeandnil-esqueca/</guid>
-      </item>
-    
-      <item>
-        <title>Interfaces em Todo Lugar</title>
-        <description>&lt;p&gt;Variáveis não devem ser do tipo Classe.&lt;/p&gt;
-
-&lt;p&gt;Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.&lt;/p&gt;
-
-&lt;p&gt;Por que?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1452776145041-517a74be1f14.jpg&quot; alt=&quot;Pensando&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;interfaces-sao-contratos&quot;&gt;Interfaces são Contratos&lt;/h2&gt;
-
-&lt;p&gt;Vou contar uma história.&lt;/p&gt;
-
-&lt;p&gt;Carlos é um empreendedor. Ele tem um Café chamado “Instância do Café” :)&lt;/p&gt;
-
-&lt;p&gt;Seus negócios estão indo muito bem mas seus clientes estão ficando cada vez mais exigentes… ele
-precisa contratar um barista mais experiente.&lt;/p&gt;
-
-&lt;p&gt;Ele paga por um anúncio para achar o melhor barista que ele puder pagar. Ele não sabe quem será o novo
-contratado, ele só espera que o pretendente tenha as qualificações necessárias para fazer o trabalho que
-lhe for designado.&lt;/p&gt;
-
-&lt;p&gt;Carlos não está procurando especificamente um João, Amanda ou um Xavier… suas exigências são apenas
-sobre as qualificações de barista. Ele não quer saber se o novo pretendente será homem ou mulher. Não importa
-a cor do cabelo e muito menos sobre seu gosto musical. Ele precisa de um profissional, e só.&lt;/p&gt;
-
-&lt;p&gt;O pretendente com as melhores qualificações terá um &lt;strong&gt;contrato&lt;/strong&gt; com Carlos, seja ele/ela quem for.&lt;/p&gt;
-
-&lt;p&gt;Na Orientação a Objetos, a &lt;strong&gt;Interface&lt;/strong&gt; é o contrato firmado entre dois ou mais Objetos.&lt;/p&gt;
-
-&lt;h2 id=&quot;interfaces-definem-o-trabalho-no-as-implementaes&quot;&gt;Interfaces definem o trabalho, não as Implementações&lt;/h2&gt;
-
-&lt;p&gt;Assim como Carlos, você não deve ser “preconceituoso” ao definir trabalho para Classes específicas.&lt;/p&gt;
-
-&lt;p&gt;Defina o contrato do trabalho ou função utilizando Interfaces.&lt;/p&gt;
-
-&lt;p&gt;Toda classe que implementar esse contrato será uma pretendente em potencial.&lt;/p&gt;
-
-&lt;p&gt;Por isso que toda Variável deve ser do tipo Interface — essa é a resposta ao “Porque” no início do post.&lt;/p&gt;
-
-&lt;p&gt;Se você utilizar tipos de Classes em vez de tipos de Interfaces,
-você estará restringindo quem fará o trabalho. Isso é preconceito. Seu sistema ficará dependende dessas Classes e 
-não poderá deixá-las nunca mais. Não faça isso!&lt;/p&gt;
-
-&lt;p&gt;Exemplo. Eu utilizo &lt;a href=&quot;http://synapse.ararat.cz/doku.php/download&quot;&gt;Synapse&lt;/a&gt; para protocolos de rede como &lt;code&gt;HTTP&lt;/code&gt;, &lt;code&gt;FTP&lt;/code&gt;, etc. 
-Mas meus sistemas não conhecem a implementação do Synapse, com exeção de um único módulo onde as classes específicas de Synapse são instânciadas.
-Todos os outros módulos/classes só conhecem os contratos, ou seja, as Interfaces para os protocolos de rede, 
-mas não se importam em saber quem irá executar o trabalho.
-Isso é Polimorfismo. Se eu quiser mudar de Synapse para &lt;a href=&quot;https://lnet.wordpress.com/&quot;&gt;lNet&lt;/a&gt; ou &lt;a href=&quot;http://www.indyproject.org/index.en.aspx&quot;&gt;Indy&lt;/a&gt;, 
-poderia fazê-lo em apenas um lugar e tudo continuaria funcionando perfeitamente.&lt;/p&gt;
-
-&lt;p&gt;Eu tenho um projeto OpenSource codificado em FreePascal chamado &lt;a href=&quot;https://github.com/mdbs99/AWS&quot;&gt;AWS Lib&lt;/a&gt;.
-Ele é um &lt;em&gt;client&lt;/em&gt; para o  serviço &lt;a href=&quot;http://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html&quot;&gt;Amazon S3&lt;/a&gt; que também utiliza Synapse
-para as chamadas &lt;code&gt;HTTP&lt;/code&gt;.
-Este projeto mostra de forma bem simples o que eu quero dizer. Sugiro “passear” pelos fontes e descobrir você mesmo
-onde é instanciado o(s) Objeto(s) do Synapse.&lt;/p&gt;
-
-&lt;p&gt;A &lt;a href=&quot;https://github.com/mdbs99/AWS&quot;&gt;AWS Lib&lt;/a&gt; também mostra conceitos sobre &lt;strong&gt;imutabilidade&lt;/strong&gt; que irei
-explicar em futuros posts.&lt;/p&gt;
-
-&lt;p&gt;Argumentos e atributos também são variáveis. Então vamos nos referir aos três apenas como &lt;strong&gt;instância&lt;/strong&gt; de agora em diante,
-utilizando a nomenclatura correta para o paradigma Orientado a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Utilizando Interfaces em todas as suas instâncias você ganha o benefício do &lt;strong&gt;Polimorfismo&lt;/strong&gt; pois qualquer classe — mesmo
-aquelas fora do seu sistema — poderão executar o trabalho de acordo com o contrato. Favorece baixo acoplamento
-porque as classes não estarão conectadas entre si, mas sim por Interfaces. Outra vantagem é facilitar a codificação de testes
-automatizados, pois podemos criar implementações &lt;em&gt;fake&lt;/em&gt; para qualquer Interface… assunto para outro post.&lt;/p&gt;
-
-&lt;hr /&gt;
-&lt;p&gt;&lt;strong&gt;Dica:&lt;/strong&gt; A utilização de tipos primitivos como Integer, TDateTime ou &lt;code&gt;string&lt;/code&gt; em variáveis sempre será em
-função da performance em detrimento ao melhor design. Priorize as Interfaces. Só utilize tipos 
-primitivos em métodos locais — você poderá alterar quando quiser sem complicações — ou em casos bem específicos onde o 
-ganho de performance é muito maior do que o benefício do Polimorfismo ao utilizar Interfaces.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-</description>
-        <pubDate>Mon, 18 Jan 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/</guid>
       </item>
     
   </channel>

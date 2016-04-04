@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Objetos sem Estado &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="oo">
+    <meta name="keywords" content="estado, state, encapsulamento">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/objetos-sem-estado/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201604041046" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Objetos sem Estado">
+    <meta property="og:description" content="Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/objetos-sem-estado/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1455641064490-74f5f8dbf598.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Objetos sem Estado" />
+    <meta name="twitter:description" content="Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/objetos-sem-estado/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Objetos sem Estado</h1>
+  <span class="post-meta">Apr 4, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    3 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Por que sempre deveríamos criar nossas Classes com pelo menos um argumento no construtor principal afim de 
+não deixar nossos Objetos <strong>“vazios de estado”</strong>?</p>
+
+<p>Porque construtores sem argumentos é um anti-padrão.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1455641064490-74f5f8dbf598.jpg" alt="Vazio" /></p>
+
+<p>Para criamos instância de objetos utilizamos os Construtores de Classes 
+<a href="/posts/construtores-da-classe-primario-secundarios/">Primários e Secundários</a>
+ou indiretamente, através do padrão chamado <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New()</a>.</p>
+
+<p>Um bom construtor sempre tem argumentos para a inicialização do Objeto.</p>
+
+<p>Não utilizar argumentos é visto como uma má prática na Orientação a Objetos porque um Objeto deve encapsular
+atributos privados, ou seja, seu <strong>Estado</strong>.</p>
+
+<p>Se um Objeto não tem Estado então ele pode ser visto como uma instância de uma 
+<a href="/posts/nao-utilize-metodos-estaticos/#classes-utilitarias">Classe Utilitária</a>,
+o que é um anti-padrão na programação Orientada a Objetos.</p>
+
+<p>Infelizmente o senso comum da maioria dos programadores Object Pascal — e também de outras linguagens Orientada a Objetos —
+é sempre ter apenas um <strong>construtor sem parâmetros</strong>.</p>
+
+<p>Essa prática é comum desde… sempre.</p>
+
+<p>A VCL/LCL, a RTL, todos os descendentes de <code>TComponent</code>, a maioria dos códigos que tenho visto em 
+várias empresas e, é claro, em muitos dos meus códigos
+— projetos antigos cujo o custo para fazer tais alterações seria muito alto — 
+todos utilizam construtores sem argumentos, na maioria das Classes.</p>
+
+<p>Por que codificamos dessa maneira?</p>
+
+<p>Porque é mais <strong>fácil</strong> codificar dessa maneira.</p>
+
+<p>Após a inicialização do Objeto com um construtor sem argumentos basta utilizar as <em>properties</em> ou métodos <code>SetXxx(Value)</code> para inicializar ou
+injetar algum valor.</p>
+
+<p>Fácil.</p>
+
+<p>Essa prática é <strong>simples e conveniente</strong>, no entanto dizem que “na Engenharia nada é de graça”, ou seja, essa facilidade tem um preço.</p>
+
+<p>Essa <strong>falsa simplicidade</strong> trás consigo:</p>
+
+<ul>
+  <li>“Código-espaguete”: Classes mutáveis, crescentes, são quase sempre o início do caos.</li>
+  <li>Complexidade: Classes gigantes e complexas com dezenas de métodos e propriedades.</li>
+  <li>Desperdícios: De memória devido a alocação desnecessária de “objetos filhos”; 
+  de tempo devido ao tempo perdido para entender, implementar ou resolver problemas.</li>
+</ul>
+
+<p>Sério.</p>
+
+<p>Não concorda?</p>
+
+<p>Então me diga quando foi a última vez que você utilizou todas as propriedades e métodos de um componente? Não lembra, quase nunca ou o mais provável, nunca.</p>
+
+<p>Um Objeto deve ser fácil de criar, mas você precisa no mínimo raciocinar sobre o motivo de instânciá-lo e isso é feito 
+através dos argumentos passados em seu construtor. Você deve instanciar um Objeto que
+<a href="/posts/objetos-representam-entidades/">represente uma Entidade</a> para fazer algum trabalho num
+momento específico no tempo.</p>
+
+<p>Sem um construtor adequado é fácil adicionar mais e mais propriedades 
+e métodos aos Objetos.</p>
+
+<p>O problema é que esses Objetos não param de crescer ou já são grandes o bastante para ninguém mais entendê-los ou não ter a coragem para 
+refatorar seu código.</p>
+
+<p>No fim você terá um monstro em suas mãos e é justamente isso que queremos evitar!</p>
+
+<p>O outro motivo desses monstros aparecerem é devido ao fato desses Objetos não serem <a href="https://en.wikipedia.org/wiki/Immutable_object">imutáveis</a>.
+Codificar utilizando imutabilidade irá restringí-lo num primeiro momento, no entanto essa restrição irá fazê-lo pensar num
+design melhor para suas Classes.</p>
+
+<p>Num mundo perfeito, todo construtor deveria prover informação necessária para um Objeto encapsular algum Estado. Essa informação
+é concedida através dos argumentos.</p>
+
+<p>Bem, acho que ainda não é possível criar componentes para a IDE sem que apenas um construtor único e sem argumentos seja utilizado
+para instanciar o Objeto. Fizeram a arquitetura dessa forma e não temos como mudar. É assim no Delphi e Lazarus, mas também 
+ocorre no Java ou C# onde muitos <em>frameworks</em> exigem um construtor sem argumentos.</p>
+
+<p>Então vamos deixar os componentes de lado e focar apenas nas <strong>Classes de Negócio</strong>, porque podemos implementar essas Classes 
+da maneira que quisermos sem nos preocuparmos em integrá-las com <em>frameworks</em> ou IDE’s.</p>
+
+<p>Antes de criar uma Classe, não pense nas funções. Pense no que ela representa e quais os argumentos que seus Objetos irão precisar
+para fazer o trabalho.</p>
+
+<p>Até logo.</p>
+
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/objetos-sem-estado/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Objetos sem Estado&via=mdbs99;url=http://objectpascalprogramming.com/posts/objetos-sem-estado/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/objetos-sem-estado/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/objetos-sem-estado/&title=Objetos sem Estado" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/objetos-sem-estado/&title=Objetos sem Estado" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/objetos-sem-estado/&t=Objetos sem Estado" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-o-metodo-estatico-new/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e o Método estático New</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+        </ul>
+        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-pensam-e-tomam-decisoes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos pensam e tomam decisões</li></h4>
+        </ul>
+        <!--<p class="post-summary">Objetos pensam e tomam decisões. Eles não precisam de um controlador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/awslib-a-historia-e-o-novo-suporte-a-ses/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>AWS Lib: A História e o novo suporte a SES</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como tudo começou e o novo Suporte a SES.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-em-todo-lugar/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces em Todo Lugar</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Você sabe, com certeza, o que é Orientação a Objetos?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/objetos-sem-estado';
+      var disqus_title      = 'Objetos sem Estado';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
