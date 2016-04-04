@@ -4,7 +4,7 @@ title: "AWS Lib: A História e o novo suporte a SES"
 date: 2016-03-28
 description: Como tudo começou e o novo Suporte a SES.
 summary: Como tudo começou e o novo Suporte a SES.
-image: /images/photo-awsList.png
+image: /images/photo-awslist.png
 categories: 
   - AWS Lib
 tags:
