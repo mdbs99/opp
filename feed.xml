@@ -8,6 +8,203 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Não Utilize nil ou NULL</title>
+        <description>&lt;p&gt;O conceito &lt;em&gt;NULL&lt;/em&gt;, também conhecido como &lt;a href=&quot;http://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare&quot;&gt;“O erro de 1 bilhão de dólares”&lt;/a&gt;,
+foi inventado por Charles Antony Richard Hoare em 1965.&lt;/p&gt;
+
+&lt;p&gt;Em uma conferência em 2009, ele pediu desculpas por inventar a referência nula.&lt;/p&gt;
+
+&lt;p&gt;Mas o estrago já havia sido feito…&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1415226620463-aedee27159c5.jpg&quot; alt=&quot;NULL&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;A referência &lt;em&gt;NULL&lt;/em&gt; — o mesmo vale para &lt;em&gt;nil&lt;/em&gt; do Object Pascal — é antiga e existe, talvez, 
+em todas as linguagens de programação.&lt;/p&gt;
+
+&lt;p&gt;O conceito também é valido para SGBD’s.&lt;/p&gt;
+
+&lt;p&gt;Então por que estou dizendo para você não utilizar &lt;em&gt;nil&lt;/em&gt; ou &lt;em&gt;NULL&lt;/em&gt;?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;em&gt;NULL&lt;/em&gt; ou nil não pertencem ao mundo Orientado a Objetos.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Pense por um segundo, como seria o mundo sem o &lt;em&gt;NULL&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;null-na-orientao-a-objetos&quot;&gt;&lt;em&gt;NULL&lt;/em&gt; na Orientação a Objetos&lt;/h2&gt;
+
+&lt;p&gt;De agora em diante quando eu disser &lt;em&gt;NULL&lt;/em&gt;, pense também em &lt;em&gt;nil&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Esse blog fala de Orientação a Objetos com &lt;em&gt;Object Pascal&lt;/em&gt;, então nós, programadores &lt;em&gt;Object Pascal&lt;/em&gt;, 
+utilizamos o &lt;code&gt;nil&lt;/code&gt; ao invés de &lt;code&gt;NULL&lt;/code&gt; quando estamos falando sobre Objetos e referências a Objetos. 
+Se estivermos falando de dados, então é &lt;em&gt;NULL&lt;/em&gt; mesmo.
+Mas como a maioria das linguagens e &lt;em&gt;papers&lt;/em&gt; falam sobre &lt;em&gt;NULL&lt;/em&gt;, fica mais claro para todos — inclusive 
+para programadores que não programam em &lt;em&gt;Object Pascal&lt;/em&gt; — falarmos sobre &lt;em&gt;NULL&lt;/em&gt; para nos referirmos a ambos.&lt;/p&gt;
+
+&lt;p&gt;Então.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O que significa &lt;em&gt;NULL&lt;/em&gt; na Orientação a Objetos?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Nada.&lt;/p&gt;
+
+&lt;p&gt;Não existe instância, não existe um Objeto. Ninguém para receber uma mensagem (método) e fazer alguma coisa.&lt;/p&gt;
+
+&lt;p&gt;Mas um método pode retornar &lt;em&gt;NULL&lt;/em&gt; se o contexto em execução não tiver um Objeto válido
+para o retorno — você poderia afirmar.&lt;/p&gt;
+
+&lt;p&gt;Bem, em um código Orientado a Objetos você deve ter Objetos “conversando” entre si e &lt;em&gt;NULL&lt;/em&gt;
+não é uma instância válida.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Todo método que retorna um tipo de Interface ou Classe deveria retornar uma instância
+válida. Sempre.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Se não for possível, &lt;strong&gt;levante uma exceção&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Essa é a &lt;strong&gt;teoria&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Infelizmente essa teoria não funciona na prática. Não em 100% das vezes.&lt;/p&gt;
+
+&lt;p&gt;Não há como saber, previamente, se um método que deveria retornar uma instância de algum
+Objeto irá retornar uma instância válida ou &lt;em&gt;NULL&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Muitos &lt;em&gt;frameworks&lt;/em&gt; utilizam &lt;em&gt;NULL&lt;/em&gt;, o SGBD retorna &lt;em&gt;NULL&lt;/em&gt;, o mundo
+utiliza &lt;em&gt;NULL&lt;/em&gt;…&lt;/p&gt;
+
+&lt;p&gt;Esse é o problema. O &lt;em&gt;NULL&lt;/em&gt; existe e não podemos ignorá-lo.&lt;/p&gt;
+
+&lt;p&gt;Felizmente existem técnicas para evitá-lo e proteger nosso código de seu uso.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;em&gt;Null Object Pattern&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Optional Pattern&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Listas&lt;/li&gt;
+  &lt;li&gt;Levantar uma Exceção&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;null-object-pattern&quot;&gt;1. &lt;em&gt;Null Object Pattern&lt;/em&gt;&lt;/h2&gt;
+
+&lt;p&gt;O padrão &lt;a href=&quot;https://en.wikipedia.org/wiki/Null_Object_pattern&quot;&gt;&lt;em&gt;Null Object Pattern&lt;/em&gt;&lt;/a&gt; sugere utilizar
+um “Objeto Nulo” que implementa a mesma interface do Objeto real, no entanto esse Objeto não 
+teria implementação.&lt;/p&gt;
+
+&lt;p&gt;Tradução livre:&lt;/p&gt;
+&lt;blockquote&gt;
+  Em vez de utilizar uma referência nula para transmitir ausência de um objeto (por exemplo, um cliente inexistente), 
+  utiliza-se um objeto que implementa a interface esperada, mas cujo o corpo dos métodos estarão vazios. 
+  &lt;footer&gt;&lt;cite title=&quot;Wikipedia&quot;&gt;— Wikipedia&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;É uma boa ideia. Mas não resolve o problema. Aliás, em alguns casos, pode-se aumentar o problema
+introduzindo um Objeto que “não faz nada” e não levanta exceções. Pode ser difícil encontrar &lt;em&gt;bugs&lt;/em&gt; devido
+ao seu uso.&lt;/p&gt;
+
+&lt;p&gt;Esse tipo de Objeto pode ser utilizado, na minha opinião, não como um “Objeto Nulo” mas como um “Objeto &lt;em&gt;Default&lt;/em&gt;”,
+que contém código real.&lt;/p&gt;
+
+&lt;p&gt;Em um Sistema de Pagamentos, cada Documento tem um código. Cada um desses códigos tem uma “Classe de Cálculo”
+específica que irá fazer o cálculo do valor a ser pago. O Objeto é criado de acordo com o código, utilizando uma &lt;strong&gt;Fábrica&lt;/strong&gt; de 
+acordo com o padrão &lt;a href=&quot;https://en.wikipedia.org/wiki/Abstract_factory_pattern&quot;&gt;&lt;em&gt;Abstract Factory Pattern&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;O problema ocorre se o usuário criar um novo código para o qual ainda não existe um Cálculo pré-determinado. 
+Nesso momento utilizo o “Objeto &lt;em&gt;Default&lt;/em&gt;”. É uma Classe padrão que serve para calcular qualquer novo Documento que
+não tenha uma Classe de Cálculo definida.&lt;/p&gt;
+
+&lt;p&gt;O cálculo pode não estar 100% correto para o usuário, mas também não considero um erro pois a Classe de Cálculo ainda 
+não foi definida.&lt;/p&gt;
+
+&lt;p&gt;É uma &lt;strong&gt;solução elegante&lt;/strong&gt; para um &lt;strong&gt;problema temporário&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;optional-pattern&quot;&gt;2. &lt;em&gt;Optional Pattern&lt;/em&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Optional Pattern&lt;/em&gt; ou &lt;a href=&quot;https://en.wikipedia.org/wiki/Option_type&quot;&gt;&lt;em&gt;Option Type&lt;/em&gt;&lt;/a&gt; é nada mais, nada menos, que a 
+utilização de &lt;em&gt;Generics&lt;/em&gt; para encapsular o resultado de um método, quando esse resultado pode ou não conter uma 
+instância válida.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Optional&lt;/em&gt; também é conhecido por &lt;em&gt;Maybe&lt;/em&gt;. É um conceito das linguagens funcionais que foram implementados em linguagens
+imperativas como Java e C#.&lt;/p&gt;
+
+&lt;p&gt;Basicamente você tem uma Classe genérica que contém os seguintes métodos:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;IsNull — indica se o valor encapsulado é &lt;em&gt;NULL&lt;/em&gt;;&lt;/li&gt;
+  &lt;li&gt;Value — retorna o valor real, ou seja, o Objeto encapsulado;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;O nome dos métodos podem variar dependendo da &lt;em&gt;Lib&lt;/em&gt; utilizada.&lt;/p&gt;
+
+&lt;p&gt;Este &lt;a href=&quot;http://enterprisecraftsmanship.com/2015/03/13/functional-c-non-nullable-reference-types/&quot;&gt;link&lt;/a&gt; tem exemplos em C# interessantes.&lt;/p&gt;
+
+&lt;h2 id=&quot;listas&quot;&gt;3. Listas&lt;/h2&gt;
+
+&lt;p&gt;Como podemos simular o &lt;em&gt;Optional Pattern&lt;/em&gt; sem utilizar &lt;em&gt;Generics&lt;/em&gt;?&lt;/p&gt;
+
+&lt;p&gt;Ora, Listas!&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Generics&lt;/em&gt; é muito utilizado, mas não o acho impressindível. &lt;em&gt;Generics&lt;/em&gt; nos permite escrever menos e, é isso.
+O que é muito bom pois menos código, menos &lt;em&gt;bugs&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas para o problema do &lt;em&gt;NULL&lt;/em&gt; você não precisa de &lt;em&gt;Generics&lt;/em&gt;, basta utilizar Listas.&lt;/p&gt;
+
+&lt;p&gt;Qual a diferença entre ter uma condicional que verifica o método &lt;code&gt;IsNull&lt;/code&gt; de um &lt;em&gt;Optional&lt;/em&gt;  para depois utilizar sua propriedade &lt;code&gt;Value&lt;/code&gt;
+para obter a instância, do que ter uma Lista que também devemos verificar &lt;code&gt;Empty&lt;/code&gt; e depois obter o primeiro &lt;code&gt;Item[0]&lt;/code&gt; da lista? :)&lt;/p&gt;
+
+&lt;p&gt;Então se está utilizando uma versão antiga do Delphi — eu ainda utilizo Delphi 7 para alguns sistemas — que não tem &lt;em&gt;Generics&lt;/em&gt;
+e não tem certeza se um método poderá retornar &lt;em&gt;NULL&lt;/em&gt;, pense em retornar uma Lista com itens que contém o tipo da interface que o método
+deveria retornar. Se a lista não está vazia, basta pegar o primeiro item.&lt;/p&gt;
+
+&lt;h2 id=&quot;levantar-uma-exceo&quot;&gt;4. Levantar uma Exceção&lt;/h2&gt;
+
+&lt;p&gt;Se tudo der errado, levante e uma exceção. É isso. &lt;strong&gt;Falhe rapidamente&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas como saber se devo utilizar uma das técnicas acima ou levantar uma exceção?&lt;/p&gt;
+
+&lt;p&gt;Não há uma regra. Deve-se usar o &lt;strong&gt;bom senso&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se você tem um método que pesquisa pelo &lt;code&gt;Id&lt;/code&gt;, então quer dizer que o sistema, naquele momento, tem
+o &lt;code&gt;Id&lt;/code&gt; do registro e ele &lt;strong&gt;deveria&lt;/strong&gt; existir. Se nada é retornado, então levante uma exceção.&lt;/p&gt;
+
+&lt;p&gt;Se a pesquisa é por &lt;code&gt;Nome&lt;/code&gt;, no entanto, então &lt;strong&gt;não há certeza&lt;/strong&gt; de retornar 0-n registros. Nesse caso
+levantar uma exceção não faria muito sentido.&lt;/p&gt;
+
+&lt;h2 id=&quot;concluso&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Não há mágica para remover o &lt;em&gt;NULL&lt;/em&gt;. Mesmo utilizando as técnicas apresentadas acima, deve-se codificar
+uma &lt;strong&gt;condicional&lt;/strong&gt; para verificar a presença ou não do &lt;em&gt;NULL&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Muitos &lt;em&gt;frameworks&lt;/em&gt;, &lt;em&gt;API’s&lt;/em&gt;, componentes irão utilizar o &lt;em&gt;NULL&lt;/em&gt;, então tais verificações sempre irão existir no seu código.&lt;/p&gt;
+
+&lt;p&gt;Você irá utilizar &lt;em&gt;NULL&lt;/em&gt; ou &lt;em&gt;nil&lt;/em&gt;, isso é quase um fato.&lt;/p&gt;
+
+&lt;p&gt;Esse artigo propõe a &lt;strong&gt;não utilização do &lt;em&gt;NULL&lt;/em&gt;&lt;/strong&gt; em Objetos que fazem parte do 
+&lt;strong&gt;Domínio&lt;/strong&gt; do seu sistema, ou seja, das suas &lt;strong&gt;Classes de Negócio&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não permita que seus métodos retornem &lt;em&gt;NULL&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não utilize &lt;em&gt;NULL&lt;/em&gt; em lógicas condicionais de suas Classes.&lt;/p&gt;
+
+&lt;p&gt;Você deve estar pensando:&lt;/p&gt;
+
+&lt;p&gt;&lt;ins&gt;Testar se uma instância é &lt;em&gt;NULL&lt;/em&gt; não é o mesmo que testar se um &lt;em&gt;Optional&lt;/em&gt; ou Lista estão vazios antes de obter seu &lt;code&gt;Value&lt;/code&gt;?&lt;/ins&gt;&lt;/p&gt;
+
+&lt;p&gt;O teste é o mesmo, sim. Você terá um &lt;code&gt;if&lt;/code&gt; no código, é verdade. Mas se o valor retornado no método é uma instância 
+de algum Objeto que implementa alguma interface, não tem como saber se a instância é válida ou &lt;em&gt;NULL&lt;/em&gt;. E &lt;strong&gt;ninguém&lt;/strong&gt;, nenhum programador,
+&lt;strong&gt;testa todos os retornos de todos os métodos&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;No entanto, &lt;em&gt;Optional&lt;/em&gt; ou Listas &lt;strong&gt;avisam&lt;/strong&gt; ao programador que algo pode dar errado, que &lt;em&gt;NULL&lt;/em&gt; pode ser retornado. Cabe
+ao programador fazer a análise, fazer o teste ou não… mas ele foi avisado.&lt;/p&gt;
+
+&lt;p&gt;O código fica &lt;strong&gt;auto-documentado&lt;/strong&gt; sobre o possível retorno de valores &lt;em&gt;NULL&lt;/em&gt; nos métodos.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 11 Apr 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/</guid>
+      </item>
+    
+      <item>
         <title>Objetos sem Estado</title>
         <description>&lt;p&gt;Por que sempre deveríamos criar nossas Classes com pelo menos um argumento no construtor principal afim de 
 não deixar nossos Objetos &lt;strong&gt;“vazios de estado”&lt;/strong&gt;?&lt;/p&gt;
@@ -2272,341 +2469,6 @@ quando fizer manutenção no código.&lt;/p&gt;
         <pubDate>Mon, 01 Feb 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/interfaces-e-a-referencia-circular-entre-objetos/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/interfaces-e-a-referencia-circular-entre-objetos/</guid>
-      </item>
-    
-      <item>
-        <title>FreeAndNil... Esqueça</title>
-        <description>&lt;p&gt;Se você utiliza o paradigma da Orientação a Objetos corretamente, você não precisa utilizar
-&lt;em&gt;FreeAndNil&lt;/em&gt;… você não precisa nem mesmo utilizar o método &lt;em&gt;Free&lt;/em&gt;!&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1452942000102-9c4c7aaeac81.jpg&quot; alt=&quot;Antigo pensamento&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introduo&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Já existe muitas controvérsias e discussões na Internet em torno do uso do &lt;em&gt;FreeAndNil&lt;/em&gt;, se é “certo” ou
-“errado” utilizá-lo.&lt;/p&gt;
-
-&lt;p&gt;Dizem que o código fica mais seguro, previne vazamentos de memória… será mesmo?&lt;/p&gt;
-
-&lt;p&gt;As coisas mudam. Nem sempre o que aprendemos no passado será verdade no futuro.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo. Muitos programadores aprenderam Pascal utilizando variáveis globais — a IDE Delphi/Lazarus adiciona 
-automaticamente uma variável global na &lt;em&gt;unit&lt;/em&gt; do &lt;em&gt;Form&lt;/em&gt; — e alguns mantém esse aprendizado até hoje como uma
-verdade, como correto. Outro exemplo do antigo aprendizado é o uso do &lt;em&gt;FreeAndNil&lt;/em&gt;. Para muitos programadores 
-seu uso é incontestável.&lt;/p&gt;
-
-&lt;p&gt;Então não quero tornar esse post mais um debate sem fim, mas apenas mostrar porque &lt;strong&gt;eu&lt;/strong&gt; não
-utilizo &lt;em&gt;FreeAndNil&lt;/em&gt; em 99.9% dos casos e explicar porque considero errado utilizá-lo — mesmo quando sou 
-obrigado a utilizá-lo — mas deixo à você leitor, o veredicto final.&lt;/p&gt;
-
-&lt;h2 id=&quot;programao-imperativa-ou-estruturada&quot;&gt;Programação Imperativa ou Estruturada&lt;/h2&gt;
-
-&lt;p&gt;A Linguagem Pascal é realmente surpreendente. Até hoje seus desenvolvedores conseguem suportar
-vários tipos de paradigmas de desenvolvimento dentro da mesma linguagem.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente (meu ponto de vista) o paradigma mais utilizado pelas comunidades Pascal — e também Java, 
-C#, PHP… sim, eles também — é o Imperativo ou Estruturado. Para mim ambos são equivalentes e se complementam.
-O paradigma Estruturado só melhorou o Imperativo, adicionando estruturas de sequência, decisão e iteração.&lt;/p&gt;
-
-&lt;p&gt;Eu me refiro a ambos como Imperativo.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;
-    Na Ciência da Computação, programação imperativa é um paradigma de programação que descreve 
-    a computação como ações, enunciados ou comandos que mudam o estado (variáveis) de um programa.
-    Muito parecido com o comportamento imperativo das linguagens naturais que expressam ordens, 
-    programas imperativos são uma sequência de comandos para o computador executar.
-  &lt;/p&gt;
-  &lt;footer&gt;&lt;cite title=&quot;Wikipedia&quot;&gt;— Wikipedia&lt;/cite&gt;&lt;/footer&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;As diferenças entre o paradigma Imperativo comparado ao paradigma Orientado a Objetos podem ser bem
-sutis ou muito explícitos, dependendo do caso.&lt;/p&gt;
-
-&lt;p&gt;No paradigma Imperativo o programador diz ao computador para seguir uma sequência de ações passo-a-passo,
-enquanto que no paradigma Orientado a Objetos são &lt;strong&gt;os objetos que determinam a sequência de ações&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1442458370899-ae20e367c5d8.jpg&quot; alt=&quot;??!&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Pode parecer muito estranho afirmar isso, pois mesmo objetos tem códigos sequênciais em seus métodos, mas essa
-&lt;a href=&quot;/posts/pensando-em-objetos/&quot;&gt;diferença sutil de mindset&lt;/a&gt; pode determinar se uma aplicação
-é mais ou menos Orientada a Objetos.&lt;/p&gt;
-
-&lt;p&gt;O uso de &lt;em&gt;FreeAndNil&lt;/em&gt; remete ao código Imperativo. Significa que você tem uma variável global — ou um atributo
-num objeto — que está sendo recriada várias vezes. Isso é o que eu penso quando encontro um &lt;em&gt;FreeAndNil&lt;/em&gt; no código.
-E isso é péssimo. Primeiro que instâncias deveriam ser &lt;strong&gt;imutáveis&lt;/strong&gt;, pois a mutabilidade é um dos fatores que
-trazem complexidade para o código e segundo, se você está reutilizando uma variável, o &lt;em&gt;design&lt;/em&gt; do seu código
-está errado, na maioria dos casos.&lt;/p&gt;
-
-&lt;p&gt;Sobre o uso do &lt;em&gt;FreeAndNil&lt;/em&gt;, Nick Hodges &lt;a href=&quot;http://www.nickhodges.com/post/Using-FreeAndNil.aspx&quot;&gt;escreveu&lt;/a&gt;:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“When should I use FreeAndNil?” is “never”, or at least “Almost never, and if you must use it, make sure that there is a really, really good reason to do so and that you clearly document that reason”.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;A opinião dele é &lt;strong&gt;nunca&lt;/strong&gt;, ou quase nunca, utilizar &lt;em&gt;FreeAndNil&lt;/em&gt; a não ser que tenha uma ótima razão para fazê-lo.
-Seu post data de Dezembro de 2011. É um post antigo que fala de um assunto mais antigo ainda… mas que 
-continuamos a falar sobre isso em 2016. Triste.&lt;/p&gt;
-
-&lt;p&gt;Para quem não sabe, Nick Hodges é programador Delphi de longa data e autor de &lt;a href=&quot;http://www.amazon.com/gp/product/1941266037/ref=as_li_ss_il?ie=UTF8&amp;amp;camp=1789&amp;amp;creative=390957&amp;amp;creativeASIN=1941266037&amp;amp;linkCode=as2&amp;amp;tag=nickhodgeshomepa&quot;&gt;Coding in Delphi&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;tentando-achar-motivos-para-usar-freeandnil&quot;&gt;Tentando achar motivos para usar &lt;em&gt;FreeAndNil&lt;/em&gt;&lt;/h2&gt;
-
-&lt;p&gt;Vou tentar dar alguns exemplos do uso de &lt;em&gt;FreeAndNil&lt;/em&gt; para depois mostrar o que eu considero ser
-a forma correta, utilizando o paradigma Orientado a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Vamos codificar um acesso hipotético ao serviço da Amazon S3 para obter um arquivo e salvá-lo no HD.&lt;/p&gt;
-
-&lt;h3 id=&quot;exemplo-1&quot;&gt;Exemplo 1&lt;/h3&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TForm1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;SaveButtonClick&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sender&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Credentials&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAWSCredentials&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAWSClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Rgn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TS3Region&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Bucket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TS3Bucket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TS3Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Credentials&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAWSCredentials&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;access_key&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;secret_key&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAWSClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Credentials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Rgn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TS3Region&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Bucket&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Obj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Bucket&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rgn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetBucket&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;mybucket&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Obj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bucket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;foo.txt&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SaveToFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;./foo.txt&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Bucket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Rgn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Credentials&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;O programador teve que informar a sequência de ações passo-a-passo para o compilador. Mas o código parece bem “simples”, não?&lt;/p&gt;
-
-&lt;p&gt;Criamos uma credencial, um client, uma região, inicializamos &lt;em&gt;Bucket&lt;/em&gt; e &lt;em&gt;Obj&lt;/em&gt; com &lt;code&gt;nil&lt;/code&gt; (?!!).&lt;/p&gt;
-
-&lt;p&gt;Depois &lt;em&gt;Rgn&lt;/em&gt; chama &lt;em&gt;GetBucket&lt;/em&gt; para obter uma nova instância de &lt;em&gt;TS3Bucket&lt;/em&gt; e este chama &lt;em&gt;GetObject&lt;/em&gt; para
-obtermos uma nova instância de &lt;em&gt;TS3Object&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Por que, neste exemplo, &lt;strong&gt;precisamos&lt;/strong&gt; inicializar &lt;em&gt;Bucket&lt;/em&gt; e &lt;em&gt;Obj&lt;/em&gt; com &lt;code&gt;nil&lt;/code&gt;? O motivo é porque dentro 
-do &lt;em&gt;try-finally&lt;/em&gt;, pode ocorrer uma &lt;em&gt;Exception&lt;/em&gt; (acesso a Internet, HTTP, login, etc) nestas linhas&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;    &lt;span class=&quot;n&quot;&gt;Bucket&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rgn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetBucket&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;mybucket&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Obj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bucket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;foo.txt&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;e se ocorrer uma exceção a variável &lt;em&gt;Bucket&lt;/em&gt; e/ou &lt;em&gt;Obj&lt;/em&gt; nunca serão inicializadas e no fim ocorrerá uma 
-violação de acesso quando o compilador tentar liberar a memória utilizando &lt;em&gt;.Free&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Bem, na minha opinião, esse código é muito errado. Tem mais código de infraestrutura para o computador do que código para 
-resolver meu requisito, que é salvar o arquivo no meu computador.&lt;/p&gt;
-
-&lt;p&gt;Mas, talvez, o &lt;em&gt;FreeAndNil&lt;/em&gt; possa nos ajudar com esse problema… não é?&lt;/p&gt;
-
-&lt;hr /&gt;
-&lt;p&gt;&lt;strong&gt;Dica:&lt;/strong&gt; Você não deve criar um objeto em A (&lt;em&gt;Rgn.GetBucket&lt;/em&gt;) e destruí-lo B (&lt;em&gt;TForm1.SaveButtonClick&lt;/em&gt;).
-Isso é errado para linguagens com liberação manual de memória. Sempre crie e libere seus objetos dentro de um mesmo contexto.
-Não siga o &lt;em&gt;design&lt;/em&gt; do exemplo acima, é apenas um exemplo.&lt;/p&gt;
-
-&lt;hr /&gt;
-&lt;p&gt;Continuando…&lt;/p&gt;
-
-&lt;p&gt;Escrevemos demais num único método (evento, na verdade). Melhor seria refatorar esse código para a reutilização dos objetos,
-para podermos chamar os métodos de &lt;em&gt;Bucket&lt;/em&gt; ou &lt;em&gt;Obj&lt;/em&gt; em outros botões ou formulários.&lt;/p&gt;
-
-&lt;h4 id=&quot;refatorando&quot;&gt;Refatorando&lt;/h4&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TForm1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TForm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FCredentials&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAWSCredentials&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAWSClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FRgn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TS3Region&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FBucket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TS3Bucket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;FObj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TS3Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TForm1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;FormCreate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sender&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FCredentials&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAWSCredentials&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;access_key&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;secret_key&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FClient&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAWSClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Credentials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FRgn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TS3Region&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TForm1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;FormDestroy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sender&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FCredentials&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FRgn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FBucket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FObj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TForm1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;SaveButtonClick&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sender&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FBucket&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FRgn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetBucket&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;mybucket&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FObj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FBucket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;foo.txt&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FObj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SaveToFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;./foo.txt&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;FreeAndNil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;FreeAndNil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FBucket&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Agora o código esta menor e continua “seguro”. Se houver uma exceção, as variáveis &lt;em&gt;FBucket&lt;/em&gt; e &lt;em&gt;FObj&lt;/em&gt; ainda
-serão liberadas no fim do programa, no envento &lt;em&gt;FormDestroy&lt;/em&gt;, sem violação de acesso porque o &lt;em&gt;FreeAndNil&lt;/em&gt;
-irá garantir isso.&lt;/p&gt;
-
-&lt;p&gt;Agora ficou muito melhor? Eu acho que não:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Apenas movemos o problema para outro lugar;&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Form1&lt;/em&gt; não deveria saber quem é &lt;em&gt;Bucket&lt;/em&gt;, &lt;em&gt;Region&lt;/em&gt;, &lt;em&gt;Credentials&lt;/em&gt;, etc apenas porque queremos reutilizar suas instâncias;&lt;/li&gt;
-  &lt;li&gt;Se &lt;em&gt;FBucket&lt;/em&gt; e &lt;em&gt;FObj&lt;/em&gt; são recriados toda hora, qual a vantagem de termos eles como atributos de &lt;em&gt;Form1&lt;/em&gt;?&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Form1&lt;/em&gt; agora é um objeto inchado porque “sabe demais”;&lt;/li&gt;
-  &lt;li&gt;Você ainda precisa se preocupar com a liberação de memória no &lt;em&gt;FormDestroy&lt;/em&gt; e utilizando &lt;em&gt;try-finally&lt;/em&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;exemplo-2&quot;&gt;Exemplo 2&lt;/h3&gt;
-
-&lt;p&gt;Se o exemplo anterior foi simples demais, veja este outro &lt;a href=&quot;https://github.com/mdbs99/Greyhound/blob/0524b1f61e9ef267d17544ae1fc9dfa82683d64c/src/ghsql.pas#L1170&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Este código faz parte do &lt;a href=&quot;https://github.com/mdbs99/Greyhound/&quot;&gt;Greyhound&lt;/a&gt;, um projeto OpenSource codificado em FreePascal por mim.&lt;/p&gt;
-
-&lt;p&gt;Isso mesmo, estou lhe dizendo que usei &lt;em&gt;FreeAndNil&lt;/em&gt; em um dos meus projetos.&lt;/p&gt;
-
-&lt;p&gt;Eu utilizo &lt;em&gt;FreeAndNil&lt;/em&gt; 3 vezes em todo o projeto (nesta mesma &lt;em&gt;unit&lt;/em&gt;, pode procurar). E sim, continuo achando errado. Mas esse
-projeto tem uma complexidade muito maior do que o simples exemplo anterior.&lt;/p&gt;
-
-&lt;h4 id=&quot;explicando-o-uso-do-freeandnil-no-projeto-greyhound&quot;&gt;Explicando o uso do &lt;em&gt;FreeAndNil&lt;/em&gt; no Projeto Greyhound&lt;/h4&gt;
-&lt;p&gt;&lt;em&gt;FData&lt;/em&gt; é um atributo do tipo &lt;em&gt;TDataSet&lt;/em&gt;. A instância de &lt;em&gt;TghSQLTable&lt;/em&gt;, que contem &lt;em&gt;FData&lt;/em&gt;, não sabe como o &lt;em&gt;DataSet&lt;/em&gt; é criado.
-Ela depende de outro objeto para criar o &lt;em&gt;DataSet&lt;/em&gt;, que depende dos filtros setados e também
-do tipo de &lt;em&gt;Lib&lt;/em&gt; utilizada para conexão ao SGBD. Então, neste caso, foi &lt;strong&gt;mais fácil&lt;/strong&gt; destruir e pedir uma nova instância.&lt;/p&gt;
-
-&lt;p&gt;Mas esse design &lt;ins&gt;não está correto&lt;/ins&gt; assim como eu não estou 100% satisfeito com ele. Motivos esses que me farão
-reescrever toda a Lib — na verdade já estou reescrevendo a algum tempo, porém privadamente.&lt;/p&gt;
-
-&lt;h2 id=&quot;freeandnil-na-programao-orientada-a-objetos&quot;&gt;&lt;em&gt;FreeAndNil&lt;/em&gt; na Programação Orientada a Objetos&lt;/h2&gt;
-
-&lt;p&gt;É claro que &lt;em&gt;FreeAndNil&lt;/em&gt; não existe aqui. Nenhuma &lt;em&gt;procedure&lt;/em&gt; ou &lt;em&gt;function&lt;/em&gt; deveriam existir.&lt;/p&gt;
-
-&lt;p&gt;Apenas Objetos com Estado e Comportamento, interagindo entre si e manipulando dados.&lt;/p&gt;
-
-&lt;p&gt;No início do post eu falei que não há necessidade de usar &lt;em&gt;FreeAndNil&lt;/em&gt; ou mesmo &lt;em&gt;Free&lt;/em&gt;. É claro que estou falando do uso de 
-&lt;em&gt;Interfaces&lt;/em&gt; em conjunto com a técnica que expliquei &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;aqui sobre o Método &lt;em&gt;New&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Utilizando &lt;em&gt;Interfaces&lt;/em&gt; para usufruir do &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;&lt;em&gt;“Garbage Collector”&lt;/em&gt;&lt;/a&gt; do compilador, 
-não precisaremos utilizar &lt;em&gt;Free&lt;/em&gt; e muito menos &lt;em&gt;FreeAndNil&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então como seria a codificação do exemplo acima utilizando Orientação a Objetos?&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TForm1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;SaveButtonClick&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sender&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TS3Region&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;TAWSClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;TAWSCredentials&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;access_key&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;secret_key&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Buckets&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;mybucket&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Objects&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;foo.txt&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stream&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SaveToFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;./foo.txt&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Não é a melhor &lt;em&gt;design&lt;/em&gt;, mas melhorou 100% comparado aos exemplos anteriores.&lt;/p&gt;
-
-&lt;p&gt;Não tenho variáveis, nem mutabilidade, nem código de infraestrutura como &lt;em&gt;try-finally&lt;/em&gt; para desalocação de memória. É
-menor, mais simples, mais direto.&lt;/p&gt;
-
-&lt;p&gt;Mas ainda haverá duplicação de código toda vez que for utilizar os métodos de um &lt;em&gt;S3Bucket&lt;/em&gt; ou &lt;em&gt;S3Object&lt;/em&gt; em outros lugares.
-Então como faríamos se quiséssemos reutilizar o código sem ter que especificar a &lt;em&gt;Credentials&lt;/em&gt; e &lt;em&gt;Client&lt;/em&gt; todas as vezes?&lt;/p&gt;
-
-&lt;p&gt;Uma das opções é codificar sua própria implementação de &lt;em&gt;IS3Region&lt;/em&gt;, a &lt;em&gt;interface&lt;/em&gt; que &lt;em&gt;TS3Region&lt;/em&gt; implementa.
-No construtor da nova implementação (ex: &lt;em&gt;TMyRegion&lt;/em&gt;) você poderá inicializar &lt;em&gt;Credentials&lt;/em&gt; e &lt;em&gt;Client&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h4 id=&quot;refatorando-1&quot;&gt;Refatorando&lt;/h4&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TMyRegion&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IS3Region&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IS3Region&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Origin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IS3Region&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;IS3Region&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;    
-    &lt;span class=&quot;c1&quot;&gt;// IS3Region methods...&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  
-&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMyRegion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Origin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IS3Region&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Origin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMyRegion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;IS3Region&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMyRegion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;TS3Region&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;TAWSClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;TAWSCredentials&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;access_key&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;secret_key&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  
-  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;    
-
-&lt;span class=&quot;c1&quot;&gt;//....&lt;/span&gt;
-  
-&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TForm1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;SaveButtonClick&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sender&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TMyRegion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Buckets&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;mybucket&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Objects&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;foo.txt&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stream&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SaveToFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;./foo.txt&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;A instância &lt;em&gt;FOrigin&lt;/em&gt; será utilizada dentro de cada implementação para cada método de &lt;em&gt;IS3Region&lt;/em&gt;.
-A implementação &lt;em&gt;TMyRegion&lt;/em&gt; é um &lt;em&gt;Decorator&lt;/em&gt; implícito.&lt;/p&gt;
-
-&lt;p&gt;O código ficou ainda menor e mais robusto, pois agora qualquer modificação em &lt;em&gt;Credentials&lt;/em&gt; e/ou &lt;em&gt;Client&lt;/em&gt; serão
-modificados em apenas um lugar, a classe &lt;em&gt;TMyRegion&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;É claro que o código das &lt;em&gt;classes&lt;/em&gt; e &lt;em&gt;interfaces&lt;/em&gt; somados podem ser maiores que a quantidade de código do modelo Imperativo.
-Mas isso é irrelevante quando você consegue codificar de forma mais segura e consistente, após implementar as &lt;em&gt;interfaces&lt;/em&gt;
-e &lt;em&gt;classes&lt;/em&gt;. Se implementá-los bem, você só precisa fazer isso uma vez, enquanto que no modelo Imperativo a qualquer momento
-você pode quebrar o código devido a sua mutabilidade e &lt;strong&gt;acoplamento temporal&lt;/strong&gt; — assunto para outro post.&lt;/p&gt;
-
-&lt;h2 id=&quot;concluso&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Para dizer se é “certo” ou “errado” utilizar &lt;em&gt;FreeAndNil&lt;/em&gt; é necessário saber o contexto e o paradigma utilizado para
-codificar o sistema.&lt;/p&gt;
-
-&lt;p&gt;Sistemas antigos com muito código Imperativo o utilizam. Sem problemas.&lt;/p&gt;
-
-&lt;p&gt;Mesmo em sistemas Orientado a Objetos poderemos encontrar &lt;em&gt;FreeAndNil&lt;/em&gt; devido a alguns motivos bem particulares como, 
-por exemplo, utilização de código legado, uso de DLL/SO, uso de &lt;em&gt;lib&lt;/em&gt; de terceiros ou até mesmo por simplicidade em alguns casos.&lt;/p&gt;
-
-&lt;p&gt;O importante, no entanto, é estarmos conscientes do seu uso e do &lt;strong&gt;motivo&lt;/strong&gt; de estarmos utilizando-o. Não tome como uma regra 
-quando dizem que é melhor utilizar &lt;em&gt;FreeAndNil&lt;/em&gt; em todos os casos ou que “não faz mal utilizar”… &lt;em&gt;FreeAndNil&lt;/em&gt; pode não
-fazer mal diretamente, mas tem potencial para fazer mal indiretamente quando ajuda a deixar seu código com um péssimo &lt;em&gt;design&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Sempre pesquise sobre o real motivo de utilizar qualquer função, classe, estrutura e todo o resto… e tire suas próprias conclusões.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 25 Jan 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/freeandnil-esqueca/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/freeandnil-esqueca/</guid>
       </item>
     
   </channel>

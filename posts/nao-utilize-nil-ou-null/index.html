@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Não Utilize nil ou NULL &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Pascal">
+    <meta name="keywords" content="nil, ">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201604111036" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Não Utilize nil ou NULL">
+    <meta property="og:description" content="Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1415226620463-aedee27159c5.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Não Utilize nil ou NULL" />
+    <meta name="twitter:description" content="Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Não Utilize nil ou NULL</h1>
+  <span class="post-meta">Apr 11, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    6 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>O conceito <em>NULL</em>, também conhecido como <a href="http://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare">“O erro de 1 bilhão de dólares”</a>,
+foi inventado por Charles Antony Richard Hoare em 1965.</p>
+
+<p>Em uma conferência em 2009, ele pediu desculpas por inventar a referência nula.</p>
+
+<p>Mas o estrago já havia sido feito…</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1415226620463-aedee27159c5.jpg" alt="NULL" /></p>
+
+<p>A referência <em>NULL</em> — o mesmo vale para <em>nil</em> do Object Pascal — é antiga e existe, talvez, 
+em todas as linguagens de programação.</p>
+
+<p>O conceito também é valido para SGBD’s.</p>
+
+<p>Então por que estou dizendo para você não utilizar <em>nil</em> ou <em>NULL</em>?</p>
+
+<blockquote>
+  <p><em>NULL</em> ou nil não pertencem ao mundo Orientado a Objetos.</p>
+</blockquote>
+
+<p>Pense por um segundo, como seria o mundo sem o <em>NULL</em>.</p>
+
+<h2 id="null-na-orientao-a-objetos"><em>NULL</em> na Orientação a Objetos</h2>
+
+<p>De agora em diante quando eu disser <em>NULL</em>, pense também em <em>nil</em>.</p>
+
+<p>Esse blog fala de Orientação a Objetos com <em>Object Pascal</em>, então nós, programadores <em>Object Pascal</em>, 
+utilizamos o <code>nil</code> ao invés de <code>NULL</code> quando estamos falando sobre Objetos e referências a Objetos. 
+Se estivermos falando de dados, então é <em>NULL</em> mesmo.
+Mas como a maioria das linguagens e <em>papers</em> falam sobre <em>NULL</em>, fica mais claro para todos — inclusive 
+para programadores que não programam em <em>Object Pascal</em> — falarmos sobre <em>NULL</em> para nos referirmos a ambos.</p>
+
+<p>Então.</p>
+
+<p><strong>O que significa <em>NULL</em> na Orientação a Objetos?</strong></p>
+
+<p>Nada.</p>
+
+<p>Não existe instância, não existe um Objeto. Ninguém para receber uma mensagem (método) e fazer alguma coisa.</p>
+
+<p>Mas um método pode retornar <em>NULL</em> se o contexto em execução não tiver um Objeto válido
+para o retorno — você poderia afirmar.</p>
+
+<p>Bem, em um código Orientado a Objetos você deve ter Objetos “conversando” entre si e <em>NULL</em>
+não é uma instância válida.</p>
+
+<p><strong>Todo método que retorna um tipo de Interface ou Classe deveria retornar uma instância
+válida. Sempre.</strong></p>
+
+<p>Se não for possível, <strong>levante uma exceção</strong>.</p>
+
+<p>Essa é a <strong>teoria</strong>.</p>
+
+<p>Infelizmente essa teoria não funciona na prática. Não em 100% das vezes.</p>
+
+<p>Não há como saber, previamente, se um método que deveria retornar uma instância de algum
+Objeto irá retornar uma instância válida ou <em>NULL</em>.</p>
+
+<p>Muitos <em>frameworks</em> utilizam <em>NULL</em>, o SGBD retorna <em>NULL</em>, o mundo
+utiliza <em>NULL</em>…</p>
+
+<p>Esse é o problema. O <em>NULL</em> existe e não podemos ignorá-lo.</p>
+
+<p>Felizmente existem técnicas para evitá-lo e proteger nosso código de seu uso.</p>
+
+<ol>
+  <li><em>Null Object Pattern</em></li>
+  <li><em>Optional Pattern</em></li>
+  <li>Listas</li>
+  <li>Levantar uma Exceção</li>
+</ol>
+
+<h2 id="null-object-pattern">1. <em>Null Object Pattern</em></h2>
+
+<p>O padrão <a href="https://en.wikipedia.org/wiki/Null_Object_pattern"><em>Null Object Pattern</em></a> sugere utilizar
+um “Objeto Nulo” que implementa a mesma interface do Objeto real, no entanto esse Objeto não 
+teria implementação.</p>
+
+<p>Tradução livre:</p>
+<blockquote>
+  Em vez de utilizar uma referência nula para transmitir ausência de um objeto (por exemplo, um cliente inexistente), 
+  utiliza-se um objeto que implementa a interface esperada, mas cujo o corpo dos métodos estarão vazios. 
+  <footer><cite title="Wikipedia">— Wikipedia</cite></footer>
+</blockquote>
+
+<p>É uma boa ideia. Mas não resolve o problema. Aliás, em alguns casos, pode-se aumentar o problema
+introduzindo um Objeto que “não faz nada” e não levanta exceções. Pode ser difícil encontrar <em>bugs</em> devido
+ao seu uso.</p>
+
+<p>Esse tipo de Objeto pode ser utilizado, na minha opinião, não como um “Objeto Nulo” mas como um “Objeto <em>Default</em>”,
+que contém código real.</p>
+
+<p>Em um Sistema de Pagamentos, cada Documento tem um código. Cada um desses códigos tem uma “Classe de Cálculo”
+específica que irá fazer o cálculo do valor a ser pago. O Objeto é criado de acordo com o código, utilizando uma <strong>Fábrica</strong> de 
+acordo com o padrão <a href="https://en.wikipedia.org/wiki/Abstract_factory_pattern"><em>Abstract Factory Pattern</em></a>.</p>
+
+<p>O problema ocorre se o usuário criar um novo código para o qual ainda não existe um Cálculo pré-determinado. 
+Nesso momento utilizo o “Objeto <em>Default</em>”. É uma Classe padrão que serve para calcular qualquer novo Documento que
+não tenha uma Classe de Cálculo definida.</p>
+
+<p>O cálculo pode não estar 100% correto para o usuário, mas também não considero um erro pois a Classe de Cálculo ainda 
+não foi definida.</p>
+
+<p>É uma <strong>solução elegante</strong> para um <strong>problema temporário</strong>.</p>
+
+<h2 id="optional-pattern">2. <em>Optional Pattern</em></h2>
+
+<p><em>Optional Pattern</em> ou <a href="https://en.wikipedia.org/wiki/Option_type"><em>Option Type</em></a> é nada mais, nada menos, que a 
+utilização de <em>Generics</em> para encapsular o resultado de um método, quando esse resultado pode ou não conter uma 
+instância válida.</p>
+
+<p><em>Optional</em> também é conhecido por <em>Maybe</em>. É um conceito das linguagens funcionais que foram implementados em linguagens
+imperativas como Java e C#.</p>
+
+<p>Basicamente você tem uma Classe genérica que contém os seguintes métodos:</p>
+
+<ul>
+  <li>IsNull — indica se o valor encapsulado é <em>NULL</em>;</li>
+  <li>Value — retorna o valor real, ou seja, o Objeto encapsulado;</li>
+</ul>
+
+<p>O nome dos métodos podem variar dependendo da <em>Lib</em> utilizada.</p>
+
+<p>Este <a href="http://enterprisecraftsmanship.com/2015/03/13/functional-c-non-nullable-reference-types/">link</a> tem exemplos em C# interessantes.</p>
+
+<h2 id="listas">3. Listas</h2>
+
+<p>Como podemos simular o <em>Optional Pattern</em> sem utilizar <em>Generics</em>?</p>
+
+<p>Ora, Listas!</p>
+
+<p><em>Generics</em> é muito utilizado, mas não o acho impressindível. <em>Generics</em> nos permite escrever menos e, é isso.
+O que é muito bom pois menos código, menos <em>bugs</em>.</p>
+
+<p>Mas para o problema do <em>NULL</em> você não precisa de <em>Generics</em>, basta utilizar Listas.</p>
+
+<p>Qual a diferença entre ter uma condicional que verifica o método <code>IsNull</code> de um <em>Optional</em>  para depois utilizar sua propriedade <code>Value</code>
+para obter a instância, do que ter uma Lista que também devemos verificar <code>Empty</code> e depois obter o primeiro <code>Item[0]</code> da lista? :)</p>
+
+<p>Então se está utilizando uma versão antiga do Delphi — eu ainda utilizo Delphi 7 para alguns sistemas — que não tem <em>Generics</em>
+e não tem certeza se um método poderá retornar <em>NULL</em>, pense em retornar uma Lista com itens que contém o tipo da interface que o método
+deveria retornar. Se a lista não está vazia, basta pegar o primeiro item.</p>
+
+<h2 id="levantar-uma-exceo">4. Levantar uma Exceção</h2>
+
+<p>Se tudo der errado, levante e uma exceção. É isso. <strong>Falhe rapidamente</strong>.</p>
+
+<p>Mas como saber se devo utilizar uma das técnicas acima ou levantar uma exceção?</p>
+
+<p>Não há uma regra. Deve-se usar o <strong>bom senso</strong>.</p>
+
+<p>Se você tem um método que pesquisa pelo <code>Id</code>, então quer dizer que o sistema, naquele momento, tem
+o <code>Id</code> do registro e ele <strong>deveria</strong> existir. Se nada é retornado, então levante uma exceção.</p>
+
+<p>Se a pesquisa é por <code>Nome</code>, no entanto, então <strong>não há certeza</strong> de retornar 0-n registros. Nesse caso
+levantar uma exceção não faria muito sentido.</p>
+
+<h2 id="concluso">Conclusão</h2>
+
+<p>Não há mágica para remover o <em>NULL</em>. Mesmo utilizando as técnicas apresentadas acima, deve-se codificar
+uma <strong>condicional</strong> para verificar a presença ou não do <em>NULL</em>.</p>
+
+<p>Muitos <em>frameworks</em>, <em>API’s</em>, componentes irão utilizar o <em>NULL</em>, então tais verificações sempre irão existir no seu código.</p>
+
+<p>Você irá utilizar <em>NULL</em> ou <em>nil</em>, isso é quase um fato.</p>
+
+<p>Esse artigo propõe a <strong>não utilização do <em>NULL</em></strong> em Objetos que fazem parte do 
+<strong>Domínio</strong> do seu sistema, ou seja, das suas <strong>Classes de Negócio</strong>.</p>
+
+<p>Não permita que seus métodos retornem <em>NULL</em>.</p>
+
+<p>Não utilize <em>NULL</em> em lógicas condicionais de suas Classes.</p>
+
+<p>Você deve estar pensando:</p>
+
+<p><ins>Testar se uma instância é <em>NULL</em> não é o mesmo que testar se um <em>Optional</em> ou Lista estão vazios antes de obter seu <code>Value</code>?</ins></p>
+
+<p>O teste é o mesmo, sim. Você terá um <code>if</code> no código, é verdade. Mas se o valor retornado no método é uma instância 
+de algum Objeto que implementa alguma interface, não tem como saber se a instância é válida ou <em>NULL</em>. E <strong>ninguém</strong>, nenhum programador,
+<strong>testa todos os retornos de todos os métodos</strong>.</p>
+
+<p>No entanto, <em>Optional</em> ou Listas <strong>avisam</strong> ao programador que algo pode dar errado, que <em>NULL</em> pode ser retornado. Cabe
+ao programador fazer a análise, fazer o teste ou não… mas ele foi avisado.</p>
+
+<p>O código fica <strong>auto-documentado</strong> sobre o possível retorno de valores <em>NULL</em> nos métodos.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Não Utilize nil ou NULL&via=mdbs99;url=http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/&title=Não Utilize nil ou NULL" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/&title=Não Utilize nil ou NULL" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/&t=Não Utilize nil ou NULL" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-sem-estado/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos sem Estado</li></h4>
+        </ul>
+        <!--<p class="post-summary">Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-representam-entidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+        </ul>
+        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-o-metodo-estatico-new/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e o Método estático New</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/awslib-a-historia-e-o-novo-suporte-a-ses/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>AWS Lib: A História e o novo suporte a SES</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como tudo começou e o novo Suporte a SES.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+        </ul>
+        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Você sabe, com certeza, o que é Orientação a Objetos?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/nao-utilize-nil-ou-null';
+      var disqus_title      = 'Não Utilize nil ou NULL';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
