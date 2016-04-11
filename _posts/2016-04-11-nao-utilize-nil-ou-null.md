@@ -2,8 +2,8 @@
 layout: post
 title: "Não Utilize nil ou NULL"
 date: 2016-04-11
-description: Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.
-summary: Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.
+description: Não Utilize nil ou NULL em Classes de Negócio.
+summary: Não Utilize nil ou NULL em Classes de Negócio.
 image: /images/photo-1415226620463-aedee27159c5.jpg
 categories: 
   - Pascal
