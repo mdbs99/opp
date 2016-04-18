@@ -8,7 +8,7 @@ image: /images/photo-1445783426434-670f9b34e183.jpg
 categories: 
   - OO
 tags:
-  - classe
+  - oo
   - responsabilidade
 keywords:
   - responsability

@@ -6,7 +6,7 @@ description: Objetos deveriam ser inicializados somente através dos seus constr
 summary: Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.
 image: /images/photo-1455641064490-74f5f8dbf598.jpg
 categories: 
-  - oo
+  - OO
 tags:
   - estado
 keywords:

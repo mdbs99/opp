@@ -8,7 +8,7 @@ image: /images/photo-1444208393177-b2a88904ed8d.jpg
 categories: 
   - Pascal
 tags:
-  - método estático
+  - object pascal
 keywords:
   - método estático
   - static methods

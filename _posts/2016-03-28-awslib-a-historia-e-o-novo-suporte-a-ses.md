@@ -6,7 +6,7 @@ description: Como tudo começou e o novo Suporte a SES.
 summary: Como tudo começou e o novo Suporte a SES.
 image: /images/photo-awslist.png
 categories: 
-  - AWS Lib
+  - Pascal
 tags:
   - aws
 keywords:

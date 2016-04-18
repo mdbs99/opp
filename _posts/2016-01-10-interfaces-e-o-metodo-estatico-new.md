@@ -8,7 +8,6 @@ image: /images/829d24cf.jpg
 categories: 
   - Pascal
 tags:
-  - oop
   - object pascal
 keywords:
   - oop
