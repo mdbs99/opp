@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Objetos sem Estado &#8211; Object Pascal Programming</title>
+    <title>Nomeando Classes &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.">
+    <meta name="description" content="O nome de uma Classe deve significar quem ela representa e não o que ela faz.">
     <meta name="author" content="Marcos Douglas">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="OO">
-    <meta name="keywords" content="estado, state, encapsulamento">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/objetos-sem-estado/">
+    <meta name="keywords" content="Pascal">
+    <meta name="keywords" content="naming, nomeando">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/nomeando-classes/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +30,21 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Objetos sem Estado">
-    <meta property="og:description" content="Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/objetos-sem-estado/">
+    <meta property="og:title" content="Nomeando Classes">
+    <meta property="og:description" content="O nome de uma Classe deve significar quem ela representa e não o que ela faz.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/nomeando-classes/">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1455641064490-74f5f8dbf598.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1453946610176-6be21147c400.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Objetos sem Estado" />
-    <meta name="twitter:description" content="Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/objetos-sem-estado/" />
+    <meta name="twitter:title" content="Nomeando Classes" />
+    <meta name="twitter:description" content="O nome de uma Classe deve significar quem ela representa e não o que ela faz." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/nomeando-classes/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -155,8 +155,8 @@
 
 
 <div class="post-header mb2">
-  <h1>Objetos sem Estado</h1>
-  <span class="post-meta">Apr 4, 2016</span><br>
+  <h1>Nomeando Classes</h1>
+  <span class="post-meta">Apr 25, 2016</span><br>
   
   <span class="post-meta small">
   
@@ -166,96 +166,96 @@
 </div>
 
 <article class="post-content">
-  <p>Por que sempre deveríamos criar nossas Classes com pelo menos um argumento no construtor principal afim de 
-não deixar nossos Objetos <strong>“vazios de estado”</strong>?</p>
+  <p>O nome de uma Classe deve significar quem ela representa e não o que ela faz.</p>
 
-<p>Porque construtores sem argumentos é um anti-padrão.</p>
+<p>Não utilize nomes como Validador, Leitor, Controlador, <em>Parser</em>, 
+Executor, <em>Manager</em>, <em>Handle</em>, etc. Esses nomes dizem o que fazem, não o que são.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1455641064490-74f5f8dbf598.jpg" alt="Vazio" /></p>
+<p><img src="/images/photo-1453946610176-6be21147c400.jpg" alt="Naming" /></p>
 
-<p>Para criamos instância de objetos utilizamos os Construtores de Classes 
-<a href="/posts/construtores-da-classe-primario-secundarios/">Primários e Secundários</a>
-ou indiretamente, através do padrão chamado <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New()</a>.</p>
+<p>Considere alguns exemplos:</p>
 
-<p>Um bom construtor sempre tem argumentos para a inicialização do Objeto.</p>
+<p><strong>#1</strong> Seu software trabalha com <strong>Arquivos Texto</strong> enviados pelo Banco
+(arquivos de retorno de pagamentos). Então <em>TBankFileParser</em> é o nome da sua Classe?</p>
 
-<p>Não utilizar argumentos é visto como uma má prática na Orientação a Objetos porque um Objeto deve encapsular
-atributos privados, ou seja, seu <strong>Estado</strong>.</p>
+<p><strong>#2</strong> Você precisa <strong>importar</strong> um arquivo CSV proveniente de outro software. Então <em>TCSVImporter</em>
+é o nome da sua Classe?</p>
 
-<p>Se um Objeto não tem Estado então ele pode ser visto como uma instância de uma 
-<a href="/posts/nao-utilize-metodos-estaticos/#classes-utilitarias">Classe Utilitária</a>,
-o que é um anti-padrão na programação Orientada a Objetos.</p>
+<p>Não faça isso.</p>
 
-<p>Infelizmente o senso comum da maioria dos programadores Object Pascal — e também de outras linguagens Orientada a Objetos —
-é sempre ter apenas um <strong>construtor sem parâmetros</strong>.</p>
+<blockquote>
+  <p>“O nome de uma Classe deve corresponder ou representar uma Entidade pura ou uma versão dela”</p>
+</blockquote>
 
-<p>Essa prática é comum desde… sempre.</p>
+<p>Se não conseguimos encontrar um bom nome para as Classes e Interfaces, quer dizer que não 
+sabemos o suficiente sobre o domínio do problema ou é apenas preguiça para pensar em nomes melhores.</p>
 
-<p>A VCL/LCL, a RTL, todos os descendentes de <code>TComponent</code>, a maioria dos códigos que tenho visto em 
-várias empresas e, é claro, em muitos dos meus códigos
-— projetos antigos cujo o custo para fazer tais alterações seria muito alto — 
-todos utilizam construtores sem argumentos, na maioria das Classes.</p>
+<p>Temos que pensar nas <strong>Entidades</strong> em si, e não nas <strong>funções</strong> que elas exercem.</p>
 
-<p>Por que codificamos dessa maneira?</p>
+<p>Por exemplo, considere <em>File</em>. Um nome de <strong>Entidade pura</strong>, ou seja, um Arquivo de computador ou arquivo em
+papel, dependendo do contexto. Se temos um arquivo para ler <strong>não</strong> devemos nomear a classe como <em>Reader</em>!
+Utilize <em>File</em> ou uma variação deste.</p>
 
-<p>Porque é mais <strong>fácil</strong> codificar dessa maneira.</p>
+<p>Um nome como <em>TextFile</em>, é uma versão ou variação de <em>File</em>. Também está correto. Simples. Perfeito.</p>
 
-<p>Após a inicialização do Objeto com um construtor sem argumentos basta utilizar as <em>properties</em> ou métodos <code>SetXxx(Value)</code> para inicializar ou
-injetar algum valor.</p>
+<p>Então se temos um Arquivo Texto do Banco (exemplo #1) ele também deveria representar uma
+Entidade. Seu nome deveria ser <code>TBankFile</code> ou algo parecido.</p>
 
-<p>Fácil.</p>
+<p>Se enviamos o Arquivo para o Banco (Remessa) e obtemos outro Arquivo de resposta
+(Retorno), então poderíamos ter uma única interface <code>IBankFile</code> e duas classes 
+<code>TBankShipmentFile</code> e <code>TBankReturnFile</code>. Ambas as Classes implementariam 
+a Interface.</p>
 
-<p>Essa prática é <strong>simples e conveniente</strong>, no entanto dizem que “na Engenharia nada é de graça”, ou seja, essa facilidade tem um preço.</p>
+<p>Mas o nome de uma Classe nem sempre será <strong>exatamente igual</strong> a mesma nomenclatura da Entidade real que está representando.</p>
 
-<p>Essa <strong>falsa simplicidade</strong> trás consigo:</p>
+<p>Em um dos meus projetos, o <a href="https://github.com/mdbs99/aws">AWS Lib</a>, tenho classes como <code>TS3Service</code>,
+<code>TS3Bucket</code>, <code>TAWSSignatureVersion1</code> e muitas outras.</p>
 
-<ul>
-  <li>“Código-espaguete”: Classes mutáveis, crescentes, são quase sempre o início do caos.</li>
-  <li>Complexidade: Classes gigantes e complexas com dezenas de métodos e propriedades.</li>
-  <li>Desperdícios: De memória devido a alocação desnecessária de “objetos filhos”; 
-  de tempo devido ao tempo perdido para entender, implementar ou resolver problemas.</li>
-</ul>
+<p>Por que não apenas <em>Service</em>, <em>Bucket</em> ou <em>Signature</em> respectivamente?
+Porque Classes precisam de um <strong>contexto</strong> — um prefixo — quando seus nomes são muito ambíguos.</p>
 
-<p>Sério.</p>
+<p>Na vida real o contexto está implícito, mesmo se for somente através da linguagem corporal. Exemplo:
+Quando falamos para uma pessoa “sua <strong>manga</strong> está suja”<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> olhando para sua <strong>camisa</strong> fica claro do que se trata. 
+Não há confusão com a <strong>fruta</strong> manga se ninguém está comendo no momento.</p>
 
-<p>Não concorda?</p>
+<p>No código é mais difícil. Só tem… texto! Tudo tem a mesma “forma”. Então como diferenciar os nomes?</p>
 
-<p>Então me diga quando foi a última vez que você utilizou todas as propriedades e métodos de um componente? Não lembra, quase nunca ou o mais provável, nunca.</p>
+<p>Temos <em>units</em> que são <em>namespaces</em> e que poderiam ser utilizadas como “prefixo”
+de todas as classes, mas quem faz isso?! Ficaria muito verboso. Ninguém quer isso — bem, talvez o pessoal do Java, 
+eles gostam de escrever… :)</p>
 
-<p>Um Objeto deve ser fácil de criar, mas você precisa no mínimo raciocinar sobre o motivo de instânciá-lo e isso é feito 
-através dos argumentos passados em seu construtor. Você deve instanciar um Objeto que
-<a href="/posts/objetos-representam-entidades/">represente uma Entidade</a> para fazer algum trabalho num
-momento específico no tempo.</p>
+<p>Então para ter um padrão no código eu tenho uma regra para a nomenclatura das Classes: <strong>Contexto + Nome</strong>.</p>
 
-<p>Sem um construtor adequado é fácil adicionar mais e mais propriedades 
-e métodos aos Objetos.</p>
+<p>Isso evita a colisão de nomes com Classes já existentes na VCL/LCL e também deixa o código mais homogêneo, mais
+pradronizado. Ajuda na visualização e facilita o <em>code-completion</em> da IDE.</p>
 
-<p>O problema é que esses Objetos não param de crescer ou já são grandes o bastante para ninguém mais entendê-los ou não ter a coragem para 
-refatorar seu código.</p>
+<p>Mas cuidado para não ir somando Contextos um após o outro.</p>
 
-<p>No fim você terá um monstro em suas mãos e é justamente isso que queremos evitar!</p>
+<p>Exemplo: <code>TAWSNetHTTPClient</code></p>
 
-<p>O outro motivo desses monstros aparecerem é devido ao fato desses Objetos não serem <a href="https://en.wikipedia.org/wiki/Immutable_object">imutáveis</a>.
-Codificar utilizando imutabilidade irá restringí-lo num primeiro momento, no entanto essa restrição irá fazê-lo pensar num
-design melhor para suas Classes.</p>
+<p>Que tal esse nome de Classe?</p>
 
-<p>Num mundo perfeito, todo construtor deveria prover informação necessária para um Objeto encapsular algum Estado. Essa informação
-é concedida através dos argumentos.</p>
+<p>A Classe tem 3 contextos (AWS, Net e HTTP) e mais o nome <em>Client</em>. 
+Apesar da <strong>vantagem</strong> que ganhamos ao evitar a colisão de nomes, é <strong>verboso</strong> demais para codificar e, o mais 
+importante, <strong>ler</strong>.</p>
 
-<p>Bem, acho que ainda não é possível criar componentes para a IDE sem que apenas um construtor único e sem argumentos seja utilizado
-para instanciar o Objeto. Fizeram a arquitetura dessa forma e não temos como mudar. É assim no Delphi e Lazarus, mas também 
-ocorre no Java ou C# onde muitos <em>frameworks</em> exigem um construtor sem argumentos.</p>
+<p>Não é uma regra perfeita, mas funciona pra mim.</p>
 
-<p>Então vamos deixar os componentes de lado e focar apenas nas <strong>Classes de Negócio</strong>, porque podemos implementar essas Classes 
-da maneira que quisermos sem nos preocuparmos em integrá-las com <em>frameworks</em> ou IDE’s.</p>
-
-<p>Antes de criar uma Classe, não pense nas funções. Pense no que ela representa e quais os argumentos que seus Objetos irão precisar
-para fazer o trabalho.</p>
+<p>Mesmo assim, após anos de codificação, ainda é uma <strong>arte</strong> bem difícil.</p>
 
 <p>Até logo.</p>
 
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Não fará sentido se você traduzir o artigo para o Inglês, já que a ambiguidade da palavra “manga” só faz sentido em Português. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 
 </article>
 
@@ -265,33 +265,33 @@ para fazer o trabalho.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/objetos-sem-estado/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/nomeando-classes/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Objetos sem Estado&via=mdbs99;url=http://objectpascalprogramming.com/posts/objetos-sem-estado/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Nomeando Classes&via=mdbs99;url=http://objectpascalprogramming.com/posts/nomeando-classes/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/objetos-sem-estado/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/nomeando-classes/" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/objetos-sem-estado/&title=Objetos sem Estado" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/objetos-sem-estado/&title=Objetos sem Estado" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/nomeando-classes/&title=Nomeando Classes" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/objetos-sem-estado/&t=Objetos sem Estado" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/nomeando-classes/&title=Nomeando Classes" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/nomeando-classes/&t=Nomeando Classes" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -331,11 +331,11 @@ para fazer o trabalho.</p>
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+      <a href="/posts/objetos-representam-entidades/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
         </ul>
-        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
       </a>
     </div>
   
@@ -349,11 +349,11 @@ para fazer o trabalho.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+          <h4 class="post-title"><li>Você sabe, com certeza, o que é Orientação a Objetos?</li></h4>
         </ul>
-        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+        <!--<p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.</p>-->
       </a>
     </div>
   
@@ -367,15 +367,6 @@ para fazer o trabalho.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/construtores-da-classe-primario-secundarios/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Construtores da Classe, Primário e Secundários</li></h4>
-        </ul>
-        <!--<p class="post-summary">Como Utilizar Construtores Primários e Secundários.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
@@ -385,11 +376,11 @@ para fazer o trabalho.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/pensando-em-objetos/" class="post-link">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
         </ul>
-        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
       </a>
     </div>
   
@@ -403,29 +394,38 @@ para fazer o trabalho.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
         </ul>
-        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/awslib-a-historia-e-o-novo-suporte-a-ses/" class="post-link">
+      <a href="/posts/interfaces-em-todo-lugar/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>AWS Lib: A História e o novo suporte a SES</li></h4>
+          <h4 class="post-title"><li>Interfaces em Todo Lugar</li></h4>
         </ul>
-        <!--<p class="post-summary">Como tudo começou e o novo Suporte a SES.</p>-->
+        <!--<p class="post-summary">Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/interfaces-e-o-metodo-estatico-new/" class="post-link">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Interfaces e o Método estático New</li></h4>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
         </ul>
-        <!--<p class="post-summary">Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.</p>-->
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-sem-estado/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos sem Estado</li></h4>
+        </ul>
+        <!--<p class="post-summary">Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.</p>-->
       </a>
     </div>
   
@@ -436,8 +436,8 @@ para fazer o trabalho.</p>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/objetos-sem-estado';
-      var disqus_title      = 'Objetos sem Estado';
+      var disqus_identifier = '/posts/nomeando-classes';
+      var disqus_title      = 'Nomeando Classes';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

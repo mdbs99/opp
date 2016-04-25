@@ -8,6 +8,104 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Nomeando Classes</title>
+        <description>&lt;p&gt;O nome de uma Classe deve significar quem ela representa e não o que ela faz.&lt;/p&gt;
+
+&lt;p&gt;Não utilize nomes como Validador, Leitor, Controlador, &lt;em&gt;Parser&lt;/em&gt;, 
+Executor, &lt;em&gt;Manager&lt;/em&gt;, &lt;em&gt;Handle&lt;/em&gt;, etc. Esses nomes dizem o que fazem, não o que são.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1453946610176-6be21147c400.jpg&quot; alt=&quot;Naming&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Considere alguns exemplos:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;#1&lt;/strong&gt; Seu software trabalha com &lt;strong&gt;Arquivos Texto&lt;/strong&gt; enviados pelo Banco
+(arquivos de retorno de pagamentos). Então &lt;em&gt;TBankFileParser&lt;/em&gt; é o nome da sua Classe?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;#2&lt;/strong&gt; Você precisa &lt;strong&gt;importar&lt;/strong&gt; um arquivo CSV proveniente de outro software. Então &lt;em&gt;TCSVImporter&lt;/em&gt;
+é o nome da sua Classe?&lt;/p&gt;
+
+&lt;p&gt;Não faça isso.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“O nome de uma Classe deve corresponder ou representar uma Entidade pura ou uma versão dela”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Se não conseguimos encontrar um bom nome para as Classes e Interfaces, quer dizer que não 
+sabemos o suficiente sobre o domínio do problema ou é apenas preguiça para pensar em nomes melhores.&lt;/p&gt;
+
+&lt;p&gt;Temos que pensar nas &lt;strong&gt;Entidades&lt;/strong&gt; em si, e não nas &lt;strong&gt;funções&lt;/strong&gt; que elas exercem.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo, considere &lt;em&gt;File&lt;/em&gt;. Um nome de &lt;strong&gt;Entidade pura&lt;/strong&gt;, ou seja, um Arquivo de computador ou arquivo em
+papel, dependendo do contexto. Se temos um arquivo para ler &lt;strong&gt;não&lt;/strong&gt; devemos nomear a classe como &lt;em&gt;Reader&lt;/em&gt;!
+Utilize &lt;em&gt;File&lt;/em&gt; ou uma variação deste.&lt;/p&gt;
+
+&lt;p&gt;Um nome como &lt;em&gt;TextFile&lt;/em&gt;, é uma versão ou variação de &lt;em&gt;File&lt;/em&gt;. Também está correto. Simples. Perfeito.&lt;/p&gt;
+
+&lt;p&gt;Então se temos um Arquivo Texto do Banco (exemplo #1) ele também deveria representar uma
+Entidade. Seu nome deveria ser &lt;code&gt;TBankFile&lt;/code&gt; ou algo parecido.&lt;/p&gt;
+
+&lt;p&gt;Se enviamos o Arquivo para o Banco (Remessa) e obtemos outro Arquivo de resposta
+(Retorno), então poderíamos ter uma única interface &lt;code&gt;IBankFile&lt;/code&gt; e duas classes 
+&lt;code&gt;TBankShipmentFile&lt;/code&gt; e &lt;code&gt;TBankReturnFile&lt;/code&gt;. Ambas as Classes implementariam 
+a Interface.&lt;/p&gt;
+
+&lt;p&gt;Mas o nome de uma Classe nem sempre será &lt;strong&gt;exatamente igual&lt;/strong&gt; a mesma nomenclatura da Entidade real que está representando.&lt;/p&gt;
+
+&lt;p&gt;Em um dos meus projetos, o &lt;a href=&quot;https://github.com/mdbs99/aws&quot;&gt;AWS Lib&lt;/a&gt;, tenho classes como &lt;code&gt;TS3Service&lt;/code&gt;,
+&lt;code&gt;TS3Bucket&lt;/code&gt;, &lt;code&gt;TAWSSignatureVersion1&lt;/code&gt; e muitas outras.&lt;/p&gt;
+
+&lt;p&gt;Por que não apenas &lt;em&gt;Service&lt;/em&gt;, &lt;em&gt;Bucket&lt;/em&gt; ou &lt;em&gt;Signature&lt;/em&gt; respectivamente?
+Porque Classes precisam de um &lt;strong&gt;contexto&lt;/strong&gt; — um prefixo — quando seus nomes são muito ambíguos.&lt;/p&gt;
+
+&lt;p&gt;Na vida real o contexto está implícito, mesmo se for somente através da linguagem corporal. Exemplo:
+Quando falamos para uma pessoa “sua &lt;strong&gt;manga&lt;/strong&gt; está suja”&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; olhando para sua &lt;strong&gt;camisa&lt;/strong&gt; fica claro do que se trata. 
+Não há confusão com a &lt;strong&gt;fruta&lt;/strong&gt; manga se ninguém está comendo no momento.&lt;/p&gt;
+
+&lt;p&gt;No código é mais difícil. Só tem… texto! Tudo tem a mesma “forma”. Então como diferenciar os nomes?&lt;/p&gt;
+
+&lt;p&gt;Temos &lt;em&gt;units&lt;/em&gt; que são &lt;em&gt;namespaces&lt;/em&gt; e que poderiam ser utilizadas como “prefixo”
+de todas as classes, mas quem faz isso?! Ficaria muito verboso. Ninguém quer isso — bem, talvez o pessoal do Java, 
+eles gostam de escrever… :)&lt;/p&gt;
+
+&lt;p&gt;Então para ter um padrão no código eu tenho uma regra para a nomenclatura das Classes: &lt;strong&gt;Contexto + Nome&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Isso evita a colisão de nomes com Classes já existentes na VCL/LCL e também deixa o código mais homogêneo, mais
+pradronizado. Ajuda na visualização e facilita o &lt;em&gt;code-completion&lt;/em&gt; da IDE.&lt;/p&gt;
+
+&lt;p&gt;Mas cuidado para não ir somando Contextos um após o outro.&lt;/p&gt;
+
+&lt;p&gt;Exemplo: &lt;code&gt;TAWSNetHTTPClient&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Que tal esse nome de Classe?&lt;/p&gt;
+
+&lt;p&gt;A Classe tem 3 contextos (AWS, Net e HTTP) e mais o nome &lt;em&gt;Client&lt;/em&gt;. 
+Apesar da &lt;strong&gt;vantagem&lt;/strong&gt; que ganhamos ao evitar a colisão de nomes, é &lt;strong&gt;verboso&lt;/strong&gt; demais para codificar e, o mais 
+importante, &lt;strong&gt;ler&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não é uma regra perfeita, mas funciona pra mim.&lt;/p&gt;
+
+&lt;p&gt;Mesmo assim, após anos de codificação, ainda é uma &lt;strong&gt;arte&lt;/strong&gt; bem difícil.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;Não fará sentido se você traduzir o artigo para o Inglês, já que a ambiguidade da palavra “manga” só faz sentido em Português. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 25 Apr 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/nomeando-classes/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nomeando-classes/</guid>
+      </item>
+    
+      <item>
         <title>Não Utilize Casting</title>
         <description>&lt;p&gt;Sua equipe precisa de um programador Object Pascal para trabalhar num projeto que está
 sendo codificado em FreePascal. Este projeto terá integração com um ERP codificado em Java e
@@ -1812,291 +1910,6 @@ Orientado a Objetos.&lt;/p&gt;
         <pubDate>Mon, 22 Feb 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/datamodule-e-apenas-um-container/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/datamodule-e-apenas-um-container/</guid>
-      </item>
-    
-      <item>
-        <title>Não utilize Métodos Estáticos</title>
-        <description>&lt;p&gt;Objetos são representações de Entidades vivas. Quando solicitamos uma tarefa a um Objeto, 
-ele mesmo irá executar ou repassar a tarefa à outro Objeto.&lt;/p&gt;
-
-&lt;p&gt;Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum. A tarefa será
-executada pelo Método Estático da Classe e nenhum Objeto estará envolvido.&lt;/p&gt;
-
-&lt;p&gt;Método Estático é uma herança da programação Procedural.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1444208393177-b2a88904ed8d.jpg&quot; alt=&quot;Circular Reference&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introduo&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Há pequenas exceções na utilização de Métodos Estáticos, mas todos eles são em benefício
-da performance ou algum &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;recurso tecnológico&lt;/a&gt;.
-Métodos Estáticos simplesmente não existem no mundo Orientado a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Linguagens populares como Java, C# ou Object Pascal utilizam Métodos Estáticos, muitas vezes em
-Classes Utilitárias. São classes onde todos os seus métodos são estáticos.&lt;/p&gt;
-
-&lt;p&gt;Vou lhe mostrar porque não devemos utilizar Métodos Estáticos – na maioria dos casos – e qual seria
-a alternativa Orientada a Objetos.&lt;/p&gt;
-
-&lt;h2 id=&quot;mtodos-estticos-ou-procedural-disfarado&quot;&gt;Métodos Estáticos ou Procedural disfarçado&lt;/h2&gt;
-
-&lt;p&gt;Os Métodos Estáticos executam uma tarefa sem estarem vinculados a um Objeto. Se não existe
-Objeto vinculado, tais métodos não trabalham com atributos de uma instância. Eles são imperativos, procedurais e
-não Orientados a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Mas a verdade é que ainda precisamos deles em pouquíssimos casos.&lt;/p&gt;
-
-&lt;p&gt;Vejamos alguns exemplos:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;O padrão do &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New&lt;/a&gt; é um caso de necessidade, 
-mais do que estilo de codificação. Ele não é um método de negócio. É utilizado como um construtor.&lt;/li&gt;
-  &lt;li&gt;Se necessitarmos de extrema performance, utilizar um Método Estático – ou mesmo uma &lt;em&gt;procedure&lt;/em&gt; ou &lt;em&gt;function&lt;/em&gt; – terá 
-uma performance melhor do que ter o &lt;em&gt;overhead&lt;/em&gt; da criação de um Objeto porém você não estará perdendo todos os benefícios 
-da Programação Orientada a Objetos. Será que vale a pena?&lt;/li&gt;
-  &lt;li&gt;Várias linguagens tem disponíveis classes – ou funções – para trabalhar no nível básico e genérico que todo programa
-poderia querer utilizar. Classes para cálculos Matemáticos, manipulação de Arquivos, API do Sistema Operacional, etc. Se 
-você precisa lidar com esses problemas não tem que reinventar a roda, apenas utilize o que já existe.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;O Método Estático em si não é o (grande) problema. O real problema é você utilizá-lo para modelar seus Objetos de Negócios.&lt;/p&gt;
-
-&lt;p&gt;Então a Regra de Ouro que deixo à você é:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Não implemente Métodos de Negócio utilizando Métodos Estáticos.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Exemplo:&lt;/p&gt;
-
-&lt;p&gt;A) Se você precisa apenas gravar um arquivo de Log, pode utilizar alguma rotina que trabalhe com arquivos e tudo bem.&lt;/p&gt;
-
-&lt;p&gt;B) Mas se fizer parte das &lt;strong&gt;Regras de Negócio&lt;/strong&gt; do sistema, por exemplo, ter que gerar um XML e compactar antes de enviar a um serviço REST,
-você &lt;strong&gt;NÃO&lt;/strong&gt; deve utilizar rotinas que manipulam esses problemas diretamente. É necessário que você crie classes &lt;a href=&quot;https://en.wikipedia.org/wiki/Adapter_pattern&quot;&gt;adaptadoras ou invólucros&lt;/a&gt;
-para encapsular as regras de negócio que irão utilizar essas rotinas.&lt;/p&gt;
-
-&lt;p&gt;Faz sentido?&lt;/p&gt;
-
-&lt;p&gt;São coisas diferentes. Gerar um arquivo de Log não é algo intrínsico das Regras de Negócio – ao menos no meu exemplo –
-porém se o seu sistema foi feito para integrar dados entre outros sistemas, faz parte das Regras de Negócio trabalhar com 
-arquivos. Então você precisa de Objetos reais e não de rotinas ou Métodos Estáticos.&lt;/p&gt;
-
-&lt;h2 id=&quot;classes-utilitarias&quot;&gt;Classes Utilitárias&lt;/h2&gt;
-
-&lt;p&gt;Enquanto Métodos Estáticos são considerados apenas uma má prática, as Classes Utilitárias representam o &lt;strong&gt;mal&lt;/strong&gt; para 
-a Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Sim, várias linguagens disponibilizam essas Classes Utilitárias, como falei acima, mas elas servem para serem utilizadas &lt;strong&gt;dentro&lt;/strong&gt; 
-das suas Classes de Negócio.&lt;/p&gt;
-
-&lt;p&gt;De acordo com Nick Malik nesse &lt;a href=&quot;http://blogs.msdn.com/b/nickmalik/archive/2005/09/06/461404.aspx&quot;&gt;artigo&lt;/a&gt;, na maioria das 
-vezes a definição e implementação de Classes Utilitárias é apenas preguiça. Eu concordo.&lt;/p&gt;
-
-&lt;p&gt;Essas classes já existem. Você pode utilizá-las mas não precisa replicá-las ou copiá-las. Não aumente o problema!
-Crie Objetos, não rotinas procedurais.&lt;/p&gt;
-
-&lt;p&gt;Objetos tem &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Comportamento e Estado&lt;/a&gt;. Os métodos representam
-o comportamento de um Objeto. É valido dizer que todo método de um Objeto deverá fazer uso de pelo menos um atributo
-dele mesmo, do contrário tal método pode estar na classe errada.&lt;/p&gt;
-
-&lt;p&gt;Um canditado a Método Estático é um desses métodos que não faz uso de atributos.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TMath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;implementation&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
-    &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
-    &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;A classe &lt;em&gt;TMath&lt;/em&gt; é bem simples. Possui um método que verifica qual é o maior número dentre 2 possíveis.&lt;/p&gt;
-
-&lt;p&gt;Um exemplo de uso:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;V&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;ShowMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;IntToStr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Você consegue ver algum problema no &lt;em&gt;design&lt;/em&gt; desse código?&lt;/p&gt;
-
-&lt;p&gt;Se você está acostumado a utilizar Classes Utilitárias como essa, provavelmente não vê problema algum. O
-código é simples de entender, é rápido, não cria “objetos desnecessários” e… funciona.&lt;/p&gt;
-
-&lt;p&gt;Então qual é o problema?&lt;/p&gt;
-
-&lt;p&gt;Bem, vamos incrementar com um exemplo um pouco mais complexo:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMathA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Compute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMathC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TMathB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;cm&quot;&gt;{...}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;V&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMathA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;ShowMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;IntToStr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;O código não está completo mas dá para entender perfeitamente:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Existem as classes &lt;em&gt;TMathA&lt;/em&gt;, &lt;em&gt;TMathB&lt;/em&gt; e &lt;em&gt;TMathC&lt;/em&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;TMathA&lt;/em&gt; tem uma dependência física com as outras classes.&lt;/li&gt;
-  &lt;li&gt;Todas as classes possuem Métodos Estáticos.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;O cálculo é irrelevante. Pura invenção. Escrevi o que veio a minha mente.&lt;/p&gt;
-
-&lt;p&gt;Tente enxergar os &lt;strong&gt;problemas&lt;/strong&gt; dessa abordagem, considerando o paradigma da Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Aqui estão alguns problemas:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Não dá para substituir nenhuma classe no código, pois elas não &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;implementam uma &lt;em&gt;Interface&lt;/em&gt;&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;Se não consigo &lt;strong&gt;substituir&lt;/strong&gt; nenhuma implementação, então não consigo testar essas classes isoladamente.&lt;/li&gt;
-  &lt;li&gt;Se não consigo &lt;strong&gt;testar&lt;/strong&gt; cada classe isoladamente, o sistema de testes terá que processar todos os Métodos Estáticos.
-  Se esses métodos demoram muito para calcular, seria uma perda de tempo toda vez que executasse os testes. E também
-  teríamos que lidar com outros acoplamentos que tais classes poderiam ter se fosse um exemplo mais complexo.&lt;/li&gt;
-  &lt;li&gt;Temos um &lt;strong&gt;acoplamento forte&lt;/strong&gt; entre nosso código e todas essas classes estáticas, além do acoplamento entre elas.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;soluo&quot;&gt;Solução?&lt;/h2&gt;
-
-&lt;p&gt;Vou tentar reescrever o mesmo exemplo acima utilizando uma abordagem mais Orientada a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Primeiramente sempre temos que ter uma &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interface que represente uma abstração&lt;/a&gt;,
-que neste exemplo aqui é &lt;em&gt;Math&lt;/em&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;IMath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Compute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Então vamos codificar &lt;em&gt;TMathA&lt;/em&gt;, &lt;em&gt;TMathB&lt;/em&gt; e &lt;em&gt;TMathC&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Para simplificação do código, só irei implementar os métodos relevantes para o entendimento:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TMathA&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FMC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FMB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Compute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//...function Sum(A, B, C: Double): Double;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//...function Max(A, B: Double): Double;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  
-  &lt;span class=&quot;n&quot;&gt;TMathB&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//...function Compute(A, B: Double): Double&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//...function Sum(A, B, C: Double): Double;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//...function Max(A, B: Double): Double;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  
-  &lt;span class=&quot;n&quot;&gt;TMathC&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//...function Compute(A, B: Double): Double&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//...function Sum(A, B, C: Double): Double;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//...function Max(A, B: Double): Double;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  
-&lt;span class=&quot;k&quot;&gt;implementation&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMathA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FMC&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FMB&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMathA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMathA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMathA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Compute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FMC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FMB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;E então reescrevo o mesmo teste, mas agora utilizando instâncias em vez de Métodos Estáticos:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;V&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMathA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;TMathC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;TMathB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;ShowMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;IntToStr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;No código acima utilizei &lt;a href=&quot;https://en.wikipedia.org/wiki/Dependency_injection&quot;&gt;Injeção de Dependência&lt;/a&gt;
-na inicialização de &lt;em&gt;TMathA&lt;/em&gt;. Por esse motivo &lt;em&gt;TMathA&lt;/em&gt; não tem conhecimento da existencia
-de &lt;em&gt;TMathB&lt;/em&gt; ou &lt;em&gt;TMathC&lt;/em&gt;. O código fica desacoplado e ainda ganhamos nos testes.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo:&lt;/p&gt;
-
-&lt;p&gt;Imagine que &lt;em&gt;TMathB&lt;/em&gt; e &lt;em&gt;TMathC&lt;/em&gt; são classes que tem um processamento muito demorado. Mas nós queremos apenas
-testar a funcionalidade de &lt;em&gt;TMathA&lt;/em&gt;. O que podemos fazer?&lt;/p&gt;
-
-&lt;p&gt;Criar Objetos Falsos.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;V&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMathA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;TFakeMathC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;TFakeMathB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;ShowMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;IntToStr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;As classes &lt;em&gt;TFakeMathC&lt;/em&gt; e &lt;em&gt;TFakeMathB&lt;/em&gt; não tem código de produção. A implementação nem precisa calcular nada,
-apenas retornar números válidos para passar nos testes automatizados.&lt;/p&gt;
-
-&lt;p&gt;Viu as vantagens?&lt;/p&gt;
-
-&lt;h2 id=&quot;concluso&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Métodos Estáticos não fazem parte do paradigma da Orientação a Objetos. Podem ainda ser necessários devido a
-natureza e herança procedural das linguagens. No entanto devem ser evitados.&lt;/p&gt;
-
-&lt;p&gt;Para Classes de Negócio é altamente desencorajado utilizar Métodos Estáticos para evitar todos os problemas
-relatados acima.&lt;/p&gt;
-
-&lt;p&gt;Classes Utilitárias… esqueça-as. É um conceito errado. Não permita que nenhuma Classe Utilitária seja criada
-no seu código.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 15 Feb 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/nao-utilize-metodos-estaticos/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nao-utilize-metodos-estaticos/</guid>
       </item>
     
   </channel>
