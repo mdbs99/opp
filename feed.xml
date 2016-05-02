@@ -8,6 +8,67 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Decorator Pattern</title>
+        <description>&lt;p&gt;Como agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe?&lt;/p&gt;
+
+&lt;p&gt;Utilizando &lt;em&gt;Decorator Pattern&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Os Decoradores oferecem uma alternativa simples e flexível ou uso de subclasses para extensão de funcionalidades.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1461709444300-a6217cec3dff.jpg&quot; alt=&quot;Decorator&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Para mim, &lt;a href=&quot;https://en.wikipedia.org/wiki/Decorator_pattern&quot;&gt;&lt;em&gt;Decorador&lt;/em&gt;&lt;/a&gt; é um dos mais importantes padrões de &lt;em&gt;design&lt;/em&gt;.
+Infelizmente esse padrão quase nunca é utilizado, pelo menos nos projetos que vi nos últimos anos, independentemente
+da linguagem de programação utilizada.&lt;/p&gt;
+
+&lt;p&gt;Por que?&lt;/p&gt;
+
+&lt;p&gt;Não tenho uma resposta exata, mas suponho que o motivo do não uso de Decoradores seja devido a escolha “natural” de 
+utilizarmos &lt;strong&gt;Herança de Classes&lt;/strong&gt; para estender funcionalidades.&lt;/p&gt;
+
+&lt;p&gt;Aprendemos que a Orientação a Objetos tem 3 pilares: &lt;strong&gt;Herança, Encapsulamento e Polimorfismo.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Herança de Classe é utilizada para estender funcionalidades, implementando uma nova Classe que herda as funcionalidades
+da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre será a escolha mais correta para extensão de funcionalidades?&lt;/p&gt;
+
+&lt;p&gt;Eu acho que não. Em 90~95% dos casos, eu utilizo &lt;strong&gt;Decoradores&lt;/strong&gt; e &lt;strong&gt;Composição de Objetos&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;
+    Um Decorador oferece uma abordagem do tipo &quot;use quando for necessário” para adição de responsabilidades. Em vez de tentar
+    suportar todas as características previsíveis em uma Classe complexa e customizada, você pode definir uma Classe simples e 
+    acrescentar funcionalidade de modo incremental com objetos Decoradores.
+  &lt;/p&gt;
+  &lt;footer&gt;&lt;cite title=&quot;Padrões de Projeto&quot;&gt;— Padrões de Projeto, Erich Gamma, pág.173&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Decoradores são tão simples de implementar como Herança, mas traz mais benefícios.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Você não precisa prever o futuro utilizando Decoradores. Utilizando Herança você tem que se preocupar com a hierarquia
+  das Classes desde o início, desde a Classe mais básica até a mais específica, como se pudesse prever o futuro;&lt;/li&gt;
+  &lt;li&gt;Evita Classes sobrecarregadas de características e funcionalidades;&lt;/li&gt;
+  &lt;li&gt;Classes pequenas e coesas;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Exemplos de código?&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Parte do código de um projeto em produção que utiliza Decoradores para consumir um WebService, &lt;a href=&quot;/posts/pensando-em-objetos/#exemplo-2&quot;&gt;aqui&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Implementação de um Log com Decoradores para memória, arquivo, banco de dados e e-mail, &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo&quot;&gt;aqui&lt;/a&gt;;&lt;/li&gt;
+  &lt;li&gt;Utilizando a Classe &lt;code&gt;TEmployeeSalaryWithCommission&lt;/code&gt; como Decorador de &lt;code&gt;TEmployeeSalary&lt;/code&gt;, &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/#versao-orientada-a-objetos&quot;&gt;aqui&lt;/a&gt;;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 02 May 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/decorator-pattern/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/decorator-pattern/</guid>
+      </item>
+    
+      <item>
         <title>Nomeando Classes</title>
         <description>&lt;p&gt;O nome de uma Classe deve significar quem ela representa e não o que ela faz.&lt;/p&gt;
 
@@ -1682,234 +1743,6 @@ verdadeira reutilização de código. Tem que pensar em Contextos.&lt;/p&gt;
         <pubDate>Mon, 29 Feb 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/objetos-representam-entidades/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-representam-entidades/</guid>
-      </item>
-    
-      <item>
-        <title>DataModule é apenas um recipiente, e só isso</title>
-        <description>&lt;p&gt;Não utilize um &lt;em&gt;DataModule&lt;/em&gt; como uma Classe de Negócio, implementando métodos públicos e utilizando-o como um
-&lt;em&gt;Singleton&lt;/em&gt;. Isso é errado. Você deixará seu sistema acoplado a esta única implementação e não será possível
-testá-lo da maneira correta.&lt;/p&gt;
-
-&lt;p&gt;Um &lt;em&gt;DataModule&lt;/em&gt; não deve conter Regras de Negócio.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1455487890814-f11ab4eaec4b.jpg&quot; alt=&quot;Container&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Utilize &lt;em&gt;DataModules&lt;/em&gt; apenas com recipientes de componentes e nada mais.&lt;/p&gt;
-
-&lt;p&gt;Um &lt;em&gt;DataModule&lt;/em&gt; deverá conter, na maioria das vezes, componentes de relatório e &lt;em&gt;queries&lt;/em&gt;, todos relacionados
-a um contexto bem específico e delimitado.&lt;/p&gt;
-
-&lt;p&gt;Quanto menos componentes adicionar, melhor, mais simples e com menos gasto de memória do computador.&lt;/p&gt;
-
-&lt;p&gt;Componentes de relatório foram concebidos para utilizar dados tabulados. Aqui a Orientação a Objetos não ajuda muito.
-A maneira mais eficiente para gerar um relatório é trabalhar com &lt;em&gt;queries&lt;/em&gt;, retornando conjuntos de dados relacionados
-entre si.&lt;/p&gt;
-
-&lt;p&gt;Vou mostrar um exemplo real – sistema em produção – que demostra como eu utilizo &lt;em&gt;DataModules&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;implementao-de-um-relatrio&quot;&gt;Implementação de um Relatório&lt;/h2&gt;
-
-&lt;p&gt;Para a implementação de um relatório, &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;a primeira coisa a fazer&lt;/a&gt;
-é definirmos uma abstração para a definição de um Relatório, ou seja, uma Interface.&lt;/p&gt;
-
-&lt;p&gt;Para a Interface apenas 3 métodos são necessários:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;em&gt;Show&lt;/em&gt;: Para pré-visualizar o relatório na tela.&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Print&lt;/em&gt;: Para mostrar somente o &lt;em&gt;PrintDialog&lt;/em&gt; para o usuário para impressão direta.&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;PDF&lt;/em&gt;: Para gerar um PDF no disco.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;{29414A64-69BA-40A1-970B-2CD61C633508}&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;PDF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;O sistema que utiliza esse código foi codificado em Delphi 7, utilizando ADO e &lt;em&gt;ReportBuilder®&lt;/em&gt;(RB), no 
-entanto essa é uma Interface genérica o bastante para ser utilizado por qualquer versão do Delphi/Lazarus,
-com a possibilidade de implementar e utilizar qualquer gerador de relatório.&lt;/p&gt;
-
-&lt;p&gt;O próximo passo é codificar uma implementação de &lt;code&gt;IReport&lt;/code&gt; para o RB.&lt;/p&gt;
-
-&lt;p&gt;Abaixo contém apenas a Interface da classe. Não é necessária a implementação para o 
-entendimento dos conceitos que quero mostrar.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TRBuilderReport&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TppReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Report&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TppReport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Report&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TppReport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;PDF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;O motivo de termos um &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New&lt;/a&gt; já foi
-explicado anteriormente.&lt;/p&gt;
-
-&lt;p&gt;Bem, nesse momento eu tenho uma Interface para qualquer tipo de relatório e uma implementação genérica
-para utilizar o &lt;em&gt;design&lt;/em&gt; do RB.&lt;/p&gt;
-
-&lt;p&gt;Repare que na implementação do RB eu tenho que injetar a dependência &lt;code&gt;Report: TppReport&lt;/code&gt;. 
-A instância desse componente estará num &lt;em&gt;DataModule&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Aqui está o &lt;em&gt;design&lt;/em&gt; da classe &lt;code&gt;TDividaAtivaMedicoModule&lt;/code&gt;, que é o &lt;em&gt;DataModule&lt;/em&gt; que vou 
-utilizar nesse exemplo.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/divativa-datamodule-1.jpg&quot; alt=&quot;DataModule&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Todo o &lt;em&gt;design&lt;/em&gt; dos relatórios, assim como o SQL é propriedade privada e não será mostrado aqui.&lt;/p&gt;
-
-&lt;p&gt;Garanto que neste &lt;em&gt;DataModule&lt;/em&gt; não há métodos públicos ou privados. Apenas eventos dos componentes do
-relatório são implementados, pois essa é a maneira de customizar a impressão do relatório.&lt;/p&gt;
-
-&lt;p&gt;Para o contexto do problema, e de acordo com as regras de negócio, são necessários 3 relatórios como
-pode-se ver na imagem, mais irei demostrar a implementação de apenas um deles.&lt;/p&gt;
-
-&lt;h3 id=&quot;um-datamodule--um-singleton&quot;&gt;Um &lt;em&gt;DataModule&lt;/em&gt; é um &lt;em&gt;Singleton&lt;/em&gt;&lt;/h3&gt;
-
-&lt;p&gt;Quando você instancia um &lt;em&gt;DataModule&lt;/em&gt; ele se torna um &lt;em&gt;Singleton&lt;/em&gt; global para todo projeto. Não importa se
-você está utilizando a variável global que a IDE adiciona automaticamente ou qualquer outra variável. Isso quer dizer
-que se eu tenho 2 &lt;em&gt;Forms&lt;/em&gt; que tem componentes “apontando” para componentes num &lt;em&gt;DataModule&lt;/em&gt;, ambos os &lt;em&gt;Forms&lt;/em&gt; 
-estarão utilizando a mesma instância do &lt;em&gt;DataModule&lt;/em&gt;, compartilhando os mesmos componentes.&lt;/p&gt;
-
-&lt;p&gt;Eu não quero isso.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;Dica:&lt;/strong&gt; &lt;a href=&quot;https://goo.gl/2zkz3U&quot;&gt;&lt;em&gt;Singleton&lt;/em&gt;&lt;/a&gt; é um anti-padrão.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;A maneira para fazer uma instância do &lt;em&gt;DataModule&lt;/em&gt; não ser global é chamar &lt;code&gt;RemoveDataModule&lt;/code&gt; no seu construtor:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TDataModule1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;DataModuleCreate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sender&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;RemoveDataModule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Por que fazer isso?&lt;/p&gt;
-
-&lt;p&gt;Bem, utilizar variáveis globais nunca é recomendado. A abordagem proposta aqui é mais &lt;em&gt;thread-safe&lt;/em&gt;.
-Poderia apresentar o relatório ao usuário e gerar um PDF ao mesmo tempo, utilizando &lt;em&gt;thread&lt;/em&gt;.
-Também poderia gerar relatórios diferentes ao mesmo tempo passando parâmetros diferentes às &lt;em&gt;queries&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;a-classe-de-negcio&quot;&gt;A Classe de Negócio&lt;/h3&gt;
-
-&lt;p&gt;Instanciar um &lt;em&gt;DataModule&lt;/em&gt;, atribuir parâmetros às &lt;em&gt;queries&lt;/em&gt;, chamar o relatório… o passo-a-passo
-é mais ou menos assim, certo? No entanto eu espero que você &lt;strong&gt;não&lt;/strong&gt; tenha pensado em fazer isso diretamente 
-no código de um &lt;em&gt;Form&lt;/em&gt;, por exemplo.&lt;/p&gt;
-
-&lt;p&gt;Precisamos ter uma – ou muitas outras – &lt;strong&gt;Classe de Negócio&lt;/strong&gt; para encapsular e implementar o relatório.&lt;/p&gt;
-
-&lt;p&gt;Para o único relatório que iremos implementar – &lt;em&gt;AvisosReport&lt;/em&gt; – temos uma classe chamada &lt;code&gt;TDividaAtivaMedicoAvisosReport&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TDividaAtivaMedicoAvisosReport&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FModule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDividaAtivaMedicoModule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NotificacaoId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NotificacaoId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;destructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;override&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;PDF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;implementation&lt;/span&gt;  
-  
-&lt;span class=&quot;cm&quot;&gt;{ TDividaAtivaMedicoAvisosReport }&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TDividaAtivaMedicoAvisosReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NotificacaoId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FModule&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDividaAtivaMedicoModule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FReport&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TRBuilderReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FModule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AvisosReport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FModule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NotificacoesQuery&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parameters&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ParamByName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;notificacao_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NotificacaoId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ParamByName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;fase&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CDividaAtivaFases&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AvisoId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TDividaAtivaMedicoAvisosReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NotificacaoId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NotificacaoId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;destructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TDividaAtivaMedicoAvisosReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FModule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TDividaAtivaMedicoAvisosReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TDividaAtivaMedicoAvisosReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TDividaAtivaMedicoAvisosReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;PDF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PDF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Essa implementação é real e está em produção. O código poderia ser melhorado, é claro, mas isso é
-irrelevante agora.&lt;/p&gt;
-
-&lt;p&gt;Essa classe, a &lt;code&gt;TDividaAtivaMedicoAvisosReport&lt;/code&gt;, funciona como um decorador para &lt;code&gt;IReport&lt;/code&gt;,
-e tem uma implementação implícita de &lt;code&gt;TRBuilderReport&lt;/code&gt;. Como eu disse, pode melhorar. Enfim.&lt;/p&gt;
-
-&lt;p&gt;O mais importante são essas 2 linhas:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;  &lt;span class=&quot;n&quot;&gt;FModule&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDividaAtivaMedicoModule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FReport&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TRBuilderReport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FModule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AvisosReport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Um &lt;em&gt;DataModule&lt;/em&gt; é instanciado em &lt;code&gt;FModule&lt;/code&gt;. Esse &lt;em&gt;DataModule&lt;/em&gt; é retirado do “estado global” utilizando
-&lt;code&gt;RemoveDataModule&lt;/code&gt; em seu construtor.&lt;/p&gt;
-
-&lt;p&gt;Então temos uma instância de &lt;code&gt;TRBuilderReport&lt;/code&gt; em &lt;code&gt;FReport&lt;/code&gt; que é inicializado com um
-relatório específico: &lt;code&gt;FModule.AvisosReport&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;A implementação da classe, a partir daí, apenas repassa as solicitações para &lt;code&gt;FReport&lt;/code&gt; utilizando os
-métodos da Interface &lt;code&gt;IReport&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Dessa maneira o restante do código não precisa se preocupar em inicializar variáveis, campos calculados, cores,
-abrir &lt;em&gt;queries&lt;/em&gt;, etc pois tudo que o sistema precisa é utilizar uma instância de &lt;code&gt;TDividaAtivaMedicoAvisosReport&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa classe poderia ter sua implementação alterada, no futuro, sem termos que reescrever código que a utilize, pois o
-relatório, dados e parâmetros estão encapsulados dentro dela.&lt;/p&gt;
-
-&lt;h2 id=&quot;concluso&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Quando o sistema precisa de emitir um relatório, a Interface &lt;code&gt;IReport&lt;/code&gt; é utilizada e Classes de Negócio
-são implementadas para encapsular cada relatório. O sistema não sabe qual gerador de relatórios está sendo utilizado, apenas
-as Classes de Negócio sabem. É &lt;em&gt;thread-safe&lt;/em&gt;, simples, extensível e de fácil manutenção.&lt;/p&gt;
-
-&lt;p&gt;Não é um método perfeito, mas demostra o uso eficiente de um componente &lt;em&gt;RAD&lt;/em&gt; sendo utilizado num contexto mais 
-Orientado a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Para mim esse é o uso correto de um &lt;em&gt;DataModule&lt;/em&gt;, ou seja, ser apenas um recipiente de componentes e nada mais.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 22 Feb 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/datamodule-e-apenas-um-container/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/datamodule-e-apenas-um-container/</guid>
       </item>
     
   </channel>

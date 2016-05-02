@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Não Utilize Casting &#8211; Object Pascal Programming</title>
+    <title>Decorator Pattern &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Não Utilize Casting em Regras de Negócio.">
+    <meta name="description" content="Agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe.">
     <meta name="author" content="Marcos Douglas">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Pascal">
-    <meta name="keywords" content="cast, casting">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/nao-utilize-casting/">
+    <meta name="keywords" content="OO">
+    <meta name="keywords" content="decorator, pattern">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/decorator-pattern/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +30,21 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Não Utilize Casting">
-    <meta property="og:description" content="Não Utilize Casting em Regras de Negócio.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/nao-utilize-casting/">
+    <meta property="og:title" content="Decorator Pattern">
+    <meta property="og:description" content="Agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/decorator-pattern/">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1445451983996-ac6b92ffb1fb.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1461709444300-a6217cec3dff.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Não Utilize Casting" />
-    <meta name="twitter:description" content="Não Utilize Casting em Regras de Negócio." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/nao-utilize-casting/" />
+    <meta name="twitter:title" content="Decorator Pattern" />
+    <meta name="twitter:description" content="Agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/decorator-pattern/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -155,97 +155,68 @@
 
 
 <div class="post-header mb2">
-  <h1>Não Utilize Casting</h1>
-  <span class="post-meta">Apr 18, 2016</span><br>
+  <h1>Decorator Pattern</h1>
+  <span class="post-meta">May 2, 2016</span><br>
   
   <span class="post-meta small">
   
-    2 minute read
+    1 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Sua equipe precisa de um programador Object Pascal para trabalhar num projeto que está
-sendo codificado em FreePascal. Este projeto terá integração com um ERP codificado em Java e
-um website codificado em PHP. Tudo utilizando MS SQLServer como SGBD.</p>
+  <p>Como agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe?</p>
 
-<p>Como você iria descrever o anúncio dessa vaga?</p>
+<p>Utilizando <em>Decorator Pattern</em>.</p>
+
+<p>Os Decoradores oferecem uma alternativa simples e flexível ou uso de subclasses para extensão de funcionalidades.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1445451983996-ac6b92ffb1fb.jpg" alt="Casting" /></p>
+<p><img src="/images/photo-1461709444300-a6217cec3dff.jpg" alt="Decorator" /></p>
 
-<p>Uma tradução para <em>Casting</em>, em Português, seria <strong>moldagem</strong>. Você recebe algo e o “molda” em outra coisa.</p>
+<p>Para mim, <a href="https://en.wikipedia.org/wiki/Decorator_pattern"><em>Decorador</em></a> é um dos mais importantes padrões de <em>design</em>.
+Infelizmente esse padrão quase nunca é utilizado, pelo menos nos projetos que vi nos últimos anos, independentemente
+da linguagem de programação utilizada.</p>
 
-<p>Fazemos isso muitas vezes. Temos um <em>Integer</em> e o moldamos em uma <em>String</em> e vice-versa.</p>
+<p>Por que?</p>
 
-<p>Mas será que o uso de <em>Casting</em> é necessário para codificarmos nossas <strong>Regras de Negócio</strong> utilizando
-Objetos?</p>
+<p>Não tenho uma resposta exata, mas suponho que o motivo do não uso de Decoradores seja devido a escolha “natural” de 
+utilizarmos <strong>Herança de Classes</strong> para estender funcionalidades.</p>
 
-<center><p><strong>. . .</strong></p></center>
+<p>Aprendemos que a Orientação a Objetos tem 3 pilares: <strong>Herança, Encapsulamento e Polimorfismo.</strong></p>
 
-<p>O arquiteto da equipe — sr. Anderson — já definiu o projeto.</p>
+<p>Herança de Classe é utilizada para estender funcionalidades, implementando uma nova Classe que herda as funcionalidades
+da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre será a escolha mais correta para extensão de funcionalidades?</p>
 
-<p>Anderson definiu a API de integração, diagramas de classes, componentes, módulos, etc. Mas o projeto 
-ficou maior que o esperado e agora precisam de um programador experiente para compor a equipe.</p>
-
-<p>O arquiteto solicita ao seu gerente o novo programador, mas sem lhe dar instruções específicas.</p>
-
-<p>O gerente repassa o pedido ao pessoal do RH e então eles anunciam a vaga em sites:</p>
-
-<p><em>“Empresa ACME Inc. precisa de programador experiente.”</em></p>
-
-<p>A empresa recebe currículos com especialidade em COBOL, Delphi, C/C++, Java… PHP foi a maioria. :)</p>
-
-<p>Todos perdem tempo, pois terão muito mais currículos para <strong>analisar e verificar</strong> se o canditato 
-se <strong>encaixa nos critérios</strong>, pois não definiram as <strong>habilidades necessárias</strong> que o programador deve ter
-quando fizeram o anúncio.</p>
-
-<p>O mesmo acontece quando utilizamos <em>Casting</em>. É necessário ter <strong>código de verificação</strong> para o Objeto 
-afim de determinar sua Classe.</p>
+<p>Eu acho que não. Em 90~95% dos casos, eu utilizo <strong>Decoradores</strong> e <strong>Composição de Objetos</strong>.</p>
 
 <blockquote>
-  Seus Objetos devem trabalhar sob contratos, ou seja, interfaces. Somente Objetos
-  qualificados — que implementam a Interface — poderão ser utilizados para fazer o serviço.
+  <p>
+    Um Decorador oferece uma abordagem do tipo "use quando for necessário” para adição de responsabilidades. Em vez de tentar
+    suportar todas as características previsíveis em uma Classe complexa e customizada, você pode definir uma Classe simples e 
+    acrescentar funcionalidade de modo incremental com objetos Decoradores.
+  </p>
+  <footer><cite title="Padrões de Projeto">— Padrões de Projeto, Erich Gamma, pág.173</cite></footer>
 </blockquote>
 
-<p>Se você tem um trabalho a fazer, chame um <strong>especialista</strong> apto para fazer o trabalho — ou faça você mesmo.</p>
-
-<p>O trabalho é determinado por um <strong>contrato</strong> que especifica as habilidades necessárias que o especialista 
-precisa ter.</p>
-
-<p>Na Orientação a Objetos os <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contratos são representados por Interfaces</a>.</p>
-
-<p>Interfaces, <strong>não Classes.</strong></p>
-
-<center><p><strong>. . .</strong></p></center>
-
-<p>Anderson precisa de um programador.</p>
-
-<p>O RH altera os requisitos da vaga.</p>
-
-<p>O programador deve saber:</p>
+<p>Decoradores são tão simples de implementar como Herança, mas traz mais benefícios.</p>
 
 <ul>
-  <li>Object Pascal</li>
-  <li>MS SQLServer</li>
-  <li>Desejável PHP, Java</li>
+  <li>Você não precisa prever o futuro utilizando Decoradores. Utilizando Herança você tem que se preocupar com a hierarquia
+  das Classes desde o início, desde a Classe mais básica até a mais específica, como se pudesse prever o futuro;</li>
+  <li>Evita Classes sobrecarregadas de características e funcionalidades;</li>
+  <li>Classes pequenas e coesas;</li>
 </ul>
 
-<p>Agora ficou mais fácil de encontrar o programador específico para o trabalho.</p>
+<p>Exemplos de código?</p>
 
-<p>É isso que você deve fazer no seu código. Especifique Interfaces que definam o contrato necessário para fazer 
-o trabalho.</p>
-
-<p>Não defina argumentos do tipo de <strong>Classes genéricas</strong> — TObject, etc — sendo necessário utilizar <em>Casting</em> para verificar
-qual o tipo de Classe do Objeto para fazer algum <strong>processamento específico</strong> dependendo da Classe. Não faça isso!</p>
-
-<p>Interfaces são contratos de trabalho.</p>
-
-<p>Defina bem seus contratos e você não precisará fazer <em>Casting</em> pois saberá que
-somente <strong>Objetos especialistas</strong> irão se “candidatar” ao trabalho. Do contrário não fique surpreso de receber 
-um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)</p>
+<ol>
+  <li>Parte do código de um projeto em produção que utiliza Decoradores para consumir um WebService, <a href="/posts/pensando-em-objetos/#exemplo-2">aqui</a>.</li>
+  <li>Implementação de um Log com Decoradores para memória, arquivo, banco de dados e e-mail, <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo">aqui</a>;</li>
+  <li>Utilizando a Classe <code>TEmployeeSalaryWithCommission</code> como Decorador de <code>TEmployeeSalary</code>, <a href="/posts/objetos-pensam-e-tomam-decisoes/#versao-orientada-a-objetos">aqui</a>;</li>
+</ol>
 
 <p>Até logo.</p>
 
@@ -257,33 +228,33 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/nao-utilize-casting/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/decorator-pattern/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Não Utilize Casting&via=mdbs99;url=http://objectpascalprogramming.com/posts/nao-utilize-casting/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Decorator Pattern&via=mdbs99;url=http://objectpascalprogramming.com/posts/decorator-pattern/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/nao-utilize-casting/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/decorator-pattern/" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/nao-utilize-casting/&title=Não Utilize Casting" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/nao-utilize-casting/&title=Não Utilize Casting" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/decorator-pattern/&title=Decorator Pattern" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/nao-utilize-casting/&t=Não Utilize Casting" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/decorator-pattern/&title=Decorator Pattern" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/decorator-pattern/&t=Decorator Pattern" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -323,24 +294,6 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/interfaces-em-todo-lugar/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Interfaces em Todo Lugar</li></h4>
-        </ul>
-        <!--<p class="post-summary">Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/freeandnil-esqueca/" class="post-link">
         <ul>
           <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
@@ -359,24 +312,6 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     </div>
   
     <div class="post ml2">
-      <a href="/posts/objetos-representam-entidades/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
-        </ul>
-        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/objetos-pensam-e-tomam-decisoes/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Objetos pensam e tomam decisões</li></h4>
-        </ul>
-        <!--<p class="post-summary">Objetos pensam e tomam decisões. Eles não precisam de um controlador.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
@@ -386,11 +321,11 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     </div>
   
     <div class="post ml2">
-      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
         </ul>
-        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
       </a>
     </div>
   
@@ -404,6 +339,42 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     </div>
   
     <div class="post ml2">
+      <a href="/posts/awslib-a-historia-e-o-novo-suporte-a-ses/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>AWS Lib: A História e o novo suporte a SES</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como tudo começou e o novo Suporte a SES.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+        </ul>
+        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-representam-entidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+        </ul>
+        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/posts/objetos-sem-estado/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Objetos sem Estado</li></h4>
@@ -413,11 +384,11 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     </div>
   
     <div class="post ml2">
-      <a href="/posts/pensando-em-objetos/" class="post-link">
+      <a href="/posts/interfaces-em-todo-lugar/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+          <h4 class="post-title"><li>Interfaces em Todo Lugar</li></h4>
         </ul>
-        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+        <!--<p class="post-summary">Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>-->
       </a>
     </div>
   
@@ -428,8 +399,8 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/nao-utilize-casting';
-      var disqus_title      = 'Não Utilize Casting';
+      var disqus_identifier = '/posts/decorator-pattern';
+      var disqus_title      = 'Decorator Pattern';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
