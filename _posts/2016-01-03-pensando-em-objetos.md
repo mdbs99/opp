@@ -63,6 +63,8 @@ Para cada requisição, o *Client* precisa:
   2. Fazer um *parser* nos dados;
   3. Fazer uma persistência com os dados obtidos;  
 
+### Exemplo 1: {#exemplo-1}
+
 Aqui está o código **Procedural** para consumir o WebService:
 
 **Atenção**: Eu digitei a `procedure` diretamente no post, sem teste de compilação, então podem haver erros de sintaxe.
@@ -158,6 +160,8 @@ em blocos (classes) para fazer ações para o **orquestrador**, você!
 E como estes mesmos requisitos poderiam ser codificados utilizando Orientação a Objetos,
 sem um orquestrador, utilizando "objetos vivos" com **encapsulamento** perfeito, minimizando a quebra de código
 em manutenções futuras e com um código muito mais **elegante**?
+
+### Exemplo 2: {#exemplo-2}
 
 Aqui está o código **Orientado a Objetos** para consumir o mesmo WebService:
 
