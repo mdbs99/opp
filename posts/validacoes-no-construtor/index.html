@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Validações no Construtor &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="É possível validar um Objeto antes de criá-lo?">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="OO">
+    <meta name="keywords" content="validation, validação, construtor">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/validacoes-no-construtor/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201605091122" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Validações no Construtor">
+    <meta property="og:description" content="É possível validar um Objeto antes de criá-lo?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/validacoes-no-construtor/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-EnF7DhHROS8OMEp2pCkx_Duferfood.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Validações no Construtor" />
+    <meta name="twitter:description" content="É possível validar um Objeto antes de criá-lo?" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/validacoes-no-construtor/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Validações no Construtor</h1>
+  <span class="post-meta">May 9, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    3 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Dizem que um Objeto não pode ter um <strong>estado inválido</strong> e que 
+sua validação deve ser feita no seu <strong>Construtor</strong>, ou seja, se 
+os argumentos do Construtor não são suficientes, não deveríamos
+criar o Objeto.</p>
+
+<p>Imagine um mundo onde tudo são objetos.</p>
+
+<p>Como você irá verificar se um Objeto é inválido antes de você criá-lo?</p>
+
+<!--more-->
+
+<p><img src="/images/photo-EnF7DhHROS8OMEp2pCkx_Duferfood.jpg" alt="Imagem" /></p>
+
+<p>O que significa <strong>estado inválido</strong>?</p>
+
+<p>Se os argumentos do construtor de um Objeto não forem suficientes, e não fizermos uma
+validação prévia desses argumentos, poderíamos criar um Objeto com estado inválido.
+Quero dizer que seu <strong>Estado</strong> não estaria válido para que ele pudesse fazer o trabalho
+para o qual ele foi/será designado.</p>
+
+<p>E porque isso seria um problema?</p>
+
+<p>Bem, eu não acho que seria um problema. A única <strong>exceção</strong> é
+a utilização de <a href="/posts/nao-utilize-nil-ou-null/">Objetos Nulos</a>. Nesse 
+caso sim, seria um <strong>erro</strong>.</p>
+
+<p>Vamos a um exemplo. Vamos definir uma classe <code>TDbQuery</code> que irá encapsular um SQL.
+Essa classe só terá um método (simplificando) para executar o SQL.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TDbQuery</span> <span class="o">=</span> <span class="k">class</span>
+  <span class="kp">private</span>
+    <span class="n">FScript</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="n">construtor</span> <span class="n">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">Script</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Execute</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>O construtor tem um argumento do tipo <code>string</code> e o usuário da classe poderia passar qualquer
+valor como um SQL válido, mas também letras, números ou até mesmo uma string em branco.</p>
+
+<p>Precisamos saber se o SQL é válido antes da hora de chamar <code>Execute</code>? <strong>Não</strong>.</p>
+
+<p>Existem validações simples como verificar se uma <code>string</code> está em branco, mas há outras validações
+muito mais complexas.</p>
+
+<p>Para validar a classe acima seria muito complexo.</p>
+
+<p>Por que?</p>
+
+<p>Você teria que validar a sintaxe do SQL,
+talvez utilizando <em>Regular Expression</em> (RegExpr). Se tivéssemos Objetos que implementam RegExpr, então
+teríamos muitas instâncias de Objetos para validar a <code>string</code>. São Objetos, que chamam outros, que chamam outros…</p>
+
+<p>E, mesmo depois de toda essa validação sintática, a execução do SQL ainda poderia gerar erro! A tabela não existe,
+o nome da coluna foi digitado errado, etc.</p>
+
+<p>Pior. Talvez o algoritmo em execução nem precisasse chamar esse Objeto, talvez o usuário tenha cancelado a operação
+antes… então você perdeu tempo validando e nem precisou executar o <em>Script</em>!</p>
+
+<p>Se tudo são Objetos, eles devem ser criados <strong>antes</strong> de serem validados. Essa operação deve ocorrer o <strong>mais rápido</strong>
+possível, no <strong>menor custo</strong> computacional possível, mesmo em “estado inválido”.</p>
+
+<p>Em outro momento ele será validado pois não há como validar algo que ainda não existe!</p>
+
+<p>Ainda não concorda?</p>
+
+<p>Então vamos ver um exemplo no mundo real.</p>
+
+<p>Para fazer um bom prato você precisa ter bons ingredientes. Um <em>Spaghetti a Lá Carbonara</em> precisa de uns 4 ovos — eu
+gosto de fazer esse prato — bacon, queijo parmesão…
+No <a href="https://en.wikipedia.org/wiki/Mise_en_place">Mise en place</a> você precisa bater os ovos e misturar com parmesão; 
+então você vai quebrando os ovos e descobre que um deles está podre (estado inválido). Você não vai utilizá-lo.
+Esse Objeto não serve… mas ele existe! Estava lá, junto com os outros “ovos válidos”. Ele ocupava espaço, tinha a 
+mesma aparência dos demais mas estava “inválido”. O mundo é assim.</p>
+
+<blockquote>
+  <p>Se existisse um mundo onde todos os Objetos fossem validados antes de serem criados, então seria um mundo perfeito com Objetos perfeitos.</p>
+</blockquote>
+
+<p>A <a href="https://en.wikipedia.org/wiki/The_Matrix">Matrix</a> tentou criar um mundo assim — ou foram 3, talvez 4? Não lembro — 
+mas não deu muito certo… ao que parece os seres humanos precisam de estado inválido e não lidam bem com perfeição 
+— o primeiro filme da série foi o melhor, não é? :)</p>
+
+<p>Se nosso <strong>mundo real</strong> foi “implementado” assim, contendo “Objetos com estado inválido”, porque você acha que 
+seus Objetos são — ou deveriam ser — mais <strong>perfeitos</strong> do que os objetos do mundo real, do qual eles representam?</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/validacoes-no-construtor/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Validações no Construtor&via=mdbs99;url=http://objectpascalprogramming.com/posts/validacoes-no-construtor/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/validacoes-no-construtor/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/validacoes-no-construtor/&title=Validações no Construtor" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/validacoes-no-construtor/&title=Validações no Construtor" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/validacoes-no-construtor/&t=Validações no Construtor" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-sem-estado/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos sem Estado</li></h4>
+        </ul>
+        <!--<p class="post-summary">Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-representam-entidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+        </ul>
+        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/construtores-da-classe-primario-secundarios/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Construtores da Classe, Primário e Secundários</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como Utilizar Construtores Primários e Secundários.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-pensam-e-tomam-decisoes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos pensam e tomam decisões</li></h4>
+        </ul>
+        <!--<p class="post-summary">Objetos pensam e tomam decisões. Eles não precisam de um controlador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+        </ul>
+        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/validacoes-no-construtor';
+      var disqus_title      = 'Validações no Construtor';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
