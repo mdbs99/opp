@@ -8,6 +8,270 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Singleton é um anti-padrão?</title>
+        <description>&lt;p&gt;O padrão &lt;em&gt;Singleton&lt;/em&gt; garante a existência de &lt;strong&gt;apenas uma instância&lt;/strong&gt; de &lt;strong&gt;uma classe&lt;/strong&gt;, 
+mantendo &lt;strong&gt;um ponto global&lt;/strong&gt; de acesso ao seu Objeto.&lt;/p&gt;
+
+&lt;p&gt;O &lt;strong&gt;conceito&lt;/strong&gt; do &lt;em&gt;Singleton&lt;/em&gt; não está errado, mas sua &lt;strong&gt;implementação&lt;/strong&gt; clássica está.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1462826743322-63f0fbb29f87.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Ter um &lt;strong&gt;ponto global de acesso&lt;/strong&gt; é bom.&lt;/p&gt;
+
+&lt;p&gt;Garantir uma &lt;strong&gt;única instância&lt;/strong&gt; para um Objeto, pode ser bom.&lt;/p&gt;
+
+&lt;p&gt;O &lt;strong&gt;erro&lt;/strong&gt; é ter uma única instância de uma &lt;strong&gt;classe&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Por que?&lt;/p&gt;
+
+&lt;p&gt;Simples. Você não deve utilizar pontos globais com &lt;strong&gt;Referência Direta&lt;/strong&gt; em seu código.&lt;/p&gt;
+
+&lt;p&gt;Quando digo Referência Direta quero dizer:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Variáveis globais&lt;/li&gt;
+  &lt;li&gt;Métodos estáticos que não trabalham com &lt;em&gt;Interfaces&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;variaveis-globais&quot;&gt;Variáveis globais&lt;/h2&gt;
+
+&lt;p&gt;Você já deve saber que não devemos utilizar variáveis globais.&lt;/p&gt;
+
+&lt;p&gt;Seu uso é considerado um anti-padrão porque seu conteúdo pode ser modificado/acessado de 
+qualquer parte do seu código. Haverá uma dependência direta dessa variável aumentando a 
+complexidade do código. Qualquer alteração no valor dessa variável poderá ocasionar problemas
+em qualquer parte do código que a utilize.&lt;/p&gt;
+
+&lt;h2 id=&quot;metodos-estaticos&quot;&gt;Métodos estáticos&lt;/h2&gt;
+
+&lt;p&gt;Um &lt;a href=&quot;/posts/nao-utilize-metodos-estaticos/&quot;&gt;método estático&lt;/a&gt; é acessado
+diretamente na Classe. Assim como uma variável global, o método estático é uma dependência 
+direta e isso não é bom. No entanto o valor retornado 
+por um método estático pode ser dinâmico. Pode ser um Objeto. Pode ser uma instância
+de uma &lt;em&gt;Interface&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;O &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New()&lt;/a&gt; é estático, 
+mas seu retorno é dinâmico. Ele também retorna uma instância de uma &lt;em&gt;Interface&lt;/em&gt; ao invés de 
+um tipo primitivo ou Classe.&lt;/p&gt;
+
+&lt;h2 id=&quot;padrao-singleton&quot;&gt;O Padrão &lt;em&gt;Singleton&lt;/em&gt;&lt;/h2&gt;
+
+&lt;p&gt;Um &lt;a href=&quot;https://en.wikipedia.org/wiki/Singleton_pattern&quot;&gt;&lt;em&gt;Singleton&lt;/em&gt;&lt;/a&gt; utiliza uma variável global, 
+que está encapsulada dentro da própria classe. Também utiliza um método estático, que irá 
+retornar a instância única encapsulada na Classe. Essa instância é do tipo da própria Classe.&lt;/p&gt;
+
+&lt;p&gt;Precisamos utilizar esse Padrão?&lt;/p&gt;
+
+&lt;p&gt;Sim, por simplicidade.&lt;/p&gt;
+
+&lt;p&gt;Explico.&lt;/p&gt;
+
+&lt;p&gt;É possível nunca utilizar o &lt;em&gt;Singleton&lt;/em&gt;. Basta você utilizar Injeção de Dependência nos
+&lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt; das Classes.&lt;/p&gt;
+
+&lt;p&gt;Mas para cada dependência teríamos que definir um argumento em todos os construtores, de todas as 
+Classes, que necessitam utilizar a dependência.&lt;/p&gt;
+
+&lt;p&gt;Isso irá gerar &lt;strong&gt;Complexidade&lt;/strong&gt; no código.&lt;/p&gt;
+
+&lt;p&gt;Você precisa de uma única instância de Objetos para:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Conexão com um SGBD&lt;/li&gt;
+  &lt;li&gt;Log de execução/&lt;em&gt;debugging&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Configurações da Aplicação&lt;/li&gt;
+  &lt;li&gt;Etc&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;São exemplos. Na verdade eu posso querer utilizar um &lt;em&gt;pool&lt;/em&gt; de conexões para o SGBD; ter várias Classes
+que representam as Configurações, etc. Mas, você entendeu.&lt;/p&gt;
+
+&lt;p&gt;Então garantir a existência de &lt;strong&gt;apenas uma instância&lt;/strong&gt; mantendo &lt;strong&gt;um ponto global&lt;/strong&gt; de acesso ao Objeto 
+é importante. Isso minimiza a complexidade.
+Ao invés de ter sempre um parâmetro a mais em todos os construtores das Classes — ou da maioria delas — eu
+só preciso ter um único ponto de acesso para “algum” Objeto.&lt;/p&gt;
+
+&lt;p&gt;O &lt;em&gt;Singleton&lt;/em&gt; clássico parece resolver isso. Sim, mas ele nos traz um problema maior do que o benefício.&lt;/p&gt;
+
+&lt;h3 id=&quot;o-problema&quot;&gt;O Problema&lt;/h3&gt;
+
+&lt;p&gt;Não há como implementar um &lt;em&gt;Singleton&lt;/em&gt; sem haver uma &lt;strong&gt;variável&lt;/strong&gt; para retornar &lt;strong&gt;uma única instância&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;O problema não é a variável, pois ela estará encapsulada na Classe. Isso quer dizer que
+ela estará protegida. Bem, talvez não tão protegida mas ainda melhor que uma variável global.&lt;/p&gt;
+
+&lt;p&gt;O problema também não é o &lt;strong&gt;método estático&lt;/strong&gt; — mesmo tendo seu uso desencorajado na maioria dos casos —
+pois podemos retornar qualquer valor.&lt;/p&gt;
+
+&lt;p&gt;O &lt;strong&gt;real problema&lt;/strong&gt; do Padrão &lt;em&gt;Singleton&lt;/em&gt;, em sua implementação clássica, é o &lt;strong&gt;tipo de retorno&lt;/strong&gt; do método estático.&lt;/p&gt;
+
+&lt;h3 id=&quot;implementacao-classica&quot;&gt;Implementação Clássica&lt;/h3&gt;
+
+&lt;p&gt;Existem variações de implementação do Padrão &lt;em&gt;Singleton&lt;/em&gt; que utilizam algumas técnicas para inicializar 
+a variável encapsulada, ou seja, a instância que será retornada pelo método estático que, na maioria das 
+vezes, é denominado &lt;code&gt;GetInstance&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Na implementação mais básica, que pode ser feita em praticamente qualquer linguagem Orientada a Objetos,
+implementamos construtores da Classe 
+como privados. Assim o utilizador da Classe não conseguirá instanciar Objetos dessa Classe diretamente. Depois
+é definido um (ou mais) método estático — &lt;code&gt;GetInstance&lt;/code&gt; — para retornar uma instância da Classe… do mesmo tipo da Classe!&lt;/p&gt;
+
+&lt;p&gt;Aí está o problema.&lt;/p&gt;
+
+&lt;p&gt;Um &lt;strong&gt;grave&lt;/strong&gt; problema.&lt;/p&gt;
+
+&lt;p&gt;Se você retornar uma instância do mesmo tipo da Classe, seu código terá uma dependência direta com essa Classe.
+Só isso pode arruinar qualquer tentativa de testes automatizados no código.&lt;/p&gt;
+
+&lt;p&gt;Veja um exemplo:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TUserAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ChangePassword&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IUser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NewPassword&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NewPassword&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Invalid Password&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewPassword&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Must have 8 characters or more&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Password&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NewPassword&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;TMSSQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;É um código idiota, mas serve ao propósito.&lt;/p&gt;
+
+&lt;p&gt;Vejamos.&lt;/p&gt;
+
+&lt;p&gt;Existe um Classe &lt;code&gt;TUserAction&lt;/code&gt; que tem um método para alterar o &lt;em&gt;password&lt;/em&gt; do usuário logado. Esse método tem 
+algumas validações simples.&lt;/p&gt;
+
+&lt;p&gt;Alteramos seu &lt;em&gt;password&lt;/em&gt; e depois essa alteração será persistida no SGBD.&lt;/p&gt;
+
+&lt;p&gt;A chamada &lt;code&gt;TMSSQL.GetInstance&lt;/code&gt; é um &lt;em&gt;Singleton&lt;/em&gt;. O método irá retornar uma conexão &lt;code&gt;TMSSQLConnection&lt;/code&gt; para o MSSQL.&lt;/p&gt;
+
+&lt;p&gt;Utilizamos então o método &lt;code&gt;Save(User)&lt;/code&gt; para persistir as alterações.&lt;/p&gt;
+
+&lt;p&gt;Não importa como &lt;code&gt;Save(User)&lt;/code&gt; sabe como persistir um usuário. Isso não é relevante. O problema aqui é
+como iremos testar &lt;code&gt;ChangePassword&lt;/code&gt; sem fazer a integração/conexão real com o SGBD (MSSQL).&lt;/p&gt;
+
+&lt;p&gt;Eu só quero testar o método utilizando um &lt;strong&gt;teste automatizado&lt;/strong&gt;. Eu não quero ter que conectar num SGBD real,
+utilizar &lt;em&gt;user/password&lt;/em&gt; reais e muito menos alterar algum dado.&lt;/p&gt;
+
+&lt;p&gt;Quero fazer &lt;strong&gt;testes de unidade&lt;/strong&gt;, não &lt;strong&gt;testes de integração&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Bem, se &lt;code&gt;TMSSQL.GetInstance&lt;/code&gt; me retorna uma instância de &lt;code&gt;TMSSQLConnection&lt;/code&gt;, uma Classe concreta, &lt;strong&gt;não é possível
+fazer o teste automatizado&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;É um exemplo simples. Vejo isso na maioria dos códigos “&lt;em&gt;Object Pascal&lt;/em&gt;” — que não tem nada de Orientação a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Na verdade, a maioria iria utilizar uma instância de algum
+&lt;a href=&quot;/posts/datamodule-e-apenas-um-container/&quot;&gt;DataModule&lt;/a&gt; e iria substituir a chamada &lt;code&gt;TMSSQL.GetInstance&lt;/code&gt;
+por apenas &lt;code&gt;DM.conMSSQL&lt;/code&gt; ou seja, duas variáveis. Triste.&lt;/p&gt;
+
+&lt;p&gt;Entendeu por que não devemos utilizar uma instância de Classe concreta?&lt;/p&gt;
+
+&lt;p&gt;E qual a solução?&lt;/p&gt;
+
+&lt;p&gt;Retornar uma instância de &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interface&lt;/a&gt; ao invés
+de uma instância do tipo Classe.&lt;/p&gt;
+
+&lt;h3 id=&quot;implementacao-sugerida&quot;&gt;Implementação Sugerida&lt;/h3&gt;
+
+&lt;p&gt;O que irei sugerir para a implementação de um &lt;em&gt;Singleton&lt;/em&gt; é tão simples quanto parece, mas com um ganho
+incontestável: &lt;strong&gt;Desacoplamento&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Utilize &lt;em&gt;Interfaces&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Ao invés de &lt;code&gt;TMSSQL.GetInstance&lt;/code&gt; retornar um &lt;code&gt;TMSSQLConnection&lt;/code&gt;, o método irá retornar um &lt;code&gt;IConnection&lt;/code&gt; ou seja,
+uma &lt;em&gt;Interface&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se agora temos um retorno que é uma &lt;em&gt;Interface&lt;/em&gt;, podemos ter qualquer Classe que implemente essa &lt;em&gt;Interface&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;A Classe &lt;code&gt;TMSSQLConnection&lt;/code&gt; deverá implementar &lt;code&gt;IConnection&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;E onde está desacoplamento?&lt;/p&gt;
+
+&lt;p&gt;Você poderá retornar qualquer instância que implemente &lt;code&gt;IConnection&lt;/code&gt; e isso pode ser feito de várias formas.&lt;/p&gt;
+
+&lt;p&gt;Se quiser escrever menos, utilize &lt;strong&gt;diretivas de compilação&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMSSQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IConnection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Assigned&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;{$IFDEF TEST}&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TFakeConnection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;{$ELSE}&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMSSQLConnection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;user&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;password&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;{$ENDIF}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Essa é a maneira “Rápido e sujo”. Você pode começar por aí caso nunca tenha pensado nisso. Quando estiver
+em “modo de teste”, ative a diretiva &lt;code&gt;TEST&lt;/code&gt;, do contrário a Classe de produção será utilizada.&lt;/p&gt;
+
+&lt;p&gt;A Classe &lt;code&gt;TFakeConnection&lt;/code&gt; não se conecta em nenhum SGBD. Talvez você possa utilizá-la para fazer 
+um log das instruções SQL ou &lt;strong&gt;não fazer nada&lt;/strong&gt; quando chamar o método &lt;code&gt;Save&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se você está testando as &lt;strong&gt;Regras de Negócio&lt;/strong&gt;, a persistência é irrelevante.&lt;/p&gt;
+
+&lt;p&gt;Depois você pode &lt;strong&gt;refatorar&lt;/strong&gt; esse código e deixá-lo mais Orientado a Objetos, utilizando 
+Injeção de Dependência em conjunto com &lt;a href=&quot;https://en.wikipedia.org/wiki/Abstract_factory_pattern&quot;&gt;&lt;em&gt;Abstract Factory Pattern&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Como?&lt;/p&gt;
+
+&lt;p&gt;Bem, em algum lugar no seu código você deverá ter uma chamada para “inicializar” a Classe &lt;code&gt;TMSSQL&lt;/code&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMSSQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IConnectionFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;FFactory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;initialization&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;TMSSQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TDbConnectionFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;mssql&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Mais um vez estaremos utilizando métodos estáticos. Mas estamos em busca de simplicidade.
+Não devemos ser &lt;strong&gt;puristas&lt;/strong&gt; em Orientação a Objetos se não há nenhum benefício. Sempre haverá partes do código
+que poderiam melhorar, refatorar, eliminar, etc. Enfim.&lt;/p&gt;
+
+&lt;p&gt;A Classe &lt;code&gt;TMSSQL&lt;/code&gt; deverá ser bem pequena e sem complexidade.&lt;/p&gt;
+
+&lt;p&gt;O atributo &lt;code&gt;FFactory&lt;/code&gt; é um &lt;code&gt;class var&lt;/code&gt; assim como &lt;code&gt;FInstance&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então você poderá ter novas Classes que implementam &lt;code&gt;IConnectionFactory&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;No exemplo temos &lt;code&gt;TDbConnectionFactory&lt;/code&gt;. Optei por utilizar um parâmetro que me diz qual “tipo” de Classe será
+utilizada. Se eu quiser testar o código bastaria chamar &lt;code&gt;TDbConnectionFactory.New(&#39;test&#39;)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Utilize seu estilo.&lt;/p&gt;
+
+&lt;p&gt;Após essa alteração o método &lt;code&gt;GetInstance&lt;/code&gt; pode ser refatorado:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMSSQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IConnection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Assigned&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewConnection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FUser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FPassword&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;A chamada a &lt;code&gt;FFactory.NewConnection&lt;/code&gt; irá gerar uma nova instância de &lt;code&gt;IConnection&lt;/code&gt;. Qual a Classe que 
+estará sendo utilizada é irrelevante para o código que utiliza &lt;code&gt;TMSSQL.GetInstance&lt;/code&gt; em todos os lugares,
+como deve ser. O retorno poderia ser &lt;code&gt;TMSSQLConnection&lt;/code&gt;, &lt;code&gt;TFakeConnection&lt;/code&gt; ou qualquer outra classe que
+implemente &lt;code&gt;IConnection&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Esse é um &lt;em&gt;Singleton&lt;/em&gt; &lt;strong&gt;simples&lt;/strong&gt;, &lt;strong&gt;desacoplado&lt;/strong&gt; e &lt;strong&gt;Orientado a Objetos&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 16 May 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/singleton-e-um-anti-padrao/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/singleton-e-um-anti-padrao/</guid>
+      </item>
+    
+      <item>
         <title>Validações no Construtor</title>
         <description>&lt;p&gt;Dizem que um Objeto não pode ter um &lt;strong&gt;estado inválido&lt;/strong&gt; e que 
 sua validação deve ser feita no seu &lt;strong&gt;Construtor&lt;/strong&gt;, ou seja, se 
@@ -1133,446 +1397,6 @@ pensar em procedimentos e na ordem de chamada entre eles. &lt;strong&gt;Deixe qu
         <pubDate>Mon, 14 Mar 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/</guid>
-      </item>
-    
-      <item>
-        <title>Classes devem Implementar apenas uma Responsabilidade</title>
-        <description>&lt;p&gt;O Princípio da Responsabilidade Única (Single Responsibility Principle) afirma que, se tivermos 
-mais de uma razão para mudar a implementação de uma Classe, devemos dividir o comportamento em 
-duas ou mais Classes.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1445783426434-670f9b34e183.jpg&quot; alt=&quot;Funcionalidades&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;unica-responsabilidade&quot;&gt;Uma única responsabilidade&lt;/h2&gt;
-
-&lt;p&gt;A implementação de uma Classe deve ser o mais Simples possível.
-Classes com mais de uma Responsabilidade são Complexas.&lt;/p&gt;
-
-&lt;p&gt;Não confunda Objeto com Classe. Objetos podem ser &lt;strong&gt;Complexos&lt;/strong&gt; e ter mais de uma
-Responsabilidade devido ao uso da &lt;strong&gt;Composição e Decoração de Objetos&lt;/strong&gt;, no
-entanto as Classes que compõem esses Objetos devem implementar apenas uma única
-Responsabilidade.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“Uma Classe com apenas uma Responsabilidade é Simples para usar, modificar e reutilizar”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Mas como é possível ter Objetos que são mais complexos enquanto suas Classes são simples?&lt;/p&gt;
-
-&lt;p&gt;Bem, vamos implementar um módulo simples de &lt;em&gt;Log&lt;/em&gt; para responder a esta pergunta. 
-Primeiro vamos utilizar a &lt;strong&gt;Programação Procedural&lt;/strong&gt; com Classes do tipo “tudo em um” e depois a &lt;strong&gt;Orientada a Objetos&lt;/strong&gt;, 
-com Classes simples utilizando &lt;a href=&quot;https://en.wikipedia.org/wiki/Decorator_pattern&quot;&gt;Decorator Design Pattern&lt;/a&gt;,
-dividindo as funcionalidades em Classes menores e mais reutilizáveis.&lt;/p&gt;
-
-&lt;p&gt;Um sistema hipotético necessita salvar um &lt;em&gt;Log&lt;/em&gt; com tudo o que foi processado.&lt;/p&gt;
-
-&lt;p&gt;Este &lt;em&gt;Log&lt;/em&gt; deverá implementar os requisitos a seguir:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Possibilidade de salvar a informação em Arquivo Texto&lt;/li&gt;
-  &lt;li&gt;Possibilidade de salvar a informação em Banco de Dados&lt;/li&gt;
-  &lt;li&gt;Possibilidade de enviar o &lt;em&gt;Log&lt;/em&gt; por e-mail&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;implementacao-tradicional&quot;&gt;1-Implementação “Tradicional” e Procedural&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1453560814059-d646dffd32fd.jpg&quot; alt=&quot;Procedural e antiga&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;De acordo com os requisitos acima, &lt;strong&gt;parece muito simples&lt;/strong&gt; pensar numa única Classe com “apenas” 4 métodos.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TLog&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TStrings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;destructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;override&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SaveToFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SaveToDB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SendMail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;From&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  
-&lt;span class=&quot;k&quot;&gt;implementation&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TStringList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FMail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;destructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;SaveToFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SaveToFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Clear&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;SaveToDB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&amp;#39;insert into Log (info) values (:info)&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;TSQLParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;info&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ftString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Clear&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;SendMail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;From&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;From&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Clear&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;Observações&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Considere &lt;code&gt;DB: IDatabase&lt;/code&gt; como uma instância de uma conexão com o Banco de Dados.&lt;/li&gt;
-  &lt;li&gt;Considere &lt;code&gt;FMail.Send(From, FInfo.Text)&lt;/code&gt; uma instrução que envia para um destinatário a informação no corpo do e-mail.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Para utilizar a Classe não há dúvidas. Faz-se uma instância de &lt;code&gt;TLog&lt;/code&gt; para chamar cada método. Seu uso é simples, mas…&lt;/p&gt;
-
-&lt;p&gt;Quais são os problemas dessa implementação?&lt;/p&gt;
-
-&lt;p&gt;Muitos problemas:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;A Classe é “complexa” demais porque lida com muitas responsabilidades e consequentemente muito mais propensa a alterações e bugs.&lt;/li&gt;
-  &lt;li&gt;A classe tem uma instância concreta de &lt;em&gt;TMail&lt;/em&gt;, não sendo possível utilizarmos &lt;em&gt;libs&lt;/em&gt; diferentes para o envio de e-mail.&lt;/li&gt;
-  &lt;li&gt;Sua interface possui muitos métodos com contextos diferentes.&lt;/li&gt;
-  &lt;li&gt;Cada novo requisito irá gerar um novo método. A Classe não para de crescer.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Já vi implementações como a Classe acima, mas também já encontrei outras muito piores.&lt;/p&gt;
-
-&lt;p&gt;Trabalhei num sistema onde existia uma Classe de &lt;em&gt;Log&lt;/em&gt; que tinha +20 métodos! Método para salvar em arquivo e no Banco de Dados; 
-gerar XML; enviar por e-mail; excluir arquivos antigos; e muito mais. Era uma grande &lt;strong&gt;Classe Utilitária&lt;/strong&gt; composta somente 
-de &lt;a href=&quot;/posts/nao-utilize-metodos-estaticos/&quot;&gt;Métodos Estáticos&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;implementacao-oo&quot;&gt;2-Implementação Orientada a Objetos&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1457257495536-67f31bc9773d.jpg&quot; alt=&quot;Orientada a Objetos&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;É claro que a &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;primeira coisa a fazer&lt;/a&gt; é definirmos uma abstração para &lt;em&gt;Log&lt;/em&gt;. Precisamos de uma Interface.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Apenas isso.&lt;/p&gt;
-
-&lt;p&gt;Um &lt;em&gt;Log&lt;/em&gt; precisa registrar a informação, informar e salvar em &lt;strong&gt;algum lugar&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Agora podemos implementar cada Classe, cada uma com uma responsabilidade bem distinta e única.&lt;/p&gt;
-
-&lt;p&gt;Primeiro uma Classe para implementar o &lt;em&gt;Log&lt;/em&gt; apenas em memória — pode ser utilizado em &lt;em&gt;UnitTests&lt;/em&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TLogInMemory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TStrings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//class function New...&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;destructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;override&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  
-&lt;span class=&quot;k&quot;&gt;implementation&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogInMemory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TStringList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;destructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogInMemory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogInMemory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogInMemory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogInMemory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Clear&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;No método &lt;code&gt;Save&lt;/code&gt; não há nada para registrar pois o &lt;em&gt;Log&lt;/em&gt; só trabalha em memória.&lt;/p&gt;
-
-&lt;p&gt;Teremos outra Classe para fazer o &lt;em&gt;Log&lt;/em&gt; num Arquivo Texto:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TLogToFile&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FFileStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TFileStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Origin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//class function New...&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;destructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;override&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  
-&lt;span class=&quot;k&quot;&gt;implementation&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Origin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-  &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Origin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FFileStream&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TFileStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fmOpenWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;destructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FFileStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FFileStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SaveToFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FFileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Repare que há um parâmetro &lt;code&gt;Origin&lt;/code&gt;. Isso significa que essa classe
-irá gerar Objetos que trabalham “decorando” outros Objetos que se originaram em outro momento.&lt;/p&gt;
-
-&lt;p&gt;Da mesma forma teremos outra Classe para fazer o &lt;em&gt;Log&lt;/em&gt; no Banco de Dados:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TLogToDB&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FDB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDatabase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Origin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//class function New...&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  
-&lt;span class=&quot;k&quot;&gt;implementation&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToDB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Origin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Origin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;FDB&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToDB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToDB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToDB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&amp;#39;insert into Log (info) values (:info)&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;TSQLParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;info&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ftString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;Observação&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;p&gt;Você pode pensar: Por que &lt;code&gt;TLogToFile&lt;/code&gt; não &lt;strong&gt;herda&lt;/strong&gt; de &lt;code&gt;TLogInMemory&lt;/code&gt; para reaproveitar
-o código que trabalha com a instância de &lt;em&gt;FInfo&lt;/em&gt;?&lt;/p&gt;
-
-&lt;p&gt;Eu poderia, mas não devo. Falarei sobre herança em próximos posts. Por enquanto vamos deixar as coisas simples 
-e prosseguir com o exemplo.&lt;/p&gt;
-
-&lt;p&gt;Falta a Classe de &lt;em&gt;Log&lt;/em&gt; que envia e-mails, sem esquecer de Injetar a Dependência de &lt;code&gt;Mail&lt;/code&gt; no &lt;em&gt;construtor&lt;/em&gt;:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TLogToMail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;FMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Origin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Mail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//class function New...&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  
-&lt;span class=&quot;k&quot;&gt;implementation&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Origin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;Mail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Origin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;FMail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Mail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLogToMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ILog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;From&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FOrigin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Cada Classe tem apenas uma única responsabilidade e todas as Classes seguem o &lt;a href=&quot;/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos&quot;&gt;contrato&lt;/a&gt;
-de uma única Interface, simples e coesa.&lt;/p&gt;
-
-&lt;p&gt;E agora, e o mais legal! Podemos ter um único Objeto que implementa tudo, mas o código que irá utilizar esse Objeto
-ignora completamente sua implementação, ou seja, o código não irá chamar um procedimento específico para salvar a informação em determinado
-lugar, como na Implementação Procedural.&lt;/p&gt;
-
-&lt;p&gt;Não entendeu? Vamos lá.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo. Se os requisitos mudarem e seu cliente pedir para gravar o &lt;em&gt;Log&lt;/em&gt; num Arquivo Texto e também no Banco de Dados, o que seria preciso fazer?&lt;/p&gt;
-
-&lt;p&gt;Bem, na implementação Procedural do primeiro exemplo, o programador teria que &lt;ins&gt;criar um novo método&lt;/ins&gt; porque ele não consegue
-reutilizar os métodos existentes para fazer algo que seria simples!&lt;/p&gt;
-
-&lt;p&gt;Por que ele não consegue? Repare que em cada método &lt;code&gt;SaveXxx&lt;/code&gt; há uma chamada de &lt;code&gt;FInfo.Clear&lt;/code&gt;. Então ele não pode executar
-os métodos assim:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SaveToFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;/path/file.log&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;Log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SaveToDB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Na primeira chamada a informação do &lt;em&gt;Log&lt;/em&gt; será perdida.&lt;/p&gt;
-
-&lt;p&gt;Sei que você pode pensar em inúmeras outras implementações para que isso não aconteça, mas o &lt;strong&gt;fato&lt;/strong&gt; é que você precisa
-alterar a Classe para fazer algo que seria simples. Talvez você tenha lido o código da primeira vez e não viu nada de errado. Isso acontece
-todo tempo com Classes complexas e muito mais com aquelas que utilizam herança.&lt;/p&gt;
-
-&lt;p&gt;Mas, continuando.&lt;/p&gt;
-
-&lt;p&gt;Então vou escolher uma das possíveis implementações: Adicionar um novo método.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;SaveToFileAndDB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TLog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SaveToFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;SaveToDB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;UAU! HORRÍVEL!&lt;/p&gt;
-
-&lt;p&gt;Está claro que essa não é uma solução elegante…&lt;/p&gt;
-
-&lt;p&gt;Esqueçam isso e vamos para a implementação &lt;strong&gt;correta&lt;/strong&gt;, Orientada a Objetos, &lt;strong&gt;simples&lt;/strong&gt; e &lt;strong&gt;reutilizável&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Para um novo requisito você não precisa alterar um código que já estava funcionando. Não precisa quebrar nada, nem sobrescrever nada.
-Basta criar um &lt;ins&gt;novo Objeto&lt;/ins&gt; que encapsule os Objetos que já sabem fazer o serviço.&lt;/p&gt;
-
-&lt;p&gt;Com apenas uma única Interface e várias implementações, é possível criar um único Objeto que contenha todo tipo de comportamento
-referente a &lt;em&gt;Log&lt;/em&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TLogToMail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;TLogToDB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;TLogToFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;TLogInMemory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;First info&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&amp;#39;/path/file.log&amp;#39;&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Mail&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Second info&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Final info&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Save&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Para o código-geral não há diferença se o &lt;em&gt;Log&lt;/em&gt; está sendo gravado num Arquivo, Banco de Dados ou sendo enviado por e-mail.&lt;/p&gt;
-
-&lt;p&gt;Só há uma Interface &lt;em&gt;ILog&lt;/em&gt; com apenas alguns poucos métodos. Cada Classe tem sua própria implementação, simples e limpa.&lt;/p&gt;
-
-&lt;p&gt;No fim temos uma única instância de um Objeto mais Complexo que é capaz de fazer todo o tipo de &lt;em&gt;Log&lt;/em&gt;, mas sua Interface
-não cresce junto com os requisitos.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 07 Mar 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/classes-devem-implementar-apenas-uma-responsabilidade/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/classes-devem-implementar-apenas-uma-responsabilidade/</guid>
       </item>
     
   </channel>
