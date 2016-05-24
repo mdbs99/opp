@@ -23,7 +23,7 @@ cometendo um &lt;strong&gt;erro&lt;/strong&gt; terrível.&lt;/p&gt;
 
 &lt;h2 id=&quot;indroduo&quot;&gt;Indrodução&lt;/h2&gt;
 
-&lt;p&gt;Se você já programa utilizando &lt;strong&gt;Orientação a Objetos&lt;/strong&gt; a muito tempo, utilizando &lt;strong&gt;Classes e 
+&lt;p&gt;Se você já programa utilizando &lt;strong&gt;Orientação a Objetos&lt;/strong&gt; há muito tempo, utilizando &lt;strong&gt;Classes e 
 Subclasses&lt;/strong&gt; em seu código para “reutilizar” funcionalidades, eu realmente &lt;strong&gt;não&lt;/strong&gt; espero que você 
 entenda e concorde comigo tão rapidamente.&lt;/p&gt;
 
@@ -39,7 +39,7 @@ em &lt;strong&gt;preconceitos&lt;/strong&gt; ou ignorância de informações.&lt
 &lt;strong&gt;Herança é o Mal&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;E, claro, é importante saber que grandes empresas e desenvolvedores ao redor do mundo já 
-chegaram a mesma conclusão a muito tempo.&lt;/p&gt;
+chegaram a mesma conclusão faz muito tempo.&lt;/p&gt;
 
 &lt;p&gt;Mas porfavor, não pense que estou &lt;strong&gt;abolindo&lt;/strong&gt; completamente a Herança. Estou lhe dizendo que ela é má,
 mas mesmo assim haverá momentos em que poderá ser mais &lt;strong&gt;simples&lt;/strong&gt; ou eficiente utitilizá-la do que outra 
@@ -62,7 +62,7 @@ mantra na época: &lt;strong&gt;Herança, Encapsulamento e Polimorfismo&lt;/stro
 &lt;p&gt;Para alguém como eu que só tinha visto &lt;strong&gt;código procedural&lt;/strong&gt; em C ou Pascal, declarar uma Classe e Subclasses para
 herdar o comportamento reutilizando o código era… &lt;strong&gt;mágico&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;Acho que Herança é o que mais &lt;strong&gt;impressiona&lt;/strong&gt; quem está aprendendo — ou mesmo utilizando a muito tempo — a
+&lt;p&gt;Acho que Herança é o que mais &lt;strong&gt;impressiona&lt;/strong&gt; quem está aprendendo — ou mesmo quem já é veterano — a
 programar Orientado a Objetos.&lt;/p&gt;
 
 &lt;p&gt;Com Herança o programador consegue extender uma Classe com novos
@@ -90,7 +90,7 @@ Classe foi codificada numa “Hierarquia errada”.&lt;/p&gt;
 &lt;h2 id=&quot;os-males&quot;&gt;Os Males&lt;/h2&gt;
 
 &lt;p&gt;Se você nunca ouviu dizer que Herança é ruim, deve estar pensando que eu sou louco. Bem, saiba que eu não inventei
-tal afirmação. Gostaria de citar um artigo que encontrei na Internet a muito tempo e que serviu
+tal afirmação. Gostaria de citar um artigo que encontrei na Internet há bastante tempo e que serviu
 de inspiração para o título desse artigo que você está lendo agora.&lt;/p&gt;
 
 &lt;p&gt;O &lt;a href=&quot;http://www.javaworld.com/article/2073649/core-java/why-extends-is-evil.html&quot;&gt;artigo&lt;/a&gt; foi publicado na JavaWorld em
