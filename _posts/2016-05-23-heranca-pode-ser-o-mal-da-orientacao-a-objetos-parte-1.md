@@ -35,7 +35,7 @@ Herança de Classe deve ser **evitada** a todo custo.
 
 ##Indrodução
 
-Se você já programa utilizando **Orientação a Objetos** a muito tempo, utilizando **Classes e 
+Se você já programa utilizando **Orientação a Objetos** há muito tempo, utilizando **Classes e 
 Subclasses** em seu código para "reutilizar" funcionalidades, eu realmente **não** espero que você 
 entenda e concorde comigo tão rapidamente. 
 
@@ -51,7 +51,7 @@ No fim eu espero veementemente que você junte tudo isso e chegue a mesma conclu
 **Herança é o Mal**.
 
 E, claro, é importante saber que grandes empresas e desenvolvedores ao redor do mundo já 
-chegaram a mesma conclusão a muito tempo.
+chegaram a mesma conclusão faz muito tempo.
 
 Mas porfavor, não pense que estou **abolindo** completamente a Herança. Estou lhe dizendo que ela é má,
 mas mesmo assim haverá momentos em que poderá ser mais **simples** ou eficiente utitilizá-la do que outra 
@@ -74,7 +74,7 @@ mantra na época: **Herança, Encapsulamento e Polimorfismo**.
 Para alguém como eu que só tinha visto **código procedural** em C ou Pascal, declarar uma Classe e Subclasses para
 herdar o comportamento reutilizando o código era... **mágico**.
 
-Acho que Herança é o que mais **impressiona** quem está aprendendo — ou mesmo utilizando a muito tempo — a
+Acho que Herança é o que mais **impressiona** quem está aprendendo — ou mesmo quem já é veterano — a
 programar Orientado a Objetos.
 
 Com Herança o programador consegue extender uma Classe com novos
@@ -102,7 +102,7 @@ Classe foi codificada numa "Hierarquia errada".
 ##Os Males
 
 Se você nunca ouviu dizer que Herança é ruim, deve estar pensando que eu sou louco. Bem, saiba que eu não inventei
-tal afirmação. Gostaria de citar um artigo que encontrei na Internet a muito tempo e que serviu
+tal afirmação. Gostaria de citar um artigo que encontrei na Internet há bastante tempo e que serviu
 de inspiração para o título desse artigo que você está lendo agora.
 
 O [artigo](http://www.javaworld.com/article/2073649/core-java/why-extends-is-evil.html) foi publicado na JavaWorld em
