@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Herança pode ser o Mal da Orientação a Objetos — Parte 2"
-date: 2016-05-30
+title: "Herança pode ser o Mal da Orientação a Objetos — Parte 3"
+date: 2016-06-06
 description: Não faça da Herança a sua primeira escolha para reutilizar código.
 summary: Não faça da Herança a sua primeira escolha para reutilizar código.
-image: /images/photo-1444212477490-ca407925329e.jpg
+image: /images/photo-1456087468887-17b7d7b076e0.jpg
 categories: 
   - OO
 tags:
@@ -22,28 +22,10 @@ keywords:
 --- 
 
 
+
 <!--more-->
 
 ![Imagem]({{ page.image }})
-
-##Herança Viola o Encapsulamento
-
-Vou repetir: **A Herança Viola o Encapsulamento**.
-
-Isso é um **fato lógico**. Pode não parecer lógico se é a primeira vez que você lê essa afirmação, mas você entenderá.
-
-Quando li isso a primeira vez tive o sentimento de **negação** que você pode estar tendo agora:
-
-— "Ora, isso não faz o menor sentido!"
-
-Como um um dos pilares da Orientação a Objetos, a Herança, pode se **contrapor** a outro princípio, o Encapsulamento?
-
-Se a Subclasse precisa conhecer os métodos da Super Classe e, consequentemente, como eles funcionam, já houve a Violação
-do Encapsulamento.
-
-##Herança leva a um Forte Acoplamento
-
-
 
 ##Hierarquias Complexas
 
@@ -63,12 +45,6 @@ O artigo termina propondo uma solução para o *design* de `HttpServlet` que, n�
 para quase todos os problemas relatados nos artigos desse blog, ou seja, 
 [utilize Interfaces]({% post_url 2016-01-18-interfaces-em-todo-lugar %}).
 
-##Composição
-
-Deveríamos utilizar a [Composição de Objetos](https://en.wikipedia.org/wiki/Composition_over_inheritance) ao 
-invés de **Herança de Classes**.
-
-Composição significa **tem-um** ao invés de **é-um** como na Herança.
 
 ---
 

@@ -33,7 +33,7 @@ Herança de Classe deve ser **evitada** a todo custo.
 
 ![Imagem]({{ page.image }})
 
-##Indrodução
+##Indrodução {#introducao}
 
 Se você já programa utilizando **Orientação a Objetos** há muito tempo, utilizando **Classes e 
 Subclasses** em seu código para "reutilizar" funcionalidades, eu realmente **não** espero que você 
@@ -61,7 +61,7 @@ você pensar no todo — a sobrevivência do paciente.
 
 É o mesmo com a Herança. Você tem essa possibilidade, mas só deverá utilizar em último recurso.
 
-##Herança
+##Herança {#heranca}
 
 A Herança é um dos pilares da Orientação a Objetos, assim como **Encapsulamento** e **Polimorfismo**.
 
@@ -99,7 +99,7 @@ quando sua **Hierarquia de Classes** se torna um peso e atrapalha mais do que aj
 métodos para não "fazer nada", desabilitando funcionalidades; ou quando você tem que **duplicar código** porque sua
 Classe foi codificada numa "Hierarquia errada".
 
-##Os Males
+##Os Males {#os-males}
 
 Se você nunca ouviu dizer que Herança é ruim, deve estar pensando que eu sou louco. Bem, saiba que eu não inventei
 tal afirmação. Gostaria de citar um artigo que encontrei na Internet há bastante tempo e que serviu
@@ -131,10 +131,12 @@ Os principais motivos são:
 
 ##No próximo artigo...
 
-No próximo artigo irei explicar em detalhes porque a Herança Viola o Encapsulamento, com exemplos de código.
+No próximo artigo irei explicar em detalhes porque a Herança **Viola o Encapsulamento**, com exemplos de código.
+
+[Clique aqui]({% post_url 2016-05-30-heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2 %}) para ler a **Parte #2** dessa série.
 
 Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
 abaixo para comentários.
   
-Até o próximo artigo!
+Até logo.
 
