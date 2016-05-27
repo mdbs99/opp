@@ -46,8 +46,4 @@ para quase todos os problemas relatados nos artigos desse blog, ou seja,
 [utilize Interfaces]({% post_url 2016-01-18-interfaces-em-todo-lugar %}).
 
 
----
-
-  - Go language não tem herança: https://talks.golang.org/2012/splash.article#TOC_15.
-
 

@@ -21,7 +21,8 @@ keywords:
   - polimorfismo
 --- 
 
-
+No artigo anterior citei alguns males ao utilizarmos Herança de Classe. Nesse artigo irei falar sobre
+um deles, a Violação de Encapsulamento ao utilizarmos Subclasses.
 
 <!--more-->
 
@@ -108,6 +109,10 @@ ao projetar seu diagrama de Classes. Ao invés de Herança a melhor escolha é a
 dos princípios proposto no livro Padrões de Projetos:
 
 *Favoreça a composição de objetos em relação à herança de classe*.
+
+Foi o que fizeram os engenheiros do Google ao projetar a [Go language](https://golang.org/). 
+A linguagem [não tem nenhuma forma](https://talks.golang.org/2012/splash.article#TOC_15) de Herança de Classes,
+ou seja, Herança baseada em subtipos. Não há hierarquia de tipos!
 
 ##Implementando a Violação do Encapsulamento
 
