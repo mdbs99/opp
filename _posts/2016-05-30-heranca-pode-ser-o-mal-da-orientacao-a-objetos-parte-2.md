@@ -22,7 +22,7 @@ keywords:
 --- 
 
 No artigo anterior citei alguns males ao utilizarmos Herança de Classe. Nesse artigo irei falar sobre
-um deles, a Violação de Encapsulamento ao utilizarmos Subclasses.
+um deles, a **Violação de Encapsulamento** ao utilizarmos Subclasses.
 
 <!--more-->
 
@@ -114,17 +114,182 @@ Foi o que fizeram os engenheiros do Google ao projetar a [Go language](https://g
 A linguagem [não tem nenhuma forma](https://talks.golang.org/2012/splash.article#TOC_15) de Herança de Classes,
 ou seja, Herança baseada em subtipos. Não há hierarquia de tipos!
 
-##Implementando a Violação do Encapsulamento
+##Me mostre o Código
 
-A teoria foi explicada. Agora vou provar os conceitos apresentados, implementando no código.
+A teoria foi explicada. Agora vou lhe mostrar alguns exemplos de código.
 
-<code>
-begin ... end
-</code>
+Não posso colocar exemplos completos e reais senão o artigo irá virar um "repositório de código" e não um
+artigo. Então veja os exemplos e imagine o código real. Veja se você já passou por esses problemas ou o 
+quanto pode ser perigoso utilizar Herança. Veja que com pequenas mudanças você pode facilmente quebrar um código que
+utiliza Herança.
 
-Espero que você tenha entendido. Herança viola o Encapsulamento. Não é apenas um conceito, mas um fato.
+###Exemplo 1 — *Stack Overflow*
+
+É um exemplo simples que poderia ser evitado pelo programador que fez a Classe A, a classe ancestral, 
+no entanto veja que para descobrir o problema o programador da Classe B, a Subclasse, deve ver como a Classe A
+foi implementada, Violando o Encapsulamento, pois ele deverá fazer ajustes em função da implementão interna da 
+Classe A: 
+
+{% highlight pascal %}
+type
+  TClasseA = class
+  protected
+    procedure Exec; virtual;
+  public
+    procedure Proc;
+  end;
+
+  TClasseB = class(TClasseA)
+  protected
+    procedure Exec; override;
+  end;
+
+{ TClasseA }
+
+procedure TClasseA.Exec;
+begin
+  ShowMessage('Exec')
+end;
+
+procedure TClasseA.Proc;
+begin
+  Exec;
+end;
+
+{ TClasseB }
+
+procedure TClasseB.Exec;
+begin
+  Proc;
+end;
+
+{ TForm1 }
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  with TClasseA.Create do
+  try
+    Proc;
+  finally
+    Free;
+  end;
+
+  with TClasseB.Create do
+  try
+    Proc;
+  finally
+    Free;
+  end;
+end;
+{% endhighlight text %}
+
+A Classe B sobrescreve um método da Classe A. Simples. Fazemos isso todo tempo.
+Então, qual é o problema desse código?
+
+Se você copiar/colar o código na sua IDE e executar, verá uma mensagem de erro na segunda execução de `Proc`.
+Essa mensagem pode variar de IDE mas basicamente é um *Stack Overflow*. Acontece que ao sobrescrever `Exec` 
+na Classe B, o programador chamou `Proc` internamente. O problema é que na Classe A, `Proc` já está chamando `Exec` e,
+dessa forma, o programa entra em um *loop* infinito.
+
+###Exemplo 2 — Utilizar `inherited` ou não?
+
+Quando sobrescrevemos um método há a possibilidade de chamar o código do mesmo método da Classe ancestral. 
+Para isso utilizamos a palavra reservada `inherited`.
+
+Mas como saber se devo ou não chamar o código da Classe ancestral?
+
+Somente olhando a implementação privada da Classe para termos certeza se **devemos ou não** chamar o código.
+Novamente, temos uma Violação de Encapsulamento.
+
+{% highlight pascal %}
+type
+  TClasseA = class
+  protected
+    FCount: Integer;
+  public
+    procedure Exec; virtual;
+  end;
+
+  TClasseB = class(TClasseA)
+  public
+    procedure Exec; override;
+  end;
+
+{ TClasseA }
+
+procedure TClasseA.Exec;
+begin
+  FCount := FCount + 1;
+  ShowMessage('Count=' + IntToStr(FCount)); //=1
+  ShowMessage('Exec A');
+end;
+
+{ TClasseB }
+
+procedure TClasseB.Exec;
+begin
+  inherited;
+  FCount := FCount + 1;
+  ShowMessage('Count=' + IntToStr(FCount)); //=2
+  ShowMessage('Exec B');
+end;
+
+{ TForm1 }
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  with TClasseB.Create do
+  try
+    Exec;
+  finally
+    Free;
+  end;
+end;
+{% endhighlight text %}
+
+Quando executado teremos as mensagens: 
+
+  1. "Count=1"
+  2. "Exec A"
+  3. "Count=2"
+  4. "Exec B"
+  
+Nesse exemplo o programador utilizar `inherited` porque ele sabe — olhando para a implementação de `TClasseA.Exec` —
+que a execução da Classe ancestral iria incrementar o atributo `FCount` antes que ele fosse incrementado novamente no 
+método sobrescrito.
+
+É um exemplo idiota, mas serve para o que eu quero lhe mostrar.
+
+Como eu disse, tente imaginar um código em produção, pensando quantas vezes você já teve que
+ver o código da Classe ancestral (ou uma hierarquia de classes inteira) para saber se podia ou não chamar um método; se devia ou não
+chamar o código ancestral do método; se um determinado atributo já havia sido inicializado, etc.
+
+Antigamente, nos compiladores mais antigos, era possível fazer uma chamada a um método abstrato — sei que o compilador FreePascal
+não permite, nem compila — mas não sei se o compilador atual do Delphi permite. Bem, em compiladores antigos esse é mais um problema:
+"Será que posso utilizar `inherited` nesse método? Como saber se é abstrato?"
+
+Se não me engano, acho que o Java permite a chamada a métodos abstratos — me corrijam se eu estiver errado.
+
+###Exemplo 3 — Herança pode ser o Mal em qualquer lugar
+
+O próximo exemplo não é codificado em *Object Pascal*, mas em Java. Muitas pessoas pensam que algo está correto só
+porque foi feito por uma grande empresa. Não. Pode ser uma grande empresa, com muito lucro, porém os programadores
+não são robôs, eles falham.
+
+<blockquote>
+  Quando então usar herança? Essa é uma questão difícil. Na minha visão particular, a resposta seria um enfático “quase nunca”.
+  <footer><cite title="Paulo Silveira">Como não aprender orientação a objetos: Herança — Paulo Silveira</cite></footer>
+</blockquote>
+
+[Clique aqui](http://blog.caelum.com.br/como-nao-aprender-orientacao-a-objetos-heranca/) para ler o artigo na íntegra e
+ver como os arquitetos do Java erraram incrivelmente no *design* da arquitetura de *Servlets*.
+
+A solução proposta pelo autor no artigo é a mesma que eu iria propor:
+[Utilize Interfaces]({% post_url 2016-01-18-interfaces-em-todo-lugar %}).
 
 ##No próximo artigo...
+
+Espero que você tenha entendido. Herança viola o Encapsulamento. Não é apenas um conceito, mas um fato.
 
 No próximo artigo irei falar sobre **Duplicação de Código** ao utilizarmos Herança.
 
