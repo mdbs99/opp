@@ -54,22 +54,20 @@ Ele não escreveu, especificamente, que a Herança Viola o Encapsulamento mas vo
 O interior de uma Classe não pode ser visível, mesmo para Subclasses, porque isso significaria **violação de 
 encapsulamento**. Ponto.
 
-Se ainda não acredita ou não concorda, continue lendo.
-
 <blockquote>
   Porque a herança expõe para uma subclasse os detalhes da implementação dos seus ancestrais, frequentemente
    é dito que "a herança viola a encapsulação"[Sny86]
   <footer><cite title="Padrões de Projetos">Padrões de Projetos, 2002 — p.34</cite></footer>
 </blockquote>
 
-Vou repetir: A Herança Viola o Encapsulamento.
-
-Isso é um **fato lógico**. Pode não parecer lógico se é a primeira vez que você lê essa afirmação, mas você entenderá.
-
 Quando li isso a primeira vez, pouco tempo depois que comecei a codificar software "Orientado a Objetos", tive o 
 sentimento de **negação** que você pode estar tendo agora:
 
 — "Ora, isso não faz o menor sentido!"
+
+Mas faz todo o sentido. Vou repetir: A Herança Viola o Encapsulamento.
+
+Isso é um **fato lógico**. Pode não parecer lógico se é a primeira vez que você lê essa afirmação, mas você entenderá.
 
 ##Encapsulamento {#encapsulamento}
 
@@ -92,7 +90,7 @@ Um subtipo de Classe viola esse conceito.
 
 ##Herança de Classe
 
-O motivo de termos Subclasses é **acrescentar** mais funcionalidade às Classes ancestrais.
+O motivo de termos Subclasses é **acrescentar** mais funcionalidade às Classes ancestrais, criando um novo tipo.
 Ao acrescentar funcionalidades a nova Subclasse deverá, inevitavelmente, interagir com o Estado e Métodos protegidos da 
 Classe ancestral. Em outras palavras, a Subclasse deverá conhecer como a Classe ancestral trabalha (internamente) para
 poder adicionar funcionalidade, o que é uma clara **Violação de Encapsulamento**.
@@ -118,10 +116,8 @@ ou seja, Herança baseada em subtipos. Não há hierarquia de tipos!
 
 A teoria foi explicada. Agora vou lhe mostrar alguns exemplos de código.
 
-Não posso colocar exemplos completos e reais senão o artigo irá virar um "repositório de código" e não um
-artigo. Então veja os exemplos e imagine o código real. Veja se você já passou por esses problemas ou o 
-quanto pode ser perigoso utilizar Herança. Veja que com pequenas mudanças você pode facilmente quebrar um código que
-utiliza Herança.
+Não posso colocar exemplos completos e reais senão o artigo iria virar um "repositório de código" e não um
+artigo. Então veja os exemplos e imagine como seria no código real.
 
 ###Exemplo 1 — *Stack Overflow*
 
@@ -272,8 +268,8 @@ Se não me engano, acho que o Java permite a chamada a métodos abstratos — me
 
 ###Exemplo 3 — Herança pode ser o Mal em qualquer lugar
 
-O próximo exemplo não é codificado em *Object Pascal*, mas em Java. Muitas pessoas pensam que algo está correto só
-porque foi feito por uma grande empresa. Não. Pode ser uma grande empresa, com muito lucro, porém os programadores
+O próximo exemplo não é sobre *Object Pascal*, mas sim Java. Muitas pessoas pensam que algo está correto só
+porque foi feito por uma grande empresa. Não. Pode ser uma grande empresa lucrativa, porém seus programadores
 não são robôs, eles falham.
 
 <blockquote>
@@ -284,7 +280,7 @@ não são robôs, eles falham.
 [Clique aqui](http://blog.caelum.com.br/como-nao-aprender-orientacao-a-objetos-heranca/) para ler o artigo na íntegra e
 ver como os arquitetos do Java erraram incrivelmente no *design* da arquitetura de *Servlets*.
 
-A solução proposta pelo autor no artigo é a mesma que eu iria propor:
+A solução proposta pelo autor do artigo é a mesma que proponho em quase todos os posts aqui no blog:
 [Utilize Interfaces]({% post_url 2016-01-18-interfaces-em-todo-lugar %}).
 
 ##No próximo artigo...
