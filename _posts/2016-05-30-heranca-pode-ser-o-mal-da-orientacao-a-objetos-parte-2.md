@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Herança pode ser o Mal da Orientação a Objetos — Parte 2"
-date: 2016-05-26
+date: 2016-05-30
 description: Não faça da Herança a sua primeira escolha para reutilizar código.
 summary: Não faça da Herança a sua primeira escolha para reutilizar código.
 image: /images/photo-1456087468887-17b7d7b076e0.jpg
@@ -60,8 +60,8 @@ encapsulamento**. Ponto.
   <footer><cite title="Padrões de Projetos">Padrões de Projetos, 2002 — p.34</cite></footer>
 </blockquote>
 
-Quando li isso a primeira vez, pouco tempo depois que comecei a codificar software "Orientado a Objetos", tive o 
-sentimento de **negação** que você pode estar tendo agora:
+Quando li isso a primeira vez, pouco tempo depois que comecei a codificar software "Orientado a Objetos" — eu achava
+que estava utilizando Orientação a Objetos — tive o sentimento de **negação** que você pode estar tendo agora:
 
 — "Ora, isso não faz o menor sentido!"
 
@@ -183,7 +183,7 @@ A Classe B sobrescreve um método da Classe A. Simples. Fazemos isso todo tempo.
 Então, qual é o problema desse código?
 
 Se você copiar/colar o código na sua IDE e executar, verá uma mensagem de erro na segunda execução de `Proc`.
-Essa mensagem pode variar de IDE mas basicamente é um *Stack Overflow*. Acontece que ao sobrescrever `Exec` 
+Essa mensagem pode variar de IDE mas basicamente é um *Stack Overflow*. Ao sobrescrever `Exec` 
 na Classe B, o programador chamou `Proc` internamente. O problema é que na Classe A, `Proc` já está chamando `Exec` e,
 dessa forma, o programa entra em um *loop* infinito.
 
@@ -287,7 +287,7 @@ A solução proposta pelo autor do artigo é a mesma que proponho em quase todos
 
 Espero que você tenha entendido. Herança viola o Encapsulamento. Não é apenas um conceito, mas um fato.
 
-No próximo artigo irei falar sobre **Duplicação de Código** ao utilizarmos Herança.
+No próximo artigo irei falar mais sobre outros problemas quando utilizamos Herança de Classes.
 
 Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
 abaixo para comentários.
