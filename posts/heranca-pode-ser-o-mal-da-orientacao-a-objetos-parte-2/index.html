@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Herança pode ser o Mal da Orientação a Objetos — Parte 2 &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Não faça da Herança a sua primeira escolha para reutilizar código.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="OO">
+    <meta name="keywords" content="herança, inheritance, evil, mal, orientação a objetos, oop, poo, encapsulamento, polimorfismo">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201605300051" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Herança pode ser o Mal da Orientação a Objetos — Parte 2">
+    <meta property="og:description" content="Não faça da Herança a sua primeira escolha para reutilizar código.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1456087468887-17b7d7b076e0.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Herança pode ser o Mal da Orientação a Objetos — Parte 2" />
+    <meta name="twitter:description" content="Não faça da Herança a sua primeira escolha para reutilizar código." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Herança pode ser o Mal da Orientação a Objetos — Parte 2</h1>
+  <span class="post-meta">May 30, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    8 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>No artigo anterior citei alguns males ao utilizarmos Herança de Classe. Nesse artigo irei falar sobre
+um deles, a <strong>Violação de Encapsulamento</strong> ao utilizarmos Subclasses.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1456087468887-17b7d7b076e0.jpg" alt="Imagem" /></p>
+
+<p><a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">Clique aqui</a> para ler a <strong>Parte #1</strong> 
+dessa série, caso ainda não tenha lido.</p>
+
+<h2 id="introducao">Indrodução</h2>
+
+<p>Há muitos artigos na internet que falam sobre esse assunto, mas não encontrei nenhum que tenha apresentado esse conceito,
+de forma satisfatória, para programadores <em>Object Pascal</em> e, aqui estamos.</p>
+
+<p>Então, como um dos pilares da Orientação a Objetos, a Herança, pode se <strong>contrapor</strong> a outro princípio, o <strong>Encapsulamento</strong>?</p>
+
+<blockquote>
+  ...a herança de classe permite definir a implementação de uma classe em termos da implemetação de outra.
+  A reutilização por meio de sublcasses é frequentemente chamada de reutilização de caixa branca (ou aberta).
+  O termo "caixa branca" se refere à visibilidade: com herança, os interiores das classes ancestrais são frequentemente
+  visíveis para subclasses.
+  <footer><cite title="Padrões de Projetos">Padrões de Projetos, 2002 — p.34 — Erich Gamma e outros — ISBN 85-7307-610-0</cite></footer>
+</blockquote>
+
+<p>O texto é claro.</p>
+
+<p>O autor escreveu que <strong>“…os interiores das classes ancestrais são frequentemente visíveis para subclasses”</strong>.
+Ele não escreveu, especificamente, que a Herança Viola o Encapsulamento mas você percebeu que é a mesma coisa?</p>
+
+<p>O interior de uma Classe não pode ser visível, mesmo para Subclasses, porque isso significaria <strong>violação de 
+encapsulamento</strong>. Ponto.</p>
+
+<blockquote>
+  Porque a herança expõe para uma subclasse os detalhes da implementação dos seus ancestrais, frequentemente
+   é dito que "a herança viola a encapsulação"[Sny86]
+  <footer><cite title="Padrões de Projetos">Padrões de Projetos, 2002 — p.34</cite></footer>
+</blockquote>
+
+<p>Quando li isso a primeira vez, pouco tempo depois que comecei a codificar software “Orientado a Objetos” — eu achava
+que estava utilizando Orientação a Objetos — tive o sentimento de <strong>negação</strong> que você pode estar tendo agora:</p>
+
+<p>— “Ora, isso não faz o menor sentido!”</p>
+
+<p>Mas faz todo o sentido. Vou repetir: A Herança Viola o Encapsulamento.</p>
+
+<p>Isso é um <strong>fato lógico</strong>. Pode não parecer lógico se é a primeira vez que você lê essa afirmação, mas você entenderá.</p>
+
+<h2 id="encapsulamento">Encapsulamento</h2>
+
+<p>Precisamos definir o que é Encapsulamento que, de acordo com o dicionário, significa:
+<strong>colocar ou encerrar em cápsula; capsular</strong>.</p>
+
+<p>Uma cápsula não pode — ou não deveria — ser quebrada. O mundo externo ao Objeto não pode saber o que há em seu
+interior a menos que o Objeto queira lhes dizer “com suas próprias palavras”, ou seja, através de métodos que 
+retornam informações mas não necessariamente seu <a href="/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados">Estado</a>.</p>
+
+<p>O mundo externo só deve conhecer os métodos públicos de um Objeto. Seus métodos públicos representam sua
+<a href="/posts/interfaces-em-todo-lugar/">Interface</a> para fazer o que ele deve fazer. Qualquer método ou
+atributo interno ao Objeto é de propriedade dele e de mais ninguém.</p>
+
+<p>Um Objeto pode ter um único método em sua Interface
+porém pode haver 10 outros métodos privados apenas para resolver um único problema. Mas o mundo externo não sabe e não deve
+saber como o Objeto trabalha internamente.</p>
+
+<p>Um subtipo de Classe viola esse conceito.</p>
+
+<h2 id="herana-de-classe">Herança de Classe</h2>
+
+<p>O motivo de termos Subclasses é <strong>acrescentar</strong> mais funcionalidade às Classes ancestrais, criando um novo tipo.
+Ao acrescentar funcionalidades a nova Subclasse deverá, inevitavelmente, interagir com o Estado e Métodos protegidos da 
+Classe ancestral. Em outras palavras, a Subclasse deverá conhecer como a Classe ancestral trabalha (internamente) para
+poder adicionar funcionalidade, o que é uma clara <strong>Violação de Encapsulamento</strong>.</p>
+
+<blockquote>
+  A implementação de uma Subclasse, dessa forma, torna-se tão amarrada à implementação da sua classe-mãe que qualquer mudança
+  na implementação desta forçará uma mudança naquela.
+  <footer><cite title="Padrões de Projetos">Padrões de Projetos, 2002 — p.34</cite></footer>
+</blockquote>
+
+<p>A Herança de Classe é simples de usar e entender, mas no longo prazo é provado que essa não é a melhor escolha
+ao projetar seu diagrama de Classes. Ao invés de Herança a melhor escolha é a
+<a href="https://en.wikipedia.org/wiki/Composition_over_inheritance">Composição de Objetos</a>. Esse é um
+dos princípios proposto no livro Padrões de Projetos:</p>
+
+<p><em>Favoreça a composição de objetos em relação à herança de classe</em>.</p>
+
+<p>Foi o que fizeram os engenheiros do Google ao projetar a <a href="https://golang.org/">Go language</a>. 
+A linguagem <a href="https://talks.golang.org/2012/splash.article#TOC_15">não tem nenhuma forma</a> de Herança de Classes,
+ou seja, Herança baseada em subtipos. Não há hierarquia de tipos!</p>
+
+<h2 id="me-mostre-o-cdigo">Me mostre o Código</h2>
+
+<p>A teoria foi explicada. Agora vou lhe mostrar alguns exemplos de código.</p>
+
+<p>Não posso colocar exemplos completos e reais senão o artigo iria virar um “repositório de código” e não um
+artigo. Então veja os exemplos e imagine como seria no código real.</p>
+
+<h3 id="exemplo-1--stack-overflow">Exemplo 1 — <em>Stack Overflow</em></h3>
+
+<p>É um exemplo simples que poderia ser evitado pelo programador que fez a Classe A, a classe ancestral, 
+no entanto veja que para descobrir o problema o programador da Classe B, a Subclasse, deve ver como a Classe A
+foi implementada, Violando o Encapsulamento, pois ele deverá fazer ajustes em função da implementão interna da 
+Classe A:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TClasseA</span> <span class="o">=</span> <span class="k">class</span>
+  <span class="kp">protected</span>
+    <span class="k">procedure</span> <span class="nf">Exec</span><span class="o">;</span> <span class="kp">virtual</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">procedure</span> <span class="nf">Proc</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+  <span class="n">TClasseB</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TClasseA</span><span class="p">)</span>
+  <span class="kp">protected</span>
+    <span class="k">procedure</span> <span class="nf">Exec</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TClasseA }</span>
+
+<span class="k">procedure</span> <span class="nc">TClasseA</span><span class="o">.</span><span class="nf">Exec</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">ShowMessage</span><span class="p">(</span><span class="s">&#39;Exec&#39;</span><span class="p">)</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">procedure</span> <span class="nc">TClasseA</span><span class="o">.</span><span class="nf">Proc</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">Exec</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TClasseB }</span>
+
+<span class="k">procedure</span> <span class="nc">TClasseB</span><span class="o">.</span><span class="nf">Exec</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">Proc</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TForm1 }</span>
+
+<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">Button1Click</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">with</span> <span class="n">TClasseA</span><span class="o">.</span><span class="n">Create</span> <span class="k">do</span>
+  <span class="k">try</span>
+    <span class="n">Proc</span><span class="o">;</span>
+  <span class="k">finally</span>
+    <span class="n">Free</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+  <span class="k">with</span> <span class="n">TClasseB</span><span class="o">.</span><span class="n">Create</span> <span class="k">do</span>
+  <span class="k">try</span>
+    <span class="n">Proc</span><span class="o">;</span>
+  <span class="k">finally</span>
+    <span class="n">Free</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>A Classe B sobrescreve um método da Classe A. Simples. Fazemos isso todo tempo.
+Então, qual é o problema desse código?</p>
+
+<p>Se você copiar/colar o código na sua IDE e executar, verá uma mensagem de erro na segunda execução de <code>Proc</code>.
+Essa mensagem pode variar de IDE mas basicamente é um <em>Stack Overflow</em>. Ao sobrescrever <code>Exec</code> 
+na Classe B, o programador chamou <code>Proc</code> internamente. O problema é que na Classe A, <code>Proc</code> já está chamando <code>Exec</code> e,
+dessa forma, o programa entra em um <em>loop</em> infinito.</p>
+
+<h3 id="exemplo-2--utilizar-inherited-ou-no">Exemplo 2 — Utilizar <code>inherited</code> ou não?</h3>
+
+<p>Quando sobrescrevemos um método há a possibilidade de chamar o código do mesmo método da Classe ancestral. 
+Para isso utilizamos a palavra reservada <code>inherited</code>.</p>
+
+<p>Mas como saber se devo ou não chamar o código da Classe ancestral?</p>
+
+<p>Somente olhando a implementação privada da Classe para termos certeza se <strong>devemos ou não</strong> chamar o código.
+Novamente, temos uma Violação de Encapsulamento.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TClasseA</span> <span class="o">=</span> <span class="k">class</span>
+  <span class="kp">protected</span>
+    <span class="n">FCount</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">procedure</span> <span class="nf">Exec</span><span class="o">;</span> <span class="kp">virtual</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+  <span class="n">TClasseB</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TClasseA</span><span class="p">)</span>
+  <span class="kp">public</span>
+    <span class="k">procedure</span> <span class="nf">Exec</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TClasseA }</span>
+
+<span class="k">procedure</span> <span class="nc">TClasseA</span><span class="o">.</span><span class="nf">Exec</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">FCount</span> <span class="o">:=</span> <span class="n">FCount</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="n">ShowMessage</span><span class="p">(</span><span class="s">&#39;Count=&#39;</span> <span class="o">+</span> <span class="nb">IntToStr</span><span class="p">(</span><span class="n">FCount</span><span class="p">))</span><span class="o">;</span> <span class="c1">//=1</span>
+  <span class="n">ShowMessage</span><span class="p">(</span><span class="s">&#39;Exec A&#39;</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TClasseB }</span>
+
+<span class="k">procedure</span> <span class="nc">TClasseB</span><span class="o">.</span><span class="nf">Exec</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span><span class="o">;</span>
+  <span class="n">FCount</span> <span class="o">:=</span> <span class="n">FCount</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="n">ShowMessage</span><span class="p">(</span><span class="s">&#39;Count=&#39;</span> <span class="o">+</span> <span class="nb">IntToStr</span><span class="p">(</span><span class="n">FCount</span><span class="p">))</span><span class="o">;</span> <span class="c1">//=2</span>
+  <span class="n">ShowMessage</span><span class="p">(</span><span class="s">&#39;Exec B&#39;</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TForm1 }</span>
+
+<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">Button1Click</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">with</span> <span class="n">TClasseB</span><span class="o">.</span><span class="n">Create</span> <span class="k">do</span>
+  <span class="k">try</span>
+    <span class="n">Exec</span><span class="o">;</span>
+  <span class="k">finally</span>
+    <span class="n">Free</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Quando executado teremos as mensagens:</p>
+
+<ol>
+  <li>“Count=1”</li>
+  <li>“Exec A”</li>
+  <li>“Count=2”</li>
+  <li>“Exec B”</li>
+</ol>
+
+<p>Nesse exemplo o programador utilizar <code>inherited</code> porque ele sabe — olhando para a implementação de <code>TClasseA.Exec</code> —
+que a execução da Classe ancestral iria incrementar o atributo <code>FCount</code> antes que ele fosse incrementado novamente no 
+método sobrescrito.</p>
+
+<p>É um exemplo idiota, mas serve para o que eu quero lhe mostrar.</p>
+
+<p>Como eu disse, tente imaginar um código em produção, pensando quantas vezes você já teve que
+ver o código da Classe ancestral (ou uma hierarquia de classes inteira) para saber se podia ou não chamar um método; se devia ou não
+chamar o código ancestral do método; se um determinado atributo já havia sido inicializado, etc.</p>
+
+<p>Antigamente, nos compiladores mais antigos, era possível fazer uma chamada a um método abstrato — sei que o compilador FreePascal
+não permite, nem compila — mas não sei se o compilador atual do Delphi permite. Bem, em compiladores antigos esse é mais um problema:
+“Será que posso utilizar <code>inherited</code> nesse método? Como saber se é abstrato?”</p>
+
+<p>Se não me engano, acho que o Java permite a chamada a métodos abstratos — me corrijam se eu estiver errado.</p>
+
+<h3 id="exemplo-3--herana-pode-ser-o-mal-em-qualquer-lugar">Exemplo 3 — Herança pode ser o Mal em qualquer lugar</h3>
+
+<p>O próximo exemplo não é sobre <em>Object Pascal</em>, mas sim Java. Muitas pessoas pensam que algo está correto só
+porque foi feito por uma grande empresa. Não. Pode ser uma grande empresa lucrativa, porém seus programadores
+não são robôs, eles falham.</p>
+
+<blockquote>
+  Quando então usar herança? Essa é uma questão difícil. Na minha visão particular, a resposta seria um enfático “quase nunca”.
+  <footer><cite title="Paulo Silveira">Como não aprender orientação a objetos: Herança — Paulo Silveira</cite></footer>
+</blockquote>
+
+<p><a href="http://blog.caelum.com.br/como-nao-aprender-orientacao-a-objetos-heranca/">Clique aqui</a> para ler o artigo na íntegra e
+ver como os arquitetos do Java erraram incrivelmente no <em>design</em> da arquitetura de <em>Servlets</em>.</p>
+
+<p>A solução proposta pelo autor do artigo é a mesma que proponho em quase todos os posts aqui no blog:
+<a href="/posts/interfaces-em-todo-lugar/">Utilize Interfaces</a>.</p>
+
+<h2 id="no-prximo-artigo">No próximo artigo…</h2>
+
+<p>Espero que você tenha entendido. Herança viola o Encapsulamento. Não é apenas um conceito, mas um fato.</p>
+
+<p>No próximo artigo irei falar mais sobre outros problemas quando utilizamos Herança de Classes.</p>
+
+<p>Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
+abaixo para comentários.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Herança pode ser o Mal da Orientação a Objetos — Parte 2&via=mdbs99;url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/&title=Herança pode ser o Mal da Orientação a Objetos — Parte 2" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/&title=Herança pode ser o Mal da Orientação a Objetos — Parte 2" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/&t=Herança pode ser o Mal da Orientação a Objetos — Parte 2" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-representam-entidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+        </ul>
+        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+        </ul>
+        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+      </a>
+    </div>
+  
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
