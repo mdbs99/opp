@@ -33,7 +33,7 @@ Herança de Classe deve ser **evitada** a todo custo.
 
 ![Imagem]({{ page.image }})
 
-##Indrodução {#introducao}
+##Introdução {#introducao}
 
 Se você já programa utilizando **Orientação a Objetos** há muito tempo, utilizando **Classes e 
 Subclasses** em seu código para "reutilizar" funcionalidades, eu realmente **não** espero que você 
