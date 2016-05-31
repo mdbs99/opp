@@ -31,7 +31,7 @@ um deles, a **Violação de Encapsulamento** ao utilizarmos Subclasses.
 [Clique aqui]({% post_url 2016-05-23-heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1 %}) para ler a **Parte #1** 
 dessa série, caso ainda não tenha lido.
 
-##Indrodução {#introducao}
+##Introdução {#introducao}
 
 Há muitos artigos na internet que falam sobre esse assunto, mas não encontrei nenhum que tenha apresentado esse conceito,
 de forma satisfatória, para programadores *Object Pascal* e, aqui estamos.
