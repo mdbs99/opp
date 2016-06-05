@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Herança pode ser o Mal da Orientação a Objetos — Parte 3"
-date: 2016-06-06
+title: "Herança pode ser o Mal da Orientação a Objetos — Parte 4"
+date: 2016-06-13
 description: Não faça da Herança a sua primeira escolha para reutilizar código.
 summary: Não faça da Herança a sua primeira escolha para reutilizar código.
-image: /images/photo-1456087468887-17b7d7b076e0.jpg
+image: /images/photo-1461287159820-04de78c094e9.jpg
 categories: 
   - OO
 tags:
@@ -21,13 +21,18 @@ keywords:
   - polimorfismo
 --- 
 
-
+No artigo anterior falei sobre Duplicação de Código.
+Nesse artigo irei falar sobre o **Forte Acoplamento** que ocorre ao utilizarmos a Herança de 
+Classe ao invés de **Interfaces**.
 
 <!--more-->
 
-![Imagem]({{ page.image }})
+![Acoplamento]({{ page.image }})
 
-##Hierarquias Complexas
+[Clique aqui]({% post_url 2016-06-06-heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3 %}) para ler a **Parte #3** 
+dessa série, caso ainda não tenha lido.
+
+##Introdução
 
 >Se um gato possui raça e patas, e um cachorro possui raça, patas e tipoDoPelo, logo Cachorro extends Gato? 
 
@@ -40,10 +45,6 @@ menos na faculdade — e precisou extender essa Classe e se deparou com o mesmo 
 
 Na época da faculdade eu vi isso mas, **ignorei**. Achei que eu estava errado. Ora, uma grande empresa que projetou o Java
 não poderia estar errada, não é mesmo?
-
-O artigo termina propondo uma solução para o *design* de `HttpServlet` que, não por coincidência, a mesma solução proposta 
-para quase todos os problemas relatados nos artigos desse blog, ou seja, 
-[utilize Interfaces]({% post_url 2016-01-18-interfaces-em-todo-lugar %}).
 
 
 

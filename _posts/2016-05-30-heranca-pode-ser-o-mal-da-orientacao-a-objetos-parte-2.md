@@ -88,7 +88,7 @@ saber como o Objeto trabalha internamente.
 
 Um subtipo de Classe viola esse conceito.
 
-##Herança de Classe
+##Herança de Classe {#heranca-de-classe}
 
 O motivo de termos Subclasses é **acrescentar** mais funcionalidade às Classes ancestrais, criando um novo tipo.
 Ao acrescentar funcionalidades a nova Subclasse deverá, inevitavelmente, interagir com o Estado e Métodos protegidos da 
@@ -112,14 +112,14 @@ Foi o que fizeram os engenheiros do Google ao projetar a [Go language](https://g
 A linguagem [não tem nenhuma forma](https://talks.golang.org/2012/splash.article#TOC_15) de Herança de Classes,
 ou seja, Herança baseada em subtipos. Não há hierarquia de tipos!
 
-##Me mostre o Código
+##Me mostre o Código {#me-mostre-o-codigo}
 
 A teoria foi explicada. Agora vou lhe mostrar alguns exemplos de código.
 
 Não posso colocar exemplos completos e reais senão o artigo iria virar um "repositório de código" e não um
 artigo. Então veja os exemplos e imagine como seria no código real.
 
-###Exemplo 1 — *Stack Overflow*
+###Exemplo 1 — *Stack Overflow* {#exemplo-1}
 
 É um exemplo simples que poderia ser evitado pelo programador que fez a Classe A, a classe ancestral, 
 no entanto veja que para descobrir o problema o programador da Classe B, a Subclasse, deve ver como a Classe A
@@ -187,7 +187,7 @@ Essa mensagem pode variar de IDE mas basicamente é um *Stack Overflow*. Ao sobr
 na Classe B, o programador chamou `Proc` internamente. O problema é que na Classe A, `Proc` já está chamando `Exec` e,
 dessa forma, o programa entra em um *loop* infinito.
 
-###Exemplo 2 — Utilizar `inherited` ou não?
+###Exemplo 2 — Utilizar `inherited` ou não? {#exemplo-2}
 
 Quando sobrescrevemos um método há a possibilidade de chamar o código do mesmo método da Classe ancestral. 
 Para isso utilizamos a palavra reservada `inherited`.
@@ -266,7 +266,7 @@ não permite, nem compila — mas não sei se o compilador atual do Delphi permi
 
 Se não me engano, acho que o Java permite a chamada a métodos abstratos — me corrijam se eu estiver errado.
 
-###Exemplo 3 — Herança pode ser o Mal em qualquer lugar
+###Exemplo 3 — Herança pode ser o Mal em qualquer lugar {#exemplo-3}
 
 O próximo exemplo não é sobre *Object Pascal*, mas sim Java. Muitas pessoas pensam que algo está correto só
 porque foi feito por uma grande empresa. Não. Pode ser uma grande empresa lucrativa, porém seus programadores
@@ -287,7 +287,9 @@ A solução proposta pelo autor do artigo é a mesma que proponho em quase todos
 
 Espero que você tenha entendido. Herança viola o Encapsulamento. Não é apenas um conceito, mas um fato.
 
-No próximo artigo irei falar mais sobre outros problemas quando utilizamos Herança de Classes.
+No próximo artigo irei falar mais sobre **Duplicação de Código** ao utilizarmos a Herança de Classe.
+
+[Clique aqui]({% post_url 2016-06-06-heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3 %}) para ler a **Parte #3** dessa série.
 
 Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
 abaixo para comentários.
