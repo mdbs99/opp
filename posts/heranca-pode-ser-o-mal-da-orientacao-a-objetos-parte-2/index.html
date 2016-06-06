@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201605310246" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201606061147" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -233,7 +233,7 @@ saber como o Objeto trabalha internamente.</p>
 
 <p>Um subtipo de Classe viola esse conceito.</p>
 
-<h2 id="herana-de-classe">Herança de Classe</h2>
+<h2 id="heranca-de-classe">Herança de Classe</h2>
 
 <p>O motivo de termos Subclasses é <strong>acrescentar</strong> mais funcionalidade às Classes ancestrais, criando um novo tipo.
 Ao acrescentar funcionalidades a nova Subclasse deverá, inevitavelmente, interagir com o Estado e Métodos protegidos da 
@@ -257,14 +257,14 @@ dos princípios proposto no livro Padrões de Projetos:</p>
 A linguagem <a href="https://talks.golang.org/2012/splash.article#TOC_15">não tem nenhuma forma</a> de Herança de Classes,
 ou seja, Herança baseada em subtipos. Não há hierarquia de tipos!</p>
 
-<h2 id="me-mostre-o-cdigo">Me mostre o Código</h2>
+<h2 id="me-mostre-o-codigo">Me mostre o Código</h2>
 
 <p>A teoria foi explicada. Agora vou lhe mostrar alguns exemplos de código.</p>
 
 <p>Não posso colocar exemplos completos e reais senão o artigo iria virar um “repositório de código” e não um
 artigo. Então veja os exemplos e imagine como seria no código real.</p>
 
-<h3 id="exemplo-1--stack-overflow">Exemplo 1 — <em>Stack Overflow</em></h3>
+<h3 id="exemplo-1">Exemplo 1 — <em>Stack Overflow</em></h3>
 
 <p>É um exemplo simples que poderia ser evitado pelo programador que fez a Classe A, a classe ancestral, 
 no entanto veja que para descobrir o problema o programador da Classe B, a Subclasse, deve ver como a Classe A
@@ -330,7 +330,7 @@ Essa mensagem pode variar de IDE mas basicamente é um <em>Stack Overflow</em>. 
 na Classe B, o programador chamou <code>Proc</code> internamente. O problema é que na Classe A, <code>Proc</code> já está chamando <code>Exec</code> e,
 dessa forma, o programa entra em um <em>loop</em> infinito.</p>
 
-<h3 id="exemplo-2--utilizar-inherited-ou-no">Exemplo 2 — Utilizar <code>inherited</code> ou não?</h3>
+<h3 id="exemplo-2">Exemplo 2 — Utilizar <code>inherited</code> ou não?</h3>
 
 <p>Quando sobrescrevemos um método há a possibilidade de chamar o código do mesmo método da Classe ancestral. 
 Para isso utilizamos a palavra reservada <code>inherited</code>.</p>
@@ -409,7 +409,7 @@ não permite, nem compila — mas não sei se o compilador atual do Delphi permi
 
 <p>Se não me engano, acho que o Java permite a chamada a métodos abstratos — me corrijam se eu estiver errado.</p>
 
-<h3 id="exemplo-3--herana-pode-ser-o-mal-em-qualquer-lugar">Exemplo 3 — Herança pode ser o Mal em qualquer lugar</h3>
+<h3 id="exemplo-3">Exemplo 3 — Herança pode ser o Mal em qualquer lugar</h3>
 
 <p>O próximo exemplo não é sobre <em>Object Pascal</em>, mas sim Java. Muitas pessoas pensam que algo está correto só
 porque foi feito por uma grande empresa. Não. Pode ser uma grande empresa lucrativa, porém seus programadores
@@ -430,7 +430,9 @@ ver como os arquitetos do Java erraram incrivelmente no <em>design</em> da arqui
 
 <p>Espero que você tenha entendido. Herança viola o Encapsulamento. Não é apenas um conceito, mas um fato.</p>
 
-<p>No próximo artigo irei falar mais sobre outros problemas quando utilizamos Herança de Classes.</p>
+<p>No próximo artigo irei falar mais sobre <strong>Duplicação de Código</strong> ao utilizarmos a Herança de Classe.</p>
+
+<p><a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/">Clique aqui</a> para ler a <strong>Parte #3</strong> dessa série.</p>
 
 <p>Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
 abaixo para comentários.</p>
@@ -529,6 +531,24 @@ abaixo para comentários.</p>
     </div>
   
     <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
@@ -556,15 +576,6 @@ abaixo para comentários.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/pensando-em-objetos/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Pensando em Objetos</li></h4>
@@ -583,15 +594,6 @@ abaixo para comentários.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/objetos-representam-entidades/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
-        </ul>
-        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
         <ul>
           <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
@@ -601,11 +603,11 @@ abaixo para comentários.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/awslib-a-historia-e-o-novo-suporte-a-ses/" class="post-link">
+      <a href="/posts/objetos-pensam-e-tomam-decisoes/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>AWS Lib: A História e o novo suporte a SES</li></h4>
+          <h4 class="post-title"><li>Objetos pensam e tomam decisões</li></h4>
         </ul>
-        <!--<p class="post-summary">Como tudo começou e o novo Suporte a SES.</p>-->
+        <!--<p class="post-summary">Objetos pensam e tomam decisões. Eles não precisam de um controlador.</p>-->
       </a>
     </div>
   

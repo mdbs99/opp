@@ -8,6 +8,191 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Herança pode ser o Mal da Orientação a Objetos — Parte 3</title>
+        <description>&lt;p&gt;No artigo anterior falei sobre Violação de Encapsulamento.
+Nesse artigo irei falar sobre a &lt;strong&gt;Duplicação de Código&lt;/strong&gt; ao utilizarmos a Herança de Classe.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-90abc28jsj8383.jpg&quot; alt=&quot;Duplicação&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/&quot;&gt;Clique aqui&lt;/a&gt; para ler a &lt;strong&gt;Parte #2&lt;/strong&gt; 
+dessa série, caso ainda não tenha lido.&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Duplicação de Código utilizando Herança. Essa afirmação pode parecer &lt;strong&gt;heresia&lt;/strong&gt; porque a maioria dos programadores
+utilizam Herança de Classe justamente para &lt;strong&gt;não&lt;/strong&gt; duplicar o código.&lt;/p&gt;
+
+&lt;p&gt;Em uma hierarquia de classes onde &lt;code&gt;B&lt;/code&gt; e &lt;code&gt;C&lt;/code&gt; herdam de &lt;code&gt;A&lt;/code&gt;, basta adicionar a nova funcionalidade em &lt;code&gt;A&lt;/code&gt; para termos 
+disponível em &lt;code&gt;B&lt;/code&gt; e &lt;code&gt;C&lt;/code&gt;. Simples, rápido e sem duplicar código.&lt;/p&gt;
+
+&lt;p&gt;Mas será esse o melhor &lt;em&gt;design&lt;/em&gt; para &lt;strong&gt;reaproveitar&lt;/strong&gt; e não duplicar código?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A Herança de Classe é simples de usar e entender, mas no longo prazo é provado que essa não é a melhor escolha
+ao projetar seu diagrama de Classes. Ao invés de Herança a melhor escolha é a
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Composition_over_inheritance&quot;&gt;Composição de Objetos&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Quando estamos começando um novo projeto — ou um novo módulo — sim, essa &lt;strong&gt;parece&lt;/strong&gt; ser ser a “melhor maneira”
+para reaproveitar código.&lt;/p&gt;
+
+&lt;p&gt;Parece.&lt;/p&gt;
+
+&lt;p&gt;Com certeza a Herança é &lt;strong&gt;simples&lt;/strong&gt; e &lt;strong&gt;intuitiva&lt;/strong&gt; no entanto não é o melhor &lt;em&gt;design&lt;/em&gt; no médio e longo prazo.&lt;/p&gt;
+
+&lt;p&gt;Herança de Classe leva a um código altamente acoplado e sem flexibilidade.&lt;/p&gt;
+
+&lt;h2 id=&quot;duplicando-o-codigo&quot;&gt;Duplicando o código&lt;/h2&gt;
+
+&lt;p&gt;Então, como é possível duplicar o código utilizando Herança?&lt;/p&gt;
+
+&lt;p&gt;Utilizando &lt;strong&gt;Hierarquias de Classes&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;É contra intuitivo pensar nisso, mas é verdade. Pense por um minuto. Se você tem um comportamento/funcionalidade
+espalhado entre Classes e Subclasses dentro de uma Hierarquia, como &lt;strong&gt;reutilizar&lt;/strong&gt; esse código em outras Classes 
+ou Hierarquias diferentes? Difícil.&lt;/p&gt;
+
+&lt;p&gt;Não estou dizendo que é impossível. Estou dizendo que &lt;strong&gt;dificulta&lt;/strong&gt; muito a reutilização devido o comportamento não
+ter sido codificado de maneira &lt;strong&gt;coesa&lt;/strong&gt;, utilizando &lt;strong&gt;Classes pequenas&lt;/strong&gt; com 
+&lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;apenas uma responsabilidade&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Quando utilizamos Herança somos seduzidos pelo &lt;strong&gt;fácil reaproveitamento&lt;/strong&gt; do código e por isso vamos agregando mais e 
+mais funcionalidades nas Classes e Subclasses, tornando-as “inchadas” e dificultando o reaproveitamento entre módulos
+ou Projetos distintos.&lt;/p&gt;
+
+&lt;p&gt;Na maioria das vezes exigirá uma refatoração massiva no código para haver reutilização, devido as Classes e Subclasses
+estarem muito acopladas umas as outras.&lt;/p&gt;
+
+&lt;p&gt;Esse é o motivo da &lt;strong&gt;Duplicação de Código&lt;/strong&gt;. É muito mais fácil e confortável — para a maioria dos programadores 
+com prazos curtos e chefes estressados — duplicar o código do que refatorar, talvez, toda a Hierarquia.&lt;/p&gt;
+
+&lt;h2 id=&quot;exemplo&quot;&gt;Exemplo&lt;/h2&gt;
+
+&lt;p&gt;Vejamos agora um exemplo utilizando Diagramas de Classes.&lt;/p&gt;
+
+&lt;p&gt;Antes eu gostaria de lembrá-lo que é fácil olhar um exemplo simples e pensar em inúmeras maneiras de fazê-lo melhor. 
+Mas pense que esses são apenas exemplos para lhe mostrar o conceito e não a melhor maneira de implementar uma solução.&lt;/p&gt;
+
+&lt;h3 id=&quot;exemplo-1&quot;&gt;O Mundo Animal&lt;/h3&gt;
+
+&lt;p&gt;Vou começar com o bom e velho “Exemplo de Animais”. O exemplo é antigo, sim, porém você ainda tem dúvidas sobre
+utilizar ou não herança — senão não estaria lendo esse artigo — então acho que o exemplo continua sendo válido.&lt;/p&gt;
+
+&lt;p&gt;Precisamos implementar um sistema que lida com Animais e resolvemos utilizar Herança de Classes para implementar
+uma Hierarquia e “reutilizar o código”.&lt;/p&gt;
+
+&lt;p&gt;Primeiramente o sistema só irá trabalhar com Cachorros e Gatos então temos o primeiro modelo:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Diagram01.png&quot; alt=&quot;Diagram1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;No diagrama acima temos 3 Classes simples: &lt;code&gt;Animal&lt;/code&gt;, &lt;code&gt;Cachorro&lt;/code&gt; e &lt;code&gt;Gato&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Apenas a Classe &lt;code&gt;Animal&lt;/code&gt; tem um método &lt;code&gt;Caminhar()&lt;/code&gt; que é herdado para as Classes &lt;code&gt;Cachorro&lt;/code&gt; e &lt;code&gt;Gato&lt;/code&gt;. Queremos 
+reaproveitar o código então basta implementar na Classe mais acima da Hierarquia, ou seja, &lt;code&gt;Animal&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então vamos imaginar como seria a implementação do método &lt;code&gt;Caminhar()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TAnimal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Caminhar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAnimal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;MovePata1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;MovePata2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;MovePata3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;MovePata4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Como estamos trabalhando, a princípio, com tetrápodes ou quadrúpedes, precisamos mover as 4 patas para caminhar.
+Tudo funciona perfeitamente.&lt;/p&gt;
+
+&lt;p&gt;Então precisamos acrescentar mais alguns animais: Pato, Tubarão, Sapo, Morcego e Crocodilo.&lt;/p&gt;
+
+&lt;p&gt;Como somos espertos, vamos acrescentar mais abstrações para deixar o modelo mais “legal” e “sofisticado”.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Diagram02.png&quot; alt=&quot;Diagram1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Um &lt;code&gt;Pato&lt;/code&gt; também caminha, no entanto ele caminha utilizando 2 membros. O &lt;code&gt;Sapo&lt;/code&gt; e &lt;code&gt;Crocodilo&lt;/code&gt; caminham com 4 patas, assim
+como o &lt;code&gt;Cachorro&lt;/code&gt; e &lt;code&gt;Gato&lt;/code&gt;. O &lt;code&gt;Morcego&lt;/code&gt; tem pernas, mas ele realmente caminha? Não sei. O &lt;code&gt;Tubarão&lt;/code&gt;… complicou.&lt;/p&gt;
+
+&lt;p&gt;Veja que pelo simples fato de termos acrescentado outros animais, &lt;strong&gt;toda a hierarquia deverá ser verificada&lt;/strong&gt; afim 
+de saber se os métodos de Classes ancestrais continuam fazendo sentido para a nova hierarquia.&lt;/p&gt;
+
+&lt;p&gt;O que fazer? Há inúmeras possibilidades. Algumas mais certas, outras mais erradas. Mas o que é que a &lt;strong&gt;maioria&lt;/strong&gt; 
+dos programadores fazem — 
+inclusive em &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#exemplo-3&quot;&gt;grandes empresas&lt;/a&gt; —
+quando a hierarquia não reflete o mundo real?&lt;/p&gt;
+
+&lt;p&gt;Eles sobrescrevem métodos, &lt;strong&gt;ignorando-os&lt;/strong&gt; (métodos em branco) ou &lt;strong&gt;lançando uma exceção&lt;/strong&gt; (métodos que existem, mas não devem ser
+utilizados… WTF!).&lt;/p&gt;
+
+&lt;p&gt;Nesse ponto emerge a Duplicação de Código.&lt;/p&gt;
+
+&lt;p&gt;Como assim?&lt;/p&gt;
+
+&lt;p&gt;Dependendo da quantidade de Classes numa hierarquia, duplicar a implementação será o método escolhido.
+No caso do nosso exemplo o método &lt;code&gt;Caminhar()&lt;/code&gt; seria modificado para utilizar apenas
+2 patas em algumas Classes. Em outras levantaríamos uma exceção naqueles Animais que não deveriam caminhar, como no caso da Classe &lt;code&gt;Tubarão&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas isso é uma &lt;strong&gt;solução alternativa&lt;/strong&gt; que está longe de ser a ideal.&lt;/p&gt;
+
+&lt;h2 id=&quot;soluo&quot;&gt;Solução&lt;/h2&gt;
+
+&lt;p&gt;A Hierarquia está errada? Qual seria a implementação “certa”? Como reaproveitar o código sem usar Herança?&lt;/p&gt;
+
+&lt;p&gt;Quando os cientistas separam os animais em “Classes”, eles fizeram-na baseado no que eles são (identidade) e não no que eles fazem (comportamento).&lt;/p&gt;
+
+&lt;p&gt;Um pato nada, assim como um crocodilo. Mas o ato de nadar &lt;strong&gt;não pertence&lt;/strong&gt; ao pato nem ao crocodilo, pois nadar é um &lt;strong&gt;comportamento&lt;/strong&gt; “implementado” em vários outros Animais (Classes).&lt;/p&gt;
+
+&lt;p&gt;Vou lhe contar como resolver o problema da implementação da Hierarquia Animal.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Atenção&lt;/strong&gt;, aqui está:&lt;/p&gt;
+
+&lt;p&gt;Um Animal não caminha. Quem caminha é um Cachorro, Gato ou Pato. Animal é uma abstração, uma classificação, 
+assim como Mamífero ou Anfíbio. Animal não existe.&lt;/p&gt;
+
+&lt;p&gt;Tetrápodes, Bípedes, Mamíferos, Anfíbios, Aves, Peixes, Pássaros… &lt;strong&gt;eles não existem&lt;/strong&gt;!&lt;/p&gt;
+
+&lt;p&gt;Que?!&lt;/p&gt;
+
+&lt;p&gt;É isso aí.&lt;/p&gt;
+
+&lt;p&gt;Não entendeu? Aqui vai outro exemplo.&lt;/p&gt;
+
+&lt;p&gt;Você já viu uma Árvore? Tenho certeza que não! Você viu, talvez, uma goiabeira, bananeira, macieira… Árvore é uma abstração, uma classificação. Árvore não existe.&lt;/p&gt;
+
+&lt;p&gt;Se Mamíferos, Anfíbios, Aves, Peixes…e Árvores não existem, o que são?&lt;/p&gt;
+
+&lt;p&gt;São apenas &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt; que definem uma classificação para algum comportamento.&lt;/p&gt;
+
+&lt;p&gt;Então não há — ou não deveria haver — Hierarquia de Classes, apenas &lt;strong&gt;Hierarquias de Interfaces&lt;/strong&gt;!&lt;/p&gt;
+
+&lt;p&gt;Cientistas não tem problemas em classificar novas espécieis porque a inclusão na hierarquia existente não “quebra” nenhuma “funcionalidade”
+nas “Classes” abaixo desta. São apenas Interfaces.&lt;/p&gt;
+
+&lt;p&gt;Então, se não há Hierarquia de Classes, como reaproveitar código sem duplicar?&lt;/p&gt;
+
+&lt;p&gt;Resposta: &lt;strong&gt;Composição de Objetos&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Objetos tem comportamento, Interfaces não. Um cachorro é um Objeto; um pato é um Objeto; o ato de caminhar é um comportamento de 
+“algum objeto” que os pássaros sabem utilizar… ou será que &lt;strong&gt;Alguém&lt;/strong&gt; “Duplicou o Código” em cada DNA porque era mais fácil de implementar? :)&lt;/p&gt;
+
+&lt;h2 id=&quot;no-prximo-artigo&quot;&gt;No próximo artigo…&lt;/h2&gt;
+
+&lt;p&gt;No próximo artigo irei falar sobre &lt;strong&gt;Forte Acoplamento&lt;/strong&gt; entre Classes que utilizam Herança.&lt;/p&gt;
+
+&lt;p&gt;Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
+abaixo para comentários.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 06 Jun 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/</guid>
+      </item>
+    
+      <item>
         <title>Herança pode ser o Mal da Orientação a Objetos — Parte 2</title>
         <description>&lt;p&gt;No artigo anterior citei alguns males ao utilizarmos Herança de Classe. Nesse artigo irei falar sobre
 um deles, a &lt;strong&gt;Violação de Encapsulamento&lt;/strong&gt; ao utilizarmos Subclasses.&lt;/p&gt;
@@ -76,7 +261,7 @@ saber como o Objeto trabalha internamente.&lt;/p&gt;
 
 &lt;p&gt;Um subtipo de Classe viola esse conceito.&lt;/p&gt;
 
-&lt;h2 id=&quot;herana-de-classe&quot;&gt;Herança de Classe&lt;/h2&gt;
+&lt;h2 id=&quot;heranca-de-classe&quot;&gt;Herança de Classe&lt;/h2&gt;
 
 &lt;p&gt;O motivo de termos Subclasses é &lt;strong&gt;acrescentar&lt;/strong&gt; mais funcionalidade às Classes ancestrais, criando um novo tipo.
 Ao acrescentar funcionalidades a nova Subclasse deverá, inevitavelmente, interagir com o Estado e Métodos protegidos da 
@@ -100,14 +285,14 @@ dos princípios proposto no livro Padrões de Projetos:&lt;/p&gt;
 A linguagem &lt;a href=&quot;https://talks.golang.org/2012/splash.article#TOC_15&quot;&gt;não tem nenhuma forma&lt;/a&gt; de Herança de Classes,
 ou seja, Herança baseada em subtipos. Não há hierarquia de tipos!&lt;/p&gt;
 
-&lt;h2 id=&quot;me-mostre-o-cdigo&quot;&gt;Me mostre o Código&lt;/h2&gt;
+&lt;h2 id=&quot;me-mostre-o-codigo&quot;&gt;Me mostre o Código&lt;/h2&gt;
 
 &lt;p&gt;A teoria foi explicada. Agora vou lhe mostrar alguns exemplos de código.&lt;/p&gt;
 
 &lt;p&gt;Não posso colocar exemplos completos e reais senão o artigo iria virar um “repositório de código” e não um
 artigo. Então veja os exemplos e imagine como seria no código real.&lt;/p&gt;
 
-&lt;h3 id=&quot;exemplo-1--stack-overflow&quot;&gt;Exemplo 1 — &lt;em&gt;Stack Overflow&lt;/em&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;exemplo-1&quot;&gt;Exemplo 1 — &lt;em&gt;Stack Overflow&lt;/em&gt;&lt;/h3&gt;
 
 &lt;p&gt;É um exemplo simples que poderia ser evitado pelo programador que fez a Classe A, a classe ancestral, 
 no entanto veja que para descobrir o problema o programador da Classe B, a Subclasse, deve ver como a Classe A
@@ -173,7 +358,7 @@ Essa mensagem pode variar de IDE mas basicamente é um &lt;em&gt;Stack Overflow&
 na Classe B, o programador chamou &lt;code&gt;Proc&lt;/code&gt; internamente. O problema é que na Classe A, &lt;code&gt;Proc&lt;/code&gt; já está chamando &lt;code&gt;Exec&lt;/code&gt; e,
 dessa forma, o programa entra em um &lt;em&gt;loop&lt;/em&gt; infinito.&lt;/p&gt;
 
-&lt;h3 id=&quot;exemplo-2--utilizar-inherited-ou-no&quot;&gt;Exemplo 2 — Utilizar &lt;code&gt;inherited&lt;/code&gt; ou não?&lt;/h3&gt;
+&lt;h3 id=&quot;exemplo-2&quot;&gt;Exemplo 2 — Utilizar &lt;code&gt;inherited&lt;/code&gt; ou não?&lt;/h3&gt;
 
 &lt;p&gt;Quando sobrescrevemos um método há a possibilidade de chamar o código do mesmo método da Classe ancestral. 
 Para isso utilizamos a palavra reservada &lt;code&gt;inherited&lt;/code&gt;.&lt;/p&gt;
@@ -252,7 +437,7 @@ não permite, nem compila — mas não sei se o compilador atual do Delphi permi
 
 &lt;p&gt;Se não me engano, acho que o Java permite a chamada a métodos abstratos — me corrijam se eu estiver errado.&lt;/p&gt;
 
-&lt;h3 id=&quot;exemplo-3--herana-pode-ser-o-mal-em-qualquer-lugar&quot;&gt;Exemplo 3 — Herança pode ser o Mal em qualquer lugar&lt;/h3&gt;
+&lt;h3 id=&quot;exemplo-3&quot;&gt;Exemplo 3 — Herança pode ser o Mal em qualquer lugar&lt;/h3&gt;
 
 &lt;p&gt;O próximo exemplo não é sobre &lt;em&gt;Object Pascal&lt;/em&gt;, mas sim Java. Muitas pessoas pensam que algo está correto só
 porque foi feito por uma grande empresa. Não. Pode ser uma grande empresa lucrativa, porém seus programadores
@@ -273,7 +458,9 @@ ver como os arquitetos do Java erraram incrivelmente no &lt;em&gt;design&lt;/em&
 
 &lt;p&gt;Espero que você tenha entendido. Herança viola o Encapsulamento. Não é apenas um conceito, mas um fato.&lt;/p&gt;
 
-&lt;p&gt;No próximo artigo irei falar mais sobre outros problemas quando utilizamos Herança de Classes.&lt;/p&gt;
+&lt;p&gt;No próximo artigo irei falar mais sobre &lt;strong&gt;Duplicação de Código&lt;/strong&gt; ao utilizarmos a Herança de Classe.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/&quot;&gt;Clique aqui&lt;/a&gt; para ler a &lt;strong&gt;Parte #3&lt;/strong&gt; dessa série.&lt;/p&gt;
 
 &lt;p&gt;Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
 abaixo para comentários.&lt;/p&gt;
@@ -1316,182 +1503,6 @@ para fazer o trabalho.&lt;/p&gt;
         <pubDate>Mon, 04 Apr 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/objetos-sem-estado/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-sem-estado/</guid>
-      </item>
-    
-      <item>
-        <title>AWS Lib: A História e o novo suporte a SES</title>
-        <description>&lt;p&gt;Você já conhece o projeto OpenSource &lt;a href=&quot;https://github.com/mdbs99/aws&quot;&gt;AWS Lib&lt;/a&gt;?&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;AWS Lib&lt;/strong&gt; é uma implementação minimalista para &lt;strong&gt;Amazon Web Services (AWS)&lt;/strong&gt;. Inicialmente
-foi implementada somente a API para a utilização de apenas um dos serviços, o &lt;strong&gt;Amazon S3&lt;/strong&gt;,
-até agora…&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-awslist.png&quot; alt=&quot;Amazon Web Services List&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;como-tudo-comeou&quot;&gt;Como Tudo Começou&lt;/h2&gt;
-
-&lt;p&gt;A três anos atrás fui contratado para a fazer a análise, arquitetura e implementação de alguns módulos 
-de um sistema.&lt;/p&gt;
-
-&lt;p&gt;Apesar desse sistema utilizar outras linguagens, implementei os módulos utilizando a linguagem &lt;strong&gt;Object Pascal&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Esses módulos eram, na verdade, &lt;strong&gt;ferramentas&lt;/strong&gt; para um grande sistema muito maior.&lt;/p&gt;
-
-&lt;p&gt;Um dos requisitos desse grande sistema era a utilização do serviço Amazon S3. Os motivos ou 
-como eles utilizam o S3 são propriedade privada e não são relevantes aqui neste blog.&lt;/p&gt;
-
-&lt;p&gt;Esse requisito chegou até mim por último. Os módulos ou ferramentas já estávam quase terminados, 
-mas agora tinha um novo requisito e eu não sabia nada sobre os serviços da Amazon.&lt;/p&gt;
-
-&lt;p&gt;Eu tinha apenas mais 1 semana para entregar o sistema.&lt;/p&gt;
-
-&lt;p&gt;Então fiz uma rápida pesquisa na Internet sobre possíveis implementações em Object Pascal para a 
-&lt;strong&gt;API Amazon S3&lt;/strong&gt; e não encontrei nada que pudesse utilizar. Lembro que existia alguma coisa em &lt;strong&gt;Delphi&lt;/strong&gt;
-mas o código era confuso e eu não estava utilizando Delphi mas sim, &lt;strong&gt;FreePascal&lt;/strong&gt; (FPC) e &lt;strong&gt;Lazarus&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então, mesmo que funcionasse em Delphi, eu não iria copiar o código alheio, converter para FPC e
-depois cobrar por isso. É claro que não.&lt;/p&gt;
-
-&lt;p&gt;Então só havia uma coisa a fazer. Teria que codificar minha própria implementação.&lt;/p&gt;
-
-&lt;p&gt;Descobri que não era tão difícil mas tive dificuldades para implementar a parte de autenticação do serviço.&lt;/p&gt;
-
-&lt;p&gt;Quase terminando o prazo consegui resolver o problema fazendo uma classe &lt;strong&gt;simples&lt;/strong&gt;, &lt;strong&gt;suja&lt;/strong&gt; e 
-totalmente &lt;strong&gt;procedural&lt;/strong&gt;. Mas funcionava. O projeto foi entregue e foi um sucesso.&lt;/p&gt;
-
-&lt;p&gt;Esse módulo que utilizava o Amazon S3 era apenas 5% de tudo que tinha que entregar.&lt;/p&gt;
-
-&lt;p&gt;Depois de alguns dias resolvi publicar no &lt;a href=&quot;https://github.com/mdbs99/aws&quot;&gt;Github&lt;/a&gt; apenas essa classe
-como projeto OpenSource, pois sabia que haveria outras pessoas com o mesmo problema que tive, ou seja, não
-havia nenhuma implementação dos serviços AWS para Object Pascal — e pelo que sei ainda não há — especificamente
-para FPC.&lt;/p&gt;
-
-&lt;p&gt;O tempo passou e o projeto ficou esquecido. Até que um dia um amigo me lembrou:&lt;/p&gt;
-&lt;pre&gt;
-— Você não tem vergonha daquele código publicado no Github? — ele disse.
-— Que código? — perguntei.
-— A implementação do Amazon S3...
-— Err, sei... tá ruim aquele código e...
-— Tá horrível! Você fala de Orientação a Objetos, é aquilo lá?
-— Está bem, vou dar uma olhada no código.
-— Acho melhor refazer tudo — ele disse.
-&lt;/pre&gt;
-
-&lt;p&gt;E ele estava certo.&lt;/p&gt;
-
-&lt;p&gt;Então eu refiz tudo. Trabalhei no código até que as prioridades mudarem novamente, ou seja, novos Projetos.&lt;/p&gt;
-
-&lt;p&gt;Mas ficou 100% melhor do que estava antes.&lt;/p&gt;
-
-&lt;p&gt;Defini alguns princípios para o projeto:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;todas as classes são &lt;em&gt;sealed&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;todos os métodos retornam uma interface ou um tipo primitivo&lt;/li&gt;
-  &lt;li&gt;todos os métodos públicos são implementações de métodos de uma interface&lt;/li&gt;
-  &lt;li&gt;todas as instâncias são imutáveis&lt;/li&gt;
-  &lt;li&gt;a alocação de memória é liberada automaticamente&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Nada mal, eu acho.&lt;/p&gt;
-
-&lt;h2 id=&quot;amazon-ses-um-novo-servio&quot;&gt;Amazon SES, um Novo Serviço&lt;/h2&gt;
-
-&lt;p&gt;Pela imagem acima tem-se uma ideia de que a Amazon, para quem não conhece, tem dezenas de serviços. Um deles
-é o &lt;a href=&quot;https://aws.amazon.com/pt/ses/&quot;&gt;Amazon Simple Email Service&lt;/a&gt;.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;
-    O Amazon Simple Email Service (Amazon SES)  é um serviço de e-mails econômico criado na infraestrutura 
-    confiável e escalável que a Amazon.com desenvolveu para atender à sua própria base de clientes. 
-  &lt;/p&gt;
-  &lt;footer&gt;&lt;cite title=&quot;Amazon SES&quot;&gt;— Amazon SES&lt;/cite&gt;&lt;/footer&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Na semana passada retornei ao projeto.&lt;/p&gt;
-
-&lt;p&gt;Comecei refatorando todos os construtores para utilizar 
-o padrão do &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New()&lt;/a&gt;. O motivo
-é que estou preparando o código para a implementação de um novo serviço, o &lt;strong&gt;Amazon Simple Email Service (SES)&lt;/strong&gt; e,
-felizmente, não estou sozinho nessa empreitada.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.facebook.com/andre.medeiros.5458?fref=ts&quot;&gt;André Medeiros&lt;/a&gt; entrou em contato comigo em 2015 para 
-falar sobre meu outro projeto, o &lt;a href=&quot;https://github.com/mdbs99/Greyhound&quot;&gt;Greyhound&lt;/a&gt;, e assim nos tornamos amigos.&lt;/p&gt;
-
-&lt;p&gt;O tempo passou e em 12 de Março recebo um e-mail do André que falava, dentre outras coisas, o seguinte:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Nos últimos dias precisei fazer uma integração com a API do SES, e pensei em usar a sua base para isso, já que ela esta muito bem feita.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Mais uma vez, não sabia que serviço era esse.&lt;/p&gt;
-
-&lt;p&gt;O próprio André resumiu o que é o SES e como ele quer utilizar esse serviço na empresa dele. Achei bem interessante.&lt;/p&gt;
-
-&lt;p&gt;Alguém, além de mim, estava utilizando o AWS Lib em projetos reais e agora estava querendo extender seu uso para outros
-serviços… Legal!&lt;/p&gt;
-
-&lt;p&gt;O AWS Lib foi feito com esse pensamento. A princípio seria só a implementação do S3, porém seu nome não é “AWS S3 Lib” 
-mas sim, &lt;strong&gt;AWS Lib&lt;/strong&gt; que é um nome genérico para compor todos as implementações possíveis de fazer com Object Pascal.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;…nosso desejo é fazer com que a sua AWS Lib possa nos acompanhar, 
-e tenho certeza que com nosso conhecimento em AWS podemos contribuir bastante para seu projeto&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Então vamos lá, falei, vamos fazer isso!&lt;/p&gt;
-
-&lt;h2 id=&quot;problema-na-autenticao&quot;&gt;Problema na Autenticação&lt;/h2&gt;
-
-&lt;p&gt;A autenticação padrão do AWS Lib não estava funcionando com o novo serviço, o SES.&lt;/p&gt;
-
-&lt;p&gt;Novamente problemas com a autenticação, pensei…&lt;/p&gt;
-
-&lt;p&gt;Ora, fiz a unit &lt;em&gt;aws_client&lt;/em&gt; separada justamente pensando nessa reutilização de autenticação em todas as outras 
-implementações de outros serviços… mas não estava funcionando.&lt;/p&gt;
-
-&lt;p&gt;Felizmente o André apresentou a solução 2 dias depois:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;O problema não era a forma de assinar, e sim a forma de declarar o tipo de assinatura para AWS.
-As autenticações se dividem em versões, e cada serviço da AWS suporta 1 ou mais tipos de autenticação&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;O SES suporta as autenticações das versões 3 e 4. Ele implementou a versão 3 e funcionou!&lt;/p&gt;
-
-&lt;p&gt;Mas…&lt;/p&gt;
-
-&lt;h2 id=&quot;refatorando-o-cdigo-voc-vai-gostar-disso&quot;&gt;Refatorando o código, Você vai Gostar disso&lt;/h2&gt;
-
-&lt;p&gt;Ontem eu atualizei os fontes do projeto no Github utilizando a implementação do André, ou seja, a unit &lt;em&gt;aws_ses&lt;/em&gt;
-assim como a pequena modificação na unit &lt;em&gt;aws_client&lt;/em&gt; que ele precisou fazer para tudo funcionar.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Acredito que você vai melhorar esta codificação, mas já é possível enviar email pelo SES e interagir com o S3 usando o AWS Lib.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;André é leitor do blog. Ele sabe… bem, ambos sabemos que o código não está no “padrão”. Mas mesmo assim
-eu atualizei os fontes.&lt;/p&gt;
-
-&lt;p&gt;O motivo é simples: Vou utilizar esse &lt;em&gt;Case&lt;/em&gt; para fazer refatorações e lhe explicar — você leitor — os motivos de tais
-alterações. E, é claro, tais refatorações serão feitas tendo sempre em mente a verdadeira &lt;strong&gt;Orientação a Objetos&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Neste &lt;a href=&quot;https://github.com/mdbs99/aws/commit/c5d990f4d55b4565035327705e2e33999d4f9126&quot;&gt;&lt;em&gt;commit&lt;/em&gt;&lt;/a&gt; você poderá ver o código novo. 
-Funciona, mas não está como gostaríamos.&lt;/p&gt;
-
-&lt;p&gt;Vou utilizar os ensinamentos aqui expostos para direcionar a refatoração do código. O objetivo final é termos uma suíte
-de componentes 100% codificado em Object Pascal que implementa a maioria dos serviços da Amazon.&lt;/p&gt;
-
-&lt;p&gt;Fique ligado!&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 28 Mar 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/awslib-a-historia-e-o-novo-suporte-a-ses/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/awslib-a-historia-e-o-novo-suporte-a-ses/</guid>
       </item>
     
   </channel>
