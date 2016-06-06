@@ -160,7 +160,8 @@ Vou lhe contar como resolver o problema da implementação da Hierarquia Animal.
 
 **Atenção**, aqui está:
 
-Um Animal não caminha. Quem caminha é um Cachorro, Gato ou Pato. Animal é uma abstração, uma classificação, assim como Mamífero ou Anfíbio.
+Um Animal não caminha. Quem caminha é um Cachorro, Gato ou Pato. Animal é uma abstração, uma classificação, 
+assim como Mamífero ou Anfíbio. Animal não existe.
 
 Tetrápodes, Bípedes, Mamíferos, Anfíbios, Aves, Peixes, Pássaros... **eles não existem**!
 
@@ -186,7 +187,7 @@ Então, se não há Hierarquia de Classes, como reaproveitar código sem duplica
 Resposta: **Composição de Objetos**.
 
 Objetos tem comportamento, Interfaces não. Um cachorro é um Objeto; um pato é um Objeto; o ato de caminhar é um comportamento de 
-"algum objeto" que os pássaros sabem utilizar... ou será que **Alguém** Duplicou o Código em cada DNA porque era mais fácil de implementar? :)
+"algum objeto" que os pássaros sabem utilizar... ou será que **Alguém** "Duplicou o Código" em cada DNA porque era mais fácil de implementar? :)
 
 ##No próximo artigo...
 
