@@ -45,7 +45,7 @@ Eu não quero utilizar um gerador automatizado de código para ler o WSDL e gera
 Então, hipoteticamente falando, temos um WebService simples com 5 métodos. Cada método tem os mesmos argumentos: usuário e senha.
 
 As configurações do WebService como Usuário, Senha, URL, métodos do WebService que deverão ser executados, horário de execução, etc.
-estão num arquivo de configurações. Porque isso? Bem, esse WebService será executado em `batch` automaticamente em horários pré-programados.
+estão num arquivo de configurações. Por que isso? Bem, esse WebService será executado em `batch` automaticamente em horários pré-programados.
 E em cada horário alguns métodos serão executados, em outros não.
 
 Como é automatizado, precisamos de um `Log`. Em texto mesmo. Um `Log` que grave a execução, método, horário, usuário/senha, exeções, etc.

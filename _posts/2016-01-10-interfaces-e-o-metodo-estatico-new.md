@@ -74,7 +74,7 @@ Quantos vazamentos de memória teremos: 0, 1 ou 2?
 
 A resposta é 1. 
 
-Porque?
+Por quê?
 
 O compilador fará o seguinte (mais ou menos, em termos leigos):
 
