@@ -192,10 +192,10 @@ Objetos tem comportamento, Interfaces não. Um cachorro é um Objeto; um pato é
 ##No próximo artigo...
 
 No próximo artigo irei falar sobre **Forte Acoplamento** entre Classes que utilizam Herança.
-  
+
+[Clique aqui]({% post_url 2016-06-13-heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4 %}) para ler a **Parte #4** dessa série.
+
 Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
 abaixo para comentários.
   
 Até logo.
-
-
