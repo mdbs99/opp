@@ -151,7 +151,7 @@ E terceiro, se `FAddress` não fosse `protected` nenhuma opção estaria dispon�
 
 ##A Classe TDataSet
 
-Erros de *design* de Classes não existem só na linguagem Java. No Delphi também temos muitos erros. Um dos piores, na minha opinião, 
+Erros de *design* de Classes não existem só na linguagem Java. No Delphi também temos erros. Um deles, na minha opinião, 
 é a Classe `TDataSet`.
 
 Por simplicidade, talvez, alguém pensou em fazer uma Classe para manipulação de dados. É o famoso *data-ware*. Componentes mostram
