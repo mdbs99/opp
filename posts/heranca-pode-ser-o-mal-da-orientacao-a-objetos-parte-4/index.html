@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Herança pode ser o Mal da Orientação a Objetos — Parte 4 &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Não faça da Herança a sua primeira escolha para reutilizar código.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="OO">
+    <meta name="keywords" content="herança, inheritance, evil, mal, orientação a objetos, oop, poo, encapsulamento, polimorfismo">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201606131104" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Herança pode ser o Mal da Orientação a Objetos — Parte 4">
+    <meta property="og:description" content="Não faça da Herança a sua primeira escolha para reutilizar código.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1461287159820-04de78c094e9.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Herança pode ser o Mal da Orientação a Objetos — Parte 4" />
+    <meta name="twitter:description" content="Não faça da Herança a sua primeira escolha para reutilizar código." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Herança pode ser o Mal da Orientação a Objetos — Parte 4</h1>
+  <span class="post-meta">Jun 13, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    5 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>No artigo anterior falei sobre Duplicação de Código.
+Nesse artigo irei falar sobre o <strong>Forte Acoplamento</strong> que ocorre ao utilizarmos a Herança de Classe.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1461287159820-04de78c094e9.jpg" alt="Acoplamento" /></p>
+
+<p><a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/">Clique aqui</a> para ler a <strong>Parte #3</strong> 
+dessa série, caso ainda não tenha lido.</p>
+
+<h2 id="introducao">Introdução</h2>
+
+<blockquote>
+  <p>Se um gato possui raça e patas, e um cachorro possui raça, patas e tipoDoPelo, logo Cachorro extends Gato?</p>
+</blockquote>
+
+<p>O texto acima é emprestado <a href="http://blog.caelum.com.br/como-nao-aprender-orientacao-a-objetos-heranca/">desse artigo</a> que
+fala sobre Herança e Hierarquia de Classes. O artigo fala sobre o erro de <em>design</em> dos projetistas da linguagem Java quando
+codificaram as Classes <code>Stack</code> e <code>Properties</code>. Não precisa conhecer Java para entender o artigo.</p>
+
+<p>No mesmo artigo ele mostra o erro <strong>grotesco</strong> no <em>design</em> da Classe <code>HttpServlet</code>.</p>
+
+<p>Se você já utilizou Java e precisou extender essa Classe, deve ter reparado no mesmo problema citado no artigo.</p>
+
+<p>Na época da faculdade eu reparei nesse erro de <em>design</em> mas, <strong>ignorei</strong>. Achei que eu estava errado, que não tinha entendido a “maneira correta
+de programar utilizando Orientação a Objetos com Java”. Eu não sabia muita coisa mesmo. Talvez
+ainda não saiba… sempre que leio textos de outrem fico indignado o quanto ainda preciso aprender. Pois é.</p>
+
+<p>O fato é que o pensamento comum da maioria das pessoas é: Será que uma grande empresa, projetista do Java por exemplo, 
+poderia estar errada?</p>
+
+<p>Sim as empresas erram, muito.</p>
+
+<p>Sim, elas também ganham muito dinheiro. Mas não é porque seus <em>softwares</em> são perfeitos, mas sim porque elas se adaptam
+rapidamente e dão aos seus clientes o que eles querem — ou o que está na moda; ou algo similar ao concorrente; ou talvez algo
+“legal de se ter”.</p>
+
+<p>Por isso muitas empresas não se importam em descontinuar aplicativos e <em>frameworks</em> se eles não dão lucro ou não estão mais em conformidade
+com a visão de longo prazo delas — vide Microsoft — o que é perfeitamente normal. Elas precisam gerar lucro, certo?</p>
+
+<p>Então não pense que as empresas milionárias como a Microsoft, Sun/Oracle, Embarcadero e muitas outras, estão sempre certas “só” porque
+elas são milionárias. Bem, elas estão corretíssimas sobre gerar lucro, mas nem sempre estão corretas sobre <strong>arquitetura e desenvolvimento</strong>
+de <em>softwares</em>.</p>
+
+<h2 id="forte-acoplamento">Forte Acoplamento</h2>
+
+<p>O termo <a href="https://en.wikipedia.org/wiki/Coupling_(computer_programming)">Acoplamento</a> é uma medida de quão duas rotinas, módulos ou 
+Classes estão ligados <strong>intimamente</strong>.</p>
+
+<blockquote>
+  Em engenharia de software, acoplamento é a maneira e grau de interdependência entre módulos de software.
+  <footer><cite title="Coupling">Coupling - Wikipedia</cite></footer>
+</blockquote>
+
+<p>Existem várias formas de acoplamento.</p>
+
+<p>O Forte Acoplamento entre Classes se dá quando uma Classe “conhece” uma outra diretamente. 
+Por exemplo. Quando você inicializa um atributo de uma Classe utilizando uma Classe concreta, 
+você está acoplando as Classes.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">constructor</span> <span class="nc">TCustomer</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FName</span> <span class="o">:=</span> <span class="n">Name</span><span class="o">;</span>
+  <span class="n">FAddress</span> <span class="o">:=</span> <span class="n">TAddress</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>No exemplo acima existe um acoplamento entre <code>TCustomer</code> e <code>TAddress</code>. Conceitualmente isso é ruim. O mais correto seria utilizar
+<strong>injeção de dependência</strong> passando a instância de <code>TAddress</code> através de um argumento do tipo Interface no construtor de <code>TCustomer</code>.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">constructor</span> <span class="nc">TCustomer</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
+  <span class="n">Address</span><span class="o">:</span> <span class="n">IAddress</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FName</span> <span class="o">:=</span> <span class="n">Name</span><span class="o">;</span>
+  <span class="n">FAddress</span> <span class="o">:=</span> <span class="n">Address</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Devemos evitar o acoplamento. O motivo é simples. Toda vez que você alterar uma Classe que está acoplada a outra, haverá grandes
+chances de você ter que alterar ambas.</p>
+
+<p>Se utilizar argumentos do tipo <a href="/posts/interfaces-em-todo-lugar/">Interface</a> e injeção de dependência, 
+o acoplamento será apenas de Interfaces.</p>
+
+<p>O exemplo acima não é sobre Herança, mas sobre <strong>Composição de Objetos</strong>.</p>
+
+<p>Apesar de ser ruim o acoplamento sem utilizar injeção de dependência, é possível refatorar essas Classes (se necessário) 
+sem termos que alterar todas as Classes envolvidas.
+Poderíamos começar a codificação de <code>TCustomer</code> sem injetar <code>TAddress</code> e, depois, resolver alterar o código para tornar <code>TCustomer</code>
+mais desacoplada.</p>
+
+<p>No entanto, se utilizássemos <strong>Herança de Classe</strong>, a mesma refatoração poderia ser <strong>muito mais difícil</strong>. 
+Por exemplo. Se <code>TCustomer</code> fosse uma Subclasse de <code>TPerson</code> e essa Classe inicializasse <code>FAddress</code> em seu construtor,
+<code>TCustomer</code> não poderia — ou não deveria — alterar a instância de <code>FAddress</code>, reinicializando-a com um outro tipo de Classe.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="cm">{ TPerson }</span>
+
+<span class="k">constructor</span> <span class="nc">TPerson</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FName</span> <span class="o">:=</span> <span class="n">Name</span><span class="o">;</span>
+  <span class="n">FAddress</span> <span class="o">:=</span> <span class="n">TAddress</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TCustomer }</span>
+
+<span class="k">constructor</span> <span class="nc">TCustomer</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="p">(</span><span class="n">Name</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">FAddress</span> <span class="o">:=</span> <span class="n">TAnotherAddress</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span> <span class="c1">//&lt;&lt;&lt;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Nesse exemplo simples, existem alguns problemas.</p>
+
+<p>Primeiro, para que <code>TCustomer</code> consiga alterar <code>FAddress</code>, esta deve ter a visibilidade de <code>protected</code>, o que é uma
+<a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/">Violação de Encapsulamento</a>, pois
+<code>TCustomer</code> teria conhecimento interno sobre o estado de <code>TPerson</code>.</p>
+
+<p>Segundo, se <code>TCustomer</code> tem acesso de alteração dos atributos herdados de <code>TPerson</code>, esta mudança poderia causar inúmeros
+problemas pois o comportamento de <code>TPerson</code> poderia ser alterado ou invalidado para todos as outras Subclasse de <code>TPerson</code>.</p>
+
+<p>E terceiro, se <code>FAddress</code> não fosse <code>protected</code> nenhuma opção estaria disponível.</p>
+
+<h2 id="a-classe-tdataset">A Classe TDataSet</h2>
+
+<p>Erros de <em>design</em> de Classes não existem só na linguagem Java. No Delphi também temos erros. Um deles, na minha opinião, 
+é a Classe <code>TDataSet</code>.</p>
+
+<p>Por simplicidade, talvez, alguém pensou em fazer uma Classe para manipulação de dados. É o famoso <em>data-ware</em>. Componentes mostram
+dados em <em>widgets</em> (edits, grids, etc) obtendo esses dados de instâncias de Subclasses de <code>TDataSet</code>.</p>
+
+<p>Esse é um abuso clássico da Herança: Utilização da Herança para reaproveitar código.</p>
+
+<p>Bem, se a Herança fosse mesmo uma boa escolha, eu estaria utilizando Herança nas minhas Classes. Teria minha própria Hierarquia de 
+Classes e Subclasses, certo?</p>
+
+<p>Então eu lhes pergunto: Onde <code>TDataSet</code> faria sentido na minha Hierarquia de Classes? Provavelmente nenhum sentido.
+No entanto eu sou <strong>obrigado</strong> a herdar de <code>TDataSet</code> se eu quiser exibir dados num <code>TDBGrid</code>. Esse <em>design</em> é muito errado.</p>
+
+<p>E qual seria o <em>design</em> correto?</p>
+
+<p>Você já sabe.</p>
+
+<p>Todos os lugares que esperam uma instância de <code>TDataSet</code> deveriam esperar uma Interface <code>IDataSet</code>. Tão simples quanto
+utilizar Herança, porém mais eficiente e desacoplado.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>A utilização de Herança é a pior forma de acoplamento porque é mais difícil de corrigir e refatorar.</p>
+
+<p>Utilizar Herança é como usar concreto, após secar você não consegue mover mais nada.</p>
+
+<h2 id="no-prximo-artigo">No próximo artigo…</h2>
+
+<p>No próximo artigo irei falar sobre <strong>Hierarquias Complexas</strong> entre Classes que utilizam Herança.</p>
+
+<p>Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
+abaixo para comentários.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Herança pode ser o Mal da Orientação a Objetos — Parte 4&via=mdbs99;url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/&title=Herança pode ser o Mal da Orientação a Objetos — Parte 4" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/&title=Herança pode ser o Mal da Orientação a Objetos — Parte 4" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/&t=Herança pode ser o Mal da Orientação a Objetos — Parte 4" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-representam-entidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+        </ul>
+        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+        </ul>
+        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4';
+      var disqus_title      = 'Herança pode ser o Mal da Orientação a Objetos — Parte 4';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

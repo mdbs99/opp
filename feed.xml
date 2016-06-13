@@ -8,6 +8,174 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Herança pode ser o Mal da Orientação a Objetos — Parte 4</title>
+        <description>&lt;p&gt;No artigo anterior falei sobre Duplicação de Código.
+Nesse artigo irei falar sobre o &lt;strong&gt;Forte Acoplamento&lt;/strong&gt; que ocorre ao utilizarmos a Herança de Classe.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1461287159820-04de78c094e9.jpg&quot; alt=&quot;Acoplamento&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/&quot;&gt;Clique aqui&lt;/a&gt; para ler a &lt;strong&gt;Parte #3&lt;/strong&gt; 
+dessa série, caso ainda não tenha lido.&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Se um gato possui raça e patas, e um cachorro possui raça, patas e tipoDoPelo, logo Cachorro extends Gato?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;O texto acima é emprestado &lt;a href=&quot;http://blog.caelum.com.br/como-nao-aprender-orientacao-a-objetos-heranca/&quot;&gt;desse artigo&lt;/a&gt; que
+fala sobre Herança e Hierarquia de Classes. O artigo fala sobre o erro de &lt;em&gt;design&lt;/em&gt; dos projetistas da linguagem Java quando
+codificaram as Classes &lt;code&gt;Stack&lt;/code&gt; e &lt;code&gt;Properties&lt;/code&gt;. Não precisa conhecer Java para entender o artigo.&lt;/p&gt;
+
+&lt;p&gt;No mesmo artigo ele mostra o erro &lt;strong&gt;grotesco&lt;/strong&gt; no &lt;em&gt;design&lt;/em&gt; da Classe &lt;code&gt;HttpServlet&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se você já utilizou Java e precisou extender essa Classe, deve ter reparado no mesmo problema citado no artigo.&lt;/p&gt;
+
+&lt;p&gt;Na época da faculdade eu reparei nesse erro de &lt;em&gt;design&lt;/em&gt; mas, &lt;strong&gt;ignorei&lt;/strong&gt;. Achei que eu estava errado, que não tinha entendido a “maneira correta
+de programar utilizando Orientação a Objetos com Java”. Eu não sabia muita coisa mesmo. Talvez
+ainda não saiba… sempre que leio textos de outrem fico indignado o quanto ainda preciso aprender. Pois é.&lt;/p&gt;
+
+&lt;p&gt;O fato é que o pensamento comum da maioria das pessoas é: Será que uma grande empresa, projetista do Java por exemplo, 
+poderia estar errada?&lt;/p&gt;
+
+&lt;p&gt;Sim as empresas erram, muito.&lt;/p&gt;
+
+&lt;p&gt;Sim, elas também ganham muito dinheiro. Mas não é porque seus &lt;em&gt;softwares&lt;/em&gt; são perfeitos, mas sim porque elas se adaptam
+rapidamente e dão aos seus clientes o que eles querem — ou o que está na moda; ou algo similar ao concorrente; ou talvez algo
+“legal de se ter”.&lt;/p&gt;
+
+&lt;p&gt;Por isso muitas empresas não se importam em descontinuar aplicativos e &lt;em&gt;frameworks&lt;/em&gt; se eles não dão lucro ou não estão mais em conformidade
+com a visão de longo prazo delas — vide Microsoft — o que é perfeitamente normal. Elas precisam gerar lucro, certo?&lt;/p&gt;
+
+&lt;p&gt;Então não pense que as empresas milionárias como a Microsoft, Sun/Oracle, Embarcadero e muitas outras, estão sempre certas “só” porque
+elas são milionárias. Bem, elas estão corretíssimas sobre gerar lucro, mas nem sempre estão corretas sobre &lt;strong&gt;arquitetura e desenvolvimento&lt;/strong&gt;
+de &lt;em&gt;softwares&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;forte-acoplamento&quot;&gt;Forte Acoplamento&lt;/h2&gt;
+
+&lt;p&gt;O termo &lt;a href=&quot;https://en.wikipedia.org/wiki/Coupling_(computer_programming)&quot;&gt;Acoplamento&lt;/a&gt; é uma medida de quão duas rotinas, módulos ou 
+Classes estão ligados &lt;strong&gt;intimamente&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  Em engenharia de software, acoplamento é a maneira e grau de interdependência entre módulos de software.
+  &lt;footer&gt;&lt;cite title=&quot;Coupling&quot;&gt;Coupling - Wikipedia&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Existem várias formas de acoplamento.&lt;/p&gt;
+
+&lt;p&gt;O Forte Acoplamento entre Classes se dá quando uma Classe “conhece” uma outra diretamente. 
+Por exemplo. Quando você inicializa um atributo de uma Classe utilizando uma Classe concreta, 
+você está acoplando as Classes.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TCustomer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;FName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;FAddress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAddress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;No exemplo acima existe um acoplamento entre &lt;code&gt;TCustomer&lt;/code&gt; e &lt;code&gt;TAddress&lt;/code&gt;. Conceitualmente isso é ruim. O mais correto seria utilizar
+&lt;strong&gt;injeção de dependência&lt;/strong&gt; passando a instância de &lt;code&gt;TAddress&lt;/code&gt; através de um argumento do tipo Interface no construtor de &lt;code&gt;TCustomer&lt;/code&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TCustomer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;Address&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IAddress&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;FName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;FAddress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Address&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Devemos evitar o acoplamento. O motivo é simples. Toda vez que você alterar uma Classe que está acoplada a outra, haverá grandes
+chances de você ter que alterar ambas.&lt;/p&gt;
+
+&lt;p&gt;Se utilizar argumentos do tipo &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interface&lt;/a&gt; e injeção de dependência, 
+o acoplamento será apenas de Interfaces.&lt;/p&gt;
+
+&lt;p&gt;O exemplo acima não é sobre Herança, mas sobre &lt;strong&gt;Composição de Objetos&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Apesar de ser ruim o acoplamento sem utilizar injeção de dependência, é possível refatorar essas Classes (se necessário) 
+sem termos que alterar todas as Classes envolvidas.
+Poderíamos começar a codificação de &lt;code&gt;TCustomer&lt;/code&gt; sem injetar &lt;code&gt;TAddress&lt;/code&gt; e, depois, resolver alterar o código para tornar &lt;code&gt;TCustomer&lt;/code&gt;
+mais desacoplada.&lt;/p&gt;
+
+&lt;p&gt;No entanto, se utilizássemos &lt;strong&gt;Herança de Classe&lt;/strong&gt;, a mesma refatoração poderia ser &lt;strong&gt;muito mais difícil&lt;/strong&gt;. 
+Por exemplo. Se &lt;code&gt;TCustomer&lt;/code&gt; fosse uma Subclasse de &lt;code&gt;TPerson&lt;/code&gt; e essa Classe inicializasse &lt;code&gt;FAddress&lt;/code&gt; em seu construtor,
+&lt;code&gt;TCustomer&lt;/code&gt; não poderia — ou não deveria — alterar a instância de &lt;code&gt;FAddress&lt;/code&gt;, reinicializando-a com um outro tipo de Classe.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;cm&quot;&gt;{ TPerson }&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TPerson&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;FName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;FAddress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAddress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;{ TCustomer }&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TCustomer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;FAddress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAnotherAddress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Nesse exemplo simples, existem alguns problemas.&lt;/p&gt;
+
+&lt;p&gt;Primeiro, para que &lt;code&gt;TCustomer&lt;/code&gt; consiga alterar &lt;code&gt;FAddress&lt;/code&gt;, esta deve ter a visibilidade de &lt;code&gt;protected&lt;/code&gt;, o que é uma
+&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/&quot;&gt;Violação de Encapsulamento&lt;/a&gt;, pois
+&lt;code&gt;TCustomer&lt;/code&gt; teria conhecimento interno sobre o estado de &lt;code&gt;TPerson&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Segundo, se &lt;code&gt;TCustomer&lt;/code&gt; tem acesso de alteração dos atributos herdados de &lt;code&gt;TPerson&lt;/code&gt;, esta mudança poderia causar inúmeros
+problemas pois o comportamento de &lt;code&gt;TPerson&lt;/code&gt; poderia ser alterado ou invalidado para todos as outras Subclasse de &lt;code&gt;TPerson&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;E terceiro, se &lt;code&gt;FAddress&lt;/code&gt; não fosse &lt;code&gt;protected&lt;/code&gt; nenhuma opção estaria disponível.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-classe-tdataset&quot;&gt;A Classe TDataSet&lt;/h2&gt;
+
+&lt;p&gt;Erros de &lt;em&gt;design&lt;/em&gt; de Classes não existem só na linguagem Java. No Delphi também temos erros. Um deles, na minha opinião, 
+é a Classe &lt;code&gt;TDataSet&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Por simplicidade, talvez, alguém pensou em fazer uma Classe para manipulação de dados. É o famoso &lt;em&gt;data-ware&lt;/em&gt;. Componentes mostram
+dados em &lt;em&gt;widgets&lt;/em&gt; (edits, grids, etc) obtendo esses dados de instâncias de Subclasses de &lt;code&gt;TDataSet&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Esse é um abuso clássico da Herança: Utilização da Herança para reaproveitar código.&lt;/p&gt;
+
+&lt;p&gt;Bem, se a Herança fosse mesmo uma boa escolha, eu estaria utilizando Herança nas minhas Classes. Teria minha própria Hierarquia de 
+Classes e Subclasses, certo?&lt;/p&gt;
+
+&lt;p&gt;Então eu lhes pergunto: Onde &lt;code&gt;TDataSet&lt;/code&gt; faria sentido na minha Hierarquia de Classes? Provavelmente nenhum sentido.
+No entanto eu sou &lt;strong&gt;obrigado&lt;/strong&gt; a herdar de &lt;code&gt;TDataSet&lt;/code&gt; se eu quiser exibir dados num &lt;code&gt;TDBGrid&lt;/code&gt;. Esse &lt;em&gt;design&lt;/em&gt; é muito errado.&lt;/p&gt;
+
+&lt;p&gt;E qual seria o &lt;em&gt;design&lt;/em&gt; correto?&lt;/p&gt;
+
+&lt;p&gt;Você já sabe.&lt;/p&gt;
+
+&lt;p&gt;Todos os lugares que esperam uma instância de &lt;code&gt;TDataSet&lt;/code&gt; deveriam esperar uma Interface &lt;code&gt;IDataSet&lt;/code&gt;. Tão simples quanto
+utilizar Herança, porém mais eficiente e desacoplado.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;A utilização de Herança é a pior forma de acoplamento porque é mais difícil de corrigir e refatorar.&lt;/p&gt;
+
+&lt;p&gt;Utilizar Herança é como usar concreto, após secar você não consegue mover mais nada.&lt;/p&gt;
+
+&lt;h2 id=&quot;no-prximo-artigo&quot;&gt;No próximo artigo…&lt;/h2&gt;
+
+&lt;p&gt;No próximo artigo irei falar sobre &lt;strong&gt;Hierarquias Complexas&lt;/strong&gt; entre Classes que utilizam Herança.&lt;/p&gt;
+
+&lt;p&gt;Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
+abaixo para comentários.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 13 Jun 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/</guid>
+      </item>
+    
+      <item>
         <title>Herança pode ser o Mal da Orientação a Objetos — Parte 3</title>
         <description>&lt;p&gt;No artigo anterior falei sobre Violação de Encapsulamento.
 Nesse artigo irei falar sobre a &lt;strong&gt;Duplicação de Código&lt;/strong&gt; ao utilizarmos a Herança de Classe.&lt;/p&gt;
@@ -181,11 +349,12 @@ nas “Classes” abaixo desta. São apenas Interfaces.&lt;/p&gt;
 
 &lt;p&gt;No próximo artigo irei falar sobre &lt;strong&gt;Forte Acoplamento&lt;/strong&gt; entre Classes que utilizam Herança.&lt;/p&gt;
 
+&lt;p&gt;&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/&quot;&gt;Clique aqui&lt;/a&gt; para ler a &lt;strong&gt;Parte #4&lt;/strong&gt; dessa série.&lt;/p&gt;
+
 &lt;p&gt;Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
 abaixo para comentários.&lt;/p&gt;
 
 &lt;p&gt;Até logo.&lt;/p&gt;
-
 </description>
         <pubDate>Mon, 06 Jun 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/</link>
@@ -1405,104 +1574,6 @@ ao programador fazer a análise, fazer o teste ou não… mas ele foi avisado.&l
         <pubDate>Mon, 11 Apr 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/</guid>
-      </item>
-    
-      <item>
-        <title>Objetos sem Estado</title>
-        <description>&lt;p&gt;Por que sempre deveríamos criar nossas Classes com pelo menos um argumento no construtor principal afim de 
-não deixar nossos Objetos &lt;strong&gt;“vazios de estado”&lt;/strong&gt;?&lt;/p&gt;
-
-&lt;p&gt;Porque construtores sem argumentos é um anti-padrão.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1455641064490-74f5f8dbf598.jpg&quot; alt=&quot;Vazio&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Para criamos instância de objetos utilizamos os Construtores de Classes 
-&lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;Primários e Secundários&lt;/a&gt;
-ou indiretamente, através do padrão chamado &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New()&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Um bom construtor sempre tem argumentos para a inicialização do Objeto.&lt;/p&gt;
-
-&lt;p&gt;Não utilizar argumentos é visto como uma má prática na Orientação a Objetos porque um Objeto deve encapsular
-atributos privados, ou seja, seu &lt;strong&gt;Estado&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se um Objeto não tem Estado então ele pode ser visto como uma instância de uma 
-&lt;a href=&quot;/posts/nao-utilize-metodos-estaticos/#classes-utilitarias&quot;&gt;Classe Utilitária&lt;/a&gt;,
-o que é um anti-padrão na programação Orientada a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente o senso comum da maioria dos programadores Object Pascal — e também de outras linguagens Orientada a Objetos —
-é sempre ter apenas um &lt;strong&gt;construtor sem parâmetros&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa prática é comum desde… sempre.&lt;/p&gt;
-
-&lt;p&gt;A VCL/LCL, a RTL, todos os descendentes de &lt;code&gt;TComponent&lt;/code&gt;, a maioria dos códigos que tenho visto em 
-várias empresas e, é claro, em muitos dos meus códigos
-— projetos antigos cujo o custo para fazer tais alterações seria muito alto — 
-todos utilizam construtores sem argumentos, na maioria das Classes.&lt;/p&gt;
-
-&lt;p&gt;Por que codificamos dessa maneira?&lt;/p&gt;
-
-&lt;p&gt;Porque é mais &lt;strong&gt;fácil&lt;/strong&gt; codificar dessa maneira.&lt;/p&gt;
-
-&lt;p&gt;Após a inicialização do Objeto com um construtor sem argumentos basta utilizar as &lt;em&gt;properties&lt;/em&gt; ou métodos &lt;code&gt;SetXxx(Value)&lt;/code&gt; para inicializar ou
-injetar algum valor.&lt;/p&gt;
-
-&lt;p&gt;Fácil.&lt;/p&gt;
-
-&lt;p&gt;Essa prática é &lt;strong&gt;simples e conveniente&lt;/strong&gt;, no entanto dizem que “na Engenharia nada é de graça”, ou seja, essa facilidade tem um preço.&lt;/p&gt;
-
-&lt;p&gt;Essa &lt;strong&gt;falsa simplicidade&lt;/strong&gt; trás consigo:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;“Código-espaguete”: Classes mutáveis, crescentes, são quase sempre o início do caos.&lt;/li&gt;
-  &lt;li&gt;Complexidade: Classes gigantes e complexas com dezenas de métodos e propriedades.&lt;/li&gt;
-  &lt;li&gt;Desperdícios: De memória devido a alocação desnecessária de “objetos filhos”; 
-  de tempo devido ao tempo perdido para entender, implementar ou resolver problemas.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Sério.&lt;/p&gt;
-
-&lt;p&gt;Não concorda?&lt;/p&gt;
-
-&lt;p&gt;Então me diga quando foi a última vez que você utilizou todas as propriedades e métodos de um componente? Não lembra, quase nunca ou o mais provável, nunca.&lt;/p&gt;
-
-&lt;p&gt;Um Objeto deve ser fácil de criar, mas você precisa no mínimo raciocinar sobre o motivo de instânciá-lo e isso é feito 
-através dos argumentos passados em seu construtor. Você deve instanciar um Objeto que
-&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;represente uma Entidade&lt;/a&gt; para fazer algum trabalho num
-momento específico no tempo.&lt;/p&gt;
-
-&lt;p&gt;Sem um construtor adequado é fácil adicionar mais e mais propriedades 
-e métodos aos Objetos.&lt;/p&gt;
-
-&lt;p&gt;O problema é que esses Objetos não param de crescer ou já são grandes o bastante para ninguém mais entendê-los ou não ter a coragem para 
-refatorar seu código.&lt;/p&gt;
-
-&lt;p&gt;No fim você terá um monstro em suas mãos e é justamente isso que queremos evitar!&lt;/p&gt;
-
-&lt;p&gt;O outro motivo desses monstros aparecerem é devido ao fato desses Objetos não serem &lt;a href=&quot;https://en.wikipedia.org/wiki/Immutable_object&quot;&gt;imutáveis&lt;/a&gt;.
-Codificar utilizando imutabilidade irá restringí-lo num primeiro momento, no entanto essa restrição irá fazê-lo pensar num
-design melhor para suas Classes.&lt;/p&gt;
-
-&lt;p&gt;Num mundo perfeito, todo construtor deveria prover informação necessária para um Objeto encapsular algum Estado. Essa informação
-é concedida através dos argumentos.&lt;/p&gt;
-
-&lt;p&gt;Bem, acho que ainda não é possível criar componentes para a IDE sem que apenas um construtor único e sem argumentos seja utilizado
-para instanciar o Objeto. Fizeram a arquitetura dessa forma e não temos como mudar. É assim no Delphi e Lazarus, mas também 
-ocorre no Java ou C# onde muitos &lt;em&gt;frameworks&lt;/em&gt; exigem um construtor sem argumentos.&lt;/p&gt;
-
-&lt;p&gt;Então vamos deixar os componentes de lado e focar apenas nas &lt;strong&gt;Classes de Negócio&lt;/strong&gt;, porque podemos implementar essas Classes 
-da maneira que quisermos sem nos preocuparmos em integrá-las com &lt;em&gt;frameworks&lt;/em&gt; ou IDE’s.&lt;/p&gt;
-
-&lt;p&gt;Antes de criar uma Classe, não pense nas funções. Pense no que ela representa e quais os argumentos que seus Objetos irão precisar
-para fazer o trabalho.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 04 Apr 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/objetos-sem-estado/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-sem-estado/</guid>
       </item>
     
   </channel>
