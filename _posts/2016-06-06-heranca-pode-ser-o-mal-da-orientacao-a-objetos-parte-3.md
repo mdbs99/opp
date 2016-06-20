@@ -148,7 +148,7 @@ No caso do nosso exemplo o método `Caminhar()` seria modificado para utilizar a
 
 Mas isso é uma **solução alternativa** que está longe de ser a ideal.
 
-##Solução
+##Solução {#solucao}
 
 A Hierarquia está errada? Qual seria a implementação "certa"? Como reaproveitar o código sem usar Herança?
 
@@ -158,7 +158,7 @@ Um pato nada, assim como um crocodilo. Mas o ato de nadar **não pertence** ao p
 
 Vou lhe contar como resolver o problema da implementação da Hierarquia Animal.
 
-**Atenção**, aqui está:
+**Atenção**. Aqui está:
 
 Um Animal não caminha. Quem caminha é um Cachorro, Gato ou Pato. Animal é uma abstração, uma classificação, 
 assim como Mamífero ou Anfíbio. Animal não existe.

@@ -182,6 +182,8 @@ Utilizar Herança é como usar concreto, após secar você não consegue mover m
 
 No próximo artigo irei falar sobre **Hierarquias Complexas** entre Classes que utilizam Herança.
 
+[Clique aqui]({% post_url 2016-06-20-heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final %}) para ler a **Parte Final** dessa série.
+
 Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
 abaixo para comentários.
   
