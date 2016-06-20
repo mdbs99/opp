@@ -8,6 +8,162 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Herança pode ser o Mal da Orientação a Objetos — Parte Final</title>
+        <description>&lt;p&gt;No artigo anterior falei sobre Forte Acoplamento.
+Nesse artigo irei falar sobre &lt;strong&gt;Hierarquias Complexas&lt;/strong&gt; e concluir a série.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1457473075527-b0db85c08e66.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/&quot;&gt;Clique aqui&lt;/a&gt; para ler a &lt;strong&gt;Parte #4&lt;/strong&gt; dessa série, caso ainda não tenha lido.&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;A maioria dos desenvolvedores esqueceram ou nunca aprenderam que a Herança foi feita para proporcionar o Polimorfismo e não  para reutilizar código.&lt;/p&gt;
+
+&lt;p&gt;O reuso de código é apenas um “efeito colateral” da Herança.&lt;/p&gt;
+
+&lt;p&gt;Polimorfismo é importante e em linguagens como C++, por exemplo, a única maneira de implementarmos Polimorfismo é através da Herança de Classes.
+A linguagem C++ não tem Interfaces, sendo Herança de Classe uma escolha correta.&lt;/p&gt;
+
+&lt;p&gt;Arquitetos de linguagens de programação vem copiando as ideias de outras linguagens a muito tempo. Se uma linguagem nova for muito diferente das mais populares, corre o risco de nunca ter um público que as utilize. Então, por que não copiar caracteristicas de outras linguagens que já fazem sucesso?&lt;/p&gt;
+
+&lt;p&gt;Se C++ tem Herança de Classes, porque não ter em Java, Ruby, Object Pascal… os programadores já estão acostumados, então vamos implementar essa característica também.&lt;/p&gt;
+
+&lt;p&gt;Imagino que seja assim ao criar uma nova linguagem. Mas nem sempre. As linguagens funcionais são bem diferentes das imperativas. A Go Language, por exemplo, não é funcional mas também não implementa Herança — mas parece uma nova cópia da liguagem C, não?&lt;/p&gt;
+
+&lt;p&gt;Então, cada nova linguagem deve ter alguma referência anterior para não ser completamente alienígena. Pra mim, esse é o maior motivo de ainda termos Herança de Classes nas novas linguagens.&lt;/p&gt;
+
+&lt;p&gt;Se você programa em Object Pascal, no entanto, já tem o suporte a &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;, que é uma melhor opção para implementar Polimorfismo do que utilizar Herança de Classes.
+Se podemos implementar o Polimorfismo através de Interfaces e reutilizar código através da Composição de Objetos e delegação, por que iríamos limitar nossas Classes a herdar de uma única hierarquia rígida de Classes?&lt;/p&gt;
+
+&lt;p&gt;Não faz sentido.&lt;/p&gt;
+
+&lt;p&gt;Por que uma Classe Gato deveria herdar de Animal, Mamífero ou quadrúpede se o sistema só precisa conhecer um Gato?
+Essas implementações de Super Classes, muitas vezes, &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/#solucao&quot;&gt;nem existem&lt;/a&gt; no modelo de negócios.&lt;/p&gt;
+
+&lt;h2 id=&quot;hierarquias-complexas&quot;&gt;Hierarquias Complexas&lt;/h2&gt;
+
+&lt;p&gt;Eu defino Hierarquias Complexas todos os modelos de Classes que utilizam Herança e que contenham erros conceituais ou reais. E eu sempre encontro esses tipos de erros. Sempre. A não ser que seu modelo seja muito pequeno, ele também conterá esses erros. O motivo é simples. É quase impossível definir uma Hierarquia de Classes perfeita porque o mundo real, o qual modelamos utilizando Classes, não é estruturado.&lt;/p&gt;
+
+&lt;p&gt;Isso mesmo, a natureza não é estruturada. Não disse que não ela não é perfeita. Estou dizendo que ela não é estruturada como Classes perfeitamente agrupadas numa Hierarquia bonita e elegante. Na minha opinião, a natureza é um caos.&lt;/p&gt;
+
+&lt;p&gt;Na &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/#exemplo-1&quot;&gt;Parte #3&lt;/a&gt; dessa série eu apresentei um modelo de Classes do Mundo Animal.&lt;/p&gt;
+
+&lt;p&gt;Aqui está o Diagrama:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Diagram02.png&quot; alt=&quot;Diagram1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;A princípio, parece simples e correto. Todos os animais no modelo são Animais, obviamente, e todos eles Caminham. Bem, com exceção do Tubarão, pois ele não tem pernas mas… vamos ignorar isso. Imagine um &lt;code&gt;raise Exception.Create&lt;/code&gt; no método &lt;code&gt;Caminhar&lt;/code&gt; do Tubarão e vamos em frente.&lt;/p&gt;
+
+&lt;p&gt;E se quisermos adicionar mais animais nessa Hierarquia? Talvez um Tigre.&lt;/p&gt;
+
+&lt;p&gt;Você pode imaginar que um Tigre herde de Gato — ou seria o contrário? — e tudo irá continuar funcionando. Bonito e elegante.&lt;/p&gt;
+
+&lt;p&gt;O mesmo para um Leão, Lobo, Urso… e então precisamos implementar um Ornitorrinco.&lt;/p&gt;
+
+&lt;p&gt;O que é um Ornitorrinco?&lt;/p&gt;
+
+&lt;blockquote&gt;
+Com bico de ave, semelhante a pato, é um mamífero semiaquático natural da Austrália e Tasmânia. É o único representante vivo da família Ornithorhynchidae, e a única espécie do gênero Ornithorhynchus. Juntamente com as equidnas, formam o grupo dos monotremados, os únicos mamíferos ovíparos existentes. A espécie é monotípica, ou seja, não tem subespécies ou variedades reconhecidas.
+  &lt;footer&gt;&lt;cite title=&quot;wikipedia&quot;&gt;— Wikipedia&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;É um mamífero, ovíparo, tem bico e nadadeiras e é uma mono espécie… se a natureza fosse estruturada, esse seria um dos seus &lt;em&gt;bugs&lt;/em&gt;?&lt;/p&gt;
+
+&lt;p&gt;Pense agora no peixe-voador…&lt;/p&gt;
+
+&lt;p&gt;Brincadeira a parte, eu acredito que não, que não há nada de errado com o Ornitorrinco ou qualquer outro animal.&lt;/p&gt;
+
+&lt;p&gt;Nosso Modelo de Classes, baseado em Herança, é que está errado.&lt;/p&gt;
+
+&lt;p&gt;Imagine o modelo acima bem maior, com mais métodos e Subclasses. Para tentar colocar o Ornitorrinco na Hierarquia você teria que fazer uma refatoração possivelmente grande. Criar novas classes abastratas, mover métodos para Classes acima, outros para Classes abaixo, “desabilitar” alguns métodos utilizando &lt;code&gt;raise&lt;/code&gt; e seguir a vida.&lt;/p&gt;
+
+&lt;p&gt;A Hierarquia iria ficar &lt;strong&gt;extremamente complexa&lt;/strong&gt;. Iriam existir Classes que só existiram para compartilhar código, e não porque o &lt;strong&gt;modelo de negócios&lt;/strong&gt; exige que existam.&lt;/p&gt;
+
+&lt;p&gt;Sempre foi assim nos sistema que utilizam Herança, certo? Aquele &lt;em&gt;Form&lt;/em&gt; que tem um botão que não é necessário na Subclasse, basta setar um &lt;code&gt;Visible = False&lt;/code&gt; e tudo certo; um botão que faz algo a mais do que é preciso na nova Subclasse, basta “refatorar” o código dividindo em 2 métodos com nomes insípedos e fazer a chamada deles, sobrescrevendo o método original para chamar apenas uma parte do código; sobrescrever métodos da super Classe para “não fazer nada”; copiar código de outra hierarquia de Classes… uma verdadeira bagunça.&lt;/p&gt;
+
+&lt;p&gt;Eu conheço esses problemas. Eu passei por muitos deles. E, acredite, em grande parte o motivo dos problemas sempre foram as Hierarquias Complexas que criamos sem pensar, quando estamos tentando “reaproveitar” código utilizando Herança.&lt;/p&gt;
+
+&lt;p&gt;Na natureza, eu acredito, não há “reaproveitamento de código”, só composição.&lt;/p&gt;
+
+&lt;p&gt;Átomos, elementos químicos. Alguns organismos tem mais disso, outros mais daquilo. Um animal tem 0,0003% desse elemento, mais 0,0006% de outro. A composição desses Objetos determinam o comportamento e a evolução de cada indivíduo.&lt;/p&gt;
+
+&lt;p&gt;DNA.&lt;/p&gt;
+
+&lt;p&gt;Lembre-se que &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/#solucao&quot;&gt;a árvore&lt;/a&gt; não existe. Tetrápodes, Bípedes, Mamíferos, Anfíbios, Aves… nada disso existe. São abstrações que nós criamos para organizar as coisas, mas elas &lt;strong&gt;não existem no mundo real&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Qualquer Hierarquia de Classes que tente implementar o mundo, terá falhas.&lt;/p&gt;
+
+&lt;p&gt;Parece que os biólogos conseguem separar os indivíduos em “hierarquias perfeitas”. Eles observam os indivíduos na natureza e classificam. Se descobrem um animal que não se encaixa em nenhuma hierarquia não há problema, basta criar uma nova. Nenhum animal já classificado será afetado. Não há um “fio” que liga os animais às hierarquias. 
+O indivíduo determina a hierarquia, ou seja, de baixo pra cima. As hierarquias são apenas nomes e classificações. Ontologia.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A ontologia não define o comportamento das amostras individuais.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Nós, desenvolvedores de software, fazemos o inverso. Vamos codificando nossas hierarquias e tentando definir o comportamento dos objetos de cima pra baixo! É como se tentássemos prever o futuro da evolução de nossas Classes separando-as em hierarquias pré-definidas. É praticamente impossível dar certo.&lt;/p&gt;
+
+&lt;h2 id=&quot;solucao&quot;&gt;Solução&lt;/h2&gt;
+
+&lt;p&gt;A solução é a Composição de Objetos em conjunto com Interfaces. Já falei isso. Falei e repeti muitas vezes. Mas para quem ainda não entendeu, vou revelar mais uma dica através de uma pergunta:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Se seu sistema trabalha com Tigres, quantas Classes Tigre você teria?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;A grande maioria, acredito, responderia &lt;strong&gt;apenas uma classe&lt;/strong&gt; &lt;code&gt;TTigre&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Concorda?&lt;/p&gt;
+
+&lt;p&gt;A pergunta é capciosa.&lt;/p&gt;
+
+&lt;p&gt;Esse é um dos problemas ao tentarmos modelar sistemas Orientados a Objetos. O desenvolvedor acha que apenas uma Classe deve representar o conceito quando, na verdade, podemos ter &lt;strong&gt;diferentes Classes para representar o mesmo conceito em diferentes contextos&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;As pessoas me perguntaram quais eram as soluções para os problemas apontados nessa série. Eu lhes disse, Composição de Objetos.&lt;/p&gt;
+
+&lt;p&gt;Mas elas esperavam ler a solução definitiva: Quais classes criar; quais interfaces; usar ou não herança; em quais Classes por tais métodos.&lt;/p&gt;
+
+&lt;p&gt;Não há uma única resposta, porque tudo irá depender do seu modelo de negócios. Uma vez que você saiba o modelo de negócios, deverá haver a definição de contextos — Bounded Context no DDD — e assim você terá “N” &lt;a href=&quot;/posts/objetos-representam-entidades/#o-que-e-uma-entidade&quot;&gt;variações de um único conceito&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Lembra do &lt;code&gt;TTigre&lt;/code&gt;? Se nesse sistema hipotético você precisa analisar na tela a pata de um tigre, não haveria necessidade de instânciar um objeto da Classe &lt;code&gt;TTigre&lt;/code&gt; que contém tudo de um tigre (olhos, tipo, peso, tamanho, cor, que corre, nada, caça, etc). Não estou dizendo isso pensando em performance ou alocação de memória, não! Estou dizendo isso porque essa Classe seria enorme e complexa. Iria implementar muitas interfaces para poder Correr, Nadar, Pular… num sistema precisamos abstrair o que não é necessário. Esse é um dos motivos de não precisarmos de Hierarquias Complexas. Se você precisa examinar uma pata, então:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;IPaw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// function...&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  
+  &lt;span class=&quot;n&quot;&gt;TTigerPaw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IPaw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// function...&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Assim como você poderá utilizar os Objetos da Classe &lt;code&gt;TTigerPaw&lt;/code&gt; para compor outras abstrações de Tigre em outros contextos.&lt;/p&gt;
+
+&lt;p&gt;Sim, você terá muito mais definições de Classes. Mas isso já é previsto na Composição de Objetos. Fazer o certo dá mais trabalho, mas só no início.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao-final&quot;&gt;Conclusão Final&lt;/h2&gt;
+
+&lt;p&gt;Chegamos ao final dessa série. Falei sobre como a Herança Viola o Encapsulamento, pode Duplicar o Código, promove Forte Acoplamento e
+Hierarquias Complexas.&lt;/p&gt;
+
+&lt;p&gt;Espero ter lhe ajudado a entender mais sobre Herança de Classes e os males que ela pode trazer ao código.&lt;/p&gt;
+
+&lt;p&gt;O título dessa série é “Herança &lt;strong&gt;pode&lt;/strong&gt; ser o Mal da Orientação a Objetos”. Eu não falei que ela &lt;strong&gt;é&lt;/strong&gt;, disse que pode ser.
+Eu lhe mostrei os problemas que vem com a Herança de Classes. Tenha conhecimento deles e evite-os.&lt;/p&gt;
+
+&lt;p&gt;Herança de Classe pode ser benéfica em alguns (poucos) contextos. Mas ao usá-la uma vez, a tentação é grande em continuar utilizando. 
+Não faça isso.&lt;/p&gt;
+
+&lt;p&gt;Modele suas Classes utilizando Composição de Objetos que implementam Interfaces. Esse é o segredo.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 20 Jun 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/</guid>
+      </item>
+    
+      <item>
         <title>Herança pode ser o Mal da Orientação a Objetos — Parte 4</title>
         <description>&lt;p&gt;No artigo anterior falei sobre Duplicação de Código.
 Nesse artigo irei falar sobre o &lt;strong&gt;Forte Acoplamento&lt;/strong&gt; que ocorre ao utilizarmos a Herança de Classe.&lt;/p&gt;
@@ -165,6 +321,8 @@ utilizar Herança, porém mais eficiente e desacoplado.&lt;/p&gt;
 
 &lt;p&gt;No próximo artigo irei falar sobre &lt;strong&gt;Hierarquias Complexas&lt;/strong&gt; entre Classes que utilizam Herança.&lt;/p&gt;
 
+&lt;p&gt;&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/&quot;&gt;Clique aqui&lt;/a&gt; para ler a &lt;strong&gt;Parte Final&lt;/strong&gt; dessa série.&lt;/p&gt;
+
 &lt;p&gt;Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
 abaixo para comentários.&lt;/p&gt;
 
@@ -304,7 +462,7 @@ No caso do nosso exemplo o método &lt;code&gt;Caminhar()&lt;/code&gt; seria mod
 
 &lt;p&gt;Mas isso é uma &lt;strong&gt;solução alternativa&lt;/strong&gt; que está longe de ser a ideal.&lt;/p&gt;
 
-&lt;h2 id=&quot;soluo&quot;&gt;Solução&lt;/h2&gt;
+&lt;h2 id=&quot;solucao&quot;&gt;Solução&lt;/h2&gt;
 
 &lt;p&gt;A Hierarquia está errada? Qual seria a implementação “certa”? Como reaproveitar o código sem usar Herança?&lt;/p&gt;
 
@@ -314,7 +472,7 @@ No caso do nosso exemplo o método &lt;code&gt;Caminhar()&lt;/code&gt; seria mod
 
 &lt;p&gt;Vou lhe contar como resolver o problema da implementação da Hierarquia Animal.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Atenção&lt;/strong&gt;, aqui está:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Atenção&lt;/strong&gt;. Aqui está:&lt;/p&gt;
 
 &lt;p&gt;Um Animal não caminha. Quem caminha é um Cachorro, Gato ou Pato. Animal é uma abstração, uma classificação, 
 assim como Mamífero ou Anfíbio. Animal não existe.&lt;/p&gt;
@@ -1377,203 +1535,6 @@ um &lt;strong&gt;tomate&lt;/strong&gt; quando você esperava uma &lt;strong&gt;m
         <pubDate>Mon, 18 Apr 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/nao-utilize-casting/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nao-utilize-casting/</guid>
-      </item>
-    
-      <item>
-        <title>Não Utilize nil ou NULL</title>
-        <description>&lt;p&gt;O conceito &lt;em&gt;NULL&lt;/em&gt;, também conhecido como &lt;a href=&quot;http://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare&quot;&gt;“O erro de 1 bilhão de dólares”&lt;/a&gt;,
-foi inventado por Charles Antony Richard Hoare em 1965.&lt;/p&gt;
-
-&lt;p&gt;Em uma conferência em 2009, ele pediu desculpas por inventar a referência nula.&lt;/p&gt;
-
-&lt;p&gt;Mas o estrago já havia sido feito…&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1415226620463-aedee27159c5.jpg&quot; alt=&quot;NULL&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;A referência &lt;em&gt;NULL&lt;/em&gt; — o mesmo vale para &lt;em&gt;nil&lt;/em&gt; do Object Pascal — é antiga e existe, talvez, 
-em todas as linguagens de programação.&lt;/p&gt;
-
-&lt;p&gt;O conceito também é valido para SGBD’s.&lt;/p&gt;
-
-&lt;p&gt;Então por que estou dizendo para você não utilizar &lt;em&gt;nil&lt;/em&gt; ou &lt;em&gt;NULL&lt;/em&gt;?&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;em&gt;NULL&lt;/em&gt; ou nil não pertencem ao mundo Orientado a Objetos.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Pense por um segundo, como seria o mundo sem o &lt;em&gt;NULL&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;null-na-orientao-a-objetos&quot;&gt;&lt;em&gt;NULL&lt;/em&gt; na Orientação a Objetos&lt;/h2&gt;
-
-&lt;p&gt;De agora em diante quando eu disser &lt;em&gt;NULL&lt;/em&gt;, pense também em &lt;em&gt;nil&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Esse blog fala de Orientação a Objetos com &lt;em&gt;Object Pascal&lt;/em&gt;, então nós, programadores &lt;em&gt;Object Pascal&lt;/em&gt;, 
-utilizamos o &lt;code&gt;nil&lt;/code&gt; ao invés de &lt;code&gt;NULL&lt;/code&gt; quando estamos falando sobre Objetos e referências a Objetos. 
-Se estivermos falando de dados, então é &lt;em&gt;NULL&lt;/em&gt; mesmo.
-Mas como a maioria das linguagens e &lt;em&gt;papers&lt;/em&gt; falam sobre &lt;em&gt;NULL&lt;/em&gt;, fica mais claro para todos — inclusive 
-para programadores que não programam em &lt;em&gt;Object Pascal&lt;/em&gt; — falarmos sobre &lt;em&gt;NULL&lt;/em&gt; para nos referirmos a ambos.&lt;/p&gt;
-
-&lt;p&gt;Então.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;O que significa &lt;em&gt;NULL&lt;/em&gt; na Orientação a Objetos?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Nada.&lt;/p&gt;
-
-&lt;p&gt;Não existe instância, não existe um Objeto. Ninguém para receber uma mensagem (método) e fazer alguma coisa.&lt;/p&gt;
-
-&lt;p&gt;Mas um método pode retornar &lt;em&gt;NULL&lt;/em&gt; se o contexto em execução não tiver um Objeto válido
-para o retorno — você poderia afirmar.&lt;/p&gt;
-
-&lt;p&gt;Bem, em um código Orientado a Objetos você deve ter Objetos “conversando” entre si e &lt;em&gt;NULL&lt;/em&gt;
-não é uma instância válida.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Todo método que retorna um tipo de Interface ou Classe deveria retornar uma instância
-válida. Sempre.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Se não for possível, &lt;strong&gt;levante uma exceção&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa é a &lt;strong&gt;teoria&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente essa teoria não funciona na prática. Não em 100% das vezes.&lt;/p&gt;
-
-&lt;p&gt;Não há como saber, previamente, se um método que deveria retornar uma instância de algum
-Objeto irá retornar uma instância válida ou &lt;em&gt;NULL&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Muitos &lt;em&gt;frameworks&lt;/em&gt; utilizam &lt;em&gt;NULL&lt;/em&gt;, o SGBD retorna &lt;em&gt;NULL&lt;/em&gt;, o mundo
-utiliza &lt;em&gt;NULL&lt;/em&gt;…&lt;/p&gt;
-
-&lt;p&gt;Esse é o problema. O &lt;em&gt;NULL&lt;/em&gt; existe e não podemos ignorá-lo.&lt;/p&gt;
-
-&lt;p&gt;Felizmente existem técnicas para evitá-lo e proteger nosso código de seu uso.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;em&gt;Null Object Pattern&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Optional Pattern&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;Listas&lt;/li&gt;
-  &lt;li&gt;Levantar uma Exceção&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;null-object-pattern&quot;&gt;1. &lt;em&gt;Null Object Pattern&lt;/em&gt;&lt;/h2&gt;
-
-&lt;p&gt;O padrão &lt;a href=&quot;https://en.wikipedia.org/wiki/Null_Object_pattern&quot;&gt;&lt;em&gt;Null Object Pattern&lt;/em&gt;&lt;/a&gt; sugere utilizar
-um “Objeto Nulo” que implementa a mesma interface do Objeto real, no entanto esse Objeto não 
-teria implementação.&lt;/p&gt;
-
-&lt;p&gt;Tradução livre:&lt;/p&gt;
-&lt;blockquote&gt;
-  Em vez de utilizar uma referência nula para transmitir ausência de um objeto (por exemplo, um cliente inexistente), 
-  utiliza-se um objeto que implementa a interface esperada, mas cujo o corpo dos métodos estarão vazios. 
-  &lt;footer&gt;&lt;cite title=&quot;Wikipedia&quot;&gt;— Wikipedia&lt;/cite&gt;&lt;/footer&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;É uma boa ideia. Mas não resolve o problema. Aliás, em alguns casos, pode-se aumentar o problema
-introduzindo um Objeto que “não faz nada” e não levanta exceções. Pode ser difícil encontrar &lt;em&gt;bugs&lt;/em&gt; devido
-ao seu uso.&lt;/p&gt;
-
-&lt;p&gt;Esse tipo de Objeto pode ser utilizado, na minha opinião, não como um “Objeto Nulo” mas como um “Objeto &lt;em&gt;Default&lt;/em&gt;”,
-que contém código real.&lt;/p&gt;
-
-&lt;p&gt;Em um Sistema de Pagamentos, cada Documento tem um código. Cada um desses códigos tem uma “Classe de Cálculo”
-específica que irá fazer o cálculo do valor a ser pago. O Objeto é criado de acordo com o código, utilizando uma &lt;strong&gt;Fábrica&lt;/strong&gt; de 
-acordo com o padrão &lt;a href=&quot;https://en.wikipedia.org/wiki/Abstract_factory_pattern&quot;&gt;&lt;em&gt;Abstract Factory Pattern&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;O problema ocorre se o usuário criar um novo código para o qual ainda não existe um Cálculo pré-determinado. 
-Nesso momento utilizo o “Objeto &lt;em&gt;Default&lt;/em&gt;”. É uma Classe padrão que serve para calcular qualquer novo Documento que
-não tenha uma Classe de Cálculo definida.&lt;/p&gt;
-
-&lt;p&gt;O cálculo pode não estar 100% correto para o usuário, mas também não considero um erro pois a Classe de Cálculo ainda 
-não foi definida.&lt;/p&gt;
-
-&lt;p&gt;É uma &lt;strong&gt;solução elegante&lt;/strong&gt; para um &lt;strong&gt;problema temporário&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;optional-pattern&quot;&gt;2. &lt;em&gt;Optional Pattern&lt;/em&gt;&lt;/h2&gt;
-
-&lt;p&gt;&lt;em&gt;Optional Pattern&lt;/em&gt; ou &lt;a href=&quot;https://en.wikipedia.org/wiki/Option_type&quot;&gt;&lt;em&gt;Option Type&lt;/em&gt;&lt;/a&gt; é nada mais, nada menos, que a 
-utilização de &lt;em&gt;Generics&lt;/em&gt; para encapsular o resultado de um método, quando esse resultado pode ou não conter uma 
-instância válida.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Optional&lt;/em&gt; também é conhecido por &lt;em&gt;Maybe&lt;/em&gt;. É um conceito das linguagens funcionais que foram implementados em linguagens
-imperativas como Java e C#.&lt;/p&gt;
-
-&lt;p&gt;Basicamente você tem uma Classe genérica que contém os seguintes métodos:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;IsNull — indica se o valor encapsulado é &lt;em&gt;NULL&lt;/em&gt;;&lt;/li&gt;
-  &lt;li&gt;Value — retorna o valor real, ou seja, o Objeto encapsulado;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;O nome dos métodos podem variar dependendo da &lt;em&gt;Lib&lt;/em&gt; utilizada.&lt;/p&gt;
-
-&lt;p&gt;Este &lt;a href=&quot;http://enterprisecraftsmanship.com/2015/03/13/functional-c-non-nullable-reference-types/&quot;&gt;link&lt;/a&gt; tem exemplos em C# interessantes.&lt;/p&gt;
-
-&lt;h2 id=&quot;listas&quot;&gt;3. Listas&lt;/h2&gt;
-
-&lt;p&gt;Como podemos simular o &lt;em&gt;Optional Pattern&lt;/em&gt; sem utilizar &lt;em&gt;Generics&lt;/em&gt;?&lt;/p&gt;
-
-&lt;p&gt;Ora, Listas!&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Generics&lt;/em&gt; é muito utilizado, mas não o acho impressindível. &lt;em&gt;Generics&lt;/em&gt; nos permite escrever menos e, é isso.
-O que é muito bom pois menos código, menos &lt;em&gt;bugs&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Mas para o problema do &lt;em&gt;NULL&lt;/em&gt; você não precisa de &lt;em&gt;Generics&lt;/em&gt;, basta utilizar Listas.&lt;/p&gt;
-
-&lt;p&gt;Qual a diferença entre ter uma condicional que verifica o método &lt;code&gt;IsNull&lt;/code&gt; de um &lt;em&gt;Optional&lt;/em&gt;  para depois utilizar sua propriedade &lt;code&gt;Value&lt;/code&gt;
-para obter a instância, do que ter uma Lista que também devemos verificar &lt;code&gt;Empty&lt;/code&gt; e depois obter o primeiro &lt;code&gt;Item[0]&lt;/code&gt; da lista? :)&lt;/p&gt;
-
-&lt;p&gt;Então se está utilizando uma versão antiga do Delphi — eu ainda utilizo Delphi 7 para alguns sistemas — que não tem &lt;em&gt;Generics&lt;/em&gt;
-e não tem certeza se um método poderá retornar &lt;em&gt;NULL&lt;/em&gt;, pense em retornar uma Lista com itens que contém o tipo da interface que o método
-deveria retornar. Se a lista não está vazia, basta pegar o primeiro item.&lt;/p&gt;
-
-&lt;h2 id=&quot;levantar-uma-exceo&quot;&gt;4. Levantar uma Exceção&lt;/h2&gt;
-
-&lt;p&gt;Se tudo der errado, levante e uma exceção. É isso. &lt;strong&gt;Falhe rapidamente&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Mas como saber se devo utilizar uma das técnicas acima ou levantar uma exceção?&lt;/p&gt;
-
-&lt;p&gt;Não há uma regra. Deve-se usar o &lt;strong&gt;bom senso&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se você tem um método que pesquisa pelo &lt;code&gt;Id&lt;/code&gt;, então quer dizer que o sistema, naquele momento, tem
-o &lt;code&gt;Id&lt;/code&gt; do registro e ele &lt;strong&gt;deveria&lt;/strong&gt; existir. Se nada é retornado, então levante uma exceção.&lt;/p&gt;
-
-&lt;p&gt;Se a pesquisa é por &lt;code&gt;Nome&lt;/code&gt;, no entanto, então &lt;strong&gt;não há certeza&lt;/strong&gt; de retornar 0-n registros. Nesse caso
-levantar uma exceção não faria muito sentido.&lt;/p&gt;
-
-&lt;h2 id=&quot;concluso&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Não há mágica para remover o &lt;em&gt;NULL&lt;/em&gt;. Mesmo utilizando as técnicas apresentadas acima, deve-se codificar
-uma &lt;strong&gt;condicional&lt;/strong&gt; para verificar a presença ou não do &lt;em&gt;NULL&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Muitos &lt;em&gt;frameworks&lt;/em&gt;, &lt;em&gt;API’s&lt;/em&gt;, componentes irão utilizar o &lt;em&gt;NULL&lt;/em&gt;, então tais verificações sempre irão existir no seu código.&lt;/p&gt;
-
-&lt;p&gt;Você irá utilizar &lt;em&gt;NULL&lt;/em&gt; ou &lt;em&gt;nil&lt;/em&gt;, isso é quase um fato.&lt;/p&gt;
-
-&lt;p&gt;Esse artigo propõe a &lt;strong&gt;não utilização do &lt;em&gt;NULL&lt;/em&gt;&lt;/strong&gt; em Objetos que fazem parte do 
-&lt;strong&gt;Domínio&lt;/strong&gt; do seu sistema, ou seja, das suas &lt;strong&gt;Classes de Negócio&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Não permita que seus métodos retornem &lt;em&gt;NULL&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Não utilize &lt;em&gt;NULL&lt;/em&gt; em lógicas condicionais de suas Classes.&lt;/p&gt;
-
-&lt;p&gt;Você deve estar pensando:&lt;/p&gt;
-
-&lt;p&gt;&lt;ins&gt;Testar se uma instância é &lt;em&gt;NULL&lt;/em&gt; não é o mesmo que testar se um &lt;em&gt;Optional&lt;/em&gt; ou Lista estão vazios antes de obter seu &lt;code&gt;Value&lt;/code&gt;?&lt;/ins&gt;&lt;/p&gt;
-
-&lt;p&gt;O teste é o mesmo, sim. Você terá um &lt;code&gt;if&lt;/code&gt; no código, é verdade. Mas se o valor retornado no método é uma instância 
-de algum Objeto que implementa alguma interface, não tem como saber se a instância é válida ou &lt;em&gt;NULL&lt;/em&gt;. E &lt;strong&gt;ninguém&lt;/strong&gt;, nenhum programador,
-&lt;strong&gt;testa todos os retornos de todos os métodos&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;No entanto, &lt;em&gt;Optional&lt;/em&gt; ou Listas &lt;strong&gt;avisam&lt;/strong&gt; ao programador que algo pode dar errado, que &lt;em&gt;NULL&lt;/em&gt; pode ser retornado. Cabe
-ao programador fazer a análise, fazer o teste ou não… mas ele foi avisado.&lt;/p&gt;
-
-&lt;p&gt;O código fica &lt;strong&gt;auto-documentado&lt;/strong&gt; sobre o possível retorno de valores &lt;em&gt;NULL&lt;/em&gt; nos métodos.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 11 Apr 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/</guid>
       </item>
     
   </channel>

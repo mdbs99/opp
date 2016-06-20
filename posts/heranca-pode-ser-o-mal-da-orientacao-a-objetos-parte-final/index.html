@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Herança pode ser o Mal da Orientação a Objetos — Parte Final &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Não faça da Herança a sua primeira escolha para reutilizar código.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="OO">
+    <meta name="keywords" content="herança, inheritance, evil, mal, orientação a objetos, oop, poo, encapsulamento, polimorfismo">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201606201101" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Herança pode ser o Mal da Orientação a Objetos — Parte Final">
+    <meta property="og:description" content="Não faça da Herança a sua primeira escolha para reutilizar código.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1457473075527-b0db85c08e66.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Herança pode ser o Mal da Orientação a Objetos — Parte Final" />
+    <meta name="twitter:description" content="Não faça da Herança a sua primeira escolha para reutilizar código." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Herança pode ser o Mal da Orientação a Objetos — Parte Final</h1>
+  <span class="post-meta">Jun 20, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    8 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>No artigo anterior falei sobre Forte Acoplamento.
+Nesse artigo irei falar sobre <strong>Hierarquias Complexas</strong> e concluir a série.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1457473075527-b0db85c08e66.jpg" alt="Imagem" /></p>
+
+<p><a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/">Clique aqui</a> para ler a <strong>Parte #4</strong> dessa série, caso ainda não tenha lido.</p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>A maioria dos desenvolvedores esqueceram ou nunca aprenderam que a Herança foi feita para proporcionar o Polimorfismo e não  para reutilizar código.</p>
+
+<p>O reuso de código é apenas um “efeito colateral” da Herança.</p>
+
+<p>Polimorfismo é importante e em linguagens como C++, por exemplo, a única maneira de implementarmos Polimorfismo é através da Herança de Classes.
+A linguagem C++ não tem Interfaces, sendo Herança de Classe uma escolha correta.</p>
+
+<p>Arquitetos de linguagens de programação vem copiando as ideias de outras linguagens a muito tempo. Se uma linguagem nova for muito diferente das mais populares, corre o risco de nunca ter um público que as utilize. Então, por que não copiar caracteristicas de outras linguagens que já fazem sucesso?</p>
+
+<p>Se C++ tem Herança de Classes, porque não ter em Java, Ruby, Object Pascal… os programadores já estão acostumados, então vamos implementar essa característica também.</p>
+
+<p>Imagino que seja assim ao criar uma nova linguagem. Mas nem sempre. As linguagens funcionais são bem diferentes das imperativas. A Go Language, por exemplo, não é funcional mas também não implementa Herança — mas parece uma nova cópia da liguagem C, não?</p>
+
+<p>Então, cada nova linguagem deve ter alguma referência anterior para não ser completamente alienígena. Pra mim, esse é o maior motivo de ainda termos Herança de Classes nas novas linguagens.</p>
+
+<p>Se você programa em Object Pascal, no entanto, já tem o suporte a <a href="/posts/interfaces-em-todo-lugar/">Interfaces</a>, que é uma melhor opção para implementar Polimorfismo do que utilizar Herança de Classes.
+Se podemos implementar o Polimorfismo através de Interfaces e reutilizar código através da Composição de Objetos e delegação, por que iríamos limitar nossas Classes a herdar de uma única hierarquia rígida de Classes?</p>
+
+<p>Não faz sentido.</p>
+
+<p>Por que uma Classe Gato deveria herdar de Animal, Mamífero ou quadrúpede se o sistema só precisa conhecer um Gato?
+Essas implementações de Super Classes, muitas vezes, <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/#solucao">nem existem</a> no modelo de negócios.</p>
+
+<h2 id="hierarquias-complexas">Hierarquias Complexas</h2>
+
+<p>Eu defino Hierarquias Complexas todos os modelos de Classes que utilizam Herança e que contenham erros conceituais ou reais. E eu sempre encontro esses tipos de erros. Sempre. A não ser que seu modelo seja muito pequeno, ele também conterá esses erros. O motivo é simples. É quase impossível definir uma Hierarquia de Classes perfeita porque o mundo real, o qual modelamos utilizando Classes, não é estruturado.</p>
+
+<p>Isso mesmo, a natureza não é estruturada. Não disse que não ela não é perfeita. Estou dizendo que ela não é estruturada como Classes perfeitamente agrupadas numa Hierarquia bonita e elegante. Na minha opinião, a natureza é um caos.</p>
+
+<p>Na <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/#exemplo-1">Parte #3</a> dessa série eu apresentei um modelo de Classes do Mundo Animal.</p>
+
+<p>Aqui está o Diagrama:</p>
+
+<p><img src="/images/Diagram02.png" alt="Diagram1" /></p>
+
+<p>A princípio, parece simples e correto. Todos os animais no modelo são Animais, obviamente, e todos eles Caminham. Bem, com exceção do Tubarão, pois ele não tem pernas mas… vamos ignorar isso. Imagine um <code>raise Exception.Create</code> no método <code>Caminhar</code> do Tubarão e vamos em frente.</p>
+
+<p>E se quisermos adicionar mais animais nessa Hierarquia? Talvez um Tigre.</p>
+
+<p>Você pode imaginar que um Tigre herde de Gato — ou seria o contrário? — e tudo irá continuar funcionando. Bonito e elegante.</p>
+
+<p>O mesmo para um Leão, Lobo, Urso… e então precisamos implementar um Ornitorrinco.</p>
+
+<p>O que é um Ornitorrinco?</p>
+
+<blockquote>
+Com bico de ave, semelhante a pato, é um mamífero semiaquático natural da Austrália e Tasmânia. É o único representante vivo da família Ornithorhynchidae, e a única espécie do gênero Ornithorhynchus. Juntamente com as equidnas, formam o grupo dos monotremados, os únicos mamíferos ovíparos existentes. A espécie é monotípica, ou seja, não tem subespécies ou variedades reconhecidas.
+  <footer><cite title="wikipedia">— Wikipedia</cite></footer>
+</blockquote>
+
+<p>É um mamífero, ovíparo, tem bico e nadadeiras e é uma mono espécie… se a natureza fosse estruturada, esse seria um dos seus <em>bugs</em>?</p>
+
+<p>Pense agora no peixe-voador…</p>
+
+<p>Brincadeira a parte, eu acredito que não, que não há nada de errado com o Ornitorrinco ou qualquer outro animal.</p>
+
+<p>Nosso Modelo de Classes, baseado em Herança, é que está errado.</p>
+
+<p>Imagine o modelo acima bem maior, com mais métodos e Subclasses. Para tentar colocar o Ornitorrinco na Hierarquia você teria que fazer uma refatoração possivelmente grande. Criar novas classes abastratas, mover métodos para Classes acima, outros para Classes abaixo, “desabilitar” alguns métodos utilizando <code>raise</code> e seguir a vida.</p>
+
+<p>A Hierarquia iria ficar <strong>extremamente complexa</strong>. Iriam existir Classes que só existiram para compartilhar código, e não porque o <strong>modelo de negócios</strong> exige que existam.</p>
+
+<p>Sempre foi assim nos sistema que utilizam Herança, certo? Aquele <em>Form</em> que tem um botão que não é necessário na Subclasse, basta setar um <code>Visible = False</code> e tudo certo; um botão que faz algo a mais do que é preciso na nova Subclasse, basta “refatorar” o código dividindo em 2 métodos com nomes insípedos e fazer a chamada deles, sobrescrevendo o método original para chamar apenas uma parte do código; sobrescrever métodos da super Classe para “não fazer nada”; copiar código de outra hierarquia de Classes… uma verdadeira bagunça.</p>
+
+<p>Eu conheço esses problemas. Eu passei por muitos deles. E, acredite, em grande parte o motivo dos problemas sempre foram as Hierarquias Complexas que criamos sem pensar, quando estamos tentando “reaproveitar” código utilizando Herança.</p>
+
+<p>Na natureza, eu acredito, não há “reaproveitamento de código”, só composição.</p>
+
+<p>Átomos, elementos químicos. Alguns organismos tem mais disso, outros mais daquilo. Um animal tem 0,0003% desse elemento, mais 0,0006% de outro. A composição desses Objetos determinam o comportamento e a evolução de cada indivíduo.</p>
+
+<p>DNA.</p>
+
+<p>Lembre-se que <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/#solucao">a árvore</a> não existe. Tetrápodes, Bípedes, Mamíferos, Anfíbios, Aves… nada disso existe. São abstrações que nós criamos para organizar as coisas, mas elas <strong>não existem no mundo real</strong>.</p>
+
+<p>Qualquer Hierarquia de Classes que tente implementar o mundo, terá falhas.</p>
+
+<p>Parece que os biólogos conseguem separar os indivíduos em “hierarquias perfeitas”. Eles observam os indivíduos na natureza e classificam. Se descobrem um animal que não se encaixa em nenhuma hierarquia não há problema, basta criar uma nova. Nenhum animal já classificado será afetado. Não há um “fio” que liga os animais às hierarquias. 
+O indivíduo determina a hierarquia, ou seja, de baixo pra cima. As hierarquias são apenas nomes e classificações. Ontologia.</p>
+
+<blockquote>
+  <p>A ontologia não define o comportamento das amostras individuais.</p>
+</blockquote>
+
+<p>Nós, desenvolvedores de software, fazemos o inverso. Vamos codificando nossas hierarquias e tentando definir o comportamento dos objetos de cima pra baixo! É como se tentássemos prever o futuro da evolução de nossas Classes separando-as em hierarquias pré-definidas. É praticamente impossível dar certo.</p>
+
+<h2 id="solucao">Solução</h2>
+
+<p>A solução é a Composição de Objetos em conjunto com Interfaces. Já falei isso. Falei e repeti muitas vezes. Mas para quem ainda não entendeu, vou revelar mais uma dica através de uma pergunta:</p>
+
+<p><strong>Se seu sistema trabalha com Tigres, quantas Classes Tigre você teria?</strong></p>
+
+<p>A grande maioria, acredito, responderia <strong>apenas uma classe</strong> <code>TTigre</code>.</p>
+
+<p>Concorda?</p>
+
+<p>A pergunta é capciosa.</p>
+
+<p>Esse é um dos problemas ao tentarmos modelar sistemas Orientados a Objetos. O desenvolvedor acha que apenas uma Classe deve representar o conceito quando, na verdade, podemos ter <strong>diferentes Classes para representar o mesmo conceito em diferentes contextos</strong>.</p>
+
+<p>As pessoas me perguntaram quais eram as soluções para os problemas apontados nessa série. Eu lhes disse, Composição de Objetos.</p>
+
+<p>Mas elas esperavam ler a solução definitiva: Quais classes criar; quais interfaces; usar ou não herança; em quais Classes por tais métodos.</p>
+
+<p>Não há uma única resposta, porque tudo irá depender do seu modelo de negócios. Uma vez que você saiba o modelo de negócios, deverá haver a definição de contextos — Bounded Context no DDD — e assim você terá “N” <a href="/posts/objetos-representam-entidades/#o-que-e-uma-entidade">variações de um único conceito</a>.</p>
+
+<p>Lembra do <code>TTigre</code>? Se nesse sistema hipotético você precisa analisar na tela a pata de um tigre, não haveria necessidade de instânciar um objeto da Classe <code>TTigre</code> que contém tudo de um tigre (olhos, tipo, peso, tamanho, cor, que corre, nada, caça, etc). Não estou dizendo isso pensando em performance ou alocação de memória, não! Estou dizendo isso porque essa Classe seria enorme e complexa. Iria implementar muitas interfaces para poder Correr, Nadar, Pular… num sistema precisamos abstrair o que não é necessário. Esse é um dos motivos de não precisarmos de Hierarquias Complexas. Se você precisa examinar uma pata, então:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">IPaw</span> <span class="o">=</span> <span class="k">interface</span>
+    <span class="c1">// function...</span>
+  <span class="k">end</span><span class="o">;</span>
+  
+  <span class="n">TTigerPaw</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IPaw</span><span class="p">)</span>
+  <span class="kp">public</span>
+    <span class="c1">// function...</span>
+  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Assim como você poderá utilizar os Objetos da Classe <code>TTigerPaw</code> para compor outras abstrações de Tigre em outros contextos.</p>
+
+<p>Sim, você terá muito mais definições de Classes. Mas isso já é previsto na Composição de Objetos. Fazer o certo dá mais trabalho, mas só no início.</p>
+
+<h2 id="conclusao-final">Conclusão Final</h2>
+
+<p>Chegamos ao final dessa série. Falei sobre como a Herança Viola o Encapsulamento, pode Duplicar o Código, promove Forte Acoplamento e
+Hierarquias Complexas.</p>
+
+<p>Espero ter lhe ajudado a entender mais sobre Herança de Classes e os males que ela pode trazer ao código.</p>
+
+<p>O título dessa série é “Herança <strong>pode</strong> ser o Mal da Orientação a Objetos”. Eu não falei que ela <strong>é</strong>, disse que pode ser.
+Eu lhe mostrei os problemas que vem com a Herança de Classes. Tenha conhecimento deles e evite-os.</p>
+
+<p>Herança de Classe pode ser benéfica em alguns (poucos) contextos. Mas ao usá-la uma vez, a tentação é grande em continuar utilizando. 
+Não faça isso.</p>
+
+<p>Modele suas Classes utilizando Composição de Objetos que implementam Interfaces. Esse é o segredo.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Herança pode ser o Mal da Orientação a Objetos — Parte Final&via=mdbs99;url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/&title=Herança pode ser o Mal da Orientação a Objetos — Parte Final" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/&title=Herança pode ser o Mal da Orientação a Objetos — Parte Final" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/&t=Herança pode ser o Mal da Orientação a Objetos — Parte Final" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-representam-entidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+        </ul>
+        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 4</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final';
+      var disqus_title      = 'Herança pode ser o Mal da Orientação a Objetos — Parte Final';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
