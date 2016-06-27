@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Métodos Getters e Setters &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Não codifique Classes anêmicas como se fosse um balde de dados.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="OO">
+    <meta name="keywords" content="getter, setter, evil">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/getters-e-setters/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201606271120" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Métodos Getters e Setters">
+    <meta property="og:description" content="Não codifique Classes anêmicas como se fosse um balde de dados.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/getters-e-setters/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1466921583968-f07aa80c526e.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Métodos Getters e Setters" />
+    <meta name="twitter:description" content="Não codifique Classes anêmicas como se fosse um balde de dados." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/getters-e-setters/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Métodos Getters e Setters</h1>
+  <span class="post-meta">Jun 27, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    3 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Seus Objetos representam alguma Entidade real ou são apenas um “balde de dados e funções”? Classes que possuem somente métodos <code>Get/Set</code> não geram Objetos reais seguindo o real conceito da Orientação a Objetos.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1466921583968-f07aa80c526e.jpg" alt="Imagem" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Os Objetos devem ter métodos para interagir com o mundo exterior. Esses métodos podem executar ações e retornar outros Objetos. No entanto o mundo exterior não deveria ter o conhecimento se os Objetos ou valores retornados nesses métodos fazem ou não parte do Estado interno dos Objetos.</p>
+
+<blockquote>
+  Ao projetar com cuidado e se concentrar no que você deve fazer ao invés de como você vai fazer, elimina a grande maioria dos métodos getters/setters em seu programa.
+  <footer><cite title="JavaWorld">— Why getter and setter methods are evil, JavaWorld</cite></footer>
+</blockquote>
+
+<p>Muitos programadores não entendem ou ignoram esse conceito.</p>
+
+<p>Um Objeto não deve representar um <a href="/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados">registro numa tabela</a>, mas sim <a href="/posts/objetos-representam-entidades/">Entidades</a> exteriores ao sistema no qual o Objeto foi criado.</p>
+
+<h2 id="getters">Métodos Getters</h2>
+
+<p>Os métodos <code>Getters</code> são, conceituamente, mal entendidos e erroneamente utilizados. Por exemplo. Se você tem um método <code>GetName</code>, público, que retorna um atributo <code>FName: string</code> que faz parte do Estado do Objeto, conceitualmente falando, fica <strong>explícito</strong> para o mundo exterior que informações internas do Objeto estão sendo retornadas apenas porque estamos utilizando o prefixo <code>Get</code>.</p>
+
+<p>Essa é uma forma de <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">Violação de Encapsulamento</a>. No entanto é uma <strong>violação teórica</strong>, baseada apenas na intenção da nomenclatura escolhida para o método.</p>
+
+<p>Repito. É uma violação <strong>teórica</strong>. Isso quer dizer que não tem efeito prático em utilizar ou não o prefixo <code>Get</code>. Mas estou falando de intenção, ou seja, qual será o trabalho do método. Usar <code>Get</code> como prefixo dá a entender que <strong>algo interno será dado a quem pede</strong>. E isso não é bom.</p>
+
+<p>Mas a linguagem <em>Object Pascal</em> tem <em>properties</em> — o mesmo conceito copiado para C# :) — e não precisamos utilizar métodos <code>Get</code>, encapsulando do mundo exterior como a informação será processada antes de ser retornada. Pode vir de um método <code>Get</code> privado ou diretamente do atributo. Ponto positivo para o <em>Object Pascal</em>.</p>
+
+<h2 id="setters">Métodos Setters</h2>
+
+<p>Bem, se deixar o mundo exterior bisbilhotar dentro de um Objeto utilizando seus métodos <code>Getters</code> públicos para obter todo o seu Estado interno é ruim, imagine então permitir alterações no Estado desse Objeto utilizando métodos <code>Setters</code>.</p>
+
+<blockquote>
+  Um Objeto não pode ter seu estado interno alterado, pois
+  isso entraria em conflito com a realidade da Entidade na
+  qual ele representa.
+  <footer><cite title="eBook OPP">eBook — @ObjectPascalProgramming</cite></footer>
+</blockquote>
+
+<p>Objetos devem ser Imutáveis.</p>
+
+<p>Objetos Imutáveis são livres de efeitos colaterais externos. Eles são criados representando um momento específico no tempo e devem permanecer inalterados até a sua morte.</p>
+
+<p>Esse é um conceito muito menos abstrato do que a violação de encapsulamento utilizando <code>Getters</code>, mas pode ser ainda mais difícil de entender. E é por isso que terei que falar sobre imutabilidade em outro artigo.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Esse artigo serve para lembrá-lo que codificar Classes que representam registros em tabelas não é Orientação a Objetos.</p>
+
+<p>Métodos <code>Getters</code> públicos não são necessários.</p>
+
+<p>Métodos <code>Setters</code> ou <em>properties</em> que podem ser alteradas devem ser evitadas a todo custo. Nem todo Objeto pode ser imutável, infelizmente. Objetos <em>widgets</em>, por exemplo, serão mutáveis por conveniência e performance. Mas tente manter seus Objetos de Negócio imutáveis.</p>
+
+<p>Podemos remover ambos, <code>Getters/Setters</code>, de nossos sistemas Orientado a Objetos quase por completo. Classes imutáveis não tem <code>Setters</code> e para <code>Getters</code> o Objeto deve passar a informação <strong>ele mesmo</strong> e não <strong>alguém pegar a informação</strong> dele. Falarei sobre isso futuramente.</p>
+
+<p>Se você não precisasse de métodos <code>Setters</code> e utilizar <code>Getters</code> é no mínimo duvidoso, simplifique utilizando somente funções.</p>
+
+<p>Como sempre faço uso de <a href="/posts/interfaces-em-todo-lugar/">Interfaces</a>, eu nunca implemento <em>properties</em> porque seria obrigado a declarar seus métodos de leitura/escrita, ou seja, <code>Get/Set</code>. Esses métodos poderiam ser privados, é claro, mas essa verbosidade é desnecessária se você estiver utilizando Objetos imutáveis.</p>
+
+<p>Você acha que sou o único a pensar dessa maneira? Bem, então <a href="http://www.javaworld.com/article/2073723/core-java/why-getter-and-setter-methods-are-evil.html">aqui está</a> um ótimo artigo que fala sobre o assunto. Foi dele que traduzi a citação no início do artigo. E se quiser mais um, <a href="http://www.yegor256.com/2014/09/16/getters-and-setters-are-evil.html">aqui está</a>. Boa leitura.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/getters-e-setters/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Métodos Getters e Setters&via=mdbs99;url=http://objectpascalprogramming.com/posts/getters-e-setters/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/getters-e-setters/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/getters-e-setters/&title=Métodos Getters e Setters" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/getters-e-setters/&title=Métodos Getters e Setters" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/getters-e-setters/&t=Métodos Getters e Setters" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Você sabe, com certeza, o que é Orientação a Objetos?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-pensam-e-tomam-decisoes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos pensam e tomam decisões</li></h4>
+        </ul>
+        <!--<p class="post-summary">Objetos pensam e tomam decisões. Eles não precisam de um controlador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-sem-estado/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos sem Estado</li></h4>
+        </ul>
+        <!--<p class="post-summary">Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/getters-e-setters';
+      var disqus_title      = 'Métodos Getters e Setters';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

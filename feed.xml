@@ -8,6 +8,77 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Métodos Getters e Setters</title>
+        <description>&lt;p&gt;Seus Objetos representam alguma Entidade real ou são apenas um “balde de dados e funções”? Classes que possuem somente métodos &lt;code&gt;Get/Set&lt;/code&gt; não geram Objetos reais seguindo o real conceito da Orientação a Objetos.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1466921583968-f07aa80c526e.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Os Objetos devem ter métodos para interagir com o mundo exterior. Esses métodos podem executar ações e retornar outros Objetos. No entanto o mundo exterior não deveria ter o conhecimento se os Objetos ou valores retornados nesses métodos fazem ou não parte do Estado interno dos Objetos.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  Ao projetar com cuidado e se concentrar no que você deve fazer ao invés de como você vai fazer, elimina a grande maioria dos métodos getters/setters em seu programa.
+  &lt;footer&gt;&lt;cite title=&quot;JavaWorld&quot;&gt;— Why getter and setter methods are evil, JavaWorld&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Muitos programadores não entendem ou ignoram esse conceito.&lt;/p&gt;
+
+&lt;p&gt;Um Objeto não deve representar um &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;registro numa tabela&lt;/a&gt;, mas sim &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidades&lt;/a&gt; exteriores ao sistema no qual o Objeto foi criado.&lt;/p&gt;
+
+&lt;h2 id=&quot;getters&quot;&gt;Métodos Getters&lt;/h2&gt;
+
+&lt;p&gt;Os métodos &lt;code&gt;Getters&lt;/code&gt; são, conceituamente, mal entendidos e erroneamente utilizados. Por exemplo. Se você tem um método &lt;code&gt;GetName&lt;/code&gt;, público, que retorna um atributo &lt;code&gt;FName: string&lt;/code&gt; que faz parte do Estado do Objeto, conceitualmente falando, fica &lt;strong&gt;explícito&lt;/strong&gt; para o mundo exterior que informações internas do Objeto estão sendo retornadas apenas porque estamos utilizando o prefixo &lt;code&gt;Get&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Essa é uma forma de &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;Violação de Encapsulamento&lt;/a&gt;. No entanto é uma &lt;strong&gt;violação teórica&lt;/strong&gt;, baseada apenas na intenção da nomenclatura escolhida para o método.&lt;/p&gt;
+
+&lt;p&gt;Repito. É uma violação &lt;strong&gt;teórica&lt;/strong&gt;. Isso quer dizer que não tem efeito prático em utilizar ou não o prefixo &lt;code&gt;Get&lt;/code&gt;. Mas estou falando de intenção, ou seja, qual será o trabalho do método. Usar &lt;code&gt;Get&lt;/code&gt; como prefixo dá a entender que &lt;strong&gt;algo interno será dado a quem pede&lt;/strong&gt;. E isso não é bom.&lt;/p&gt;
+
+&lt;p&gt;Mas a linguagem &lt;em&gt;Object Pascal&lt;/em&gt; tem &lt;em&gt;properties&lt;/em&gt; — o mesmo conceito copiado para C# :) — e não precisamos utilizar métodos &lt;code&gt;Get&lt;/code&gt;, encapsulando do mundo exterior como a informação será processada antes de ser retornada. Pode vir de um método &lt;code&gt;Get&lt;/code&gt; privado ou diretamente do atributo. Ponto positivo para o &lt;em&gt;Object Pascal&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;setters&quot;&gt;Métodos Setters&lt;/h2&gt;
+
+&lt;p&gt;Bem, se deixar o mundo exterior bisbilhotar dentro de um Objeto utilizando seus métodos &lt;code&gt;Getters&lt;/code&gt; públicos para obter todo o seu Estado interno é ruim, imagine então permitir alterações no Estado desse Objeto utilizando métodos &lt;code&gt;Setters&lt;/code&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  Um Objeto não pode ter seu estado interno alterado, pois
+  isso entraria em conflito com a realidade da Entidade na
+  qual ele representa.
+  &lt;footer&gt;&lt;cite title=&quot;eBook OPP&quot;&gt;eBook — @ObjectPascalProgramming&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Objetos devem ser Imutáveis.&lt;/p&gt;
+
+&lt;p&gt;Objetos Imutáveis são livres de efeitos colaterais externos. Eles são criados representando um momento específico no tempo e devem permanecer inalterados até a sua morte.&lt;/p&gt;
+
+&lt;p&gt;Esse é um conceito muito menos abstrato do que a violação de encapsulamento utilizando &lt;code&gt;Getters&lt;/code&gt;, mas pode ser ainda mais difícil de entender. E é por isso que terei que falar sobre imutabilidade em outro artigo.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Esse artigo serve para lembrá-lo que codificar Classes que representam registros em tabelas não é Orientação a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Métodos &lt;code&gt;Getters&lt;/code&gt; públicos não são necessários.&lt;/p&gt;
+
+&lt;p&gt;Métodos &lt;code&gt;Setters&lt;/code&gt; ou &lt;em&gt;properties&lt;/em&gt; que podem ser alteradas devem ser evitadas a todo custo. Nem todo Objeto pode ser imutável, infelizmente. Objetos &lt;em&gt;widgets&lt;/em&gt;, por exemplo, serão mutáveis por conveniência e performance. Mas tente manter seus Objetos de Negócio imutáveis.&lt;/p&gt;
+
+&lt;p&gt;Podemos remover ambos, &lt;code&gt;Getters/Setters&lt;/code&gt;, de nossos sistemas Orientado a Objetos quase por completo. Classes imutáveis não tem &lt;code&gt;Setters&lt;/code&gt; e para &lt;code&gt;Getters&lt;/code&gt; o Objeto deve passar a informação &lt;strong&gt;ele mesmo&lt;/strong&gt; e não &lt;strong&gt;alguém pegar a informação&lt;/strong&gt; dele. Falarei sobre isso futuramente.&lt;/p&gt;
+
+&lt;p&gt;Se você não precisasse de métodos &lt;code&gt;Setters&lt;/code&gt; e utilizar &lt;code&gt;Getters&lt;/code&gt; é no mínimo duvidoso, simplifique utilizando somente funções.&lt;/p&gt;
+
+&lt;p&gt;Como sempre faço uso de &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;, eu nunca implemento &lt;em&gt;properties&lt;/em&gt; porque seria obrigado a declarar seus métodos de leitura/escrita, ou seja, &lt;code&gt;Get/Set&lt;/code&gt;. Esses métodos poderiam ser privados, é claro, mas essa verbosidade é desnecessária se você estiver utilizando Objetos imutáveis.&lt;/p&gt;
+
+&lt;p&gt;Você acha que sou o único a pensar dessa maneira? Bem, então &lt;a href=&quot;http://www.javaworld.com/article/2073723/core-java/why-getter-and-setter-methods-are-evil.html&quot;&gt;aqui está&lt;/a&gt; um ótimo artigo que fala sobre o assunto. Foi dele que traduzi a citação no início do artigo. E se quiser mais um, &lt;a href=&quot;http://www.yegor256.com/2014/09/16/getters-and-setters-are-evil.html&quot;&gt;aqui está&lt;/a&gt;. Boa leitura.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 27 Jun 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/getters-e-setters/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/getters-e-setters/</guid>
+      </item>
+    
+      <item>
         <title>Herança pode ser o Mal da Orientação a Objetos — Parte Final</title>
         <description>&lt;p&gt;No artigo anterior falei sobre Forte Acoplamento.
 Nesse artigo irei falar sobre &lt;strong&gt;Hierarquias Complexas&lt;/strong&gt; e concluir a série.&lt;/p&gt;
@@ -1445,96 +1516,6 @@ importante, &lt;strong&gt;ler&lt;/strong&gt;.&lt;/p&gt;
         <pubDate>Mon, 25 Apr 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/nomeando-classes/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nomeando-classes/</guid>
-      </item>
-    
-      <item>
-        <title>Não Utilize Casting</title>
-        <description>&lt;p&gt;Sua equipe precisa de um programador Object Pascal para trabalhar num projeto que está
-sendo codificado em FreePascal. Este projeto terá integração com um ERP codificado em Java e
-um website codificado em PHP. Tudo utilizando MS SQLServer como SGBD.&lt;/p&gt;
-
-&lt;p&gt;Como você iria descrever o anúncio dessa vaga?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1445451983996-ac6b92ffb1fb.jpg&quot; alt=&quot;Casting&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Uma tradução para &lt;em&gt;Casting&lt;/em&gt;, em Português, seria &lt;strong&gt;moldagem&lt;/strong&gt;. Você recebe algo e o “molda” em outra coisa.&lt;/p&gt;
-
-&lt;p&gt;Fazemos isso muitas vezes. Temos um &lt;em&gt;Integer&lt;/em&gt; e o moldamos em uma &lt;em&gt;String&lt;/em&gt; e vice-versa.&lt;/p&gt;
-
-&lt;p&gt;Mas será que o uso de &lt;em&gt;Casting&lt;/em&gt; é necessário para codificarmos nossas &lt;strong&gt;Regras de Negócio&lt;/strong&gt; utilizando
-Objetos?&lt;/p&gt;
-
-&lt;center&gt;&lt;p&gt;&lt;strong&gt;. . .&lt;/strong&gt;&lt;/p&gt;&lt;/center&gt;
-
-&lt;p&gt;O arquiteto da equipe — sr. Anderson — já definiu o projeto.&lt;/p&gt;
-
-&lt;p&gt;Anderson definiu a API de integração, diagramas de classes, componentes, módulos, etc. Mas o projeto 
-ficou maior que o esperado e agora precisam de um programador experiente para compor a equipe.&lt;/p&gt;
-
-&lt;p&gt;O arquiteto solicita ao seu gerente o novo programador, mas sem lhe dar instruções específicas.&lt;/p&gt;
-
-&lt;p&gt;O gerente repassa o pedido ao pessoal do RH e então eles anunciam a vaga em sites:&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;“Empresa ACME Inc. precisa de programador experiente.”&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;A empresa recebe currículos com especialidade em COBOL, Delphi, C/C++, Java… PHP foi a maioria. :)&lt;/p&gt;
-
-&lt;p&gt;Todos perdem tempo, pois terão muito mais currículos para &lt;strong&gt;analisar e verificar&lt;/strong&gt; se o canditato 
-se &lt;strong&gt;encaixa nos critérios&lt;/strong&gt;, pois não definiram as &lt;strong&gt;habilidades necessárias&lt;/strong&gt; que o programador deve ter
-quando fizeram o anúncio.&lt;/p&gt;
-
-&lt;p&gt;O mesmo acontece quando utilizamos &lt;em&gt;Casting&lt;/em&gt;. É necessário ter &lt;strong&gt;código de verificação&lt;/strong&gt; para o Objeto 
-afim de determinar sua Classe.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  Seus Objetos devem trabalhar sob contratos, ou seja, interfaces. Somente Objetos
-  qualificados — que implementam a Interface — poderão ser utilizados para fazer o serviço.
-&lt;/blockquote&gt;
-
-&lt;p&gt;Se você tem um trabalho a fazer, chame um &lt;strong&gt;especialista&lt;/strong&gt; apto para fazer o trabalho — ou faça você mesmo.&lt;/p&gt;
-
-&lt;p&gt;O trabalho é determinado por um &lt;strong&gt;contrato&lt;/strong&gt; que especifica as habilidades necessárias que o especialista 
-precisa ter.&lt;/p&gt;
-
-&lt;p&gt;Na Orientação a Objetos os &lt;a href=&quot;/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos&quot;&gt;contratos são representados por Interfaces&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Interfaces, &lt;strong&gt;não Classes.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;center&gt;&lt;p&gt;&lt;strong&gt;. . .&lt;/strong&gt;&lt;/p&gt;&lt;/center&gt;
-
-&lt;p&gt;Anderson precisa de um programador.&lt;/p&gt;
-
-&lt;p&gt;O RH altera os requisitos da vaga.&lt;/p&gt;
-
-&lt;p&gt;O programador deve saber:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Object Pascal&lt;/li&gt;
-  &lt;li&gt;MS SQLServer&lt;/li&gt;
-  &lt;li&gt;Desejável PHP, Java&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Agora ficou mais fácil de encontrar o programador específico para o trabalho.&lt;/p&gt;
-
-&lt;p&gt;É isso que você deve fazer no seu código. Especifique Interfaces que definam o contrato necessário para fazer 
-o trabalho.&lt;/p&gt;
-
-&lt;p&gt;Não defina argumentos do tipo de &lt;strong&gt;Classes genéricas&lt;/strong&gt; — TObject, etc — sendo necessário utilizar &lt;em&gt;Casting&lt;/em&gt; para verificar
-qual o tipo de Classe do Objeto para fazer algum &lt;strong&gt;processamento específico&lt;/strong&gt; dependendo da Classe. Não faça isso!&lt;/p&gt;
-
-&lt;p&gt;Interfaces são contratos de trabalho.&lt;/p&gt;
-
-&lt;p&gt;Defina bem seus contratos e você não precisará fazer &lt;em&gt;Casting&lt;/em&gt; pois saberá que
-somente &lt;strong&gt;Objetos especialistas&lt;/strong&gt; irão se “candidatar” ao trabalho. Do contrário não fique surpreso de receber 
-um &lt;strong&gt;tomate&lt;/strong&gt; quando você esperava uma &lt;strong&gt;maçã&lt;/strong&gt;! :)&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 18 Apr 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/nao-utilize-casting/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nao-utilize-casting/</guid>
       </item>
     
   </channel>
