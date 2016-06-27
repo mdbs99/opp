@@ -76,8 +76,6 @@ Se você não precisasse de métodos `Setters` e utilizar `Getters` é no mínim
 
 Como sempre faço uso de [Interfaces]({% post_url 2016-01-18-interfaces-em-todo-lugar %}), eu nunca implemento *properties* porque seria obrigado a declarar seus métodos de leitura/escrita, ou seja, `Get/Set`. Esses métodos poderiam ser privados, é claro, mas essa verbosidade é desnecessária se você estiver utilizando Objetos imutáveis.
 
-Acha que sou o único louco a pensar dessa maneira? Bem, então [aqui está](http://www.javaworld.com/article/2073723/core-java/why-getter-and-setter-methods-are-evil.html) um ótimo artigo que fala sobre o assunto. Foi dele que traduzi a citação no início do artigo.
-
-Outro artigo, outro louco, [aqui está](http://www.yegor256.com/2014/09/16/getters-and-setters-are-evil.html). Boa leitura.
+Você acha que sou o único a pensar dessa maneira? Bem, então [aqui está](http://www.javaworld.com/article/2073723/core-java/why-getter-and-setter-methods-are-evil.html) um ótimo artigo que fala sobre o assunto. Foi dele que traduzi a citação no início do artigo. E se quiser mais um, [aqui está](http://www.yegor256.com/2014/09/16/getters-and-setters-are-evil.html). Boa leitura.
 
 Até logo.
