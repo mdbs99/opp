@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Objetos Imutáveis &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="OO">
+    <meta name="keywords" content="immutable, imutavel, imutabilidade">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/objetos-imutaveis/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201607041132" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Objetos Imutáveis">
+    <meta property="og:description" content="O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/objetos-imutaveis/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1448357019934-caa4696bb949.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Objetos Imutáveis" />
+    <meta name="twitter:description" content="O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/objetos-imutaveis/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Objetos Imutáveis</h1>
+  <span class="post-meta">Jul 4, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    8 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Objetos Imutáveis são seguros, são <em>thread-safe</em>, simples de entender, construir e testar. Evitam acoplamento temporal, previnem a referencia nil/NULL e não precisam utilizar “cópia defensiva”.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1448357019934-caa4696bb949.jpg" alt="Imagem" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Um <a href="https://en.wikipedia.org/wiki/Immutable_object">Objeto Imutável</a> é uma instância que, após inicializada através do 
+<a href="/posts/construtores-da-classe-primario-secundarios/">construtor</a> 
+de sua Classe, nunca terá seu Estado alterado para o mundo exterior até o fim de sua vida.</p>
+
+<p>Se você está lendo isso pela primeira vez talvez não consiga visualizar os benefícios das <strong>restrições</strong> que a Imutabilidade traz ao Desenvolvimento de Software.</p>
+
+<p>Sim, restrições, e isso é ótimo.</p>
+
+<blockquote>
+  Objetos Imutáveis são livres de efeitos colaterais externos. Eles são criados representando um momento específico no tempo e devem permanecer inalterados até a sua morte.
+  <footer><cite title="eBook OPP">eBook — @ObjectPascalProgramming</cite></footer>
+</blockquote>
+
+<p>A Imutabilidade irá lhe ajudar a <strong>codificar melhor</strong>, muito melhor, devido as restrições impostas.</p>
+
+<p>Você terá que pensar cuidadosamente em suas Classes, porque elas existem, qual o real trabalho delas… Seus Objetos serão imutáveis então você não poderá alterar o comportamento deles em <em>runtime</em> utilizando 
+<a href="/posts/getters-e-setters/"><em>Setters</em></a>. Consequentemente cada Objeto deverá ter uma <strong>construção simples</strong> e fazer apenas um único trabalho. Os argumentos desse trabalho só poderão ser informados no construtor e ninguém quer um construtor complexo com 10 parâmetros, certo?</p>
+
+<p>Por causa da Imutabilidade você será obrigado a fazer as Classes com poucos métodos e poucos argumentos no construtor.</p>
+
+<p>Imutabilidade nos faz ter <strong>disciplina</strong> para codificar.</p>
+
+<h2 id="vantagens-da-imutabilidade">Vantagens da Imutabilidade</h2>
+
+<p>Restrições são ótimas para o código. Restrições, limites, condições… tudo isso traz ordem, clareza e entendimento.</p>
+
+<p>Se você restringir, terá menos coisas para se preocupar, cuidar, modificar e testar.</p>
+
+<p>Além da disciplina, vejamos algumas outras vantagens em utilizarmos a Imutabilidade.</p>
+
+<h3 id="seguranca">1-Segurança</h3>
+
+<p>Objetos Imutáveis são seguros. Se o construtor de uma Classe retornar para o seu programa uma instância de um Objeto Imutável, significa que essa instância é segura para usar. Tudo o que deveria ter sido inicializado nessa instância que dependia do mundo externo, já foi verificado e satisfeito. Não é necessário utilizar nenhum outro <code>Setter</code>. Não há mais dependências externas. Tudo está pronto. Nada poderá ser quebrado.</p>
+
+<h3 id="thread-safe">2-<em>Thread-safe</em></h3>
+
+<p>Objetos Imutáveis são <em>thread-safe</em> por definição. Se seu estado não modifica, seu Objeto pode ser compartilhado por mais de uma <em>thread</em>, ao mesmo tempo, sem necessidade de sincronismos. Isso nos traz performance. Não há necessidade de <em>lock</em> nas threads. A informação irá fluir com segurança e rapidez.</p>
+
+<h3 id="entender-construir-testar">3-Simples de Entender, Construir e Testar</h3>
+
+<p>Objetos Imutáveis só recebem seus argumentos no construtor da Classe. Não queremos 10 ou mais argumentos para iniciar um Objeto. No máximo deveríamos utilizar 5 argumentos — é a regra que tento seguir.</p>
+
+<p>Se uma Classe não tem modificadores externos e os construtores tem apenas 5 ou menos argumentos, então o Objeto será:</p>
+
+<ol>
+  <li>Simples de entender porque terá menos código para ler (toda a dependência externa estará apenas no construtor);</li>
+  <li>Fácil de construir por possuir poucos argumentos (lembre-se: 5 no máximo);</li>
+  <li>Fácil de testar porque o único ponto de variação do comportamento são os argumentos (trate-os em Testes de Unidade e terá coberto todas as possibilidades de comportamento que o Objeto poderá ter).</li>
+</ol>
+
+<h3 id="acoplamento-temporal">4-Evitam Acoplamento Temporal</h3>
+
+<p>Acoplamento Temporal é quando métodos ou funções só podem ser executadas numa sequência pré-determinada.</p>
+
+<p>Isso é programação procedural.</p>
+
+<p>Vejamos um exemplo:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">begin</span>
+  <span class="n">Query</span> <span class="o">:=</span> <span class="n">TQuery</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Database</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">Query</span><span class="o">.</span><span class="n">SQL</span><span class="o">.</span><span class="n">Text</span> <span class="o">:=</span> 
+    <span class="s">&#39;SELECT id, name FROM Customer WHERE id = :id&#39;</span><span class="o">;</span>
+  <span class="n">Query</span><span class="o">.</span><span class="n">Params</span><span class="o">.</span><span class="n">ParamByName</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Value</span> <span class="o">:=</span> <span class="mi">10</span><span class="o">;</span>
+  <span class="n">Query</span><span class="o">.</span><span class="n">Open</span><span class="o">;</span>
+  <span class="n">ShowMessage</span><span class="p">(</span><span class="n">Query</span><span class="o">.</span><span class="n">FieldByName</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsString</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>No exemplo acima o Objeto Query é criado. Temos que chamar seus métodos ou propriedades numa sequência correta ou uma <code>Exception</code> será gerada. Esse é um “código padrão” que encontramos na maioria dos sistemas, certo?</p>
+
+<p>Esse código não é Orientado a Objetos, é Procedural. Apesar de haver Objetos envolvidos, eles não estão conversando entre si. Há um “controlador” (você) que informa passo-a-passo o que fazer.</p>
+
+<ol>
+  <li>A <em>query</em> deve ser informada;</li>
+  <li>Os parâmetros devem ser informados;</li>
+  <li>Executa a <em>query</em>;</li>
+  <li>Obtém o resultado;</li>
+</ol>
+
+<p>Como seria o mesmo exemplo utilizando um código Orientado a Objetos, declarativo, com Objetos conversando entre si?</p>
+
+<p>Existem várias opções. Vou propor uma delas como exemplo:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">begin</span>
+  <span class="n">ShowMessage</span><span class="p">(</span>
+    <span class="n">TQuery</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+      <span class="n">Database</span><span class="o">,</span> 
+      <span class="n">TStatement</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+        <span class="s">&#39;SELECT id, name FROM Customer WHERE id = :id&#39;</span><span class="o">,</span> 
+        <span class="n">TParam</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">ftInteger</span><span class="o">,</span> <span class="mi">10</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">Open</span>
+    <span class="o">.</span><span class="n">Fields</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsString</span>
+  <span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Não há um controlador. Não há procedimentos um após o outro. O que existe é uma combinação de Objetos que trabalham entre si para gerar um resultado.</p>
+
+<ol>
+  <li>Só é possível criar um <code>TStatement</code> se passar um SQL e seus parâmetros;</li>
+  <li>Só é possível criar um <code>TQuery</code> se passar uma instância de <em>Database</em> e <code>TStatement</code>;</li>
+  <li>O método <code>Open</code> pode ser executado a qualquer momento e ele gera um outro Objeto, por exemplo, um <code>TDataSet</code> (não pense no mesmo <code>TDataSet</code> que já existe na VCL/LCL);</li>
+  <li>Um <code>TDataSet</code> tem uma lista <code>Fields</code> que, pelo nome, retorna um <code>Field</code> que é exibido na forma de <code>string</code>.</li>
+</ol>
+
+<p>Não há acoplamento temporal.</p>
+
+<p>Quando você executa o método <code>Open</code> tudo já foi configurado antes.</p>
+
+<h3 id="previne-referencia-null">5-Previne a Referencia nil/NULL</h3>
+
+<p>Esse é um item óbvio quando utilizamos Objetos Imutáveis.</p>
+
+<p>Não existe instâncias <a href="/posts/nao-utilize-nil-ou-null/">nil/NULL</a>.</p>
+
+<p>Se você não tem métodos de alteração dos atributos e os argumentos necessários para inicializar um Objeto Imutável são passados apenas no construtor da Classe, basta testar a existência de nil/NULL no construtor. Feito.</p>
+
+<h3 id="copia-defensiva">6-Não precisam usar “Cópia Defensiva”</h3>
+
+<p>Esse é um problema que muitos programadores Object Pascal não dão muita importância. Ele é mais conhecido no Java. Mas vou lhe dar um exemplo em Object Pascal:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TQuery</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IQuery</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FDatabase</span><span class="o">:</span> <span class="n">TDatabase</span><span class="o">;</span>
+    <span class="n">FSQL</span><span class="o">:</span> <span class="n">TStrings</span><span class="o">;</span>
+    <span class="n">FParams</span><span class="o">:</span> <span class="n">TParams</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Database</span><span class="o">:</span> <span class="n">TDatabase</span><span class="p">)</span><span class="o">;</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">Database</span><span class="o">:</span> <span class="n">TDatabase</span><span class="p">)</span><span class="o">:</span> <span class="n">IQuery</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">SQL</span><span class="o">:</span> <span class="n">TStrings</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Params</span><span class="o">:</span> <span class="n">TParams</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Open</span><span class="o">:</span> <span class="n">IQuery</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+<span class="k">begin</span>
+  <span class="n">Query</span> <span class="o">:=</span> <span class="n">TQuery</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Database</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">Query</span><span class="o">.</span><span class="n">SQL</span><span class="o">.</span><span class="n">Text</span> <span class="o">:=</span> 
+    <span class="s">&#39;SELECT id, name FROM Customer WHERE id = :id&#39;</span><span class="o">;</span>
+  <span class="n">Query</span><span class="o">.</span><span class="n">Params</span><span class="o">.</span><span class="n">ParamByName</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Value</span> <span class="o">:=</span> <span class="mi">10</span><span class="o">;</span>
+  <span class="n">Query</span><span class="o">.</span><span class="n">Open</span><span class="o">;</span>
+  <span class="n">ShowMessage</span><span class="p">(</span><span class="n">Query</span><span class="o">.</span><span class="n">FieldByName</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsString</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>A Classe <code>TQuery</code> tem 2 defeitos:</p>
+
+<ol>
+  <li>Acoplamento Temporal. Se <code>Open</code> for executado antes da inicilização de <code>SQL</code> e <code>Params</code>, haverá problemas;</li>
+  <li>Os atributos <code>FSQL</code> e <code>FParams</code>, apesar de serem privados e não terem nenhum método <code>Setter</code> para atualizá-los, ainda assim seus valores podem ser atualizados de fora do Objeto (chamadas a <code>SQL.Text</code> e <code>Params.ParamByName</code>).</li>
+</ol>
+
+<p>Isso acontece porque <code>SQL</code> e <code>Params</code> são Classes com métodos Mutáveis.</p>
+
+<p>Para que não aconteça isso você deveria criar cópias defensivas desses mesmos Objetos e retorná-los nos métodos ao invés de utilizar a referência dos atributos privados.</p>
+
+<p>Mas teríamos outro problema, <em>memory leak</em>. O programador não saberia quando destruir um Objeto porque ele não saberia se é uma cópia ou a referência do atributo privado do Objeto. Java não tem esse problema porque tem o <em>Garbage Collector</em>.</p>
+
+<p>O que devemos fazer, em Object Pascal, é só utilizar tipos Imutáveis ou retornar tipos de <a href="/posts/interfaces-em-todo-lugar/">Interfaces</a>
+que não tenham métodos/propriedades que permitam alterar seu estado interno. Interfaces com contagem de referência seriam destruídas automaticamete pelo compilador.</p>
+
+<h2 id="desvantagens-da-imutabilidade">Desvantagens da Imutabilidade</h2>
+
+<p>Na engenharia tudo tem um preço. A Orientação a Objetos tem a vantagem do encapsulamento e polimorfismo, mas dizem que tem um custo alto no uso da memória do computador.</p>
+
+<p>Temos que escolher as ferramentas corretas dependendo do trabalho a ser feito, pois não dá para termos só vantagens utilizando uma única ferramenta.</p>
+
+<p>Então vejamos algumas desvantagens em utilizarmos a Imutabilidade.</p>
+
+<h3 id="impacto-na-performance">1-Impacto na Performance</h3>
+
+<p>Imutabilidade exige que criemos uma nova instância se alguma modificação for necessária no estado do Objeto. 
+Não podemos alterar o estado, então o Objeto deve criar uma cópia de si mesmo, com sutis diferenças.</p>
+
+<p>Isso pode impactar na performance, mas há técnicas para minimizar esse custo.</p>
+
+<p>O framework <a href="">Immutable-js</a>, um framework do Facebook que utiliza o conceito da Imutabilidade, faz uso de estruturas compartilhas para minimizar a criação de novas instâncias.</p>
+
+<h3 id="mudanca-de-pensamento">2-Mudança de Pensamento</h3>
+
+<p>Com Objetos Imutáveis você não poderá pensar em execuções linha-a-linha. Tem-se que usar uma programação mais declarativa. Essa pode ser uma transição difícil de fazer.</p>
+
+<p>Nas <a href="https://en.wikipedia.org/wiki/Functional_programming">Linguagens Funcionais</a> como Clojure, Haskell ou F# é natural utilizar Imutabilidade, pois esse é o <em>default</em> nessas linguagens. 
+O código é declarativo e funcional, não procedural. No código funcional, o valor de uma função de saída depende somente dos argumentos que são passados para a função. E funções podem retornar funções e recebê-las também. É um estilo completamente diferente do código procedural.</p>
+
+<p>Linguagens imperativas como Java, C/C++ ou Object Pascal não tem estruturas imutáveis por padrão. Precisa ser simulado. Precisamos pensar, deliberadamente, em tornar algo imutável. Cada retorno de método, cada Objeto ou argumento. Essa é uma desvantagem, mas que diminui com o tempo e prática.</p>
+
+<h3 id="gui-widgets-etc">3-GUI, <em>Widgets</em>, etc</h3>
+
+<p>Temos Objetos que representam <em>widgets</em> na tela do usuário. Fazer esses Objetos Imutáveis seria complicado. É possível, mas não é eficaz — teríamos que mudar a forma de pensar e escrever GUI.</p>
+
+<p>Tais Objetos como <code>TEdit</code>, <code>TMemo</code>, etc são melhores construídos sendo Mutáveis.</p>
+
+<p>Utilizando a forma que temos hoje para criar Objetos na tela, se tívessemos que criar um novo Objeto sempre que o usuário alterasse o <code>Text</code> ou <code>Caption</code> de algum <em>widget</em>, a performance cairia drásticamente além de haver problemas com a GUI.</p>
+
+<p>Então, para construir GUI, Objetos Mutáveis ainda são melhores nessa área.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Imutabilidade me faz ter disciplina e simplicidade.</p>
+
+<p>Apresentei a teoria e os motivos — ou alguns deles — para você começar a utilizar Objetos Imutáveis.</p>
+
+<p>Na teoria pode parecer fácil mas na prática é muito mais difícil do que parece. Exige quase uma lobotomia. Você deve extrair o <strong>pensamento procedural</strong>, que está muito ligado a mutabilidade, e começar a utilizar o <strong>pensamento funcional</strong> onde tudo é imutável.</p>
+
+<p>Vejo a Orientação a Objetos como um caminho do meio. Um caminho mais equilibrado, mais simples, entre os paradigmas procedural e funcional.</p>
+
+<p>Utilizando a Orientação a Objetos podemos utilizar o que há de melhor entre esses dois paradigmas.</p>
+
+<p>Faça sua escolha.</p>
+
+<p>Até logo.</p>
+
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/objetos-imutaveis/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Objetos Imutáveis&via=mdbs99;url=http://objectpascalprogramming.com/posts/objetos-imutaveis/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/objetos-imutaveis/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/objetos-imutaveis/&title=Objetos Imutáveis" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/objetos-imutaveis/&title=Objetos Imutáveis" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/objetos-imutaveis/&t=Objetos Imutáveis" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-representam-entidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+        </ul>
+        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/objetos-imutaveis';
+      var disqus_title      = 'Objetos Imutáveis';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

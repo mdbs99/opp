@@ -8,6 +8,234 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Objetos Imutáveis</title>
+        <description>&lt;p&gt;Objetos Imutáveis são seguros, são &lt;em&gt;thread-safe&lt;/em&gt;, simples de entender, construir e testar. Evitam acoplamento temporal, previnem a referencia nil/NULL e não precisam utilizar “cópia defensiva”.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1448357019934-caa4696bb949.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Um &lt;a href=&quot;https://en.wikipedia.org/wiki/Immutable_object&quot;&gt;Objeto Imutável&lt;/a&gt; é uma instância que, após inicializada através do 
+&lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt; 
+de sua Classe, nunca terá seu Estado alterado para o mundo exterior até o fim de sua vida.&lt;/p&gt;
+
+&lt;p&gt;Se você está lendo isso pela primeira vez talvez não consiga visualizar os benefícios das &lt;strong&gt;restrições&lt;/strong&gt; que a Imutabilidade traz ao Desenvolvimento de Software.&lt;/p&gt;
+
+&lt;p&gt;Sim, restrições, e isso é ótimo.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  Objetos Imutáveis são livres de efeitos colaterais externos. Eles são criados representando um momento específico no tempo e devem permanecer inalterados até a sua morte.
+  &lt;footer&gt;&lt;cite title=&quot;eBook OPP&quot;&gt;eBook — @ObjectPascalProgramming&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A Imutabilidade irá lhe ajudar a &lt;strong&gt;codificar melhor&lt;/strong&gt;, muito melhor, devido as restrições impostas.&lt;/p&gt;
+
+&lt;p&gt;Você terá que pensar cuidadosamente em suas Classes, porque elas existem, qual o real trabalho delas… Seus Objetos serão imutáveis então você não poderá alterar o comportamento deles em &lt;em&gt;runtime&lt;/em&gt; utilizando 
+&lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;&lt;em&gt;Setters&lt;/em&gt;&lt;/a&gt;. Consequentemente cada Objeto deverá ter uma &lt;strong&gt;construção simples&lt;/strong&gt; e fazer apenas um único trabalho. Os argumentos desse trabalho só poderão ser informados no construtor e ninguém quer um construtor complexo com 10 parâmetros, certo?&lt;/p&gt;
+
+&lt;p&gt;Por causa da Imutabilidade você será obrigado a fazer as Classes com poucos métodos e poucos argumentos no construtor.&lt;/p&gt;
+
+&lt;p&gt;Imutabilidade nos faz ter &lt;strong&gt;disciplina&lt;/strong&gt; para codificar.&lt;/p&gt;
+
+&lt;h2 id=&quot;vantagens-da-imutabilidade&quot;&gt;Vantagens da Imutabilidade&lt;/h2&gt;
+
+&lt;p&gt;Restrições são ótimas para o código. Restrições, limites, condições… tudo isso traz ordem, clareza e entendimento.&lt;/p&gt;
+
+&lt;p&gt;Se você restringir, terá menos coisas para se preocupar, cuidar, modificar e testar.&lt;/p&gt;
+
+&lt;p&gt;Além da disciplina, vejamos algumas outras vantagens em utilizarmos a Imutabilidade.&lt;/p&gt;
+
+&lt;h3 id=&quot;seguranca&quot;&gt;1-Segurança&lt;/h3&gt;
+
+&lt;p&gt;Objetos Imutáveis são seguros. Se o construtor de uma Classe retornar para o seu programa uma instância de um Objeto Imutável, significa que essa instância é segura para usar. Tudo o que deveria ter sido inicializado nessa instância que dependia do mundo externo, já foi verificado e satisfeito. Não é necessário utilizar nenhum outro &lt;code&gt;Setter&lt;/code&gt;. Não há mais dependências externas. Tudo está pronto. Nada poderá ser quebrado.&lt;/p&gt;
+
+&lt;h3 id=&quot;thread-safe&quot;&gt;2-&lt;em&gt;Thread-safe&lt;/em&gt;&lt;/h3&gt;
+
+&lt;p&gt;Objetos Imutáveis são &lt;em&gt;thread-safe&lt;/em&gt; por definição. Se seu estado não modifica, seu Objeto pode ser compartilhado por mais de uma &lt;em&gt;thread&lt;/em&gt;, ao mesmo tempo, sem necessidade de sincronismos. Isso nos traz performance. Não há necessidade de &lt;em&gt;lock&lt;/em&gt; nas threads. A informação irá fluir com segurança e rapidez.&lt;/p&gt;
+
+&lt;h3 id=&quot;entender-construir-testar&quot;&gt;3-Simples de Entender, Construir e Testar&lt;/h3&gt;
+
+&lt;p&gt;Objetos Imutáveis só recebem seus argumentos no construtor da Classe. Não queremos 10 ou mais argumentos para iniciar um Objeto. No máximo deveríamos utilizar 5 argumentos — é a regra que tento seguir.&lt;/p&gt;
+
+&lt;p&gt;Se uma Classe não tem modificadores externos e os construtores tem apenas 5 ou menos argumentos, então o Objeto será:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Simples de entender porque terá menos código para ler (toda a dependência externa estará apenas no construtor);&lt;/li&gt;
+  &lt;li&gt;Fácil de construir por possuir poucos argumentos (lembre-se: 5 no máximo);&lt;/li&gt;
+  &lt;li&gt;Fácil de testar porque o único ponto de variação do comportamento são os argumentos (trate-os em Testes de Unidade e terá coberto todas as possibilidades de comportamento que o Objeto poderá ter).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;acoplamento-temporal&quot;&gt;4-Evitam Acoplamento Temporal&lt;/h3&gt;
+
+&lt;p&gt;Acoplamento Temporal é quando métodos ou funções só podem ser executadas numa sequência pré-determinada.&lt;/p&gt;
+
+&lt;p&gt;Isso é programação procedural.&lt;/p&gt;
+
+&lt;p&gt;Vejamos um exemplo:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TQuery&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Database&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; 
+    &lt;span class=&quot;s&quot;&gt;&amp;#39;SELECT id, name FROM Customer WHERE id = :id&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ParamByName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Open&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;ShowMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FieldByName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AsString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;No exemplo acima o Objeto Query é criado. Temos que chamar seus métodos ou propriedades numa sequência correta ou uma &lt;code&gt;Exception&lt;/code&gt; será gerada. Esse é um “código padrão” que encontramos na maioria dos sistemas, certo?&lt;/p&gt;
+
+&lt;p&gt;Esse código não é Orientado a Objetos, é Procedural. Apesar de haver Objetos envolvidos, eles não estão conversando entre si. Há um “controlador” (você) que informa passo-a-passo o que fazer.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;A &lt;em&gt;query&lt;/em&gt; deve ser informada;&lt;/li&gt;
+  &lt;li&gt;Os parâmetros devem ser informados;&lt;/li&gt;
+  &lt;li&gt;Executa a &lt;em&gt;query&lt;/em&gt;;&lt;/li&gt;
+  &lt;li&gt;Obtém o resultado;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Como seria o mesmo exemplo utilizando um código Orientado a Objetos, declarativo, com Objetos conversando entre si?&lt;/p&gt;
+
+&lt;p&gt;Existem várias opções. Vou propor uma delas como exemplo:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;ShowMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;TQuery&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;Database&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; 
+      &lt;span class=&quot;n&quot;&gt;TStatement&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&amp;#39;SELECT id, name FROM Customer WHERE id = :id&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; 
+        &lt;span class=&quot;n&quot;&gt;TParam&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ftInteger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Open&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AsString&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Não há um controlador. Não há procedimentos um após o outro. O que existe é uma combinação de Objetos que trabalham entre si para gerar um resultado.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Só é possível criar um &lt;code&gt;TStatement&lt;/code&gt; se passar um SQL e seus parâmetros;&lt;/li&gt;
+  &lt;li&gt;Só é possível criar um &lt;code&gt;TQuery&lt;/code&gt; se passar uma instância de &lt;em&gt;Database&lt;/em&gt; e &lt;code&gt;TStatement&lt;/code&gt;;&lt;/li&gt;
+  &lt;li&gt;O método &lt;code&gt;Open&lt;/code&gt; pode ser executado a qualquer momento e ele gera um outro Objeto, por exemplo, um &lt;code&gt;TDataSet&lt;/code&gt; (não pense no mesmo &lt;code&gt;TDataSet&lt;/code&gt; que já existe na VCL/LCL);&lt;/li&gt;
+  &lt;li&gt;Um &lt;code&gt;TDataSet&lt;/code&gt; tem uma lista &lt;code&gt;Fields&lt;/code&gt; que, pelo nome, retorna um &lt;code&gt;Field&lt;/code&gt; que é exibido na forma de &lt;code&gt;string&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Não há acoplamento temporal.&lt;/p&gt;
+
+&lt;p&gt;Quando você executa o método &lt;code&gt;Open&lt;/code&gt; tudo já foi configurado antes.&lt;/p&gt;
+
+&lt;h3 id=&quot;previne-referencia-null&quot;&gt;5-Previne a Referencia nil/NULL&lt;/h3&gt;
+
+&lt;p&gt;Esse é um item óbvio quando utilizamos Objetos Imutáveis.&lt;/p&gt;
+
+&lt;p&gt;Não existe instâncias &lt;a href=&quot;/posts/nao-utilize-nil-ou-null/&quot;&gt;nil/NULL&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se você não tem métodos de alteração dos atributos e os argumentos necessários para inicializar um Objeto Imutável são passados apenas no construtor da Classe, basta testar a existência de nil/NULL no construtor. Feito.&lt;/p&gt;
+
+&lt;h3 id=&quot;copia-defensiva&quot;&gt;6-Não precisam usar “Cópia Defensiva”&lt;/h3&gt;
+
+&lt;p&gt;Esse é um problema que muitos programadores Object Pascal não dão muita importância. Ele é mais conhecido no Java. Mas vou lhe dar um exemplo em Object Pascal:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;TQuery&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FDatabase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDatabase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FSQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TStrings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Database&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Database&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IQuery&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TStrings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Open&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IQuery&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TQuery&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Database&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; 
+    &lt;span class=&quot;s&quot;&gt;&amp;#39;SELECT id, name FROM Customer WHERE id = :id&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ParamByName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Open&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;ShowMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FieldByName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AsString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;A Classe &lt;code&gt;TQuery&lt;/code&gt; tem 2 defeitos:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Acoplamento Temporal. Se &lt;code&gt;Open&lt;/code&gt; for executado antes da inicilização de &lt;code&gt;SQL&lt;/code&gt; e &lt;code&gt;Params&lt;/code&gt;, haverá problemas;&lt;/li&gt;
+  &lt;li&gt;Os atributos &lt;code&gt;FSQL&lt;/code&gt; e &lt;code&gt;FParams&lt;/code&gt;, apesar de serem privados e não terem nenhum método &lt;code&gt;Setter&lt;/code&gt; para atualizá-los, ainda assim seus valores podem ser atualizados de fora do Objeto (chamadas a &lt;code&gt;SQL.Text&lt;/code&gt; e &lt;code&gt;Params.ParamByName&lt;/code&gt;).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Isso acontece porque &lt;code&gt;SQL&lt;/code&gt; e &lt;code&gt;Params&lt;/code&gt; são Classes com métodos Mutáveis.&lt;/p&gt;
+
+&lt;p&gt;Para que não aconteça isso você deveria criar cópias defensivas desses mesmos Objetos e retorná-los nos métodos ao invés de utilizar a referência dos atributos privados.&lt;/p&gt;
+
+&lt;p&gt;Mas teríamos outro problema, &lt;em&gt;memory leak&lt;/em&gt;. O programador não saberia quando destruir um Objeto porque ele não saberia se é uma cópia ou a referência do atributo privado do Objeto. Java não tem esse problema porque tem o &lt;em&gt;Garbage Collector&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;O que devemos fazer, em Object Pascal, é só utilizar tipos Imutáveis ou retornar tipos de &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;
+que não tenham métodos/propriedades que permitam alterar seu estado interno. Interfaces com contagem de referência seriam destruídas automaticamete pelo compilador.&lt;/p&gt;
+
+&lt;h2 id=&quot;desvantagens-da-imutabilidade&quot;&gt;Desvantagens da Imutabilidade&lt;/h2&gt;
+
+&lt;p&gt;Na engenharia tudo tem um preço. A Orientação a Objetos tem a vantagem do encapsulamento e polimorfismo, mas dizem que tem um custo alto no uso da memória do computador.&lt;/p&gt;
+
+&lt;p&gt;Temos que escolher as ferramentas corretas dependendo do trabalho a ser feito, pois não dá para termos só vantagens utilizando uma única ferramenta.&lt;/p&gt;
+
+&lt;p&gt;Então vejamos algumas desvantagens em utilizarmos a Imutabilidade.&lt;/p&gt;
+
+&lt;h3 id=&quot;impacto-na-performance&quot;&gt;1-Impacto na Performance&lt;/h3&gt;
+
+&lt;p&gt;Imutabilidade exige que criemos uma nova instância se alguma modificação for necessária no estado do Objeto. 
+Não podemos alterar o estado, então o Objeto deve criar uma cópia de si mesmo, com sutis diferenças.&lt;/p&gt;
+
+&lt;p&gt;Isso pode impactar na performance, mas há técnicas para minimizar esse custo.&lt;/p&gt;
+
+&lt;p&gt;O framework &lt;a href=&quot;&quot;&gt;Immutable-js&lt;/a&gt;, um framework do Facebook que utiliza o conceito da Imutabilidade, faz uso de estruturas compartilhas para minimizar a criação de novas instâncias.&lt;/p&gt;
+
+&lt;h3 id=&quot;mudanca-de-pensamento&quot;&gt;2-Mudança de Pensamento&lt;/h3&gt;
+
+&lt;p&gt;Com Objetos Imutáveis você não poderá pensar em execuções linha-a-linha. Tem-se que usar uma programação mais declarativa. Essa pode ser uma transição difícil de fazer.&lt;/p&gt;
+
+&lt;p&gt;Nas &lt;a href=&quot;https://en.wikipedia.org/wiki/Functional_programming&quot;&gt;Linguagens Funcionais&lt;/a&gt; como Clojure, Haskell ou F# é natural utilizar Imutabilidade, pois esse é o &lt;em&gt;default&lt;/em&gt; nessas linguagens. 
+O código é declarativo e funcional, não procedural. No código funcional, o valor de uma função de saída depende somente dos argumentos que são passados para a função. E funções podem retornar funções e recebê-las também. É um estilo completamente diferente do código procedural.&lt;/p&gt;
+
+&lt;p&gt;Linguagens imperativas como Java, C/C++ ou Object Pascal não tem estruturas imutáveis por padrão. Precisa ser simulado. Precisamos pensar, deliberadamente, em tornar algo imutável. Cada retorno de método, cada Objeto ou argumento. Essa é uma desvantagem, mas que diminui com o tempo e prática.&lt;/p&gt;
+
+&lt;h3 id=&quot;gui-widgets-etc&quot;&gt;3-GUI, &lt;em&gt;Widgets&lt;/em&gt;, etc&lt;/h3&gt;
+
+&lt;p&gt;Temos Objetos que representam &lt;em&gt;widgets&lt;/em&gt; na tela do usuário. Fazer esses Objetos Imutáveis seria complicado. É possível, mas não é eficaz — teríamos que mudar a forma de pensar e escrever GUI.&lt;/p&gt;
+
+&lt;p&gt;Tais Objetos como &lt;code&gt;TEdit&lt;/code&gt;, &lt;code&gt;TMemo&lt;/code&gt;, etc são melhores construídos sendo Mutáveis.&lt;/p&gt;
+
+&lt;p&gt;Utilizando a forma que temos hoje para criar Objetos na tela, se tívessemos que criar um novo Objeto sempre que o usuário alterasse o &lt;code&gt;Text&lt;/code&gt; ou &lt;code&gt;Caption&lt;/code&gt; de algum &lt;em&gt;widget&lt;/em&gt;, a performance cairia drásticamente além de haver problemas com a GUI.&lt;/p&gt;
+
+&lt;p&gt;Então, para construir GUI, Objetos Mutáveis ainda são melhores nessa área.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Imutabilidade me faz ter disciplina e simplicidade.&lt;/p&gt;
+
+&lt;p&gt;Apresentei a teoria e os motivos — ou alguns deles — para você começar a utilizar Objetos Imutáveis.&lt;/p&gt;
+
+&lt;p&gt;Na teoria pode parecer fácil mas na prática é muito mais difícil do que parece. Exige quase uma lobotomia. Você deve extrair o &lt;strong&gt;pensamento procedural&lt;/strong&gt;, que está muito ligado a mutabilidade, e começar a utilizar o &lt;strong&gt;pensamento funcional&lt;/strong&gt; onde tudo é imutável.&lt;/p&gt;
+
+&lt;p&gt;Vejo a Orientação a Objetos como um caminho do meio. Um caminho mais equilibrado, mais simples, entre os paradigmas procedural e funcional.&lt;/p&gt;
+
+&lt;p&gt;Utilizando a Orientação a Objetos podemos utilizar o que há de melhor entre esses dois paradigmas.&lt;/p&gt;
+
+&lt;p&gt;Faça sua escolha.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 04 Jul 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/objetos-imutaveis/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-imutaveis/</guid>
+      </item>
+    
+      <item>
         <title>Métodos Getters e Setters</title>
         <description>&lt;p&gt;Seus Objetos representam alguma Entidade real ou são apenas um “balde de dados e funções”? Classes que possuem somente métodos &lt;code&gt;Get/Set&lt;/code&gt; não geram Objetos reais seguindo o real conceito da Orientação a Objetos.&lt;/p&gt;
 
@@ -1418,104 +1646,6 @@ da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre
         <pubDate>Mon, 02 May 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/decorator-pattern/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/decorator-pattern/</guid>
-      </item>
-    
-      <item>
-        <title>Nomeando Classes</title>
-        <description>&lt;p&gt;O nome de uma Classe deve significar quem ela representa e não o que ela faz.&lt;/p&gt;
-
-&lt;p&gt;Não utilize nomes como Validador, Leitor, Controlador, &lt;em&gt;Parser&lt;/em&gt;, 
-Executor, &lt;em&gt;Manager&lt;/em&gt;, &lt;em&gt;Handle&lt;/em&gt;, etc. Esses nomes dizem o que fazem, não o que são.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1453946610176-6be21147c400.jpg&quot; alt=&quot;Naming&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Considere alguns exemplos:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;#1&lt;/strong&gt; Seu software trabalha com &lt;strong&gt;Arquivos Texto&lt;/strong&gt; enviados pelo Banco
-(arquivos de retorno de pagamentos). Então &lt;em&gt;TBankFileParser&lt;/em&gt; é o nome da sua Classe?&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;#2&lt;/strong&gt; Você precisa &lt;strong&gt;importar&lt;/strong&gt; um arquivo CSV proveniente de outro software. Então &lt;em&gt;TCSVImporter&lt;/em&gt;
-é o nome da sua Classe?&lt;/p&gt;
-
-&lt;p&gt;Não faça isso.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“O nome de uma Classe deve corresponder ou representar uma Entidade pura ou uma versão dela”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Se não conseguimos encontrar um bom nome para as Classes e Interfaces, quer dizer que não 
-sabemos o suficiente sobre o domínio do problema ou é apenas preguiça para pensar em nomes melhores.&lt;/p&gt;
-
-&lt;p&gt;Temos que pensar nas &lt;strong&gt;Entidades&lt;/strong&gt; em si, e não nas &lt;strong&gt;funções&lt;/strong&gt; que elas exercem.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo, considere &lt;em&gt;File&lt;/em&gt;. Um nome de &lt;strong&gt;Entidade pura&lt;/strong&gt;, ou seja, um Arquivo de computador ou arquivo em
-papel, dependendo do contexto. Se temos um arquivo para ler &lt;strong&gt;não&lt;/strong&gt; devemos nomear a classe como &lt;em&gt;Reader&lt;/em&gt;!
-Utilize &lt;em&gt;File&lt;/em&gt; ou uma variação deste.&lt;/p&gt;
-
-&lt;p&gt;Um nome como &lt;em&gt;TextFile&lt;/em&gt;, é uma versão ou variação de &lt;em&gt;File&lt;/em&gt;. Também está correto. Simples. Perfeito.&lt;/p&gt;
-
-&lt;p&gt;Então se temos um Arquivo Texto do Banco (exemplo #1) ele também deveria representar uma
-Entidade. Seu nome deveria ser &lt;code&gt;TBankFile&lt;/code&gt; ou algo parecido.&lt;/p&gt;
-
-&lt;p&gt;Se enviamos o Arquivo para o Banco (Remessa) e obtemos outro Arquivo de resposta
-(Retorno), então poderíamos ter uma única interface &lt;code&gt;IBankFile&lt;/code&gt; e duas classes 
-&lt;code&gt;TBankShipmentFile&lt;/code&gt; e &lt;code&gt;TBankReturnFile&lt;/code&gt;. Ambas as Classes implementariam 
-a Interface.&lt;/p&gt;
-
-&lt;p&gt;Mas o nome de uma Classe nem sempre será &lt;strong&gt;exatamente igual&lt;/strong&gt; a mesma nomenclatura da Entidade real que está representando.&lt;/p&gt;
-
-&lt;p&gt;Em um dos meus projetos, o &lt;a href=&quot;https://github.com/mdbs99/aws&quot;&gt;AWS Lib&lt;/a&gt;, tenho classes como &lt;code&gt;TS3Service&lt;/code&gt;,
-&lt;code&gt;TS3Bucket&lt;/code&gt;, &lt;code&gt;TAWSSignatureVersion1&lt;/code&gt; e muitas outras.&lt;/p&gt;
-
-&lt;p&gt;Por que não apenas &lt;em&gt;Service&lt;/em&gt;, &lt;em&gt;Bucket&lt;/em&gt; ou &lt;em&gt;Signature&lt;/em&gt; respectivamente?
-Porque Classes precisam de um &lt;strong&gt;contexto&lt;/strong&gt; — um prefixo — quando seus nomes são muito ambíguos.&lt;/p&gt;
-
-&lt;p&gt;Na vida real o contexto está implícito, mesmo se for somente através da linguagem corporal. Exemplo:
-Quando falamos para uma pessoa “sua &lt;strong&gt;manga&lt;/strong&gt; está suja”&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; olhando para sua &lt;strong&gt;camisa&lt;/strong&gt; fica claro do que se trata. 
-Não há confusão com a &lt;strong&gt;fruta&lt;/strong&gt; manga se ninguém está comendo no momento.&lt;/p&gt;
-
-&lt;p&gt;No código é mais difícil. Só tem… texto! Tudo tem a mesma “forma”. Então como diferenciar os nomes?&lt;/p&gt;
-
-&lt;p&gt;Temos &lt;em&gt;units&lt;/em&gt; que são &lt;em&gt;namespaces&lt;/em&gt; e que poderiam ser utilizadas como “prefixo”
-de todas as classes, mas quem faz isso?! Ficaria muito verboso. Ninguém quer isso — bem, talvez o pessoal do Java, 
-eles gostam de escrever… :)&lt;/p&gt;
-
-&lt;p&gt;Então para ter um padrão no código eu tenho uma regra para a nomenclatura das Classes: &lt;strong&gt;Contexto + Nome&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Isso evita a colisão de nomes com Classes já existentes na VCL/LCL e também deixa o código mais homogêneo, mais
-pradronizado. Ajuda na visualização e facilita o &lt;em&gt;code-completion&lt;/em&gt; da IDE.&lt;/p&gt;
-
-&lt;p&gt;Mas cuidado para não ir somando Contextos um após o outro.&lt;/p&gt;
-
-&lt;p&gt;Exemplo: &lt;code&gt;TAWSNetHTTPClient&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Que tal esse nome de Classe?&lt;/p&gt;
-
-&lt;p&gt;A Classe tem 3 contextos (AWS, Net e HTTP) e mais o nome &lt;em&gt;Client&lt;/em&gt;. 
-Apesar da &lt;strong&gt;vantagem&lt;/strong&gt; que ganhamos ao evitar a colisão de nomes, é &lt;strong&gt;verboso&lt;/strong&gt; demais para codificar e, o mais 
-importante, &lt;strong&gt;ler&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Não é uma regra perfeita, mas funciona pra mim.&lt;/p&gt;
-
-&lt;p&gt;Mesmo assim, após anos de codificação, ainda é uma &lt;strong&gt;arte&lt;/strong&gt; bem difícil.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;Não fará sentido se você traduzir o artigo para o Inglês, já que a ambiguidade da palavra “manga” só faz sentido em Português. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Mon, 25 Apr 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/nomeando-classes/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nomeando-classes/</guid>
       </item>
     
   </channel>

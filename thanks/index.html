@@ -15,7 +15,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201606271120" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201607041132" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -144,6 +144,21 @@
 <div class="clearfix"></div>
 
       
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
     </div>
   </div>
 </header>
