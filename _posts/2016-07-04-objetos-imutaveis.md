@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Objetos Imutáveis"
-date: 2016-07-02
+date: 2016-07-04
 description: O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.
 summary: O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.
 image: /images/photo-1448357019934-caa4696bb949.jpg
@@ -36,12 +36,12 @@ Sim, restrições, e isso é ótimo.
   <footer><cite title="eBook OPP">eBook — @ObjectPascalProgramming</cite></footer>
 </blockquote>
 
-A Imutabilidade também irá lhe ajudar a **codificar melhor**. Muito melhor.
+A Imutabilidade irá lhe ajudar a **codificar melhor**, muito melhor, devido as restrições impostas.
 
 Você terá que pensar cuidadosamente em suas Classes, porque elas existem, qual o real trabalho delas... Seus Objetos serão imutáveis então você não poderá alterar o comportamento deles em *runtime* utilizando 
 [*Setters*]({% post_url 2016-06-27-getters-e-setters %}). Consequentemente cada Objeto deverá ter uma **construção simples** e fazer apenas um único trabalho. Os argumentos desse trabalho só poderão ser informados no construtor e ninguém quer um construtor complexo com 10 parâmetros, certo?
 
-Por causa da Imutabilidade você será obrigado a fazer as Classes o mais simples possível. Com poucos métodos e poucos argumentos no construtor.
+Por causa da Imutabilidade você será obrigado a fazer as Classes com poucos métodos e poucos argumentos no construtor.
 
 Imutabilidade nos faz ter **disciplina** para codificar.
 
@@ -176,7 +176,7 @@ Isso acontece porque `SQL` e `Params` são Classes com métodos Mutáveis.
 
 Para que não aconteça isso você deveria criar cópias defensivas desses mesmos Objetos e retorná-los nos métodos ao invés de utilizar a referência dos atributos privados.
 
-Mas teríamos outro problema, *memory leak*. O programador não saberia quando destruir um Objeto porque ele não saberia se é uma cópia ou o Objeto real. Java não tem esse problema porque tem o *Garbage Collector*.
+Mas teríamos outro problema, *memory leak*. O programador não saberia quando destruir um Objeto porque ele não saberia se é uma cópia ou a referência do atributo privado do Objeto. Java não tem esse problema porque tem o *Garbage Collector*.
 
 O que devemos fazer, em Object Pascal, é só utilizar tipos Imutáveis ou retornar tipos de [Interfaces]({% post_url 2016-01-18-interfaces-em-todo-lugar %})
 que não tenham métodos/propriedades que permitam alterar seu estado interno. Interfaces com contagem de referência seriam destruídas automaticamete pelo compilador.
@@ -207,6 +207,16 @@ O código é declarativo e funcional, não procedural. No código funcional, o v
 
 Linguagens imperativas como Java, C/C++ ou Object Pascal não tem estruturas imutáveis por padrão. Precisa ser simulado. Precisamos pensar, deliberadamente, em tornar algo imutável. Cada retorno de método, cada Objeto ou argumento. Essa é uma desvantagem, mas que diminui com o tempo e prática.
 
+###3-GUI, *Widgets*, etc
+
+Temos Objetos que representam *widgets* na tela do usuário. Fazer esses Objetos Imutáveis seria complicado. É possível, mas não é eficaz — teríamos que mudar a forma de pensar e escrever GUI.
+
+Tais Objetos como `TEdit`, `TMemo`, etc são melhores construídos sendo Mutáveis.
+
+Utilizando a forma que temos hoje para criar Objetos na tela, se tívessemos que criar um novo Objeto sempre que o usuário alterasse o `Text` ou `Caption` de algum *widget*, a performance cairia drásticamente além de haver problemas com a GUI.
+
+Então, para construir GUI, Objetos Mutáveis ainda são melhores nessa área.
+
 ##Conclusão {#conclusao}
 
 Imutabilidade me faz ter disciplina e simplicidade.
@@ -218,6 +228,8 @@ Na teoria pode parecer fácil mas na prática é muito mais difícil do que pare
 Vejo a Orientação a Objetos como um caminho do meio. Um caminho mais equilibrado, mais simples, entre os paradigmas procedural e funcional.
 
 Utilizando a Orientação a Objetos podemos utilizar o que há de melhor entre esses dois paradigmas.
+
+Faça sua escolha.
 
 Até logo.
 
