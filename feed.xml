@@ -8,6 +8,162 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Assinatura Digital em Arquivos XML</title>
+        <description>&lt;p&gt;A Assinatura Digital é cada vez mais utilizada devido a segurança de integridade que ela proporciona.
+Nesse artigo vou demostrar como Assinar Digitalmente um arquivo XML utilizando o &lt;em&gt;framework&lt;/em&gt; ACBr.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1430760903787-4d91bbf15384.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;A Assinatura Digital nos dá mais segurança no envio de arquivos entre servidores, utilizando WebServices e/ou Serviços REST.&lt;/p&gt;
+
+&lt;p&gt;No mundo Java e .NET tem-se muitos &lt;em&gt;frameworks&lt;/em&gt; para trabalhar com Assinatura Digital… mas e em &lt;em&gt;Object Pascal&lt;/em&gt;?&lt;/p&gt;
+
+&lt;p&gt;Eu conhecia o &lt;a href=&quot;http://www.projetoacbr.com.br/&quot;&gt;Projeto ACBr&lt;/a&gt; a muito tempo. Eu utilizei esse projeto, anos atrás, para fazer a integração de NF-e para um cliente que, na época, utilizava Delphi 6.&lt;/p&gt;
+
+&lt;p&gt;A integração foi feita em apenas 1 semana — conte com as madrugadas — e tudo funcionou perfeitamente.&lt;/p&gt;
+
+&lt;p&gt;Anos se passaram e eu não tive mais projetos que envolvessem NF-e e/ou Assinatura Digital. Pelo menos não que eu mesmo tivesse que implementá-los.&lt;/p&gt;
+
+&lt;p&gt;Este ano eu tenho um Novo Projeto.&lt;/p&gt;
+
+&lt;p&gt;Nesse projeto tenho que utilizar Assinatura Digital em arquivos XML. Não são Notas Fiscais Eletrônicas (NF-e). São arquivos XML que precisam ser assinados antes do envio e verificados na outra ponta. A segurança é levado muito a sério nesse projeto.&lt;/p&gt;
+
+&lt;p&gt;Lembrei do Projeto ACBr, é claro.&lt;/p&gt;
+
+&lt;h2 id=&quot;utilizando-acbr&quot;&gt;Utilizando o ACBr&lt;/h2&gt;
+
+&lt;p&gt;O ACBr trabalha com dois tipos de Assinadores: CAPICOM (Microsoft) e OpenSSL (OpenSource e crossplataforma).&lt;/p&gt;
+
+&lt;p&gt;Meu cliente só utiliza Windows, então eu escolhi a opção mais óbvia.&lt;/p&gt;
+
+&lt;p&gt;O ACBr compila em Delphi e FreePascal perfeitamente.&lt;/p&gt;
+
+&lt;p&gt;Para instalar no Delphi é mais fácil. O projeto dispõe de um Instalador &lt;em&gt;next-next-finish&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Para instalar no FreePascal eu não sei se é o mesmo instalador. O que fiz foi instalar os pacotes manualmente, pela IDE do Lazarus.&lt;/p&gt;
+
+&lt;p&gt;Então fiz um programa simples para assinar um XML e tentar validar o resultado em um dos WebServices do cliente.&lt;/p&gt;
+
+&lt;p&gt;Precisei criar o XML Template, que é o XML que tenho que enviar ao WebService:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;iso-8859-1&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;Principal&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Solicitacao&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;123&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;Parametros&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Codigo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Todos&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&amp;lt;/Solicitacao&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Assinatura&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Signature&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://www.w3.org/2000/09/xmldsig#&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;SignedInfo&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;CanonicalizationMethod&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Algorithm=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://www.w3.org/TR/2001/REC-xml-c14n-20010315&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;SignatureMethod&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Algorithm=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://www.w3.org/2000/09/xmldsig#rsa-sha1&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;Reference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;URI=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#123&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;Transforms&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;Transform&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Algorithm=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://www.w3.org/2000/09/xmldsig#enveloped-signature&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;Transform&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Algorithm=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://www.w3.org/TR/2001/REC-xml-c14n-20010315&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Transforms&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;DigestMethod&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Algorithm=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://www.w3.org/2000/09/xmldsig#sha1&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;DigestValue&amp;gt;&amp;lt;/DigestValue&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Reference&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/SignedInfo&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;SignatureValue/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Signature&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Assinatura&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Principal&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Veja que já existe os nós da assinatura (Signature), mas estão em branco ou incompletos. Esse é o template que o ACBr irá utilizar para realmente assinar e gerar um novo XML.&lt;/p&gt;
+
+&lt;p&gt;Então codifiquei um pequeno programa em Object Pascal para fazer os testes.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMainForm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Assinar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDFeSSL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;I&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDFeSSL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SSLLib&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;libCapicom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SelecionarCertificado&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TStringList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// carrega o XML de template&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;LoadFromFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;template.xml&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// obtém o XML assinado no Text do StringList&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;iso-8859-1&amp;quot;?&amp;gt;&amp;#39;&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Assinar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;Assinatura&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// salva o XML em disco&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;SaveToFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;assinado.xml&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;A tela para escolher o certificado — previamente instalado no computador — aparece e o usuário, que pode selecionar qual ele deseja.&lt;/p&gt;
+
+&lt;p&gt;O XML é assinado (&lt;em&gt;node&lt;/em&gt; Assinatura) e tudo parece perfeito… mas o WebService do cliente não valida a Assinatura.&lt;/p&gt;
+
+&lt;p&gt;Algo estava errado.&lt;/p&gt;
+
+&lt;h1 id=&quot;solucao&quot;&gt;Solução&lt;/h1&gt;
+
+&lt;p&gt;Após ajuda do pessoal do ACBr e amigos, chegamos a conclusão que os espaços em branco no Template eram o problema.&lt;/p&gt;
+
+&lt;p&gt;Modifiquei o projeto de teste, intruduzindo algumas linhas de código para retirar os espaços e quebras de linha. Funcionou.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMainForm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Assinar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDFeSSL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;AnsiString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;I&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDFeSSL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SSLLib&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;libCapicom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SelecionarCertificado&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TStringList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// carrega o XML de template&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;LoadFromFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;template.xml&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// retira dos os espaços em braco e quebras de linha&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Trim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;StringReplace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+          &lt;span class=&quot;nb&quot;&gt;StringReplace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Strings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;I&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;#13&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rfReplaceAll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;sc&quot;&gt;#10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rfReplaceAll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// obtém o XML assinado no Text do StringList&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;iso-8859-1&amp;quot;?&amp;gt;&amp;#39;&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Assinar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;Assinatura&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// salva o XML em disco&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;SaveToFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;assinado.xml&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;O Projeto ACBr me ajudou bastante me poupando muito tempo de desenvolvimento.&lt;/p&gt;
+
+&lt;p&gt;Há alguns detalhes que não mencionei. Foram necessários pequenas modificações no código do ACBr devido a alguns &lt;em&gt;nodes&lt;/em&gt; customizados que eu precisa fazer no XML mas que o ACBr original não suportava. Essas modificações foram enviadas aos programadores do ACBr.&lt;/p&gt;
+
+&lt;p&gt;É isso.&lt;/p&gt;
+
+&lt;p&gt;Agradeço a todos os desenvolvedores e amigos que ajudaram na solução.&lt;/p&gt;
+
+&lt;p&gt;Obrigado e até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 11 Jul 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/</guid>
+      </item>
+    
+      <item>
         <title>Objetos Imutáveis</title>
         <description>&lt;p&gt;Objetos Imutáveis são seguros, são &lt;em&gt;thread-safe&lt;/em&gt;, simples de entender, construir e testar. Evitam acoplamento temporal, previnem a referencia nil/NULL e não precisam utilizar “cópia defensiva”.&lt;/p&gt;
 
@@ -1585,67 +1741,6 @@ seus Objetos são — ou deveriam ser — mais &lt;strong&gt;perfeitos&lt;/stron
         <pubDate>Mon, 09 May 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/validacoes-no-construtor/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/validacoes-no-construtor/</guid>
-      </item>
-    
-      <item>
-        <title>Decorator Pattern</title>
-        <description>&lt;p&gt;Como agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe?&lt;/p&gt;
-
-&lt;p&gt;Utilizando &lt;em&gt;Decorator Pattern&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Os Decoradores oferecem uma alternativa simples e flexível ou uso de subclasses para extensão de funcionalidades.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1461709444300-a6217cec3dff.jpg&quot; alt=&quot;Decorator&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Para mim, &lt;a href=&quot;https://en.wikipedia.org/wiki/Decorator_pattern&quot;&gt;&lt;em&gt;Decorador&lt;/em&gt;&lt;/a&gt; é um dos mais importantes padrões de &lt;em&gt;design&lt;/em&gt;.
-Infelizmente esse padrão quase nunca é utilizado, pelo menos nos projetos que vi nos últimos anos, independentemente
-da linguagem de programação utilizada.&lt;/p&gt;
-
-&lt;p&gt;Por que?&lt;/p&gt;
-
-&lt;p&gt;Não tenho uma resposta exata, mas suponho que o motivo do não uso de Decoradores seja devido a escolha “natural” de 
-utilizarmos &lt;strong&gt;Herança de Classes&lt;/strong&gt; para estender funcionalidades.&lt;/p&gt;
-
-&lt;p&gt;Aprendemos que a Orientação a Objetos tem 3 pilares: &lt;strong&gt;Herança, Encapsulamento e Polimorfismo.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Herança de Classe é utilizada para estender funcionalidades, implementando uma nova Classe que herda as funcionalidades
-da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre será a escolha mais correta para extensão de funcionalidades?&lt;/p&gt;
-
-&lt;p&gt;Eu acho que não. Em 90~95% dos casos, eu utilizo &lt;strong&gt;Decoradores&lt;/strong&gt; e &lt;strong&gt;Composição de Objetos&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;
-    Um Decorador oferece uma abordagem do tipo &quot;use quando for necessário” para adição de responsabilidades. Em vez de tentar
-    suportar todas as características previsíveis em uma Classe complexa e customizada, você pode definir uma Classe simples e 
-    acrescentar funcionalidade de modo incremental com objetos Decoradores.
-  &lt;/p&gt;
-  &lt;footer&gt;&lt;cite title=&quot;Padrões de Projeto&quot;&gt;— Padrões de Projeto, Erich Gamma, pág.173&lt;/cite&gt;&lt;/footer&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Decoradores são tão simples de implementar como Herança, mas traz mais benefícios.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Você não precisa prever o futuro utilizando Decoradores. Utilizando Herança você tem que se preocupar com a hierarquia
-  das Classes desde o início, desde a Classe mais básica até a mais específica, como se pudesse prever o futuro;&lt;/li&gt;
-  &lt;li&gt;Evita Classes sobrecarregadas de características e funcionalidades;&lt;/li&gt;
-  &lt;li&gt;Classes pequenas e coesas;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Exemplos de código?&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Parte do código de um projeto em produção que utiliza Decoradores para consumir um WebService, &lt;a href=&quot;/posts/pensando-em-objetos/#exemplo-2&quot;&gt;aqui&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;Implementação de um Log com Decoradores para memória, arquivo, banco de dados e e-mail, &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo&quot;&gt;aqui&lt;/a&gt;;&lt;/li&gt;
-  &lt;li&gt;Utilizando a Classe &lt;code&gt;TEmployeeSalaryWithCommission&lt;/code&gt; como Decorador de &lt;code&gt;TEmployeeSalary&lt;/code&gt;, &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/#versao-orientada-a-objetos&quot;&gt;aqui&lt;/a&gt;;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 02 May 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/decorator-pattern/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/decorator-pattern/</guid>
       </item>
     
   </channel>
