@@ -12,6 +12,7 @@ tags:
 keywords:
   - naming
   - nomeando
+  - classes
 ---
 
 O nome de uma Classe deve significar quem ela representa e não o que ela faz.
