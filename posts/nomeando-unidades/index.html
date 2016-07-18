@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Nomeando Unidades &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Pascal">
+    <meta name="keywords" content="naming, nomeando, unit">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/nomeando-unidades/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201607181106" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Nomeando Unidades">
+    <meta property="og:description" content="Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/nomeando-unidades/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1434030216411-0b793f4b4173.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Nomeando Unidades" />
+    <meta name="twitter:description" content="Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/nomeando-unidades/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Nomeando Unidades</h1>
+  <span class="post-meta">Jul 18, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    6 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Acredito que todos os nomes de Unidades em um Projeto <em>Object Pascal</em>, quiça em qualquer outra linguagem, deveriam ser hierárquicos do mais genérico para o mais específico.</p>
+
+<p>Neste artigo irei escrever sobre a lógica em utilizar uma nomenclatura hieraquizada para deixar seu projeto mais coeso e elegante.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1434030216411-0b793f4b4173.jpg" alt="Imagem" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Foi-se o tempo quando programávamos utilizando nomes de Unidades como: <code>uUtils</code>, <code>uPerson</code>, <code>frmClient</code>, etc.</p>
+
+<p>Em projetos pequenos tais nomes de Unidades ainda são utilizados (será?), mas essa nomenclatura não é nada profissional.</p>
+
+<p>Por quê?</p>
+
+<p>O motivo é que uma Unidade deve encapsular um Contexto <strong>bem definido</strong>. Um Contexto pode ser genérico ou ser uma especialização.</p>
+
+<p>Um nome de Unidade como esses acima não transmitem um Contexto bem definido.</p>
+
+<p>Para que a idéia de Contexto fique clara, uma Unidade deve ter um nome sem ambiguidades.</p>
+
+<p>Veja esse exemplo de nomes de Unidades:</p>
+
+<ol>
+  <li>frmClient</li>
+  <li>AcmeClientEditForm</li>
+</ol>
+
+<p>Qual dos nomes é mais claro, passando imediatamente a ideia do que essa Unidade faz?</p>
+
+<p>O item #2, é claro.</p>
+
+<ol>
+  <li><code>Acme</code> é o nome do Projeto ou nome da Empresa.</li>
+  <li><code>Client</code> é o Contexto mais genérico.</li>
+  <li><code>Edit</code> é o Contexto mais específico.</li>
+  <li><code>Form</code> determina hierarquia da Classe ou o seu propósito.</li>
+</ol>
+
+<p>A medida que um projeto cresce e novas Unidades são inseridas, colisões de nomes podem ocorrer. Ter bons nomes de Unidades no projeto fará muita diferença no longo prazo. Será mais fácil determinar o impacto de alguma alteração apenas olhando a hierarquia no nome da Unidade.</p>
+
+<p>Mas existem regras ou dicas para escolhermos bons nomes de Unidades?</p>
+
+<p>É o que iremos ver a seguir.</p>
+
+<h2 id="regra-1-prefixos">Regra 1: Prefixos</h2>
+
+<p>Um nome de Unidade hieraquizado nada mais é do que utilizar <strong>prefixos</strong>. A cada prefixo adicionado, damos o nome de Contexto. O nome para cada Contexto ou prefixo utilizado vai depender de cada projeto.</p>
+
+<p>Um Contexto pode identificar uma tecnologia, protocolo, setor da empresa, entidade ou até mesmo um outro sistema.</p>
+
+<p>Para sistemas comerciais, o próprio usuário irá lhe dar os nomes desses Contextos. Os nomes dos setores na empresa serão o ponto de partida.</p>
+
+<h2 id="regra-2-nome-do-projeto-ou-empresa">Regra 2: Nome do Projeto ou Empresa</h2>
+
+<p>Toda Unidade deve ser precedida com o nome do Projeto ou nome da Empresa.</p>
+
+<p>Se teus projetos são feitos somente dentro de tua empresa para seu próprios clientes, basta utilizar o nome do Projeto como prefixo para todas as Unidades.</p>
+
+<p>Caso sua empresa faça <em>frameworks</em> ou projetos OpenSource, ou seja, se o projeto terá um contexto mais global, é uma boa ideia utilizar o nome da Empresa como prefixo.</p>
+
+<p>Qual dos dois será utilizado dependerá do propósito geral do Projeto.</p>
+
+<h2 id="regra-3-generico-para-especializado">Regra 3: Genérico para o mais Especializado</h2>
+
+<p>O nome de uma Unidade deve ser hierarquizado do mais genérico para o mais especializado.</p>
+
+<p>No artigo sobre <a href="/posts/nomeando-classes/">Nomenclatura de Classes</a> eu lhes dei um exemplo de nomenclatura (errada) para uma hipotética Classe do meu <a href="https://github.com/mdbs99/aws">Projeto AWS</a> que foi <code>TAWSNetHTTPClient</code>.</p>
+
+<p>O nome de uma Classe não deve ser uma hierarquia.</p>
+
+<p>Classes nem deveriam fazer parte de uma <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">hieraquia de herança</a> na maioria das vezes.</p>
+
+<p>A hierarquia deve estar no nome da Unidade.</p>
+
+<p>Então como ficariam os nomes, da Classe e da Unidade, considerando o exemplo acima?</p>
+
+<ol>
+  <li>Unidade: AWSNetHttpClient</li>
+  <li>Classe: THttpClient</li>
+</ol>
+
+<p>O <code>Http</code> se repete no nome da Classe. O motivo é porque o nome da Classe deve ser constituído de <strong>Contexto + Nome</strong>, conforme já explicado <a href="/posts/nomeando-classes/">aqui</a>.</p>
+
+<p>Outros exemplos de bons nomes para Unidades:</p>
+
+<ul>
+  <li>AcmeData</li>
+  <li>AcmeDataXml</li>
+  <li>
+    <p>AcmeDataJson</p>
+  </li>
+  <li>AcmeReport</li>
+  <li>
+    <p>AcmeReportRBuilder</p>
+  </li>
+  <li>AcmeWeb</li>
+  <li>AcmeWebHttp</li>
+  <li>
+    <p>AcmeWebFtp</p>
+  </li>
+  <li>AcmeFinances</li>
+  <li>AcmeFinancesClient</li>
+  <li>AcmeFinancesClientReports</li>
+</ul>
+
+<h2 id="regra-4-interfaces-e-classes">Regra 4: Interfaces numa Unidade, Classes noutra</h2>
+
+<p>Toda Classe deveria <a href="/posts/interfaces-em-todo-lugar/">implementar ao menos uma Interface</a> e todo o Projeto deveria trabalhar com variáveis e argumentos do tipo Interface. Dessa forma um argumento poderia receber qualquer instância de Classe que implementa o tipo da Interface.</p>
+
+<p>Então temos que definir as Interfaces numa Unidade e suas implementações <em>default</em> em outra Unidade. Caso o programador queira codificar sua própria implementação da Interface, ele só precisa adicionar no <em>uses</em> apenas a Unidade que contém as Interfaces.</p>
+
+<p>Como nomear ambas as Unidades?</p>
+
+<p>Bem, eu utilizo uma nomenclatura que a princípio você não verá muita lógica, mas ficou como um costume pra mim. Talvez você pense numa nomenclatura melhor e nos diga na área de comentários.</p>
+
+<p>Vamos lá. Para Unidades sobre Finanças, por exemplo, eu teria o seguinte:</p>
+
+<ol>
+  <li>Unidade das Interfaces: AcmeFinances</li>
+  <li>Unidade das Classes: AcmeFinancesA</li>
+</ol>
+
+<p>Isso aí. Apenas a letra <code>A</code> como sufixo.</p>
+
+<p>O motivo é que as Unidades são exibidas em ordem alfabética, então a Unidade de Interfaces virá antes da Unidade de Classes.</p>
+
+<p>Caso eu tenha outro sub prefixo que também começe com <code>A</code>, exemplo <code>AcmeFinancesAction</code>, ainda assim a ordem visual seria mantida, do mais genérico para o mais especializado.</p>
+
+<h2 id="regra-5-unidade-especializada">Regra 5: Uma Unidade especializada utiliza a mais genérica, nunca o contrário</h2>
+
+<p>Essa regra é clara, mas sempre é bom lembrar que uma Unidade genérica <strong>nunca</strong> poderá ter um <em>uses</em> para uma mais especializada dentro da mesma hierarquia.</p>
+
+<p>Veja o esquema abaixo:</p>
+
+<ol>
+  <li>AcmeFinances</li>
+  <li>AcmeFinancesClient » uses AcmeFinances</li>
+  <li>AcmeFinancesClientReports » uses AcmeFinancesClient</li>
+</ol>
+
+<h2 id="regra-6-unidade-nao-pertence-ao-projeto">Regra 6: Se uma Unidade está sendo utilizada em muitas outras hierarquias, ela não pertence ao Projeto</h2>
+
+<p>Se uma Unidade ou um pequeno conjunto delas, sempre aparecem no <em>uses</em> de várias hierarquias diferentes, isso pode indicar que essa(s) Unidade(s) não fazem parte do <em>core</em> do projeto devem ser refatoradas/extraídas para outro projeto ou <em>package</em>.</p>
+
+<p>Se essas Unidades podem ser reaproveitadas em outros projetos por serem muito genéricas, é também outro grande indício para refatorar e extraí-las do projeto.</p>
+
+<h2 id="bnus">Bônus</h2>
+
+<h3 id="unidades-pontilhadas">Nomes de Unidades Pontilhadas</h3>
+
+<p>Hoje e dia o Delphi e FreePascal/Lazarus tem suporte para “Nomes de Unidades Pontilhadas”, ou seja, podemos nomear uma Unidade utilizando pontos que separam contextos. No Java sempre foi assim e o .NET fez igual.</p>
+
+<p>E em que isso muda as regras acima?</p>
+
+<p>Nada.</p>
+
+<p>Sem considerar os pontos, não há nenhuma diferença técnica ou de utilização para utilizar <code>Acme.Finances.Client.Reports</code> ao invés de <code>AcmeFinancesClientReports</code>.</p>
+
+<p>A “vantagem” em utilizar “Nomes de Unidades Pontilhadas”, na minha opinião, é apenas visual.</p>
+
+<p>Veja um exemplo:</p>
+
+<ol>
+  <li>AcmeWebHTTPClient</li>
+  <li>Acme.Web.HTTP.Client</li>
+</ol>
+
+<p>A opção #2 é mais <em>clean</em> que a opção #1 devido ao Contexto <code>HTTP</code> ter sido escrito em maiúsculo.</p>
+
+<p>Obs.: Já ouvi falar que o compilador do Delphi atualmente tem parâmetros que podem selecionar um <em>namespace</em> específico para compilar Unidades específicas e isso pode ter haver com esse tipo de nomenclatura que utiliza pontos. Caso você saiba mais sobre isso, porfavor deixei seu comentário.</p>
+
+<h3 id="abreviacoes-maiusculas">Abreviações em Pascal-case ou tudo em maiúsculas</h3>
+
+<p>Qual nomenclatura utilizar para abreviações, por exemplo, <code>HTTP</code>?</p>
+
+<p>Sendo <code>HTTP</code> uma abreviação de <em>Hypertext Transfer Protocol</em>, o mais correto na escrita seria <code>HTTP</code> e não <code>Http</code>. Mas visualmente, quando uma abreviação faz parte do nome de uma Classe, fica mais elegante ou mais fácil de ler utilizando Pascal-case.</p>
+
+<p>Teoricamente <code>THttpClient</code> é mais fácil de ler do que <code>THTTPClient</code>.</p>
+
+<p>Mas nesse quesito eu mesmo ainda não tomei uma decisão. Algumas vezes eu utilizo tudo em maiúsculo, outras vezes em Pascal-case. Ainda tenho um conflito interior entre o “certo na escrita” vs. “visual elegante”.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Escolher bons nomes para Unidades, Classes, Interfaces e métodos sempre será uma arte. Não existe o <strong>certo absoluto</strong>. Cada projeto nos dará seus requisitos e os nomes irão aparecer.</p>
+
+<p>Essas Regras podem ajudar, mas cabe ao arquiteto ter bom senso, conhecer bem o domínio e pensar bem antes de nomear suas Unidades.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/nomeando-unidades/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Nomeando Unidades&via=mdbs99;url=http://objectpascalprogramming.com/posts/nomeando-unidades/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/nomeando-unidades/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/nomeando-unidades/&title=Nomeando Unidades" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/nomeando-unidades/&title=Nomeando Unidades" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/nomeando-unidades/&t=Nomeando Unidades" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nomeando-classes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Classes</li></h4>
+        </ul>
+        <!--<p class="post-summary">O nome de uma Classe deve significar quem ela representa e não o que ela faz.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-representam-entidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+        </ul>
+        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/nomeando-unidades';
+      var disqus_title      = 'Nomeando Unidades';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
