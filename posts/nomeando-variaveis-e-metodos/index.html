@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Nomeando Variáveis e Métodos &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A nomenclatura correta de Variáveis e Métodos simplifica o código.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Pascal">
+    <meta name="keywords" content="naming, nomeando, variaveis, métodos, variable, method">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201607251122" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Nomeando Variáveis e Métodos">
+    <meta property="og:description" content="A nomenclatura correta de Variáveis e Métodos simplifica o código.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-08208oju93773-4746gf33.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Nomeando Variáveis e Métodos" />
+    <meta name="twitter:description" content="A nomenclatura correta de Variáveis e Métodos simplifica o código." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Nomeando Variáveis e Métodos</h1>
+  <span class="post-meta">Jul 25, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    4 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>A nomenclatura correta de Variáveis e Métodos simplifica e melhora o entendimento do código.</p>
+
+<p>Basicamente há uma única Regra para nomear ambos: <strong>Não utilize prefixos</strong>.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-08208oju93773-4746gf33.jpg" alt="Imagem" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>A regra de <a href="/posts/nomeando-classes/">nomenclatura para Classes</a> é sobre utilizar um prefixo (contexto) além do seu nome.</p>
+
+<p>A primeira regra de <a href="/posts/nomeando-unidades/">nomenclatura para Unidades</a> é sobre utilizar prefixos.</p>
+
+<p>Ambas as regras falam sobre prefixos. O maior objetivo para os utilizarmos é evitar colisões de nomes. Unidades e Classes podem ser utilizadas globalmente em todo o projeto e por isso precisam ter nomes que minimizam ao máximo ambiguidades.</p>
+
+<p>No entanto, ao nomear Variáveis ou Métodos na programação <a href="/posts/o-que-e-orientacao-a-objetos/">Orientada a Objetos</a>, você deve esquecer os prefixos.</p>
+
+<p>Prefixos de qualquer tipo, esqueça-os.</p>
+
+<h2 id="variaveis">Nomeando Variáveis</h2>
+
+<p>Acho que não preciso lembrá-lo que utilizar <a href="/posts/singleton-e-um-anti-padrao/#variaveis-globais">variáveis globais</a> é um anti-padrão.</p>
+
+<p>Então toda variável é, ou deveria ser, local.</p>
+
+<p>Se variáveis são locais, não deveria haver colisões de nomes. Se não há colisões de nomes, por que utilizar prefixos?</p>
+
+<p>Mas o problema — você deve estar pensando — é que há colisões de nomes de variáveis até mesmo dentro de um único método. Pode não ser exatamente uma colisão de nome onde o compilador não conseguir ir adiante. Talvez haja só uma confusão de nomes, daquelas que você olha o código e pensa:</p>
+
+<p>“Essa é uma variável-atributo, uma variável local ou argumento do método?</p>
+
+<p>Acontece, certo?</p>
+
+<p>Bem, continue lendo.</p>
+
+<h2 id="metodos">Nomeando Métodos</h2>
+
+<p>Métodos de uma Classe definem a implementação de um <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contrato</a> de uma Interface.</p>
+
+<p>Toda Classe deveria implementar apenas uma <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/#unica-responsabilidade">única responsabilidade</a>. Se a Classe tem apenas uma única responsabilidade, dificilmente você irá utilizar prefixos nos métodos.</p>
+
+<p>Veja nesse <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-tradicional">exemplo de código</a> os métodos <code>SaveXxx</code>.</p>
+
+<p>A palavra <code>Save</code> é um prefixo — nem sempre um nome composto será um prefixo, mas nesse caso ele é.</p>
+
+<p>Compare agora com a <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo">versão</a> Orientada a Objetos e verá que as Classes ficaram muito mais simples, utilizando nomes de métodos simples. Cada Classe só implementa apenas uma única responsabilidade. Por isso seus Métodos são simples e diretos.</p>
+
+<p>Consegue ver a diferença?</p>
+
+<h2 id="o-que-esta-errado">O que há de errado com Prefixos?</h2>
+
+<p>Os prefixos podem ser o mais diversos.</p>
+
+<p>Quando comecei a programar eu utilizava a <a href="https://en.wikipedia.org/wiki/Hungarian_notation">notação húngara</a>. Também já utilizei outros prefixos, dependendo da empresa/projeto.</p>
+
+<p>Meu último “padrão pessoal de prefixo” foi utilizar um “l” (L minúsculo) para qualquer variável local…</p>
+
+<p>Nada disso era ou é necessário.</p>
+
+<p>Utilizamos prefixos em Métodos e Variáveis com o mesmo objetivo de quando nomeamos Classes e Unidades: evitar a colisão de nomes.</p>
+
+<p>É isso, não é?</p>
+
+<p>Bem, se você está fazendo isso — como eu mesmo fiz durante muito tempo — eu tenho que lhe dizer:</p>
+
+<p>Seu código <strong>não</strong> tem um bom <em>design</em>. Ele está acoplado e não está modularizado o sufiente.</p>
+
+<p>Se você está utilizando prefixos em Variáveis dentro de um método, quer dizer que seu Método está fazendo coisas demais. Você precisa identificar “quem é quem” dentro de um código possivelmente grande. Isso é errado. Refatore.</p>
+
+<p>Alias, aqui vai uma <strong>dica</strong>: Refatore o Método que tiver utilizando mais de 5 variáveis.</p>
+
+<p>Se você está utilizando prefixos em Métodos, sua Classe está fazendo coisas demais. Esses Métodos com prefixos estão “gritando” à você que eles pertencem a outra Classe e que não deveriam estar ali! Isso é muito mais errado. Refatore imediatamente.</p>
+
+<p>Variáveis e Métodos devem ter o nome mais simples possível. Isso deveria ser um requisito de <em>design</em>, uma restrição. Toda restrição impõe limites, que leva a regras, que leva a uma melhor organização de todo o código.</p>
+
+<h2 id="argumentos-dos-metodos">Argumentos dos Métodos</h2>
+
+<p>E para Argumentos dos Métodos, é necessário algum prefixo?</p>
+
+<p>Você continua não precisando de prefixos, mas Argumentos podem ter nomes mais verbosos a fim de facilitar o uso do Método, sem que o programador tenha que ler alguma documentação.</p>
+
+<p>A linguagem <em>Object Pascal</em> tem mais uma particularidade: Não é <em>case-sensitive</em>.</p>
+
+<p>Por isso utilizamos prefixos como “T” para Classes, “I” para Interfaces, “P” para tipos ponteiro, etc. Nessa mesma linha de pensamento, alguns programadores utilizam o prefixo “A” para Argumentos.</p>
+
+<p>Não vejo problema nessa prática. No entanto se você codificar Classes e Métodos pequenos, talvez não será necessário utilizar nenhum prefixo nos argumentos, pois haverá pouco código para existência de conflitos de nomes.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Escolher bons nomes para Métodos e Variáveis é bem mais simples que escolher nomes para Unidades, Classes e Interfaces, mas ainda assim é uma arte.</p>
+
+<p>Novamente lhe digo que não existe o <strong>certo absoluto</strong>. Talvez o padrão de nomenclatura que você já utiliza seja melhor pra você. Tudo bem. Mas o que tenho observado ao longo de alguns anos é que a minha “obrigação” de utilizar nomes mais simples deixa o código melhor. Não apenas por causa dos nomes em si, mas devido as Classes implementarem apena uma única responsabilidade, sendo os nomes uma espécie de métrica para verificar essa prática.</p>
+
+<p>Após anos de desenvolvimento, utilizando dezenas de padrões de nomenclatura em diversas empresas e projetos distintos, cheguei a conclusão que o “não-padrão” — sem prefixos e sem burocracia — é o melhor. É como estar organizado, sem organizar. Faz sentido?</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Nomeando Variáveis e Métodos&via=mdbs99;url=http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/&title=Nomeando Variáveis e Métodos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/&title=Nomeando Variáveis e Métodos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/&t=Nomeando Variáveis e Métodos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/nomeando-unidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
+        </ul>
+        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nomeando-classes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Classes</li></h4>
+        </ul>
+        <!--<p class="post-summary">O nome de uma Classe deve significar quem ela representa e não o que ela faz.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/nomeando-variaveis-e-metodos';
+      var disqus_title      = 'Nomeando Variáveis e Métodos';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

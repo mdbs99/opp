@@ -8,6 +8,111 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Nomeando Variáveis e Métodos</title>
+        <description>&lt;p&gt;A nomenclatura correta de Variáveis e Métodos simplifica e melhora o entendimento do código.&lt;/p&gt;
+
+&lt;p&gt;Basicamente há uma única Regra para nomear ambos: &lt;strong&gt;Não utilize prefixos&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-08208oju93773-4746gf33.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;A regra de &lt;a href=&quot;/posts/nomeando-classes/&quot;&gt;nomenclatura para Classes&lt;/a&gt; é sobre utilizar um prefixo (contexto) além do seu nome.&lt;/p&gt;
+
+&lt;p&gt;A primeira regra de &lt;a href=&quot;/posts/nomeando-unidades/&quot;&gt;nomenclatura para Unidades&lt;/a&gt; é sobre utilizar prefixos.&lt;/p&gt;
+
+&lt;p&gt;Ambas as regras falam sobre prefixos. O maior objetivo para os utilizarmos é evitar colisões de nomes. Unidades e Classes podem ser utilizadas globalmente em todo o projeto e por isso precisam ter nomes que minimizam ao máximo ambiguidades.&lt;/p&gt;
+
+&lt;p&gt;No entanto, ao nomear Variáveis ou Métodos na programação &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientada a Objetos&lt;/a&gt;, você deve esquecer os prefixos.&lt;/p&gt;
+
+&lt;p&gt;Prefixos de qualquer tipo, esqueça-os.&lt;/p&gt;
+
+&lt;h2 id=&quot;variaveis&quot;&gt;Nomeando Variáveis&lt;/h2&gt;
+
+&lt;p&gt;Acho que não preciso lembrá-lo que utilizar &lt;a href=&quot;/posts/singleton-e-um-anti-padrao/#variaveis-globais&quot;&gt;variáveis globais&lt;/a&gt; é um anti-padrão.&lt;/p&gt;
+
+&lt;p&gt;Então toda variável é, ou deveria ser, local.&lt;/p&gt;
+
+&lt;p&gt;Se variáveis são locais, não deveria haver colisões de nomes. Se não há colisões de nomes, por que utilizar prefixos?&lt;/p&gt;
+
+&lt;p&gt;Mas o problema — você deve estar pensando — é que há colisões de nomes de variáveis até mesmo dentro de um único método. Pode não ser exatamente uma colisão de nome onde o compilador não conseguir ir adiante. Talvez haja só uma confusão de nomes, daquelas que você olha o código e pensa:&lt;/p&gt;
+
+&lt;p&gt;“Essa é uma variável-atributo, uma variável local ou argumento do método?&lt;/p&gt;
+
+&lt;p&gt;Acontece, certo?&lt;/p&gt;
+
+&lt;p&gt;Bem, continue lendo.&lt;/p&gt;
+
+&lt;h2 id=&quot;metodos&quot;&gt;Nomeando Métodos&lt;/h2&gt;
+
+&lt;p&gt;Métodos de uma Classe definem a implementação de um &lt;a href=&quot;/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos&quot;&gt;contrato&lt;/a&gt; de uma Interface.&lt;/p&gt;
+
+&lt;p&gt;Toda Classe deveria implementar apenas uma &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/#unica-responsabilidade&quot;&gt;única responsabilidade&lt;/a&gt;. Se a Classe tem apenas uma única responsabilidade, dificilmente você irá utilizar prefixos nos métodos.&lt;/p&gt;
+
+&lt;p&gt;Veja nesse &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-tradicional&quot;&gt;exemplo de código&lt;/a&gt; os métodos &lt;code&gt;SaveXxx&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;A palavra &lt;code&gt;Save&lt;/code&gt; é um prefixo — nem sempre um nome composto será um prefixo, mas nesse caso ele é.&lt;/p&gt;
+
+&lt;p&gt;Compare agora com a &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo&quot;&gt;versão&lt;/a&gt; Orientada a Objetos e verá que as Classes ficaram muito mais simples, utilizando nomes de métodos simples. Cada Classe só implementa apenas uma única responsabilidade. Por isso seus Métodos são simples e diretos.&lt;/p&gt;
+
+&lt;p&gt;Consegue ver a diferença?&lt;/p&gt;
+
+&lt;h2 id=&quot;o-que-esta-errado&quot;&gt;O que há de errado com Prefixos?&lt;/h2&gt;
+
+&lt;p&gt;Os prefixos podem ser o mais diversos.&lt;/p&gt;
+
+&lt;p&gt;Quando comecei a programar eu utilizava a &lt;a href=&quot;https://en.wikipedia.org/wiki/Hungarian_notation&quot;&gt;notação húngara&lt;/a&gt;. Também já utilizei outros prefixos, dependendo da empresa/projeto.&lt;/p&gt;
+
+&lt;p&gt;Meu último “padrão pessoal de prefixo” foi utilizar um “l” (L minúsculo) para qualquer variável local…&lt;/p&gt;
+
+&lt;p&gt;Nada disso era ou é necessário.&lt;/p&gt;
+
+&lt;p&gt;Utilizamos prefixos em Métodos e Variáveis com o mesmo objetivo de quando nomeamos Classes e Unidades: evitar a colisão de nomes.&lt;/p&gt;
+
+&lt;p&gt;É isso, não é?&lt;/p&gt;
+
+&lt;p&gt;Bem, se você está fazendo isso — como eu mesmo fiz durante muito tempo — eu tenho que lhe dizer:&lt;/p&gt;
+
+&lt;p&gt;Seu código &lt;strong&gt;não&lt;/strong&gt; tem um bom &lt;em&gt;design&lt;/em&gt;. Ele está acoplado e não está modularizado o sufiente.&lt;/p&gt;
+
+&lt;p&gt;Se você está utilizando prefixos em Variáveis dentro de um método, quer dizer que seu Método está fazendo coisas demais. Você precisa identificar “quem é quem” dentro de um código possivelmente grande. Isso é errado. Refatore.&lt;/p&gt;
+
+&lt;p&gt;Alias, aqui vai uma &lt;strong&gt;dica&lt;/strong&gt;: Refatore o Método que tiver utilizando mais de 5 variáveis.&lt;/p&gt;
+
+&lt;p&gt;Se você está utilizando prefixos em Métodos, sua Classe está fazendo coisas demais. Esses Métodos com prefixos estão “gritando” à você que eles pertencem a outra Classe e que não deveriam estar ali! Isso é muito mais errado. Refatore imediatamente.&lt;/p&gt;
+
+&lt;p&gt;Variáveis e Métodos devem ter o nome mais simples possível. Isso deveria ser um requisito de &lt;em&gt;design&lt;/em&gt;, uma restrição. Toda restrição impõe limites, que leva a regras, que leva a uma melhor organização de todo o código.&lt;/p&gt;
+
+&lt;h2 id=&quot;argumentos-dos-metodos&quot;&gt;Argumentos dos Métodos&lt;/h2&gt;
+
+&lt;p&gt;E para Argumentos dos Métodos, é necessário algum prefixo?&lt;/p&gt;
+
+&lt;p&gt;Você continua não precisando de prefixos, mas Argumentos podem ter nomes mais verbosos a fim de facilitar o uso do Método, sem que o programador tenha que ler alguma documentação.&lt;/p&gt;
+
+&lt;p&gt;A linguagem &lt;em&gt;Object Pascal&lt;/em&gt; tem mais uma particularidade: Não é &lt;em&gt;case-sensitive&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Por isso utilizamos prefixos como “T” para Classes, “I” para Interfaces, “P” para tipos ponteiro, etc. Nessa mesma linha de pensamento, alguns programadores utilizam o prefixo “A” para Argumentos.&lt;/p&gt;
+
+&lt;p&gt;Não vejo problema nessa prática. No entanto se você codificar Classes e Métodos pequenos, talvez não será necessário utilizar nenhum prefixo nos argumentos, pois haverá pouco código para existência de conflitos de nomes.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Escolher bons nomes para Métodos e Variáveis é bem mais simples que escolher nomes para Unidades, Classes e Interfaces, mas ainda assim é uma arte.&lt;/p&gt;
+
+&lt;p&gt;Novamente lhe digo que não existe o &lt;strong&gt;certo absoluto&lt;/strong&gt;. Talvez o padrão de nomenclatura que você já utiliza seja melhor pra você. Tudo bem. Mas o que tenho observado ao longo de alguns anos é que a minha “obrigação” de utilizar nomes mais simples deixa o código melhor. Não apenas por causa dos nomes em si, mas devido as Classes implementarem apena uma única responsabilidade, sendo os nomes uma espécie de métrica para verificar essa prática.&lt;/p&gt;
+
+&lt;p&gt;Após anos de desenvolvimento, utilizando dezenas de padrões de nomenclatura em diversas empresas e projetos distintos, cheguei a conclusão que o “não-padrão” — sem prefixos e sem burocracia — é o melhor. É como estar organizado, sem organizar. Faz sentido?&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 25 Jul 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/</guid>
+      </item>
+    
+      <item>
         <title>Nomeando Unidades</title>
         <description>&lt;p&gt;Acredito que todos os nomes de Unidades em um Projeto &lt;em&gt;Object Pascal&lt;/em&gt;, quiça em qualquer outra linguagem, deveriam ser hierárquicos do mais genérico para o mais específico.&lt;/p&gt;
 
@@ -1579,270 +1684,6 @@ abaixo para comentários.&lt;/p&gt;
         <pubDate>Mon, 23 May 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/</guid>
-      </item>
-    
-      <item>
-        <title>Singleton é um anti-padrão?</title>
-        <description>&lt;p&gt;O padrão &lt;em&gt;Singleton&lt;/em&gt; garante a existência de &lt;strong&gt;apenas uma instância&lt;/strong&gt; de &lt;strong&gt;uma classe&lt;/strong&gt;, 
-mantendo &lt;strong&gt;um ponto global&lt;/strong&gt; de acesso ao seu Objeto.&lt;/p&gt;
-
-&lt;p&gt;O &lt;strong&gt;conceito&lt;/strong&gt; do &lt;em&gt;Singleton&lt;/em&gt; não está errado, mas sua &lt;strong&gt;implementação&lt;/strong&gt; clássica está.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1462826743322-63f0fbb29f87.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Ter um &lt;strong&gt;ponto global de acesso&lt;/strong&gt; é bom.&lt;/p&gt;
-
-&lt;p&gt;Garantir uma &lt;strong&gt;única instância&lt;/strong&gt; para um Objeto, pode ser bom.&lt;/p&gt;
-
-&lt;p&gt;O &lt;strong&gt;erro&lt;/strong&gt; é ter uma única instância de uma &lt;strong&gt;classe&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Por que?&lt;/p&gt;
-
-&lt;p&gt;Simples. Você não deve utilizar pontos globais com &lt;strong&gt;Referência Direta&lt;/strong&gt; em seu código.&lt;/p&gt;
-
-&lt;p&gt;Quando digo Referência Direta quero dizer:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Variáveis globais&lt;/li&gt;
-  &lt;li&gt;Métodos estáticos que não trabalham com &lt;em&gt;Interfaces&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;variaveis-globais&quot;&gt;Variáveis globais&lt;/h2&gt;
-
-&lt;p&gt;Você já deve saber que não devemos utilizar variáveis globais.&lt;/p&gt;
-
-&lt;p&gt;Seu uso é considerado um anti-padrão porque seu conteúdo pode ser modificado/acessado de 
-qualquer parte do seu código. Haverá uma dependência direta dessa variável aumentando a 
-complexidade do código. Qualquer alteração no valor dessa variável poderá ocasionar problemas
-em qualquer parte do código que a utilize.&lt;/p&gt;
-
-&lt;h2 id=&quot;metodos-estaticos&quot;&gt;Métodos estáticos&lt;/h2&gt;
-
-&lt;p&gt;Um &lt;a href=&quot;/posts/nao-utilize-metodos-estaticos/&quot;&gt;método estático&lt;/a&gt; é acessado
-diretamente na Classe. Assim como uma variável global, o método estático é uma dependência 
-direta e isso não é bom. No entanto o valor retornado 
-por um método estático pode ser dinâmico. Pode ser um Objeto. Pode ser uma instância
-de uma &lt;em&gt;Interface&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;O &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New()&lt;/a&gt; é estático, 
-mas seu retorno é dinâmico. Ele também retorna uma instância de uma &lt;em&gt;Interface&lt;/em&gt; ao invés de 
-um tipo primitivo ou Classe.&lt;/p&gt;
-
-&lt;h2 id=&quot;padrao-singleton&quot;&gt;O Padrão &lt;em&gt;Singleton&lt;/em&gt;&lt;/h2&gt;
-
-&lt;p&gt;Um &lt;a href=&quot;https://en.wikipedia.org/wiki/Singleton_pattern&quot;&gt;&lt;em&gt;Singleton&lt;/em&gt;&lt;/a&gt; utiliza uma variável global, 
-que está encapsulada dentro da própria classe. Também utiliza um método estático, que irá 
-retornar a instância única encapsulada na Classe. Essa instância é do tipo da própria Classe.&lt;/p&gt;
-
-&lt;p&gt;Precisamos utilizar esse Padrão?&lt;/p&gt;
-
-&lt;p&gt;Sim, por simplicidade.&lt;/p&gt;
-
-&lt;p&gt;Explico.&lt;/p&gt;
-
-&lt;p&gt;É possível nunca utilizar o &lt;em&gt;Singleton&lt;/em&gt;. Basta você utilizar Injeção de Dependência nos
-&lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt; das Classes.&lt;/p&gt;
-
-&lt;p&gt;Mas para cada dependência teríamos que definir um argumento em todos os construtores, de todas as 
-Classes, que necessitam utilizar a dependência.&lt;/p&gt;
-
-&lt;p&gt;Isso irá gerar &lt;strong&gt;Complexidade&lt;/strong&gt; no código.&lt;/p&gt;
-
-&lt;p&gt;Você precisa de uma única instância de Objetos para:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Conexão com um SGBD&lt;/li&gt;
-  &lt;li&gt;Log de execução/&lt;em&gt;debugging&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;Configurações da Aplicação&lt;/li&gt;
-  &lt;li&gt;Etc&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;São exemplos. Na verdade eu posso querer utilizar um &lt;em&gt;pool&lt;/em&gt; de conexões para o SGBD; ter várias Classes
-que representam as Configurações, etc. Mas, você entendeu.&lt;/p&gt;
-
-&lt;p&gt;Então garantir a existência de &lt;strong&gt;apenas uma instância&lt;/strong&gt; mantendo &lt;strong&gt;um ponto global&lt;/strong&gt; de acesso ao Objeto 
-é importante. Isso minimiza a complexidade.
-Ao invés de ter sempre um parâmetro a mais em todos os construtores das Classes — ou da maioria delas — eu
-só preciso ter um único ponto de acesso para “algum” Objeto.&lt;/p&gt;
-
-&lt;p&gt;O &lt;em&gt;Singleton&lt;/em&gt; clássico parece resolver isso. Sim, mas ele nos traz um problema maior do que o benefício.&lt;/p&gt;
-
-&lt;h3 id=&quot;o-problema&quot;&gt;O Problema&lt;/h3&gt;
-
-&lt;p&gt;Não há como implementar um &lt;em&gt;Singleton&lt;/em&gt; sem haver uma &lt;strong&gt;variável&lt;/strong&gt; para retornar &lt;strong&gt;uma única instância&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;O problema não é a variável, pois ela estará encapsulada na Classe. Isso quer dizer que
-ela estará protegida. Bem, talvez não tão protegida mas ainda melhor que uma variável global.&lt;/p&gt;
-
-&lt;p&gt;O problema também não é o &lt;strong&gt;método estático&lt;/strong&gt; — mesmo tendo seu uso desencorajado na maioria dos casos —
-pois podemos retornar qualquer valor.&lt;/p&gt;
-
-&lt;p&gt;O &lt;strong&gt;real problema&lt;/strong&gt; do Padrão &lt;em&gt;Singleton&lt;/em&gt;, em sua implementação clássica, é o &lt;strong&gt;tipo de retorno&lt;/strong&gt; do método estático.&lt;/p&gt;
-
-&lt;h3 id=&quot;implementacao-classica&quot;&gt;Implementação Clássica&lt;/h3&gt;
-
-&lt;p&gt;Existem variações de implementação do Padrão &lt;em&gt;Singleton&lt;/em&gt; que utilizam algumas técnicas para inicializar 
-a variável encapsulada, ou seja, a instância que será retornada pelo método estático que, na maioria das 
-vezes, é denominado &lt;code&gt;GetInstance&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Na implementação mais básica, que pode ser feita em praticamente qualquer linguagem Orientada a Objetos,
-implementamos construtores da Classe 
-como privados. Assim o utilizador da Classe não conseguirá instanciar Objetos dessa Classe diretamente. Depois
-é definido um (ou mais) método estático — &lt;code&gt;GetInstance&lt;/code&gt; — para retornar uma instância da Classe… do mesmo tipo da Classe!&lt;/p&gt;
-
-&lt;p&gt;Aí está o problema.&lt;/p&gt;
-
-&lt;p&gt;Um &lt;strong&gt;grave&lt;/strong&gt; problema.&lt;/p&gt;
-
-&lt;p&gt;Se você retornar uma instância do mesmo tipo da Classe, seu código terá uma dependência direta com essa Classe.
-Só isso pode arruinar qualquer tentativa de testes automatizados no código.&lt;/p&gt;
-
-&lt;p&gt;Veja um exemplo:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TUserAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ChangePassword&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IUser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NewPassword&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NewPassword&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Invalid Password&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewPassword&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Must have 8 characters or more&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Password&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NewPassword&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TMSSQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;É um código idiota, mas serve ao propósito.&lt;/p&gt;
-
-&lt;p&gt;Vejamos.&lt;/p&gt;
-
-&lt;p&gt;Existe um Classe &lt;code&gt;TUserAction&lt;/code&gt; que tem um método para alterar o &lt;em&gt;password&lt;/em&gt; do usuário logado. Esse método tem 
-algumas validações simples.&lt;/p&gt;
-
-&lt;p&gt;Alteramos seu &lt;em&gt;password&lt;/em&gt; e depois essa alteração será persistida no SGBD.&lt;/p&gt;
-
-&lt;p&gt;A chamada &lt;code&gt;TMSSQL.GetInstance&lt;/code&gt; é um &lt;em&gt;Singleton&lt;/em&gt;. O método irá retornar uma conexão &lt;code&gt;TMSSQLConnection&lt;/code&gt; para o MSSQL.&lt;/p&gt;
-
-&lt;p&gt;Utilizamos então o método &lt;code&gt;Save(User)&lt;/code&gt; para persistir as alterações.&lt;/p&gt;
-
-&lt;p&gt;Não importa como &lt;code&gt;Save(User)&lt;/code&gt; sabe como persistir um usuário. Isso não é relevante. O problema aqui é
-como iremos testar &lt;code&gt;ChangePassword&lt;/code&gt; sem fazer a integração/conexão real com o SGBD (MSSQL).&lt;/p&gt;
-
-&lt;p&gt;Eu só quero testar o método utilizando um &lt;strong&gt;teste automatizado&lt;/strong&gt;. Eu não quero ter que conectar num SGBD real,
-utilizar &lt;em&gt;user/password&lt;/em&gt; reais e muito menos alterar algum dado.&lt;/p&gt;
-
-&lt;p&gt;Quero fazer &lt;strong&gt;testes de unidade&lt;/strong&gt;, não &lt;strong&gt;testes de integração&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Bem, se &lt;code&gt;TMSSQL.GetInstance&lt;/code&gt; me retorna uma instância de &lt;code&gt;TMSSQLConnection&lt;/code&gt;, uma Classe concreta, &lt;strong&gt;não é possível
-fazer o teste automatizado&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;É um exemplo simples. Vejo isso na maioria dos códigos “&lt;em&gt;Object Pascal&lt;/em&gt;” — que não tem nada de Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Na verdade, a maioria iria utilizar uma instância de algum
-&lt;a href=&quot;/posts/datamodule-e-apenas-um-container/&quot;&gt;DataModule&lt;/a&gt; e iria substituir a chamada &lt;code&gt;TMSSQL.GetInstance&lt;/code&gt;
-por apenas &lt;code&gt;DM.conMSSQL&lt;/code&gt; ou seja, duas variáveis. Triste.&lt;/p&gt;
-
-&lt;p&gt;Entendeu por que não devemos utilizar uma instância de Classe concreta?&lt;/p&gt;
-
-&lt;p&gt;E qual a solução?&lt;/p&gt;
-
-&lt;p&gt;Retornar uma instância de &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interface&lt;/a&gt; ao invés
-de uma instância do tipo Classe.&lt;/p&gt;
-
-&lt;h3 id=&quot;implementacao-sugerida&quot;&gt;Implementação Sugerida&lt;/h3&gt;
-
-&lt;p&gt;O que irei sugerir para a implementação de um &lt;em&gt;Singleton&lt;/em&gt; é tão simples quanto parece, mas com um ganho
-incontestável: &lt;strong&gt;Desacoplamento&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Utilize &lt;em&gt;Interfaces&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Ao invés de &lt;code&gt;TMSSQL.GetInstance&lt;/code&gt; retornar um &lt;code&gt;TMSSQLConnection&lt;/code&gt;, o método irá retornar um &lt;code&gt;IConnection&lt;/code&gt; ou seja,
-uma &lt;em&gt;Interface&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se agora temos um retorno que é uma &lt;em&gt;Interface&lt;/em&gt;, podemos ter qualquer Classe que implemente essa &lt;em&gt;Interface&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TMSSQLConnection&lt;/code&gt; deverá implementar &lt;code&gt;IConnection&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;E onde está desacoplamento?&lt;/p&gt;
-
-&lt;p&gt;Você poderá retornar qualquer instância que implemente &lt;code&gt;IConnection&lt;/code&gt; e isso pode ser feito de várias formas.&lt;/p&gt;
-
-&lt;p&gt;Se quiser escrever menos, utilize &lt;strong&gt;diretivas de compilação&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMSSQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IConnection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Assigned&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;{$IFDEF TEST}&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TFakeConnection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;{$ELSE}&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMSSQLConnection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;user&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;password&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;{$ENDIF}&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Essa é a maneira “Rápido e sujo”. Você pode começar por aí caso nunca tenha pensado nisso. Quando estiver
-em “modo de teste”, ative a diretiva &lt;code&gt;TEST&lt;/code&gt;, do contrário a Classe de produção será utilizada.&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TFakeConnection&lt;/code&gt; não se conecta em nenhum SGBD. Talvez você possa utilizá-la para fazer 
-um log das instruções SQL ou &lt;strong&gt;não fazer nada&lt;/strong&gt; quando chamar o método &lt;code&gt;Save&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se você está testando as &lt;strong&gt;Regras de Negócio&lt;/strong&gt;, a persistência é irrelevante.&lt;/p&gt;
-
-&lt;p&gt;Depois você pode &lt;strong&gt;refatorar&lt;/strong&gt; esse código e deixá-lo mais Orientado a Objetos, utilizando 
-Injeção de Dependência em conjunto com &lt;a href=&quot;https://en.wikipedia.org/wiki/Abstract_factory_pattern&quot;&gt;&lt;em&gt;Abstract Factory Pattern&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Como?&lt;/p&gt;
-
-&lt;p&gt;Bem, em algum lugar no seu código você deverá ter uma chamada para “inicializar” a Classe &lt;code&gt;TMSSQL&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMSSQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IConnectionFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FFactory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;initialization&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;TMSSQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TDbConnectionFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;mssql&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Mais um vez estaremos utilizando métodos estáticos. Mas estamos em busca de simplicidade.
-Não devemos ser &lt;strong&gt;puristas&lt;/strong&gt; em Orientação a Objetos se não há nenhum benefício. Sempre haverá partes do código
-que poderiam melhorar, refatorar, eliminar, etc. Enfim.&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TMSSQL&lt;/code&gt; deverá ser bem pequena e sem complexidade.&lt;/p&gt;
-
-&lt;p&gt;O atributo &lt;code&gt;FFactory&lt;/code&gt; é um &lt;code&gt;class var&lt;/code&gt; assim como &lt;code&gt;FInstance&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então você poderá ter novas Classes que implementam &lt;code&gt;IConnectionFactory&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;No exemplo temos &lt;code&gt;TDbConnectionFactory&lt;/code&gt;. Optei por utilizar um parâmetro que me diz qual “tipo” de Classe será
-utilizada. Se eu quiser testar o código bastaria chamar &lt;code&gt;TDbConnectionFactory.New(&#39;test&#39;)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Utilize seu estilo.&lt;/p&gt;
-
-&lt;p&gt;Após essa alteração o método &lt;code&gt;GetInstance&lt;/code&gt; pode ser refatorado:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMSSQL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IConnection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Assigned&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewConnection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FUser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FPassword&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;A chamada a &lt;code&gt;FFactory.NewConnection&lt;/code&gt; irá gerar uma nova instância de &lt;code&gt;IConnection&lt;/code&gt;. Qual a Classe que 
-estará sendo utilizada é irrelevante para o código que utiliza &lt;code&gt;TMSSQL.GetInstance&lt;/code&gt; em todos os lugares,
-como deve ser. O retorno poderia ser &lt;code&gt;TMSSQLConnection&lt;/code&gt;, &lt;code&gt;TFakeConnection&lt;/code&gt; ou qualquer outra classe que
-implemente &lt;code&gt;IConnection&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Esse é um &lt;em&gt;Singleton&lt;/em&gt; &lt;strong&gt;simples&lt;/strong&gt;, &lt;strong&gt;desacoplado&lt;/strong&gt; e &lt;strong&gt;Orientado a Objetos&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 16 May 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/singleton-e-um-anti-padrao/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/singleton-e-um-anti-padrao/</guid>
       </item>
     
   </channel>
