@@ -27,7 +27,7 @@ E os Dados, onde estão os Dados?
 
 Tenho dito, por várias vezes, que um Objeto não deve ser visto ou utilizado como um [balde de dados e funções]({% post_url 2015-12-29-o-que-e-orientacao-a-objetos %}#objeto-nao-e-um-balde-de-funcoes-e-dados).
 
-Objetos não são [*containers*]({% post_url 2016-02-22-datamodule-e-apenas-um-container %}) de transporte de dados. Eles devem [representar uma Entidade]({% post_url 2016-02-29-objetos-representam-entidades %}) fora do Contexto do Software. Não importa de a Entidade é um objeto, pessoa ou Dados.
+Objetos não são [*containers*]({% post_url 2016-02-22-datamodule-e-apenas-um-container %}) de transporte de dados. Eles devem [representar uma Entidade]({% post_url 2016-02-29-objetos-representam-entidades %}) fora do Contexto do Software. Não importa se a Entidade é um objeto, pessoa ou Dados.
 
 E o que são Dados?
 
@@ -97,15 +97,15 @@ type
 
 Agora o Contexto mudou.
 
-A propriedade `FStream` na Classe `TDataStream` é apenas o Estado da Classe e não apenas Dados. Essa Classe representa um *stream* mas ela não sabe se o *stream* é proveniente de um Arquivo ou de registros em uma Tabela.
+A propriedade `FStream` na Classe `TDataStream` representa o Estado do Objeto e não Dados do Objeto. Essa Classe representa um *stream* mas ela não sabe se o *stream* é proveniente de um Arquivo ou de registros em uma Tabela.
 
 Estamos olhando para um novo Contexto e isso muda nossa percepção sobre o que é ou não Dados.
 
-Veja que internamente `TDataStream` foi implementado utilizando um `TMemoryStream` para "guardar" o *stream* — mais uma vez utilizando Composição de Objetos — mas eu poderia optar por utilizar apenas *bytes* e um ponteiro para a memória. Não importa. Isso tudo é privado e ninguém sabe o que acontece dentro de um Objeto.
+Veja que internamente `TDataStream` foi implementado utilizando um `TMemoryStream` para "guardar" o *stream* — mais uma vez utilizando Composição de Objetos — mas eu poderia optar por utilizar apenas *bytes* e um ponteiro para a memória. Não importa. Isso tudo é privado e ninguém sabe o que acontece dentro de um Objeto. O importante é saber distinguir a diferença entre Dados e Estado do Objeto.
 
-Confuso?
+##Dados na forma de Objetos {#dados-na-forma-de-objetos}
 
-##Dados na forma de Objetos
+Classes de Dados são aquelas que geram Objetos que representam Dados.
 
 Nós utilizamos Dados na forma de Objetos a muito tempo.
 
@@ -116,6 +116,8 @@ Se não tivéssemos essas Classes, teríamos que trabalhar os Dados no nível de
 Queremos utilizar Objetos, pois eles facilitam nossas vidas. Então encapsulamos arquivos, *streams*, registros de Tabelas, etc em Classes que geram Objetos para manipular os Dados.
   
 ##Conclusão {#conclusao}
+
+Não há problema se seu Objeto encapsula apenas Dados, contanto que esses Dados fazem parte da Entidade real que seu Objeto está representando.
 
 Entender a sutil diferença entre Dados e Estado do Objeto irá fazer você codificar Classes melhores. 
 
