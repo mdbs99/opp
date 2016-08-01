@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Classes de Dados"
-date: 2016-07-25
+date: 2016-08-01
 description: Como manipulamos os Dados num Projeto Orientado a Objetos.
 summary: Como manipulamos os Dados num Projeto Orientado a Objetos.
 image: /images/photo-1457904375453-3e1fc2fc76f4.jpg
