@@ -325,6 +325,8 @@ Caso o VERBO seja GET, então `FStream` irá conter um PATH_INFO para complement
 
 Até aqui nada de mais. Você viu apenas algumas Classes simples que encapsulam [Entidades]({% post_url 2016-02-29-objetos-representam-entidades %}) reais, utilizando Orientação a Objetos.
 
-No próximo artigo vou escrever sobre o módulo `MicroService` que contém todas as Classes que fazem a comunicação com os Microservices codificados em Java.
+No próximo artigo escrevo sobre o módulo `MicroService` que contém todas as Classes que fazem a comunicação com os Microservices codificados em Java.
+
+[Clique aqui]({% post_url 2016-08-15-microservices-delphi-parte-2 %}) para ler a **Parte #2** dessa série.
 
 Até logo.

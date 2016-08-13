@@ -4,7 +4,7 @@ title: Microservices com Delphi — Parte 2
 date: 2016-08-15
 description: Como implementar uma simples API para fazer a comunicação com Microservices em Java.
 summary: Como implementar uma simples API para fazer a comunicação com Microservices em Java.
-image: /images/photo-1453230806017-56d81464b6c5.jpg
+image: /images/photo-1457305237443-44c3d5a30b89.jpg
 categories: 
   - Pascal
 tags:
@@ -22,8 +22,12 @@ keywords:
 
 ##Introdução {#introducao}
 
+No [artigo anterior]({% post_url 2016-08-08-microservices-delphi-parte-1 %}) 
 
-###Localizando Serviços
+
+###Localizando Serviços {#localizando-servicos}
+
+
 
 ####Unit MicroServiceA
 
@@ -89,9 +93,8 @@ var
   Q: ISQLQuery;
 begin
   // Através de uma Query (instância Q), 
-  // pesquisa pelo nome do serviço (FServiceName)
-  // Os Fields irão gerar um TDataParams
-  // ...  
+  // pesquisa pelo nome do serviço (FServiceName).
+  // Utilizando os Fields, retornamos uma instância TDataParams.
   Result := TDataParams.New(Q.Fields);
 end;
 
@@ -178,11 +181,11 @@ begin
 end;
 {% endhighlight text %}
 
-###Consumindo um Serviço
+###Consumindo um Serviço {#consumindo-um-servico}
 
 
 
-###Tratamento de Exceções
+###Tratamento de Exceções {#tratamento-de-excecoes}
 
 {% highlight pascal %}
 function TMicroServiceClient.Send(XML: IXMLDocument): IMicroServiceResponse;
@@ -214,10 +217,10 @@ end;
 
 O código é real e está em produção. E parece bem simples, não?
 
-WebServices, Multi-camadas, Sistemas distribuídos... tudo isso parece muito complicado. Mas se você souber como as coias funcionam, poderá remover tudo que é desnecessário e se concentrar no essencial.
+WebServices, Multi-camadas, Sistemas distribuídos... tudo isso parece muito complicado. Mas se você souber como as coias funcionam, poderá remover tudo que é **desnecessário** e se concentrar no **essencial**.
 
 A migração está longe de estar concluída. O sistema tem poucos meses, mas apenas poucos dias de trabalho *full time* apenas na codificação e integração dos Microservices.
 
-Ainda há muito o que fazer, mas acho que estamos indo bem. E você, o que achou?
+Bem, por enquanto estamos indo bem.
 
 Até logo.
