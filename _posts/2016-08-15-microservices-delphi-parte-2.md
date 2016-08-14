@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Microservices com Delphi — Parte 2
-date: 2016-08-15
+date: 2016-08-14
 description: Como implementar uma simples API para fazer a comunicação com Microservices em Java.
 summary: Como implementar uma simples API para fazer a comunicação com Microservices em Java.
 image: /images/photo-1457305237443-44c3d5a30b89.jpg
@@ -15,6 +15,9 @@ keywords:
   - delphi
 --- 
 
+Não basta apenas utilizar um Protocolo HTTP para fazer a comunicação com os Microservices. É necessário, também, codificar um Localizador de Microservices.
+
+Veja como um implementar um Localizador simples, utilizando um SGBD, e também a implementação de um *Client* para fazer a comunicação com qualquer Microservice no nosso *framework*.
 
 <!--more-->
 
@@ -22,16 +25,69 @@ keywords:
 
 ##Introdução {#introducao}
 
-No [artigo anterior]({% post_url 2016-08-08-microservices-delphi-parte-1 %}) 
+No [artigo anterior]({% post_url 2016-08-08-microservices-delphi-parte-1 %}) eu falei sobre o Projeto codificado em Delphi 7 que está sendo recodificado utilizando Microservices em Java.
+
+Nesse artigo irei falar sobre o Módulo Microservices, que possui todo o necessário para fazer a comunicação com os serviços.
+
+##Módulo MicroService
+
+O Módulo MicroService é composto de apenas 4 simples Interfaces (até agora).
+
+  * **IMicroServiceParams**: Representa um localizador de MicroService;
+  * **IMicroServiceResponse**: Representa um `Response` após uma chamada a um MicroService;
+  * **IMicroServiceClient**: Representa o *Client* para todos os Microservices;
+  * **IMicroServiceAction**: Representa uma Ação (irei falar sobre essa Interface em outro artigo).
+
+###Unit AcmeMicroServices.pas {#unit-microservices}
+
+Aqui está a implementação das Interfaces.
+
+Há algumas dependências que não estarão no escopo desses artigos, mas acredito que seja fácil abstrair as Classes ou Interfaces como, por exemplo, `IDataParams` e `IXMLDocument`.
+  
+{% highlight pascal %}
+type
+  IMicroServiceParams = interface
+    function Find: IDataParams;
+  end;
+
+  IMicroServiceResponse = interface
+    function Code: Integer;
+    function Empty: Boolean;
+    function XML: IXMLDocument;
+  end;
+
+  IMicroServiceClient = interface
+    function Send(XML: IXMLDocument): IMicroServiceResponse;
+  end;
+
+  IMicroServiceAction = interface
+    function Act: IMicroServiceResponse;
+  end;
+{% endhighlight text %}
 
 
-###Localizando Serviços {#localizando-servicos}
+##Localizando Serviços {#localizando-servicos}
 
+Se sua aplicação utiliza apenas 3 ou 5 Microservices, não haveria necessidade de implementar um Localizador. Mas se sua aplicação lida com dezenas ou mais de Microservices, então é necessário haver um "índice" de Microservices.
 
+O índice está no SGBD, em apenas 1 tabela (atualmente), e a localização de qualquer serviço é feita através do seu *name*.
 
-####Unit MicroServiceA
+Sim, é só isso.
 
-Essa *unit* encapsula as Classes relativas a toda comunicação com os Microservices.
+A tabela — vamos dar o nome de Micro_Services para esse artigo — possue algumas colunas.
+
+As mais relevantes são:
+
+  * **[name]**: O nome do serviço. Esse nome deve ser único;
+  * **[server]**: O IP do servidor onde o MicroService está hospedado;
+  * **[path]**: O *path* do serviço, exemplo: http://10.20.0.10/execute onde "/execute" é o *path*;
+  * **[port]**: A porta onde o serviço está hospedado, exemplo: http://10.20.0.10:8020/execute (8020 é a porta);
+  * **[encoding]**: Alguns serviços trabalham com *encode* diferente de UTF-8;
+  * **[verb]**: Existem serviços que utilizam GET outros POST, etc. Essa coluna informa qual verbo HTTP utilizar;
+
+###Unit AcmeMicroServiceA.pas {#unit-microservicesa}
+
+Essa *unit* encapsula as Classes que implementam as Interfaces acima.
 
 A parte importante por aqui é o método `TMicroServiceClient.Response`. Esse método utiliza o resultado de `TMicroServiceParams.Find`, que é um localizador de serviços cadastrados, para montar uma requisição HTTP completa.
 
@@ -150,8 +206,7 @@ begin
     begin
       raise EMicroService.Create(
         'Service: ' + FParams.Param('name').AsString + #13 +
-        'Error: ' + E.Message + #13
-        //Result.AsString
+        'Error: ' + E.Message
       );
     end;
   end;
@@ -176,51 +231,16 @@ begin
       Code,
       TXMLFactory.New('ISO-8859-1', Stream).Document
     );
-    // Exceptions... veja mais abaixo
   end;
 end;
 {% endhighlight text %}
 
-###Consumindo um Serviço {#consumindo-um-servico}
+##No próximo artigo… {#no-proximo-artigo}
 
+O código em produção está um pouco mais completo. Falta lhe mostrar o Tratamento de Exceções (outro artigo), por exemplo, e talvez alguns outros detalhes. 
 
+Mas é isso, o código é real e está em uso!
 
-###Tratamento de Exceções {#tratamento-de-excecoes}
-
-{% highlight pascal %}
-function TMicroServiceClient.Send(XML: IXMLDocument): IMicroServiceResponse;
-begin
-  with Response(XML) do
-  begin
-    Result := TMicroServiceResponse.New(
-      Code,
-      TXMLFactory.New('ISO-8859-1', Stream).Document
-    );
-    case Code of
-      // BAD REQUEST
-      400..499:
-        raise EMicroService.Create(
-          Result.XML.DocumentElement.ChildNodes['UserMessage'].Text
-        );
-      // SERVER ERROR
-      500..510:
-        raise EMicroService.Create(
-          Result.XML.DocumentElement.ChildNodes['DevMessage'].Text
-        );
-    end;
-  end;
-end;
-{% endhighlight text %}
-
-
-##Conclusão {#conclusao}
-
-O código é real e está em produção. E parece bem simples, não?
-
-WebServices, Multi-camadas, Sistemas distribuídos... tudo isso parece muito complicado. Mas se você souber como as coias funcionam, poderá remover tudo que é **desnecessário** e se concentrar no **essencial**.
-
-A migração está longe de estar concluída. O sistema tem poucos meses, mas apenas poucos dias de trabalho *full time* apenas na codificação e integração dos Microservices.
-
-Bem, por enquanto estamos indo bem.
+No próximo artigo você irá ver como construir uma **Classe de Negócio** que faz uso de todo esse arcabouço.
 
 Até logo.

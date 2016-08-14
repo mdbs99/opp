@@ -77,7 +77,7 @@ Um sistema precisa ser [modularizado]({% post_url 2016-07-18-nomeando-unidades %
 
 Esse Módulo tem 2 *units* de Classes que são relevantes para essa implementação.
 
-###Unit WebA
+###Unit AcmeWebA.pas {#unit-weba}
 
 Essa *unit* encasula tudo que é genérico sobre Web.
 
@@ -145,7 +145,7 @@ begin
 end;
 {% endhighlight text %}
 
-###Unit WebHttpA
+###Unit AcmeWebHttpA.pas {#unit-webhttpa}
 
 Essa *unit* encapsula o protocolo HTTP.
 
@@ -325,8 +325,6 @@ Caso o VERBO seja GET, então `FStream` irá conter um PATH_INFO para complement
 
 Até aqui nada de mais. Você viu apenas algumas Classes simples que encapsulam [Entidades]({% post_url 2016-02-29-objetos-representam-entidades %}) reais, utilizando Orientação a Objetos.
 
-No próximo artigo escrevo sobre o módulo `MicroService` que contém todas as Classes que fazem a comunicação com os Microservices codificados em Java.
-
-[Clique aqui]({% post_url 2016-08-15-microservices-delphi-parte-2 %}) para ler a **Parte #2** dessa série.
+No [próximo artigo]({% post_url 2016-08-15-microservices-delphi-parte-2 %}) escrevo sobre o módulo `MicroService` que contém todas as Classes que fazem a comunicação com os Microservices codificados em Java.
 
 Até logo.
