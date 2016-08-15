@@ -194,7 +194,7 @@ begin
   try
     Result :=
       THttpClient.New(
-        TWebURL.Create(
+        TWebURL.New(
           FParams.Param('server').AsString,
           FParams.Param('path').AsString,
           FParams.Param('port').AsInteger
