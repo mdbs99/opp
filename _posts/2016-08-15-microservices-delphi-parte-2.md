@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Microservices com Delphi — Parte 2
-date: 2016-08-14
+date: 2016-08-15
 description: Como implementar uma simples API para fazer a comunicação com Microservices em Java.
 summary: Como implementar uma simples API para fazer a comunicação com Microservices em Java.
 image: /images/photo-1457305237443-44c3d5a30b89.jpg
@@ -57,7 +57,8 @@ type
   end;
 
   IMicroServiceClient = interface
-    function Send(XML: IXMLDocument): IMicroServiceResponse;
+    function Send(const Content: string): IMicroServiceResponse; overload;
+    function Send(XML: IXMLDocument): IMicroServiceResponse; overload;
   end;
 
   IMicroServiceAction = interface
@@ -91,6 +92,8 @@ Essa *unit* encapsula as Classes que implementam as Interfaces acima.
 
 A parte importante por aqui é o método `TMicroServiceClient.Response`. Esse método utiliza o resultado de `TMicroServiceParams.Find`, que é um localizador de serviços cadastrados, para montar uma requisição HTTP completa.
 
+Consegue ver a beleza do método `TMicroServiceClient.Response` onde (quase) tudo são Objetos conversando e [tomando decisões]({% post_url 2016-03-14-objetos-pensam-e-tomam-decisoes %}) entre si?
+
 {% highlight pascal %}
 type
   EMicroService = class(Exception);
@@ -119,11 +122,12 @@ type
   TMicroServiceClient = class(TInterfacedObject, IMicroServiceClient)
   private
     FParams: IDataParams;
-    function Response(XML: IXMLDocument): IHttpResponse;
+    function Response(const Content: string): IHttpResponse;
   public
     constructor Create(ServiceParams: IDataParams);
     class function New(ServiceParams: IDataParams): IMicroServiceClient;
-    function Send(XML: IXMLDocument): IMicroServiceResponse;
+    function Send(const Content: string): IMicroServiceResponse; overload;
+    function Send(XML: IXMLDocument): IMicroServiceResponse; overload;
   end;
 
 implementation
@@ -185,7 +189,7 @@ end;
 
 { TMicroServiceClient }
 
-function TMicroServiceClient.Response(XML: IXMLDocument): IHttpResponse;
+function TMicroServiceClient.Response(const Content: string): IHttpResponse;
 begin
   try
     Result :=
@@ -198,7 +202,7 @@ begin
         .AsString,
         'application/xml;charset=' +
           FParams.Param('encoding').AsString,
-        TDataStream.New(XML.XML)
+        TDataStream.New(Content)
       )
       .Execute(FParams.Param('verb').AsString);
   except
@@ -223,9 +227,9 @@ begin
   Result := Create(ServiceParams);
 end;
 
-function TMicroServiceClient.Send(XML: IXMLDocument): IMicroServiceResponse;
+function TMicroServiceClient.Send(const Content: string): IMicroServiceResponse;
 begin
-  with Response(XML) do
+  with Response(Content) do
   begin
     Result := TMicroServiceResponse.New(
       Code,
@@ -233,13 +237,18 @@ begin
     );
   end;
 end;
+
+function TMicroServiceClient.Send(XML: IXMLDocument): IMicroServiceResponse;
+begin
+  Result := Send(XML.XML);
+end;
 {% endhighlight text %}
 
 ##No próximo artigo… {#no-proximo-artigo}
 
-O código em produção está um pouco mais completo. Falta lhe mostrar o Tratamento de Exceções (outro artigo), por exemplo, e talvez alguns outros detalhes. 
+Isso é código real, em produção!
 
-Mas é isso, o código é real e está em uso!
+E onde está o Tratamento de Exceções, Classes de Negócio, etc?
 
 No próximo artigo você irá ver como construir uma **Classe de Negócio** que faz uso de todo esse arcabouço.
 
