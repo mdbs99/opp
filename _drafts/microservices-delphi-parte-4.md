@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Microservices com Delphi — Parte 3
-date: 2016-08-22
+title: Microservices com Delphi — Parte 4
+date: 2016-08-29
 description: Como implementar uma simples API para fazer a comunicação com Microservices em Java.
 summary: Como implementar uma simples API para fazer a comunicação com Microservices em Java.
 image: /images/photo-1457305237443-44c3d5a30b89.jpg
@@ -21,9 +21,6 @@ keywords:
 ![Imagem]({{ page.image }})
 
 ##Introdução {#introducao}
-
-
-###Consumindo um Serviço {#consumindo-um-servico}
 
 
 ###Tratamento de Exceções {#tratamento-de-excecoes}

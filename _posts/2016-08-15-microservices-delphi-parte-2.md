@@ -25,11 +25,11 @@ Veja como um implementar um Localizador simples, utilizando um SGBD, e também a
 
 ##Introdução {#introducao}
 
-No [artigo anterior]({% post_url 2016-08-08-microservices-delphi-parte-1 %}) eu falei sobre o Projeto codificado em Delphi 7 que está sendo recodificado utilizando Microservices em Java.
+No [artigo anterior]({% post_url 2016-08-08-microservices-delphi-parte-1 %}) eu escrevi sobre o Projeto codificado em Delphi 7 que está sendo recodificado utilizando Microservices em Java.
 
 Nesse artigo irei falar sobre o Módulo Microservices, que possui todo o necessário para fazer a comunicação com os serviços.
 
-##Módulo MicroService
+##Módulo MicroService {#modulo-microservice}
 
 O Módulo MicroService é composto de apenas 4 simples Interfaces (até agora).
 
@@ -250,6 +250,6 @@ Isso é código real, em produção!
 
 E onde está o Tratamento de Exceções, Classes de Negócio, etc?
 
-No próximo artigo você irá ver como construir uma **Classe de Negócio** que faz uso de todo esse arcabouço.
+No [próximo artigo]({% post_url 2016-08-22-microservices-delphi-parte-3 %}) você irá ver como construir uma **Classe de Negócio** que faz uso de todo esse arcabouço.
 
 Até logo.
