@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Microservices com Delphi — Parte 3
-date: 2016-08-21
+date: 2016-08-22
 description: Como implementar uma simples API para fazer a comunicação com Microservices em Java.
 summary: Como implementar uma simples API para fazer a comunicação com Microservices em Java.
 image: /images/photo-1448932223592-d1fc686e76ea.jpg
@@ -17,7 +17,7 @@ keywords:
 
 Podemos utilizar diretamente uma instância de `TMicroServiceClient`, passar um XML como parâmetro e obter a resposta. Mas isso não seria o ideal. Devemos ter Classes de Negócio, com suas próprias Regras e entrada/saída de informações.
 
-Vamos codificar uma Classe de Negócio, que construa seu próprio XML e utilize, internamente, a instância do Client.
+Vamos codificar uma Classe de Negócio, que construa seu próprio XML e utilize, internamente, uma instância do *Client*.
 
 <!--more-->
 
@@ -28,6 +28,8 @@ Vamos codificar uma Classe de Negócio, que construa seu próprio XML e utilize,
 No [artigo anterior]({% post_url 2016-08-15-microservices-delphi-parte-2 %}) eu escrevi sobre o Módulo MicroService e Localização de Serviços.
 
 Nesse artigo você irá aprender a codificar uma Classe de Negócio que irá consumir um Microservice, utilizando o Módulo já apresentado ateriormente.
+
+Também aprenderá como transformar XML em dados tabulares para apresentá-los numa *Grid*, por exemplo.
 
 ##Classe TXMLFactory {#classe-txmlfactory}
 
@@ -163,12 +165,6 @@ begin
 end;
 {% endhighlight text %}
 
-E é isso.
-
-Uma implementação completa de um serviço.
-
-Se você esperava algo mais complexo, sinto decepcioná-lo, pois a implementação é tão simples quanto isso. :)
-
 ###O código passo-a-passo {#passo-a-passo}
 
 Vamos entender o código juntos:
@@ -179,6 +175,12 @@ Vamos entender o código juntos:
   5. O Objeto `TMicroServiceClient` envia o XML de envio e retorna uma instância de `IMicroServiceResponse`.
   2. O objeto retornado contém um `XML: IXMLDocument` que é a resposta do Microservice codificado em Java;
 
+E é isso.
+
+Uma implementação completa de um serviço.
+
+Se você esperava algo mais complexo, sinto decepcioná-lo, pois a implementação é tão simples quanto isso. :)  
+  
 ###Utilizando a Classe de Negócio {#utilizando-a-classe}
   
 Uma vez que a Classe de Negócio foi implementada, poderá ser utilizada em muitas partes do sistema sem haver duplicação de código; não precisará montar o mesmo XML em vários lugares; não precisará passar os mesmos parâmetros para o *Client*, etc.
@@ -217,7 +219,7 @@ Não. É tão simples quanto a implementação da Classe de Negócio.
 Veja a implementação do método `Adapt`:
 
 {% highlight pascal %}
-function TXMLDataSetAdapter.Adapt: IDataAdapter;
+function TXMLClientDataSetAdapter.Adapt: IDataAdapter;
 var
   I: Integer;
   Field: TField;
@@ -250,7 +252,7 @@ end;
 
 Ele adapta o XML para o formato tabular e no fim temos uma instância de `TClientDataSet` com os dados provenientes do XML.
 
-###Será um substituto ao *DataSnap*?
+##Será um substituto ao *DataSnap*?
 
 Eu ainda não terminei essa série, porém já recebi alguns e-mails de alguns leitores perguntando se é possível utilizar essa solução como um substituto ao [*Delphi DataSnap*](http://docwiki.embarcadero.com/RADStudio/Seattle/en/Developing_DataSnap_Applications).
 
@@ -258,11 +260,11 @@ Minha resposta é que o *DataSnap* tem muito, muito código implementado com in�
 
 É melhor ou pior?
 
-Não sei. Eu acho que depende do tipo do projeto quando escolhemos as tecnologias.
+Depende do tipo do projeto.
 
 Nesse projeto a versão do Delphi é a 7. A empresa não quer mais investir no Delphi e vai substituí-lo, aos poucos, por Java ou mesmo C#. Então não haveria motivos em utilizar *DataSnap*, visto que a linguagem irá mudar no futuro.
 
-###Desvantagens, *by Design*
+##Desvantagens *by design*
 
 É claro que há desvantagens na solução proposta. Sempre há desvantagens.
 
@@ -285,8 +287,8 @@ Apesar de não vermos isso como desvantagens, não deixa de ler uma limitação.
 
 ##No próximo artigo… {#no-proximo-artigo}
 
-Você acabou de ver uma implementação simples, *"made in home"*, para trabalhar com interoperabilidade entre sistemas distintos utilizando "tecnologias da moda", que nada mais são do que requisições HTTP enviando e recebendo XML.
+Você acabou de ver uma implementação simples, *"made in home"*, para trabalhar com interoperabilidade entre sistemas distintos utilizando Microservices que nada mais são do que requisições HTTP enviando e recebendo XML.
 
-No próximo artigo você irá ver como fazer o Tratamento de Exceções.
+Finalizaremos essa série no próximo artigo, aguarde.
 
 Até logo.
