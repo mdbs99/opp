@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Microservices com Delphi — Parte 3 &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Como implementar uma simples API para fazer a comunicação com Microservices em Java.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Pascal">
+    <meta name="keywords" content="microservices, java, delphi">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201608221232" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Microservices com Delphi — Parte 3">
+    <meta property="og:description" content="Como implementar uma simples API para fazer a comunicação com Microservices em Java.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1448932223592-d1fc686e76ea.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Microservices com Delphi — Parte 3" />
+    <meta name="twitter:description" content="Como implementar uma simples API para fazer a comunicação com Microservices em Java." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>Lista VIP | eBook</a>
+<a href="/archive/">Arquivo</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Microservices com Delphi — Parte 3</h1>
+  <span class="post-meta">Aug 22, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    6 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Podemos utilizar diretamente uma instância de <code>TMicroServiceClient</code>, passar um XML como parâmetro e obter a resposta. Mas isso não seria o ideal. Devemos ter Classes de Negócio, com suas próprias Regras e entrada/saída de informações.</p>
+
+<p>Vamos codificar uma Classe de Negócio, que construa seu próprio XML e utilize, internamente, uma instância do <em>Client</em>.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1448932223592-d1fc686e76ea.jpg" alt="Imagem" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>No <a href="/posts/microservices-delphi-parte-2/">artigo anterior</a> eu escrevi sobre o Módulo MicroService e Localização de Serviços.</p>
+
+<p>Nesse artigo você irá aprender a codificar uma Classe de Negócio que irá consumir um Microservice, utilizando o Módulo já apresentado ateriormente.</p>
+
+<p>Também aprenderá como transformar XML em dados tabulares para apresentá-los numa <em>Grid</em>, por exemplo.</p>
+
+<h2 id="classe-txmlfactory">Classe TXMLFactory</h2>
+
+<p>Uma instância de <code>TXMLFactory</code> é utilizada no <em>Client</em>, especificamente no método <code>TMicroServiceClient.Send</code>, que não foi abordada no artigo anterior.</p>
+
+<p>É uma Classe simples mas importante, utilizada tanto para montar tanto o XML de envio como o de retorno.</p>
+
+<p>O Delphi 7 não trabalha com <em>encode</em> <code>UTF-8</code> por padrão mas os Microservices em Java trabalham no formato <code>UTF-8</code>. Então o <em>Client</em> deve fazer todas as solicitações nesse formato.</p>
+
+<p>O resultado, no entanto, é convertido para <code>ISO-8859-1</code> — que é o formato que estou utilizando no Delphi 7 — antes dos dados serem disponibilizados para o resto da aplicação.</p>
+
+<p>A Classe <code>TXMLFactory</code> facilita o envio e retorno.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TXMLFactory</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IXMLFactory</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FEncoding</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+    <span class="n">FStream</span><span class="o">:</span> <span class="n">IDataStream</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">Encoding</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Stream</span><span class="o">:</span> <span class="n">IDataStream</span><span class="p">)</span><span class="o">;</span> <span class="k">reintroduce</span><span class="o">;</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="n">Encoding</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Stream</span><span class="o">:</span> <span class="n">IDataStream</span><span class="p">)</span><span class="o">:</span> <span class="n">IXMLFactory</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="n">Encoding</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IXMLFactory</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="o">:</span> <span class="nf">IXMLFactory</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Document</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TXMLFactory }</span>
+
+<span class="k">constructor</span> <span class="nc">TXMLFactory</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">Encoding</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Stream</span><span class="o">:</span> <span class="n">IDataStream</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FEncoding</span> <span class="o">:=</span> <span class="n">Encoding</span><span class="o">;</span>
+  <span class="n">FStream</span> <span class="o">:=</span> <span class="n">Stream</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">class</span> <span class="k">function</span> <span class="nc">TXMLFactory</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="n">Encoding</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
+  <span class="n">Stream</span><span class="o">:</span> <span class="n">IDataStream</span><span class="p">)</span><span class="o">:</span> <span class="n">IXMLFactory</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">Create</span><span class="p">(</span><span class="n">Encoding</span><span class="o">,</span> <span class="n">Stream</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">class</span> <span class="k">function</span> <span class="nc">TXMLFactory</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="n">Encoding</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IXMLFactory</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">New</span><span class="p">(</span><span class="n">Encoding</span><span class="o">,</span> <span class="n">TDataStream</span><span class="o">.</span><span class="k">New</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">class</span> <span class="k">function</span> <span class="nc">TXMLFactory</span><span class="o">.</span><span class="k">New</span><span class="o">:</span> <span class="nf">IXMLFactory</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">New</span><span class="p">(</span><span class="s">&#39;UTF-8&#39;</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TXMLFactory</span><span class="o">.</span><span class="nf">Document</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="o">;</span>
+<span class="k">var</span>
+  <span class="n">Buf</span><span class="o">:</span> <span class="n">TMemoryStream</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TXMLDocument</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="k">nil</span><span class="p">)</span><span class="o">;</span>
+  <span class="n">Buf</span> <span class="o">:=</span> <span class="n">TMemoryStream</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
+  <span class="k">try</span>
+    <span class="bp">Result</span><span class="o">.</span><span class="n">Options</span> <span class="o">:=</span> <span class="p">[]</span><span class="o">;</span>
+    <span class="bp">Result</span><span class="o">.</span><span class="n">Active</span> <span class="o">:=</span> <span class="k">True</span><span class="o">;</span>
+    <span class="bp">Result</span><span class="o">.</span><span class="n">Version</span> <span class="o">:=</span> <span class="s">&#39;1.0&#39;</span><span class="o">;</span>
+    <span class="k">if</span> <span class="n">FStream</span><span class="o">.</span><span class="n">Size</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">then</span>
+    <span class="k">begin</span>
+      <span class="n">FStream</span><span class="o">.</span><span class="n">Save</span><span class="p">(</span><span class="n">Buf</span><span class="p">)</span><span class="o">;</span>
+      <span class="bp">Result</span><span class="o">.</span><span class="n">LoadFromStream</span><span class="p">(</span><span class="n">Buf</span><span class="p">)</span><span class="o">;</span>
+    <span class="k">end</span><span class="o">;</span>
+    <span class="bp">Result</span><span class="o">.</span><span class="n">Encoding</span> <span class="o">:=</span> <span class="n">FEncoding</span><span class="o">;</span>
+  <span class="k">finally</span>
+    <span class="n">Buf</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<h2 id="consumindo-um-servico">Consumindo um Serviço</h2>
+
+<p>Nesse projeto eu defini que todo consumo de qualquer Microservice será feito através de Classes de Negócio. Então poderei ter o mesmo número de Classes correspondende ao número de Microservices ou até mais, pois uma Classe de Negócio poderia fazer uso de mais de um Microservice.</p>
+
+<p>Iremos implementar uma Classe de Negócio simples e hipotética, visto que não poderia disponibilizar o código real do sistema quando se trata do negócio da empresa.</p>
+
+<p>A Classe proposta é a <code>TFaturasService</code>.</p>
+
+<p>A instância dessa Classe irá receber um parâmetro do tipo <code>IDataUId</code> — uma classe que encapsula um <em>GUID</em> — para retornar os dados de uma Fatura.</p>
+
+<p>Segue sua implementação abaixo:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
+  <span class="n">TFaturasService</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IMicroServiceAction</span><span class="p">)</span>
+  <span class="kp">private</span>
+    <span class="n">FUId</span><span class="o">:</span> <span class="n">IDataUId</span><span class="o">;</span>
+  <span class="kp">public</span>
+    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">UId</span><span class="o">:</span> <span class="n">IDataUId</span><span class="p">)</span><span class="o">;</span> <span class="k">reintroduce</span><span class="o">;</span>
+    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">UId</span><span class="o">:</span> <span class="n">IDataUId</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceAction</span><span class="o">;</span>
+    <span class="k">function</span> <span class="nf">Act</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+<span class="cm">{ TFaturasService }</span>
+
+<span class="k">constructor</span> <span class="nc">TFaturasService</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">UId</span><span class="o">:</span> <span class="n">IDataUId</span><span class="p">)</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
+  <span class="n">FUId</span> <span class="o">:=</span> <span class="n">UId</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">class</span> <span class="k">function</span> <span class="nc">TFaturasService</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+  <span class="n">UId</span><span class="o">:</span> <span class="n">IDataUId</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceAction</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">Create</span><span class="p">(</span><span class="n">UId</span><span class="p">)</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span>
+
+<span class="k">function</span> <span class="nc">TFaturasService</span><span class="o">.</span><span class="nf">Act</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span>
+
+  <span class="k">function</span> <span class="nf">XML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="o">;</span>
+  <span class="k">begin</span>
+    <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TXMLFactory</span><span class="o">.</span><span class="k">New</span><span class="o">.</span><span class="n">Document</span><span class="o">;</span>
+    <span class="k">with</span> <span class="bp">Result</span><span class="o">.</span><span class="n">AddChild</span><span class="p">(</span><span class="s">&#39;Params&#39;</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">begin</span>
+      <span class="n">AddChild</span><span class="p">(</span><span class="s">&#39;uid&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Text</span> <span class="o">:=</span> <span class="n">FUId</span><span class="o">.</span><span class="n">AsString</span><span class="o">;</span>
+      <span class="n">AddChild</span><span class="p">(</span><span class="s">&#39;active&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Text</span> <span class="o">:=</span> <span class="s">&#39;True&#39;</span><span class="o">;</span>
+    <span class="k">end</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span>
+    <span class="n">TMicroServiceClient</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+      <span class="n">TMicroServiceParams</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+        <span class="s">&#39;financ:faturas-service&#39;</span>
+      <span class="p">)</span>
+      <span class="o">.</span><span class="n">Find</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">Send</span><span class="p">(</span><span class="n">XML</span><span class="p">)</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<h3 id="passo-a-passo">O código passo-a-passo</h3>
+
+<p>Vamos entender o código juntos:</p>
+
+<ol>
+  <li><code>TFaturasService</code> é uma Classe de Negócio que implementa <code>IMicroServiceAction</code> (veja <a href="/posts/microservices-delphi-parte-2/#introducao">aqui</a>);</li>
+  <li>O Objeto <code>TXMLFactory</code> é utilizado para gerar o XML de envio;</li>
+  <li>O Objeto <code>TMicroServiceParams</code> localiza o serviço através do seu <code>name</code> (único) e traz as informações em forma de parâmetros;</li>
+  <li>O Objeto <code>TMicroServiceClient</code> envia o XML de envio e retorna uma instância de <code>IMicroServiceResponse</code>.</li>
+  <li>O objeto retornado contém um <code>XML: IXMLDocument</code> que é a resposta do Microservice codificado em Java;</li>
+</ol>
+
+<p>E é isso.</p>
+
+<p>Uma implementação completa de um serviço.</p>
+
+<p>Se você esperava algo mais complexo, sinto decepcioná-lo, pois a implementação é tão simples quanto isso. :)</p>
+
+<h3 id="utilizando-a-classe">Utilizando a Classe de Negócio</h3>
+
+<p>Uma vez que a Classe de Negócio foi implementada, poderá ser utilizada em muitas partes do sistema sem haver duplicação de código; não precisará montar o mesmo XML em vários lugares; não precisará passar os mesmos parâmetros para o <em>Client</em>, etc.</p>
+
+<p>Então, como utilizar a nova Classe no nosso código?</p>
+
+<p>Aqui está um exemplo:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">FillData</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="n">TXMLClientDataSetAdapter</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+    <span class="n">FModule</span><span class="o">.</span><span class="n">FaturaClient</span><span class="o">,</span>
+    <span class="n">TFaturasService</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">FUId</span><span class="p">)</span><span class="o">.</span><span class="n">Act</span><span class="o">.</span><span class="n">XML</span>
+  <span class="p">)</span>
+  <span class="o">.</span><span class="n">Adapt</span><span class="o">;</span></code></pre></figure>
+
+<p>No Delphi 7 utilizamos <code>TClientDataSet</code> para manter os dados tabulares (linhas e colunas) em memória, exibir numa <em>Grid</em> ou em qualquer outro <em>widget</em>. Mas os dados dos Microservices vem no formato de XML. Esses dados precisam ser convertidos para um formato tabular.</p>
+
+<p>Para isso temos uma outra Classe responsável por fazer essa conversão da forma mais genérica possível.</p>
+
+<p>Essa Classe é a <code>TXMLClientDataSetAdapter</code>.</p>
+
+<p>Ela recebe 2 parâmetros:</p>
+
+<ol>
+  <li>Uma instância de um <code>TClientDataSet</code>, que no exemplo está em um <code>TDataModule</code>;</li>
+  <li>Uma instância de <code>IXMLDocument</code>, que é obtido através da chamada <code>Act.XML</code>;</li>
+</ol>
+
+<p>Então executamos o método <code>Adapt</code> e pronto, temos um XML convertido em dados tabulares.</p>
+
+<p>Será que o código da Classe <code>TXMLClientDataSetAdapter</code> é complexo?</p>
+
+<p>Não. É tão simples quanto a implementação da Classe de Negócio.</p>
+
+<p>Veja a implementação do método <code>Adapt</code>:</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">function</span> <span class="nc">TXMLClientDataSetAdapter</span><span class="o">.</span><span class="nf">Adapt</span><span class="o">:</span> <span class="n">IDataAdapter</span><span class="o">;</span>
+<span class="k">var</span>
+  <span class="n">I</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
+  <span class="n">Field</span><span class="o">:</span> <span class="n">TField</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
+  <span class="k">if</span> <span class="k">not</span> <span class="nb">Assigned</span><span class="p">(</span><span class="n">FSource</span><span class="p">)</span> <span class="k">then</span>
+    <span class="k">Exit</span><span class="o">;</span>
+  <span class="n">FDest</span><span class="o">.</span><span class="n">DisableControls</span><span class="o">;</span>
+  <span class="k">try</span>
+    <span class="k">while</span> <span class="nb">Assigned</span><span class="p">(</span><span class="n">FSource</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">begin</span>
+      <span class="n">FDest</span><span class="o">.</span><span class="n">Append</span><span class="o">;</span>
+      <span class="k">for</span> <span class="n">I</span> <span class="o">:=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">FSource</span><span class="o">.</span><span class="n">ChildNodes</span><span class="o">.</span><span class="n">Count</span> <span class="o">-</span><span class="mi">1</span> <span class="k">do</span>
+      <span class="k">begin</span>
+        <span class="k">with</span> <span class="n">FSource</span><span class="o">.</span><span class="n">ChildNodes</span><span class="p">[</span><span class="n">I</span><span class="p">]</span> <span class="k">do</span>
+        <span class="k">begin</span>
+          <span class="n">Field</span> <span class="o">:=</span> <span class="n">FDest</span><span class="o">.</span><span class="n">FindField</span><span class="p">(</span><span class="n">NodeName</span><span class="p">)</span><span class="o">;</span>
+          <span class="k">if</span> <span class="nb">Assigned</span><span class="p">(</span><span class="n">Field</span><span class="p">)</span> <span class="k">and</span> <span class="p">(</span><span class="n">Text</span> <span class="o">&lt;&gt;</span> <span class="s">&#39;&#39;</span><span class="p">)</span> <span class="k">then</span>
+            <span class="n">Field</span><span class="o">.</span><span class="n">Value</span> <span class="o">:=</span> <span class="n">Text</span><span class="o">;</span>
+        <span class="k">end</span><span class="o">;</span>
+      <span class="k">end</span><span class="o">;</span>
+      <span class="n">FSource</span> <span class="o">:=</span> <span class="n">FSource</span><span class="o">.</span><span class="n">NextSibling</span><span class="o">;</span>
+    <span class="k">end</span><span class="o">;</span>
+  <span class="k">finally</span>
+    <span class="n">FDest</span><span class="o">.</span><span class="n">First</span><span class="o">;</span>
+    <span class="n">FDest</span><span class="o">.</span><span class="n">EnableControls</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Ele adapta o XML para o formato tabular e no fim temos uma instância de <code>TClientDataSet</code> com os dados provenientes do XML.</p>
+
+<h2 id="ser-um-substituto-ao-datasnap">Será um substituto ao <em>DataSnap</em>?</h2>
+
+<p>Eu ainda não terminei essa série, porém já recebi alguns e-mails de alguns leitores perguntando se é possível utilizar essa solução como um substituto ao <a href="http://docwiki.embarcadero.com/RADStudio/Seattle/en/Developing_DataSnap_Applications"><em>Delphi DataSnap</em></a>.</p>
+
+<p>Minha resposta é que o <em>DataSnap</em> tem muito, muito código implementado com inúmeras facilidades para os desenvolvedores. Então não é um substituto — e mesmo se esse fosse o objetivo, estaríamos muito longe de concluí-lo.</p>
+
+<p>É melhor ou pior?</p>
+
+<p>Depende do tipo do projeto.</p>
+
+<p>Nesse projeto a versão do Delphi é a 7. A empresa não quer mais investir no Delphi e vai substituí-lo, aos poucos, por Java ou mesmo C#. Então não haveria motivos em utilizar <em>DataSnap</em>, visto que a linguagem irá mudar no futuro.</p>
+
+<h2 id="desvantagens-by-design">Desvantagens <em>by design</em></h2>
+
+<p>É claro que há desvantagens na solução proposta. Sempre há desvantagens.</p>
+
+<p>Uma grande desvantagem é que novas informações não são, necessariamente, visíveis automaticamente quando há alterações nos Microservices.</p>
+
+<p>Por exemplo.</p>
+
+<p>Caso o Microservice acima enviasse uma nova informação chamada “status”, ela não iria aparecer automaticamente numa <em>Grid</em> do Delphi. Esse campo teria que ser incluso, manualmente, no <em>ClientDataSet</em> que fosse receber os dados.</p>
+
+<p>O que eu quero dizer é que a aplicação Delphi não se adapta automaticamente as mudanças dos Microservices. É possível fazer, porém exigiria muito mais tempo de desenvolvimento.</p>
+
+<p>A solução é simples porque estamos utilizando a premissa <a href="https://en.wikipedia.org/wiki/Convention_over_configuration"><em>Convention over configuration</em></a>.</p>
+
+<ol>
+  <li>Se há dados, então eles estarão no formato XML;</li>
+  <li>Os <em>fields</em> de um <em>ClientDataSet</em> devem ter o mesmo nome dos <em>fields</em> que são esperados nos Microservices e vice-versa;</li>
+  <li>Utilizamos os mesmos formatos para Data, Hora e Números decimais.</li>
+  <li>Etc.</li>
+</ol>
+
+<p>Apesar de não vermos isso como desvantagens, não deixa de ler uma limitação.</p>
+
+<h2 id="no-proximo-artigo">No próximo artigo…</h2>
+
+<p>Você acabou de ver uma implementação simples, <em>“made in home”</em>, para trabalhar com interoperabilidade entre sistemas distintos utilizando Microservices que nada mais são do que requisições HTTP enviando e recebendo XML.</p>
+
+<p>Finalizaremos essa série no próximo artigo, aguarde.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Microservices com Delphi — Parte 3&via=mdbs99;url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/&title=Microservices com Delphi — Parte 3" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/&title=Microservices com Delphi — Parte 3" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/&t=Microservices com Delphi — Parte 3" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/microservices-delphi-parte-1/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Microservices com Delphi — Parte 1</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+        </ul>
+        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/microservices-delphi-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Microservices com Delphi — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/microservices-delphi-parte-3';
+      var disqus_title      = 'Microservices com Delphi — Parte 3';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

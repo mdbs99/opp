@@ -8,6 +8,289 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Microservices com Delphi — Parte 3</title>
+        <description>&lt;p&gt;Podemos utilizar diretamente uma instância de &lt;code&gt;TMicroServiceClient&lt;/code&gt;, passar um XML como parâmetro e obter a resposta. Mas isso não seria o ideal. Devemos ter Classes de Negócio, com suas próprias Regras e entrada/saída de informações.&lt;/p&gt;
+
+&lt;p&gt;Vamos codificar uma Classe de Negócio, que construa seu próprio XML e utilize, internamente, uma instância do &lt;em&gt;Client&lt;/em&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1448932223592-d1fc686e76ea.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;No &lt;a href=&quot;/posts/microservices-delphi-parte-2/&quot;&gt;artigo anterior&lt;/a&gt; eu escrevi sobre o Módulo MicroService e Localização de Serviços.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo você irá aprender a codificar uma Classe de Negócio que irá consumir um Microservice, utilizando o Módulo já apresentado ateriormente.&lt;/p&gt;
+
+&lt;p&gt;Também aprenderá como transformar XML em dados tabulares para apresentá-los numa &lt;em&gt;Grid&lt;/em&gt;, por exemplo.&lt;/p&gt;
+
+&lt;h2 id=&quot;classe-txmlfactory&quot;&gt;Classe TXMLFactory&lt;/h2&gt;
+
+&lt;p&gt;Uma instância de &lt;code&gt;TXMLFactory&lt;/code&gt; é utilizada no &lt;em&gt;Client&lt;/em&gt;, especificamente no método &lt;code&gt;TMicroServiceClient.Send&lt;/code&gt;, que não foi abordada no artigo anterior.&lt;/p&gt;
+
+&lt;p&gt;É uma Classe simples mas importante, utilizada tanto para montar tanto o XML de envio como o de retorno.&lt;/p&gt;
+
+&lt;p&gt;O Delphi 7 não trabalha com &lt;em&gt;encode&lt;/em&gt; &lt;code&gt;UTF-8&lt;/code&gt; por padrão mas os Microservices em Java trabalham no formato &lt;code&gt;UTF-8&lt;/code&gt;. Então o &lt;em&gt;Client&lt;/em&gt; deve fazer todas as solicitações nesse formato.&lt;/p&gt;
+
+&lt;p&gt;O resultado, no entanto, é convertido para &lt;code&gt;ISO-8859-1&lt;/code&gt; — que é o formato que estou utilizando no Delphi 7 — antes dos dados serem disponibilizados para o resto da aplicação.&lt;/p&gt;
+
+&lt;p&gt;A Classe &lt;code&gt;TXMLFactory&lt;/code&gt; facilita o envio e retorno.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;TXMLFactory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IXMLFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FEncoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDataStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Stream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDataStream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;reintroduce&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Stream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDataStream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;overload&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;overload&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;IXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;overload&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Document&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IXMLDocument&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;{ TXMLFactory }&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Stream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDataStream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;FEncoding&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;FStream&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Stream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Stream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDataStream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TDataStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;IXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;UTF-8&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Document&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IXMLDocument&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Buf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMemoryStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TXMLDocument&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Buf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMemoryStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;
+    &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Options&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Active&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;1.0&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;FStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LoadFromStream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Encoding&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FEncoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Buf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Free&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;consumindo-um-servico&quot;&gt;Consumindo um Serviço&lt;/h2&gt;
+
+&lt;p&gt;Nesse projeto eu defini que todo consumo de qualquer Microservice será feito através de Classes de Negócio. Então poderei ter o mesmo número de Classes correspondende ao número de Microservices ou até mais, pois uma Classe de Negócio poderia fazer uso de mais de um Microservice.&lt;/p&gt;
+
+&lt;p&gt;Iremos implementar uma Classe de Negócio simples e hipotética, visto que não poderia disponibilizar o código real do sistema quando se trata do negócio da empresa.&lt;/p&gt;
+
+&lt;p&gt;A Classe proposta é a &lt;code&gt;TFaturasService&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;A instância dessa Classe irá receber um parâmetro do tipo &lt;code&gt;IDataUId&lt;/code&gt; — uma classe que encapsula um &lt;em&gt;GUID&lt;/em&gt; — para retornar os dados de uma Fatura.&lt;/p&gt;
+
+&lt;p&gt;Segue sua implementação abaixo:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;TFaturasService&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMicroServiceAction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FUId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDataUId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDataUId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;reintroduce&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDataUId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMicroServiceAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Act&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMicroServiceResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;{ TFaturasService }&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TFaturasService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDataUId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;FUId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TFaturasService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;UId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDataUId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMicroServiceAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TFaturasService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Act&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMicroServiceResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;XML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IXMLDocument&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+    &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Document&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Params&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;AddChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;uid&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FUId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AsString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;AddChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;active&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;True&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;TMicroServiceClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;TMicroServiceParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&amp;#39;financ:faturas-service&amp;#39;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Find&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;passo-a-passo&quot;&gt;O código passo-a-passo&lt;/h3&gt;
+
+&lt;p&gt;Vamos entender o código juntos:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code&gt;TFaturasService&lt;/code&gt; é uma Classe de Negócio que implementa &lt;code&gt;IMicroServiceAction&lt;/code&gt; (veja &lt;a href=&quot;/posts/microservices-delphi-parte-2/#introducao&quot;&gt;aqui&lt;/a&gt;);&lt;/li&gt;
+  &lt;li&gt;O Objeto &lt;code&gt;TXMLFactory&lt;/code&gt; é utilizado para gerar o XML de envio;&lt;/li&gt;
+  &lt;li&gt;O Objeto &lt;code&gt;TMicroServiceParams&lt;/code&gt; localiza o serviço através do seu &lt;code&gt;name&lt;/code&gt; (único) e traz as informações em forma de parâmetros;&lt;/li&gt;
+  &lt;li&gt;O Objeto &lt;code&gt;TMicroServiceClient&lt;/code&gt; envia o XML de envio e retorna uma instância de &lt;code&gt;IMicroServiceResponse&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;O objeto retornado contém um &lt;code&gt;XML: IXMLDocument&lt;/code&gt; que é a resposta do Microservice codificado em Java;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;E é isso.&lt;/p&gt;
+
+&lt;p&gt;Uma implementação completa de um serviço.&lt;/p&gt;
+
+&lt;p&gt;Se você esperava algo mais complexo, sinto decepcioná-lo, pois a implementação é tão simples quanto isso. :)&lt;/p&gt;
+
+&lt;h3 id=&quot;utilizando-a-classe&quot;&gt;Utilizando a Classe de Negócio&lt;/h3&gt;
+
+&lt;p&gt;Uma vez que a Classe de Negócio foi implementada, poderá ser utilizada em muitas partes do sistema sem haver duplicação de código; não precisará montar o mesmo XML em vários lugares; não precisará passar os mesmos parâmetros para o &lt;em&gt;Client&lt;/em&gt;, etc.&lt;/p&gt;
+
+&lt;p&gt;Então, como utilizar a nova Classe no nosso código?&lt;/p&gt;
+
+&lt;p&gt;Aqui está um exemplo:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;procedure&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TForm1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;FillData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;TXMLClientDataSetAdapter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FModule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FaturaClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;TFaturasService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FUId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Act&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Adapt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;No Delphi 7 utilizamos &lt;code&gt;TClientDataSet&lt;/code&gt; para manter os dados tabulares (linhas e colunas) em memória, exibir numa &lt;em&gt;Grid&lt;/em&gt; ou em qualquer outro &lt;em&gt;widget&lt;/em&gt;. Mas os dados dos Microservices vem no formato de XML. Esses dados precisam ser convertidos para um formato tabular.&lt;/p&gt;
+
+&lt;p&gt;Para isso temos uma outra Classe responsável por fazer essa conversão da forma mais genérica possível.&lt;/p&gt;
+
+&lt;p&gt;Essa Classe é a &lt;code&gt;TXMLClientDataSetAdapter&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Ela recebe 2 parâmetros:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Uma instância de um &lt;code&gt;TClientDataSet&lt;/code&gt;, que no exemplo está em um &lt;code&gt;TDataModule&lt;/code&gt;;&lt;/li&gt;
+  &lt;li&gt;Uma instância de &lt;code&gt;IXMLDocument&lt;/code&gt;, que é obtido através da chamada &lt;code&gt;Act.XML&lt;/code&gt;;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Então executamos o método &lt;code&gt;Adapt&lt;/code&gt; e pronto, temos um XML convertido em dados tabulares.&lt;/p&gt;
+
+&lt;p&gt;Será que o código da Classe &lt;code&gt;TXMLClientDataSetAdapter&lt;/code&gt; é complexo?&lt;/p&gt;
+
+&lt;p&gt;Não. É tão simples quanto a implementação da Classe de Negócio.&lt;/p&gt;
+
+&lt;p&gt;Veja a implementação do método &lt;code&gt;Adapt&lt;/code&gt;:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TXMLClientDataSetAdapter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Adapt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDataAdapter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;I&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TField&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Assigned&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FSource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;Exit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;FDest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DisableControls&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Assigned&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FSource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;FDest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Append&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FSource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ChildNodes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FSource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ChildNodes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;I&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FDest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FindField&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NodeName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Assigned&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;FSource&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FSource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NextSibling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FDest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;First&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FDest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EnableControls&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Ele adapta o XML para o formato tabular e no fim temos uma instância de &lt;code&gt;TClientDataSet&lt;/code&gt; com os dados provenientes do XML.&lt;/p&gt;
+
+&lt;h2 id=&quot;ser-um-substituto-ao-datasnap&quot;&gt;Será um substituto ao &lt;em&gt;DataSnap&lt;/em&gt;?&lt;/h2&gt;
+
+&lt;p&gt;Eu ainda não terminei essa série, porém já recebi alguns e-mails de alguns leitores perguntando se é possível utilizar essa solução como um substituto ao &lt;a href=&quot;http://docwiki.embarcadero.com/RADStudio/Seattle/en/Developing_DataSnap_Applications&quot;&gt;&lt;em&gt;Delphi DataSnap&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Minha resposta é que o &lt;em&gt;DataSnap&lt;/em&gt; tem muito, muito código implementado com inúmeras facilidades para os desenvolvedores. Então não é um substituto — e mesmo se esse fosse o objetivo, estaríamos muito longe de concluí-lo.&lt;/p&gt;
+
+&lt;p&gt;É melhor ou pior?&lt;/p&gt;
+
+&lt;p&gt;Depende do tipo do projeto.&lt;/p&gt;
+
+&lt;p&gt;Nesse projeto a versão do Delphi é a 7. A empresa não quer mais investir no Delphi e vai substituí-lo, aos poucos, por Java ou mesmo C#. Então não haveria motivos em utilizar &lt;em&gt;DataSnap&lt;/em&gt;, visto que a linguagem irá mudar no futuro.&lt;/p&gt;
+
+&lt;h2 id=&quot;desvantagens-by-design&quot;&gt;Desvantagens &lt;em&gt;by design&lt;/em&gt;&lt;/h2&gt;
+
+&lt;p&gt;É claro que há desvantagens na solução proposta. Sempre há desvantagens.&lt;/p&gt;
+
+&lt;p&gt;Uma grande desvantagem é que novas informações não são, necessariamente, visíveis automaticamente quando há alterações nos Microservices.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo.&lt;/p&gt;
+
+&lt;p&gt;Caso o Microservice acima enviasse uma nova informação chamada “status”, ela não iria aparecer automaticamente numa &lt;em&gt;Grid&lt;/em&gt; do Delphi. Esse campo teria que ser incluso, manualmente, no &lt;em&gt;ClientDataSet&lt;/em&gt; que fosse receber os dados.&lt;/p&gt;
+
+&lt;p&gt;O que eu quero dizer é que a aplicação Delphi não se adapta automaticamente as mudanças dos Microservices. É possível fazer, porém exigiria muito mais tempo de desenvolvimento.&lt;/p&gt;
+
+&lt;p&gt;A solução é simples porque estamos utilizando a premissa &lt;a href=&quot;https://en.wikipedia.org/wiki/Convention_over_configuration&quot;&gt;&lt;em&gt;Convention over configuration&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Se há dados, então eles estarão no formato XML;&lt;/li&gt;
+  &lt;li&gt;Os &lt;em&gt;fields&lt;/em&gt; de um &lt;em&gt;ClientDataSet&lt;/em&gt; devem ter o mesmo nome dos &lt;em&gt;fields&lt;/em&gt; que são esperados nos Microservices e vice-versa;&lt;/li&gt;
+  &lt;li&gt;Utilizamos os mesmos formatos para Data, Hora e Números decimais.&lt;/li&gt;
+  &lt;li&gt;Etc.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Apesar de não vermos isso como desvantagens, não deixa de ler uma limitação.&lt;/p&gt;
+
+&lt;h2 id=&quot;no-proximo-artigo&quot;&gt;No próximo artigo…&lt;/h2&gt;
+
+&lt;p&gt;Você acabou de ver uma implementação simples, &lt;em&gt;“made in home”&lt;/em&gt;, para trabalhar com interoperabilidade entre sistemas distintos utilizando Microservices que nada mais são do que requisições HTTP enviando e recebendo XML.&lt;/p&gt;
+
+&lt;p&gt;Finalizaremos essa série no próximo artigo, aguarde.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 22 Aug 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/</guid>
+      </item>
+    
+      <item>
         <title>Microservices com Delphi — Parte 2</title>
         <description>&lt;p&gt;Não basta apenas utilizar um Protocolo HTTP para fazer a comunicação com os Microservices. É necessário, também, codificar um Localizador de Microservices.&lt;/p&gt;
 
@@ -19,11 +302,11 @@
 
 &lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
 
-&lt;p&gt;No &lt;a href=&quot;/posts/microservices-delphi-parte-1/&quot;&gt;artigo anterior&lt;/a&gt; eu falei sobre o Projeto codificado em Delphi 7 que está sendo recodificado utilizando Microservices em Java.&lt;/p&gt;
+&lt;p&gt;No &lt;a href=&quot;/posts/microservices-delphi-parte-1/&quot;&gt;artigo anterior&lt;/a&gt; eu escrevi sobre o Projeto codificado em Delphi 7 que está sendo recodificado utilizando Microservices em Java.&lt;/p&gt;
 
 &lt;p&gt;Nesse artigo irei falar sobre o Módulo Microservices, que possui todo o necessário para fazer a comunicação com os serviços.&lt;/p&gt;
 
-&lt;h2 id=&quot;mdulo-microservice&quot;&gt;Módulo MicroService&lt;/h2&gt;
+&lt;h2 id=&quot;modulo-microservice&quot;&gt;Módulo MicroService&lt;/h2&gt;
 
 &lt;p&gt;O Módulo MicroService é composto de apenas 4 simples Interfaces (até agora).&lt;/p&gt;
 
@@ -243,7 +526,7 @@
 
 &lt;p&gt;E onde está o Tratamento de Exceções, Classes de Negócio, etc?&lt;/p&gt;
 
-&lt;p&gt;No próximo artigo você irá ver como construir uma &lt;strong&gt;Classe de Negócio&lt;/strong&gt; que faz uso de todo esse arcabouço.&lt;/p&gt;
+&lt;p&gt;No &lt;a href=&quot;/posts/microservices-delphi-parte-3/&quot;&gt;próximo artigo&lt;/a&gt; você irá ver como construir uma &lt;strong&gt;Classe de Negócio&lt;/strong&gt; que faz uso de todo esse arcabouço.&lt;/p&gt;
 
 &lt;p&gt;Até logo.&lt;/p&gt;
 </description>
@@ -1596,176 +1879,6 @@ Não faça isso.&lt;/p&gt;
         <pubDate>Mon, 20 Jun 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/</guid>
-      </item>
-    
-      <item>
-        <title>Herança pode ser o Mal da Orientação a Objetos — Parte 4</title>
-        <description>&lt;p&gt;No artigo anterior falei sobre Duplicação de Código.
-Nesse artigo irei falar sobre o &lt;strong&gt;Forte Acoplamento&lt;/strong&gt; que ocorre ao utilizarmos a Herança de Classe.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1461287159820-04de78c094e9.jpg&quot; alt=&quot;Acoplamento&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/&quot;&gt;Clique aqui&lt;/a&gt; para ler a &lt;strong&gt;Parte #3&lt;/strong&gt; 
-dessa série, caso ainda não tenha lido.&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Se um gato possui raça e patas, e um cachorro possui raça, patas e tipoDoPelo, logo Cachorro extends Gato?&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;O texto acima é emprestado &lt;a href=&quot;http://blog.caelum.com.br/como-nao-aprender-orientacao-a-objetos-heranca/&quot;&gt;desse artigo&lt;/a&gt; que
-fala sobre Herança e Hierarquia de Classes. O artigo fala sobre o erro de &lt;em&gt;design&lt;/em&gt; dos projetistas da linguagem Java quando
-codificaram as Classes &lt;code&gt;Stack&lt;/code&gt; e &lt;code&gt;Properties&lt;/code&gt;. Não precisa conhecer Java para entender o artigo.&lt;/p&gt;
-
-&lt;p&gt;No mesmo artigo ele mostra o erro &lt;strong&gt;grotesco&lt;/strong&gt; no &lt;em&gt;design&lt;/em&gt; da Classe &lt;code&gt;HttpServlet&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se você já utilizou Java e precisou extender essa Classe, deve ter reparado no mesmo problema citado no artigo.&lt;/p&gt;
-
-&lt;p&gt;Na época da faculdade eu reparei nesse erro de &lt;em&gt;design&lt;/em&gt; mas, &lt;strong&gt;ignorei&lt;/strong&gt;. Achei que eu estava errado, que não tinha entendido a “maneira correta
-de programar utilizando Orientação a Objetos com Java”. Eu não sabia muita coisa mesmo. Talvez
-ainda não saiba… sempre que leio textos de outrem fico indignado o quanto ainda preciso aprender. Pois é.&lt;/p&gt;
-
-&lt;p&gt;O fato é que o pensamento comum da maioria das pessoas é: Será que uma grande empresa, projetista do Java por exemplo, 
-poderia estar errada?&lt;/p&gt;
-
-&lt;p&gt;Sim as empresas erram, muito.&lt;/p&gt;
-
-&lt;p&gt;Sim, elas também ganham muito dinheiro. Mas não é porque seus &lt;em&gt;softwares&lt;/em&gt; são perfeitos, mas sim porque elas se adaptam
-rapidamente e dão aos seus clientes o que eles querem — ou o que está na moda; ou algo similar ao concorrente; ou talvez algo
-“legal de se ter”.&lt;/p&gt;
-
-&lt;p&gt;Por isso muitas empresas não se importam em descontinuar aplicativos e &lt;em&gt;frameworks&lt;/em&gt; se eles não dão lucro ou não estão mais em conformidade
-com a visão de longo prazo delas — vide Microsoft — o que é perfeitamente normal. Elas precisam gerar lucro, certo?&lt;/p&gt;
-
-&lt;p&gt;Então não pense que as empresas milionárias como a Microsoft, Sun/Oracle, Embarcadero e muitas outras, estão sempre certas “só” porque
-elas são milionárias. Bem, elas estão corretíssimas sobre gerar lucro, mas nem sempre estão corretas sobre &lt;strong&gt;arquitetura e desenvolvimento&lt;/strong&gt;
-de &lt;em&gt;softwares&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;forte-acoplamento&quot;&gt;Forte Acoplamento&lt;/h2&gt;
-
-&lt;p&gt;O termo &lt;a href=&quot;https://en.wikipedia.org/wiki/Coupling_(computer_programming)&quot;&gt;Acoplamento&lt;/a&gt; é uma medida de quão duas rotinas, módulos ou 
-Classes estão ligados &lt;strong&gt;intimamente&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  Em engenharia de software, acoplamento é a maneira e grau de interdependência entre módulos de software.
-  &lt;footer&gt;&lt;cite title=&quot;Coupling&quot;&gt;Coupling - Wikipedia&lt;/cite&gt;&lt;/footer&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Existem várias formas de acoplamento.&lt;/p&gt;
-
-&lt;p&gt;O Forte Acoplamento entre Classes se dá quando uma Classe “conhece” uma outra diretamente. 
-Por exemplo. Quando você inicializa um atributo de uma Classe utilizando uma Classe concreta, 
-você está acoplando as Classes.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TCustomer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FAddress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAddress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;No exemplo acima existe um acoplamento entre &lt;code&gt;TCustomer&lt;/code&gt; e &lt;code&gt;TAddress&lt;/code&gt;. Conceitualmente isso é ruim. O mais correto seria utilizar
-&lt;strong&gt;injeção de dependência&lt;/strong&gt; passando a instância de &lt;code&gt;TAddress&lt;/code&gt; através de um argumento do tipo Interface no construtor de &lt;code&gt;TCustomer&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TCustomer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;Address&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IAddress&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FAddress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Address&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Devemos evitar o acoplamento. O motivo é simples. Toda vez que você alterar uma Classe que está acoplada a outra, haverá grandes
-chances de você ter que alterar ambas.&lt;/p&gt;
-
-&lt;p&gt;Se utilizar argumentos do tipo &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interface&lt;/a&gt; e injeção de dependência, 
-o acoplamento será apenas de Interfaces.&lt;/p&gt;
-
-&lt;p&gt;O exemplo acima não é sobre Herança, mas sobre &lt;strong&gt;Composição de Objetos&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Apesar de ser ruim o acoplamento sem utilizar injeção de dependência, é possível refatorar essas Classes (se necessário) 
-sem termos que alterar todas as Classes envolvidas.
-Poderíamos começar a codificação de &lt;code&gt;TCustomer&lt;/code&gt; sem injetar &lt;code&gt;TAddress&lt;/code&gt; e, depois, resolver alterar o código para tornar &lt;code&gt;TCustomer&lt;/code&gt;
-mais desacoplada.&lt;/p&gt;
-
-&lt;p&gt;No entanto, se utilizássemos &lt;strong&gt;Herança de Classe&lt;/strong&gt;, a mesma refatoração poderia ser &lt;strong&gt;muito mais difícil&lt;/strong&gt;. 
-Por exemplo. Se &lt;code&gt;TCustomer&lt;/code&gt; fosse uma Subclasse de &lt;code&gt;TPerson&lt;/code&gt; e essa Classe inicializasse &lt;code&gt;FAddress&lt;/code&gt; em seu construtor,
-&lt;code&gt;TCustomer&lt;/code&gt; não poderia — ou não deveria — alterar a instância de &lt;code&gt;FAddress&lt;/code&gt;, reinicializando-a com um outro tipo de Classe.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;cm&quot;&gt;{ TPerson }&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TPerson&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FAddress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAddress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;cm&quot;&gt;{ TCustomer }&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;constructor&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TCustomer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;inherited&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;FAddress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAnotherAddress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Nesse exemplo simples, existem alguns problemas.&lt;/p&gt;
-
-&lt;p&gt;Primeiro, para que &lt;code&gt;TCustomer&lt;/code&gt; consiga alterar &lt;code&gt;FAddress&lt;/code&gt;, esta deve ter a visibilidade de &lt;code&gt;protected&lt;/code&gt;, o que é uma
-&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/&quot;&gt;Violação de Encapsulamento&lt;/a&gt;, pois
-&lt;code&gt;TCustomer&lt;/code&gt; teria conhecimento interno sobre o estado de &lt;code&gt;TPerson&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Segundo, se &lt;code&gt;TCustomer&lt;/code&gt; tem acesso de alteração dos atributos herdados de &lt;code&gt;TPerson&lt;/code&gt;, esta mudança poderia causar inúmeros
-problemas pois o comportamento de &lt;code&gt;TPerson&lt;/code&gt; poderia ser alterado ou invalidado para todos as outras Subclasse de &lt;code&gt;TPerson&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;E terceiro, se &lt;code&gt;FAddress&lt;/code&gt; não fosse &lt;code&gt;protected&lt;/code&gt; nenhuma opção estaria disponível.&lt;/p&gt;
-
-&lt;h2 id=&quot;a-classe-tdataset&quot;&gt;A Classe TDataSet&lt;/h2&gt;
-
-&lt;p&gt;Erros de &lt;em&gt;design&lt;/em&gt; de Classes não existem só na linguagem Java. No Delphi também temos erros. Um deles, na minha opinião, 
-é a Classe &lt;code&gt;TDataSet&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Por simplicidade, talvez, alguém pensou em fazer uma Classe para manipulação de dados. É o famoso &lt;em&gt;data-ware&lt;/em&gt;. Componentes mostram
-dados em &lt;em&gt;widgets&lt;/em&gt; (edits, grids, etc) obtendo esses dados de instâncias de Subclasses de &lt;code&gt;TDataSet&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Esse é um abuso clássico da Herança: Utilização da Herança para reaproveitar código.&lt;/p&gt;
-
-&lt;p&gt;Bem, se a Herança fosse mesmo uma boa escolha, eu estaria utilizando Herança nas minhas Classes. Teria minha própria Hierarquia de 
-Classes e Subclasses, certo?&lt;/p&gt;
-
-&lt;p&gt;Então eu lhes pergunto: Onde &lt;code&gt;TDataSet&lt;/code&gt; faria sentido na minha Hierarquia de Classes? Provavelmente nenhum sentido.
-No entanto eu sou &lt;strong&gt;obrigado&lt;/strong&gt; a herdar de &lt;code&gt;TDataSet&lt;/code&gt; se eu quiser exibir dados num &lt;code&gt;TDBGrid&lt;/code&gt;. Esse &lt;em&gt;design&lt;/em&gt; é muito errado.&lt;/p&gt;
-
-&lt;p&gt;E qual seria o &lt;em&gt;design&lt;/em&gt; correto?&lt;/p&gt;
-
-&lt;p&gt;Você já sabe.&lt;/p&gt;
-
-&lt;p&gt;Todos os lugares que esperam uma instância de &lt;code&gt;TDataSet&lt;/code&gt; deveriam esperar uma Interface &lt;code&gt;IDataSet&lt;/code&gt;. Tão simples quanto
-utilizar Herança, porém mais eficiente e desacoplado.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;A utilização de Herança é a pior forma de acoplamento porque é mais difícil de corrigir e refatorar.&lt;/p&gt;
-
-&lt;p&gt;Utilizar Herança é como usar concreto, após secar você não consegue mover mais nada.&lt;/p&gt;
-
-&lt;h2 id=&quot;no-prximo-artigo&quot;&gt;No próximo artigo…&lt;/h2&gt;
-
-&lt;p&gt;No próximo artigo irei falar sobre &lt;strong&gt;Hierarquias Complexas&lt;/strong&gt; entre Classes que utilizam Herança.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/&quot;&gt;Clique aqui&lt;/a&gt; para ler a &lt;strong&gt;Parte Final&lt;/strong&gt; dessa série.&lt;/p&gt;
-
-&lt;p&gt;Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
-abaixo para comentários.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 13 Jun 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/</guid>
       </item>
     
   </channel>
