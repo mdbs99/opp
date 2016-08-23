@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Microservices com Delphi — Parte 4
+title: Microservices com Delphi — Parte Final
 date: 2016-08-29
 description: Como implementar uma simples API para fazer a comunicação com Microservices em Java.
 summary: Como implementar uma simples API para fazer a comunicação com Microservices em Java.
@@ -22,6 +22,11 @@ keywords:
 
 ##Introdução {#introducao}
 
+No [artigo anterior]({% post_url 2016-08-22-microservices-delphi-parte-3 %}) eu lhe mostrei como codificar uma Classe de Negócio para fazer a comunicação com um Microservice utilizando todo o arcabouço apresentado na primeira parte dessa série.
+
+Nesse artigo você verá como fazer o tratamento de exceções...
+
+Este é o último artigo dessa série.
 
 ###Tratamento de Exceções {#tratamento-de-excecoes}
 
@@ -55,10 +60,12 @@ end;
 
 O código é real e está em produção. E parece bem simples, não?
 
-WebServices, Multi-camadas, Sistemas distribuídos... tudo isso parece muito complicado. Mas se você souber como as coias funcionam, poderá remover tudo que é **desnecessário** e se concentrar no **essencial**.
+WebServices, Multi-camadas, Sistemas distribuídos... tudo isso parece muito complicado. Mas se você souber como as coias funcionam, poderá remover tudo que é **desnecessário** para o seu negócio e se concentrar apenas no **essencial**.
 
 A migração está longe de estar concluída. O sistema tem poucos meses, mas apenas poucos dias de trabalho *full time* apenas na codificação e integração dos Microservices.
 
-Bem, por enquanto estamos indo bem.
+Por enquanto acho que estamos indo bem.
+
+E você, o que acha?
 
 Até logo.
