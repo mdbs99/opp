@@ -29,7 +29,6 @@ Nesse artigo você irá ver:
 
   1. **Tratamento de Exceções**: Quando algo dá errado nos Microservices ou na comunicação com eles;
   2. **Links**: Separei alguns artigos interessantes sobre o assunto;
-  3. **Conclusão**: Conclusão da série.
 
 ##Tratamento de Exceções {#tratamento-de-excecoes}
 
