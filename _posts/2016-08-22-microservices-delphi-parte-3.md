@@ -289,6 +289,6 @@ Apesar de não vermos isso como desvantagens, não deixa de ler uma limitação.
 
 Você acabou de ver uma implementação simples, *"made in home"*, para trabalhar com interoperabilidade entre sistemas distintos utilizando Microservices que nada mais são do que requisições HTTP enviando e recebendo XML.
 
-Finalizaremos essa série no próximo artigo, aguarde.
+Finalizaremos essa série no [próximo artigo]({% post_url 2016-08-29-microservices-delphi-parte-final %}).
 
 Até logo.
