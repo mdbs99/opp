@@ -8,6 +8,113 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Microservices com Delphi — Parte Final</title>
+        <description>&lt;p&gt;Uma arquitetura que utiliza Microservices tem seus prós e contras como qualquer outra tecnologia. Será que essa arquitetura foi uma boa escolha para o projeto?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1454023989775-79520f04322c.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;No &lt;a href=&quot;/posts/microservices-delphi-parte-3/&quot;&gt;artigo anterior&lt;/a&gt; eu lhe mostrei como codificar uma Classe de Negócio para fazer a comunicação com um Microservice utilizando todo o arcabouço apresentado na primeira parte dessa série.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo você irá ver:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Tratamento de Exceções&lt;/strong&gt;: Quando algo dá errado nos Microservices ou na comunicação com eles;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Links&lt;/strong&gt;: Separei alguns artigos interessantes sobre o assunto;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;tratamento-de-excecoes&quot;&gt;Tratamento de Exceções&lt;/h2&gt;
+
+&lt;p&gt;Todo &lt;em&gt;software&lt;/em&gt; precisa tratar erros e exceções, e é claro que estamos fazendo isso.&lt;/p&gt;
+
+&lt;p&gt;Na Unit &lt;a href=&quot;/posts/microservices-delphi-parte-2/#unit-microservicesa&quot;&gt;AcmeMicroServiceA.pas&lt;/a&gt; o tratamento de exceções é feito no método &lt;code&gt;TMicroServiceClient.Send&lt;/code&gt;, verificando o &lt;code&gt;Code&lt;/code&gt; de retorno do protocolo HTTP.&lt;/p&gt;
+
+&lt;p&gt;Se houver erro, definimos um protocolo privado que descreve como a mensagem para o &lt;em&gt;Client&lt;/em&gt; deve ser. Nada mais é do que um XML com &lt;em&gt;nodes&lt;/em&gt; específicos que descrevem o erro ou exceção.&lt;/p&gt;
+
+&lt;p&gt;Abaixo o código modificado que trata erros e exceções. O código em produção é um pouco mais elaborado, no entanto acredito que com esse exemplo você irá entender como o tratamento ocorre no projeto real.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMicroServiceClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMicroServiceResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+    &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TMicroServiceResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;Code&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;TXMLFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;ISO-8859-1&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Document&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Code&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;of&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// BAD REQUEST&lt;/span&gt;
+      &lt;span class=&quot;mi&quot;&gt;400&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;..&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;499&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EMicroService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+          &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DocumentElement&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ChildNodes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;UserMessage&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// SERVER ERROR&lt;/span&gt;
+      &lt;span class=&quot;mi&quot;&gt;500&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;..&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;510&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EMicroService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+          &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DocumentElement&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ChildNodes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;DevMessage&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Repare que para cada tipo de erro/exceção, um &lt;em&gt;node&lt;/em&gt; (ou &lt;em&gt;nodes&lt;/em&gt;) específico é utilizado para obter a informação.&lt;/p&gt;
+
+&lt;p&gt;No &lt;em&gt;Client&lt;/em&gt; Delphi, o &lt;code&gt;Code&lt;/code&gt; também é acessível através da Interface &lt;code&gt;IMicroServiceResponse&lt;/code&gt;, então o &lt;em&gt;Client&lt;/em&gt; pode tomar decisões específicas para casos que não gerem uma exceção.&lt;/p&gt;
+
+&lt;p&gt;Veja &lt;a href=&quot;http://www.restapitutorial.com/httpstatuscodes.html&quot;&gt;aqui&lt;/a&gt; uma lista de &lt;em&gt;HTTP Status Codes&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;links&quot;&gt;Links&lt;/h2&gt;
+
+&lt;p&gt;Separei alguns links interessantes de artigos e vídeos que serviram de inspiração para escrever essa série, assim como foram fontes de informações para o projeto.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.infoq.com/br/presentations/vantagens-e-desvantagens-de-uma-arquitetura-microservices&quot;&gt;Vantagens e desvantagens de uma arquitetura microservices: uma abordagem rica em exemplos&lt;/a&gt; é uma apresentação em vídeo de quase 1 hora que fala sobre os prós e contras em utilizar essa arquitetura. O autor fala sobre &lt;a href=&quot;http://www.martinfowler.com/bliki/StranglerApplication.html&quot;&gt;Strangler Application&lt;/a&gt; que é o mesmo princípio que estamos utilizando no projeto.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.infoq.com/br/articles/seven-uservices-antipatterns&quot;&gt;Sete antipadrões para microservices&lt;/a&gt; alerta sobre algumas coisas que devem ser evitadas, na opinião do autor, quando utilizamos a arquitetura de Microservices.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://medium.com/@mwhitt.w/preventing-tight-data-coupling-between-microservices-df30e1e24311#.wl6r7hcfz&quot;&gt;Preventing Tight Data Coupling Between Microservices&lt;/a&gt; é um artigo em Inglês interessante sobre acoplamento de dados.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://medium.com/@skamille/microservices-real-architectural-patterns-68bd83bbb6cd#.hrsdvq3rj&quot;&gt;Microservices: Real Architectural Patterns&lt;/a&gt; é outro artigo em Inglês que fala sobre arquitetura e CRUD.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;A escolha pela arquitetura de Microservices está sendo satisfatória.&lt;/p&gt;
+
+&lt;p&gt;Microservices são como &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;instâncias de Objetos&lt;/a&gt; pela rede.&lt;/p&gt;
+
+&lt;p&gt;Assim como Objetos, cada Microservice deve implementar apenas &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;uma única responsabilidade&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Quando falamos sobre Microservices, WebServices, Multi-camadas, protocolos… tudo isso parece muito complicado. Mas se você souber como as coisas funcionam, poderá remover tudo que é &lt;strong&gt;desnecessário&lt;/strong&gt; para o &lt;strong&gt;seu negócio&lt;/strong&gt; e se concentrar apenas no &lt;strong&gt;essencial&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Você não precisa implementar &lt;strong&gt;tudo&lt;/strong&gt; o que dizem para implementar. Utilize tecnologias que fazem sentido para seu negócio e comece simples.&lt;/p&gt;
+
+&lt;p&gt;A migração está longe de estar concluída. O sistema tem poucos meses, mas apenas poucos dias de trabalho &lt;em&gt;full time&lt;/em&gt; na codificação e integração dos Microservices.&lt;/p&gt;
+
+&lt;p&gt;Por enquanto estamos indo bem.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 29 Aug 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/</guid>
+      </item>
+    
+      <item>
         <title>Microservices com Delphi — Parte 3</title>
         <description>&lt;p&gt;Podemos utilizar diretamente uma instância de &lt;code&gt;TMicroServiceClient&lt;/code&gt;, passar um XML como parâmetro e obter a resposta. Mas isso não seria o ideal. Devemos ter Classes de Negócio, com suas próprias Regras e entrada/saída de informações.&lt;/p&gt;
 
@@ -281,7 +388,7 @@
 
 &lt;p&gt;Você acabou de ver uma implementação simples, &lt;em&gt;“made in home”&lt;/em&gt;, para trabalhar com interoperabilidade entre sistemas distintos utilizando Microservices que nada mais são do que requisições HTTP enviando e recebendo XML.&lt;/p&gt;
 
-&lt;p&gt;Finalizaremos essa série no próximo artigo, aguarde.&lt;/p&gt;
+&lt;p&gt;Finalizaremos essa série no &lt;a href=&quot;/posts/microservices-delphi-parte-final/&quot;&gt;próximo artigo&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Até logo.&lt;/p&gt;
 </description>
@@ -1723,162 +1830,6 @@ O código é declarativo e funcional, não procedural. No código funcional, o v
         <pubDate>Mon, 27 Jun 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/getters-e-setters/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/getters-e-setters/</guid>
-      </item>
-    
-      <item>
-        <title>Herança pode ser o Mal da Orientação a Objetos — Parte Final</title>
-        <description>&lt;p&gt;No artigo anterior falei sobre Forte Acoplamento.
-Nesse artigo irei falar sobre &lt;strong&gt;Hierarquias Complexas&lt;/strong&gt; e concluir a série.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1457473075527-b0db85c08e66.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-4/&quot;&gt;Clique aqui&lt;/a&gt; para ler a &lt;strong&gt;Parte #4&lt;/strong&gt; dessa série, caso ainda não tenha lido.&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;A maioria dos desenvolvedores esqueceram ou nunca aprenderam que a Herança foi feita para proporcionar o Polimorfismo e não  para reutilizar código.&lt;/p&gt;
-
-&lt;p&gt;O reuso de código é apenas um “efeito colateral” da Herança.&lt;/p&gt;
-
-&lt;p&gt;Polimorfismo é importante e em linguagens como C++, por exemplo, a única maneira de implementarmos Polimorfismo é através da Herança de Classes.
-A linguagem C++ não tem Interfaces, sendo Herança de Classe uma escolha correta.&lt;/p&gt;
-
-&lt;p&gt;Arquitetos de linguagens de programação vem copiando as ideias de outras linguagens a muito tempo. Se uma linguagem nova for muito diferente das mais populares, corre o risco de nunca ter um público que as utilize. Então, por que não copiar caracteristicas de outras linguagens que já fazem sucesso?&lt;/p&gt;
-
-&lt;p&gt;Se C++ tem Herança de Classes, porque não ter em Java, Ruby, Object Pascal… os programadores já estão acostumados, então vamos implementar essa característica também.&lt;/p&gt;
-
-&lt;p&gt;Imagino que seja assim ao criar uma nova linguagem. Mas nem sempre. As linguagens funcionais são bem diferentes das imperativas. A Go Language, por exemplo, não é funcional mas também não implementa Herança — mas parece uma nova cópia da liguagem C, não?&lt;/p&gt;
-
-&lt;p&gt;Então, cada nova linguagem deve ter alguma referência anterior para não ser completamente alienígena. Pra mim, esse é o maior motivo de ainda termos Herança de Classes nas novas linguagens.&lt;/p&gt;
-
-&lt;p&gt;Se você programa em Object Pascal, no entanto, já tem o suporte a &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;, que é uma melhor opção para implementar Polimorfismo do que utilizar Herança de Classes.
-Se podemos implementar o Polimorfismo através de Interfaces e reutilizar código através da Composição de Objetos e delegação, por que iríamos limitar nossas Classes a herdar de uma única hierarquia rígida de Classes?&lt;/p&gt;
-
-&lt;p&gt;Não faz sentido.&lt;/p&gt;
-
-&lt;p&gt;Por que uma Classe Gato deveria herdar de Animal, Mamífero ou quadrúpede se o sistema só precisa conhecer um Gato?
-Essas implementações de Super Classes, muitas vezes, &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/#solucao&quot;&gt;nem existem&lt;/a&gt; no modelo de negócios.&lt;/p&gt;
-
-&lt;h2 id=&quot;hierarquias-complexas&quot;&gt;Hierarquias Complexas&lt;/h2&gt;
-
-&lt;p&gt;Eu defino Hierarquias Complexas todos os modelos de Classes que utilizam Herança e que contenham erros conceituais ou reais. E eu sempre encontro esses tipos de erros. Sempre. A não ser que seu modelo seja muito pequeno, ele também conterá esses erros. O motivo é simples. É quase impossível definir uma Hierarquia de Classes perfeita porque o mundo real, o qual modelamos utilizando Classes, não é estruturado.&lt;/p&gt;
-
-&lt;p&gt;Isso mesmo, a natureza não é estruturada. Não disse que não ela não é perfeita. Estou dizendo que ela não é estruturada como Classes perfeitamente agrupadas numa Hierarquia bonita e elegante. Na minha opinião, a natureza é um caos.&lt;/p&gt;
-
-&lt;p&gt;Na &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/#exemplo-1&quot;&gt;Parte #3&lt;/a&gt; dessa série eu apresentei um modelo de Classes do Mundo Animal.&lt;/p&gt;
-
-&lt;p&gt;Aqui está o Diagrama:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/Diagram02.png&quot; alt=&quot;Diagram1&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;A princípio, parece simples e correto. Todos os animais no modelo são Animais, obviamente, e todos eles Caminham. Bem, com exceção do Tubarão, pois ele não tem pernas mas… vamos ignorar isso. Imagine um &lt;code&gt;raise Exception.Create&lt;/code&gt; no método &lt;code&gt;Caminhar&lt;/code&gt; do Tubarão e vamos em frente.&lt;/p&gt;
-
-&lt;p&gt;E se quisermos adicionar mais animais nessa Hierarquia? Talvez um Tigre.&lt;/p&gt;
-
-&lt;p&gt;Você pode imaginar que um Tigre herde de Gato — ou seria o contrário? — e tudo irá continuar funcionando. Bonito e elegante.&lt;/p&gt;
-
-&lt;p&gt;O mesmo para um Leão, Lobo, Urso… e então precisamos implementar um Ornitorrinco.&lt;/p&gt;
-
-&lt;p&gt;O que é um Ornitorrinco?&lt;/p&gt;
-
-&lt;blockquote&gt;
-Com bico de ave, semelhante a pato, é um mamífero semiaquático natural da Austrália e Tasmânia. É o único representante vivo da família Ornithorhynchidae, e a única espécie do gênero Ornithorhynchus. Juntamente com as equidnas, formam o grupo dos monotremados, os únicos mamíferos ovíparos existentes. A espécie é monotípica, ou seja, não tem subespécies ou variedades reconhecidas.
-  &lt;footer&gt;&lt;cite title=&quot;wikipedia&quot;&gt;— Wikipedia&lt;/cite&gt;&lt;/footer&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;É um mamífero, ovíparo, tem bico e nadadeiras e é uma mono espécie… se a natureza fosse estruturada, esse seria um dos seus &lt;em&gt;bugs&lt;/em&gt;?&lt;/p&gt;
-
-&lt;p&gt;Pense agora no peixe-voador…&lt;/p&gt;
-
-&lt;p&gt;Brincadeira a parte, eu acredito que não, que não há nada de errado com o Ornitorrinco ou qualquer outro animal.&lt;/p&gt;
-
-&lt;p&gt;Nosso Modelo de Classes, baseado em Herança, é que está errado.&lt;/p&gt;
-
-&lt;p&gt;Imagine o modelo acima bem maior, com mais métodos e Subclasses. Para tentar colocar o Ornitorrinco na Hierarquia você teria que fazer uma refatoração possivelmente grande. Criar novas classes abastratas, mover métodos para Classes acima, outros para Classes abaixo, “desabilitar” alguns métodos utilizando &lt;code&gt;raise&lt;/code&gt; e seguir a vida.&lt;/p&gt;
-
-&lt;p&gt;A Hierarquia iria ficar &lt;strong&gt;extremamente complexa&lt;/strong&gt;. Iriam existir Classes que só existiram para compartilhar código, e não porque o &lt;strong&gt;modelo de negócios&lt;/strong&gt; exige que existam.&lt;/p&gt;
-
-&lt;p&gt;Sempre foi assim nos sistema que utilizam Herança, certo? Aquele &lt;em&gt;Form&lt;/em&gt; que tem um botão que não é necessário na Subclasse, basta setar um &lt;code&gt;Visible = False&lt;/code&gt; e tudo certo; um botão que faz algo a mais do que é preciso na nova Subclasse, basta “refatorar” o código dividindo em 2 métodos com nomes insípedos e fazer a chamada deles, sobrescrevendo o método original para chamar apenas uma parte do código; sobrescrever métodos da super Classe para “não fazer nada”; copiar código de outra hierarquia de Classes… uma verdadeira bagunça.&lt;/p&gt;
-
-&lt;p&gt;Eu conheço esses problemas. Eu passei por muitos deles. E, acredite, em grande parte o motivo dos problemas sempre foram as Hierarquias Complexas que criamos sem pensar, quando estamos tentando “reaproveitar” código utilizando Herança.&lt;/p&gt;
-
-&lt;p&gt;Na natureza, eu acredito, não há “reaproveitamento de código”, só composição.&lt;/p&gt;
-
-&lt;p&gt;Átomos, elementos químicos. Alguns organismos tem mais disso, outros mais daquilo. Um animal tem 0,0003% desse elemento, mais 0,0006% de outro. A composição desses Objetos determinam o comportamento e a evolução de cada indivíduo.&lt;/p&gt;
-
-&lt;p&gt;DNA.&lt;/p&gt;
-
-&lt;p&gt;Lembre-se que &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/#solucao&quot;&gt;a árvore&lt;/a&gt; não existe. Tetrápodes, Bípedes, Mamíferos, Anfíbios, Aves… nada disso existe. São abstrações que nós criamos para organizar as coisas, mas elas &lt;strong&gt;não existem no mundo real&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Qualquer Hierarquia de Classes que tente implementar o mundo, terá falhas.&lt;/p&gt;
-
-&lt;p&gt;Parece que os biólogos conseguem separar os indivíduos em “hierarquias perfeitas”. Eles observam os indivíduos na natureza e classificam. Se descobrem um animal que não se encaixa em nenhuma hierarquia não há problema, basta criar uma nova. Nenhum animal já classificado será afetado. Não há um “fio” que liga os animais às hierarquias. 
-O indivíduo determina a hierarquia, ou seja, de baixo pra cima. As hierarquias são apenas nomes e classificações. Ontologia.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;A ontologia não define o comportamento das amostras individuais.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Nós, desenvolvedores de software, fazemos o inverso. Vamos codificando nossas hierarquias e tentando definir o comportamento dos objetos de cima pra baixo! É como se tentássemos prever o futuro da evolução de nossas Classes separando-as em hierarquias pré-definidas. É praticamente impossível dar certo.&lt;/p&gt;
-
-&lt;h2 id=&quot;solucao&quot;&gt;Solução&lt;/h2&gt;
-
-&lt;p&gt;A solução é a Composição de Objetos em conjunto com Interfaces. Já falei isso. Falei e repeti muitas vezes. Mas para quem ainda não entendeu, vou revelar mais uma dica através de uma pergunta:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Se seu sistema trabalha com Tigres, quantas Classes Tigre você teria?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;A grande maioria, acredito, responderia &lt;strong&gt;apenas uma classe&lt;/strong&gt; &lt;code&gt;TTigre&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Concorda?&lt;/p&gt;
-
-&lt;p&gt;A pergunta é capciosa.&lt;/p&gt;
-
-&lt;p&gt;Esse é um dos problemas ao tentarmos modelar sistemas Orientados a Objetos. O desenvolvedor acha que apenas uma Classe deve representar o conceito quando, na verdade, podemos ter &lt;strong&gt;diferentes Classes para representar o mesmo conceito em diferentes contextos&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;As pessoas me perguntaram quais eram as soluções para os problemas apontados nessa série. Eu lhes disse, Composição de Objetos.&lt;/p&gt;
-
-&lt;p&gt;Mas elas esperavam ler a solução definitiva: Quais classes criar; quais interfaces; usar ou não herança; em quais Classes por tais métodos.&lt;/p&gt;
-
-&lt;p&gt;Não há uma única resposta, porque tudo irá depender do seu modelo de negócios. Uma vez que você saiba o modelo de negócios, deverá haver a definição de contextos — Bounded Context no DDD — e assim você terá “N” &lt;a href=&quot;/posts/objetos-representam-entidades/#o-que-e-uma-entidade&quot;&gt;variações de um único conceito&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Lembra do &lt;code&gt;TTigre&lt;/code&gt;? Se nesse sistema hipotético você precisa analisar na tela a pata de um tigre, não haveria necessidade de instânciar um objeto da Classe &lt;code&gt;TTigre&lt;/code&gt; que contém tudo de um tigre (olhos, tipo, peso, tamanho, cor, que corre, nada, caça, etc). Não estou dizendo isso pensando em performance ou alocação de memória, não! Estou dizendo isso porque essa Classe seria enorme e complexa. Iria implementar muitas interfaces para poder Correr, Nadar, Pular… num sistema precisamos abstrair o que não é necessário. Esse é um dos motivos de não precisarmos de Hierarquias Complexas. Se você precisa examinar uma pata, então:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-pascal&quot; data-lang=&quot;pascal&quot;&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;IPaw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// function...&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  
-  &lt;span class=&quot;n&quot;&gt;TTigerPaw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TInterfacedObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IPaw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// function...&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Assim como você poderá utilizar os Objetos da Classe &lt;code&gt;TTigerPaw&lt;/code&gt; para compor outras abstrações de Tigre em outros contextos.&lt;/p&gt;
-
-&lt;p&gt;Sim, você terá muito mais definições de Classes. Mas isso já é previsto na Composição de Objetos. Fazer o certo dá mais trabalho, mas só no início.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao-final&quot;&gt;Conclusão Final&lt;/h2&gt;
-
-&lt;p&gt;Chegamos ao final dessa série. Falei sobre como a Herança Viola o Encapsulamento, pode Duplicar o Código, promove Forte Acoplamento e
-Hierarquias Complexas.&lt;/p&gt;
-
-&lt;p&gt;Espero ter lhe ajudado a entender mais sobre Herança de Classes e os males que ela pode trazer ao código.&lt;/p&gt;
-
-&lt;p&gt;O título dessa série é “Herança &lt;strong&gt;pode&lt;/strong&gt; ser o Mal da Orientação a Objetos”. Eu não falei que ela &lt;strong&gt;é&lt;/strong&gt;, disse que pode ser.
-Eu lhe mostrei os problemas que vem com a Herança de Classes. Tenha conhecimento deles e evite-os.&lt;/p&gt;
-
-&lt;p&gt;Herança de Classe pode ser benéfica em alguns (poucos) contextos. Mas ao usá-la uma vez, a tentação é grande em continuar utilizando. 
-Não faça isso.&lt;/p&gt;
-
-&lt;p&gt;Modele suas Classes utilizando Composição de Objetos que implementam Interfaces. Esse é o segredo.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 20 Jun 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/</guid>
       </item>
     
   </channel>

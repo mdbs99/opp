@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Microservices com Delphi — Parte Final &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Como implementar uma simples API para fazer a comunicação com Microservices em Java.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Pascal">
+    <meta name="keywords" content="microservices, java, delphi">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201608291142" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Microservices com Delphi — Parte Final">
+    <meta property="og:description" content="Como implementar uma simples API para fazer a comunicação com Microservices em Java.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1454023989775-79520f04322c.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Microservices com Delphi — Parte Final" />
+    <meta name="twitter:description" content="Como implementar uma simples API para fazer a comunicação com Microservices em Java." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>EBOOK</a>
+<a href="/archive/">ARQUIVO</a>
+<a href="/contact/">CONTATO</a>
+<a href="/about/">SOBRE</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Microservices com Delphi — Parte Final</h1>
+  <span class="post-meta">Aug 29, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    2 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Uma arquitetura que utiliza Microservices tem seus prós e contras como qualquer outra tecnologia. Será que essa arquitetura foi uma boa escolha para o projeto?</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1454023989775-79520f04322c.jpg" alt="Imagem" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>No <a href="/posts/microservices-delphi-parte-3/">artigo anterior</a> eu lhe mostrei como codificar uma Classe de Negócio para fazer a comunicação com um Microservice utilizando todo o arcabouço apresentado na primeira parte dessa série.</p>
+
+<p>Nesse artigo você irá ver:</p>
+
+<ol>
+  <li><strong>Tratamento de Exceções</strong>: Quando algo dá errado nos Microservices ou na comunicação com eles;</li>
+  <li><strong>Links</strong>: Separei alguns artigos interessantes sobre o assunto;</li>
+</ol>
+
+<h2 id="tratamento-de-excecoes">Tratamento de Exceções</h2>
+
+<p>Todo <em>software</em> precisa tratar erros e exceções, e é claro que estamos fazendo isso.</p>
+
+<p>Na Unit <a href="/posts/microservices-delphi-parte-2/#unit-microservicesa">AcmeMicroServiceA.pas</a> o tratamento de exceções é feito no método <code>TMicroServiceClient.Send</code>, verificando o <code>Code</code> de retorno do protocolo HTTP.</p>
+
+<p>Se houver erro, definimos um protocolo privado que descreve como a mensagem para o <em>Client</em> deve ser. Nada mais é do que um XML com <em>nodes</em> específicos que descrevem o erro ou exceção.</p>
+
+<p>Abaixo o código modificado que trata erros e exceções. O código em produção é um pouco mais elaborado, no entanto acredito que com esse exemplo você irá entender como o tratamento ocorre no projeto real.</p>
+
+<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">function</span> <span class="nc">TMicroServiceClient</span><span class="o">.</span><span class="nf">Send</span><span class="p">(</span>
+  <span class="k">const</span> <span class="n">Content</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span>
+<span class="k">begin</span>
+  <span class="k">with</span> <span class="n">Response</span><span class="p">(</span><span class="n">Content</span><span class="p">)</span> <span class="k">do</span>
+  <span class="k">begin</span>
+    <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TMicroServiceResponse</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
+      <span class="n">Code</span><span class="o">,</span>
+      <span class="n">TXMLFactory</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;ISO-8859-1&#39;</span><span class="o">,</span> <span class="n">Stream</span><span class="p">)</span><span class="o">.</span><span class="n">Document</span>
+    <span class="p">)</span><span class="o">;</span>
+    <span class="k">case</span> <span class="n">Code</span> <span class="k">of</span>
+      <span class="c1">// BAD REQUEST</span>
+      <span class="mi">400</span><span class="o">..</span><span class="mi">499</span><span class="o">:</span>
+        <span class="k">raise</span> <span class="n">EMicroService</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span>
+          <span class="bp">Result</span>
+            <span class="o">.</span><span class="n">XML</span>
+            <span class="o">.</span><span class="n">DocumentElement</span>
+            <span class="o">.</span><span class="n">ChildNodes</span><span class="p">[</span><span class="s">&#39;UserMessage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Text</span>
+        <span class="p">)</span><span class="o">;</span>
+      <span class="c1">// SERVER ERROR</span>
+      <span class="mi">500</span><span class="o">..</span><span class="mi">510</span><span class="o">:</span>
+        <span class="k">raise</span> <span class="n">EMicroService</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span>
+          <span class="bp">Result</span>
+            <span class="o">.</span><span class="n">XML</span>
+            <span class="o">.</span><span class="n">DocumentElement</span>
+            <span class="o">.</span><span class="n">ChildNodes</span><span class="p">[</span><span class="s">&#39;DevMessage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Text</span>
+        <span class="p">)</span><span class="o">;</span>
+    <span class="k">end</span><span class="o">;</span>
+  <span class="k">end</span><span class="o">;</span>
+<span class="k">end</span><span class="o">;</span></code></pre></figure>
+
+<p>Repare que para cada tipo de erro/exceção, um <em>node</em> (ou <em>nodes</em>) específico é utilizado para obter a informação.</p>
+
+<p>No <em>Client</em> Delphi, o <code>Code</code> também é acessível através da Interface <code>IMicroServiceResponse</code>, então o <em>Client</em> pode tomar decisões específicas para casos que não gerem uma exceção.</p>
+
+<p>Veja <a href="http://www.restapitutorial.com/httpstatuscodes.html">aqui</a> uma lista de <em>HTTP Status Codes</em>.</p>
+
+<h2 id="links">Links</h2>
+
+<p>Separei alguns links interessantes de artigos e vídeos que serviram de inspiração para escrever essa série, assim como foram fontes de informações para o projeto.</p>
+
+<ul>
+  <li>
+    <p><a href="https://www.infoq.com/br/presentations/vantagens-e-desvantagens-de-uma-arquitetura-microservices">Vantagens e desvantagens de uma arquitetura microservices: uma abordagem rica em exemplos</a> é uma apresentação em vídeo de quase 1 hora que fala sobre os prós e contras em utilizar essa arquitetura. O autor fala sobre <a href="http://www.martinfowler.com/bliki/StranglerApplication.html">Strangler Application</a> que é o mesmo princípio que estamos utilizando no projeto.</p>
+  </li>
+  <li>
+    <p><a href="https://www.infoq.com/br/articles/seven-uservices-antipatterns">Sete antipadrões para microservices</a> alerta sobre algumas coisas que devem ser evitadas, na opinião do autor, quando utilizamos a arquitetura de Microservices.</p>
+  </li>
+  <li>
+    <p><a href="https://medium.com/@mwhitt.w/preventing-tight-data-coupling-between-microservices-df30e1e24311#.wl6r7hcfz">Preventing Tight Data Coupling Between Microservices</a> é um artigo em Inglês interessante sobre acoplamento de dados.</p>
+  </li>
+  <li>
+    <p><a href="https://medium.com/@skamille/microservices-real-architectural-patterns-68bd83bbb6cd#.hrsdvq3rj">Microservices: Real Architectural Patterns</a> é outro artigo em Inglês que fala sobre arquitetura e CRUD.</p>
+  </li>
+</ul>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>A escolha pela arquitetura de Microservices está sendo satisfatória.</p>
+
+<p>Microservices são como <a href="/posts/objetos-pensam-e-tomam-decisoes/">instâncias de Objetos</a> pela rede.</p>
+
+<p>Assim como Objetos, cada Microservice deve implementar apenas <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">uma única responsabilidade</a>.</p>
+
+<p>Quando falamos sobre Microservices, WebServices, Multi-camadas, protocolos… tudo isso parece muito complicado. Mas se você souber como as coisas funcionam, poderá remover tudo que é <strong>desnecessário</strong> para o <strong>seu negócio</strong> e se concentrar apenas no <strong>essencial</strong>.</p>
+
+<p>Você não precisa implementar <strong>tudo</strong> o que dizem para implementar. Utilize tecnologias que fazem sentido para seu negócio e comece simples.</p>
+
+<p>A migração está longe de estar concluída. O sistema tem poucos meses, mas apenas poucos dias de trabalho <em>full time</em> na codificação e integração dos Microservices.</p>
+
+<p>Por enquanto estamos indo bem.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Microservices com Delphi — Parte Final&via=mdbs99;url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/&title=Microservices com Delphi — Parte Final" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/&title=Microservices com Delphi — Parte Final" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/&t=Microservices com Delphi — Parte Final" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/microservices-delphi-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Microservices com Delphi — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/microservices-delphi-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Microservices com Delphi — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/microservices-delphi-parte-1/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Microservices com Delphi — Parte 1</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/microservices-delphi-parte-final';
+      var disqus_title      = 'Microservices com Delphi — Parte Final';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
