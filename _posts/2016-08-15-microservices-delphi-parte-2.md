@@ -240,7 +240,7 @@ end;
 
 function TMicroServiceClient.Send(XML: IXMLDocument): IMicroServiceResponse;
 begin
-  Result := Send(XML.XML);
+  Result := Send(XML.XML.Text);
 end;
 {% endhighlight text %}
 
