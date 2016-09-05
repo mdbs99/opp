@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Decorator Pattern &#8211; Object Pascal Programming</title>
+    <title>Procedural é fácil, Orientado a Objetos é difícil &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="OO">
-    <meta name="keywords" content="decorator, pattern">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/decorator-pattern/">
+    <meta name="keywords" content="Pascal">
+    <meta name="keywords" content="orientado a objetos, procedural">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,23 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Decorator Pattern">
-    <meta property="og:description" content="Agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/decorator-pattern/">
+    <meta property="og:title" content="Procedural é fácil, Orientado a Objetos é difícil">
+    <meta property="og:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1461709444300-a6217cec3dff.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1470208564179-dd5b52a0d010.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Decorator Pattern" />
-    <meta name="twitter:description" content="Agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/decorator-pattern/" />
+    <meta name="twitter:title" content="Procedural é fácil, Orientado a Objetos é difícil" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -170,68 +173,82 @@
 
 
 <div class="post-header mb2">
-  <h1>Decorator Pattern</h1>
-  <span class="post-meta">May 2, 2016</span><br>
+  <h1>Procedural é fácil, Orientado a Objetos é difícil</h1>
+  <span class="post-meta">Sep 5, 2016</span><br>
   
   <span class="post-meta small">
   
-    1 minute read
+    2 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Como agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe?</p>
-
-<p>Utilizando <em>Decorator Pattern</em>.</p>
-
-<p>Os Decoradores oferecem uma alternativa simples e flexível ou uso de subclasses para extensão de funcionalidades.</p>
+  <p>Por que ainda temos discussões sobre a Programação Procedural ser mais fácil do que a Programação Orientada a Objetos? É claro que Programar no paradigma Procedural é mais fácil.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1461709444300-a6217cec3dff.jpg" alt="Decorator" /></p>
+<p><img src="/images/photo-1470208564179-dd5b52a0d010.jpg" alt="Imagem" /></p>
 
-<p>Para mim, <a href="https://en.wikipedia.org/wiki/Decorator_pattern"><em>Decorador</em></a> é um dos mais importantes padrões de <em>design</em>.
-Infelizmente esse padrão quase nunca é utilizado, pelo menos nos projetos que vi nos últimos anos, independentemente
-da linguagem de programação utilizada.</p>
+<p>Você olha para um código com 5 instâncias de Objetos, agumentos de Construtores, consumo de memória, polimorfismo e pensa:</p>
 
-<p>Por que?</p>
+<p><strong>Eu poderia fazer a mesma coisa com 10 linhas de código Procedural.</strong></p>
 
-<p>Não tenho uma resposta exata, mas suponho que o motivo do não uso de Decoradores seja devido a escolha “natural” de 
-utilizarmos <strong>Herança de Classes</strong> para estender funcionalidades.</p>
+<p>A performance — você diria — poderia ser melhor, iria consumir menos memória e, claro, é muito mais fácil codificar.</p>
 
-<p>Aprendemos que a Orientação a Objetos tem 3 pilares: <strong>Herança, Encapsulamento e Polimorfismo.</strong></p>
+<p>Eu concordo… em parte.</p>
 
-<p>Herança de Classe é utilizada para estender funcionalidades, implementando uma nova Classe que herda as funcionalidades
-da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre será a escolha mais correta para extensão de funcionalidades?</p>
+<p>Então por que escolher a <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>?</p>
 
-<p>Eu acho que não. Em 90~95% dos casos, eu utilizo <strong>Decoradores</strong> e <strong>Composição de Objetos</strong>.</p>
+<p>Por que fazer da maneira “mais difícil”?</p>
 
-<blockquote>
-  <p>
-    Um Decorador oferece uma abordagem do tipo "use quando for necessário” para adição de responsabilidades. Em vez de tentar
-    suportar todas as características previsíveis em uma Classe complexa e customizada, você pode definir uma Classe simples e 
-    acrescentar funcionalidade de modo incremental com objetos Decoradores.
-  </p>
-  <footer><cite title="Padrões de Projeto">— Padrões de Projeto, Erich Gamma, pág.173</cite></footer>
-</blockquote>
+<p>Por que criar um <a href="https://en.wikipedia.org/wiki/Overhead_(computing)"><em>overhead</em></a> “desnecessário”?</p>
 
-<p>Decoradores são tão simples de implementar como Herança, mas traz mais benefícios.</p>
+<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fobjectpascalprogramming%2Fposts%2F316968578655967&amp;width=500" width="500" height="180" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
 
-<ul>
-  <li>Você não precisa prever o futuro utilizando Decoradores. Utilizando Herança você tem que se preocupar com a hierarquia
-  das Classes desde o início, desde a Classe mais básica até a mais específica, como se pudesse prever o futuro;</li>
-  <li>Evita Classes sobrecarregadas de características e funcionalidades;</li>
-  <li>Classes pequenas e coesas;</li>
-</ul>
+<p>Se pensarmos apenas no <em>overhead</em> que traz a Orientação a Objetos, vamos então codificar nossos sistemas em apenas um único arquivo, usando <em>GO TO</em> e código ASSEMBLY.</p>
 
-<p>Exemplos de código?</p>
+<p>Orientação a Objetos é sobre <strong>manutenabilidade</strong> no longo prazo.</p>
 
-<ol>
-  <li>Parte do código de um projeto em produção que utiliza Decoradores para consumir um WebService, <a href="/posts/pensando-em-objetos/#exemplo-2">aqui</a>.</li>
-  <li>Implementação de um Log com Decoradores para memória, arquivo, banco de dados e e-mail, <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo">aqui</a>;</li>
-  <li>Utilizando a Classe <code>TEmployeeSalaryWithCommission</code> como Decorador de <code>TEmployeeSalary</code>, <a href="/posts/objetos-pensam-e-tomam-decisoes/#versao-orientada-a-objetos">aqui</a>;</li>
-</ol>
+<p>É sobre não pensar como um controlador ou CPU, mas como <a href="/posts/objetos-representam-entidades/">Entidades</a> auto-suficientes que <a href="/posts/objetos-pensam-e-tomam-decisoes/">pensam e tomam decisões</a> por conta própria.</p>
+
+<p>Não é sobre estar certo ou errado, fazer diagramas bonitos ou porque fica legal por no Currículo.</p>
+
+<p><strong>Orientação a Objetos é sobre resolver um problema de forma sustentável.</strong></p>
+
+<p>Por isso escolhemos desenvolver seguindo esse paradigma.</p>
+
+<p>Em 1 hora é possível fazer muita coisa de forma Procedural, enquanto na Orientação a Objetos podemos ficar 1 hora apenas tentando identificar o melhor <a href="/posts/nomeando-classes/">nome para uma Classe</a>, quais são as <a href="/posts/objetos-representam-entidades/">Entidades</a> que fazem parte do problema, quais os Contextos…</p>
+
+<p>E se eu lhe dissesse que podemos ficar “apenas” <a href="/posts/pensando-em-objetos/">pensando</a> por 1 ou 2 semanas, sem escrever nenhuma linha de código?</p>
+
+<p>É verdade, acontece.</p>
+
+<p>Não adianta fazer um sistema rapidamente se seu código não é <strong>sustentável</strong> no longo prazo.</p>
+
+<p><em>Softwares</em> sempre <strong>mudam</strong>.</p>
+
+<p><strong>Orientação a Objetos é sobre organização.</strong></p>
+
+<p>Nós passamos a maior parte do tempo não codificando novas <em>features</em>, mas sim lendo e tentando entender o código.</p>
+
+<p>De que adianta ter um código de execução mais rápida em 100 ms se daqui a um mês ninguém sabe como alterá-lo?</p>
+
+<p>Orientação a Objetos não é mais difícil de codificar, é apenas é mais trabalhoso.</p>
+
+<p><strong>Mas vale a pena.</strong></p>
+
+<p>Por que no fim você irá trabalhar menos.</p>
+
+<p>Talvez com um pouco mais de código, é verdade, mas terá menos <em>bugs</em>.</p>
+
+<p>Menos <em>debugging</em>.</p>
+
+<p>Menos problemas.</p>
+
+<p>Orientação a Objetos agrega <strong>qualidade</strong>.</p>
+
+<p>E qualidade, é o que mais importa.</p>
 
 <p>Até logo.</p>
 
@@ -243,33 +260,33 @@ da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/decorator-pattern/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Decorator Pattern&via=mdbs99;url=http://objectpascalprogramming.com/posts/decorator-pattern/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Procedural é fácil, Orientado a Objetos é difícil&via=mdbs99;url=http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/decorator-pattern/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/decorator-pattern/&title=Decorator Pattern" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/decorator-pattern/&title=Decorator Pattern" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/&title=Procedural é fácil, Orientado a Objetos é difícil" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/decorator-pattern/&t=Decorator Pattern" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/&title=Procedural é fácil, Orientado a Objetos é difícil" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/&t=Procedural é fácil, Orientado a Objetos é difícil" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -309,29 +326,20 @@ da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/freeandnil-esqueca/" class="post-link">
         <ul>
           <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
         </ul>
         <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
       </a>
     </div>
   
@@ -345,20 +353,20 @@ da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+      <a href="/posts/objetos-pensam-e-tomam-decisoes/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+          <h4 class="post-title"><li>Objetos pensam e tomam decisões</li></h4>
         </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+        <!--<p class="post-summary">Objetos pensam e tomam decisões. Eles não precisam de um controlador.</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
         </ul>
-        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
     </div>
   
@@ -372,11 +380,38 @@ da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre
     </div>
   
     <div class="post ml2">
+      <a href="/posts/classes-de-dados/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes de Dados</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como manipulamos os Dados em Projetos Orientados a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
         </ul>
         <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
       </a>
     </div>
   
@@ -389,24 +424,6 @@ da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre
       </a>
     </div>
   
-    <div class="post ml2">
-      <a href="/posts/pensando-em-objetos/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
-        </ul>
-        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/nomeando-variaveis-e-metodos/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Nomeando Variáveis e Métodos</li></h4>
-        </ul>
-        <!--<p class="post-summary">A nomenclatura correta de Variáveis e Métodos simplifica o código.</p>-->
-      </a>
-    </div>
-  
 
 
 
@@ -414,8 +431,8 @@ da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/decorator-pattern';
-      var disqus_title      = 'Decorator Pattern';
+      var disqus_identifier = '/posts/procedural-e-facil-orientado-a-objetos-e-dificil';
+      var disqus_title      = 'Procedural é fácil, Orientado a Objetos é difícil';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

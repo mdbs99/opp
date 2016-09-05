@@ -8,6 +8,81 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Procedural é fácil, Orientado a Objetos é difícil</title>
+        <description>&lt;p&gt;Por que ainda temos discussões sobre a Programação Procedural ser mais fácil do que a Programação Orientada a Objetos? É claro que Programar no paradigma Procedural é mais fácil.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1470208564179-dd5b52a0d010.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Você olha para um código com 5 instâncias de Objetos, agumentos de Construtores, consumo de memória, polimorfismo e pensa:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Eu poderia fazer a mesma coisa com 10 linhas de código Procedural.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;A performance — você diria — poderia ser melhor, iria consumir menos memória e, claro, é muito mais fácil codificar.&lt;/p&gt;
+
+&lt;p&gt;Eu concordo… em parte.&lt;/p&gt;
+
+&lt;p&gt;Então por que escolher a &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;?&lt;/p&gt;
+
+&lt;p&gt;Por que fazer da maneira “mais difícil”?&lt;/p&gt;
+
+&lt;p&gt;Por que criar um &lt;a href=&quot;https://en.wikipedia.org/wiki/Overhead_(computing)&quot;&gt;&lt;em&gt;overhead&lt;/em&gt;&lt;/a&gt; “desnecessário”?&lt;/p&gt;
+
+&lt;iframe src=&quot;https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fobjectpascalprogramming%2Fposts%2F316968578655967&amp;amp;width=500&quot; width=&quot;500&quot; height=&quot;180&quot; style=&quot;border:none;overflow:hidden&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; allowtransparency=&quot;true&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Se pensarmos apenas no &lt;em&gt;overhead&lt;/em&gt; que traz a Orientação a Objetos, vamos então codificar nossos sistemas em apenas um único arquivo, usando &lt;em&gt;GO TO&lt;/em&gt; e código ASSEMBLY.&lt;/p&gt;
+
+&lt;p&gt;Orientação a Objetos é sobre &lt;strong&gt;manutenabilidade&lt;/strong&gt; no longo prazo.&lt;/p&gt;
+
+&lt;p&gt;É sobre não pensar como um controlador ou CPU, mas como &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidades&lt;/a&gt; auto-suficientes que &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;pensam e tomam decisões&lt;/a&gt; por conta própria.&lt;/p&gt;
+
+&lt;p&gt;Não é sobre estar certo ou errado, fazer diagramas bonitos ou porque fica legal por no Currículo.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Orientação a Objetos é sobre resolver um problema de forma sustentável.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Por isso escolhemos desenvolver seguindo esse paradigma.&lt;/p&gt;
+
+&lt;p&gt;Em 1 hora é possível fazer muita coisa de forma Procedural, enquanto na Orientação a Objetos podemos ficar 1 hora apenas tentando identificar o melhor &lt;a href=&quot;/posts/nomeando-classes/&quot;&gt;nome para uma Classe&lt;/a&gt;, quais são as &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidades&lt;/a&gt; que fazem parte do problema, quais os Contextos…&lt;/p&gt;
+
+&lt;p&gt;E se eu lhe dissesse que podemos ficar “apenas” &lt;a href=&quot;/posts/pensando-em-objetos/&quot;&gt;pensando&lt;/a&gt; por 1 ou 2 semanas, sem escrever nenhuma linha de código?&lt;/p&gt;
+
+&lt;p&gt;É verdade, acontece.&lt;/p&gt;
+
+&lt;p&gt;Não adianta fazer um sistema rapidamente se seu código não é &lt;strong&gt;sustentável&lt;/strong&gt; no longo prazo.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Softwares&lt;/em&gt; sempre &lt;strong&gt;mudam&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Orientação a Objetos é sobre organização.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Nós passamos a maior parte do tempo não codificando novas &lt;em&gt;features&lt;/em&gt;, mas sim lendo e tentando entender o código.&lt;/p&gt;
+
+&lt;p&gt;De que adianta ter um código de execução mais rápida em 100 ms se daqui a um mês ninguém sabe como alterá-lo?&lt;/p&gt;
+
+&lt;p&gt;Orientação a Objetos não é mais difícil de codificar, é apenas é mais trabalhoso.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Mas vale a pena.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Por que no fim você irá trabalhar menos.&lt;/p&gt;
+
+&lt;p&gt;Talvez com um pouco mais de código, é verdade, mas terá menos &lt;em&gt;bugs&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Menos &lt;em&gt;debugging&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Menos problemas.&lt;/p&gt;
+
+&lt;p&gt;Orientação a Objetos agrega &lt;strong&gt;qualidade&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;E qualidade, é o que mais importa.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 05 Sep 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/</guid>
+      </item>
+    
+      <item>
         <title>Microservices com Delphi — Parte Final</title>
         <description>&lt;p&gt;Uma arquitetura que utiliza Microservices tem seus prós e contras como qualquer outra tecnologia. Será que essa arquitetura foi uma boa escolha para o projeto?&lt;/p&gt;
 
@@ -624,7 +699,7 @@
 
 &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TMicroServiceClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IXMLDocument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IMicroServiceResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
-  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;bp&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;no-proximo-artigo&quot;&gt;No próximo artigo…&lt;/h2&gt;
@@ -1759,77 +1834,6 @@ O código é declarativo e funcional, não procedural. No código funcional, o v
         <pubDate>Mon, 04 Jul 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/objetos-imutaveis/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-imutaveis/</guid>
-      </item>
-    
-      <item>
-        <title>Métodos Getters e Setters</title>
-        <description>&lt;p&gt;Seus Objetos representam alguma Entidade real ou são apenas um “balde de dados e funções”? Classes que possuem somente métodos &lt;code&gt;Get/Set&lt;/code&gt; não geram Objetos reais seguindo o real conceito da Orientação a Objetos.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1466921583968-f07aa80c526e.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Os Objetos devem ter métodos para interagir com o mundo exterior. Esses métodos podem executar ações e retornar outros Objetos. No entanto o mundo exterior não deveria ter o conhecimento se os Objetos ou valores retornados nesses métodos fazem ou não parte do Estado interno dos Objetos.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  Ao projetar com cuidado e se concentrar no que você deve fazer ao invés de como você vai fazer, elimina a grande maioria dos métodos getters/setters em seu programa.
-  &lt;footer&gt;&lt;cite title=&quot;JavaWorld&quot;&gt;— Why getter and setter methods are evil, JavaWorld&lt;/cite&gt;&lt;/footer&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Muitos programadores não entendem ou ignoram esse conceito.&lt;/p&gt;
-
-&lt;p&gt;Um Objeto não deve representar um &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;registro numa tabela&lt;/a&gt;, mas sim &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidades&lt;/a&gt; exteriores ao sistema no qual o Objeto foi criado.&lt;/p&gt;
-
-&lt;h2 id=&quot;getters&quot;&gt;Métodos Getters&lt;/h2&gt;
-
-&lt;p&gt;Os métodos &lt;code&gt;Getters&lt;/code&gt; são, conceituamente, mal entendidos e erroneamente utilizados. Por exemplo. Se você tem um método &lt;code&gt;GetName&lt;/code&gt;, público, que retorna um atributo &lt;code&gt;FName: string&lt;/code&gt; que faz parte do Estado do Objeto, conceitualmente falando, fica &lt;strong&gt;explícito&lt;/strong&gt; para o mundo exterior que informações internas do Objeto estão sendo retornadas apenas porque estamos utilizando o prefixo &lt;code&gt;Get&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa é uma forma de &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;Violação de Encapsulamento&lt;/a&gt;. No entanto é uma &lt;strong&gt;violação teórica&lt;/strong&gt;, baseada apenas na intenção da nomenclatura escolhida para o método.&lt;/p&gt;
-
-&lt;p&gt;Repito. É uma violação &lt;strong&gt;teórica&lt;/strong&gt;. Isso quer dizer que não tem efeito prático em utilizar ou não o prefixo &lt;code&gt;Get&lt;/code&gt;. Mas estou falando de intenção, ou seja, qual será o trabalho do método. Usar &lt;code&gt;Get&lt;/code&gt; como prefixo dá a entender que &lt;strong&gt;algo interno será dado a quem pede&lt;/strong&gt;. E isso não é bom.&lt;/p&gt;
-
-&lt;p&gt;Mas a linguagem &lt;em&gt;Object Pascal&lt;/em&gt; tem &lt;em&gt;properties&lt;/em&gt; — o mesmo conceito copiado para C# :) — e não precisamos utilizar métodos &lt;code&gt;Get&lt;/code&gt;, encapsulando do mundo exterior como a informação será processada antes de ser retornada. Pode vir de um método &lt;code&gt;Get&lt;/code&gt; privado ou diretamente do atributo. Ponto positivo para o &lt;em&gt;Object Pascal&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;setters&quot;&gt;Métodos Setters&lt;/h2&gt;
-
-&lt;p&gt;Bem, se deixar o mundo exterior bisbilhotar dentro de um Objeto utilizando seus métodos &lt;code&gt;Getters&lt;/code&gt; públicos para obter todo o seu Estado interno é ruim, imagine então permitir alterações no Estado desse Objeto utilizando métodos &lt;code&gt;Setters&lt;/code&gt;.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  Um Objeto não pode ter seu estado interno alterado, pois
-  isso entraria em conflito com a realidade da Entidade na
-  qual ele representa.
-  &lt;footer&gt;&lt;cite title=&quot;eBook OPP&quot;&gt;eBook — @ObjectPascalProgramming&lt;/cite&gt;&lt;/footer&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Objetos devem ser Imutáveis.&lt;/p&gt;
-
-&lt;p&gt;Objetos Imutáveis são livres de efeitos colaterais externos. Eles são criados representando um momento específico no tempo e devem permanecer inalterados até a sua morte.&lt;/p&gt;
-
-&lt;p&gt;Esse é um conceito muito menos abstrato do que a violação de encapsulamento utilizando &lt;code&gt;Getters&lt;/code&gt;, mas pode ser ainda mais difícil de entender. E é por isso que terei que falar sobre imutabilidade em outro artigo.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Esse artigo serve para lembrá-lo que codificar Classes que representam registros em tabelas não é Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Métodos &lt;code&gt;Getters&lt;/code&gt; públicos não são necessários.&lt;/p&gt;
-
-&lt;p&gt;Métodos &lt;code&gt;Setters&lt;/code&gt; ou &lt;em&gt;properties&lt;/em&gt; que podem ser alteradas devem ser evitadas a todo custo. Nem todo Objeto pode ser imutável, infelizmente. Objetos &lt;em&gt;widgets&lt;/em&gt;, por exemplo, serão mutáveis por conveniência e performance. Mas tente manter seus Objetos de Negócio imutáveis.&lt;/p&gt;
-
-&lt;p&gt;Podemos remover ambos, &lt;code&gt;Getters/Setters&lt;/code&gt;, de nossos sistemas Orientado a Objetos quase por completo. Classes imutáveis não tem &lt;code&gt;Setters&lt;/code&gt; e para &lt;code&gt;Getters&lt;/code&gt; o Objeto deve passar a informação &lt;strong&gt;ele mesmo&lt;/strong&gt; e não &lt;strong&gt;alguém pegar a informação&lt;/strong&gt; dele. Falarei sobre isso futuramente.&lt;/p&gt;
-
-&lt;p&gt;Se você não precisasse de métodos &lt;code&gt;Setters&lt;/code&gt; e utilizar &lt;code&gt;Getters&lt;/code&gt; é no mínimo duvidoso, simplifique utilizando somente funções.&lt;/p&gt;
-
-&lt;p&gt;Como sempre faço uso de &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;, eu nunca implemento &lt;em&gt;properties&lt;/em&gt; porque seria obrigado a declarar seus métodos de leitura/escrita, ou seja, &lt;code&gt;Get/Set&lt;/code&gt;. Esses métodos poderiam ser privados, é claro, mas essa verbosidade é desnecessária se você estiver utilizando Objetos imutáveis.&lt;/p&gt;
-
-&lt;p&gt;Você acha que sou o único a pensar dessa maneira? Bem, então &lt;a href=&quot;http://www.javaworld.com/article/2073723/core-java/why-getter-and-setter-methods-are-evil.html&quot;&gt;aqui está&lt;/a&gt; um ótimo artigo que fala sobre o assunto. Foi dele que traduzi a citação no início do artigo. E se quiser mais um, &lt;a href=&quot;http://www.yegor256.com/2014/09/16/getters-and-setters-are-evil.html&quot;&gt;aqui está&lt;/a&gt;. Boa leitura.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 27 Jun 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/getters-e-setters/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/getters-e-setters/</guid>
       </item>
     
   </channel>
