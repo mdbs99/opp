@@ -126,58 +126,56 @@ no entanto veja que para descobrir o problema o programador da Classe B, a Subcl
 foi implementada, Violando o Encapsulamento, pois ele deverá fazer ajustes em função da implementão interna da 
 Classe A: 
 
-{% highlight pascal %}
-type
-  TClasseA = class
-  protected
-    procedure Exec; virtual;
-  public
-    procedure Proc;
-  end;
+    type
+      TClasseA = class
+      protected
+        procedure Exec; virtual;
+      public
+        procedure Proc;
+      end;
 
-  TClasseB = class(TClasseA)
-  protected
-    procedure Exec; override;
-  end;
+      TClasseB = class(TClasseA)
+      protected
+        procedure Exec; override;
+      end;
 
-{ TClasseA }
+    { TClasseA }
 
-procedure TClasseA.Exec;
-begin
-  ShowMessage('Exec')
-end;
+    procedure TClasseA.Exec;
+    begin
+      ShowMessage('Exec')
+    end;
 
-procedure TClasseA.Proc;
-begin
-  Exec;
-end;
+    procedure TClasseA.Proc;
+    begin
+      Exec;
+    end;
 
-{ TClasseB }
+    { TClasseB }
 
-procedure TClasseB.Exec;
-begin
-  Proc;
-end;
+    procedure TClasseB.Exec;
+    begin
+      Proc;
+    end;
 
-{ TForm1 }
+    { TForm1 }
 
-procedure TForm1.Button1Click(Sender: TObject);
-begin
-  with TClasseA.Create do
-  try
-    Proc;
-  finally
-    Free;
-  end;
+    procedure TForm1.Button1Click(Sender: TObject);
+    begin
+      with TClasseA.Create do
+      try
+        Proc;
+      finally
+        Free;
+      end;
 
-  with TClasseB.Create do
-  try
-    Proc;
-  finally
-    Free;
-  end;
-end;
-{% endhighlight text %}
+      with TClasseB.Create do
+      try
+        Proc;
+      finally
+        Free;
+      end;
+    end;
 
 A Classe B sobrescreve um método da Classe A. Simples. Fazemos isso todo tempo.
 Então, qual é o problema desse código?
@@ -197,51 +195,49 @@ Mas como saber se devo ou não chamar o código da Classe ancestral?
 Somente olhando a implementação privada da Classe para termos certeza se **devemos ou não** chamar o código.
 Novamente, temos uma Violação de Encapsulamento.
 
-{% highlight pascal %}
-type
-  TClasseA = class
-  protected
-    FCount: Integer;
-  public
-    procedure Exec; virtual;
-  end;
+    type
+      TClasseA = class
+      protected
+        FCount: Integer;
+      public
+        procedure Exec; virtual;
+      end;
 
-  TClasseB = class(TClasseA)
-  public
-    procedure Exec; override;
-  end;
+      TClasseB = class(TClasseA)
+      public
+        procedure Exec; override;
+      end;
 
-{ TClasseA }
+    { TClasseA }
 
-procedure TClasseA.Exec;
-begin
-  FCount := FCount + 1;
-  ShowMessage('Count=' + IntToStr(FCount)); //=1
-  ShowMessage('Exec A');
-end;
+    procedure TClasseA.Exec;
+    begin
+      FCount := FCount + 1;
+      ShowMessage('Count=' + IntToStr(FCount)); //=1
+      ShowMessage('Exec A');
+    end;
 
-{ TClasseB }
+    { TClasseB }
 
-procedure TClasseB.Exec;
-begin
-  inherited;
-  FCount := FCount + 1;
-  ShowMessage('Count=' + IntToStr(FCount)); //=2
-  ShowMessage('Exec B');
-end;
+    procedure TClasseB.Exec;
+    begin
+      inherited;
+      FCount := FCount + 1;
+      ShowMessage('Count=' + IntToStr(FCount)); //=2
+      ShowMessage('Exec B');
+    end;
 
-{ TForm1 }
+    { TForm1 }
 
-procedure TForm1.Button1Click(Sender: TObject);
-begin
-  with TClasseB.Create do
-  try
-    Exec;
-  finally
-    Free;
-  end;
-end;
-{% endhighlight text %}
+    procedure TForm1.Button1Click(Sender: TObject);
+    begin
+      with TClasseB.Create do
+      try
+        Exec;
+      finally
+        Free;
+      end;
+    end;
 
 Quando executado teremos as mensagens: 
 

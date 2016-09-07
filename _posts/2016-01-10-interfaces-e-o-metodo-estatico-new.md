@@ -56,12 +56,10 @@ Para que o *garbage colletor* funcione corretamente você precisa ter uma variá
 
 Considere o código abaixo:
 
-{% highlight pascal %}
-function TFoo.Execute(const Name: string): string;
-begin
-  Result := TAction.Create(TTask.Create(Name)).Execute.ToString;
-end;
-{% endhighlight text %}
+    function TFoo.Execute(const Name: string): string;
+    begin
+      Result := TAction.Create(TTask.Create(Name)).Execute.ToString;
+    end;
 
   1. TTask é uma classe que recebe uma `string` no construtor;
   2. TTask implementa ITask, uma Interface;
@@ -94,15 +92,13 @@ sabe que deverá desalocar essa instância logo que não precisar mais dela.
 
 Então vamos acertar o código:
 
-{% highlight pascal %}
-function TFoo.Execute(const Name: string): string;
-var
-  A: IAction;
-begin
-  A := TAction.Create(TTask.Create(Name));
-  Result := A.Execute.ToString;
-end;
-{% endhighlight text %}
+    function TFoo.Execute(const Name: string): string;
+    var
+      A: IAction;
+    begin
+      A := TAction.Create(TTask.Create(Name));
+      Result := A.Execute.ToString;
+    end;
 
 Agora não haverá `memleaks` porque agora o compilador tem a referência `A` para `TAction`. No fim do método
 `TFoo.Execute` a instância em `A` será liberada automaticamente.
@@ -135,31 +131,29 @@ Todas as novas instâncias terão uma variável-interface para receber a referê
 
 Eu implemento essa "mágica" de forma muito simples utilizando o método *New*.
 
-{% highlight pascal %}
-type
-  TAction = class(TInterfacedObject, IAction)
-  public
-    constructor Create(Task: ITask);
-    class function New(Task: ITask): IAction;
-    function Execute: IResult;
-  end;
-  
-class function TAction.New(Task: ITask): IAction;
-begin
-  Result := TAction.Create(Task);
-end;  
+    type
+      TAction = class(TInterfacedObject, IAction)
+      public
+        constructor Create(Task: ITask);
+        class function New(Task: ITask): IAction;
+        function Execute: IResult;
+      end;
+      
+    class function TAction.New(Task: ITask): IAction;
+    begin
+      Result := TAction.Create(Task);
+    end;  
 
-{ Implementação de Create e Execute... irrelevantes }  
+    { Implementação de Create e Execute... irrelevantes }  
 
-{ Implementação do método New também para TTask... }
+    { Implementação do método New também para TTask... }
 
-{...}  
-  
-function TFoo.Execute(const Name: string): string;
-begin
-  Result := TAction.New(TTask.New(Name)).Execute.ToString;
-end;
-{% endhighlight text %}
+    {...}  
+      
+    function TFoo.Execute(const Name: string): string;
+    begin
+      Result := TAction.New(TTask.New(Name)).Execute.ToString;
+    end;
 
 Agora nós estamos chamando `TAction.New` ao invés de `TAction.Create`.
 

@@ -44,16 +44,14 @@ caso sim, seria um **erro**.
 Vamos a um exemplo. Vamos definir uma classe `TDbQuery` que irá encapsular um SQL.
 Essa classe só terá um método (simplificando) para executar o SQL.
 
-{% highlight pascal %}
-type
-  TDbQuery = class
-  private
-    FScript: string;
-  public
-    construtor Create(const Script: string);
-    function Execute: Integer;
-  end;
-{% endhighlight text %}
+    type
+      TDbQuery = class
+      private
+        FScript: string;
+      public
+        construtor Create(const Script: string);
+        function Execute: Integer;
+      end;
 
 O construtor tem um argumento do tipo `string` e o usuário da classe poderia passar qualquer
 valor como um SQL válido, mas também letras, números ou até mesmo uma string em branco.

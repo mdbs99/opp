@@ -68,27 +68,25 @@ Como implementar Cliente?
 A maioria das pessoas iriam definir **todos** os campos (atributos) 
 em uma única Classe, mais ou menos assim:
 
-{% highlight pascal %}
-type
-  TCustomer = class
-  private
-    FName: string;
-    FBirthday: TDateTime;
-    FEmail: string;
-    FAddress: TAddress;
-    FStatus: TStatus;
-    FCreditCard: TCreditCard;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    property Name: string read FName write FName; 
-    property Birthday: TDateTime read FBirthday write FBirthday; 
-    property Email: string read FEmail write FEmail; 
-    property Address: TAddress read FAddress; 
-    property Status: TStatus read FStatus write FStatus; 
-    property CreditCard: TCreditCard read FCreditCard; 
-  end;
-{% endhighlight text %}
+    type
+      TCustomer = class
+      private
+        FName: string;
+        FBirthday: TDateTime;
+        FEmail: string;
+        FAddress: TAddress;
+        FStatus: TStatus;
+        FCreditCard: TCreditCard;
+      public
+        constructor Create;
+        destructor Destroy; override;
+        property Name: string read FName write FName; 
+        property Birthday: TDateTime read FBirthday write FBirthday; 
+        property Email: string read FEmail write FEmail; 
+        property Address: TAddress read FAddress; 
+        property Status: TStatus read FStatus write FStatus; 
+        property CreditCard: TCreditCard read FCreditCard; 
+      end;
 
 Num sistema real de médio ou grande porte sabemos que um
 Cliente poderia ter muitos outros atributos, certo? Essa Classe iria crescer e crescer... 
@@ -159,80 +157,74 @@ o *Status* são necessários para enviar e-mails somente aos clientes ativos.
 
 Então temos, de uma forma bem sucinta, a definição das Interfaces:
 
-{% highlight pascal %}
-type
-  ICustomer = interface
-    function Name: string;
-    function Birthday: TDateTime;
-  end;
-  
-  IEmail = interface
-    function Value: string;
-  end;
-  
-  IAddress = interface
-    function Address: string;
-    function Number: Integer;
-  end;
-  
-  IStatus = interface
-    function Value: Integer
-  end;
-  
-  ICreditCard = interface
-    function Number: string;
-    function Name: string;
-    function ExpiresIn: TDateTime;
-  end;
-{% endhighlight text %}
+    type
+      ICustomer = interface
+        function Name: string;
+        function Birthday: TDateTime;
+      end;
+      
+      IEmail = interface
+        function Value: string;
+      end;
+      
+      IAddress = interface
+        function Address: string;
+        function Number: Integer;
+      end;
+      
+      IStatus = interface
+        function Value: Integer
+      end;
+      
+      ICreditCard = interface
+        function Number: string;
+        function Name: string;
+        function ExpiresIn: TDateTime;
+      end;
 
 Abaixo as possíveis implementações para cada contexto relacionado com Cliente:
 
-{% highlight pascal %}
-// Contexto #1
-type 
-  TCustomer = class(TInterfacedObject, ICustomer)
-  public  
-    constructor Create(Id: Integer);
-    {...}
-  end;
-  
-  TCustomerAddress = class(TInterfacedObject, IAddress)
-  public
-    constructor Create(Customer: ICustomer);
-    {...}
-  end;
+    // Contexto #1
+    type 
+      TCustomer = class(TInterfacedObject, ICustomer)
+      public  
+        constructor Create(Id: Integer);
+        {...}
+      end;
+      
+      TCustomerAddress = class(TInterfacedObject, IAddress)
+      public
+        constructor Create(Customer: ICustomer);
+        {...}
+      end;
 
-// Contexto #1 e #2
-type
-  TCustomerCreditCard = class(TInterfacedObject, ICreditCard)
-  public
-    constructor Create(Customer: ICustomer);
-    {...}
-  end;
-  
-// Contexto #3
-type
-  TCustomerStatus = class(TInterfacedObject, IStatus)
-  public
-    constructor Create(Customer: ICustomer);
-    {...}
-  end;
-{% endhighlight text %}
+    // Contexto #1 e #2
+    type
+      TCustomerCreditCard = class(TInterfacedObject, ICreditCard)
+      public
+        constructor Create(Customer: ICustomer);
+        {...}
+      end;
+      
+    // Contexto #3
+    type
+      TCustomerStatus = class(TInterfacedObject, IStatus)
+      public
+        constructor Create(Customer: ICustomer);
+        {...}
+      end;
 
 Então se queremos saber o cartão de crédito de um determinado Cliente, basta codificar:
 
-{% highlight pascal %}
-begin
-  ShowMessage(
-    TCustomerCreditCard.New(
-      TCustomer.New(
-        123
-      )
-    ).Number
-  );
-end;
-{% endhighlight text %}
+    begin
+      ShowMessage(
+        TCustomerCreditCard.New(
+          TCustomer.New(
+            123
+          )
+        ).Number
+      );
+    end;
 
 Dica: Veja mais sobre o **Método New** [aqui]({% post_url 2016-01-10-interfaces-e-o-metodo-estatico-new %}).
 

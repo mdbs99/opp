@@ -43,66 +43,64 @@ O resultado, no entanto, é convertido para `ISO-8859-1` — que é o formato qu
 
 A Classe `TXMLFactory` facilita o envio e retorno.
 
-{% highlight pascal %}
-type
-  TXMLFactory = class(TInterfacedObject, IXMLFactory)
-  private
-    FEncoding: string;
-    FStream: IDataStream;
-  public
-    constructor Create(const Encoding: string; Stream: IDataStream); reintroduce;
-    class function New(const Encoding: string; Stream: IDataStream): IXMLFactory; overload;
-    class function New(const Encoding: string): IXMLFactory; overload;
-    class function New: IXMLFactory; overload;
-    function Document: IXMLDocument;
-  end;
+    type
+      TXMLFactory = class(TInterfacedObject, IXMLFactory)
+      private
+        FEncoding: string;
+        FStream: IDataStream;
+      public
+        constructor Create(const Encoding: string; Stream: IDataStream); reintroduce;
+        class function New(const Encoding: string; Stream: IDataStream): IXMLFactory; overload;
+        class function New(const Encoding: string): IXMLFactory; overload;
+        class function New: IXMLFactory; overload;
+        function Document: IXMLDocument;
+      end;
 
-{ TXMLFactory }
+    { TXMLFactory }
 
-constructor TXMLFactory.Create(const Encoding: string; Stream: IDataStream);
-begin
-  inherited Create;
-  FEncoding := Encoding;
-  FStream := Stream;
-end;
-
-class function TXMLFactory.New(const Encoding: string;
-  Stream: IDataStream): IXMLFactory;
-begin
-  Result := Create(Encoding, Stream);
-end;
-
-class function TXMLFactory.New(const Encoding: string): IXMLFactory;
-begin
-  Result := New(Encoding, TDataStream.New);
-end;
-
-class function TXMLFactory.New: IXMLFactory;
-begin
-  Result := New('UTF-8');
-end;
-
-function TXMLFactory.Document: IXMLDocument;
-var
-  Buf: TMemoryStream;
-begin
-  Result := TXMLDocument.Create(nil);
-  Buf := TMemoryStream.Create;
-  try
-    Result.Options := [];
-    Result.Active := True;
-    Result.Version := '1.0';
-    if FStream.Size > 0 then
+    constructor TXMLFactory.Create(const Encoding: string; Stream: IDataStream);
     begin
-      FStream.Save(Buf);
-      Result.LoadFromStream(Buf);
+      inherited Create;
+      FEncoding := Encoding;
+      FStream := Stream;
     end;
-    Result.Encoding := FEncoding;
-  finally
-    Buf.Free;
-  end;
-end;
-{% endhighlight text %}
+
+    class function TXMLFactory.New(const Encoding: string;
+      Stream: IDataStream): IXMLFactory;
+    begin
+      Result := Create(Encoding, Stream);
+    end;
+
+    class function TXMLFactory.New(const Encoding: string): IXMLFactory;
+    begin
+      Result := New(Encoding, TDataStream.New);
+    end;
+
+    class function TXMLFactory.New: IXMLFactory;
+    begin
+      Result := New('UTF-8');
+    end;
+
+    function TXMLFactory.Document: IXMLDocument;
+    var
+      Buf: TMemoryStream;
+    begin
+      Result := TXMLDocument.Create(nil);
+      Buf := TMemoryStream.Create;
+      try
+        Result.Options := [];
+        Result.Active := True;
+        Result.Version := '1.0';
+        if FStream.Size > 0 then
+        begin
+          FStream.Save(Buf);
+          Result.LoadFromStream(Buf);
+        end;
+        Result.Encoding := FEncoding;
+      finally
+        Buf.Free;
+      end;
+    end;
 
 ##Consumindo um Serviço {#consumindo-um-servico}
 
@@ -116,54 +114,52 @@ A instância dessa Classe irá receber um parâmetro do tipo `IDataUId` — uma 
 
 Segue sua implementação abaixo:
 
-{% highlight pascal %}
-type
-  TFaturasService = class(TInterfacedObject, IMicroServiceAction)
-  private
-    FUId: IDataUId;
-  public
-    constructor Create(UId: IDataUId); reintroduce;
-    class function New(UId: IDataUId): IMicroServiceAction;
-    function Act: IMicroServiceResponse;
-  end;
+    type
+      TFaturasService = class(TInterfacedObject, IMicroServiceAction)
+      private
+        FUId: IDataUId;
+      public
+        constructor Create(UId: IDataUId); reintroduce;
+        class function New(UId: IDataUId): IMicroServiceAction;
+        function Act: IMicroServiceResponse;
+      end;
 
-{ TFaturasService }
+    { TFaturasService }
 
-constructor TFaturasService.Create(UId: IDataUId);
-begin
-  inherited Create;
-  FUId := UId;
-end;
-
-class function TFaturasService.New(
-  UId: IDataUId): IMicroServiceAction;
-begin
-  Result := Create(UId);
-end;
-
-function TFaturasService.Act: IMicroServiceResponse;
-
-  function XML: IXMLDocument;
-  begin
-    Result := TXMLFactory.New.Document;
-    with Result.AddChild('Params') do
+    constructor TFaturasService.Create(UId: IDataUId);
     begin
-      AddChild('uid').Text := FUId.AsString;
-      AddChild('active').Text := 'True';
+      inherited Create;
+      FUId := UId;
     end;
-  end;
 
-begin
-  Result :=
-    TMicroServiceClient.New(
-      TMicroServiceParams.New(
-        'financ:faturas-service'
-      )
-      .Find
-    )
-    .Send(XML)
-end;
-{% endhighlight text %}
+    class function TFaturasService.New(
+      UId: IDataUId): IMicroServiceAction;
+    begin
+      Result := Create(UId);
+    end;
+
+    function TFaturasService.Act: IMicroServiceResponse;
+
+      function XML: IXMLDocument;
+      begin
+        Result := TXMLFactory.New.Document;
+        with Result.AddChild('Params') do
+        begin
+          AddChild('uid').Text := FUId.AsString;
+          AddChild('active').Text := 'True';
+        end;
+      end;
+
+    begin
+      Result :=
+        TMicroServiceClient.New(
+          TMicroServiceParams.New(
+            'financ:faturas-service'
+          )
+          .Find
+        )
+        .Send(XML)
+    end;
 
 ###O código passo-a-passo {#passo-a-passo}
 
@@ -189,15 +185,13 @@ Então, como utilizar a nova Classe no nosso código?
 
 Aqui está um exemplo:
 
-{% highlight pascal %}
-procedure TForm1.FillData;
-begin
-  TXMLClientDataSetAdapter.New(
-    FModule.FaturaClient,
-    TFaturasService.New(FUId).Act.XML
-  )
-  .Adapt;
-{% endhighlight text %}
+    procedure TForm1.FillData;
+    begin
+      TXMLClientDataSetAdapter.New(
+        FModule.FaturaClient,
+        TFaturasService.New(FUId).Act.XML
+      )
+      .Adapt;
 
 No Delphi 7 utilizamos `TClientDataSet` para manter os dados tabulares (linhas e colunas) em memória, exibir numa *Grid* ou em qualquer outro *widget*. Mas os dados dos Microservices vem no formato de XML. Esses dados precisam ser convertidos para um formato tabular.
 
@@ -218,37 +212,35 @@ Não. É tão simples quanto a implementação da Classe de Negócio.
 
 Veja a implementação do método `Adapt`:
 
-{% highlight pascal %}
-function TXMLClientDataSetAdapter.Adapt: IDataAdapter;
-var
-  I: Integer;
-  Field: TField;
-begin
-  Result := Self;
-  if not Assigned(FSource) then
-    Exit;
-  FDest.DisableControls;
-  try
-    while Assigned(FSource) do
+    function TXMLClientDataSetAdapter.Adapt: IDataAdapter;
+    var
+      I: Integer;
+      Field: TField;
     begin
-      FDest.Append;
-      for I := 0 to FSource.ChildNodes.Count -1 do
-      begin
-        with FSource.ChildNodes[I] do
+      Result := Self;
+      if not Assigned(FSource) then
+        Exit;
+      FDest.DisableControls;
+      try
+        while Assigned(FSource) do
         begin
-          Field := FDest.FindField(NodeName);
-          if Assigned(Field) and (Text <> '') then
-            Field.Value := Text;
+          FDest.Append;
+          for I := 0 to FSource.ChildNodes.Count -1 do
+          begin
+            with FSource.ChildNodes[I] do
+            begin
+              Field := FDest.FindField(NodeName);
+              if Assigned(Field) and (Text <> '') then
+                Field.Value := Text;
+            end;
+          end;
+          FSource := FSource.NextSibling;
         end;
+      finally
+        FDest.First;
+        FDest.EnableControls;
       end;
-      FSource := FSource.NextSibling;
     end;
-  finally
-    FDest.First;
-    FDest.EnableControls;
-  end;
-end;
-{% endhighlight text %}
 
 Ele adapta o XML para o formato tabular e no fim temos uma instância de `TClientDataSet` com os dados provenientes do XML.
 

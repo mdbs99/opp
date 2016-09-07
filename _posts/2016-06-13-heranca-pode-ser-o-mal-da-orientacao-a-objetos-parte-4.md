@@ -79,27 +79,23 @@ O Forte Acoplamento entre Classes se dá quando uma Classe "conhece" uma outra d
 Por exemplo. Quando você inicializa um atributo de uma Classe utilizando uma Classe concreta, 
 você está acoplando as Classes.
 
-{% highlight pascal %}
-constructor TCustomer.Create(const Name: string);
-begin
-  inherited Create;
-  FName := Name;
-  FAddress := TAddress.Create;
-end;
-{% endhighlight text %}
+    constructor TCustomer.Create(const Name: string);
+    begin
+      inherited Create;
+      FName := Name;
+      FAddress := TAddress.Create;
+    end;
 
 No exemplo acima existe um acoplamento entre `TCustomer` e `TAddress`. Conceitualmente isso é ruim. O mais correto seria utilizar
 **injeção de dependência** passando a instância de `TAddress` através de um argumento do tipo Interface no construtor de `TCustomer`.
 
-{% highlight pascal %}
-constructor TCustomer.Create(const Name: string; 
-  Address: IAddress);
-begin
-  inherited Create;
-  FName := Name;
-  FAddress := Address;
-end;
-{% endhighlight text %}
+    constructor TCustomer.Create(const Name: string; 
+      Address: IAddress);
+    begin
+      inherited Create;
+      FName := Name;
+      FAddress := Address;
+    end;
 
 Devemos evitar o acoplamento. O motivo é simples. Toda vez que você alterar uma Classe que está acoplada a outra, haverá grandes
 chances de você ter que alterar ambas.
@@ -118,25 +114,22 @@ No entanto, se utilizássemos **Herança de Classe**, a mesma refatoração pode
 Por exemplo. Se `TCustomer` fosse uma Subclasse de `TPerson` e essa Classe inicializasse `FAddress` em seu construtor,
 `TCustomer` não poderia — ou não deveria — alterar a instância de `FAddress`, reinicializando-a com um outro tipo de Classe.
 
-{% highlight pascal %}
+    { TPerson }
 
-{ TPerson }
+    constructor TPerson.Create(const Name: string);
+    begin
+      inherited Create;
+      FName := Name;
+      FAddress := TAddress.Create;
+    end;
 
-constructor TPerson.Create(const Name: string);
-begin
-  inherited Create;
-  FName := Name;
-  FAddress := TAddress.Create;
-end;
+    { TCustomer }
 
-{ TCustomer }
-
-constructor TCustomer.Create(const Name: string);
-begin
-  inherited Create(Name);
-  FAddress := TAnotherAddress.Create; //<<<
-end;
-{% endhighlight text %}
+    constructor TCustomer.Create(const Name: string);
+    begin
+      inherited Create(Name);
+      FAddress := TAnotherAddress.Create; //<<<
+    end;
 
 Nesse exemplo simples, existem alguns problemas.
 

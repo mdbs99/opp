@@ -55,21 +55,19 @@ Mas como `string` é um tipo primitivo (no Pascal), pensamos em termos de Dados 
 
 Vejamos outro exemplo:
 
-{% highlight pascal %}
-type
-  TFile = class(TInterfacedObject, IFile)
-  private
-    FPath: string;
-    FName: string;
-    FStream: IDataStream;
-  public
-    constructor Create(const Path, Name: string; 
-      Stream: IDataStream);
-    function Path: string;
-    function Name: string;
-    function Stream: IDataStream; 
-  end;
-{% endhighlight text %}
+    type
+      TFile = class(TInterfacedObject, IFile)
+      private
+        FPath: string;
+        FName: string;
+        FStream: IDataStream;
+      public
+        constructor Create(const Path, Name: string; 
+          Stream: IDataStream);
+        function Path: string;
+        function Name: string;
+        function Stream: IDataStream; 
+      end;
 
 No exemplo acima, tem diferença entre Dados e Estado?
 
@@ -81,19 +79,17 @@ A Classe `TFile` faz uso da Composição de Objetos. Não olhamos para `TFile` c
 
 Mas, se olharmos apenas para o Objeto `FStream` dentro de `TFile`, ele poderia ser implementado assim:
 
-{% highlight pascal %}
-type
-  TDataStream = class sealed(TInterfacedObject, IDataStream)
-  private
-    FStream: TMemoryStream;
-  public
-    constructor Create(Stream: TStream);
-    destructor Destroy; override;
-    procedure Save(Stream: TStream); overload;
-    procedure Save(const FileName: string); overload;
-    function Size: Int64;
-  end;
-{% endhighlight text %}
+    type
+      TDataStream = class sealed(TInterfacedObject, IDataStream)
+      private
+        FStream: TMemoryStream;
+      public
+        constructor Create(Stream: TStream);
+        destructor Destroy; override;
+        procedure Save(Stream: TStream); overload;
+        procedure Save(const FileName: string); overload;
+        function Size: Int64;
+      end;
 
 Agora o Contexto mudou.
 

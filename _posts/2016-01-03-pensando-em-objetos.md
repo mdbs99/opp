@@ -69,56 +69,54 @@ Aqui está o código **Procedural** para consumir o WebService:
 
 **Atenção**: Eu digitei a `procedure` diretamente no post, sem teste de compilação, então podem haver erros de sintaxe.
 
-{% highlight pascal %}
-procedure TDpvAction.Act(const WebMethodName: string);
-var
-  Client: TDpvService;
-  Mapping: TDpvXMLMappingInTable;
-  XML: string;
-  XMLIterable: TXMLIterable; 
-begin
-  // FFileConfig é um atributo da classe
-  
-  Client := TDpvService.Create;
-  Mapping := TDpvXMLMappingInTable.Create;
-  XMLIterable := TXMLIterable.Create; 
-  try
-    // Configura a URL do WebService
-    Client.SetURL(FFileConfig.ReadString('WebService', 'URL'));
-   
-    // Configura com verificação de exceção
-    Client.WithCheck(True);
+    procedure TDpvAction.Act(const WebMethodName: string);
+    var
+      Client: TDpvService;
+      Mapping: TDpvXMLMappingInTable;
+      XML: string;
+      XMLIterable: TXMLIterable; 
+    begin
+      // FFileConfig é um atributo da classe
+      
+      Client := TDpvService.Create;
+      Mapping := TDpvXMLMappingInTable.Create;
+      XMLIterable := TXMLIterable.Create; 
+      try
+        // Configura a URL do WebService
+        Client.SetURL(FFileConfig.ReadString('WebService', 'URL'));
+       
+        // Configura com verificação de exceção
+        Client.WithCheck(True);
 
-    // Configura para gerar Log
-    Client.WithLog(True);
+        // Configura para gerar Log
+        Client.WithLog(True);
 
-    // Client executa o método
-    XML := Client.ExecuteMethod(
-      FFileConfig.ReadString('WebService', 'User'),
-      FFileConfig.ReadString('WebService', 'Password'),
-      WebMethodName
-    );
+        // Client executa o método
+        XML := Client.ExecuteMethod(
+          FFileConfig.ReadString('WebService', 'User'),
+          FFileConfig.ReadString('WebService', 'Password'),
+          WebMethodName
+        );
 
-    // Obtém as configurações necessárias
-    XMLIterable.SetXMLNodes(FFileConfig.ReadString('XMLNodes', WebMethodName));
+        // Obtém as configurações necessárias
+        XMLIterable.SetXMLNodes(FFileConfig.ReadString('XMLNodes', WebMethodName));
 
-    // Configura o XML gerado
-    XMLIterable.SetXML(XML);
+        // Configura o XML gerado
+        XMLIterable.SetXML(XML);
 
-    // Executa e gera outro XML (sim, reutilizei a mesma variável)  :)
-    XML := XMLIterable.Execute;
+        // Executa e gera outro XML (sim, reutilizei a mesma variável)  :)
+        XML := XMLIterable.Execute;
 
-    // Executa a persistência
-    Mapping.SetXML(XML);
-    Mapping.Execute;
-  finally
-    // Não pode esquecer de desalocar tudo
-    Client.Free;
-    Mapping.Free;
-    XMLIterable.Free;
-  end;
-end;
-{% endhighlight text %}
+        // Executa a persistência
+        Mapping.SetXML(XML);
+        Mapping.Execute;
+      finally
+        // Não pode esquecer de desalocar tudo
+        Client.Free;
+        Mapping.Free;
+        XMLIterable.Free;
+      end;
+    end;
 
 É um código Procedural e funciona (teoricamente).
 
@@ -165,33 +163,31 @@ em manutenções futuras e com um código muito mais **elegante**?
 
 Aqui está o código **Orientado a Objetos** para consumir o mesmo WebService:
 
-{% highlight objectpascal %}
-function TDpvAction.Act(const WebMethodName: string): IActionResult;
-begin
-  Result := TDpvXMLMappingInTable.New(
-    FFileConfig.ReadString('MethodsVsTables', WebMethodName),
-    TDpvXMLIterable.New(
-      FFileConfig.ReadString('XMLNodes', WebMethodName),
-      TDpvServiceWithLogging.New(
-        TDpvServiceWithChecking.New(
-          TDpvService.New(
-            FFileConfig.ReadString('WebService', 'URL')
+    function TDpvAction.Act(const WebMethodName: string): IActionResult;
+    begin
+      Result := TDpvXMLMappingInTable.New(
+        FFileConfig.ReadString('MethodsVsTables', WebMethodName),
+        TDpvXMLIterable.New(
+          FFileConfig.ReadString('XMLNodes', WebMethodName),
+          TDpvServiceWithLogging.New(
+            TDpvServiceWithChecking.New(
+              TDpvService.New(
+                FFileConfig.ReadString('WebService', 'URL')
+              )
+            )
           )
+          .Call(
+            TDpvMethod.New(
+              WebMethodName,
+              TWebAuthorization.New(
+                FFileConfig.ReadString('WebService', 'User'),
+                FFileConfig.ReadString('WebService', 'Password')
+              )
+            )
+          ).XML
         )
-      )
-      .Call(
-        TDpvMethod.New(
-          WebMethodName,
-          TWebAuthorization.New(
-            FFileConfig.ReadString('WebService', 'User'),
-            FFileConfig.ReadString('WebService', 'Password')
-          )
-        )
-      ).XML
-    )
-  ).Act;
-end;
-{% endhighlight text %}
+      ).Act;
+    end;
 
 Esse é um código verdadeiramente Orientado a Objetos. Não dizemos ao computador linha-a-linha sobre o que fazer.
 Os Objetos sabem o que fazer! Eles não precisam de um **orquestrador** lhes dizendo o que fazer a cada momento.

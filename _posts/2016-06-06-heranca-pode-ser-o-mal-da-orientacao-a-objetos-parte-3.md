@@ -104,16 +104,14 @@ reaproveitar o código então basta implementar na Classe mais acima da Hierarqu
 
 Então vamos imaginar como seria a implementação do método `Caminhar()`.
 
-{% highlight pascal %}
-function TAnimal.Caminhar: TAnimal;
-begin
-  Result := Self;
-  MovePata1;
-  MovePata2;
-  MovePata3;
-  MovePata4;
-end;
-{% endhighlight text %}
+    function TAnimal.Caminhar: TAnimal;
+    begin
+      Result := Self;
+      MovePata1;
+      MovePata2;
+      MovePata3;
+      MovePata4;
+    end;
 
 Como estamos trabalhando, a princípio, com tetrápodes ou quadrúpedes, precisamos mover as 4 patas para caminhar.
 Tudo funciona perfeitamente.

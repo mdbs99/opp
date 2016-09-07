@@ -99,35 +99,31 @@ Um canditado a Método Estático é um desses métodos que não faz uso de atrib
 
 Por exemplo:
 
-{% highlight pascal %}
-type
-  TMath = class
-    class function Max(A, B: Integer): Integer;
-  end;
+    type
+      TMath = class
+        class function Max(A, B: Integer): Integer;
+      end;
 
-implementation
+    implementation
 
-class function TMath.Max(A, B: Integer): Integer;
-begin
-  if A > B then
-    Result := A
-  else
-    Result := B;
-end;
-{% endhighlight text %}
+    class function TMath.Max(A, B: Integer): Integer;
+    begin
+      if A > B then
+        Result := A
+      else
+        Result := B;
+    end;
 
 A classe *TMath* é bem simples. Possui um método que verifica qual é o maior número dentre 2 possíveis.
 
 Um exemplo de uso:
 
-{% highlight pascal %}
-var
-  V: Integer;
-begin
-  V := TMath.Max(10, 15);
-  ShowMessage(IntToStr(V));
-end;
-{% endhighlight text %}
+    var
+      V: Integer;
+    begin
+      V := TMath.Max(10, 15);
+      ShowMessage(IntToStr(V));
+    end;
 
 Você consegue ver algum problema no *design* desse código?
 
@@ -138,21 +134,19 @@ Então qual é o problema?
 
 Bem, vamos incrementar com um exemplo um pouco mais complexo:
 
-{% highlight pascal %}
-class function TMathA.Compute(A, B: Double): Double;
-begin
-  Result := TMathC.Sum(TMathB.Max(A, B), A*2, B*B);
-end;
+    class function TMathA.Compute(A, B: Double): Double;
+    begin
+      Result := TMathC.Sum(TMathB.Max(A, B), A*2, B*B);
+    end;
 
-{...}
+    {...}
 
-var
-  V: Double;
-begin
-  V := TMathA.Max(10, 15);
-  ShowMessage(IntToStr(V));
-end;
-{% endhighlight text %}
+    var
+      V: Double;
+    begin
+      V := TMathA.Max(10, 15);
+      ShowMessage(IntToStr(V));
+    end;
 
 O código não está completo mas dá para entender perfeitamente:
 
@@ -180,82 +174,76 @@ Vou tentar reescrever o mesmo exemplo acima utilizando uma abordagem mais Orient
 Primeiramente sempre temos que ter uma [Interface que represente uma abstração]({% post_url 2016-01-18-interfaces-em-todo-lugar %}),
 que neste exemplo aqui é *Math*.
 
-{% highlight pascal %}
-type 
-  IMath = interface
-    function Compute(A, B: Double): Double
-    function Sum(A, B, C: Double): Double;
-    function Max(A, B: Double): Double;
-  end;
-{% endhighlight text %}
+    type 
+      IMath = interface
+        function Compute(A, B: Double): Double
+        function Sum(A, B, C: Double): Double;
+        function Max(A, B: Double): Double;
+      end;
 
 Então vamos codificar *TMathA*, *TMathB* e *TMathC*.
 
 Para simplificação do código, só irei implementar os métodos relevantes para o entendimento:
 
-{% highlight pascal %}
-type
-  TMathA = class(TInterfacedObject, IMath)
-  private
-    FMC: IMath;
-    FMB: IMath;
-  public
-    constructor Create(MC, MB: IMath);
-    class function New(MC, MB: IMath): IMath;
-    function Compute(A, B: Double): Double;
-    //...function Sum(A, B, C: Double): Double;
-    //...function Max(A, B: Double): Double;
-  end;
-  
-  TMathB = class(TInterfacedObject, IMath)
-  public
-    //...function Compute(A, B: Double): Double
-    //...function Sum(A, B, C: Double): Double;
-    //...function Max(A, B: Double): Double;
-  end;
-  
-  TMathC = class(TInterfacedObject, IMath)
-  public
-    //...function Compute(A, B: Double): Double
-    //...function Sum(A, B, C: Double): Double;
-    //...function Max(A, B: Double): Double;
-  end;
-  
-implementation
+    type
+      TMathA = class(TInterfacedObject, IMath)
+      private
+        FMC: IMath;
+        FMB: IMath;
+      public
+        constructor Create(MC, MB: IMath);
+        class function New(MC, MB: IMath): IMath;
+        function Compute(A, B: Double): Double;
+        //...function Sum(A, B, C: Double): Double;
+        //...function Max(A, B: Double): Double;
+      end;
+      
+      TMathB = class(TInterfacedObject, IMath)
+      public
+        //...function Compute(A, B: Double): Double
+        //...function Sum(A, B, C: Double): Double;
+        //...function Max(A, B: Double): Double;
+      end;
+      
+      TMathC = class(TInterfacedObject, IMath)
+      public
+        //...function Compute(A, B: Double): Double
+        //...function Sum(A, B, C: Double): Double;
+        //...function Max(A, B: Double): Double;
+      end;
+      
+    implementation
 
-constructor TMathA.Create(MC, MB: IMath);
-begin
-  inherited Create;
-  FMC := MC;
-  FMB := MB;
-end;
+    constructor TMathA.Create(MC, MB: IMath);
+    begin
+      inherited Create;
+      FMC := MC;
+      FMB := MB;
+    end;
 
-class function TMathA.New(MC, MB: IMath): IMath;
-begin
-  Result := TMathA.Create(MC, MB);
-end;
+    class function TMathA.New(MC, MB: IMath): IMath;
+    begin
+      Result := TMathA.Create(MC, MB);
+    end;
 
-function TMathA.Compute(A, B: Double): Double;
-begin
-  Result := FMC.Sum(FMB.Max(A, B), A*2, B*B);
-end;
+    function TMathA.Compute(A, B: Double): Double;
+    begin
+      Result := FMC.Sum(FMB.Max(A, B), A*2, B*B);
+    end;
 
-end;  
-{% endhighlight text %}
+    end;  
 
 E então reescrevo o mesmo teste, mas agora utilizando instâncias em vez de Métodos Estáticos:
 
-{% highlight pascal %}
-var
-  V: Double;
-begin
-  V := TMathA.New(
-    TMathC.New(),
-    TMathB.New()
-  ).Max(10, 15);
-  ShowMessage(IntToStr(V));
-end;
-{% endhighlight text %}
+    var
+      V: Double;
+    begin
+      V := TMathA.New(
+        TMathC.New(),
+        TMathB.New()
+      ).Max(10, 15);
+      ShowMessage(IntToStr(V));
+    end;
 
 No código acima utilizei [Injeção de Dependência](https://en.wikipedia.org/wiki/Dependency_injection)
 na inicialização de *TMathA*. Por esse motivo *TMathA* não tem conhecimento da existencia
@@ -268,17 +256,15 @@ testar a funcionalidade de *TMathA*. O que podemos fazer?
 
 Criar Objetos Falsos.
  
-{% highlight pascal %}
-var
-  V: Double;
-begin
-  V := TMathA.New(
-    TFakeMathC.New(),
-    TFakeMathB.New()
-  ).Max(10, 15);
-  ShowMessage(IntToStr(V));
-end;
-{% endhighlight text %}
+    var
+      V: Double;
+    begin
+      V := TMathA.New(
+        TFakeMathC.New(),
+        TFakeMathB.New()
+      ).Max(10, 15);
+      ShowMessage(IntToStr(V));
+    end;
 
 As classes *TFakeMathC* e *TFakeMathB* não tem código de produção. A implementação nem precisa calcular nada,
 apenas retornar números válidos para passar nos testes automatizados.

@@ -49,15 +49,13 @@ Para a Interface apenas 3 métodos são necessários:
   2. *Print*: Para mostrar somente o *PrintDialog* para o usuário para impressão direta.
   3. *PDF*: Para gerar um PDF no disco.
   
-{% highlight pascal %}
-type
-  IReport = interface
-  ['{29414A64-69BA-40A1-970B-2CD61C633508}']
-    function Show: IReport;
-    function Print: IReport;
-    function PDF(const FileName: string): IReport;
-  end;
-{% endhighlight text %}
+    type
+      IReport = interface
+      ['{29414A64-69BA-40A1-970B-2CD61C633508}']
+        function Show: IReport;
+        function Print: IReport;
+        function PDF(const FileName: string): IReport;
+      end;
 
 O sistema que utiliza esse código foi codificado em Delphi 7, utilizando ADO e *ReportBuilder®*(RB), no 
 entanto essa é uma Interface genérica o bastante para ser utilizado por qualquer versão do Delphi/Lazarus,
@@ -68,19 +66,17 @@ O próximo passo é codificar uma implementação de <code>IReport</code> para o
 Abaixo contém apenas a Interface da classe. Não é necessária a implementação para o 
 entendimento dos conceitos que quero mostrar.
 
-{% highlight pascal %}
-type
-  TRBuilderReport = class(TInterfacedObject, IReport)
-  private
-    FReport: TppReport;
-  public
-    constructor Create(Report: TppReport);
-    class function New(Report: TppReport): IReport;
-    function Show: IReport;
-    function Print: IReport;
-    function PDF(const FileName: string): IReport;
-  end;
-{% endhighlight text %}
+    type
+      TRBuilderReport = class(TInterfacedObject, IReport)
+      private
+        FReport: TppReport;
+      public
+        constructor Create(Report: TppReport);
+        class function New(Report: TppReport): IReport;
+        function Show: IReport;
+        function Print: IReport;
+        function PDF(const FileName: string): IReport;
+      end;
 
 O motivo de termos um [Método New]({% post_url 2016-01-10-interfaces-e-o-metodo-estatico-new %}) já foi
 explicado anteriormente.
@@ -121,13 +117,11 @@ Eu não quero isso.
 
 A maneira para fazer uma instância do *DataModule* não ser global é chamar <code>RemoveDataModule</code> no seu construtor:
 
-{% highlight pascal %}
-procedure TDataModule1.DataModuleCreate(Sender: TComponent);
-begin
-  inherited;
-  RemoveDataModule(Self);
-end;
-{% endhighlight text %}
+    procedure TDataModule1.DataModuleCreate(Sender: TComponent);
+    begin
+      inherited;
+      RemoveDataModule(Self);
+    end;
 
 Por que fazer isso?
 
@@ -145,63 +139,61 @@ Precisamos ter uma – ou muitas outras – **Classe de Negócio** para encapsul
 
 Para o único relatório que iremos implementar – *AvisosReport* – temos uma classe chamada <code>TDividaAtivaMedicoAvisosReport</code>.
 
-{% highlight pascal %}
-type
-  TDividaAtivaMedicoAvisosReport = class(TInterfacedObject, IReport)
-  private
-    FModule: TDividaAtivaMedicoModule;
-    FReport: IReport;
-  public
-    constructor Create(NotificacaoId: Integer);
-    class function New(NotificacaoId: Integer): IReport;
-    destructor Destroy; override;
-    function Show: IReport;
-    function Print: IReport;
-    function PDF(const FileName: string): IReport;
-  end;
+    type
+      TDividaAtivaMedicoAvisosReport = class(TInterfacedObject, IReport)
+      private
+        FModule: TDividaAtivaMedicoModule;
+        FReport: IReport;
+      public
+        constructor Create(NotificacaoId: Integer);
+        class function New(NotificacaoId: Integer): IReport;
+        destructor Destroy; override;
+        function Show: IReport;
+        function Print: IReport;
+        function PDF(const FileName: string): IReport;
+      end;
 
-implementation  
-  
-{ TDividaAtivaMedicoAvisosReport }
+    implementation  
+      
+    { TDividaAtivaMedicoAvisosReport }
 
-constructor TDividaAtivaMedicoAvisosReport.Create(NotificacaoId: Integer);
-begin
-  inherited Create;
-  FModule := TDividaAtivaMedicoModule.Create(nil);
-  FReport := TRBuilderReport.Create(FModule.AvisosReport);
-  with FModule.NotificacoesQuery.Parameters do
-  begin
-    ParamByName('notificacao_id').Value := NotificacaoId;
-    ParamByName('fase').Value := CDividaAtivaFases.AvisoId;
-  end;
-end;
+    constructor TDividaAtivaMedicoAvisosReport.Create(NotificacaoId: Integer);
+    begin
+      inherited Create;
+      FModule := TDividaAtivaMedicoModule.Create(nil);
+      FReport := TRBuilderReport.Create(FModule.AvisosReport);
+      with FModule.NotificacoesQuery.Parameters do
+      begin
+        ParamByName('notificacao_id').Value := NotificacaoId;
+        ParamByName('fase').Value := CDividaAtivaFases.AvisoId;
+      end;
+    end;
 
-class function TDividaAtivaMedicoAvisosReport.New(NotificacaoId: Integer): IReport;
-begin
-  Result := Create(NotificacaoId);
-end;
+    class function TDividaAtivaMedicoAvisosReport.New(NotificacaoId: Integer): IReport;
+    begin
+      Result := Create(NotificacaoId);
+    end;
 
-destructor TDividaAtivaMedicoAvisosReport.Destroy;
-begin
-  FModule.Free;
-  inherited;
-end;
+    destructor TDividaAtivaMedicoAvisosReport.Destroy;
+    begin
+      FModule.Free;
+      inherited;
+    end;
 
-function TDividaAtivaMedicoAvisosReport.Show: IReport;
-begin
-  Result := FReport.Show;
-end;
+    function TDividaAtivaMedicoAvisosReport.Show: IReport;
+    begin
+      Result := FReport.Show;
+    end;
 
-function TDividaAtivaMedicoAvisosReport.Print: IReport;
-begin
-  Result := FReport.Print;
-end;
+    function TDividaAtivaMedicoAvisosReport.Print: IReport;
+    begin
+      Result := FReport.Print;
+    end;
 
-function TDividaAtivaMedicoAvisosReport.PDF(const FileName: string): IReport;
-begin
-  Result := FReport.PDF(FileName);
-end;
-{% endhighlight text %}
+    function TDividaAtivaMedicoAvisosReport.PDF(const FileName: string): IReport;
+    begin
+      Result := FReport.PDF(FileName);
+    end;
 
 Essa implementação é real e está em produção. O código poderia ser melhorado, é claro, mas isso é
 irrelevante agora.
@@ -211,10 +203,8 @@ e tem uma implementação implícita de <code>TRBuilderReport</code>. Como eu di
 
 O mais importante são essas 2 linhas:
 
-{% highlight pascal %}
-  FModule := TDividaAtivaMedicoModule.Create(nil);
-  FReport := TRBuilderReport.Create(FModule.AvisosReport);
-{% endhighlight text %}
+      FModule := TDividaAtivaMedicoModule.Create(nil);
+      FReport := TRBuilderReport.Create(FModule.AvisosReport);
 
 Um *DataModule* é instanciado em <code>FModule</code>. Esse *DataModule* é retirado do "estado global" utilizando
 <code>RemoveDataModule</code> em seu construtor.

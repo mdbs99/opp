@@ -44,27 +44,25 @@ Aqui está a implementação das Interfaces.
 
 Há algumas dependências que não estarão no escopo desses artigos, mas acredito que seja fácil abstrair as Classes ou Interfaces como, por exemplo, `IDataParams` e `IXMLDocument`.
   
-{% highlight pascal %}
-type
-  IMicroServiceParams = interface
-    function Find: IDataParams;
-  end;
+    type
+      IMicroServiceParams = interface
+        function Find: IDataParams;
+      end;
 
-  IMicroServiceResponse = interface
-    function Code: Integer;
-    function Empty: Boolean;
-    function XML: IXMLDocument;
-  end;
+      IMicroServiceResponse = interface
+        function Code: Integer;
+        function Empty: Boolean;
+        function XML: IXMLDocument;
+      end;
 
-  IMicroServiceClient = interface
-    function Send(const Content: string): IMicroServiceResponse; overload;
-    function Send(XML: IXMLDocument): IMicroServiceResponse; overload;
-  end;
+      IMicroServiceClient = interface
+        function Send(const Content: string): IMicroServiceResponse; overload;
+        function Send(XML: IXMLDocument): IMicroServiceResponse; overload;
+      end;
 
-  IMicroServiceAction = interface
-    function Act: IMicroServiceResponse;
-  end;
-{% endhighlight text %}
+      IMicroServiceAction = interface
+        function Act: IMicroServiceResponse;
+      end;
 
 
 ##Localizando Serviços {#localizando-servicos}
@@ -94,155 +92,153 @@ A parte importante por aqui é o método `TMicroServiceClient.Response`. Esse m�
 
 Consegue ver a beleza do método `TMicroServiceClient.Response` onde (quase) tudo são Objetos conversando e [tomando decisões]({% post_url 2016-03-14-objetos-pensam-e-tomam-decisoes %}) entre si?
 
-{% highlight pascal %}
-type
-  EMicroService = class(Exception);
+    type
+      EMicroService = class(Exception);
 
-  TMicroServiceParams = class(TInterfacedObject, IMicroServiceParams)
-  private
-    FServiceName: string;
-  public
-    constructor Create(const ServiceName: string);
-    class function New(const ServiceName: string): IMicroServiceParams;
-    function Find: IDataParams; overload;
-  end;
+      TMicroServiceParams = class(TInterfacedObject, IMicroServiceParams)
+      private
+        FServiceName: string;
+      public
+        constructor Create(const ServiceName: string);
+        class function New(const ServiceName: string): IMicroServiceParams;
+        function Find: IDataParams; overload;
+      end;
 
-  TMicroServiceResponse = class(TInterfacedObject, IMicroServiceResponse)
-  private
-    FCode: Integer;
-    FXML: IXMLDocument;
-  public
-    constructor Create(Code: Integer; XML: IXMLDocument);
-    class function New(Code: Integer; XML: IXMLDocument): IMicroServiceResponse;
-    function Code: Integer;
-    function Empty: Boolean;
-    function XML: IXMLDocument;
-  end;
+      TMicroServiceResponse = class(TInterfacedObject, IMicroServiceResponse)
+      private
+        FCode: Integer;
+        FXML: IXMLDocument;
+      public
+        constructor Create(Code: Integer; XML: IXMLDocument);
+        class function New(Code: Integer; XML: IXMLDocument): IMicroServiceResponse;
+        function Code: Integer;
+        function Empty: Boolean;
+        function XML: IXMLDocument;
+      end;
 
-  TMicroServiceClient = class(TInterfacedObject, IMicroServiceClient)
-  private
-    FParams: IDataParams;
-    function Response(const Content: string): IHttpResponse;
-  public
-    constructor Create(ServiceParams: IDataParams);
-    class function New(ServiceParams: IDataParams): IMicroServiceClient;
-    function Send(const Content: string): IMicroServiceResponse; overload;
-    function Send(XML: IXMLDocument): IMicroServiceResponse; overload;
-  end;
+      TMicroServiceClient = class(TInterfacedObject, IMicroServiceClient)
+      private
+        FParams: IDataParams;
+        function Response(const Content: string): IHttpResponse;
+      public
+        constructor Create(ServiceParams: IDataParams);
+        class function New(ServiceParams: IDataParams): IMicroServiceClient;
+        function Send(const Content: string): IMicroServiceResponse; overload;
+        function Send(XML: IXMLDocument): IMicroServiceResponse; overload;
+      end;
 
-implementation
+    implementation
 
-uses
-  XMLIntf;
+    uses
+      XMLIntf;
 
-{ TMicroServiceParams }
+    { TMicroServiceParams }
 
-constructor TMicroServiceParams.Create(const ServiceName: string);
-begin
-  inherited Create;
-  FServiceName := ServiceName;
-end;
-
-class function TMicroServiceParams.New(const ServiceName: string): IMicroServiceParams;
-begin
-  Result := Create(ServiceName);
-end;
-
-function TMicroServiceParams.Find: IDataParams;
-var 
-  Q: ISQLQuery;
-begin
-  // Através de uma Query (instância Q), 
-  // pesquisa pelo nome do serviço (FServiceName).
-  // Utilizando os Fields, retornamos uma instância TDataParams.
-  Result := TDataParams.New(Q.Fields);
-end;
-
-{ TMicroServiceResponse }
-
-constructor TMicroServiceResponse.Create(Code: Integer; XML: IXMLDocument);
-begin
-  inherited Create;
-  FCode := Code;
-  FXML := XML;
-end;
-
-class function TMicroServiceResponse.New(Code: Integer; XML: IXMLDocument): IMicroServiceResponse;
-begin
-  Result := Create(Code, XML);
-end;
-
-function TMicroServiceResponse.Code: Integer;
-begin
-  Result := FCode;
-end;
-
-function TMicroServiceResponse.Empty: Boolean;
-begin
-  Result := (FCode = 204) or (FXML.ChildNodes.Count = 0);
-end;
-
-function TMicroServiceResponse.XML: IXMLDocument;
-begin
-  Result := FXML;
-end;
-
-{ TMicroServiceClient }
-
-function TMicroServiceClient.Response(const Content: string): IHttpResponse;
-begin
-  try
-    Result :=
-      THttpClient.New(
-        TWebURL.New(
-          FParams.Param('server').AsString,
-          FParams.Param('path').AsString,
-          FParams.Param('port').AsInteger
-        )
-        .AsString,
-        'application/xml;charset=' +
-          FParams.Param('encoding').AsString,
-        TDataStream.New(Content)
-      )
-      .Execute(FParams.Param('verb').AsString);
-  except
-    on E: Exception do
+    constructor TMicroServiceParams.Create(const ServiceName: string);
     begin
-      raise EMicroService.Create(
-        'Service: ' + FParams.Param('name').AsString + #13 +
-        'Error: ' + E.Message
-      );
+      inherited Create;
+      FServiceName := ServiceName;
     end;
-  end;
-end;
 
-constructor TMicroServiceClient.Create(ServiceParams: IDataParams);
-begin
-  inherited Create;
-  FParams := ServiceParams;
-end;
+    class function TMicroServiceParams.New(const ServiceName: string): IMicroServiceParams;
+    begin
+      Result := Create(ServiceName);
+    end;
 
-class function TMicroServiceClient.New(ServiceParams: IDataParams): IMicroServiceClient;
-begin
-  Result := Create(ServiceParams);
-end;
+    function TMicroServiceParams.Find: IDataParams;
+    var 
+      Q: ISQLQuery;
+    begin
+      // Através de uma Query (instância Q), 
+      // pesquisa pelo nome do serviço (FServiceName).
+      // Utilizando os Fields, retornamos uma instância TDataParams.
+      Result := TDataParams.New(Q.Fields);
+    end;
 
-function TMicroServiceClient.Send(const Content: string): IMicroServiceResponse;
-begin
-  with Response(Content) do
-  begin
-    Result := TMicroServiceResponse.New(
-      Code,
-      TXMLFactory.New('ISO-8859-1', Stream).Document
-    );
-  end;
-end;
+    { TMicroServiceResponse }
 
-function TMicroServiceClient.Send(XML: IXMLDocument): IMicroServiceResponse;
-begin
-  Result := Send(XML.XML.Text);
-end;
-{% endhighlight text %}
+    constructor TMicroServiceResponse.Create(Code: Integer; XML: IXMLDocument);
+    begin
+      inherited Create;
+      FCode := Code;
+      FXML := XML;
+    end;
+
+    class function TMicroServiceResponse.New(Code: Integer; XML: IXMLDocument): IMicroServiceResponse;
+    begin
+      Result := Create(Code, XML);
+    end;
+
+    function TMicroServiceResponse.Code: Integer;
+    begin
+      Result := FCode;
+    end;
+
+    function TMicroServiceResponse.Empty: Boolean;
+    begin
+      Result := (FCode = 204) or (FXML.ChildNodes.Count = 0);
+    end;
+
+    function TMicroServiceResponse.XML: IXMLDocument;
+    begin
+      Result := FXML;
+    end;
+
+    { TMicroServiceClient }
+
+    function TMicroServiceClient.Response(const Content: string): IHttpResponse;
+    begin
+      try
+        Result :=
+          THttpClient.New(
+            TWebURL.New(
+              FParams.Param('server').AsString,
+              FParams.Param('path').AsString,
+              FParams.Param('port').AsInteger
+            )
+            .AsString,
+            'application/xml;charset=' +
+              FParams.Param('encoding').AsString,
+            TDataStream.New(Content)
+          )
+          .Execute(FParams.Param('verb').AsString);
+      except
+        on E: Exception do
+        begin
+          raise EMicroService.Create(
+            'Service: ' + FParams.Param('name').AsString + #13 +
+            'Error: ' + E.Message
+          );
+        end;
+      end;
+    end;
+
+    constructor TMicroServiceClient.Create(ServiceParams: IDataParams);
+    begin
+      inherited Create;
+      FParams := ServiceParams;
+    end;
+
+    class function TMicroServiceClient.New(ServiceParams: IDataParams): IMicroServiceClient;
+    begin
+      Result := Create(ServiceParams);
+    end;
+
+    function TMicroServiceClient.Send(const Content: string): IMicroServiceResponse;
+    begin
+      with Response(Content) do
+      begin
+        Result := TMicroServiceResponse.New(
+          Code,
+          TXMLFactory.New('ISO-8859-1', Stream).Document
+        );
+      end;
+    end;
+
+    function TMicroServiceClient.Send(XML: IXMLDocument): IMicroServiceResponse;
+    begin
+      Result := Send(XML.XML.Text);
+    end;
 
 ##No próximo artigo… {#no-proximo-artigo}
 

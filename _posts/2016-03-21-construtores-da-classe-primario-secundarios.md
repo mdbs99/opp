@@ -40,44 +40,41 @@ O construtor Primário, na maioria das vezes, sempre será aquele com mais parâ
 
 Vamos a um exemplo.
 
-{% highlight pascal %}
-type
-  TUser = class
-  private
-    FLogin: string;
-    FPassword: string;
-  public
-    constructor Create(const Login, Password: string);
-    constructor Create(const Login: string); 
-    function Login: string;
-    function Password: string;
-  end;
-  
-implementation
+    type
+      TUser = class
+      private
+        FLogin: string;
+        FPassword: string;
+      public
+        constructor Create(const Login, Password: string);
+        constructor Create(const Login: string); 
+        function Login: string;
+        function Password: string;
+      end;
+      
+    implementation
 
-constructor TUser.Create(const Login, Password: string);
-begin
-  inherited Create;
-  FLogin := Login;
-  FPassword := Password;
-end;
+    constructor TUser.Create(const Login, Password: string);
+    begin
+      inherited Create;
+      FLogin := Login;
+      FPassword := Password;
+    end;
 
-constructor TUser.Create(const Login: string);
-begin
-  Create(Login, '123456');
-end;
+    constructor TUser.Create(const Login: string);
+    begin
+      Create(Login, '123456');
+    end;
 
-function TUser.Login: string;
-begin
-  Result := FLogin;
-end;
+    function TUser.Login: string;
+    begin
+      Result := FLogin;
+    end;
 
-function TUser.Password: string;
-begin
-  Result := FPassword;
-end;
-
-{% endhighlight text %}
+    function TUser.Password: string;
+    begin
+      Result := FPassword;
+    end;
 
 A Classe <code>TUser</code> tem 2 construtores.
 
@@ -96,9 +93,7 @@ bastando olhar no seu construtor Primário. Esse construtor sempre será o prime
 A linguagem Pascal permite que funções e métodos tenham argumentos *default*. O exemplo acima poderia ser
 reescrito com apenas 1 construtor, desse jeito:
 
-{% highlight pascal %}
-constructor Create(const Login, Password: string = '123456');
-{% endhighlight text %}
+    constructor Create(const Login, Password: string = '123456');
 
 Apesar de escrever menos, eu não recomendo utilizar argumentos *default*.
 
@@ -109,12 +104,10 @@ O segundo motivo é que eu prefiro gerar os valores *default* em *runtime*. Se e
 gerar uma senha aleatória, por exemplo, bastaria criar um método <code>RandomPassword</code> e chamá-lo no construtor 
 secundário, ou seja, a implementação do construtor Secundário poderia ser reescrita assim:
 
-{% highlight pascal %}
-constructor TUser.Create(const Login: string);
-begin
-  Create(Login, RandomPassword);
-end;
-{% endhighlight text %}
+    constructor TUser.Create(const Login: string);
+    begin
+      Create(Login, RandomPassword);
+    end;
 
 ##Construtores Secundários e Método New() 
 
@@ -125,27 +118,25 @@ implementar construtores Secundários e Métodos New() com a mesma assinatura.
 
 Ao invés de criar novos construtores Secundários, basta criar novas variações de Métodos <code>New()</code>.
 
-Exemplo.
+Exemplo:
 
-{% highlight pascal %}
-type
-  IUser = interface
-    function Login: string;
-    function Password: string;
-  end;
+    type
+      IUser = interface
+        function Login: string;
+        function Password: string;
+      end;
 
-  TUser = class(TInterfacedObject, IUser)
-  private
-    FLogin: string;
-    FPassword: string;
-  public
-    constructor Create(const Login, Password: string);
-    class function New(const Login, Password: string): IUser;
-    class function New(const Login: string): IUser;
-    function Login: string;
-    function Password: string;
-  end;
-{% endhighlight text %}
+      TUser = class(TInterfacedObject, IUser)
+      private
+        FLogin: string;
+        FPassword: string;
+      public
+        constructor Create(const Login, Password: string);
+        class function New(const Login, Password: string): IUser;
+        class function New(const Login: string): IUser;
+        function Login: string;
+        function Password: string;
+      end;
 
 Assim a implementação de suas Classes ficam ainda mais simples, pois teriam apenas 1 construtor
 onde todos os argumentos são inicializados. 

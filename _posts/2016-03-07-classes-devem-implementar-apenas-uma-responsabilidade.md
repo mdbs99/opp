@@ -56,71 +56,69 @@ Este *Log* deverá implementar os requisitos a seguir:
 
 De acordo com os requisitos acima, **parece muito simples** pensar numa única Classe com "apenas" 4 métodos.
 
-{% highlight pascal %}
-type
-  TLog = class
-  private
-    FInfo: TStrings;
-    FMail: TMail;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    function Add(const S: string): TLog;
-    function SaveToFile(const FileName: string): TLog;
-    function SaveToDB(DB: IDatabase): TLog;
-    function SendMail(const From: string): TLog;
-  end;
-  
-implementation
+    type
+      TLog = class
+      private
+        FInfo: TStrings;
+        FMail: TMail;
+      public
+        constructor Create;
+        destructor Destroy; override;
+        function Add(const S: string): TLog;
+        function SaveToFile(const FileName: string): TLog;
+        function SaveToDB(DB: IDatabase): TLog;
+        function SendMail(const From: string): TLog;
+      end;
+      
+    implementation
 
-constructor TLog.Create;
-begin
-  inherited Create;
-  FInfo := TStringList.Create;
-  FMail := TMail.Create;
-end;
+    constructor TLog.Create;
+    begin
+      inherited Create;
+      FInfo := TStringList.Create;
+      FMail := TMail.Create;
+    end;
 
-destructor TLog.Destroy;
-begin
-  FInfo.Free;
-  FMail.Free;
-  inherited;
-end;
+    destructor TLog.Destroy;
+    begin
+      FInfo.Free;
+      FMail.Free;
+      inherited;
+    end;
 
-function TLog.Add(const S: string): TLog;
-begin
-  Result := Self;
-  FInfo.Add(S);
-end;
+    function TLog.Add(const S: string): TLog;
+    begin
+      Result := Self;
+      FInfo.Add(S);
+    end;
 
-function TLog.SaveToFile(const FileName: string): TLog;
-begin
-  Result := Self;
-  FInfo.SaveToFile(FileName);
-  FInfo.Clear;
-end;
+    function TLog.SaveToFile(const FileName: string): TLog;
+    begin
+      Result := Self;
+      FInfo.SaveToFile(FileName);
+      FInfo.Clear;
+    end;
 
-function TLog.SaveToDB(DB: IDatabase): TLog;
-begin
-  Result := Self;
-  DB.Query(
-    'insert into Log (info) values (:info)',
-    TSQLParams.New
-      .Add('info', ftString, FInfo.Text)
-  )
-  .Execute; 
-  FInfo.Clear;
-end;
+    function TLog.SaveToDB(DB: IDatabase): TLog;
+    begin
+      Result := Self;
+      DB.Query(
+        'insert into Log (info) values (:info)',
+        TSQLParams.New
+          .Add('info', ftString, FInfo.Text)
+      )
+      .Execute; 
+      FInfo.Clear;
+    end;
 
-function TLog.SendMail(const From: string): TLog;
-begin
-  Result := Self;
-  FMail.Send(From, FInfo.Text);
-  FInfo.Clear;
-end;
+    function TLog.SendMail(const From: string): TLog;
+    begin
+      Result := Self;
+      FMail.Send(From, FInfo.Text);
+      FInfo.Clear;
+    end;
 
-end.
-{% endhighlight text %}
+    end.
 
 **Observações**: 
 
@@ -150,14 +148,12 @@ de [Métodos Estáticos]({% post_url 2016-02-15-nao-utilize-metodos-estaticos %}
 
 É claro que a [primeira coisa a fazer]({% post_url 2016-01-18-interfaces-em-todo-lugar %}) é definirmos uma abstração para *Log*. Precisamos de uma Interface.
 
-{% highlight pascal %}
-type
-  ILog = interface
-    function Add(const S: string): ILog;
-    function Text: string;
-    function Save: ILog;
-  end;
-{% endhighlight text %}
+    type
+      ILog = interface
+        function Add(const S: string): ILog;
+        function Text: string;
+        function Save: ILog;
+      end;
 
 Apenas isso.
 
@@ -167,160 +163,154 @@ Agora podemos implementar cada Classe, cada uma com uma responsabilidade bem dis
 
 Primeiro uma Classe para implementar o *Log* apenas em memória — pode ser utilizado em *UnitTests*.
 
-{% highlight pascal %}
-type
-  TLogInMemory = class(TInterfacedObject, ILog)
-  private
-    FInfo: TStrings;  
-  public
-    constructor Create(const S: string);
-    //class function New...
-    destructor Destroy; override;
-    function Add(const S: string): ILog;
-    function Text: string;
-    function Save: ILog;
-  end;
-  
-implementation
+    type
+      TLogInMemory = class(TInterfacedObject, ILog)
+      private
+        FInfo: TStrings;  
+      public
+        constructor Create(const S: string);
+        //class function New...
+        destructor Destroy; override;
+        function Add(const S: string): ILog;
+        function Text: string;
+        function Save: ILog;
+      end;
+      
+    implementation
 
-constructor TLogInMemory.Create(const S: string);
-begin
-  inherited Create;
-  FInfo := TStringList.Create;
-  FInfo.Add(S);
-end;
+    constructor TLogInMemory.Create(const S: string);
+    begin
+      inherited Create;
+      FInfo := TStringList.Create;
+      FInfo.Add(S);
+    end;
 
-destructor TLogInMemory.Destroy;
-begin
-  FInfo.Free;
-  inherited Destroy;
-end;
+    destructor TLogInMemory.Destroy;
+    begin
+      FInfo.Free;
+      inherited Destroy;
+    end;
 
-function TLogInMemory.Add(const S: string): ILog;
-begin
-  Result := Self;
-  FInfo.Add(S);
-end;
+    function TLogInMemory.Add(const S: string): ILog;
+    begin
+      Result := Self;
+      FInfo.Add(S);
+    end;
 
-function TLogInMemory.Text: string;
-begin
-  Result := FInfo.Text;
-end;
+    function TLogInMemory.Text: string;
+    begin
+      Result := FInfo.Text;
+    end;
 
-function TLogInMemory.Save: ILog;
-begin
-  Result := Self;
-  FInfo.Clear;
-end;
-{% endhighlight text %}
+    function TLogInMemory.Save: ILog;
+    begin
+      Result := Self;
+      FInfo.Clear;
+    end;
 
 No método <code>Save</code> não há nada para registrar pois o *Log* só trabalha em memória.
 
 Teremos outra Classe para fazer o *Log* num Arquivo Texto:
 
-{% highlight pascal %}
-type
-  TLogToFile = class(TInterfacedObject, ILog)
-  private
-    FOrigin: ILog;
-    FFileStream: TFileStream;
-  public
-    constructor Create(Origin: ILog; const FileName: string);
-    //class function New...
-    destructor Destroy; override;
-    function Add(const S: string): ILog;
-    function Text: string;
-    function Save: ILog;
-  end;
-  
-implementation
+    type
+      TLogToFile = class(TInterfacedObject, ILog)
+      private
+        FOrigin: ILog;
+        FFileStream: TFileStream;
+      public
+        constructor Create(Origin: ILog; const FileName: string);
+        //class function New...
+        destructor Destroy; override;
+        function Add(const S: string): ILog;
+        function Text: string;
+        function Save: ILog;
+      end;
+      
+    implementation
 
-constructor TLogToFile.Create(Origin: ILog; 
-  const FileName: string);
-begin
-  inherited Create;
-  FOrigin := Origin;
-  FFileStream := TFileStream.Create(FileName, fmOpenWrite);
-end;
+    constructor TLogToFile.Create(Origin: ILog; 
+      const FileName: string);
+    begin
+      inherited Create;
+      FOrigin := Origin;
+      FFileStream := TFileStream.Create(FileName, fmOpenWrite);
+    end;
 
-destructor TLogToFile.Destroy;
-begin
-  FFileStream.Free;
-  inherited Destroy;
-end;
+    destructor TLogToFile.Destroy;
+    begin
+      FFileStream.Free;
+      inherited Destroy;
+    end;
 
-function TLogToFile.Add(const S: string): ILog;
-begin
-  Result := Self;
-  FOrigin.Add(S);
-  FFileStream.Write(S);
-end;
+    function TLogToFile.Add(const S: string): ILog;
+    begin
+      Result := Self;
+      FOrigin.Add(S);
+      FFileStream.Write(S);
+    end;
 
-function TLogToFile.Text: string;
-begin
-  Result := FOrigin.Text;
-end;
+    function TLogToFile.Text: string;
+    begin
+      Result := FOrigin.Text;
+    end;
 
-function TLogToFile.Save: ILog;
-begin
-  Result := Self;
-  FInfo.SaveToFile(FFileName);
-  FOrigin.Save;
-end;
-{% endhighlight text %}
+    function TLogToFile.Save: ILog;
+    begin
+      Result := Self;
+      FInfo.SaveToFile(FFileName);
+      FOrigin.Save;
+    end;
 
 Repare que há um parâmetro <code>Origin</code>. Isso significa que essa classe
 irá gerar Objetos que trabalham "decorando" outros Objetos que se originaram em outro momento.
 
 Da mesma forma teremos outra Classe para fazer o *Log* no Banco de Dados:
 
-{% highlight pascal %}
-type
-  TLogToDB = class(TInterfacedObject, ILog)
-  private
-    FOrigin: ILog;
-    FDB: IDatabase;  
-  public
-    constructor Create(Origin: ILog; DB: IDatabase);
-    //class function New...
-    function Add(const S: string): ILog;
-    function Text: string;
-    function Save: ILog;
-  end;
-  
-implementation
+    type
+      TLogToDB = class(TInterfacedObject, ILog)
+      private
+        FOrigin: ILog;
+        FDB: IDatabase;  
+      public
+        constructor Create(Origin: ILog; DB: IDatabase);
+        //class function New...
+        function Add(const S: string): ILog;
+        function Text: string;
+        function Save: ILog;
+      end;
+      
+    implementation
 
-constructor TLogToDB.Create(Origin: ILog; 
-  DB: IDatabase);
-begin
-  inherited Create;
-  FOrigin := Origin; 
-  FDB := DB;
-end;
+    constructor TLogToDB.Create(Origin: ILog; 
+      DB: IDatabase);
+    begin
+      inherited Create;
+      FOrigin := Origin; 
+      FDB := DB;
+    end;
 
-function TLogToDB.Add(const S: string): ILog;
-begin
-  Result := Self;
-  FOrigin.Add(S);
-end;
+    function TLogToDB.Add(const S: string): ILog;
+    begin
+      Result := Self;
+      FOrigin.Add(S);
+    end;
 
-function TLogToDB.Text: string;
-begin
-  Result := FOrigin.Text;
-end;
+    function TLogToDB.Text: string;
+    begin
+      Result := FOrigin.Text;
+    end;
 
-function TLogToDB.Save: ILog;
-begin
-  Result := Self;
-  DB.Query(
-    'insert into Log (info) values (:info)',
-    TSQLParams.New
-      .Add('info', ftString, Self.Text)
-  )
-  .Execute; 
-  FOrigin.Save;
-end;
-{% endhighlight text %}
+    function TLogToDB.Save: ILog;
+    begin
+      Result := Self;
+      DB.Query(
+        'insert into Log (info) values (:info)',
+        TSQLParams.New
+          .Add('info', ftString, Self.Text)
+      )
+      .Execute; 
+      FOrigin.Save;
+    end;
 
 **Observação**:
 
@@ -331,48 +321,46 @@ Eu poderia, mas não devo. Falarei sobre herança em próximos posts. Por enquan
 e prosseguir com o exemplo.
 
 Falta a Classe de *Log* que envia e-mails, sem esquecer de Injetar a Dependência de <code>Mail</code> no *construtor*:
-{% highlight pascal %}
-type
-  TLogToMail = class(TInterfacedObject, ILog)
-  private
-    FOrigin: ILog; 
-    FMail: IMail;  
-  public
-    constructor Create(Origin: ILog; Mail: IMail);
-    //class function New...
-    function Add(const S: string): ILog;
-    function Text: string;
-    function Save: ILog;
-  end;
-  
-implementation
+    type
+      TLogToMail = class(TInterfacedObject, ILog)
+      private
+        FOrigin: ILog; 
+        FMail: IMail;  
+      public
+        constructor Create(Origin: ILog; Mail: IMail);
+        //class function New...
+        function Add(const S: string): ILog;
+        function Text: string;
+        function Save: ILog;
+      end;
+      
+    implementation
 
-constructor TLogToMail.Create(Origin: ILog; 
-  Mail: IMail);
-begin
-  inherited Create;
-  FOrigin := Origin; 
-  FMail := Mail;
-end;
+    constructor TLogToMail.Create(Origin: ILog; 
+      Mail: IMail);
+    begin
+      inherited Create;
+      FOrigin := Origin; 
+      FMail := Mail;
+    end;
 
-function TLogToMail.Add(const S: string): ILog;
-begin
-  Result := Self;
-  FOrigin.Add(S);
-end;
+    function TLogToMail.Add(const S: string): ILog;
+    begin
+      Result := Self;
+      FOrigin.Add(S);
+    end;
 
-function TLogToMail.Text: string;
-begin
-  Result := FOrigin.Text;
-end;
+    function TLogToMail.Text: string;
+    begin
+      Result := FOrigin.Text;
+    end;
 
-function TLogToMail.Save: ILog;
-begin
-  Result := Self;
-  FMail.Send(From, Self.Text);
-  FOrigin.Save;
-end;
-{% endhighlight text %}
+    function TLogToMail.Save: ILog;
+    begin
+      Result := Self;
+      FMail.Send(From, Self.Text);
+      FOrigin.Save;
+    end;
 
 Cada Classe tem apenas uma única responsabilidade e todas as Classes seguem o [contrato]({% post_url 2016-01-18-interfaces-em-todo-lugar %}#interfaces-sao-contratos)
 de uma única Interface, simples e coesa.
@@ -391,12 +379,10 @@ reutilizar os métodos existentes para fazer algo que seria simples!
 Por que ele não consegue? Repare que em cada método <code>SaveXxx</code> há uma chamada de <code>FInfo.Clear</code>. Então ele não pode executar
 os métodos assim:
 
-{% highlight pascal %}
-begin
-  Log.SaveToFile('/path/file.log');
-  Log.SaveToDB(DB);
-end;
-{% endhighlight text %}
+    begin
+      Log.SaveToFile('/path/file.log');
+      Log.SaveToDB(DB);
+    end;
 
 Na primeira chamada a informação do *Log* será perdida.
 
@@ -408,15 +394,13 @@ Mas, continuando.
 
 Então vou escolher uma das possíveis implementações: Adicionar um novo método.
 
-{% highlight pascal %}
-function TLog.SaveToFileAndDB(const FileName: string; 
-  DB: IDatabase): TLog;
-begin
-  Result := Self;
-  FInfo.SaveToFile(FileName);
-  SaveToDB(DB);
-end;
-{% endhighlight text %}
+    function TLog.SaveToFileAndDB(const FileName: string; 
+      DB: IDatabase): TLog;
+    begin
+      Result := Self;
+      FInfo.SaveToFile(FileName);
+      SaveToDB(DB);
+    end;
 
 UAU! HORRÍVEL!
 
@@ -430,23 +414,21 @@ Basta criar um <ins>novo Objeto</ins> que encapsule os Objetos que já sabem faz
 Com apenas uma única Interface e várias implementações, é possível criar um único Objeto que contenha todo tipo de comportamento
 referente a *Log*.
 
-{% highlight pascal %}
-begin
-  TLogToMail.New(
-    TLogToDB.New(
-      TLogToFile.New(
-        TLogInMemory.New('First info'),
-        '/path/file.log'
-      ),
-      DB
-    ),
-    Mail
-  )
-  .Add('Second info')
-  .Add('Final info')
-  .Save
-end;
-{% endhighlight text %}
+    begin
+      TLogToMail.New(
+        TLogToDB.New(
+          TLogToFile.New(
+            TLogInMemory.New('First info'),
+            '/path/file.log'
+          ),
+          DB
+        ),
+        Mail
+      )
+      .Add('Second info')
+      .Add('Final info')
+      .Save
+    end;
 
 Para o código-geral não há diferença se o *Log* está sendo gravado num Arquivo, Banco de Dados ou sendo enviado por e-mail.
 

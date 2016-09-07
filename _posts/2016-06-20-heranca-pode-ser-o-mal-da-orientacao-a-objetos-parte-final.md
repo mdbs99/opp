@@ -137,17 +137,15 @@ Não há uma única resposta, porque tudo irá depender do seu modelo de negóci
 
 Lembra do `TTigre`? Se nesse sistema hipotético você precisa analisar na tela a pata de um tigre, não haveria necessidade de instânciar um objeto da Classe `TTigre` que contém tudo de um tigre (olhos, tipo, peso, tamanho, cor, que corre, nada, caça, etc). Não estou dizendo isso pensando em performance ou alocação de memória, não! Estou dizendo isso porque essa Classe seria enorme e complexa. Iria implementar muitas interfaces para poder Correr, Nadar, Pular... num sistema precisamos abstrair o que não é necessário. Esse é um dos motivos de não precisarmos de Hierarquias Complexas. Se você precisa examinar uma pata, então:
 
-{% highlight pascal %}
-type
-  IPaw = interface
-    // function...
-  end;
-  
-  TTigerPaw = class(TInterfacedObject, IPaw)
-  public
-    // function...
-  end;
-{% endhighlight text %}
+    type
+      IPaw = interface
+        // function...
+      end;
+      
+      TTigerPaw = class(TInterfacedObject, IPaw)
+      public
+        // function...
+      end;
 
 Assim como você poderá utilizar os Objetos da Classe `TTigerPaw` para compor outras abstrações de Tigre em outros contextos.
 

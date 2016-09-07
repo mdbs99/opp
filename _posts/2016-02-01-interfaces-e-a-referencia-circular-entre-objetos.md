@@ -104,13 +104,11 @@ Eles mostram uma implementação própria e também apresentam três outras prop
 
 Escolho a solução da Synopse, a solução mais simples na minha opinião:
 
-{% highlight pascal %}
-procedure SetWeak(aInterfaceField: PIInterface; 
-  const aValue: IInterface);
-begin
-  PPointer(aInterfaceField)^ := Pointer(aValue);
-end;
-{% endhighlight text %}
+    procedure SetWeak(aInterfaceField: PIInterface; 
+      const aValue: IInterface);
+    begin
+      PPointer(aInterfaceField)^ := Pointer(aValue);
+    end;
 
 Apenas uma *procedure* que é utilizada para atribuição de instância a uma variável.
 
@@ -121,18 +119,16 @@ Por exemplo. Considere o seguinte:
   1. *Book* tem um *Author*;
   2. *Author* tem uma lista de livros;
 
-{% highlight pascal %}
-var
-  Book: IBook;
-begin
-  Book := TBook.New(
-    'Object Pascal',     // name
-    'About Interfaces',  // text
-    TAuthor.New('Jeff')   // author
-  );
-  ShowMessage(Book.Author.Books.Get(0).Name);
-end;
-{% endhighlight text %}
+    var
+      Book: IBook;
+    begin
+      Book := TBook.New(
+        'Object Pascal',     // name
+        'About Interfaces',  // text
+        TAuthor.New('Jeff')   // author
+      );
+      ShowMessage(Book.Author.Books.Get(0).Name);
+    end;
 
 Para que o código acima funcione, no construtor de *TBook* haverá uma chamada para *Author.Books.Add(Self)*, adicionando
 a nova instância de *Book* na lista de livros do *Author*.
@@ -195,245 +191,243 @@ o código as mesmas classes com os mesmos argumentos podem ser utilizados sem ne
 
 O código implementa o exemplo do início do post, sobre *Author*, *Book* e *Books*.
 
-{% highlight pascal %}
-unit Unit1;
+    unit Unit1;
 
-{$mode objfpc}{$H+}
+    {$mode objfpc}{$H+}
 
-interface
+    interface
 
-uses
-  Classes, SysUtils, Forms, Controls, StdCtrls, Dialogs;
+    uses
+      Classes, SysUtils, Forms, Controls, StdCtrls, Dialogs;
 
-type
-  IAuthor = interface;
-  IBook = interface;
-  IBooks = interface;
+    type
+      IAuthor = interface;
+      IBook = interface;
+      IBooks = interface;
 
-  IAuthor = interface
-  ['{5F7AC8EF-4C81-4F88-8915-8319B506291F}']
-    function Name: string;
-    function Books: IBooks;
-  end;
+      IAuthor = interface
+      ['{5F7AC8EF-4C81-4F88-8915-8319B506291F}']
+        function Name: string;
+        function Books: IBooks;
+      end;
 
-  IBook = interface
-  ['{02582B1D-F608-4800-9702-2E5B75CD1264}']
-    function Name: string;
-    function Author: IAuthor;
-    function Write(const Text: string): IBook;
-    function Text: string;
-  end;
+      IBook = interface
+      ['{02582B1D-F608-4800-9702-2E5B75CD1264}']
+        function Name: string;
+        function Author: IAuthor;
+        function Write(const Text: string): IBook;
+        function Text: string;
+      end;
 
-  IBooks = interface
-  ['{55E4D43B-8DC8-4A01-AA90-97F08A6F3F1A}']
-    function Add(Book: IBook): IBooks;
-    function Get(Index: Integer): IBook;
-    function Count: Integer;
-  end;
+      IBooks = interface
+      ['{55E4D43B-8DC8-4A01-AA90-97F08A6F3F1A}']
+        function Add(Book: IBook): IBooks;
+        function Get(Index: Integer): IBook;
+        function Count: Integer;
+      end;
 
-{ Classes }
+    { Classes }
 
-  TAuthor = class(TInterfacedObject, IAuthor)
-  private
-    FName: string;
-    FBooks: IBooks;
-  public
-    constructor Create(const Name: string);
-    class function New(const Name: string): IAuthor;
-    function Name: string;
-    function Books: IBooks;
-  end;
+      TAuthor = class(TInterfacedObject, IAuthor)
+      private
+        FName: string;
+        FBooks: IBooks;
+      public
+        constructor Create(const Name: string);
+        class function New(const Name: string): IAuthor;
+        function Name: string;
+        function Books: IBooks;
+      end;
 
-  TBook = class(TInterfacedObject, IBook)
-  private
-    FName: string;
-    FText: string;
-    FAuthor: IAuthor;
-  public
-    constructor Create(const Name: string; 
+      TBook = class(TInterfacedObject, IBook)
+      private
+        FName: string;
+        FText: string;
+        FAuthor: IAuthor;
+      public
+        constructor Create(const Name: string; 
+          const Text: string; Author: IAuthor);
+        class function New(const Name: string; 
+          const Text: string; Author: IAuthor): IBook; overload;
+        class function New(const Name: string; 
+          const Text: string): IBook; overload;
+        function Name: string;
+        function Author: IAuthor;
+        function Write(const Text: string): IBook;
+        function Text: string;
+      end;
+
+      TBooks = class(TInterfacedObject, IBooks)
+      private
+        FList: TInterfaceList;
+        FAuthor: IAuthor;
+      public
+        constructor Create(Author: IAuthor);
+        class function New(Author: IAuthor): IBooks;
+        destructor Destroy; override;
+        function Add(Book: IBook): IBooks;
+        function Get(Index: Integer): IBook;
+        function Count: Integer;
+      end;
+
+      TForm1 = class(TForm)
+        Button1: TButton;
+        procedure Button1Click(Sender: TObject);
+      end;
+
+    var
+      Form1: TForm1;
+
+    implementation
+
+    {$R *.lfm}
+
+    procedure SetWeak(aInterfaceField: PInterface; 
+      const aValue: IInterface);
+    begin
+      PPointer(aInterfaceField)^ := Pointer(aValue);
+    end;
+
+    { TAuthor }
+
+    constructor TAuthor.Create(const Name: string);
+    begin
+      inherited Create;
+      FName := Name;
+      FBooks := TBooks.New(Self);
+    end;
+
+    class function TAuthor.New(const Name: string): IAuthor;
+    begin
+      Result := TAuthor.Create(Name);
+    end;
+
+    function TAuthor.Name: string;
+    begin
+      Result := FName;
+    end;
+
+    function TAuthor.Books: IBooks;
+    begin
+      Result := FBooks;
+    end;
+
+    { TBook }
+
+    constructor TBook.Create(const Name: string; 
       const Text: string; Author: IAuthor);
-    class function New(const Name: string; 
-      const Text: string; Author: IAuthor): IBook; overload;
-    class function New(const Name: string; 
-      const Text: string): IBook; overload;
-    function Name: string;
-    function Author: IAuthor;
-    function Write(const Text: string): IBook;
-    function Text: string;
-  end;
+    begin
+      inherited Create;
+      FName := Name;
+      FText := Text;
+      if Assigned(Author) then
+        FAuthor := TAuthor.New(Author.Name)
+      else
+        FAuthor := TAuthor.New('Undefined');
+    end;
 
-  TBooks = class(TInterfacedObject, IBooks)
-  private
-    FList: TInterfaceList;
-    FAuthor: IAuthor;
-  public
-    constructor Create(Author: IAuthor);
-    class function New(Author: IAuthor): IBooks;
-    destructor Destroy; override;
-    function Add(Book: IBook): IBooks;
-    function Get(Index: Integer): IBook;
-    function Count: Integer;
-  end;
+    class function TBook.New(const Name: string; 
+      const Text: string; Author: IAuthor): IBook;
+    begin
+      Result := TBook.Create(Name, Text, Author);
+    end;
 
-  TForm1 = class(TForm)
-    Button1: TButton;
-    procedure Button1Click(Sender: TObject);
-  end;
+    class function TBook.New(const Name: string; 
+      const Text: string): IBook;
+    begin
+      Result := New(Name, Text, nil);
+    end;
 
-var
-  Form1: TForm1;
+    function TBook.Name: string;
+    begin
+      Result := FName;
+    end;
 
-implementation
+    function TBook.Author: IAuthor;
+    begin
+      Result := FAuthor;
+    end;
 
-{$R *.lfm}
+    function TBook.Write(const Text: string): IBook;
+    begin
+      Result := Self;
+      FText += Text + #13;
+    end;
 
-procedure SetWeak(aInterfaceField: PInterface; 
-  const aValue: IInterface);
-begin
-  PPointer(aInterfaceField)^ := Pointer(aValue);
-end;
+    function TBook.Text: string;
+    begin
+      Result := FText;
+    end;
 
-{ TAuthor }
+    { TBooks }
 
-constructor TAuthor.Create(const Name: string);
-begin
-  inherited Create;
-  FName := Name;
-  FBooks := TBooks.New(Self);
-end;
+    constructor TBooks.Create(Author: IAuthor);
+    begin
+      inherited Create;
+      FList := TInterfaceList.Create;
+      SetWeak(@FAuthor, Author);
+    end;
 
-class function TAuthor.New(const Name: string): IAuthor;
-begin
-  Result := TAuthor.Create(Name);
-end;
+    class function TBooks.New(Author: IAuthor): IBooks;
+    begin
+      Result := TBooks.Create(Author);
+    end;
 
-function TAuthor.Name: string;
-begin
-  Result := FName;
-end;
+    destructor TBooks.Destroy;
+    begin
+      FList.Free;
+      inherited Destroy;
+    end;
 
-function TAuthor.Books: IBooks;
-begin
-  Result := FBooks;
-end;
+    function TBooks.Add(Book: IBook): IBooks;
+    begin
+      Result := Self;
+      FList.Add(
+        TBook.New(
+          Book.Name,
+          Book.Text,
+          TAuthor.New(FAuthor.Name)
+        )
+      );
+    end;
 
-{ TBook }
+    function TBooks.Get(Index: Integer): IBook;
+    begin
+      Result := FList.Items[Index] as IBook;
+    end;
 
-constructor TBook.Create(const Name: string; 
-  const Text: string; Author: IAuthor);
-begin
-  inherited Create;
-  FName := Name;
-  FText := Text;
-  if Assigned(Author) then
-    FAuthor := TAuthor.New(Author.Name)
-  else
-    FAuthor := TAuthor.New('Undefined');
-end;
+    function TBooks.Count: Integer;
+    begin
+      Result := FList.Count;
+    end;
 
-class function TBook.New(const Name: string; 
-  const Text: string; Author: IAuthor): IBook;
-begin
-  Result := TBook.Create(Name, Text, Author);
-end;
+    { TForm1 }
 
-class function TBook.New(const Name: string; 
-  const Text: string): IBook;
-begin
-  Result := New(Name, Text, nil);
-end;
-
-function TBook.Name: string;
-begin
-  Result := FName;
-end;
-
-function TBook.Author: IAuthor;
-begin
-  Result := FAuthor;
-end;
-
-function TBook.Write(const Text: string): IBook;
-begin
-  Result := Self;
-  FText += Text + #13;
-end;
-
-function TBook.Text: string;
-begin
-  Result := FText;
-end;
-
-{ TBooks }
-
-constructor TBooks.Create(Author: IAuthor);
-begin
-  inherited Create;
-  FList := TInterfaceList.Create;
-  SetWeak(@FAuthor, Author);
-end;
-
-class function TBooks.New(Author: IAuthor): IBooks;
-begin
-  Result := TBooks.Create(Author);
-end;
-
-destructor TBooks.Destroy;
-begin
-  FList.Free;
-  inherited Destroy;
-end;
-
-function TBooks.Add(Book: IBook): IBooks;
-begin
-  Result := Self;
-  FList.Add(
-    TBook.New(
-      Book.Name,
-      Book.Text,
-      TAuthor.New(FAuthor.Name)
-    )
-  );
-end;
-
-function TBooks.Get(Index: Integer): IBook;
-begin
-  Result := FList.Items[Index] as IBook;
-end;
-
-function TBooks.Count: Integer;
-begin
-  Result := FList.Count;
-end;
-
-{ TForm1 }
-
-procedure TForm1.Button1Click(Sender: TObject);
-begin
-  ShowMessage(
-    TBook.New(
-      'Object Pascal',
-      'Strong Reference',
-      TAuthor.New('Jeff')
-    )
-    .Author.Name
-  );
-
-  ShowMessage(
-    TAuthor.New('Marcos')
-      .Books.Add(
+    procedure TForm1.Button1Click(Sender: TObject);
+    begin
+      ShowMessage(
         TBook.New(
           'Object Pascal',
-          'Weak Reference'
+          'Strong Reference',
+          TAuthor.New('Jeff')
         )
-      )
-      .Get(0)
-      .Author.Name
-  );
-end;
+        .Author.Name
+      );
 
-end.
-{% endhighlight text %}
+      ShowMessage(
+        TAuthor.New('Marcos')
+          .Books.Add(
+            TBook.New(
+              'Object Pascal',
+              'Weak Reference'
+            )
+          )
+          .Get(0)
+          .Author.Name
+      );
+    end;
+
+    end.
 
 A *procedure SetWeak* é utilizada somente uma vez, na chamada do construtor de *Books*. O motivo é que o *Author* cria, internamente, 
 uma instância de *Books* e esta mantém a referência do seu criador, o *Author*.

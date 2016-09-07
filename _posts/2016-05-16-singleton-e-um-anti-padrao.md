@@ -132,18 +132,16 @@ Só isso pode arruinar qualquer tentativa de testes automatizados no código.
 
 Veja um exemplo:
 
-{% highlight pascal %}
-procedure TUserAction.ChangePassword(
-  User: IUser; const NewPassword: string);
-begin
-  if NewPassword = '' then
-    raise Exception.Create('Invalid Password');
-  if Length(NewPassword) < 8 then
-    raise Exception.Create('Must have 8 characters or more');
-  User.Password := NewPassword;
-  TMSSQL.GetInstance.Save(User);
-end;
-{% endhighlight text %}
+    procedure TUserAction.ChangePassword(
+      User: IUser; const NewPassword: string);
+    begin
+      if NewPassword = '' then
+        raise Exception.Create('Invalid Password');
+      if Length(NewPassword) < 8 then
+        raise Exception.Create('Must have 8 characters or more');
+      User.Password := NewPassword;
+      TMSSQL.GetInstance.Save(User);
+    end;
 
 É um código idiota, mas serve ao propósito.
 
@@ -202,20 +200,18 @@ Você poderá retornar qualquer instância que implemente `IConnection` e isso p
 
 Se quiser escrever menos, utilize **diretivas de compilação**.
 
-{% highlight pascal %}
-class function TMSSQL.GetInstance: IConnection;
-begin
-  if not Assigned(FInstance) then
-  begin
-    {$IFDEF TEST}
-      FInstance := TFakeConnection.Create;
-    {$ELSE}
-      FInstance := TMSSQLConnection.Create('user', 'password');
-    {$ENDIF}
-  end;
-  Result := FInstance;
-end;
-{% endhighlight text %}
+    class function TMSSQL.GetInstance: IConnection;
+    begin
+      if not Assigned(FInstance) then
+      begin
+        {$IFDEF TEST}
+          FInstance := TFakeConnection.Create;
+        {$ELSE}
+          FInstance := TMSSQLConnection.Create('user', 'password');
+        {$ENDIF}
+      end;
+      Result := FInstance;
+    end;
 
 Essa é a maneira "Rápido e sujo". Você pode começar por aí caso nunca tenha pensado nisso. Quando estiver
 em "modo de teste", ative a diretiva `TEST`, do contrário a Classe de produção será utilizada.
@@ -232,17 +228,15 @@ Como?
 
 Bem, em algum lugar no seu código você deverá ter uma chamada para "inicializar" a Classe `TMSSQL`.
 
-{% highlight pascal %}
-class function TMSSQL.Initialize(Factory: IConnectionFactory);
-begin
-  FFactory := Factory;
-end;
+    class function TMSSQL.Initialize(Factory: IConnectionFactory);
+    begin
+      FFactory := Factory;
+    end;
 
-initialization
-  TMSSQL.Initialize(TDbConnectionFactory.New('mssql'));
+    initialization
+      TMSSQL.Initialize(TDbConnectionFactory.New('mssql'));
 
-end.
-{% endhighlight text %}
+    end.
 
 Mais um vez estaremos utilizando métodos estáticos. Mas estamos em busca de simplicidade.
 Não devemos ser **puristas** em Orientação a Objetos se não há nenhum benefício. Sempre haverá partes do código
@@ -261,14 +255,12 @@ Utilize seu estilo.
 
 Após essa alteração o método `GetInstance` pode ser refatorado:
 
-{% highlight pascal %}
-class function TMSSQL.GetInstance: IConnection;
-begin
-  if not Assigned(FInstance) then
-    FInstance := FFactory.NewConnection(FUser, FPassword);
-  Result := FInstance;
-end;
-{% endhighlight text %}
+    class function TMSSQL.GetInstance: IConnection;
+    begin
+      if not Assigned(FInstance) then
+        FInstance := FFactory.NewConnection(FUser, FPassword);
+      Result := FInstance;
+    end;
 
 A chamada a `FFactory.NewConnection` irá gerar uma nova instância de `IConnection`. Qual a Classe que 
 estará sendo utilizada é irrelevante para o código que utiliza `TMSSQL.GetInstance` em todos os lugares,

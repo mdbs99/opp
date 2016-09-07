@@ -54,58 +54,54 @@ Então fiz um programa simples para assinar um XML e tentar validar o resultado 
 
 Precisei criar o XML Template, que é o XML que tenho que enviar ao WebService:
 
-{% highlight xml %}
-<?xml version="1.0" encoding="iso-8859-1"?>
-<Principal>
-  <Solicitacao Id="123"><Parametros Codigo="Todos" /></Solicitacao>
-  <Assinatura>
-    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
-      <SignedInfo>
-        <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
-        <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
-        <Reference URI="#123">
-          <Transforms>
-            <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
-            <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
-          </Transforms>
-          <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-          <DigestValue></DigestValue>
-        </Reference>
-      </SignedInfo>
-    <SignatureValue/>
-    </Signature>
-  </Assinatura>
-</Principal>
-{% endhighlight xml %}
+    <?xml version="1.0" encoding="iso-8859-1"?>
+    <Principal>
+      <Solicitacao Id="123"><Parametros Codigo="Todos" /></Solicitacao>
+      <Assinatura>
+        <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+          <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+            <Reference URI="#123">
+              <Transforms>
+                <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+                <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+              </Transforms>
+              <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+              <DigestValue></DigestValue>
+            </Reference>
+          </SignedInfo>
+        <SignatureValue/>
+        </Signature>
+      </Assinatura>
+    </Principal>
 
 Veja que já existe os nós da assinatura (Signature), mas estão em branco ou incompletos. Esse é o template que o ACBr irá utilizar para realmente assinar e gerar um novo XML.
 
 Então codifiquei um pequeno programa em Object Pascal para fazer os testes.
 
-{% highlight pascal %}
-procedure TMainForm.Assinar;
-var
-  A: TDFeSSL;
-  I: Integer;
-begin
-  A := TDFeSSL.Create;
-  A.SSLLib := libCapicom;
-  A.SelecionarCertificado;
-  with TStringList.Create do
-  try
-    // carrega o XML de template
-    LoadFromFile('template.xml');
-    // obtém o XML assinado no Text do StringList
-    Text := '<?xml version="1.0" encoding="iso-8859-1"?>'
-          + A.Assinar(Text, 'Assinatura', '');
-    // salva o XML em disco
-    SaveToFile('assinado.xml');
-  finally
-    Free;
-  end;
-  A.Free;
-end;
-{% endhighlight text %}
+    procedure TMainForm.Assinar;
+    var
+      A: TDFeSSL;
+      I: Integer;
+    begin
+      A := TDFeSSL.Create;
+      A.SSLLib := libCapicom;
+      A.SelecionarCertificado;
+      with TStringList.Create do
+      try
+        // carrega o XML de template
+        LoadFromFile('template.xml');
+        // obtém o XML assinado no Text do StringList
+        Text := '<?xml version="1.0" encoding="iso-8859-1"?>'
+              + A.Assinar(Text, 'Assinatura', '');
+        // salva o XML em disco
+        SaveToFile('assinado.xml');
+      finally
+        Free;
+      end;
+      A.Free;
+    end;
 
 A tela para escolher o certificado — previamente instalado no computador — aparece e o usuário, que pode selecionar qual ele deseja.
 
@@ -119,42 +115,40 @@ Após ajuda do pessoal do ACBr e amigos, chegamos a conclusão que os espaços e
 
 Modifiquei o projeto de teste, intruduzindo algumas linhas de código para retirar os espaços e quebras de linha. Funcionou.
 
-{% highlight pascal %}
-procedure TMainForm.Assinar;
-var
-  A: TDFeSSL;
-  S: AnsiString;
-  I: Integer;
-begin
-  A := TDFeSSL.Create;
-  A.SSLLib := libCapicom;
-  A.SelecionarCertificado;
-  with TStringList.Create do
-  try
-    // carrega o XML de template
-    LoadFromFile('template.xml');
-    S := '';
-    // retira dos os espaços em braco e quebras de linha
-    for I := 0 to Count-1 do
+    procedure TMainForm.Assinar;
+    var
+      A: TDFeSSL;
+      S: AnsiString;
+      I: Integer;
     begin
-      S := S + Trim(
-        StringReplace(
-          StringReplace(Strings[I], #13, '', [rfReplaceAll]),
-          #10, '', [rfReplaceAll]
-        )
-      )
+      A := TDFeSSL.Create;
+      A.SSLLib := libCapicom;
+      A.SelecionarCertificado;
+      with TStringList.Create do
+      try
+        // carrega o XML de template
+        LoadFromFile('template.xml');
+        S := '';
+        // retira dos os espaços em braco e quebras de linha
+        for I := 0 to Count-1 do
+        begin
+          S := S + Trim(
+            StringReplace(
+              StringReplace(Strings[I], #13, '', [rfReplaceAll]),
+              #10, '', [rfReplaceAll]
+            )
+          )
+        end;
+        // obtém o XML assinado no Text do StringList
+        Text := '<?xml version="1.0" encoding="iso-8859-1"?>'
+              + A.Assinar(S, 'Assinatura', '');
+        // salva o XML em disco
+        SaveToFile('assinado.xml');
+      finally
+        Free;
+      end;
+      A.Free;
     end;
-    // obtém o XML assinado no Text do StringList
-    Text := '<?xml version="1.0" encoding="iso-8859-1"?>'
-          + A.Assinar(S, 'Assinatura', '');
-    // salva o XML em disco
-    SaveToFile('assinado.xml');
-  finally
-    Free;
-  end;
-  A.Free;
-end;
-{% endhighlight text %}
 
 ##Conclusão {#conclusao}
 

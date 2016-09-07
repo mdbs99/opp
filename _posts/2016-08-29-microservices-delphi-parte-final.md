@@ -40,37 +40,35 @@ Se houver erro, definimos um protocolo privado que descreve como a mensagem para
 
 Abaixo o código modificado que trata erros e exceções. O código em produção é um pouco mais elaborado, no entanto acredito que com esse exemplo você irá entender como o tratamento ocorre no projeto real.
 
-{% highlight pascal %}
-function TMicroServiceClient.Send(
-  const Content: string): IMicroServiceResponse;
-begin
-  with Response(Content) do
-  begin
-    Result := TMicroServiceResponse.New(
-      Code,
-      TXMLFactory.New('ISO-8859-1', Stream).Document
-    );
-    case Code of
-      // BAD REQUEST
-      400..499:
-        raise EMicroService.Create(
-          Result
-            .XML
-            .DocumentElement
-            .ChildNodes['UserMessage'].Text
+    function TMicroServiceClient.Send(
+      const Content: string): IMicroServiceResponse;
+    begin
+      with Response(Content) do
+      begin
+        Result := TMicroServiceResponse.New(
+          Code,
+          TXMLFactory.New('ISO-8859-1', Stream).Document
         );
-      // SERVER ERROR
-      500..510:
-        raise EMicroService.Create(
-          Result
-            .XML
-            .DocumentElement
-            .ChildNodes['DevMessage'].Text
-        );
+        case Code of
+          // BAD REQUEST
+          400..499:
+            raise EMicroService.Create(
+              Result
+                .XML
+                .DocumentElement
+                .ChildNodes['UserMessage'].Text
+            );
+          // SERVER ERROR
+          500..510:
+            raise EMicroService.Create(
+              Result
+                .XML
+                .DocumentElement
+                .ChildNodes['DevMessage'].Text
+            );
+        end;
+      end;
     end;
-  end;
-end;
-{% endhighlight text %}
 
 Repare que para cada tipo de erro/exceção, um *node* (ou *nodes*) específico é utilizado para obter a informação.
 

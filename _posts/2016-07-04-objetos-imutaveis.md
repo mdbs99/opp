@@ -79,16 +79,14 @@ Isso é programação procedural.
 
 Vejamos um exemplo:
 
-{% highlight pascal %}
-begin
-  Query := TQuery.New(Database);
-  Query.SQL.Text := 
-    'SELECT id, name FROM Customer WHERE id = :id';
-  Query.Params.ParamByName('id').Value := 10;
-  Query.Open;
-  ShowMessage(Query.FieldByName('name').AsString);
-end;
-{% endhighlight text %}
+    begin
+      Query := TQuery.New(Database);
+      Query.SQL.Text := 
+        'SELECT id, name FROM Customer WHERE id = :id';
+      Query.Params.ParamByName('id').Value := 10;
+      Query.Open;
+      ShowMessage(Query.FieldByName('name').AsString);
+    end;
 
 No exemplo acima o Objeto Query é criado. Temos que chamar seus métodos ou propriedades numa sequência correta ou uma `Exception` será gerada. Esse é um "código padrão" que encontramos na maioria dos sistemas, certo?
 
@@ -103,21 +101,19 @@ Como seria o mesmo exemplo utilizando um código Orientado a Objetos, declarativ
 
 Existem várias opções. Vou propor uma delas como exemplo:
 
-{% highlight pascal %}
-begin
-  ShowMessage(
-    TQuery.New(
-      Database, 
-      TStatement.New(
-        'SELECT id, name FROM Customer WHERE id = :id', 
-        TParam.New(ftInteger, 10)
-      )
-    )
-    .Open
-    .Fields('name').AsString
-  );
-end;
-{% endhighlight text %}
+    begin
+      ShowMessage(
+        TQuery.New(
+          Database, 
+          TStatement.New(
+            'SELECT id, name FROM Customer WHERE id = :id', 
+            TParam.New(ftInteger, 10)
+          )
+        )
+        .Open
+        .Fields('name').AsString
+      );
+    end;
 
 Não há um controlador. Não há procedimentos um após o outro. O que existe é uma combinação de Objetos que trabalham entre si para gerar um resultado.
 
@@ -142,30 +138,28 @@ Se você não tem métodos de alteração dos atributos e os argumentos necessá
 
 Esse é um problema que muitos programadores Object Pascal não dão muita importância. Ele é mais conhecido no Java. Mas vou lhe dar um exemplo em Object Pascal:
 
-{% highlight pascal %}
-type
-  TQuery = class(TInterfacedObject, IQuery)
-  private
-    FDatabase: TDatabase;
-    FSQL: TStrings;
-    FParams: TParams;
-  public
-    constructor Create(Database: TDatabase);
-    class function New(Database: TDatabase): IQuery;
-    function SQL: TStrings;
-    function Params: TParams;
-    function Open: IQuery;
-  end;
+    type
+      TQuery = class(TInterfacedObject, IQuery)
+      private
+        FDatabase: TDatabase;
+        FSQL: TStrings;
+        FParams: TParams;
+      public
+        constructor Create(Database: TDatabase);
+        class function New(Database: TDatabase): IQuery;
+        function SQL: TStrings;
+        function Params: TParams;
+        function Open: IQuery;
+      end;
 
-begin
-  Query := TQuery.New(Database);
-  Query.SQL.Text := 
-    'SELECT id, name FROM Customer WHERE id = :id';
-  Query.Params.ParamByName('id').Value := 10;
-  Query.Open;
-  ShowMessage(Query.FieldByName('name').AsString);
-end;
-{% endhighlight text %}
+    begin
+      Query := TQuery.New(Database);
+      Query.SQL.Text := 
+        'SELECT id, name FROM Customer WHERE id = :id';
+      Query.Params.ParamByName('id').Value := 10;
+      Query.Open;
+      ShowMessage(Query.FieldByName('name').AsString);
+    end;
 
 A Classe `TQuery` tem 2 defeitos:
 

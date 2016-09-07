@@ -83,67 +83,65 @@ Essa *unit* encasula tudo que é genérico sobre Web.
 
 A Classe mais relevante é a `TWebURL`, que será utilizada na solução.
 
-{% highlight pascal %}
-type
-  TWebURL = class(TInterfacedObject, IWebURL)
-  private
-    FServer: string;
-    FPathInfo: string;
-    FPort: Integer;
-  public
-    constructor Create(const Server, PathInfo: string; 
-      Port: Integer); reintroduce;
-    class function New(const Server, PathInfo: string; 
+    type
+      TWebURL = class(TInterfacedObject, IWebURL)
+      private
+        FServer: string;
+        FPathInfo: string;
+        FPort: Integer;
+      public
+        constructor Create(const Server, PathInfo: string; 
+          Port: Integer); reintroduce;
+        class function New(const Server, PathInfo: string; 
+          Port: Integer): IWebURL;
+        function Server: string;
+        function PathInfo: string;
+        function Port: Integer;
+        function AsString: string;
+      end;
+
+    implementation
+
+    { TWebURL }
+
+    constructor TWebURL.Create(const Server, PathInfo: string; 
+      Port: Integer);
+    begin
+      inherited Create;
+      FServer := Server;
+      FPathInfo := PathInfo;
+      FPort := Port;
+    end;
+
+    class function TWebURL.New(const Server, PathInfo: string;
       Port: Integer): IWebURL;
-    function Server: string;
-    function PathInfo: string;
-    function Port: Integer;
-    function AsString: string;
-  end;
+    begin
+      Result := Create(Server, PathInfo, Port);
+    end;
 
-implementation
+    function TWebURL.Server: string;
+    begin
+      Result := FServer;
+    end;
 
-{ TWebURL }
+    function TWebURL.PathInfo: string;
+    begin
+      Result := FPathInfo;
+    end;
 
-constructor TWebURL.Create(const Server, PathInfo: string; 
-  Port: Integer);
-begin
-  inherited Create;
-  FServer := Server;
-  FPathInfo := PathInfo;
-  FPort := Port;
-end;
+    function TWebURL.Port: Integer;
+    begin
+      Result := FPort;
+    end;
 
-class function TWebURL.New(const Server, PathInfo: string;
-  Port: Integer): IWebURL;
-begin
-  Result := Create(Server, PathInfo, Port);
-end;
-
-function TWebURL.Server: string;
-begin
-  Result := FServer;
-end;
-
-function TWebURL.PathInfo: string;
-begin
-  Result := FPathInfo;
-end;
-
-function TWebURL.Port: Integer;
-begin
-  Result := FPort;
-end;
-
-function TWebURL.AsString: string;
-begin
-  Result := Format(
-    'http://%s:%d%s', [
-      FServer, FPort, FPathInfo
-    ]
-  );
-end;
-{% endhighlight text %}
+    function TWebURL.AsString: string;
+    begin
+      Result := Format(
+        'http://%s:%d%s', [
+          FServer, FPort, FPathInfo
+        ]
+      );
+    end;
 
 ###Unit AcmeWebHttpA.pas {#unit-webhttpa}
 
@@ -153,171 +151,167 @@ A Classe mais relevante é a `THttpClient`. Essa Classe ainda deve ser refatorad
 
 Internamente é utilizada o *framework* [Synapse](http://synapse.ararat.cz/doku.php/download) que implementa o protocolo HTTP. Quem já conhece esse *framework* não terá dificuldade para entender o código. Se ainda não conhece, sugiro baixar seus fontes.
 
-{% highlight pascal %}
-type
-  THttpResponse = class(TInterfacedObject, IHttpResponse)
-  private
-    FCode: Integer;
-    FStream: IDataStream;
-  public
-    constructor Create(Code: Integer; 
-      Stream: IDataStream); reintroduce;
-    class function New(Code: Integer; 
-      Stream: IDataStream): IHttpResponse; overload;
-    function Code: Integer;
-    function Stream: IDataStream;
-  end;
+    type
+      THttpResponse = class(TInterfacedObject, IHttpResponse)
+      private
+        FCode: Integer;
+        FStream: IDataStream;
+      public
+        constructor Create(Code: Integer; 
+          Stream: IDataStream); reintroduce;
+        class function New(Code: Integer; 
+          Stream: IDataStream): IHttpResponse; overload;
+        function Code: Integer;
+        function Stream: IDataStream;
+      end;
 
-  EHttpClient = class(Exception);
+      EHttpClient = class(Exception);
 
-  THttpClient = class(TInterfacedObject, IHttpClient)
-  private
-    FURL: string;
-    FMimeType: string;
-    FStream: TStringStream;
-    function Send(const Method: string): IHttpResponse;
-  public
-    constructor Create(const URL, MimeType: string; 
-      Stream: IDataStream); reintroduce;
-    class function New(const URL, MimeType: string; 
-      Stream: IDataStream): IHttpClient; overload;
-    class function New(const URL, MimeType: string; 
-      Stream: TStream): IHttpClient; overload;
-    class function New(const URL, MimeType: string): IHttpClient; overload;
-    destructor Destroy; override;
-    function Execute(const Verb: string): IHttpResponse;
-    function Get: IHttpResponse;
-    function Post: IHttpResponse;
-  end;
+      THttpClient = class(TInterfacedObject, IHttpClient)
+      private
+        FURL: string;
+        FMimeType: string;
+        FStream: TStringStream;
+        function Send(const Method: string): IHttpResponse;
+      public
+        constructor Create(const URL, MimeType: string; 
+          Stream: IDataStream); reintroduce;
+        class function New(const URL, MimeType: string; 
+          Stream: IDataStream): IHttpClient; overload;
+        class function New(const URL, MimeType: string; 
+          Stream: TStream): IHttpClient; overload;
+        class function New(const URL, MimeType: string): IHttpClient; overload;
+        destructor Destroy; override;
+        function Execute(const Verb: string): IHttpResponse;
+        function Get: IHttpResponse;
+        function Post: IHttpResponse;
+      end;
 
-implementation
+    implementation
 
-uses
-  // synapse
-  httpsend, synacode, synautil, ssl_openssl;
+    uses
+      // synapse
+      httpsend, synacode, synautil, ssl_openssl;
 
-{ THttpResponse }
+    { THttpResponse }
 
-constructor THttpResponse.Create(Code: Integer; 
-  Stream: IDataStream);
-begin
-  inherited Create;
-  FCode := Code;
-  FStream := Stream;
-end;
-
-class function THttpResponse.New(Code: Integer;
-  Stream: IDataStream): IHttpResponse;
-begin
-  Result := Create(Code, Stream);
-end;
-
-function THttpResponse.Code: Integer;
-begin
-  Result := FCode;
-end;
-
-function THttpResponse.Stream: IDataStream;
-begin
-  Result := FStream;
-end;
-
-{ THttpClient }
-
-function THttpClient.Send(const Method: string): IHttpResponse;
-var
-  URL: string;
-begin
-  URL := FURL;
-  with THTTPSend.Create do
-  try
-    try
-      MimeType := FMimeType;
-      if Method = 'GET' then
-        URL := URL + FStream.DataString
-      else
-        WriteStrToStream(Document, FStream.DataString);
-      if not HTTPMethod(Method, URL) then
-        raise Exception.Create(Sock.LastErrorDesc);
-      Document.Position := soFromBeginning;
-    except
-      on E: Exception do
-        raise EHttpClient.Create(
-          E.Message +
-          #13'Method: ' + Method +
-          #13'Code: ' + IntToStr(ResultCode)
-        );
+    constructor THttpResponse.Create(Code: Integer; 
+      Stream: IDataStream);
+    begin
+      inherited Create;
+      FCode := Code;
+      FStream := Stream;
     end;
-  finally
-    Result := THttpResponse.New(
-      ResultCode, 
-      TDataStream.New(Document)
-    );
-    Free;
-  end;
-end;
 
-constructor THttpClient.Create(const URL, MimeType: string; 
-  Stream: IDataStream);
-begin
-  inherited Create;
-  FURL := URL;
-  FMimeType := MimeType;
-  FStream := TStringStream.Create('');
-  Stream.Save(FStream);
-end;
+    class function THttpResponse.New(Code: Integer;
+      Stream: IDataStream): IHttpResponse;
+    begin
+      Result := Create(Code, Stream);
+    end;
 
-class function THttpClient.New(const URL, MimeType: string; 
-  Stream: IDataStream): IHttpClient;
-begin
-  Result := Create(URL, MimeType, Stream);
-end;
+    function THttpResponse.Code: Integer;
+    begin
+      Result := FCode;
+    end;
 
-class function THttpClient.New(const URL, MimeType: string; 
-  Stream: TStream): IHttpClient;
-begin
-  Result := New(URL, MimeType, TDataStream.New(Stream));
-end;
+    function THttpResponse.Stream: IDataStream;
+    begin
+      Result := FStream;
+    end;
 
-class function THttpClient.New(const URL, MimeType: string): IHttpClient;
-begin
-  Result := New(URL, MimeType, TDataStream.New);
-end;
+    { THttpClient }
 
-destructor THttpClient.Destroy;
-begin
-  FStream.Free;
-  inherited;
-end;
+    function THttpClient.Send(const Method: string): IHttpResponse;
+    var
+      URL: string;
+    begin
+      URL := FURL;
+      with THTTPSend.Create do
+      try
+        try
+          MimeType := FMimeType;
+          if Method = 'GET' then
+            URL := URL + FStream.DataString
+          else
+            WriteStrToStream(Document, FStream.DataString);
+          if not HTTPMethod(Method, URL) then
+            raise Exception.Create(Sock.LastErrorDesc);
+          Document.Position := soFromBeginning;
+        except
+          on E: Exception do
+            raise EHttpClient.Create(
+              E.Message +
+              #13'Method: ' + Method +
+              #13'Code: ' + IntToStr(ResultCode)
+            );
+        end;
+      finally
+        Result := THttpResponse.New(
+          ResultCode, 
+          TDataStream.New(Document)
+        );
+        Free;
+      end;
+    end;
 
-function THttpClient.Execute(const Verb: string): IHttpResponse;
-begin
-  Result := Send(Verb);
-end;
+    constructor THttpClient.Create(const URL, MimeType: string; 
+      Stream: IDataStream);
+    begin
+      inherited Create;
+      FURL := URL;
+      FMimeType := MimeType;
+      FStream := TStringStream.Create('');
+      Stream.Save(FStream);
+    end;
 
-function THttpClient.Get: IHttpResponse;
-begin
-  Result := Execute('GET');
-end;
+    class function THttpClient.New(const URL, MimeType: string; 
+      Stream: IDataStream): IHttpClient;
+    begin
+      Result := Create(URL, MimeType, Stream);
+    end;
 
-function THttpClient.Post: IHttpResponse;
-begin
-  if FStream.Size = 0 then
-    raise EHttpClient.Create('HTTP.Send: No data.');
-  Result := Execute('POST');
-end;
-{% endhighlight text %}
+    class function THttpClient.New(const URL, MimeType: string; 
+      Stream: TStream): IHttpClient;
+    begin
+      Result := New(URL, MimeType, TDataStream.New(Stream));
+    end;
+
+    class function THttpClient.New(const URL, MimeType: string): IHttpClient;
+    begin
+      Result := New(URL, MimeType, TDataStream.New);
+    end;
+
+    destructor THttpClient.Destroy;
+    begin
+      FStream.Free;
+      inherited;
+    end;
+
+    function THttpClient.Execute(const Verb: string): IHttpResponse;
+    begin
+      Result := Send(Verb);
+    end;
+
+    function THttpClient.Get: IHttpResponse;
+    begin
+      Result := Execute('GET');
+    end;
+
+    function THttpClient.Post: IHttpResponse;
+    begin
+      if FStream.Size = 0 then
+        raise EHttpClient.Create('HTTP.Send: No data.');
+      Result := Execute('POST');
+    end;
 
 O mais importante na Classe `THttpClient` é seu método `Send`, mas não tem nada complicado.
 
 Veja essa parte:
 
-{% highlight pascal %}
-      if Method = 'GET' then
-        URL := URL + FStream.DataString
-      else
-        WriteStrToStream(Document, FStream.DataString);
-{% endhighlight text %}
+    if Method = 'GET' then
+      URL := URL + FStream.DataString
+    else
+      WriteStrToStream(Document, FStream.DataString);
 
 Caso o VERBO seja GET, então `FStream` irá conter um PATH_INFO para complementar a URL. Do contrário, `FStream` irá conter um BODY, ou seja, um XML de requisição com os parâmetros necessários para o Microservice.
 

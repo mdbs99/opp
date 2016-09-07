@@ -96,33 +96,31 @@ Vamos codificar um acesso hipotético ao serviço da Amazon S3 para obter um arq
 
 ###Exemplo 1
 
-{% highlight pascal %}
-procedure TForm1.SaveButtonClick(Sender: TObject);
-var
-  Credentials: TAWSCredentials;
-  Client: TAWSClient;
-  Rgn: TS3Region;
-  Bucket: TS3Bucket;
-  Obj: TS3Object;
-begin
-  Credentials := TAWSCredentials.Create('access_key', 'secret_key', True);
-  Client := TAWSClient.Create(Credentials);
-  Rgn := TS3Region.Create(Client);
-  Bucket := nil;
-  Obj := nil;
-  try
-    Bucket := Rgn.GetBucket('mybucket');
-    Obj := Bucket.GetObject('foo.txt');
-    Obj.SaveToFile('./foo.txt');
-  finally
-    Obj.Free;
-    Bucket.Free;
-    Rgn.Free;
-    Client.Free;
-    Credentials.Free;
-  end;  
-end;
-{% endhighlight text %}
+    procedure TForm1.SaveButtonClick(Sender: TObject);
+    var
+      Credentials: TAWSCredentials;
+      Client: TAWSClient;
+      Rgn: TS3Region;
+      Bucket: TS3Bucket;
+      Obj: TS3Object;
+    begin
+      Credentials := TAWSCredentials.Create('access_key', 'secret_key', True);
+      Client := TAWSClient.Create(Credentials);
+      Rgn := TS3Region.Create(Client);
+      Bucket := nil;
+      Obj := nil;
+      try
+        Bucket := Rgn.GetBucket('mybucket');
+        Obj := Bucket.GetObject('foo.txt');
+        Obj.SaveToFile('./foo.txt');
+      finally
+        Obj.Free;
+        Bucket.Free;
+        Rgn.Free;
+        Client.Free;
+        Credentials.Free;
+      end;  
+    end;
 
 O programador teve que informar a sequência de ações passo-a-passo para o compilador. Mas o código parece bem "simples", não?
 
@@ -133,10 +131,8 @@ obtermos uma nova instância de *TS3Object*.
 
 Por que, neste exemplo, **precisamos** inicializar *Bucket* e *Obj* com `nil`? O motivo é porque dentro 
 do *try-finally*, pode ocorrer uma *Exception* (acesso a Internet, HTTP, login, etc) nestas linhas
-{% highlight pascal %}
     Bucket := Rgn.GetBucket('mybucket');
     Obj := Bucket.GetObject('foo.txt');
-{% endhighlight text %}
 e se ocorrer uma exceção a variável *Bucket* e/ou *Obj* nunca serão inicializadas e no fim ocorrerá uma 
 violação de acesso quando o compilador tentar liberar a memória utilizando *.Free*.
 
@@ -158,46 +154,44 @@ para podermos chamar os métodos de *Bucket* ou *Obj* em outros botões ou formu
 
 ####Refatorando
 
-{% highlight pascal %}
-type
-  TForm1 = class(TForm)
-  private
-    FCredentials: TAWSCredentials;
-    FClient: TAWSClient;
-    FRgn: TS3Region;
-    FBucket: TS3Bucket; 
-    FObj: TS3Object;
-    // ...
-  end;
+    type
+      TForm1 = class(TForm)
+      private
+        FCredentials: TAWSCredentials;
+        FClient: TAWSClient;
+        FRgn: TS3Region;
+        FBucket: TS3Bucket; 
+        FObj: TS3Object;
+        // ...
+      end;
 
-procedure TForm1.FormCreate(Sender: TObject);
-begin
-  FCredentials := TAWSCredentials.Create('access_key', 'secret_key', True);
-  FClient := TAWSClient.Create(Credentials);
-  FRgn := TS3Region.Create(Client);
-end;
+    procedure TForm1.FormCreate(Sender: TObject);
+    begin
+      FCredentials := TAWSCredentials.Create('access_key', 'secret_key', True);
+      FClient := TAWSClient.Create(Credentials);
+      FRgn := TS3Region.Create(Client);
+    end;
 
-procedure TForm1.FormDestroy(Sender: TObject);
-begin
-  FCredentials.Free;
-  FClient.Free;
-  FRgn.Free;
-  FBucket.Free;
-  FObj.Free;
-end;
+    procedure TForm1.FormDestroy(Sender: TObject);
+    begin
+      FCredentials.Free;
+      FClient.Free;
+      FRgn.Free;
+      FBucket.Free;
+      FObj.Free;
+    end;
 
-procedure TForm1.SaveButtonClick(Sender: TObject);
-begin
-  try
-    FBucket := FRgn.GetBucket('mybucket');
-    FObj := FBucket.GetObject('foo.txt');
-    FObj.SaveToFile('./foo.txt');
-  finally
-    FreeAndNil(Obj);
-    FreeAndNil(FBucket);
-  end;  
-end;
-{% endhighlight text %}
+    procedure TForm1.SaveButtonClick(Sender: TObject);
+    begin
+      try
+        FBucket := FRgn.GetBucket('mybucket');
+        FObj := FBucket.GetObject('foo.txt');
+        FObj.SaveToFile('./foo.txt');
+      finally
+        FreeAndNil(Obj);
+        FreeAndNil(FBucket);
+      end;  
+    end;
 
 Agora o código esta menor e continua "seguro". Se houver uma exceção, as variáveis *FBucket* e *FObj* ainda
 serão liberadas no fim do programa, no envento *FormDestroy*, sem violação de acesso porque o *FreeAndNil*
@@ -244,22 +238,20 @@ não precisaremos utilizar *Free* e muito menos *FreeAndNil*.
 
 Então como seria a codificação do exemplo acima utilizando Orientação a Objetos?
 
-{% highlight pascal %}
-procedure TForm1.SaveButtonClick(Sender: TObject);
-begin
-  TS3Region.New(
-    TAWSClient.New(
-      TAWSCredentials.New('access_key', 'secret_key')
-    )
-  )
-  .Buckets
-  .Get('mybucket')
-  .Objects
-  .Get('foo.txt', '/')
-  .Stream
-  .SaveToFile('./foo.txt');
-end.
-{% endhighlight text %}
+    procedure TForm1.SaveButtonClick(Sender: TObject);
+    begin
+      TS3Region.New(
+        TAWSClient.New(
+          TAWSCredentials.New('access_key', 'secret_key')
+        )
+      )
+      .Buckets
+      .Get('mybucket')
+      .Objects
+      .Get('foo.txt', '/')
+      .Stream
+      .SaveToFile('./foo.txt');
+    end.
 
 Não é a melhor *design*, mas melhorou 100% comparado aos exemplos anteriores.
 
@@ -273,47 +265,45 @@ Uma das opções é codificar sua própria implementação de *IS3Region*, a *in
 No construtor da nova implementação (ex: *TMyRegion*) você poderá inicializar *Credentials* e *Client*.
 
 ####Refatorando
-{% highlight pascal %}
-type
-  TMyRegion = class(TInterfacedObject, IS3Region)
-  private
-    FOrigin: IS3Region;
-  public
-    constructor Create(Origin: IS3Region);
-    class function New: IS3Region;    
-    // IS3Region methods...
-  end;
-  
-constructor TMyRegion.Create(Origin: IS3Region);
-begin
-  inherited Create;
-  FOrigin := Origin;
-end;
+    type
+      TMyRegion = class(TInterfacedObject, IS3Region)
+      private
+        FOrigin: IS3Region;
+      public
+        constructor Create(Origin: IS3Region);
+        class function New: IS3Region;    
+        // IS3Region methods...
+      end;
+      
+    constructor TMyRegion.Create(Origin: IS3Region);
+    begin
+      inherited Create;
+      FOrigin := Origin;
+    end;
 
-class function TMyRegion.New: IS3Region;
-begin
-  Result := TMyRegion.Create(
-    TS3Region.New(
-      TAWSClient.New(
-        TAWSCredentials.New('access_key', 'secret_key')
-      )
-    )  
-  );
-end;    
+    class function TMyRegion.New: IS3Region;
+    begin
+      Result := TMyRegion.Create(
+        TS3Region.New(
+          TAWSClient.New(
+            TAWSCredentials.New('access_key', 'secret_key')
+          )
+        )  
+      );
+    end;    
 
-//....
-  
-procedure TForm1.SaveButtonClick(Sender: TObject);
-begin
-  TMyRegion.New
-  .Buckets
-  .Get('mybucket')
-  .Objects
-  .Get('foo.txt', '/')
-  .Stream
-  .SaveToFile('./foo.txt');
-end.
-{% endhighlight text %}
+    //....
+      
+    procedure TForm1.SaveButtonClick(Sender: TObject);
+    begin
+      TMyRegion.New
+      .Buckets
+      .Get('mybucket')
+      .Objects
+      .Get('foo.txt', '/')
+      .Stream
+      .SaveToFile('./foo.txt');
+    end.
 
 A instância *FOrigin* será utilizada dentro de cada implementação para cada método de *IS3Region*.
 A implementação *TMyRegion* é um *Decorator* implícito. 

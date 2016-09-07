@@ -43,18 +43,16 @@ Mas como saber se seu Objeto representa uma Entidade ou se ele é apenas um
 
 Algumas classes são mais difíceis de perceber enquanto outras são tão claras como a água. Veja: 
 
-{% highlight pascal %}
-type
-  TDataModule1 = class(TDataModule)
-    { fields, components...}
-  public
-    function AddNewCustomer(Customer: TCustomer): Integer;
-    function AddNewUser(User: TUser): Integer;
-    function GetCustomer(Id: Integer): TCustomer;
-    function GetEmployeeSalary(EmployeeId: Integer): Currency;
-    { more...}
-  end;
-{% endhighlight text %}
+    type
+      TDataModule1 = class(TDataModule)
+        { fields, components...}
+      public
+        function AddNewCustomer(Customer: TCustomer): Integer;
+        function AddNewUser(User: TUser): Integer;
+        function GetCustomer(Id: Integer): TCustomer;
+        function GetEmployeeSalary(EmployeeId: Integer): Currency;
+        { more...}
+      end;
 
 O exemplo acima, apesar de ser codificado como uma Classe, ter a sintaxe de uma Classe, se comportar como uma Classe etc, na verdade,
 não representa nenhuma abstração de uma Entidade sendo, portanto, um **código procedural**, ou seja, um 
@@ -88,31 +86,29 @@ Nessa versão do código tudo é feito num único lugar, no evento do botão.
 É claro que você poderá me dizer como reescrever o código. Dividir em partes. Criar outros "métodos", etc. Mas o ponto aqui é comparar um Código
 Procedural com um Orientado a Objetos de verdade.
 
-{% highlight pascal %}
-procedure TForm1.Button1Click(Sender: TObject);
-var
-  Id: Integer;
-  EmployeeType: Integer;
-  Salary: Currency;
-begin
-  Id := SelectedEmployeeId;
-  Query.Close;
-  Query.Params.ParamByName('id').Value := Id;
-  Query.Open;
-  
-  Salary := Query.FieldByName('salary').AsCurrency;  
-  
-  EmployeeType := Query.FieldByName('etype').AsInteger;
-  case EmployeeType of
-    1: Salary := Salary + CalcCommission1(Id, {parameters});
-    2: Salary := Salary + CalcCommission2(Id, {parameters});
-  else
-    Salary := Salary + (Salary * 0.02);
-  end;
+    procedure TForm1.Button1Click(Sender: TObject);
+    var
+      Id: Integer;
+      EmployeeType: Integer;
+      Salary: Currency;
+    begin
+      Id := SelectedEmployeeId;
+      Query.Close;
+      Query.Params.ParamByName('id').Value := Id;
+      Query.Open;
+      
+      Salary := Query.FieldByName('salary').AsCurrency;  
+      
+      EmployeeType := Query.FieldByName('etype').AsInteger;
+      case EmployeeType of
+        1: Salary := Salary + CalcCommission1(Id, {parameters});
+        2: Salary := Salary + CalcCommission2(Id, {parameters});
+      else
+        Salary := Salary + (Salary * 0.02);
+      end;
 
-  ShowMessage('Total Salary = ' + CurrToStr(Salary));
-end;
-{% endhighlight text %}
+      ShowMessage('Total Salary = ' + CurrToStr(Salary));
+    end;
  
 Quem nunca fez um código parecido com esse em todos esses anos de *Object Pascal*? Eu já. Muito mais do que eu gostaria.
 
@@ -133,21 +129,19 @@ Melhor vermos uma outra opção.
 Para essa versão, é claro, temos que ter as Interfaces que representam cada Entidade do nosso domínio.
 Mesmo um Valor ou Salário [também são Entidades]({% post_url 2015-12-29-o-que-e-orientacao-a-objetos %})!
 
-{% highlight pascal %}
-type
-  ICurrencyValue = interface
-    function Value: Currency;
-    function AsString: string;
-  end;
+    type
+      ICurrencyValue = interface
+        function Value: Currency;
+        function AsString: string;
+      end;
 
-  ISalary = interface
-    function Value: ICurencyValue;
-  end;
-  
-  IEmployee = interface
-    { ... }
-  end;
-{% endhighlight text %}
+      ISalary = interface
+        function Value: ICurencyValue;
+      end;
+      
+      IEmployee = interface
+        { ... }
+      end;
 
 Com as Interfaces definidas, não fica difícil implementar as Classes utilizando o 
 [Decorator Design Pattern](https://en.wikipedia.org/wiki/Decorator_pattern),
@@ -157,20 +151,18 @@ Classe para podermos utilizá-la. Apenas a sua Interface é suficiente.
 
 Então o código do evento no botão fica assim:
 
-{% highlight pascal %}
-procedure TForm1.Button1Click(Sender: TObject);
-begin
-  ShowMessage(
-    'Total Salary = ' + 
-      TEmployeeSalaryWithCommission.New(
-        TEmployeeSalary.New(
-          TEmployee.New(SelectedEmployeeId)
-        )
-      )
-      .Value.AsString
-  );
-end;
-{% endhighlight text %}
+    procedure TForm1.Button1Click(Sender: TObject);
+    begin
+      ShowMessage(
+        'Total Salary = ' + 
+          TEmployeeSalaryWithCommission.New(
+            TEmployeeSalary.New(
+              TEmployee.New(SelectedEmployeeId)
+            )
+          )
+          .Value.AsString
+      );
+    end;
 
 Mesmo sem o código das Classes — apenas para não "poluir" demais o post — acredito que dá pra entender perfeitamente o que seria implementado:
 
