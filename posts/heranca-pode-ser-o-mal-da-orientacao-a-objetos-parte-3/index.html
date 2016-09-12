@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -266,14 +266,15 @@ reaproveitar o código então basta implementar na Classe mais acima da Hierarqu
 
 <p>Então vamos imaginar como seria a implementação do método <code>Caminhar()</code>.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">function</span> <span class="nc">TAnimal</span><span class="o">.</span><span class="nf">Caminhar</span><span class="o">:</span> <span class="n">TAnimal</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">MovePata1</span><span class="o">;</span>
-  <span class="n">MovePata2</span><span class="o">;</span>
-  <span class="n">MovePata3</span><span class="o">;</span>
-  <span class="n">MovePata4</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>function TAnimal.Caminhar: TAnimal;
+begin
+  Result := Self;
+  MovePata1;
+  MovePata2;
+  MovePata3;
+  MovePata4;
+end;
+</code></pre>
 
 <p>Como estamos trabalhando, a princípio, com tetrápodes ou quadrúpedes, precisamos mover as 4 patas para caminhar.
 Tudo funciona perfeitamente.</p>
@@ -488,20 +489,20 @@ abaixo para comentários.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
-        </ul>
-        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/objetos-imutaveis/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
         </ul>
         <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
       </a>
     </div>
   

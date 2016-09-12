@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -266,31 +266,32 @@ a forma correta, utilizando o paradigma Orientado a Objetos.</p>
 
 <h3 id="exemplo-1">Exemplo 1</h3>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">SaveButtonClick</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
-<span class="k">var</span>
-  <span class="n">Credentials</span><span class="o">:</span> <span class="n">TAWSCredentials</span><span class="o">;</span>
-  <span class="n">Client</span><span class="o">:</span> <span class="n">TAWSClient</span><span class="o">;</span>
-  <span class="n">Rgn</span><span class="o">:</span> <span class="n">TS3Region</span><span class="o">;</span>
-  <span class="n">Bucket</span><span class="o">:</span> <span class="n">TS3Bucket</span><span class="o">;</span>
-  <span class="n">Obj</span><span class="o">:</span> <span class="n">TS3Object</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">Credentials</span> <span class="o">:=</span> <span class="n">TAWSCredentials</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s">&#39;access_key&#39;</span><span class="o">,</span> <span class="s">&#39;secret_key&#39;</span><span class="o">,</span> <span class="k">True</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">Client</span> <span class="o">:=</span> <span class="n">TAWSClient</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Credentials</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">Rgn</span> <span class="o">:=</span> <span class="n">TS3Region</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">Bucket</span> <span class="o">:=</span> <span class="k">nil</span><span class="o">;</span>
-  <span class="n">Obj</span> <span class="o">:=</span> <span class="k">nil</span><span class="o">;</span>
-  <span class="k">try</span>
-    <span class="n">Bucket</span> <span class="o">:=</span> <span class="n">Rgn</span><span class="o">.</span><span class="n">GetBucket</span><span class="p">(</span><span class="s">&#39;mybucket&#39;</span><span class="p">)</span><span class="o">;</span>
-    <span class="n">Obj</span> <span class="o">:=</span> <span class="n">Bucket</span><span class="o">.</span><span class="n">GetObject</span><span class="p">(</span><span class="s">&#39;foo.txt&#39;</span><span class="p">)</span><span class="o">;</span>
-    <span class="n">Obj</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="s">&#39;./foo.txt&#39;</span><span class="p">)</span><span class="o">;</span>
-  <span class="k">finally</span>
-    <span class="n">Obj</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-    <span class="n">Bucket</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-    <span class="n">Rgn</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-    <span class="n">Client</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-    <span class="n">Credentials</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>  
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>procedure TForm1.SaveButtonClick(Sender: TObject);
+var
+  Credentials: TAWSCredentials;
+  Client: TAWSClient;
+  Rgn: TS3Region;
+  Bucket: TS3Bucket;
+  Obj: TS3Object;
+begin
+  Credentials := TAWSCredentials.Create('access_key', 'secret_key', True);
+  Client := TAWSClient.Create(Credentials);
+  Rgn := TS3Region.Create(Client);
+  Bucket := nil;
+  Obj := nil;
+  try
+    Bucket := Rgn.GetBucket('mybucket');
+    Obj := Bucket.GetObject('foo.txt');
+    Obj.SaveToFile('./foo.txt');
+  finally
+    Obj.Free;
+    Bucket.Free;
+    Rgn.Free;
+    Client.Free;
+    Credentials.Free;
+  end;  
+end;
+</code></pre>
 
 <p>O programador teve que informar a sequência de ações passo-a-passo para o compilador. Mas o código parece bem “simples”, não?</p>
 
@@ -300,12 +301,10 @@ a forma correta, utilizando o paradigma Orientado a Objetos.</p>
 obtermos uma nova instância de <em>TS3Object</em>.</p>
 
 <p>Por que, neste exemplo, <strong>precisamos</strong> inicializar <em>Bucket</em> e <em>Obj</em> com <code>nil</code>? O motivo é porque dentro 
-do <em>try-finally</em>, pode ocorrer uma <em>Exception</em> (acesso a Internet, HTTP, login, etc) nestas linhas</p>
-
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal">    <span class="n">Bucket</span> <span class="o">:=</span> <span class="n">Rgn</span><span class="o">.</span><span class="n">GetBucket</span><span class="p">(</span><span class="s">&#39;mybucket&#39;</span><span class="p">)</span><span class="o">;</span>
-    <span class="n">Obj</span> <span class="o">:=</span> <span class="n">Bucket</span><span class="o">.</span><span class="n">GetObject</span><span class="p">(</span><span class="s">&#39;foo.txt&#39;</span><span class="p">)</span><span class="o">;</span></code></pre></figure>
-
-<p>e se ocorrer uma exceção a variável <em>Bucket</em> e/ou <em>Obj</em> nunca serão inicializadas e no fim ocorrerá uma 
+do <em>try-finally</em>, pode ocorrer uma <em>Exception</em> (acesso a Internet, HTTP, login, etc) nestas linhas
+    Bucket := Rgn.GetBucket(‘mybucket’);
+    Obj := Bucket.GetObject(‘foo.txt’);
+e se ocorrer uma exceção a variável <em>Bucket</em> e/ou <em>Obj</em> nunca serão inicializadas e no fim ocorrerá uma 
 violação de acesso quando o compilador tentar liberar a memória utilizando <em>.Free</em>.</p>
 
 <p>Bem, na minha opinião, esse código é muito errado. Tem mais código de infraestrutura para o computador do que código para 
@@ -326,44 +325,45 @@ para podermos chamar os métodos de <em>Bucket</em> ou <em>Obj</em> em outros bo
 
 <h4 id="refatorando">Refatorando</h4>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TForm1</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TForm</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FCredentials</span><span class="o">:</span> <span class="n">TAWSCredentials</span><span class="o">;</span>
-    <span class="n">FClient</span><span class="o">:</span> <span class="n">TAWSClient</span><span class="o">;</span>
-    <span class="n">FRgn</span><span class="o">:</span> <span class="n">TS3Region</span><span class="o">;</span>
-    <span class="n">FBucket</span><span class="o">:</span> <span class="n">TS3Bucket</span><span class="o">;</span> 
-    <span class="n">FObj</span><span class="o">:</span> <span class="n">TS3Object</span><span class="o">;</span>
-    <span class="c1">// ...</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TForm1 = class(TForm)
+  private
+    FCredentials: TAWSCredentials;
+    FClient: TAWSClient;
+    FRgn: TS3Region;
+    FBucket: TS3Bucket; 
+    FObj: TS3Object;
+    // ...
+  end;
 
-<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">FormCreate</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">FCredentials</span> <span class="o">:=</span> <span class="n">TAWSCredentials</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s">&#39;access_key&#39;</span><span class="o">,</span> <span class="s">&#39;secret_key&#39;</span><span class="o">,</span> <span class="k">True</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">FClient</span> <span class="o">:=</span> <span class="n">TAWSClient</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Credentials</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">FRgn</span> <span class="o">:=</span> <span class="n">TS3Region</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  FCredentials := TAWSCredentials.Create('access_key', 'secret_key', True);
+  FClient := TAWSClient.Create(Credentials);
+  FRgn := TS3Region.Create(Client);
+end;
 
-<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">FormDestroy</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">FCredentials</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="n">FClient</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="n">FRgn</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="n">FBucket</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="n">FObj</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+procedure TForm1.FormDestroy(Sender: TObject);
+begin
+  FCredentials.Free;
+  FClient.Free;
+  FRgn.Free;
+  FBucket.Free;
+  FObj.Free;
+end;
 
-<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">SaveButtonClick</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">try</span>
-    <span class="n">FBucket</span> <span class="o">:=</span> <span class="n">FRgn</span><span class="o">.</span><span class="n">GetBucket</span><span class="p">(</span><span class="s">&#39;mybucket&#39;</span><span class="p">)</span><span class="o">;</span>
-    <span class="n">FObj</span> <span class="o">:=</span> <span class="n">FBucket</span><span class="o">.</span><span class="n">GetObject</span><span class="p">(</span><span class="s">&#39;foo.txt&#39;</span><span class="p">)</span><span class="o">;</span>
-    <span class="n">FObj</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="s">&#39;./foo.txt&#39;</span><span class="p">)</span><span class="o">;</span>
-  <span class="k">finally</span>
-    <span class="nb">FreeAndNil</span><span class="p">(</span><span class="n">Obj</span><span class="p">)</span><span class="o">;</span>
-    <span class="nb">FreeAndNil</span><span class="p">(</span><span class="n">FBucket</span><span class="p">)</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>  
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+procedure TForm1.SaveButtonClick(Sender: TObject);
+begin
+  try
+    FBucket := FRgn.GetBucket('mybucket');
+    FObj := FBucket.GetObject('foo.txt');
+    FObj.SaveToFile('./foo.txt');
+  finally
+    FreeAndNil(Obj);
+    FreeAndNil(FBucket);
+  end;  
+end;
+</code></pre>
 
 <p>Agora o código esta menor e continua “seguro”. Se houver uma exceção, as variáveis <em>FBucket</em> e <em>FObj</em> ainda
 serão liberadas no fim do programa, no envento <em>FormDestroy</em>, sem violação de acesso porque o <em>FreeAndNil</em>
@@ -412,20 +412,21 @@ não precisaremos utilizar <em>Free</em> e muito menos <em>FreeAndNil</em>.</p>
 
 <p>Então como seria a codificação do exemplo acima utilizando Orientação a Objetos?</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">SaveButtonClick</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">TS3Region</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-    <span class="n">TAWSClient</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-      <span class="n">TAWSCredentials</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;access_key&#39;</span><span class="o">,</span> <span class="s">&#39;secret_key&#39;</span><span class="p">)</span>
-    <span class="p">)</span>
-  <span class="p">)</span>
-  <span class="o">.</span><span class="n">Buckets</span>
-  <span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">&#39;mybucket&#39;</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">Objects</span>
-  <span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">&#39;foo.txt&#39;</span><span class="o">,</span> <span class="s">&#39;/&#39;</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">Stream</span>
-  <span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="s">&#39;./foo.txt&#39;</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">.</span></code></pre></figure>
+<pre><code>procedure TForm1.SaveButtonClick(Sender: TObject);
+begin
+  TS3Region.New(
+    TAWSClient.New(
+      TAWSCredentials.New('access_key', 'secret_key')
+    )
+  )
+  .Buckets
+  .Get('mybucket')
+  .Objects
+  .Get('foo.txt', '/')
+  .Stream
+  .SaveToFile('./foo.txt');
+end.
+</code></pre>
 
 <p>Não é a melhor <em>design</em>, mas melhorou 100% comparado aos exemplos anteriores.</p>
 
@@ -439,46 +440,46 @@ Então como faríamos se quiséssemos reutilizar o código sem ter que especific
 No construtor da nova implementação (ex: <em>TMyRegion</em>) você poderá inicializar <em>Credentials</em> e <em>Client</em>.</p>
 
 <h4 id="refatorando-1">Refatorando</h4>
-
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TMyRegion</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IS3Region</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FOrigin</span><span class="o">:</span> <span class="n">IS3Region</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">IS3Region</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="o">:</span> <span class="nf">IS3Region</span><span class="o">;</span>    
-    <span class="c1">// IS3Region methods...</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TMyRegion = class(TInterfacedObject, IS3Region)
+  private
+    FOrigin: IS3Region;
+  public
+    constructor Create(Origin: IS3Region);
+    class function New: IS3Region;    
+    // IS3Region methods...
+  end;
   
-<span class="k">constructor</span> <span class="nc">TMyRegion</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">IS3Region</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FOrigin</span> <span class="o">:=</span> <span class="n">Origin</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TMyRegion.Create(Origin: IS3Region);
+begin
+  inherited Create;
+  FOrigin := Origin;
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TMyRegion</span><span class="o">.</span><span class="k">New</span><span class="o">:</span> <span class="nf">IS3Region</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TMyRegion</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span>
-    <span class="n">TS3Region</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-      <span class="n">TAWSClient</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-        <span class="n">TAWSCredentials</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;access_key&#39;</span><span class="o">,</span> <span class="s">&#39;secret_key&#39;</span><span class="p">)</span>
-      <span class="p">)</span>
-    <span class="p">)</span>  
-  <span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>    
+class function TMyRegion.New: IS3Region;
+begin
+  Result := TMyRegion.Create(
+    TS3Region.New(
+      TAWSClient.New(
+        TAWSCredentials.New('access_key', 'secret_key')
+      )
+    )  
+  );
+end;    
 
-<span class="c1">//....</span>
+//....
   
-<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">SaveButtonClick</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">TMyRegion</span><span class="o">.</span><span class="k">New</span>
-  <span class="o">.</span><span class="n">Buckets</span>
-  <span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">&#39;mybucket&#39;</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">Objects</span>
-  <span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">&#39;foo.txt&#39;</span><span class="o">,</span> <span class="s">&#39;/&#39;</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">Stream</span>
-  <span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="s">&#39;./foo.txt&#39;</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">.</span></code></pre></figure>
+procedure TForm1.SaveButtonClick(Sender: TObject);
+begin
+  TMyRegion.New
+  .Buckets
+  .Get('mybucket')
+  .Objects
+  .Get('foo.txt', '/')
+  .Stream
+  .SaveToFile('./foo.txt');
+end.
+</code></pre>
 
 <p>A instância <em>FOrigin</em> será utilizada dentro de cada implementação para cada método de <em>IS3Region</em>.
 A implementação <em>TMyRegion</em> é um <em>Decorator</em> implícito.</p>
@@ -619,20 +620,20 @@ fazer mal diretamente, mas tem potencial para fazer mal indiretamente quando aju
     </div>
   
     <div class="post ml2">
-      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
-        </ul>
-        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
         </ul>
         <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
       </a>
     </div>
   
@@ -664,20 +665,20 @@ fazer mal diretamente, mas tem potencial para fazer mal indiretamente quando aju
     </div>
   
     <div class="post ml2">
-      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+      <a href="/posts/a-declaracao-with-do-e-do-mal/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+          <h4 class="post-title"><li>A declaração WITH-DO é do Mal?</li></h4>
         </ul>
-        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+        <!--<p class="post-summary">Reflexões sobre o uso do WITH-DO no código Object Pascal.</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/objetos-representam-entidades/" class="post-link">
+      <a href="/posts/nomeando-unidades/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
         </ul>
-        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
       </a>
     </div>
   

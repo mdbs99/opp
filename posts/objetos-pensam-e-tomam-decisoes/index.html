@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -205,16 +205,17 @@ representa uma possível abstração de alguma Entidade.</p>
 
 <p>Algumas classes são mais difíceis de perceber enquanto outras são tão claras como a água. Veja:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TDataModule1</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TDataModule</span><span class="p">)</span>
-    <span class="cm">{ fields, components...}</span>
-  <span class="kp">public</span>
-    <span class="k">function</span> <span class="nf">AddNewCustomer</span><span class="p">(</span><span class="n">Customer</span><span class="o">:</span> <span class="n">TCustomer</span><span class="p">)</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">AddNewUser</span><span class="p">(</span><span class="n">User</span><span class="o">:</span> <span class="n">TUser</span><span class="p">)</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">GetCustomer</span><span class="p">(</span><span class="n">Id</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">:</span> <span class="n">TCustomer</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">GetEmployeeSalary</span><span class="p">(</span><span class="n">EmployeeId</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">:</span> <span class="kt">Currency</span><span class="o">;</span>
-    <span class="cm">{ more...}</span>
-  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>type
+  TDataModule1 = class(TDataModule)
+    { fields, components...}
+  public
+    function AddNewCustomer(Customer: TCustomer): Integer;
+    function AddNewUser(User: TUser): Integer;
+    function GetCustomer(Id: Integer): TCustomer;
+    function GetEmployeeSalary(EmployeeId: Integer): Currency;
+    { more...}
+  end;
+</code></pre>
 
 <p>O exemplo acima, apesar de ser codificado como uma Classe, ter a sintaxe de uma Classe, se comportar como uma Classe etc, na verdade,
 não representa nenhuma abstração de uma Entidade sendo, portanto, um <strong>código procedural</strong>, ou seja, um 
@@ -248,29 +249,30 @@ diferente e para todos os outros a comissão será de 2%.</p>
 <p>É claro que você poderá me dizer como reescrever o código. Dividir em partes. Criar outros “métodos”, etc. Mas o ponto aqui é comparar um Código
 Procedural com um Orientado a Objetos de verdade.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">Button1Click</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
-<span class="k">var</span>
-  <span class="n">Id</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-  <span class="n">EmployeeType</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-  <span class="n">Salary</span><span class="o">:</span> <span class="kt">Currency</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">Id</span> <span class="o">:=</span> <span class="n">SelectedEmployeeId</span><span class="o">;</span>
-  <span class="n">Query</span><span class="o">.</span><span class="n">Close</span><span class="o">;</span>
-  <span class="n">Query</span><span class="o">.</span><span class="n">Params</span><span class="o">.</span><span class="n">ParamByName</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Value</span> <span class="o">:=</span> <span class="n">Id</span><span class="o">;</span>
-  <span class="n">Query</span><span class="o">.</span><span class="n">Open</span><span class="o">;</span>
+<pre><code>procedure TForm1.Button1Click(Sender: TObject);
+var
+  Id: Integer;
+  EmployeeType: Integer;
+  Salary: Currency;
+begin
+  Id := SelectedEmployeeId;
+  Query.Close;
+  Query.Params.ParamByName('id').Value := Id;
+  Query.Open;
   
-  <span class="n">Salary</span> <span class="o">:=</span> <span class="n">Query</span><span class="o">.</span><span class="n">FieldByName</span><span class="p">(</span><span class="s">&#39;salary&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsCurrency</span><span class="o">;</span>  
+  Salary := Query.FieldByName('salary').AsCurrency;  
   
-  <span class="n">EmployeeType</span> <span class="o">:=</span> <span class="n">Query</span><span class="o">.</span><span class="n">FieldByName</span><span class="p">(</span><span class="s">&#39;etype&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsInteger</span><span class="o">;</span>
-  <span class="k">case</span> <span class="n">EmployeeType</span> <span class="k">of</span>
-    <span class="mi">1</span><span class="o">:</span> <span class="n">Salary</span> <span class="o">:=</span> <span class="n">Salary</span> <span class="o">+</span> <span class="n">CalcCommission1</span><span class="p">(</span><span class="n">Id</span><span class="o">,</span> <span class="cm">{parameters}</span><span class="p">)</span><span class="o">;</span>
-    <span class="mi">2</span><span class="o">:</span> <span class="n">Salary</span> <span class="o">:=</span> <span class="n">Salary</span> <span class="o">+</span> <span class="n">CalcCommission2</span><span class="p">(</span><span class="n">Id</span><span class="o">,</span> <span class="cm">{parameters}</span><span class="p">)</span><span class="o">;</span>
-  <span class="k">else</span>
-    <span class="n">Salary</span> <span class="o">:=</span> <span class="n">Salary</span> <span class="o">+</span> <span class="p">(</span><span class="n">Salary</span> <span class="o">*</span> <span class="mf">0.02</span><span class="p">)</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  EmployeeType := Query.FieldByName('etype').AsInteger;
+  case EmployeeType of
+    1: Salary := Salary + CalcCommission1(Id, {parameters});
+    2: Salary := Salary + CalcCommission2(Id, {parameters});
+  else
+    Salary := Salary + (Salary * 0.02);
+  end;
 
-  <span class="n">ShowMessage</span><span class="p">(</span><span class="s">&#39;Total Salary = &#39;</span> <span class="o">+</span> <span class="nb">CurrToStr</span><span class="p">(</span><span class="n">Salary</span><span class="p">))</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+  ShowMessage('Total Salary = ' + CurrToStr(Salary));
+end;
+</code></pre>
 
 <p>Quem nunca fez um código parecido com esse em todos esses anos de <em>Object Pascal</em>? Eu já. Muito mais do que eu gostaria.</p>
 
@@ -293,19 +295,20 @@ Procedural com um Orientado a Objetos de verdade.</p>
 <p>Para essa versão, é claro, temos que ter as Interfaces que representam cada Entidade do nosso domínio.
 Mesmo um Valor ou Salário <a href="/posts/o-que-e-orientacao-a-objetos/">também são Entidades</a>!</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">ICurrencyValue</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="nf">Value</span><span class="o">:</span> <span class="kt">Currency</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">AsString</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  ICurrencyValue = interface
+    function Value: Currency;
+    function AsString: string;
+  end;
 
-  <span class="n">ISalary</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="nf">Value</span><span class="o">:</span> <span class="n">ICurencyValue</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  ISalary = interface
+    function Value: ICurencyValue;
+  end;
   
-  <span class="n">IEmployee</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="cm">{ ... }</span>
-  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+  IEmployee = interface
+    { ... }
+  end;
+</code></pre>
 
 <p>Com as Interfaces definidas, não fica difícil implementar as Classes utilizando o 
 <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator Design Pattern</a>,
@@ -315,18 +318,19 @@ Classe para podermos utilizá-la. Apenas a sua Interface é suficiente.</p>
 
 <p>Então o código do evento no botão fica assim:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">Button1Click</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">ShowMessage</span><span class="p">(</span>
-    <span class="s">&#39;Total Salary = &#39;</span> <span class="o">+</span> 
-      <span class="n">TEmployeeSalaryWithCommission</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-        <span class="n">TEmployeeSalary</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-          <span class="n">TEmployee</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">SelectedEmployeeId</span><span class="p">)</span>
-        <span class="p">)</span>
-      <span class="p">)</span>
-      <span class="o">.</span><span class="n">Value</span><span class="o">.</span><span class="n">AsString</span>
-  <span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>procedure TForm1.Button1Click(Sender: TObject);
+begin
+  ShowMessage(
+    'Total Salary = ' + 
+      TEmployeeSalaryWithCommission.New(
+        TEmployeeSalary.New(
+          TEmployee.New(SelectedEmployeeId)
+        )
+      )
+      .Value.AsString
+  );
+end;
+</code></pre>
 
 <p>Mesmo sem o código das Classes — apenas para não “poluir” demais o post — acredito que dá pra entender perfeitamente o que seria implementado:</p>
 
@@ -439,15 +443,6 @@ pensar em procedimentos e na ordem de chamada entre eles. <strong>Deixe que os O
     </div>
   
     <div class="post ml2">
-      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
-        </ul>
-        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/freeandnil-esqueca/" class="post-link">
         <ul>
           <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
@@ -462,6 +457,15 @@ pensar em procedimentos e na ordem de chamada entre eles. <strong>Deixe que os O
           <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
         </ul>
         <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
       </a>
     </div>
   
@@ -484,6 +488,24 @@ pensar em procedimentos e na ordem de chamada entre eles. <strong>Deixe que os O
     </div>
   
     <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
         <ul>
           <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
@@ -502,29 +524,11 @@ pensar em procedimentos e na ordem de chamada entre eles. <strong>Deixe que os O
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
         </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/pensando-em-objetos/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
-        </ul>
-        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
       </a>
     </div>
   

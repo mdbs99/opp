@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -247,14 +247,15 @@ de sua Classe, nunca terá seu Estado alterado para o mundo exterior até o fim 
 
 <p>Vejamos um exemplo:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">begin</span>
-  <span class="n">Query</span> <span class="o">:=</span> <span class="n">TQuery</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Database</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">Query</span><span class="o">.</span><span class="n">SQL</span><span class="o">.</span><span class="n">Text</span> <span class="o">:=</span> 
-    <span class="s">&#39;SELECT id, name FROM Customer WHERE id = :id&#39;</span><span class="o">;</span>
-  <span class="n">Query</span><span class="o">.</span><span class="n">Params</span><span class="o">.</span><span class="n">ParamByName</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Value</span> <span class="o">:=</span> <span class="mi">10</span><span class="o">;</span>
-  <span class="n">Query</span><span class="o">.</span><span class="n">Open</span><span class="o">;</span>
-  <span class="n">ShowMessage</span><span class="p">(</span><span class="n">Query</span><span class="o">.</span><span class="n">FieldByName</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsString</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>begin
+  Query := TQuery.New(Database);
+  Query.SQL.Text := 
+    'SELECT id, name FROM Customer WHERE id = :id';
+  Query.Params.ParamByName('id').Value := 10;
+  Query.Open;
+  ShowMessage(Query.FieldByName('name').AsString);
+end;
+</code></pre>
 
 <p>No exemplo acima o Objeto Query é criado. Temos que chamar seus métodos ou propriedades numa sequência correta ou uma <code>Exception</code> será gerada. Esse é um “código padrão” que encontramos na maioria dos sistemas, certo?</p>
 
@@ -271,19 +272,20 @@ de sua Classe, nunca terá seu Estado alterado para o mundo exterior até o fim 
 
 <p>Existem várias opções. Vou propor uma delas como exemplo:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">begin</span>
-  <span class="n">ShowMessage</span><span class="p">(</span>
-    <span class="n">TQuery</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-      <span class="n">Database</span><span class="o">,</span> 
-      <span class="n">TStatement</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-        <span class="s">&#39;SELECT id, name FROM Customer WHERE id = :id&#39;</span><span class="o">,</span> 
-        <span class="n">TParam</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">ftInteger</span><span class="o">,</span> <span class="mi">10</span><span class="p">)</span>
-      <span class="p">)</span>
-    <span class="p">)</span>
-    <span class="o">.</span><span class="n">Open</span>
-    <span class="o">.</span><span class="n">Fields</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsString</span>
-  <span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>begin
+  ShowMessage(
+    TQuery.New(
+      Database, 
+      TStatement.New(
+        'SELECT id, name FROM Customer WHERE id = :id', 
+        TParam.New(ftInteger, 10)
+      )
+    )
+    .Open
+    .Fields('name').AsString
+  );
+end;
+</code></pre>
 
 <p>Não há um controlador. Não há procedimentos um após o outro. O que existe é uma combinação de Objetos que trabalham entre si para gerar um resultado.</p>
 
@@ -310,28 +312,29 @@ de sua Classe, nunca terá seu Estado alterado para o mundo exterior até o fim 
 
 <p>Esse é um problema que muitos programadores Object Pascal não dão muita importância. Ele é mais conhecido no Java. Mas vou lhe dar um exemplo em Object Pascal:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TQuery</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IQuery</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FDatabase</span><span class="o">:</span> <span class="n">TDatabase</span><span class="o">;</span>
-    <span class="n">FSQL</span><span class="o">:</span> <span class="n">TStrings</span><span class="o">;</span>
-    <span class="n">FParams</span><span class="o">:</span> <span class="n">TParams</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Database</span><span class="o">:</span> <span class="n">TDatabase</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">Database</span><span class="o">:</span> <span class="n">TDatabase</span><span class="p">)</span><span class="o">:</span> <span class="n">IQuery</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">SQL</span><span class="o">:</span> <span class="n">TStrings</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Params</span><span class="o">:</span> <span class="n">TParams</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Open</span><span class="o">:</span> <span class="n">IQuery</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TQuery = class(TInterfacedObject, IQuery)
+  private
+    FDatabase: TDatabase;
+    FSQL: TStrings;
+    FParams: TParams;
+  public
+    constructor Create(Database: TDatabase);
+    class function New(Database: TDatabase): IQuery;
+    function SQL: TStrings;
+    function Params: TParams;
+    function Open: IQuery;
+  end;
 
-<span class="k">begin</span>
-  <span class="n">Query</span> <span class="o">:=</span> <span class="n">TQuery</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Database</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">Query</span><span class="o">.</span><span class="n">SQL</span><span class="o">.</span><span class="n">Text</span> <span class="o">:=</span> 
-    <span class="s">&#39;SELECT id, name FROM Customer WHERE id = :id&#39;</span><span class="o">;</span>
-  <span class="n">Query</span><span class="o">.</span><span class="n">Params</span><span class="o">.</span><span class="n">ParamByName</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Value</span> <span class="o">:=</span> <span class="mi">10</span><span class="o">;</span>
-  <span class="n">Query</span><span class="o">.</span><span class="n">Open</span><span class="o">;</span>
-  <span class="n">ShowMessage</span><span class="p">(</span><span class="n">Query</span><span class="o">.</span><span class="n">FieldByName</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsString</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+begin
+  Query := TQuery.New(Database);
+  Query.SQL.Text := 
+    'SELECT id, name FROM Customer WHERE id = :id';
+  Query.Params.ParamByName('id').Value := 10;
+  Query.Open;
+  ShowMessage(Query.FieldByName('name').AsString);
+end;
+</code></pre>
 
 <p>A Classe <code>TQuery</code> tem 2 defeitos:</p>
 
@@ -476,20 +479,20 @@ O código é declarativo e funcional, não procedural. No código funcional, o v
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/freeandnil-esqueca/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
         </ul>
         <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
       </a>
     </div>
   
@@ -521,11 +524,11 @@ O código é declarativo e funcional, não procedural. No código funcional, o v
     </div>
   
     <div class="post ml2">
-      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
         </ul>
-        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
       </a>
     </div>
   
@@ -539,11 +542,11 @@ O código é declarativo e funcional, não procedural. No código funcional, o v
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
         </ul>
-        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
       </a>
     </div>
   
@@ -557,11 +560,11 @@ O código é declarativo e funcional, não procedural. No código funcional, o v
     </div>
   
     <div class="post ml2">
-      <a href="/posts/objetos-representam-entidades/" class="post-link">
+      <a href="/posts/a-declaracao-with-do-e-do-mal/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+          <h4 class="post-title"><li>A declaração WITH-DO é do Mal?</li></h4>
         </ul>
-        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+        <!--<p class="post-summary">Reflexões sobre o uso do WITH-DO no código Object Pascal.</p>-->
       </a>
     </div>
   

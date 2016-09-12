@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -241,23 +241,25 @@ Classes estão ligados <strong>intimamente</strong>.</p>
 Por exemplo. Quando você inicializa um atributo de uma Classe utilizando uma Classe concreta, 
 você está acoplando as Classes.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">constructor</span> <span class="nc">TCustomer</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FName</span> <span class="o">:=</span> <span class="n">Name</span><span class="o">;</span>
-  <span class="n">FAddress</span> <span class="o">:=</span> <span class="n">TAddress</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>constructor TCustomer.Create(const Name: string);
+begin
+  inherited Create;
+  FName := Name;
+  FAddress := TAddress.Create;
+end;
+</code></pre>
 
 <p>No exemplo acima existe um acoplamento entre <code>TCustomer</code> e <code>TAddress</code>. Conceitualmente isso é ruim. O mais correto seria utilizar
 <strong>injeção de dependência</strong> passando a instância de <code>TAddress</code> através de um argumento do tipo Interface no construtor de <code>TCustomer</code>.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">constructor</span> <span class="nc">TCustomer</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
-  <span class="n">Address</span><span class="o">:</span> <span class="n">IAddress</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FName</span> <span class="o">:=</span> <span class="n">Name</span><span class="o">;</span>
-  <span class="n">FAddress</span> <span class="o">:=</span> <span class="n">Address</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>constructor TCustomer.Create(const Name: string; 
+  Address: IAddress);
+begin
+  inherited Create;
+  FName := Name;
+  FAddress := Address;
+end;
+</code></pre>
 
 <p>Devemos evitar o acoplamento. O motivo é simples. Toda vez que você alterar uma Classe que está acoplada a outra, haverá grandes
 chances de você ter que alterar ambas.</p>
@@ -276,22 +278,23 @@ mais desacoplada.</p>
 Por exemplo. Se <code>TCustomer</code> fosse uma Subclasse de <code>TPerson</code> e essa Classe inicializasse <code>FAddress</code> em seu construtor,
 <code>TCustomer</code> não poderia — ou não deveria — alterar a instância de <code>FAddress</code>, reinicializando-a com um outro tipo de Classe.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="cm">{ TPerson }</span>
+<pre><code>{ TPerson }
 
-<span class="k">constructor</span> <span class="nc">TPerson</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FName</span> <span class="o">:=</span> <span class="n">Name</span><span class="o">;</span>
-  <span class="n">FAddress</span> <span class="o">:=</span> <span class="n">TAddress</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TPerson.Create(const Name: string);
+begin
+  inherited Create;
+  FName := Name;
+  FAddress := TAddress.Create;
+end;
 
-<span class="cm">{ TCustomer }</span>
+{ TCustomer }
 
-<span class="k">constructor</span> <span class="nc">TCustomer</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="p">(</span><span class="n">Name</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">FAddress</span> <span class="o">:=</span> <span class="n">TAnotherAddress</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span> <span class="c1">//&lt;&lt;&lt;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+constructor TCustomer.Create(const Name: string);
+begin
+  inherited Create(Name);
+  FAddress := TAnotherAddress.Create; //&lt;&lt;&lt;
+end;
+</code></pre>
 
 <p>Nesse exemplo simples, existem alguns problemas.</p>
 
@@ -436,20 +439,20 @@ abaixo para comentários.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
-        </ul>
-        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
         </ul>
         <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
       </a>
     </div>
   
@@ -508,11 +511,11 @@ abaixo para comentários.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/microservices-delphi-parte-3/" class="post-link">
+      <a href="/posts/nomeando-unidades/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Microservices com Delphi — Parte 3</li></h4>
+          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
         </ul>
-        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
+        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
       </a>
     </div>
   

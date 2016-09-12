@@ -678,14 +678,14 @@ code {
   font-family: "Source Code Pro", Consolas, monospace; }
 
 code {
-  color: #7a7a7a; }
+  color: #333333; }
 
 pre {
   padding: 1.125em;
   line-height: 1.11;
   overflow-x: scroll;
   margin-bottom: 0.88em;
-  background-color: #fafafa; }
+  border-left: 4px solid #7f919e; }
 
 .highlight .p {
   font-size: 1.125rem;

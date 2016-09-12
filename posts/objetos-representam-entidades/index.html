@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -232,25 +232,26 @@ Entidade pode ter dezenas de Interfaces representando-a em dezenas de Contextos 
 <p>A maioria das pessoas iriam definir <strong>todos</strong> os campos (atributos) 
 em uma única Classe, mais ou menos assim:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TCustomer</span> <span class="o">=</span> <span class="k">class</span>
-  <span class="kp">private</span>
-    <span class="n">FName</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="n">FBirthday</span><span class="o">:</span> <span class="kt">TDateTime</span><span class="o">;</span>
-    <span class="n">FEmail</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="n">FAddress</span><span class="o">:</span> <span class="n">TAddress</span><span class="o">;</span>
-    <span class="n">FStatus</span><span class="o">:</span> <span class="n">TStatus</span><span class="o">;</span>
-    <span class="n">FCreditCard</span><span class="o">:</span> <span class="n">TCreditCard</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="o">;</span>
-    <span class="k">destructor</span> <span class="nf">Destroy</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
-    <span class="k">property</span> <span class="py">Name</span><span class="o">:</span> <span class="k">string</span> <span class="kp">read</span> <span class="nf">FName</span> <span class="kp">write</span> <span class="nf">FName</span><span class="o">;</span> 
-    <span class="k">property</span> <span class="py">Birthday</span><span class="o">:</span> <span class="kt">TDateTime</span> <span class="kp">read</span> <span class="nf">FBirthday</span> <span class="kp">write</span> <span class="nf">FBirthday</span><span class="o">;</span> 
-    <span class="k">property</span> <span class="py">Email</span><span class="o">:</span> <span class="k">string</span> <span class="kp">read</span> <span class="nf">FEmail</span> <span class="kp">write</span> <span class="nf">FEmail</span><span class="o">;</span> 
-    <span class="k">property</span> <span class="py">Address</span><span class="o">:</span> <span class="n">TAddress</span> <span class="kp">read</span> <span class="nf">FAddress</span><span class="o">;</span> 
-    <span class="k">property</span> <span class="py">Status</span><span class="o">:</span> <span class="n">TStatus</span> <span class="kp">read</span> <span class="nf">FStatus</span> <span class="kp">write</span> <span class="nf">FStatus</span><span class="o">;</span> 
-    <span class="k">property</span> <span class="py">CreditCard</span><span class="o">:</span> <span class="n">TCreditCard</span> <span class="kp">read</span> <span class="nf">FCreditCard</span><span class="o">;</span> 
-  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>type
+  TCustomer = class
+  private
+    FName: string;
+    FBirthday: TDateTime;
+    FEmail: string;
+    FAddress: TAddress;
+    FStatus: TStatus;
+    FCreditCard: TCreditCard;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property Name: string read FName write FName; 
+    property Birthday: TDateTime read FBirthday write FBirthday; 
+    property Email: string read FEmail write FEmail; 
+    property Address: TAddress read FAddress; 
+    property Status: TStatus read FStatus write FStatus; 
+    property CreditCard: TCreditCard read FCreditCard; 
+  end;
+</code></pre>
 
 <p>Num sistema real de médio ou grande porte sabemos que um
 Cliente poderia ter muitos outros atributos, certo? Essa Classe iria crescer e crescer…</p>
@@ -323,74 +324,77 @@ o <em>Status</em> são necessários para enviar e-mails somente aos clientes ati
 
 <p>Então temos, de uma forma bem sucinta, a definição das Interfaces:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">ICustomer</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Birthday</span><span class="o">:</span> <span class="kt">TDateTime</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  ICustomer = interface
+    function Name: string;
+    function Birthday: TDateTime;
+  end;
   
-  <span class="n">IEmail</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="nf">Value</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  IEmail = interface
+    function Value: string;
+  end;
   
-  <span class="n">IAddress</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="nf">Address</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Number</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  IAddress = interface
+    function Address: string;
+    function Number: Integer;
+  end;
   
-  <span class="n">IStatus</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="nf">Value</span><span class="o">:</span> <span class="kt">Integer</span>
-  <span class="k">end</span><span class="o">;</span>
+  IStatus = interface
+    function Value: Integer
+  end;
   
-  <span class="n">ICreditCard</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="nf">Number</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">ExpiresIn</span><span class="o">:</span> <span class="kt">TDateTime</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+  ICreditCard = interface
+    function Number: string;
+    function Name: string;
+    function ExpiresIn: TDateTime;
+  end;
+</code></pre>
 
 <p>Abaixo as possíveis implementações para cada contexto relacionado com Cliente:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="c1">// Contexto #1</span>
-<span class="k">type</span> 
-  <span class="n">TCustomer</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">ICustomer</span><span class="p">)</span>
-  <span class="kp">public</span>  
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Id</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">;</span>
-    <span class="cm">{...}</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>// Contexto #1
+type 
+  TCustomer = class(TInterfacedObject, ICustomer)
+  public  
+    constructor Create(Id: Integer);
+    {...}
+  end;
   
-  <span class="n">TCustomerAddress</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IAddress</span><span class="p">)</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Customer</span><span class="o">:</span> <span class="n">ICustomer</span><span class="p">)</span><span class="o">;</span>
-    <span class="cm">{...}</span>
-  <span class="k">end</span><span class="o">;</span>
+  TCustomerAddress = class(TInterfacedObject, IAddress)
+  public
+    constructor Create(Customer: ICustomer);
+    {...}
+  end;
 
-<span class="c1">// Contexto #1 e #2</span>
-<span class="k">type</span>
-  <span class="n">TCustomerCreditCard</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">ICreditCard</span><span class="p">)</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Customer</span><span class="o">:</span> <span class="n">ICustomer</span><span class="p">)</span><span class="o">;</span>
-    <span class="cm">{...}</span>
-  <span class="k">end</span><span class="o">;</span>
+// Contexto #1 e #2
+type
+  TCustomerCreditCard = class(TInterfacedObject, ICreditCard)
+  public
+    constructor Create(Customer: ICustomer);
+    {...}
+  end;
   
-<span class="c1">// Contexto #3</span>
-<span class="k">type</span>
-  <span class="n">TCustomerStatus</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IStatus</span><span class="p">)</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Customer</span><span class="o">:</span> <span class="n">ICustomer</span><span class="p">)</span><span class="o">;</span>
-    <span class="cm">{...}</span>
-  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+// Contexto #3
+type
+  TCustomerStatus = class(TInterfacedObject, IStatus)
+  public
+    constructor Create(Customer: ICustomer);
+    {...}
+  end;
+</code></pre>
 
 <p>Então se queremos saber o cartão de crédito de um determinado Cliente, basta codificar:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">begin</span>
-  <span class="n">ShowMessage</span><span class="p">(</span>
-    <span class="n">TCustomerCreditCard</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-      <span class="n">TCustomer</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-        <span class="mi">123</span>
-      <span class="p">)</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">Number</span>
-  <span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>begin
+  ShowMessage(
+    TCustomerCreditCard.New(
+      TCustomer.New(
+        123
+      )
+    ).Number
+  );
+end;
+</code></pre>
 
 <p>Dica: Veja mais sobre o <strong>Método New</strong> <a href="/posts/interfaces-e-o-metodo-estatico-new/">aqui</a>.</p>
 
@@ -541,20 +545,20 @@ verdadeira reutilização de código. Tem que pensar em Contextos.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
-        </ul>
-        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
         </ul>
         <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
       </a>
     </div>
   
@@ -577,15 +581,6 @@ verdadeira reutilização de código. Tem que pensar em Contextos.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
-        </ul>
-        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/pensando-em-objetos/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Pensando em Objetos</li></h4>
@@ -595,20 +590,29 @@ verdadeira reutilização de código. Tem que pensar em Contextos.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/objetos-pensam-e-tomam-decisoes/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Objetos pensam e tomam decisões</li></h4>
-        </ul>
-        <!--<p class="post-summary">Objetos pensam e tomam decisões. Eles não precisam de um controlador.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
         </ul>
         <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+        </ul>
+        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
       </a>
     </div>
   

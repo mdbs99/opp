@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -239,54 +239,55 @@ Mas quando em execução em <code>batch</code>, ele precisa gravar o <code>Log</
 
 <p><strong>Atenção</strong>: Eu digitei a <code>procedure</code> diretamente no post, sem teste de compilação, então podem haver erros de sintaxe.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nc">TDpvAction</span><span class="o">.</span><span class="nf">Act</span><span class="p">(</span><span class="k">const</span> <span class="n">WebMethodName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-<span class="k">var</span>
-  <span class="n">Client</span><span class="o">:</span> <span class="n">TDpvService</span><span class="o">;</span>
-  <span class="n">Mapping</span><span class="o">:</span> <span class="n">TDpvXMLMappingInTable</span><span class="o">;</span>
-  <span class="n">XML</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-  <span class="n">XMLIterable</span><span class="o">:</span> <span class="n">TXMLIterable</span><span class="o">;</span> 
-<span class="k">begin</span>
-  <span class="c1">// FFileConfig é um atributo da classe</span>
+<pre><code>procedure TDpvAction.Act(const WebMethodName: string);
+var
+  Client: TDpvService;
+  Mapping: TDpvXMLMappingInTable;
+  XML: string;
+  XMLIterable: TXMLIterable; 
+begin
+  // FFileConfig é um atributo da classe
   
-  <span class="n">Client</span> <span class="o">:=</span> <span class="n">TDpvService</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
-  <span class="n">Mapping</span> <span class="o">:=</span> <span class="n">TDpvXMLMappingInTable</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
-  <span class="n">XMLIterable</span> <span class="o">:=</span> <span class="n">TXMLIterable</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span> 
-  <span class="k">try</span>
-    <span class="c1">// Configura a URL do WebService</span>
-    <span class="n">Client</span><span class="o">.</span><span class="n">SetURL</span><span class="p">(</span><span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;WebService&#39;</span><span class="o">,</span> <span class="s">&#39;URL&#39;</span><span class="p">))</span><span class="o">;</span>
+  Client := TDpvService.Create;
+  Mapping := TDpvXMLMappingInTable.Create;
+  XMLIterable := TXMLIterable.Create; 
+  try
+    // Configura a URL do WebService
+    Client.SetURL(FFileConfig.ReadString('WebService', 'URL'));
    
-    <span class="c1">// Configura com verificação de exceção</span>
-    <span class="n">Client</span><span class="o">.</span><span class="n">WithCheck</span><span class="p">(</span><span class="k">True</span><span class="p">)</span><span class="o">;</span>
+    // Configura com verificação de exceção
+    Client.WithCheck(True);
 
-    <span class="c1">// Configura para gerar Log</span>
-    <span class="n">Client</span><span class="o">.</span><span class="n">WithLog</span><span class="p">(</span><span class="k">True</span><span class="p">)</span><span class="o">;</span>
+    // Configura para gerar Log
+    Client.WithLog(True);
 
-    <span class="c1">// Client executa o método</span>
-    <span class="n">XML</span> <span class="o">:=</span> <span class="n">Client</span><span class="o">.</span><span class="n">ExecuteMethod</span><span class="p">(</span>
-      <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;WebService&#39;</span><span class="o">,</span> <span class="s">&#39;User&#39;</span><span class="p">)</span><span class="o">,</span>
-      <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;WebService&#39;</span><span class="o">,</span> <span class="s">&#39;Password&#39;</span><span class="p">)</span><span class="o">,</span>
-      <span class="n">WebMethodName</span>
-    <span class="p">)</span><span class="o">;</span>
+    // Client executa o método
+    XML := Client.ExecuteMethod(
+      FFileConfig.ReadString('WebService', 'User'),
+      FFileConfig.ReadString('WebService', 'Password'),
+      WebMethodName
+    );
 
-    <span class="c1">// Obtém as configurações necessárias</span>
-    <span class="n">XMLIterable</span><span class="o">.</span><span class="n">SetXMLNodes</span><span class="p">(</span><span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;XMLNodes&#39;</span><span class="o">,</span> <span class="n">WebMethodName</span><span class="p">))</span><span class="o">;</span>
+    // Obtém as configurações necessárias
+    XMLIterable.SetXMLNodes(FFileConfig.ReadString('XMLNodes', WebMethodName));
 
-    <span class="c1">// Configura o XML gerado</span>
-    <span class="n">XMLIterable</span><span class="o">.</span><span class="n">SetXML</span><span class="p">(</span><span class="n">XML</span><span class="p">)</span><span class="o">;</span>
+    // Configura o XML gerado
+    XMLIterable.SetXML(XML);
 
-    <span class="c1">// Executa e gera outro XML (sim, reutilizei a mesma variável)  :)</span>
-    <span class="n">XML</span> <span class="o">:=</span> <span class="n">XMLIterable</span><span class="o">.</span><span class="n">Execute</span><span class="o">;</span>
+    // Executa e gera outro XML (sim, reutilizei a mesma variável)  :)
+    XML := XMLIterable.Execute;
 
-    <span class="c1">// Executa a persistência</span>
-    <span class="n">Mapping</span><span class="o">.</span><span class="n">SetXML</span><span class="p">(</span><span class="n">XML</span><span class="p">)</span><span class="o">;</span>
-    <span class="n">Mapping</span><span class="o">.</span><span class="n">Execute</span><span class="o">;</span>
-  <span class="k">finally</span>
-    <span class="c1">// Não pode esquecer de desalocar tudo</span>
-    <span class="n">Client</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-    <span class="n">Mapping</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-    <span class="n">XMLIterable</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+    // Executa a persistência
+    Mapping.SetXML(XML);
+    Mapping.Execute;
+  finally
+    // Não pode esquecer de desalocar tudo
+    Client.Free;
+    Mapping.Free;
+    XMLIterable.Free;
+  end;
+end;
+</code></pre>
 
 <p>É um código Procedural e funciona (teoricamente).</p>
 
@@ -337,31 +338,32 @@ em manutenções futuras e com um código muito mais <strong>elegante</strong>?<
 
 <p>Aqui está o código <strong>Orientado a Objetos</strong> para consumir o mesmo WebService:</p>
 
-<figure class="highlight"><pre><code class="language-objectpascal" data-lang="objectpascal"><span class="k">function</span> <span class="nc">TDpvAction</span><span class="o">.</span><span class="nf">Act</span><span class="p">(</span><span class="k">const</span> <span class="n">WebMethodName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IActionResult</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TDpvXMLMappingInTable</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-    <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;MethodsVsTables&#39;</span><span class="o">,</span> <span class="n">WebMethodName</span><span class="p">)</span><span class="o">,</span>
-    <span class="n">TDpvXMLIterable</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-      <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;XMLNodes&#39;</span><span class="o">,</span> <span class="n">WebMethodName</span><span class="p">)</span><span class="o">,</span>
-      <span class="n">TDpvServiceWithLogging</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-        <span class="n">TDpvServiceWithChecking</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-          <span class="n">TDpvService</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-            <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;WebService&#39;</span><span class="o">,</span> <span class="s">&#39;URL&#39;</span><span class="p">)</span>
-          <span class="p">)</span>
-        <span class="p">)</span>
-      <span class="p">)</span>
-      <span class="o">.</span><span class="n">Call</span><span class="p">(</span>
-        <span class="n">TDpvMethod</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-          <span class="n">WebMethodName</span><span class="o">,</span>
-          <span class="n">TWebAuthorization</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-            <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;WebService&#39;</span><span class="o">,</span> <span class="s">&#39;User&#39;</span><span class="p">)</span><span class="o">,</span>
-            <span class="n">FFileConfig</span><span class="o">.</span><span class="n">ReadString</span><span class="p">(</span><span class="s">&#39;WebService&#39;</span><span class="o">,</span> <span class="s">&#39;Password&#39;</span><span class="p">)</span>
-          <span class="p">)</span>
-        <span class="p">)</span>
-      <span class="p">)</span><span class="o">.</span><span class="n">XML</span>
-    <span class="p">)</span>
-  <span class="p">)</span><span class="o">.</span><span class="n">Act</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>function TDpvAction.Act(const WebMethodName: string): IActionResult;
+begin
+  Result := TDpvXMLMappingInTable.New(
+    FFileConfig.ReadString('MethodsVsTables', WebMethodName),
+    TDpvXMLIterable.New(
+      FFileConfig.ReadString('XMLNodes', WebMethodName),
+      TDpvServiceWithLogging.New(
+        TDpvServiceWithChecking.New(
+          TDpvService.New(
+            FFileConfig.ReadString('WebService', 'URL')
+          )
+        )
+      )
+      .Call(
+        TDpvMethod.New(
+          WebMethodName,
+          TWebAuthorization.New(
+            FFileConfig.ReadString('WebService', 'User'),
+            FFileConfig.ReadString('WebService', 'Password')
+          )
+        )
+      ).XML
+    )
+  ).Act;
+end;
+</code></pre>
 
 <p>Esse é um código verdadeiramente Orientado a Objetos. Não dizemos ao computador linha-a-linha sobre o que fazer.
 Os Objetos sabem o que fazer! Eles não precisam de um <strong>orquestrador</strong> lhes dizendo o que fazer a cada momento.
@@ -501,20 +503,20 @@ Cada autorização (usuário/senha) também é uma classe, que chamei de <code>T
     </div>
   
     <div class="post ml2">
-      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
-        </ul>
-        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
         </ul>
         <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
       </a>
     </div>
   
@@ -573,11 +575,11 @@ Cada autorização (usuário/senha) também é uma classe, que chamei de <code>T
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
+      <a href="/posts/a-declaracao-with-do-e-do-mal/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
+          <h4 class="post-title"><li>A declaração WITH-DO é do Mal?</li></h4>
         </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+        <!--<p class="post-summary">Reflexões sobre o uso do WITH-DO no código Object Pascal.</p>-->
       </a>
     </div>
   

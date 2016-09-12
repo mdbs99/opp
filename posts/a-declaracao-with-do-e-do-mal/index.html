@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>A declaração WITH-DO é do Mal? &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Reflexões sobre o uso do WITH-DO no código Object Pascal.">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Pascal">
+    <meta name="keywords" content="with-do, language">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/a-declaracao-with-do-e-do-mal/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="A declaração WITH-DO é do Mal?">
+    <meta property="og:description" content="Reflexões sobre o uso do WITH-DO no código Object Pascal.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/a-declaracao-with-do-e-do-mal/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-8bc72ed7.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="A declaração WITH-DO é do Mal?" />
+    <meta name="twitter:description" content="Reflexões sobre o uso do WITH-DO no código Object Pascal." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/a-declaracao-with-do-e-do-mal/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>EBOOK</a>
+<a href="/archive/">ARQUIVO</a>
+<a href="/contact/">CONTATO</a>
+<a href="/about/">SOBRE</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>A declaração WITH-DO é do Mal?</h1>
+  <span class="post-meta">Sep 12, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    6 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Muita gente odeia utilizar a construção WITH-DO do Pascal.
+Dizem que é difícil de ler o código, introduz <em>bugs</em>… 
+esqueçam que WITH-DO existe! Eles dizem.</p>
+
+<p>Mas será que WITH-DO é mesmo do mal ou esses programadores é 
+que não sabem utilizá-lo no momento certo?</p>
+
+<!--more-->
+
+<p><img src="/images/photo-8bc72ed7.jpg" alt="Imagem" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Se você não sabe o que é WITH-DO, 
+<a href="http://www.freepascal.org/docs-html/ref/refsu63.html">aqui</a>
+está uma boa explicação técnica.</p>
+
+<p>Então você define um <strong>bloco</strong> ou <strong>contexto</strong> e pode acessar os 
+métodos e atributos de um Objeto sem a referência explícita à uma 
+variável.</p>
+
+<p>A primeira vista parece que o objetivo é escrever menos e,
+como bem sabemos, a maioria dos programadores são preguiçosos.</p>
+
+<p>Eu utilizo WITH-DO. Muito. E é claro, também quero escrever menos.</p>
+
+<p>Mas tento escrever menos da maneira correta. Não para poupar <em>bytes</em>,
+mas para deixar o código <strong>mais legível</strong>, <strong>menos verboso</strong> e 
+<strong>menos acoplado</strong>.</p>
+
+<p>Ao longo de muitos anos utilizando WITH-DO eu posso contar 
+nos dedos de apenas uma mão a quantidade de problemas que já 
+tive ao utilizar essa construção, ou seja, acho que seu uso vale
+a pena.</p>
+
+<p>Nesse artigo você aprenderá a utilizar a declaração WITH-DO.</p>
+
+<h2 id="imperativo">Imperativo</h2>
+
+<p>Creio que o <strong>mal</strong> que WITH-DO nos traz é devido ao seu uso 100%
+<a href="https://pt.wikipedia.org/wiki/Programa%C3%A7%C3%A3o_imperativa">imperativo</a>,
+sem nenhum contexto determinando onde começa ou termina seu uso.</p>
+
+<p>Veja <a href="http://forum.lazarus.freepascal.org/index.php?topic=32889.0">aqui</a> 
+um exemplo de mal uso da declaração WITH-DO, postado no fórum 
+do Lazarus.</p>
+
+<p>Vou replicar o código abaixo, caso o <em>link</em> não esteja mais
+disponível:</p>
+
+<pre><code>try
+  btnOK.Enabled:=False;
+  with datamodule.qryRegister do begin
+    datamodule.connection.AutoCommit:=True;
+    datamodule.connection.StartTransaction;
+    SQL.Clear;
+    SQL.Text:=
+      'INSERT INTO table VALUES (:name, :sex, :dateofbirth, :maritalstatus)';
+    ParamByName('name').AsString:=teName.Text;
+    ParamByName('sex').AsInteger:=cbSex.ItemIndex;
+    ParamByName('dateofbirth').AsDate:=StrToDate(teDateOfBirth.Text);
+    ParamByName('maritalstatus').AsInteger:=cbMaritalStatus.ItemIndex;          
+    SQL.Clear;
+    SQL.Text:='SELECT LAST_INSERT_ID() AS iddb FROM table';
+    Open;
+    idUser:=FieldByName('iddb').AsInteger;
+    ExecSQL;
+    Close;        
+    try
+      datamodule.connection.Commit;
+      clearFields;
+    except
+      datamodule.connection.Rollback;
+      ShowMessage('Error');
+    end;
+end; //with ends statement
+except
+  ShowMessage('Error: no connection to the database');
+end;
+bntOK.Enabled:=True;
+</code></pre>
+
+<p>O que é questionado nesse <em>post</em> é irrelevante.</p>
+
+<p>Apenas analisem o código e vejam como o autor está utilizando
+o WITH-DO:</p>
+
+<ol>
+  <li>Ele inicia uma transação;</li>
+  <li>Configura uma cláusula SQL;</li>
+  <li>Passa parâmetros;</li>
+  <li>Limpa a <em>query</em>(?)</li>
+  <li>Executa a <em>query</em>;</li>
+  <li>Commit… ClearFields…</li>
+</ol>
+
+<p>É um código totalmente procedural, imperativo e confuso!</p>
+
+<p>É muito difícil saber o que está sendo utilizado pelo 
+WITH-DO e o que não está, concorda?</p>
+
+<p>Nesses casos, quando há ambiguidade entre métodos utilizados
+pelo WITH-DO que não deveriam ser utilizados, alguns programadores
+culpam o WITH-DO quando, na verdade, deveriam culpar a si mesmos
+por escrever um código dessa maneira.</p>
+
+<p>Essa é uma maneira imperativa de codificação. Procedural.
+Um código altamente acoplado que, realmente, não deveria utilizar
+WITH-DO porque só piora as coisas.</p>
+
+<h2 id="declarativo">Declarativo</h2>
+
+<p>A codificação declarativa é utilizada nas linguagens funcionais.
+Também é utilizada, por exemplo, quando codificamos SQL.</p>
+
+<p>Na codificação declarativa você define <strong>o que fazer</strong>, mas não se
+importa <strong>como será feito</strong>.</p>
+
+<pre><code>SELECT * FROM Clients ORDER BY name;
+</code></pre>
+
+<p>Quando escrevemos o código SQL acima, não nos preocupamos como o
+SGBD irá trazer o resultado; quais índices; quais tuplas. Apenas
+queremos o resultado o mais rápido possível.</p>
+
+<p>Assim deve ser a codificação 
+<a href="/posts/o-que-e-orientacao-a-objetos/">Orientada a Objetos</a>,
+onde os Objetos
+<a href="/posts/objetos-pensam-e-tomam-decisoes/">pensam e tomam as próprias decisões</a>,
+sem que tenha um “controlador” informando <strong>como fazer</strong> linha a linha.</p>
+
+<p>E o que isso tem haver com o uso do WITH-DO?</p>
+
+<p>Bem, o WITH-DO nos ajuda a transformar um código procedural em algo mais
+declarativo, mais Orientado a Objetos.</p>
+
+<p>Um código mais Orientado a Objetos é mais <strong>legível</strong>.</p>
+
+<p>Um código com menos declarações de variáveis, é menos <strong>verboso</strong>.</p>
+
+<p>E se você não declara variáveis de tipos específicos, automaticamente
+seu código é <strong>menos acoplado</strong>, com menos usos de Units para determinar
+os tipos das variáveis.</p>
+
+<p>Vou lhe mostrar como.</p>
+
+<p>Vamos pegar o mesmo código procedural acima e reescrever utilizando
+WITH-DO.</p>
+
+<p>Esse código será apenas <strong>um pouco mais</strong> Orientado a Objetos, com
+uma melhor legibilidade que o primeiro:</p>
+
+<pre><code>try
+  btnOK.Enabled := False;
+  with TDatabase.Instance.StartTransaction do
+  try
+    with 
+      TQuery.New(
+        'INSERT INTO table VALUES (' +
+        '  :name, :sex, :dateofbirth, :maritalstatus)'
+      )
+    do
+    begin
+      Params
+        .Add('name', ftString, teName.Text)
+        .Add('sex', ftInteger, cbSex.ItemIndex)
+        .Add('dateofbirth', ftDateTime, StrToDate(teDateOfBirth.Text))
+        .Add('maritalstatus', ftInteger, cbMaritalStatus.ItemIndex)
+      Execute;
+    end;
+    idUser := 
+      TQuery.New('SELECT LAST_INSERT_ID() AS iddb FROM table')
+        .Open
+        .Field('iddb').AsInteger;
+    Commit;
+  except
+    Rollback;
+    raise;
+  end;
+except
+  ShowMessage('Error: no connection to the database');
+end;
+bntOK.Enabled:=True;
+</code></pre>
+
+<p><strong>O código continua ruim, porém melhor.</strong></p>
+
+<p>Há muita coisa acontecendo num único método.</p>
+
+<p>Não deveríamos parar a refatoração agora.
+Cada execução deveria estar num método a parte…</p>
+
+<p>No entanto o objetivo é mostrar o uso do WITH-DO e 
+acho que dá pra ver a diferença, certo?</p>
+
+<p>Ao todo são apenas 2 declarações de WITH-DO. Cada declaração tem 
+um <strong>contexto</strong> bem definido por <em>TRY-EXCEPT</em> ou <em>BEGIN-END</em>. 
+Não há ambiguidade.</p>
+
+<p>A declaração <code>TDatabase.Instance.StartTransaction</code> irá retornar um
+Objeto do tipo <code>ITransaction</code>.</p>
+
+<p>A declaração <code>TQuery.New</code> irá retornar um Objeto do tipo <code>IQuery</code>, 
+através do <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a>.</p>
+
+<p>O código ficou mais legível.</p>
+
+<p>Não há declarações de variáveis.</p>
+
+<p>Não há variáveis globais como existe no código procedural — 
+<code>datamodule.qryRegister</code> é um Objeto global que, possivelmente, é 
+reutilizado em toda a aplicação, sendo um <em>design</em> muito errado, 
+não <em>thread-safe</em> e gerador de problemas.</p>
+
+<h2 id="orientado-a-objetos">Orientado a Objetos</h2>
+
+<p>A declaração WITH-DO nos ajuda a escrever um código mais simples e elegante.
+Mas sejamos sinceros. Utilizamos WITH-DO para produzirmos código
+procedural. E não tem nada de errado nisso, visto que é quase
+impossível codificar 100% Orientado a Objetos em linguagens que
+são imperativas.</p>
+
+<p>Uma vez que WITH-DO define uma variável implícita, o programador
+pode chamar os <strong>métodos na sequência</strong>, linha a linha.</p>
+
+<p>O uso de WITH-DO deixa o código melhor, mas se dá pra codificar
+Orientado a Objetos, é o que devemos fazer.</p>
+
+<p>Então vou reescrever o código.</p>
+
+<p>Não há espaço aqui para a definição das Classes utilizadas
+no exemplo.</p>
+
+<p>Qualquer dúvida, basta postar nos comentários.</p>
+
+<p>Abaixo um hipotético código <strong>declarativo</strong> e <strong>Orientado a Objetos</strong>:</p>
+
+<pre><code>btnOK.Enabled := False;
+try
+  idUser :=  
+    TDatabase.Instance.Transaction(
+      TTasks.New
+        .Add(
+          TQueryTask.New(
+            'INSERT INTO table VALUES (' +
+            '  :name, :sex, :dateofbirth, :maritalstatus)',
+            TDataParams.New
+              .Add('name', ftString, teName.Text)
+              .Add('sex', ftInteger, cbSex.ItemIndex)
+              .Add('dateofbirth', ftDateTime, teDateOfBirth.Text)
+              .Add('maritalstatus', ftInteger, cbMaritalStatus.ItemIndex)
+          )
+        )
+        .Add(
+          TQueryTask.New('SELECT LAST_INSERT_ID() AS iddb FROM table')            
+        )
+    )
+    .Results
+    .Get('iddb').AsInteger;
+finally      
+  bntOK.Enabled := True;
+end;
+</code></pre>
+
+<p>O que está ocorrendo aqui?</p>
+
+<p>Bem, temos <code>TQueryTask</code> que implementa <code>ITask</code>.</p>
+
+<p>Temos uma lista de <em>tasks</em>.</p>
+
+<p>A lista é passada para <code>Transaction</code> que, internamente, irá executar
+cada <em>task</em> — chamando o método <code>Execute</code> que não está explícito no
+código — dentro de uma transação.</p>
+
+<p>Por fim <code>Transaction</code> tem um método <code>Results</code> que pode ser do tipo
+<code>IDataParams</code> e através de <code>Get</code> é retornado um valor.</p>
+
+<p>O que acontece dentro desses Objetos é de responsabilidade deles.
+O programador é apenas o <strong>orquestrador</strong> dessa comunicação.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Na minha opinião WITH-DO pode e deve ser utilizado.</p>
+
+<p>Muita gente deseja cada vez mais <em>features</em> para a linguagem
+Object Pascal. Mas será que já sabemos utilizar, de forma eficaz,
+tudo o que já temos nessa <strong>elegante linguagem</strong> chamada Object Pascal?</p>
+
+<p>Até onde eu sei, essa <em>feature</em> não existe em nenhuma outra linguagem.</p>
+
+<p>Apenas nós temos o WITH-DO!</p>
+
+<p>Mas será que sou o único que usa e aprecia essa <em>feature</em>? :)</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/a-declaracao-with-do-e-do-mal/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=A declaração WITH-DO é do Mal?&via=mdbs99;url=http://objectpascalprogramming.com/posts/a-declaracao-with-do-e-do-mal/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/a-declaracao-with-do-e-do-mal/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/a-declaracao-with-do-e-do-mal/&title=A declaração WITH-DO é do Mal?" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/a-declaracao-with-do-e-do-mal/&title=A declaração WITH-DO é do Mal?" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/a-declaracao-with-do-e-do-mal/&t=A declaração WITH-DO é do Mal?" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nomeando-variaveis-e-metodos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Variáveis e Métodos</li></h4>
+        </ul>
+        <!--<p class="post-summary">A nomenclatura correta de Variáveis e Métodos simplifica o código.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/a-declaracao-with-do-e-do-mal';
+      var disqus_title      = 'A declaração WITH-DO é do Mal?';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

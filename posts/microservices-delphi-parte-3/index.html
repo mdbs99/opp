@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -209,64 +209,65 @@
 
 <p>A Classe <code>TXMLFactory</code> facilita o envio e retorno.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TXMLFactory</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IXMLFactory</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FEncoding</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="n">FStream</span><span class="o">:</span> <span class="n">IDataStream</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">Encoding</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Stream</span><span class="o">:</span> <span class="n">IDataStream</span><span class="p">)</span><span class="o">;</span> <span class="k">reintroduce</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="n">Encoding</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Stream</span><span class="o">:</span> <span class="n">IDataStream</span><span class="p">)</span><span class="o">:</span> <span class="n">IXMLFactory</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="n">Encoding</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IXMLFactory</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="o">:</span> <span class="nf">IXMLFactory</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Document</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TXMLFactory = class(TInterfacedObject, IXMLFactory)
+  private
+    FEncoding: string;
+    FStream: IDataStream;
+  public
+    constructor Create(const Encoding: string; Stream: IDataStream); reintroduce;
+    class function New(const Encoding: string; Stream: IDataStream): IXMLFactory; overload;
+    class function New(const Encoding: string): IXMLFactory; overload;
+    class function New: IXMLFactory; overload;
+    function Document: IXMLDocument;
+  end;
 
-<span class="cm">{ TXMLFactory }</span>
+{ TXMLFactory }
 
-<span class="k">constructor</span> <span class="nc">TXMLFactory</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">Encoding</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Stream</span><span class="o">:</span> <span class="n">IDataStream</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FEncoding</span> <span class="o">:=</span> <span class="n">Encoding</span><span class="o">;</span>
-  <span class="n">FStream</span> <span class="o">:=</span> <span class="n">Stream</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TXMLFactory.Create(const Encoding: string; Stream: IDataStream);
+begin
+  inherited Create;
+  FEncoding := Encoding;
+  FStream := Stream;
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TXMLFactory</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="n">Encoding</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-  <span class="n">Stream</span><span class="o">:</span> <span class="n">IDataStream</span><span class="p">)</span><span class="o">:</span> <span class="n">IXMLFactory</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">Create</span><span class="p">(</span><span class="n">Encoding</span><span class="o">,</span> <span class="n">Stream</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+class function TXMLFactory.New(const Encoding: string;
+  Stream: IDataStream): IXMLFactory;
+begin
+  Result := Create(Encoding, Stream);
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TXMLFactory</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="n">Encoding</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IXMLFactory</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">New</span><span class="p">(</span><span class="n">Encoding</span><span class="o">,</span> <span class="n">TDataStream</span><span class="o">.</span><span class="k">New</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+class function TXMLFactory.New(const Encoding: string): IXMLFactory;
+begin
+  Result := New(Encoding, TDataStream.New);
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TXMLFactory</span><span class="o">.</span><span class="k">New</span><span class="o">:</span> <span class="nf">IXMLFactory</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">New</span><span class="p">(</span><span class="s">&#39;UTF-8&#39;</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+class function TXMLFactory.New: IXMLFactory;
+begin
+  Result := New('UTF-8');
+end;
 
-<span class="k">function</span> <span class="nc">TXMLFactory</span><span class="o">.</span><span class="nf">Document</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="o">;</span>
-<span class="k">var</span>
-  <span class="n">Buf</span><span class="o">:</span> <span class="n">TMemoryStream</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TXMLDocument</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="k">nil</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">Buf</span> <span class="o">:=</span> <span class="n">TMemoryStream</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
-  <span class="k">try</span>
-    <span class="bp">Result</span><span class="o">.</span><span class="n">Options</span> <span class="o">:=</span> <span class="p">[]</span><span class="o">;</span>
-    <span class="bp">Result</span><span class="o">.</span><span class="n">Active</span> <span class="o">:=</span> <span class="k">True</span><span class="o">;</span>
-    <span class="bp">Result</span><span class="o">.</span><span class="n">Version</span> <span class="o">:=</span> <span class="s">&#39;1.0&#39;</span><span class="o">;</span>
-    <span class="k">if</span> <span class="n">FStream</span><span class="o">.</span><span class="n">Size</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">then</span>
-    <span class="k">begin</span>
-      <span class="n">FStream</span><span class="o">.</span><span class="n">Save</span><span class="p">(</span><span class="n">Buf</span><span class="p">)</span><span class="o">;</span>
-      <span class="bp">Result</span><span class="o">.</span><span class="n">LoadFromStream</span><span class="p">(</span><span class="n">Buf</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">end</span><span class="o">;</span>
-    <span class="bp">Result</span><span class="o">.</span><span class="n">Encoding</span> <span class="o">:=</span> <span class="n">FEncoding</span><span class="o">;</span>
-  <span class="k">finally</span>
-    <span class="n">Buf</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+function TXMLFactory.Document: IXMLDocument;
+var
+  Buf: TMemoryStream;
+begin
+  Result := TXMLDocument.Create(nil);
+  Buf := TMemoryStream.Create;
+  try
+    Result.Options := [];
+    Result.Active := True;
+    Result.Version := '1.0';
+    if FStream.Size &gt; 0 then
+    begin
+      FStream.Save(Buf);
+      Result.LoadFromStream(Buf);
+    end;
+    Result.Encoding := FEncoding;
+  finally
+    Buf.Free;
+  end;
+end;
+</code></pre>
 
 <h2 id="consumindo-um-servico">Consumindo um Serviço</h2>
 
@@ -280,52 +281,53 @@
 
 <p>Segue sua implementação abaixo:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TFaturasService</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IMicroServiceAction</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FUId</span><span class="o">:</span> <span class="n">IDataUId</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">UId</span><span class="o">:</span> <span class="n">IDataUId</span><span class="p">)</span><span class="o">;</span> <span class="k">reintroduce</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">UId</span><span class="o">:</span> <span class="n">IDataUId</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceAction</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Act</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TFaturasService = class(TInterfacedObject, IMicroServiceAction)
+  private
+    FUId: IDataUId;
+  public
+    constructor Create(UId: IDataUId); reintroduce;
+    class function New(UId: IDataUId): IMicroServiceAction;
+    function Act: IMicroServiceResponse;
+  end;
 
-<span class="cm">{ TFaturasService }</span>
+{ TFaturasService }
 
-<span class="k">constructor</span> <span class="nc">TFaturasService</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">UId</span><span class="o">:</span> <span class="n">IDataUId</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FUId</span> <span class="o">:=</span> <span class="n">UId</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TFaturasService.Create(UId: IDataUId);
+begin
+  inherited Create;
+  FUId := UId;
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TFaturasService</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-  <span class="n">UId</span><span class="o">:</span> <span class="n">IDataUId</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceAction</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">Create</span><span class="p">(</span><span class="n">UId</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+class function TFaturasService.New(
+  UId: IDataUId): IMicroServiceAction;
+begin
+  Result := Create(UId);
+end;
 
-<span class="k">function</span> <span class="nc">TFaturasService</span><span class="o">.</span><span class="nf">Act</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span>
+function TFaturasService.Act: IMicroServiceResponse;
 
-  <span class="k">function</span> <span class="nf">XML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="o">;</span>
-  <span class="k">begin</span>
-    <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TXMLFactory</span><span class="o">.</span><span class="k">New</span><span class="o">.</span><span class="n">Document</span><span class="o">;</span>
-    <span class="k">with</span> <span class="bp">Result</span><span class="o">.</span><span class="n">AddChild</span><span class="p">(</span><span class="s">&#39;Params&#39;</span><span class="p">)</span> <span class="k">do</span>
-    <span class="k">begin</span>
-      <span class="n">AddChild</span><span class="p">(</span><span class="s">&#39;uid&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Text</span> <span class="o">:=</span> <span class="n">FUId</span><span class="o">.</span><span class="n">AsString</span><span class="o">;</span>
-      <span class="n">AddChild</span><span class="p">(</span><span class="s">&#39;active&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Text</span> <span class="o">:=</span> <span class="s">&#39;True&#39;</span><span class="o">;</span>
-    <span class="k">end</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  function XML: IXMLDocument;
+  begin
+    Result := TXMLFactory.New.Document;
+    with Result.AddChild('Params') do
+    begin
+      AddChild('uid').Text := FUId.AsString;
+      AddChild('active').Text := 'True';
+    end;
+  end;
 
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span>
-    <span class="n">TMicroServiceClient</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-      <span class="n">TMicroServiceParams</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-        <span class="s">&#39;financ:faturas-service&#39;</span>
-      <span class="p">)</span>
-      <span class="o">.</span><span class="n">Find</span>
-    <span class="p">)</span>
-    <span class="o">.</span><span class="n">Send</span><span class="p">(</span><span class="n">XML</span><span class="p">)</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+begin
+  Result :=
+    TMicroServiceClient.New(
+      TMicroServiceParams.New(
+        'financ:faturas-service'
+      )
+      .Find
+    )
+    .Send(XML)
+end;
+</code></pre>
 
 <h3 id="passo-a-passo">O código passo-a-passo</h3>
 
@@ -353,13 +355,14 @@
 
 <p>Aqui está um exemplo:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">FillData</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">TXMLClientDataSetAdapter</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-    <span class="n">FModule</span><span class="o">.</span><span class="n">FaturaClient</span><span class="o">,</span>
-    <span class="n">TFaturasService</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">FUId</span><span class="p">)</span><span class="o">.</span><span class="n">Act</span><span class="o">.</span><span class="n">XML</span>
-  <span class="p">)</span>
-  <span class="o">.</span><span class="n">Adapt</span><span class="o">;</span></code></pre></figure>
+<pre><code>procedure TForm1.FillData;
+begin
+  TXMLClientDataSetAdapter.New(
+    FModule.FaturaClient,
+    TFaturasService.New(FUId).Act.XML
+  )
+  .Adapt;
+</code></pre>
 
 <p>No Delphi 7 utilizamos <code>TClientDataSet</code> para manter os dados tabulares (linhas e colunas) em memória, exibir numa <em>Grid</em> ou em qualquer outro <em>widget</em>. Mas os dados dos Microservices vem no formato de XML. Esses dados precisam ser convertidos para um formato tabular.</p>
 
@@ -382,35 +385,36 @@
 
 <p>Veja a implementação do método <code>Adapt</code>:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">function</span> <span class="nc">TXMLClientDataSetAdapter</span><span class="o">.</span><span class="nf">Adapt</span><span class="o">:</span> <span class="n">IDataAdapter</span><span class="o">;</span>
-<span class="k">var</span>
-  <span class="n">I</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-  <span class="n">Field</span><span class="o">:</span> <span class="n">TField</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="k">if</span> <span class="k">not</span> <span class="nb">Assigned</span><span class="p">(</span><span class="n">FSource</span><span class="p">)</span> <span class="k">then</span>
-    <span class="k">Exit</span><span class="o">;</span>
-  <span class="n">FDest</span><span class="o">.</span><span class="n">DisableControls</span><span class="o">;</span>
-  <span class="k">try</span>
-    <span class="k">while</span> <span class="nb">Assigned</span><span class="p">(</span><span class="n">FSource</span><span class="p">)</span> <span class="k">do</span>
-    <span class="k">begin</span>
-      <span class="n">FDest</span><span class="o">.</span><span class="n">Append</span><span class="o">;</span>
-      <span class="k">for</span> <span class="n">I</span> <span class="o">:=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">FSource</span><span class="o">.</span><span class="n">ChildNodes</span><span class="o">.</span><span class="n">Count</span> <span class="o">-</span><span class="mi">1</span> <span class="k">do</span>
-      <span class="k">begin</span>
-        <span class="k">with</span> <span class="n">FSource</span><span class="o">.</span><span class="n">ChildNodes</span><span class="p">[</span><span class="n">I</span><span class="p">]</span> <span class="k">do</span>
-        <span class="k">begin</span>
-          <span class="n">Field</span> <span class="o">:=</span> <span class="n">FDest</span><span class="o">.</span><span class="n">FindField</span><span class="p">(</span><span class="n">NodeName</span><span class="p">)</span><span class="o">;</span>
-          <span class="k">if</span> <span class="nb">Assigned</span><span class="p">(</span><span class="n">Field</span><span class="p">)</span> <span class="k">and</span> <span class="p">(</span><span class="n">Text</span> <span class="o">&lt;&gt;</span> <span class="s">&#39;&#39;</span><span class="p">)</span> <span class="k">then</span>
-            <span class="n">Field</span><span class="o">.</span><span class="n">Value</span> <span class="o">:=</span> <span class="n">Text</span><span class="o">;</span>
-        <span class="k">end</span><span class="o">;</span>
-      <span class="k">end</span><span class="o">;</span>
-      <span class="n">FSource</span> <span class="o">:=</span> <span class="n">FSource</span><span class="o">.</span><span class="n">NextSibling</span><span class="o">;</span>
-    <span class="k">end</span><span class="o">;</span>
-  <span class="k">finally</span>
-    <span class="n">FDest</span><span class="o">.</span><span class="n">First</span><span class="o">;</span>
-    <span class="n">FDest</span><span class="o">.</span><span class="n">EnableControls</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>function TXMLClientDataSetAdapter.Adapt: IDataAdapter;
+var
+  I: Integer;
+  Field: TField;
+begin
+  Result := Self;
+  if not Assigned(FSource) then
+    Exit;
+  FDest.DisableControls;
+  try
+    while Assigned(FSource) do
+    begin
+      FDest.Append;
+      for I := 0 to FSource.ChildNodes.Count -1 do
+      begin
+        with FSource.ChildNodes[I] do
+        begin
+          Field := FDest.FindField(NodeName);
+          if Assigned(Field) and (Text &lt;&gt; '') then
+            Field.Value := Text;
+        end;
+      end;
+      FSource := FSource.NextSibling;
+    end;
+  finally
+    FDest.First;
+    FDest.EnableControls;
+  end;
+end;
+</code></pre>
 
 <p>Ele adapta o XML para o formato tabular e no fim temos uma instância de <code>TClientDataSet</code> com os dados provenientes do XML.</p>
 
@@ -567,20 +571,20 @@
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
-        </ul>
-        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
         </ul>
         <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
       </a>
     </div>
   
@@ -603,20 +607,20 @@
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/microservices-delphi-parte-2/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Microservices com Delphi — Parte 2</li></h4>
         </ul>
         <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
     </div>
   

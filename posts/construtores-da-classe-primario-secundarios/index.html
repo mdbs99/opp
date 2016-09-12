@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -201,41 +201,42 @@ utilizados para criar instâncias de Objetos.</p>
 
 <p>Vamos a um exemplo.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TUser</span> <span class="o">=</span> <span class="k">class</span>
-  <span class="kp">private</span>
-    <span class="n">FLogin</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="n">FPassword</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">Login</span><span class="o">,</span> <span class="n">Password</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">Login</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span> 
-    <span class="k">function</span> <span class="nf">Login</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Password</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TUser = class
+  private
+    FLogin: string;
+    FPassword: string;
+  public
+    constructor Create(const Login, Password: string);
+    constructor Create(const Login: string); 
+    function Login: string;
+    function Password: string;
+  end;
   
-<span class="k">implementation</span>
+implementation
 
-<span class="k">constructor</span> <span class="nc">TUser</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">Login</span><span class="o">,</span> <span class="n">Password</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FLogin</span> <span class="o">:=</span> <span class="n">Login</span><span class="o">;</span>
-  <span class="n">FPassword</span> <span class="o">:=</span> <span class="n">Password</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TUser.Create(const Login, Password: string);
+begin
+  inherited Create;
+  FLogin := Login;
+  FPassword := Password;
+end;
 
-<span class="k">constructor</span> <span class="nc">TUser</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">Login</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">Create</span><span class="p">(</span><span class="n">Login</span><span class="o">,</span> <span class="s">&#39;123456&#39;</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TUser.Create(const Login: string);
+begin
+  Create(Login, '123456');
+end;
 
-<span class="k">function</span> <span class="nc">TUser</span><span class="o">.</span><span class="nf">Login</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FLogin</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TUser.Login: string;
+begin
+  Result := FLogin;
+end;
 
-<span class="k">function</span> <span class="nc">TUser</span><span class="o">.</span><span class="nf">Password</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FPassword</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+function TUser.Password: string;
+begin
+  Result := FPassword;
+end;
+</code></pre>
 
 <p>A Classe <code>TUser</code> tem 2 construtores.</p>
 
@@ -254,7 +255,8 @@ bastando olhar no seu construtor Primário. Esse construtor sempre será o prime
 <p>A linguagem Pascal permite que funções e métodos tenham argumentos <em>default</em>. O exemplo acima poderia ser
 reescrito com apenas 1 construtor, desse jeito:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">Login</span><span class="o">,</span> <span class="n">Password</span><span class="o">:</span> <span class="k">string</span> <span class="o">=</span> <span class="s">&#39;123456&#39;</span><span class="p">)</span><span class="o">;</span></code></pre></figure>
+<pre><code>constructor Create(const Login, Password: string = '123456');
+</code></pre>
 
 <p>Apesar de escrever menos, eu não recomendo utilizar argumentos <em>default</em>.</p>
 
@@ -265,10 +267,11 @@ essa “vantagem de escrever menos” não faz muito sentido.</p>
 gerar uma senha aleatória, por exemplo, bastaria criar um método <code>RandomPassword</code> e chamá-lo no construtor 
 secundário, ou seja, a implementação do construtor Secundário poderia ser reescrita assim:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">constructor</span> <span class="nc">TUser</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">Login</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">Create</span><span class="p">(</span><span class="n">Login</span><span class="o">,</span> <span class="n">RandomPassword</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>constructor TUser.Create(const Login: string);
+begin
+  Create(Login, RandomPassword);
+end;
+</code></pre>
 
 <h2 id="construtores-secundrios-e-mtodo-new">Construtores Secundários e Método New()</h2>
 
@@ -279,25 +282,26 @@ implementar construtores Secundários e Métodos New() com a mesma assinatura.</
 
 <p>Ao invés de criar novos construtores Secundários, basta criar novas variações de Métodos <code>New()</code>.</p>
 
-<p>Exemplo.</p>
+<p>Exemplo:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">IUser</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="nf">Login</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Password</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  IUser = interface
+    function Login: string;
+    function Password: string;
+  end;
 
-  <span class="n">TUser</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IUser</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FLogin</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="n">FPassword</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">Login</span><span class="o">,</span> <span class="n">Password</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="n">Login</span><span class="o">,</span> <span class="n">Password</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IUser</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="n">Login</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IUser</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Login</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Password</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+  TUser = class(TInterfacedObject, IUser)
+  private
+    FLogin: string;
+    FPassword: string;
+  public
+    constructor Create(const Login, Password: string);
+    class function New(const Login, Password: string): IUser;
+    class function New(const Login: string): IUser;
+    function Login: string;
+    function Password: string;
+  end;
+</code></pre>
 
 <p>Assim a implementação de suas Classes ficam ainda mais simples, pois teriam apenas 1 construtor
 onde todos os argumentos são inicializados.</p>
@@ -414,15 +418,6 @@ onde todos os argumentos são inicializados.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
-        </ul>
-        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/objetos-imutaveis/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
@@ -437,6 +432,15 @@ onde todos os argumentos são inicializados.</p>
           <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
         </ul>
         <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
       </a>
     </div>
   
@@ -459,18 +463,18 @@ onde todos os argumentos são inicializados.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/microservices-delphi-parte-1/" class="post-link">
+      <a href="/posts/objetos-sem-estado/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Microservices com Delphi — Parte 1</li></h4>
+          <h4 class="post-title"><li>Objetos sem Estado</li></h4>
         </ul>
-        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
+        <!--<p class="post-summary">Objetos deveriam ser inicializados somente através dos seus construtores e não através de propriedades.</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/microservices-delphi-parte-2/" class="post-link">
+      <a href="/posts/microservices-delphi-parte-1/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Microservices com Delphi — Parte 2</li></h4>
+          <h4 class="post-title"><li>Microservices com Delphi — Parte 1</li></h4>
         </ul>
         <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
       </a>

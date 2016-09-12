@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -286,56 +286,57 @@ no entanto veja que para descobrir o problema o programador da Classe B, a Subcl
 foi implementada, Violando o Encapsulamento, pois ele deverá fazer ajustes em função da implementão interna da 
 Classe A:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TClasseA</span> <span class="o">=</span> <span class="k">class</span>
-  <span class="kp">protected</span>
-    <span class="k">procedure</span> <span class="nf">Exec</span><span class="o">;</span> <span class="kp">virtual</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">procedure</span> <span class="nf">Proc</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TClasseA = class
+  protected
+    procedure Exec; virtual;
+  public
+    procedure Proc;
+  end;
 
-  <span class="n">TClasseB</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TClasseA</span><span class="p">)</span>
-  <span class="kp">protected</span>
-    <span class="k">procedure</span> <span class="nf">Exec</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  TClasseB = class(TClasseA)
+  protected
+    procedure Exec; override;
+  end;
 
-<span class="cm">{ TClasseA }</span>
+{ TClasseA }
 
-<span class="k">procedure</span> <span class="nc">TClasseA</span><span class="o">.</span><span class="nf">Exec</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">ShowMessage</span><span class="p">(</span><span class="s">&#39;Exec&#39;</span><span class="p">)</span>
-<span class="k">end</span><span class="o">;</span>
+procedure TClasseA.Exec;
+begin
+  ShowMessage('Exec')
+end;
 
-<span class="k">procedure</span> <span class="nc">TClasseA</span><span class="o">.</span><span class="nf">Proc</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">Exec</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+procedure TClasseA.Proc;
+begin
+  Exec;
+end;
 
-<span class="cm">{ TClasseB }</span>
+{ TClasseB }
 
-<span class="k">procedure</span> <span class="nc">TClasseB</span><span class="o">.</span><span class="nf">Exec</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">Proc</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+procedure TClasseB.Exec;
+begin
+  Proc;
+end;
 
-<span class="cm">{ TForm1 }</span>
+{ TForm1 }
 
-<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">Button1Click</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">with</span> <span class="n">TClasseA</span><span class="o">.</span><span class="n">Create</span> <span class="k">do</span>
-  <span class="k">try</span>
-    <span class="n">Proc</span><span class="o">;</span>
-  <span class="k">finally</span>
-    <span class="n">Free</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  with TClasseA.Create do
+  try
+    Proc;
+  finally
+    Free;
+  end;
 
-  <span class="k">with</span> <span class="n">TClasseB</span><span class="o">.</span><span class="n">Create</span> <span class="k">do</span>
-  <span class="k">try</span>
-    <span class="n">Proc</span><span class="o">;</span>
-  <span class="k">finally</span>
-    <span class="n">Free</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+  with TClasseB.Create do
+  try
+    Proc;
+  finally
+    Free;
+  end;
+end;
+</code></pre>
 
 <p>A Classe B sobrescreve um método da Classe A. Simples. Fazemos isso todo tempo.
 Então, qual é o problema desse código?</p>
@@ -355,49 +356,50 @@ Para isso utilizamos a palavra reservada <code>inherited</code>.</p>
 <p>Somente olhando a implementação privada da Classe para termos certeza se <strong>devemos ou não</strong> chamar o código.
 Novamente, temos uma Violação de Encapsulamento.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TClasseA</span> <span class="o">=</span> <span class="k">class</span>
-  <span class="kp">protected</span>
-    <span class="n">FCount</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">procedure</span> <span class="nf">Exec</span><span class="o">;</span> <span class="kp">virtual</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TClasseA = class
+  protected
+    FCount: Integer;
+  public
+    procedure Exec; virtual;
+  end;
 
-  <span class="n">TClasseB</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TClasseA</span><span class="p">)</span>
-  <span class="kp">public</span>
-    <span class="k">procedure</span> <span class="nf">Exec</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  TClasseB = class(TClasseA)
+  public
+    procedure Exec; override;
+  end;
 
-<span class="cm">{ TClasseA }</span>
+{ TClasseA }
 
-<span class="k">procedure</span> <span class="nc">TClasseA</span><span class="o">.</span><span class="nf">Exec</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">FCount</span> <span class="o">:=</span> <span class="n">FCount</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-  <span class="n">ShowMessage</span><span class="p">(</span><span class="s">&#39;Count=&#39;</span> <span class="o">+</span> <span class="nb">IntToStr</span><span class="p">(</span><span class="n">FCount</span><span class="p">))</span><span class="o">;</span> <span class="c1">//=1</span>
-  <span class="n">ShowMessage</span><span class="p">(</span><span class="s">&#39;Exec A&#39;</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+procedure TClasseA.Exec;
+begin
+  FCount := FCount + 1;
+  ShowMessage('Count=' + IntToStr(FCount)); //=1
+  ShowMessage('Exec A');
+end;
 
-<span class="cm">{ TClasseB }</span>
+{ TClasseB }
 
-<span class="k">procedure</span> <span class="nc">TClasseB</span><span class="o">.</span><span class="nf">Exec</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span><span class="o">;</span>
-  <span class="n">FCount</span> <span class="o">:=</span> <span class="n">FCount</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-  <span class="n">ShowMessage</span><span class="p">(</span><span class="s">&#39;Count=&#39;</span> <span class="o">+</span> <span class="nb">IntToStr</span><span class="p">(</span><span class="n">FCount</span><span class="p">))</span><span class="o">;</span> <span class="c1">//=2</span>
-  <span class="n">ShowMessage</span><span class="p">(</span><span class="s">&#39;Exec B&#39;</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+procedure TClasseB.Exec;
+begin
+  inherited;
+  FCount := FCount + 1;
+  ShowMessage('Count=' + IntToStr(FCount)); //=2
+  ShowMessage('Exec B');
+end;
 
-<span class="cm">{ TForm1 }</span>
+{ TForm1 }
 
-<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">Button1Click</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">with</span> <span class="n">TClasseB</span><span class="o">.</span><span class="n">Create</span> <span class="k">do</span>
-  <span class="k">try</span>
-    <span class="n">Exec</span><span class="o">;</span>
-  <span class="k">finally</span>
-    <span class="n">Free</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  with TClasseB.Create do
+  try
+    Exec;
+  finally
+    Free;
+  end;
+end;
+</code></pre>
 
 <p>Quando executado teremos as mensagens:</p>
 
@@ -564,20 +566,20 @@ abaixo para comentários.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
-        </ul>
-        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
         </ul>
         <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
       </a>
     </div>
   

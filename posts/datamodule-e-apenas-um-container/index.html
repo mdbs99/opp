@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -217,13 +217,14 @@ entre si.</p>
   <li><em>PDF</em>: Para gerar um PDF no disco.</li>
 </ol>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">IReport</span> <span class="o">=</span> <span class="k">interface</span>
-  <span class="p">[</span><span class="s">&#39;{29414A64-69BA-40A1-970B-2CD61C633508}&#39;</span><span class="p">]</span>
-    <span class="k">function</span> <span class="nf">Show</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Print</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">PDF</span><span class="p">(</span><span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>type
+  IReport = interface
+  ['{29414A64-69BA-40A1-970B-2CD61C633508}']
+    function Show: IReport;
+    function Print: IReport;
+    function PDF(const FileName: string): IReport;
+  end;
+</code></pre>
 
 <p>O sistema que utiliza esse código foi codificado em Delphi 7, utilizando ADO e <em>ReportBuilder®</em>(RB), no 
 entanto essa é uma Interface genérica o bastante para ser utilizado por qualquer versão do Delphi/Lazarus,
@@ -234,17 +235,18 @@ com a possibilidade de implementar e utilizar qualquer gerador de relatório.</p
 <p>Abaixo contém apenas a Interface da classe. Não é necessária a implementação para o 
 entendimento dos conceitos que quero mostrar.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TRBuilderReport</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IReport</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FReport</span><span class="o">:</span> <span class="n">TppReport</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Report</span><span class="o">:</span> <span class="n">TppReport</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">Report</span><span class="o">:</span> <span class="n">TppReport</span><span class="p">)</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Show</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Print</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">PDF</span><span class="p">(</span><span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>type
+  TRBuilderReport = class(TInterfacedObject, IReport)
+  private
+    FReport: TppReport;
+  public
+    constructor Create(Report: TppReport);
+    class function New(Report: TppReport): IReport;
+    function Show: IReport;
+    function Print: IReport;
+    function PDF(const FileName: string): IReport;
+  end;
+</code></pre>
 
 <p>O motivo de termos um <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a> já foi
 explicado anteriormente.</p>
@@ -285,11 +287,12 @@ estarão utilizando a mesma instância do <em>DataModule</em>, compartilhando os
 
 <p>A maneira para fazer uma instância do <em>DataModule</em> não ser global é chamar <code>RemoveDataModule</code> no seu construtor:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nc">TDataModule1</span><span class="o">.</span><span class="nf">DataModuleCreate</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="n">TComponent</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span><span class="o">;</span>
-  <span class="n">RemoveDataModule</span><span class="p">(</span><span class="k">Self</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>procedure TDataModule1.DataModuleCreate(Sender: TComponent);
+begin
+  inherited;
+  RemoveDataModule(Self);
+end;
+</code></pre>
 
 <p>Por que fazer isso?</p>
 
@@ -307,61 +310,62 @@ no código de um <em>Form</em>, por exemplo.</p>
 
 <p>Para o único relatório que iremos implementar – <em>AvisosReport</em> – temos uma classe chamada <code>TDividaAtivaMedicoAvisosReport</code>.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TDividaAtivaMedicoAvisosReport</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IReport</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FModule</span><span class="o">:</span> <span class="n">TDividaAtivaMedicoModule</span><span class="o">;</span>
-    <span class="n">FReport</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">NotificacaoId</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">NotificacaoId</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-    <span class="k">destructor</span> <span class="nf">Destroy</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Show</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Print</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">PDF</span><span class="p">(</span><span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TDividaAtivaMedicoAvisosReport = class(TInterfacedObject, IReport)
+  private
+    FModule: TDividaAtivaMedicoModule;
+    FReport: IReport;
+  public
+    constructor Create(NotificacaoId: Integer);
+    class function New(NotificacaoId: Integer): IReport;
+    destructor Destroy; override;
+    function Show: IReport;
+    function Print: IReport;
+    function PDF(const FileName: string): IReport;
+  end;
 
-<span class="k">implementation</span>  
+implementation  
   
-<span class="cm">{ TDividaAtivaMedicoAvisosReport }</span>
+{ TDividaAtivaMedicoAvisosReport }
 
-<span class="k">constructor</span> <span class="nc">TDividaAtivaMedicoAvisosReport</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">NotificacaoId</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FModule</span> <span class="o">:=</span> <span class="n">TDividaAtivaMedicoModule</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="k">nil</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">FReport</span> <span class="o">:=</span> <span class="n">TRBuilderReport</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">FModule</span><span class="o">.</span><span class="n">AvisosReport</span><span class="p">)</span><span class="o">;</span>
-  <span class="k">with</span> <span class="n">FModule</span><span class="o">.</span><span class="n">NotificacoesQuery</span><span class="o">.</span><span class="n">Parameters</span> <span class="k">do</span>
-  <span class="k">begin</span>
-    <span class="n">ParamByName</span><span class="p">(</span><span class="s">&#39;notificacao_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Value</span> <span class="o">:=</span> <span class="n">NotificacaoId</span><span class="o">;</span>
-    <span class="n">ParamByName</span><span class="p">(</span><span class="s">&#39;fase&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Value</span> <span class="o">:=</span> <span class="n">CDividaAtivaFases</span><span class="o">.</span><span class="n">AvisoId</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TDividaAtivaMedicoAvisosReport.Create(NotificacaoId: Integer);
+begin
+  inherited Create;
+  FModule := TDividaAtivaMedicoModule.Create(nil);
+  FReport := TRBuilderReport.Create(FModule.AvisosReport);
+  with FModule.NotificacoesQuery.Parameters do
+  begin
+    ParamByName('notificacao_id').Value := NotificacaoId;
+    ParamByName('fase').Value := CDividaAtivaFases.AvisoId;
+  end;
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TDividaAtivaMedicoAvisosReport</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">NotificacaoId</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">Create</span><span class="p">(</span><span class="n">NotificacaoId</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+class function TDividaAtivaMedicoAvisosReport.New(NotificacaoId: Integer): IReport;
+begin
+  Result := Create(NotificacaoId);
+end;
 
-<span class="k">destructor</span> <span class="nc">TDividaAtivaMedicoAvisosReport</span><span class="o">.</span><span class="nf">Destroy</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">FModule</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="k">inherited</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+destructor TDividaAtivaMedicoAvisosReport.Destroy;
+begin
+  FModule.Free;
+  inherited;
+end;
 
-<span class="k">function</span> <span class="nc">TDividaAtivaMedicoAvisosReport</span><span class="o">.</span><span class="nf">Show</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FReport</span><span class="o">.</span><span class="n">Show</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TDividaAtivaMedicoAvisosReport.Show: IReport;
+begin
+  Result := FReport.Show;
+end;
 
-<span class="k">function</span> <span class="nc">TDividaAtivaMedicoAvisosReport</span><span class="o">.</span><span class="nf">Print</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FReport</span><span class="o">.</span><span class="n">Print</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TDividaAtivaMedicoAvisosReport.Print: IReport;
+begin
+  Result := FReport.Print;
+end;
 
-<span class="k">function</span> <span class="nc">TDividaAtivaMedicoAvisosReport</span><span class="o">.</span><span class="nf">PDF</span><span class="p">(</span><span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IReport</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FReport</span><span class="o">.</span><span class="n">PDF</span><span class="p">(</span><span class="n">FileName</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+function TDividaAtivaMedicoAvisosReport.PDF(const FileName: string): IReport;
+begin
+  Result := FReport.PDF(FileName);
+end;
+</code></pre>
 
 <p>Essa implementação é real e está em produção. O código poderia ser melhorado, é claro, mas isso é
 irrelevante agora.</p>
@@ -371,8 +375,9 @@ e tem uma implementação implícita de <code>TRBuilderReport</code>. Como eu di
 
 <p>O mais importante são essas 2 linhas:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal">  <span class="n">FModule</span> <span class="o">:=</span> <span class="n">TDividaAtivaMedicoModule</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="k">nil</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">FReport</span> <span class="o">:=</span> <span class="n">TRBuilderReport</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">FModule</span><span class="o">.</span><span class="n">AvisosReport</span><span class="p">)</span><span class="o">;</span></code></pre></figure>
+<pre><code>  FModule := TDividaAtivaMedicoModule.Create(nil);
+  FReport := TRBuilderReport.Create(FModule.AvisosReport);
+</code></pre>
 
 <p>Um <em>DataModule</em> é instanciado em <code>FModule</code>. Esse <em>DataModule</em> é retirado do “estado global” utilizando
 <code>RemoveDataModule</code> em seu construtor.</p>
@@ -476,20 +481,20 @@ Orientado a Objetos.</p>
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
-        </ul>
-        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
         </ul>
         <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
       </a>
     </div>
   
@@ -539,6 +544,15 @@ Orientado a Objetos.</p>
     </div>
   
     <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/posts/objetos-representam-entidades/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
@@ -548,9 +562,9 @@ Orientado a Objetos.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
         </ul>
         <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
@@ -562,15 +576,6 @@ Orientado a Objetos.</p>
           <h4 class="post-title"><li>Objetos pensam e tomam decisões</li></h4>
         </ul>
         <!--<p class="post-summary">Objetos pensam e tomam decisões. Eles não precisam de um controlador.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
     </div>
   

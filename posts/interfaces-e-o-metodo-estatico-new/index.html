@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -222,10 +222,11 @@ e/ou vazamentos de memória (<code>memleaks</code>).</p>
 
 <p>Considere o código abaixo:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">function</span> <span class="nc">TFoo</span><span class="o">.</span><span class="nf">Execute</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TAction</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">TTask</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Name</span><span class="p">))</span><span class="o">.</span><span class="n">Execute</span><span class="o">.</span><span class="n">ToString</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>function TFoo.Execute(const Name: string): string;
+begin
+  Result := TAction.Create(TTask.Create(Name)).Execute.ToString;
+end;
+</code></pre>
 
 <ol>
   <li>TTask é uma classe que recebe uma <code>string</code> no construtor;</li>
@@ -262,13 +263,14 @@ sabe que deverá desalocar essa instância logo que não precisar mais dela.</p>
 
 <p>Então vamos acertar o código:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">function</span> <span class="nc">TFoo</span><span class="o">.</span><span class="nf">Execute</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-<span class="k">var</span>
-  <span class="n">A</span><span class="o">:</span> <span class="n">IAction</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">A</span> <span class="o">:=</span> <span class="n">TAction</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">TTask</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Name</span><span class="p">))</span><span class="o">;</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">A</span><span class="o">.</span><span class="n">Execute</span><span class="o">.</span><span class="n">ToString</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>function TFoo.Execute(const Name: string): string;
+var
+  A: IAction;
+begin
+  A := TAction.Create(TTask.Create(Name));
+  Result := A.Execute.ToString;
+end;
+</code></pre>
 
 <p>Agora não haverá <code>memleaks</code> porque agora o compilador tem a referência <code>A</code> para <code>TAction</code>. No fim do método
 <code>TFoo.Execute</code> a instância em <code>A</code> será liberada automaticamente.</p>
@@ -301,29 +303,30 @@ o compilador não irá mais desalocar a instância criada no argumento por não 
 
 <p>Eu implemento essa “mágica” de forma muito simples utilizando o método <em>New</em>.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TAction</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IAction</span><span class="p">)</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Task</span><span class="o">:</span> <span class="n">ITask</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">Task</span><span class="o">:</span> <span class="n">ITask</span><span class="p">)</span><span class="o">:</span> <span class="n">IAction</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Execute</span><span class="o">:</span> <span class="n">IResult</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TAction = class(TInterfacedObject, IAction)
+  public
+    constructor Create(Task: ITask);
+    class function New(Task: ITask): IAction;
+    function Execute: IResult;
+  end;
   
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TAction</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Task</span><span class="o">:</span> <span class="n">ITask</span><span class="p">)</span><span class="o">:</span> <span class="n">IAction</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TAction</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Task</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>  
+class function TAction.New(Task: ITask): IAction;
+begin
+  Result := TAction.Create(Task);
+end;  
 
-<span class="cm">{ Implementação de Create e Execute... irrelevantes }</span>  
+{ Implementação de Create e Execute... irrelevantes }  
 
-<span class="cm">{ Implementação do método New também para TTask... }</span>
+{ Implementação do método New também para TTask... }
 
-<span class="cm">{...}</span>  
+{...}  
   
-<span class="k">function</span> <span class="nc">TFoo</span><span class="o">.</span><span class="nf">Execute</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TAction</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">TTask</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Name</span><span class="p">))</span><span class="o">.</span><span class="n">Execute</span><span class="o">.</span><span class="n">ToString</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+function TFoo.Execute(const Name: string): string;
+begin
+  Result := TAction.New(TTask.New(Name)).Execute.ToString;
+end;
+</code></pre>
 
 <p>Agora nós estamos chamando <code>TAction.New</code> ao invés de <code>TAction.Create</code>.</p>
 
@@ -434,20 +437,20 @@ mudanças no código.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
-        </ul>
-        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/freeandnil-esqueca/" class="post-link">
         <ul>
           <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
         </ul>
         <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
       </a>
     </div>
   
@@ -461,15 +464,6 @@ mudanças no código.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
-        </ul>
-        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
@@ -479,11 +473,11 @@ mudanças no código.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/microservices-delphi-parte-3/" class="post-link">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Microservices com Delphi — Parte 3</li></h4>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
         </ul>
-        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
       </a>
     </div>
   
@@ -493,6 +487,15 @@ mudanças no código.</p>
           <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
         </ul>
         <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/microservices-delphi-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Microservices com Delphi — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
       </a>
     </div>
   

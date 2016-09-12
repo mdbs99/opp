@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -299,15 +299,16 @@ O indivíduo determina a hierarquia, ou seja, de baixo pra cima. As hierarquias 
 
 <p>Lembra do <code>TTigre</code>? Se nesse sistema hipotético você precisa analisar na tela a pata de um tigre, não haveria necessidade de instânciar um objeto da Classe <code>TTigre</code> que contém tudo de um tigre (olhos, tipo, peso, tamanho, cor, que corre, nada, caça, etc). Não estou dizendo isso pensando em performance ou alocação de memória, não! Estou dizendo isso porque essa Classe seria enorme e complexa. Iria implementar muitas interfaces para poder Correr, Nadar, Pular… num sistema precisamos abstrair o que não é necessário. Esse é um dos motivos de não precisarmos de Hierarquias Complexas. Se você precisa examinar uma pata, então:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">IPaw</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="c1">// function...</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  IPaw = interface
+    // function...
+  end;
   
-  <span class="n">TTigerPaw</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IPaw</span><span class="p">)</span>
-  <span class="kp">public</span>
-    <span class="c1">// function...</span>
-  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+  TTigerPaw = class(TInterfacedObject, IPaw)
+  public
+    // function...
+  end;
+</code></pre>
 
 <p>Assim como você poderá utilizar os Objetos da Classe <code>TTigerPaw</code> para compor outras abstrações de Tigre em outros contextos.</p>
 
@@ -431,20 +432,20 @@ Não faça isso.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
-        </ul>
-        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/objetos-imutaveis/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
         </ul>
         <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
       </a>
     </div>
   
@@ -494,11 +495,11 @@ Não faça isso.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/objetos-representam-entidades/" class="post-link">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
         </ul>
-        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
     </div>
   

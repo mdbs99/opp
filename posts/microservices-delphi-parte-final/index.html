@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -208,35 +208,36 @@
 
 <p>Abaixo o código modificado que trata erros e exceções. O código em produção é um pouco mais elaborado, no entanto acredito que com esse exemplo você irá entender como o tratamento ocorre no projeto real.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">function</span> <span class="nc">TMicroServiceClient</span><span class="o">.</span><span class="nf">Send</span><span class="p">(</span>
-  <span class="k">const</span> <span class="n">Content</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">with</span> <span class="n">Response</span><span class="p">(</span><span class="n">Content</span><span class="p">)</span> <span class="k">do</span>
-  <span class="k">begin</span>
-    <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TMicroServiceResponse</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-      <span class="n">Code</span><span class="o">,</span>
-      <span class="n">TXMLFactory</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;ISO-8859-1&#39;</span><span class="o">,</span> <span class="n">Stream</span><span class="p">)</span><span class="o">.</span><span class="n">Document</span>
-    <span class="p">)</span><span class="o">;</span>
-    <span class="k">case</span> <span class="n">Code</span> <span class="k">of</span>
-      <span class="c1">// BAD REQUEST</span>
-      <span class="mi">400</span><span class="o">..</span><span class="mi">499</span><span class="o">:</span>
-        <span class="k">raise</span> <span class="n">EMicroService</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span>
-          <span class="bp">Result</span>
-            <span class="o">.</span><span class="n">XML</span>
-            <span class="o">.</span><span class="n">DocumentElement</span>
-            <span class="o">.</span><span class="n">ChildNodes</span><span class="p">[</span><span class="s">&#39;UserMessage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Text</span>
-        <span class="p">)</span><span class="o">;</span>
-      <span class="c1">// SERVER ERROR</span>
-      <span class="mi">500</span><span class="o">..</span><span class="mi">510</span><span class="o">:</span>
-        <span class="k">raise</span> <span class="n">EMicroService</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span>
-          <span class="bp">Result</span>
-            <span class="o">.</span><span class="n">XML</span>
-            <span class="o">.</span><span class="n">DocumentElement</span>
-            <span class="o">.</span><span class="n">ChildNodes</span><span class="p">[</span><span class="s">&#39;DevMessage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Text</span>
-        <span class="p">)</span><span class="o">;</span>
-    <span class="k">end</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>function TMicroServiceClient.Send(
+  const Content: string): IMicroServiceResponse;
+begin
+  with Response(Content) do
+  begin
+    Result := TMicroServiceResponse.New(
+      Code,
+      TXMLFactory.New('ISO-8859-1', Stream).Document
+    );
+    case Code of
+      // BAD REQUEST
+      400..499:
+        raise EMicroService.Create(
+          Result
+            .XML
+            .DocumentElement
+            .ChildNodes['UserMessage'].Text
+        );
+      // SERVER ERROR
+      500..510:
+        raise EMicroService.Create(
+          Result
+            .XML
+            .DocumentElement
+            .ChildNodes['DevMessage'].Text
+        );
+    end;
+  end;
+end;
+</code></pre>
 
 <p>Repare que para cada tipo de erro/exceção, um <em>node</em> (ou <em>nodes</em>) específico é utilizado para obter a informação.</p>
 
@@ -373,11 +374,11 @@
     </div>
   
     <div class="post ml2">
-      <a href="/posts/freeandnil-esqueca/" class="post-link">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
         </ul>
-        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
     </div>
   
@@ -391,11 +392,11 @@
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
         </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
       </a>
     </div>
   
@@ -445,11 +446,11 @@
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+      <a href="/posts/a-declaracao-with-do-e-do-mal/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+          <h4 class="post-title"><li>A declaração WITH-DO é do Mal?</li></h4>
         </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+        <!--<p class="post-summary">Reflexões sobre o uso do WITH-DO no código Object Pascal.</p>-->
       </a>
     </div>
   

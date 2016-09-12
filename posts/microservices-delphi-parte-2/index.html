@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -212,25 +212,26 @@
 
 <p>Há algumas dependências que não estarão no escopo desses artigos, mas acredito que seja fácil abstrair as Classes ou Interfaces como, por exemplo, <code>IDataParams</code> e <code>IXMLDocument</code>.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">IMicroServiceParams</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="nf">Find</span><span class="o">:</span> <span class="n">IDataParams</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  IMicroServiceParams = interface
+    function Find: IDataParams;
+  end;
 
-  <span class="n">IMicroServiceResponse</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="nf">Code</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Empty</span><span class="o">:</span> <span class="kt">Boolean</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">XML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  IMicroServiceResponse = interface
+    function Code: Integer;
+    function Empty: Boolean;
+    function XML: IXMLDocument;
+  end;
 
-  <span class="n">IMicroServiceClient</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="nf">Send</span><span class="p">(</span><span class="k">const</span> <span class="n">Content</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Send</span><span class="p">(</span><span class="n">XML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  IMicroServiceClient = interface
+    function Send(const Content: string): IMicroServiceResponse; overload;
+    function Send(XML: IXMLDocument): IMicroServiceResponse; overload;
+  end;
 
-  <span class="n">IMicroServiceAction</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="nf">Act</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+  IMicroServiceAction = interface
+    function Act: IMicroServiceResponse;
+  end;
+</code></pre>
 
 <h2 id="localizando-servicos">Localizando Serviços</h2>
 
@@ -261,153 +262,154 @@
 
 <p>Consegue ver a beleza do método <code>TMicroServiceClient.Response</code> onde (quase) tudo são Objetos conversando e <a href="/posts/objetos-pensam-e-tomam-decisoes/">tomando decisões</a> entre si?</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">EMicroService</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">Exception</span><span class="p">)</span><span class="o">;</span>
+<pre><code>type
+  EMicroService = class(Exception);
 
-  <span class="n">TMicroServiceParams</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IMicroServiceParams</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FServiceName</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">ServiceName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="n">ServiceName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceParams</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Find</span><span class="o">:</span> <span class="n">IDataParams</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  TMicroServiceParams = class(TInterfacedObject, IMicroServiceParams)
+  private
+    FServiceName: string;
+  public
+    constructor Create(const ServiceName: string);
+    class function New(const ServiceName: string): IMicroServiceParams;
+    function Find: IDataParams; overload;
+  end;
 
-  <span class="n">TMicroServiceResponse</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IMicroServiceResponse</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FCode</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-    <span class="n">FXML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Code</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span> <span class="n">XML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">Code</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span> <span class="n">XML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Code</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Empty</span><span class="o">:</span> <span class="kt">Boolean</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">XML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  TMicroServiceResponse = class(TInterfacedObject, IMicroServiceResponse)
+  private
+    FCode: Integer;
+    FXML: IXMLDocument;
+  public
+    constructor Create(Code: Integer; XML: IXMLDocument);
+    class function New(Code: Integer; XML: IXMLDocument): IMicroServiceResponse;
+    function Code: Integer;
+    function Empty: Boolean;
+    function XML: IXMLDocument;
+  end;
 
-  <span class="n">TMicroServiceClient</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IMicroServiceClient</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FParams</span><span class="o">:</span> <span class="n">IDataParams</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Response</span><span class="p">(</span><span class="k">const</span> <span class="n">Content</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IHttpResponse</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">ServiceParams</span><span class="o">:</span> <span class="n">IDataParams</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">ServiceParams</span><span class="o">:</span> <span class="n">IDataParams</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceClient</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Send</span><span class="p">(</span><span class="k">const</span> <span class="n">Content</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Send</span><span class="p">(</span><span class="n">XML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  TMicroServiceClient = class(TInterfacedObject, IMicroServiceClient)
+  private
+    FParams: IDataParams;
+    function Response(const Content: string): IHttpResponse;
+  public
+    constructor Create(ServiceParams: IDataParams);
+    class function New(ServiceParams: IDataParams): IMicroServiceClient;
+    function Send(const Content: string): IMicroServiceResponse; overload;
+    function Send(XML: IXMLDocument): IMicroServiceResponse; overload;
+  end;
 
-<span class="k">implementation</span>
+implementation
 
-<span class="k">uses</span>
-  <span class="n">XMLIntf</span><span class="o">;</span>
+uses
+  XMLIntf;
 
-<span class="cm">{ TMicroServiceParams }</span>
+{ TMicroServiceParams }
 
-<span class="k">constructor</span> <span class="nc">TMicroServiceParams</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">ServiceName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FServiceName</span> <span class="o">:=</span> <span class="n">ServiceName</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TMicroServiceParams.Create(const ServiceName: string);
+begin
+  inherited Create;
+  FServiceName := ServiceName;
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TMicroServiceParams</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="n">ServiceName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceParams</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">Create</span><span class="p">(</span><span class="n">ServiceName</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+class function TMicroServiceParams.New(const ServiceName: string): IMicroServiceParams;
+begin
+  Result := Create(ServiceName);
+end;
 
-<span class="k">function</span> <span class="nc">TMicroServiceParams</span><span class="o">.</span><span class="nf">Find</span><span class="o">:</span> <span class="n">IDataParams</span><span class="o">;</span>
-<span class="k">var</span> 
-  <span class="n">Q</span><span class="o">:</span> <span class="n">ISQLQuery</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="c1">// Através de uma Query (instância Q), </span>
-  <span class="c1">// pesquisa pelo nome do serviço (FServiceName).</span>
-  <span class="c1">// Utilizando os Fields, retornamos uma instância TDataParams.</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TDataParams</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">Fields</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TMicroServiceParams.Find: IDataParams;
+var 
+  Q: ISQLQuery;
+begin
+  // Através de uma Query (instância Q), 
+  // pesquisa pelo nome do serviço (FServiceName).
+  // Utilizando os Fields, retornamos uma instância TDataParams.
+  Result := TDataParams.New(Q.Fields);
+end;
 
-<span class="cm">{ TMicroServiceResponse }</span>
+{ TMicroServiceResponse }
 
-<span class="k">constructor</span> <span class="nc">TMicroServiceResponse</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Code</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span> <span class="n">XML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FCode</span> <span class="o">:=</span> <span class="n">Code</span><span class="o">;</span>
-  <span class="n">FXML</span> <span class="o">:=</span> <span class="n">XML</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TMicroServiceResponse.Create(Code: Integer; XML: IXMLDocument);
+begin
+  inherited Create;
+  FCode := Code;
+  FXML := XML;
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TMicroServiceResponse</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Code</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span> <span class="n">XML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">Create</span><span class="p">(</span><span class="n">Code</span><span class="o">,</span> <span class="n">XML</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+class function TMicroServiceResponse.New(Code: Integer; XML: IXMLDocument): IMicroServiceResponse;
+begin
+  Result := Create(Code, XML);
+end;
 
-<span class="k">function</span> <span class="nc">TMicroServiceResponse</span><span class="o">.</span><span class="nf">Code</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FCode</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TMicroServiceResponse.Code: Integer;
+begin
+  Result := FCode;
+end;
 
-<span class="k">function</span> <span class="nc">TMicroServiceResponse</span><span class="o">.</span><span class="nf">Empty</span><span class="o">:</span> <span class="kt">Boolean</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="p">(</span><span class="n">FCode</span> <span class="o">=</span> <span class="mi">204</span><span class="p">)</span> <span class="k">or</span> <span class="p">(</span><span class="n">FXML</span><span class="o">.</span><span class="n">ChildNodes</span><span class="o">.</span><span class="n">Count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TMicroServiceResponse.Empty: Boolean;
+begin
+  Result := (FCode = 204) or (FXML.ChildNodes.Count = 0);
+end;
 
-<span class="k">function</span> <span class="nc">TMicroServiceResponse</span><span class="o">.</span><span class="nf">XML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FXML</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TMicroServiceResponse.XML: IXMLDocument;
+begin
+  Result := FXML;
+end;
 
-<span class="cm">{ TMicroServiceClient }</span>
+{ TMicroServiceClient }
 
-<span class="k">function</span> <span class="nc">TMicroServiceClient</span><span class="o">.</span><span class="nf">Response</span><span class="p">(</span><span class="k">const</span> <span class="n">Content</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IHttpResponse</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">try</span>
-    <span class="bp">Result</span> <span class="o">:=</span>
-      <span class="n">THttpClient</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-        <span class="n">TWebURL</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-          <span class="n">FParams</span><span class="o">.</span><span class="n">Param</span><span class="p">(</span><span class="s">&#39;server&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsString</span><span class="o">,</span>
-          <span class="n">FParams</span><span class="o">.</span><span class="n">Param</span><span class="p">(</span><span class="s">&#39;path&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsString</span><span class="o">,</span>
-          <span class="n">FParams</span><span class="o">.</span><span class="n">Param</span><span class="p">(</span><span class="s">&#39;port&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsInteger</span>
-        <span class="p">)</span>
-        <span class="o">.</span><span class="n">AsString</span><span class="o">,</span>
-        <span class="s">&#39;application/xml;charset=&#39;</span> <span class="o">+</span>
-          <span class="n">FParams</span><span class="o">.</span><span class="n">Param</span><span class="p">(</span><span class="s">&#39;encoding&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsString</span><span class="o">,</span>
-        <span class="n">TDataStream</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Content</span><span class="p">)</span>
-      <span class="p">)</span>
-      <span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">FParams</span><span class="o">.</span><span class="n">Param</span><span class="p">(</span><span class="s">&#39;verb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsString</span><span class="p">)</span><span class="o">;</span>
-  <span class="k">except</span>
-    <span class="k">on</span> <span class="n">E</span><span class="o">:</span> <span class="n">Exception</span> <span class="k">do</span>
-    <span class="k">begin</span>
-      <span class="k">raise</span> <span class="n">EMicroService</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span>
-        <span class="s">&#39;Service: &#39;</span> <span class="o">+</span> <span class="n">FParams</span><span class="o">.</span><span class="n">Param</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">AsString</span> <span class="o">+</span> <span class="sc">#13</span> <span class="o">+</span>
-        <span class="s">&#39;Error: &#39;</span> <span class="o">+</span> <span class="n">E</span><span class="o">.</span><span class="n">Message</span>
-      <span class="p">)</span><span class="o">;</span>
-    <span class="k">end</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TMicroServiceClient.Response(const Content: string): IHttpResponse;
+begin
+  try
+    Result :=
+      THttpClient.New(
+        TWebURL.New(
+          FParams.Param('server').AsString,
+          FParams.Param('path').AsString,
+          FParams.Param('port').AsInteger
+        )
+        .AsString,
+        'application/xml;charset=' +
+          FParams.Param('encoding').AsString,
+        TDataStream.New(Content)
+      )
+      .Execute(FParams.Param('verb').AsString);
+  except
+    on E: Exception do
+    begin
+      raise EMicroService.Create(
+        'Service: ' + FParams.Param('name').AsString + #13 +
+        'Error: ' + E.Message
+      );
+    end;
+  end;
+end;
 
-<span class="k">constructor</span> <span class="nc">TMicroServiceClient</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">ServiceParams</span><span class="o">:</span> <span class="n">IDataParams</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FParams</span> <span class="o">:=</span> <span class="n">ServiceParams</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TMicroServiceClient.Create(ServiceParams: IDataParams);
+begin
+  inherited Create;
+  FParams := ServiceParams;
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TMicroServiceClient</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">ServiceParams</span><span class="o">:</span> <span class="n">IDataParams</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceClient</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">Create</span><span class="p">(</span><span class="n">ServiceParams</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+class function TMicroServiceClient.New(ServiceParams: IDataParams): IMicroServiceClient;
+begin
+  Result := Create(ServiceParams);
+end;
 
-<span class="k">function</span> <span class="nc">TMicroServiceClient</span><span class="o">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">const</span> <span class="n">Content</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">with</span> <span class="n">Response</span><span class="p">(</span><span class="n">Content</span><span class="p">)</span> <span class="k">do</span>
-  <span class="k">begin</span>
-    <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TMicroServiceResponse</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-      <span class="n">Code</span><span class="o">,</span>
-      <span class="n">TXMLFactory</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;ISO-8859-1&#39;</span><span class="o">,</span> <span class="n">Stream</span><span class="p">)</span><span class="o">.</span><span class="n">Document</span>
-    <span class="p">)</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TMicroServiceClient.Send(const Content: string): IMicroServiceResponse;
+begin
+  with Response(Content) do
+  begin
+    Result := TMicroServiceResponse.New(
+      Code,
+      TXMLFactory.New('ISO-8859-1', Stream).Document
+    );
+  end;
+end;
 
-<span class="k">function</span> <span class="nc">TMicroServiceClient</span><span class="o">.</span><span class="nf">Send</span><span class="p">(</span><span class="n">XML</span><span class="o">:</span> <span class="n">IXMLDocument</span><span class="p">)</span><span class="o">:</span> <span class="n">IMicroServiceResponse</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">Send</span><span class="p">(</span><span class="n">XML</span><span class="o">.</span><span class="n">XML</span><span class="o">.</span><span class="n">Text</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+function TMicroServiceClient.Send(XML: IXMLDocument): IMicroServiceResponse;
+begin
+  Result := Send(XML.XML.Text);
+end;
+</code></pre>
 
 <h2 id="no-proximo-artigo">No próximo artigo…</h2>
 
@@ -493,18 +495,18 @@
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/microservices-delphi-parte-3/" class="post-link">
+      <a href="/posts/microservices-delphi-parte-1/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Microservices com Delphi — Parte 3</li></h4>
+          <h4 class="post-title"><li>Microservices com Delphi — Parte 1</li></h4>
         </ul>
         <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/microservices-delphi-parte-1/" class="post-link">
+      <a href="/posts/microservices-delphi-parte-3/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Microservices com Delphi — Parte 1</li></h4>
+          <h4 class="post-title"><li>Microservices com Delphi — Parte 3</li></h4>
         </ul>
         <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
       </a>

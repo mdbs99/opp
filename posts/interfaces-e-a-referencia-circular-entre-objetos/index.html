@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -265,11 +265,12 @@ significa dizer que não temos ajuda para resolver o problema.</p>
 
 <p>Escolho a solução da Synopse, a solução mais simples na minha opinião:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">procedure</span> <span class="nf">SetWeak</span><span class="p">(</span><span class="n">aInterfaceField</span><span class="o">:</span> <span class="n">PIInterface</span><span class="o">;</span> 
-  <span class="k">const</span> <span class="n">aValue</span><span class="o">:</span> <span class="n">IInterface</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="kt">PPointer</span><span class="p">(</span><span class="n">aInterfaceField</span><span class="p">)</span><span class="o">^</span> <span class="o">:=</span> <span class="kt">Pointer</span><span class="p">(</span><span class="n">aValue</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>procedure SetWeak(aInterfaceField: PIInterface; 
+  const aValue: IInterface);
+begin
+  PPointer(aInterfaceField)^ := Pointer(aValue);
+end;
+</code></pre>
 
 <p>Apenas uma <em>procedure</em> que é utilizada para atribuição de instância a uma variável.</p>
 
@@ -282,16 +283,17 @@ significa dizer que não temos ajuda para resolver o problema.</p>
   <li><em>Author</em> tem uma lista de livros;</li>
 </ol>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">var</span>
-  <span class="n">Book</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">Book</span> <span class="o">:=</span> <span class="n">TBook</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-    <span class="s">&#39;Object Pascal&#39;</span><span class="o">,</span>     <span class="c1">// name</span>
-    <span class="s">&#39;About Interfaces&#39;</span><span class="o">,</span>  <span class="c1">// text</span>
-    <span class="n">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;Jeff&#39;</span><span class="p">)</span>   <span class="c1">// author</span>
-  <span class="p">)</span><span class="o">;</span>
-  <span class="n">ShowMessage</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">Author</span><span class="o">.</span><span class="n">Books</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>var
+  Book: IBook;
+begin
+  Book := TBook.New(
+    'Object Pascal',     // name
+    'About Interfaces',  // text
+    TAuthor.New('Jeff')   // author
+  );
+  ShowMessage(Book.Author.Books.Get(0).Name);
+end;
+</code></pre>
 
 <p>Para que o código acima funcione, no construtor de <em>TBook</em> haverá uma chamada para <em>Author.Books.Add(Self)</em>, adicionando
 a nova instância de <em>Book</em> na lista de livros do <em>Author</em>.</p>
@@ -356,243 +358,244 @@ o código as mesmas classes com os mesmos argumentos podem ser utilizados sem ne
 
 <p>O código implementa o exemplo do início do post, sobre <em>Author</em>, <em>Book</em> e <em>Books</em>.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">unit</span> <span class="n">Unit1</span><span class="o">;</span>
+<pre><code>unit Unit1;
 
-<span class="cm">{$mode objfpc}{$H+}</span>
+{$mode objfpc}{$H+}
 
-<span class="k">interface</span>
+interface
 
-<span class="k">uses</span>
-  <span class="n">Classes</span><span class="o">,</span> <span class="n">SysUtils</span><span class="o">,</span> <span class="n">Forms</span><span class="o">,</span> <span class="n">Controls</span><span class="o">,</span> <span class="n">StdCtrls</span><span class="o">,</span> <span class="n">Dialogs</span><span class="o">;</span>
+uses
+  Classes, SysUtils, Forms, Controls, StdCtrls, Dialogs;
 
-<span class="k">type</span>
-  <span class="n">IAuthor</span> <span class="o">=</span> <span class="k">interface</span><span class="o">;</span>
-  <span class="n">IBook</span> <span class="o">=</span> <span class="k">interface</span><span class="o">;</span>
-  <span class="n">IBooks</span> <span class="o">=</span> <span class="k">interface</span><span class="o">;</span>
+type
+  IAuthor = interface;
+  IBook = interface;
+  IBooks = interface;
 
-  <span class="n">IAuthor</span> <span class="o">=</span> <span class="k">interface</span>
-  <span class="p">[</span><span class="s">&#39;{5F7AC8EF-4C81-4F88-8915-8319B506291F}&#39;</span><span class="p">]</span>
-    <span class="k">function</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Books</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  IAuthor = interface
+  ['{5F7AC8EF-4C81-4F88-8915-8319B506291F}']
+    function Name: string;
+    function Books: IBooks;
+  end;
 
-  <span class="n">IBook</span> <span class="o">=</span> <span class="k">interface</span>
-  <span class="p">[</span><span class="s">&#39;{02582B1D-F608-4800-9702-2E5B75CD1264}&#39;</span><span class="p">]</span>
-    <span class="k">function</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Write</span><span class="p">(</span><span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  IBook = interface
+  ['{02582B1D-F608-4800-9702-2E5B75CD1264}']
+    function Name: string;
+    function Author: IAuthor;
+    function Write(const Text: string): IBook;
+    function Text: string;
+  end;
 
-  <span class="n">IBooks</span> <span class="o">=</span> <span class="k">interface</span>
-  <span class="p">[</span><span class="s">&#39;{55E4D43B-8DC8-4A01-AA90-97F08A6F3F1A}&#39;</span><span class="p">]</span>
-    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="n">Book</span><span class="o">:</span> <span class="n">IBook</span><span class="p">)</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Get</span><span class="p">(</span><span class="kp">Index</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Count</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  IBooks = interface
+  ['{55E4D43B-8DC8-4A01-AA90-97F08A6F3F1A}']
+    function Add(Book: IBook): IBooks;
+    function Get(Index: Integer): IBook;
+    function Count: Integer;
+  end;
 
-<span class="cm">{ Classes }</span>
+{ Classes }
 
-  <span class="n">TAuthor</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IAuthor</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FName</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="n">FBooks</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
-    <span class="k">function</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Books</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  TAuthor = class(TInterfacedObject, IAuthor)
+  private
+    FName: string;
+    FBooks: IBooks;
+  public
+    constructor Create(const Name: string);
+    class function New(const Name: string): IAuthor;
+    function Name: string;
+    function Books: IBooks;
+  end;
 
-  <span class="n">TBook</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IBook</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FName</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="n">FText</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="n">FAuthor</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
-      <span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
-      <span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
-      <span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span> <span class="n">overload</span><span class="o">;</span>
-    <span class="k">function</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Write</span><span class="p">(</span><span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  TBook = class(TInterfacedObject, IBook)
+  private
+    FName: string;
+    FText: string;
+    FAuthor: IAuthor;
+  public
+    constructor Create(const Name: string; 
+      const Text: string; Author: IAuthor);
+    class function New(const Name: string; 
+      const Text: string; Author: IAuthor): IBook; overload;
+    class function New(const Name: string; 
+      const Text: string): IBook; overload;
+    function Name: string;
+    function Author: IAuthor;
+    function Write(const Text: string): IBook;
+    function Text: string;
+  end;
 
-  <span class="n">TBooks</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">IBooks</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FList</span><span class="o">:</span> <span class="n">TInterfaceList</span><span class="o">;</span>
-    <span class="n">FAuthor</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">;</span>
-    <span class="k">class</span> <span class="k">function</span> <span class="k">New</span><span class="p">(</span><span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
-    <span class="k">destructor</span> <span class="nf">Destroy</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="n">Book</span><span class="o">:</span> <span class="n">IBook</span><span class="p">)</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Get</span><span class="p">(</span><span class="kp">Index</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Count</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  TBooks = class(TInterfacedObject, IBooks)
+  private
+    FList: TInterfaceList;
+    FAuthor: IAuthor;
+  public
+    constructor Create(Author: IAuthor);
+    class function New(Author: IAuthor): IBooks;
+    destructor Destroy; override;
+    function Add(Book: IBook): IBooks;
+    function Get(Index: Integer): IBook;
+    function Count: Integer;
+  end;
 
-  <span class="n">TForm1</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TForm</span><span class="p">)</span>
-    <span class="n">Button1</span><span class="o">:</span> <span class="n">TButton</span><span class="o">;</span>
-    <span class="k">procedure</span> <span class="nf">Button1Click</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+  TForm1 = class(TForm)
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
+  end;
 
-<span class="k">var</span>
-  <span class="n">Form1</span><span class="o">:</span> <span class="n">TForm1</span><span class="o">;</span>
+var
+  Form1: TForm1;
 
-<span class="k">implementation</span>
+implementation
 
-<span class="cm">{$R *.lfm}</span>
+{$R *.lfm}
 
-<span class="k">procedure</span> <span class="nf">SetWeak</span><span class="p">(</span><span class="n">aInterfaceField</span><span class="o">:</span> <span class="n">PInterface</span><span class="o">;</span> 
-  <span class="k">const</span> <span class="n">aValue</span><span class="o">:</span> <span class="n">IInterface</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="kt">PPointer</span><span class="p">(</span><span class="n">aInterfaceField</span><span class="p">)</span><span class="o">^</span> <span class="o">:=</span> <span class="kt">Pointer</span><span class="p">(</span><span class="n">aValue</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+procedure SetWeak(aInterfaceField: PInterface; 
+  const aValue: IInterface);
+begin
+  PPointer(aInterfaceField)^ := Pointer(aValue);
+end;
 
-<span class="cm">{ TAuthor }</span>
+{ TAuthor }
 
-<span class="k">constructor</span> <span class="nc">TAuthor</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FName</span> <span class="o">:=</span> <span class="n">Name</span><span class="o">;</span>
-  <span class="n">FBooks</span> <span class="o">:=</span> <span class="n">TBooks</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">Self</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TAuthor.Create(const Name: string);
+begin
+  inherited Create;
+  FName := Name;
+  FBooks := TBooks.New(Self);
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TAuthor</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Name</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+class function TAuthor.New(const Name: string): IAuthor;
+begin
+  Result := TAuthor.Create(Name);
+end;
 
-<span class="k">function</span> <span class="nc">TAuthor</span><span class="o">.</span><span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="nf">FName</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TAuthor.Name: string;
+begin
+  Result := FName;
+end;
 
-<span class="k">function</span> <span class="nc">TAuthor</span><span class="o">.</span><span class="nf">Books</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FBooks</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TAuthor.Books: IBooks;
+begin
+  Result := FBooks;
+end;
 
-<span class="cm">{ TBook }</span>
+{ TBook }
 
-<span class="k">constructor</span> <span class="nc">TBook</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
-  <span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FName</span> <span class="o">:=</span> <span class="n">Name</span><span class="o">;</span>
-  <span class="n">FText</span> <span class="o">:=</span> <span class="n">Text</span><span class="o">;</span>
-  <span class="k">if</span> <span class="nb">Assigned</span><span class="p">(</span><span class="n">Author</span><span class="p">)</span> <span class="k">then</span>
-    <span class="n">FAuthor</span> <span class="o">:=</span> <span class="n">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Author</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span>
-  <span class="k">else</span>
-    <span class="n">FAuthor</span> <span class="o">:=</span> <span class="n">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;Undefined&#39;</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TBook.Create(const Name: string; 
+  const Text: string; Author: IAuthor);
+begin
+  inherited Create;
+  FName := Name;
+  FText := Text;
+  if Assigned(Author) then
+    FAuthor := TAuthor.New(Author.Name)
+  else
+    FAuthor := TAuthor.New('Undefined');
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TBook</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
-  <span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> <span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TBook</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Name</span><span class="o">,</span> <span class="n">Text</span><span class="o">,</span> <span class="n">Author</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+class function TBook.New(const Name: string; 
+  const Text: string; Author: IAuthor): IBook;
+begin
+  Result := TBook.Create(Name, Text, Author);
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TBook</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="k">const</span> <span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
-  <span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">New</span><span class="p">(</span><span class="n">Name</span><span class="o">,</span> <span class="n">Text</span><span class="o">,</span> <span class="k">nil</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+class function TBook.New(const Name: string; 
+  const Text: string): IBook;
+begin
+  Result := New(Name, Text, nil);
+end;
 
-<span class="k">function</span> <span class="nc">TBook</span><span class="o">.</span><span class="kp">Name</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="nf">FName</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TBook.Name: string;
+begin
+  Result := FName;
+end;
 
-<span class="k">function</span> <span class="nc">TBook</span><span class="o">.</span><span class="nf">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FAuthor</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TBook.Author: IAuthor;
+begin
+  Result := FAuthor;
+end;
 
-<span class="k">function</span> <span class="nc">TBook</span><span class="o">.</span><span class="nf">Write</span><span class="p">(</span><span class="k">const</span> <span class="n">Text</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FText</span> <span class="o">+=</span> <span class="n">Text</span> <span class="o">+</span> <span class="sc">#13</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TBook.Write(const Text: string): IBook;
+begin
+  Result := Self;
+  FText += Text + #13;
+end;
 
-<span class="k">function</span> <span class="nc">TBook</span><span class="o">.</span><span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FText</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TBook.Text: string;
+begin
+  Result := FText;
+end;
 
-<span class="cm">{ TBooks }</span>
+{ TBooks }
 
-<span class="k">constructor</span> <span class="nc">TBooks</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FList</span> <span class="o">:=</span> <span class="n">TInterfaceList</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
-  <span class="n">SetWeak</span><span class="p">(</span><span class="o">@</span><span class="n">FAuthor</span><span class="o">,</span> <span class="n">Author</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TBooks.Create(Author: IAuthor);
+begin
+  inherited Create;
+  FList := TInterfaceList.Create;
+  SetWeak(@FAuthor, Author);
+end;
 
-<span class="k">class</span> <span class="k">function</span> <span class="nc">TBooks</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">Author</span><span class="o">:</span> <span class="n">IAuthor</span><span class="p">)</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">TBooks</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">Author</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+class function TBooks.New(Author: IAuthor): IBooks;
+begin
+  Result := TBooks.Create(Author);
+end;
 
-<span class="k">destructor</span> <span class="nc">TBooks</span><span class="o">.</span><span class="nf">Destroy</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">FList</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="k">inherited</span> <span class="n">Destroy</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+destructor TBooks.Destroy;
+begin
+  FList.Free;
+  inherited Destroy;
+end;
 
-<span class="k">function</span> <span class="nc">TBooks</span><span class="o">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Book</span><span class="o">:</span> <span class="n">IBook</span><span class="p">)</span><span class="o">:</span> <span class="n">IBooks</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FList</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span>
-    <span class="n">TBook</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-      <span class="n">Book</span><span class="o">.</span><span class="n">Name</span><span class="o">,</span>
-      <span class="n">Book</span><span class="o">.</span><span class="n">Text</span><span class="o">,</span>
-      <span class="n">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="n">FAuthor</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span>
-    <span class="p">)</span>
-  <span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TBooks.Add(Book: IBook): IBooks;
+begin
+  Result := Self;
+  FList.Add(
+    TBook.New(
+      Book.Name,
+      Book.Text,
+      TAuthor.New(FAuthor.Name)
+    )
+  );
+end;
 
-<span class="k">function</span> <span class="nc">TBooks</span><span class="o">.</span><span class="nf">Get</span><span class="p">(</span><span class="kp">Index</span><span class="o">:</span> <span class="kt">Integer</span><span class="p">)</span><span class="o">:</span> <span class="n">IBook</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FList</span><span class="o">.</span><span class="n">Items</span><span class="p">[</span><span class="kp">Index</span><span class="p">]</span> <span class="k">as</span> <span class="n">IBook</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TBooks.Get(Index: Integer): IBook;
+begin
+  Result := FList.Items[Index] as IBook;
+end;
 
-<span class="k">function</span> <span class="nc">TBooks</span><span class="o">.</span><span class="nf">Count</span><span class="o">:</span> <span class="kt">Integer</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FList</span><span class="o">.</span><span class="n">Count</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TBooks.Count: Integer;
+begin
+  Result := FList.Count;
+end;
 
-<span class="cm">{ TForm1 }</span>
+{ TForm1 }
 
-<span class="k">procedure</span> <span class="nc">TForm1</span><span class="o">.</span><span class="nf">Button1Click</span><span class="p">(</span><span class="n">Sender</span><span class="o">:</span> <span class="kt">TObject</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">ShowMessage</span><span class="p">(</span>
-    <span class="n">TBook</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-      <span class="s">&#39;Object Pascal&#39;</span><span class="o">,</span>
-      <span class="s">&#39;Strong Reference&#39;</span><span class="o">,</span>
-      <span class="n">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;Jeff&#39;</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="o">.</span><span class="n">Author</span><span class="o">.</span><span class="n">Name</span>
-  <span class="p">)</span><span class="o">;</span>
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  ShowMessage(
+    TBook.New(
+      'Object Pascal',
+      'Strong Reference',
+      TAuthor.New('Jeff')
+    )
+    .Author.Name
+  );
 
-  <span class="n">ShowMessage</span><span class="p">(</span>
-    <span class="n">TAuthor</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;Marcos&#39;</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">Books</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span>
-        <span class="n">TBook</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-          <span class="s">&#39;Object Pascal&#39;</span><span class="o">,</span>
-          <span class="s">&#39;Weak Reference&#39;</span>
-        <span class="p">)</span>
-      <span class="p">)</span>
-      <span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">Author</span><span class="o">.</span><span class="n">Name</span>
-  <span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+  ShowMessage(
+    TAuthor.New('Marcos')
+      .Books.Add(
+        TBook.New(
+          'Object Pascal',
+          'Weak Reference'
+        )
+      )
+      .Get(0)
+      .Author.Name
+  );
+end;
 
-<span class="k">end</span><span class="o">.</span></code></pre></figure>
+end.
+</code></pre>
 
 <p>A <em>procedure SetWeak</em> é utilizada somente uma vez, na chamada do construtor de <em>Books</em>. O motivo é que o <em>Author</em> cria, internamente, 
 uma instância de <em>Books</em> e esta mantém a referência do seu criador, o <em>Author</em>.</p>
@@ -719,20 +722,20 @@ quando fizer manutenção no código.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
-        </ul>
-        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/objetos-imutaveis/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
         </ul>
         <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
       </a>
     </div>
   
@@ -764,20 +767,20 @@ quando fizer manutenção no código.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
         </ul>
         <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
     </div>
   
@@ -800,11 +803,11 @@ quando fizer manutenção no código.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+      <a href="/posts/microservices-delphi-parte-3/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+          <h4 class="post-title"><li>Microservices com Delphi — Parte 3</li></h4>
         </ul>
-        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
+        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
       </a>
     </div>
   

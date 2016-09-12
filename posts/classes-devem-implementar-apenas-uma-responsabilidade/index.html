@@ -14,7 +14,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201609051304" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201609121225" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -226,69 +226,70 @@ dividindo as funcionalidades em Classes menores e mais reutilizáveis.</p>
 
 <p>De acordo com os requisitos acima, <strong>parece muito simples</strong> pensar numa única Classe com “apenas” 4 métodos.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TLog</span> <span class="o">=</span> <span class="k">class</span>
-  <span class="kp">private</span>
-    <span class="n">FInfo</span><span class="o">:</span> <span class="n">TStrings</span><span class="o">;</span>
-    <span class="n">FMail</span><span class="o">:</span> <span class="n">TMail</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="o">;</span>
-    <span class="k">destructor</span> <span class="nf">Destroy</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">SaveToFile</span><span class="p">(</span><span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">SaveToDB</span><span class="p">(</span><span class="n">DB</span><span class="o">:</span> <span class="n">IDatabase</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">SendMail</span><span class="p">(</span><span class="k">const</span> <span class="n">From</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TLog = class
+  private
+    FInfo: TStrings;
+    FMail: TMail;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function Add(const S: string): TLog;
+    function SaveToFile(const FileName: string): TLog;
+    function SaveToDB(DB: IDatabase): TLog;
+    function SendMail(const From: string): TLog;
+  end;
   
-<span class="k">implementation</span>
+implementation
 
-<span class="k">constructor</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">Create</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FInfo</span> <span class="o">:=</span> <span class="n">TStringList</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
-  <span class="n">FMail</span> <span class="o">:=</span> <span class="n">TMail</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TLog.Create;
+begin
+  inherited Create;
+  FInfo := TStringList.Create;
+  FMail := TMail.Create;
+end;
 
-<span class="k">destructor</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">Destroy</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">FInfo</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="n">FMail</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="k">inherited</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+destructor TLog.Destroy;
+begin
+  FInfo.Free;
+  FMail.Free;
+  inherited;
+end;
 
-<span class="k">function</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FInfo</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TLog.Add(const S: string): TLog;
+begin
+  Result := Self;
+  FInfo.Add(S);
+end;
 
-<span class="k">function</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">SaveToFile</span><span class="p">(</span><span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FInfo</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="n">FileName</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">FInfo</span><span class="o">.</span><span class="n">Clear</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TLog.SaveToFile(const FileName: string): TLog;
+begin
+  Result := Self;
+  FInfo.SaveToFile(FileName);
+  FInfo.Clear;
+end;
 
-<span class="k">function</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">SaveToDB</span><span class="p">(</span><span class="n">DB</span><span class="o">:</span> <span class="n">IDatabase</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">DB</span><span class="o">.</span><span class="n">Query</span><span class="p">(</span>
-    <span class="s">&#39;insert into Log (info) values (:info)&#39;</span><span class="o">,</span>
-    <span class="n">TSQLParams</span><span class="o">.</span><span class="k">New</span>
-      <span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#39;info&#39;</span><span class="o">,</span> <span class="n">ftString</span><span class="o">,</span> <span class="n">FInfo</span><span class="o">.</span><span class="n">Text</span><span class="p">)</span>
-  <span class="p">)</span>
-  <span class="o">.</span><span class="n">Execute</span><span class="o">;</span> 
-  <span class="n">FInfo</span><span class="o">.</span><span class="n">Clear</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TLog.SaveToDB(DB: IDatabase): TLog;
+begin
+  Result := Self;
+  DB.Query(
+    'insert into Log (info) values (:info)',
+    TSQLParams.New
+      .Add('info', ftString, FInfo.Text)
+  )
+  .Execute; 
+  FInfo.Clear;
+end;
 
-<span class="k">function</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">SendMail</span><span class="p">(</span><span class="k">const</span> <span class="n">From</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FMail</span><span class="o">.</span><span class="n">Send</span><span class="p">(</span><span class="n">From</span><span class="o">,</span> <span class="n">FInfo</span><span class="o">.</span><span class="n">Text</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">FInfo</span><span class="o">.</span><span class="n">Clear</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TLog.SendMail(const From: string): TLog;
+begin
+  Result := Self;
+  FMail.Send(From, FInfo.Text);
+  FInfo.Clear;
+end;
 
-<span class="k">end</span><span class="o">.</span></code></pre></figure>
+end.
+</code></pre>
 
 <p><strong>Observações</strong>:</p>
 
@@ -322,12 +323,13 @@ de <a href="/posts/nao-utilize-metodos-estaticos/">Métodos Estáticos</a>.</p>
 
 <p>É claro que a <a href="/posts/interfaces-em-todo-lugar/">primeira coisa a fazer</a> é definirmos uma abstração para <em>Log</em>. Precisamos de uma Interface.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">ILog</span> <span class="o">=</span> <span class="k">interface</span>
-    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>type
+  ILog = interface
+    function Add(const S: string): ILog;
+    function Text: string;
+    function Save: ILog;
+  end;
+</code></pre>
 
 <p>Apenas isso.</p>
 
@@ -337,154 +339,157 @@ de <a href="/posts/nao-utilize-metodos-estaticos/">Métodos Estáticos</a>.</p>
 
 <p>Primeiro uma Classe para implementar o <em>Log</em> apenas em memória — pode ser utilizado em <em>UnitTests</em>.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TLogInMemory</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">ILog</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FInfo</span><span class="o">:</span> <span class="n">TStrings</span><span class="o">;</span>  
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-    <span class="c1">//class function New...</span>
-    <span class="k">destructor</span> <span class="nf">Destroy</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TLogInMemory = class(TInterfacedObject, ILog)
+  private
+    FInfo: TStrings;  
+  public
+    constructor Create(const S: string);
+    //class function New...
+    destructor Destroy; override;
+    function Add(const S: string): ILog;
+    function Text: string;
+    function Save: ILog;
+  end;
   
-<span class="k">implementation</span>
+implementation
 
-<span class="k">constructor</span> <span class="nc">TLogInMemory</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FInfo</span> <span class="o">:=</span> <span class="n">TStringList</span><span class="o">.</span><span class="n">Create</span><span class="o">;</span>
-  <span class="n">FInfo</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TLogInMemory.Create(const S: string);
+begin
+  inherited Create;
+  FInfo := TStringList.Create;
+  FInfo.Add(S);
+end;
 
-<span class="k">destructor</span> <span class="nc">TLogInMemory</span><span class="o">.</span><span class="nf">Destroy</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">FInfo</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="k">inherited</span> <span class="n">Destroy</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+destructor TLogInMemory.Destroy;
+begin
+  FInfo.Free;
+  inherited Destroy;
+end;
 
-<span class="k">function</span> <span class="nc">TLogInMemory</span><span class="o">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FInfo</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TLogInMemory.Add(const S: string): ILog;
+begin
+  Result := Self;
+  FInfo.Add(S);
+end;
 
-<span class="k">function</span> <span class="nc">TLogInMemory</span><span class="o">.</span><span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FInfo</span><span class="o">.</span><span class="n">Text</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TLogInMemory.Text: string;
+begin
+  Result := FInfo.Text;
+end;
 
-<span class="k">function</span> <span class="nc">TLogInMemory</span><span class="o">.</span><span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FInfo</span><span class="o">.</span><span class="n">Clear</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+function TLogInMemory.Save: ILog;
+begin
+  Result := Self;
+  FInfo.Clear;
+end;
+</code></pre>
 
 <p>No método <code>Save</code> não há nada para registrar pois o <em>Log</em> só trabalha em memória.</p>
 
 <p>Teremos outra Classe para fazer o <em>Log</em> num Arquivo Texto:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TLogToFile</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">ILog</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FOrigin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-    <span class="n">FFileStream</span><span class="o">:</span> <span class="n">TFileStream</span><span class="o">;</span>
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> <span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-    <span class="c1">//class function New...</span>
-    <span class="k">destructor</span> <span class="nf">Destroy</span><span class="o">;</span> <span class="kp">override</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TLogToFile = class(TInterfacedObject, ILog)
+  private
+    FOrigin: ILog;
+    FFileStream: TFileStream;
+  public
+    constructor Create(Origin: ILog; const FileName: string);
+    //class function New...
+    destructor Destroy; override;
+    function Add(const S: string): ILog;
+    function Text: string;
+    function Save: ILog;
+  end;
   
-<span class="k">implementation</span>
+implementation
 
-<span class="k">constructor</span> <span class="nc">TLogToFile</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> 
-  <span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FOrigin</span> <span class="o">:=</span> <span class="n">Origin</span><span class="o">;</span>
-  <span class="n">FFileStream</span> <span class="o">:=</span> <span class="n">TFileStream</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">FileName</span><span class="o">,</span> <span class="n">fmOpenWrite</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TLogToFile.Create(Origin: ILog; 
+  const FileName: string);
+begin
+  inherited Create;
+  FOrigin := Origin;
+  FFileStream := TFileStream.Create(FileName, fmOpenWrite);
+end;
 
-<span class="k">destructor</span> <span class="nc">TLogToFile</span><span class="o">.</span><span class="nf">Destroy</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="n">FFileStream</span><span class="o">.</span><span class="n">Free</span><span class="o">;</span>
-  <span class="k">inherited</span> <span class="n">Destroy</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+destructor TLogToFile.Destroy;
+begin
+  FFileStream.Free;
+  inherited Destroy;
+end;
 
-<span class="k">function</span> <span class="nc">TLogToFile</span><span class="o">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FOrigin</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">FFileStream</span><span class="o">.</span><span class="n">Write</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TLogToFile.Add(const S: string): ILog;
+begin
+  Result := Self;
+  FOrigin.Add(S);
+  FFileStream.Write(S);
+end;
 
-<span class="k">function</span> <span class="nc">TLogToFile</span><span class="o">.</span><span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FOrigin</span><span class="o">.</span><span class="n">Text</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TLogToFile.Text: string;
+begin
+  Result := FOrigin.Text;
+end;
 
-<span class="k">function</span> <span class="nc">TLogToFile</span><span class="o">.</span><span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FInfo</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="n">FFileName</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">FOrigin</span><span class="o">.</span><span class="n">Save</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+function TLogToFile.Save: ILog;
+begin
+  Result := Self;
+  FInfo.SaveToFile(FFileName);
+  FOrigin.Save;
+end;
+</code></pre>
 
 <p>Repare que há um parâmetro <code>Origin</code>. Isso significa que essa classe
 irá gerar Objetos que trabalham “decorando” outros Objetos que se originaram em outro momento.</p>
 
 <p>Da mesma forma teremos outra Classe para fazer o <em>Log</em> no Banco de Dados:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TLogToDB</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">ILog</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FOrigin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-    <span class="n">FDB</span><span class="o">:</span> <span class="n">IDatabase</span><span class="o">;</span>  
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> <span class="n">DB</span><span class="o">:</span> <span class="n">IDatabase</span><span class="p">)</span><span class="o">;</span>
-    <span class="c1">//class function New...</span>
-    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
+<pre><code>type
+  TLogToDB = class(TInterfacedObject, ILog)
+  private
+    FOrigin: ILog;
+    FDB: IDatabase;  
+  public
+    constructor Create(Origin: ILog; DB: IDatabase);
+    //class function New...
+    function Add(const S: string): ILog;
+    function Text: string;
+    function Save: ILog;
+  end;
   
-<span class="k">implementation</span>
+implementation
 
-<span class="k">constructor</span> <span class="nc">TLogToDB</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> 
-  <span class="n">DB</span><span class="o">:</span> <span class="n">IDatabase</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FOrigin</span> <span class="o">:=</span> <span class="n">Origin</span><span class="o">;</span> 
-  <span class="n">FDB</span> <span class="o">:=</span> <span class="n">DB</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TLogToDB.Create(Origin: ILog; 
+  DB: IDatabase);
+begin
+  inherited Create;
+  FOrigin := Origin; 
+  FDB := DB;
+end;
 
-<span class="k">function</span> <span class="nc">TLogToDB</span><span class="o">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FOrigin</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TLogToDB.Add(const S: string): ILog;
+begin
+  Result := Self;
+  FOrigin.Add(S);
+end;
 
-<span class="k">function</span> <span class="nc">TLogToDB</span><span class="o">.</span><span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FOrigin</span><span class="o">.</span><span class="n">Text</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TLogToDB.Text: string;
+begin
+  Result := FOrigin.Text;
+end;
 
-<span class="k">function</span> <span class="nc">TLogToDB</span><span class="o">.</span><span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">DB</span><span class="o">.</span><span class="n">Query</span><span class="p">(</span>
-    <span class="s">&#39;insert into Log (info) values (:info)&#39;</span><span class="o">,</span>
-    <span class="n">TSQLParams</span><span class="o">.</span><span class="k">New</span>
-      <span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#39;info&#39;</span><span class="o">,</span> <span class="n">ftString</span><span class="o">,</span> <span class="k">Self</span><span class="o">.</span><span class="n">Text</span><span class="p">)</span>
-  <span class="p">)</span>
-  <span class="o">.</span><span class="n">Execute</span><span class="o">;</span> 
-  <span class="n">FOrigin</span><span class="o">.</span><span class="n">Save</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+function TLogToDB.Save: ILog;
+begin
+  Result := Self;
+  DB.Query(
+    'insert into Log (info) values (:info)',
+    TSQLParams.New
+      .Add('info', ftString, Self.Text)
+  )
+  .Execute; 
+  FOrigin.Save;
+end;
+</code></pre>
 
 <p><strong>Observação</strong>:</p>
 
@@ -494,48 +499,48 @@ o código que trabalha com a instância de <em>FInfo</em>?</p>
 <p>Eu poderia, mas não devo. Falarei sobre herança em próximos posts. Por enquanto vamos deixar as coisas simples 
 e prosseguir com o exemplo.</p>
 
-<p>Falta a Classe de <em>Log</em> que envia e-mails, sem esquecer de Injetar a Dependência de <code>Mail</code> no <em>construtor</em>:</p>
+<p>Falta a Classe de <em>Log</em> que envia e-mails, sem esquecer de Injetar a Dependência de <code>Mail</code> no <em>construtor</em>:
+    type
+      TLogToMail = class(TInterfacedObject, ILog)
+      private
+        FOrigin: ILog; 
+        FMail: IMail;<br />
+      public
+        constructor Create(Origin: ILog; Mail: IMail);
+        //class function New…
+        function Add(const S: string): ILog;
+        function Text: string;
+        function Save: ILog;
+      end;</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">type</span>
-  <span class="n">TLogToMail</span> <span class="o">=</span> <span class="k">class</span><span class="p">(</span><span class="n">TInterfacedObject</span><span class="o">,</span> <span class="n">ILog</span><span class="p">)</span>
-  <span class="kp">private</span>
-    <span class="n">FOrigin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> 
-    <span class="n">FMail</span><span class="o">:</span> <span class="n">IMail</span><span class="o">;</span>  
-  <span class="kp">public</span>
-    <span class="k">constructor</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> <span class="n">Mail</span><span class="o">:</span> <span class="n">IMail</span><span class="p">)</span><span class="o">;</span>
-    <span class="c1">//class function New...</span>
-    <span class="k">function</span> <span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-    <span class="k">function</span> <span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-  <span class="k">end</span><span class="o">;</span>
-  
-<span class="k">implementation</span>
+<pre><code>implementation
 
-<span class="k">constructor</span> <span class="nc">TLogToMail</span><span class="o">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Origin</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span> 
-  <span class="n">Mail</span><span class="o">:</span> <span class="n">IMail</span><span class="p">)</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="k">inherited</span> <span class="n">Create</span><span class="o">;</span>
-  <span class="n">FOrigin</span> <span class="o">:=</span> <span class="n">Origin</span><span class="o">;</span> 
-  <span class="n">FMail</span> <span class="o">:=</span> <span class="n">Mail</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+constructor TLogToMail.Create(Origin: ILog; 
+  Mail: IMail);
+begin
+  inherited Create;
+  FOrigin := Origin; 
+  FMail := Mail;
+end;
 
-<span class="k">function</span> <span class="nc">TLogToMail</span><span class="o">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">const</span> <span class="n">S</span><span class="o">:</span> <span class="k">string</span><span class="p">)</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FOrigin</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TLogToMail.Add(const S: string): ILog;
+begin
+  Result := Self;
+  FOrigin.Add(S);
+end;
 
-<span class="k">function</span> <span class="nc">TLogToMail</span><span class="o">.</span><span class="nf">Text</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="n">FOrigin</span><span class="o">.</span><span class="n">Text</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span>
+function TLogToMail.Text: string;
+begin
+  Result := FOrigin.Text;
+end;
 
-<span class="k">function</span> <span class="nc">TLogToMail</span><span class="o">.</span><span class="nf">Save</span><span class="o">:</span> <span class="n">ILog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FMail</span><span class="o">.</span><span class="n">Send</span><span class="p">(</span><span class="n">From</span><span class="o">,</span> <span class="k">Self</span><span class="o">.</span><span class="n">Text</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">FOrigin</span><span class="o">.</span><span class="n">Save</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+function TLogToMail.Save: ILog;
+begin
+  Result := Self;
+  FMail.Send(From, Self.Text);
+  FOrigin.Save;
+end;
+</code></pre>
 
 <p>Cada Classe tem apenas uma única responsabilidade e todas as Classes seguem o <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contrato</a>
 de uma única Interface, simples e coesa.</p>
@@ -554,10 +559,11 @@ reutilizar os métodos existentes para fazer algo que seria simples!</p>
 <p>Por que ele não consegue? Repare que em cada método <code>SaveXxx</code> há uma chamada de <code>FInfo.Clear</code>. Então ele não pode executar
 os métodos assim:</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">begin</span>
-  <span class="n">Log</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="s">&#39;/path/file.log&#39;</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">Log</span><span class="o">.</span><span class="n">SaveToDB</span><span class="p">(</span><span class="n">DB</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>begin
+  Log.SaveToFile('/path/file.log');
+  Log.SaveToDB(DB);
+end;
+</code></pre>
 
 <p>Na primeira chamada a informação do <em>Log</em> será perdida.</p>
 
@@ -569,13 +575,14 @@ todo tempo com Classes complexas e muito mais com aquelas que utilizam herança.
 
 <p>Então vou escolher uma das possíveis implementações: Adicionar um novo método.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">function</span> <span class="nc">TLog</span><span class="o">.</span><span class="nf">SaveToFileAndDB</span><span class="p">(</span><span class="k">const</span> <span class="n">FileName</span><span class="o">:</span> <span class="k">string</span><span class="o">;</span> 
-  <span class="n">DB</span><span class="o">:</span> <span class="n">IDatabase</span><span class="p">)</span><span class="o">:</span> <span class="n">TLog</span><span class="o">;</span>
-<span class="k">begin</span>
-  <span class="bp">Result</span> <span class="o">:=</span> <span class="k">Self</span><span class="o">;</span>
-  <span class="n">FInfo</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="n">FileName</span><span class="p">)</span><span class="o">;</span>
-  <span class="n">SaveToDB</span><span class="p">(</span><span class="n">DB</span><span class="p">)</span><span class="o">;</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>function TLog.SaveToFileAndDB(const FileName: string; 
+  DB: IDatabase): TLog;
+begin
+  Result := Self;
+  FInfo.SaveToFile(FileName);
+  SaveToDB(DB);
+end;
+</code></pre>
 
 <p>UAU! HORRÍVEL!</p>
 
@@ -589,21 +596,22 @@ Basta criar um <ins>novo Objeto</ins> que encapsule os Objetos que já sabem faz
 <p>Com apenas uma única Interface e várias implementações, é possível criar um único Objeto que contenha todo tipo de comportamento
 referente a <em>Log</em>.</p>
 
-<figure class="highlight"><pre><code class="language-pascal" data-lang="pascal"><span class="k">begin</span>
-  <span class="n">TLogToMail</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-    <span class="n">TLogToDB</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-      <span class="n">TLogToFile</span><span class="o">.</span><span class="k">New</span><span class="p">(</span>
-        <span class="n">TLogInMemory</span><span class="o">.</span><span class="k">New</span><span class="p">(</span><span class="s">&#39;First info&#39;</span><span class="p">)</span><span class="o">,</span>
-        <span class="s">&#39;/path/file.log&#39;</span>
-      <span class="p">)</span><span class="o">,</span>
-      <span class="n">DB</span>
-    <span class="p">)</span><span class="o">,</span>
-    <span class="n">Mail</span>
-  <span class="p">)</span>
-  <span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#39;Second info&#39;</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#39;Final info&#39;</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">Save</span>
-<span class="k">end</span><span class="o">;</span></code></pre></figure>
+<pre><code>begin
+  TLogToMail.New(
+    TLogToDB.New(
+      TLogToFile.New(
+        TLogInMemory.New('First info'),
+        '/path/file.log'
+      ),
+      DB
+    ),
+    Mail
+  )
+  .Add('Second info')
+  .Add('Final info')
+  .Save
+end;
+</code></pre>
 
 <p>Para o código-geral não há diferença se o <em>Log</em> está sendo gravado num Arquivo, Banco de Dados ou sendo enviado por e-mail.</p>
 
@@ -724,20 +732,20 @@ não cresce junto com os requisitos.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
-        </ul>
-        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/objetos-imutaveis/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
         </ul>
         <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/datamodule-e-apenas-um-container/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>DataModule é apenas um recipiente, e só isso</li></h4>
+        </ul>
+        <!--<p class="post-summary">DataModule é apenas um recipiente. Não utilize-o para implementar regras de negócio.</p>-->
       </a>
     </div>
   
@@ -751,20 +759,20 @@ não cresce junto com os requisitos.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/microservices-delphi-parte-3/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Microservices com Delphi — Parte 3</li></h4>
-        </ul>
-        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
         </ul>
         <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/microservices-delphi-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Microservices com Delphi — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
       </a>
     </div>
   
