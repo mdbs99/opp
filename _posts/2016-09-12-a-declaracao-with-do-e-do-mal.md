@@ -1,7 +1,7 @@
 ---
 layout: post
 title: A declaração WITH-DO é do Mal?
-date: 2016-09-11
+date: 2016-09-12
 description: Reflexões sobre o uso do WITH-DO no código Object Pascal.
 summary: Reflexões sobre o uso do WITH-DO no código Object Pascal.
 image: /images/photo-8bc72ed7.jpg
@@ -300,9 +300,4 @@ Até onde eu sei, essa *feature* não existe em nenhuma outra linguagem.
 
 Apenas nós temos o WITH-DO!
 
-No entanto vejo muitos programadores reclamando do WITH-DO, que ele 
-é um mal e que nunca devemos utilizá-lo.
-
-Fico pensando se estou **sozinho**...
-
-Será que sou o único que usa e aprecia a declaração WITH-DO? :)
+Mas será que sou o único que usa e aprecia essa *feature*? :)
