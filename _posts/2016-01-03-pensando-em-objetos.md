@@ -123,13 +123,10 @@ Aqui está o código **Procedural** para consumir o WebService:
 Parece fácil de ler, mas o código tem complexidade onde não deveria.
 As classes tem funções demais — mesmo separando em classes, continua procedural.
 
-Reparou nas **linhas em branco** para "facilitar a leitura"? Fiz isso propositalmente por 2 motivos:
+Reparou nas **linhas em branco** para "facilitar a leitura"?
 
-  1. Queria destacar cada linha para você ter mais contexto do problema;
-  2. Ainda não sei como alterar as configurações do `highlight` para deixar o código menos poluído quando eu usar comentários :( 
-  2. Todo mundo faz isso para facilitar a leitura... certo? :)
-
-Mas quando vocês programarem Orientado a Objetos, não haverá mais motivos para pular linhas dentro de um método, Ok?  
+Todo mundo faz isso, não é? Mesmo assim, tente eliminar esse hábito.
+Irei escrever sobre isso no futuro.
   
 ---  
 **Dica:** Pular linhas dentro de um método é um **"mal cheiro"** no código.
