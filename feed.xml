@@ -8,6 +8,121 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Linhas em Branco no Método é um Mal Cheiro no Código</title>
+        <description>&lt;p&gt;Pular linhas dentro de um Método é um “mal cheiro”
+no código. Significa que você está fazendo coisas 
+demais num único Método.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1417309807426-472e833fa5d0.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;O que significa mal cheiro no código?&lt;/p&gt;
+
+&lt;p&gt;Um &lt;a href=&quot;https://en.wikipedia.org/wiki/Code_smell&quot;&gt;mal cheiro&lt;/a&gt;,
+se refere a qualquer sintoma no código-fonte 
+de um programa que possivelmente indica um problema 
+mais profundo.&lt;/p&gt;
+
+&lt;p&gt;Eu já falei sobre isso
+&lt;a href=&quot;/posts/pensando-em-objetos/#exemplo-1&quot;&gt;aqui&lt;/a&gt;
+e nesse artigo vou abordar melhor esse assunto.&lt;/p&gt;
+
+&lt;p&gt;Você irá entender porque não devemos utilizar 
+linhas em branco dentro de Métodos.&lt;/p&gt;
+
+&lt;h2 id=&quot;blocos-de-cdigo&quot;&gt;Blocos de Código&lt;/h2&gt;
+
+&lt;p&gt;Por que muitos programadores ainda utilizam linhas em
+branco dentro de Métodos?&lt;/p&gt;
+
+&lt;p&gt;Simples. Eles estão separando o código de um Método
+em blocos. E isso é, errado.&lt;/p&gt;
+
+&lt;p&gt;Eu mesmo fiz isso por anos.&lt;/p&gt;
+
+&lt;p&gt;Algumas vezes eu conseguia enxergar esse mal cheiro, então 
+refatorava — criando outros Métodos — e seguia a vida.&lt;/p&gt;
+
+&lt;p&gt;Mas na maioria das vezes eu pensava que estava “organizando o código”.
+Tornando mais legível, mas “limpo”… não era verdade.&lt;/p&gt;
+
+&lt;p&gt;Quando li esse
+&lt;a href=&quot;http://www.yegor256.com/2014/11/03/empty-line-code-smell.html&quot;&gt;artigo&lt;/a&gt;
+eu percebi que sempre houve algo de errado quando eu
+utiliza linhas em branco.&lt;/p&gt;
+
+&lt;p&gt;Quando existem linhas em branco dentro do Método,
+significa que &lt;strong&gt;o Método está fazendo coisas demais&lt;/strong&gt;.
+Um único grande procedimento, separado por com blocos 
+de código…&lt;/p&gt;
+
+&lt;p&gt;Desde então eu não codifico mais dessa forma.&lt;/p&gt;
+
+&lt;h2 id=&quot;nao-seja-leviano&quot;&gt;Não basta retirar as Linhas em Branco&lt;/h2&gt;
+
+&lt;p&gt;Você entendeu o problema e agora quer abrir seu editor
+e começar a remover as linhas em branco… apenas remover
+as linhas.&lt;/p&gt;
+
+&lt;p&gt;Não seja leviano.&lt;/p&gt;
+
+&lt;p&gt;Não basta abrir seu editor e começar a remover toda
+linha em branco que encontrar dentro dos Métodos.&lt;/p&gt;
+
+&lt;p&gt;Não!&lt;/p&gt;
+
+&lt;p&gt;A linha em branco não é o problema em si. 
+Ela só indica que há um problema.&lt;/p&gt;
+
+&lt;p&gt;Apenas retirar essas linhas não vai sanar o problema.&lt;/p&gt;
+
+&lt;p&gt;O que temos que fazer é &lt;strong&gt;refatorar&lt;/strong&gt; o código,
+para depois removê-las.&lt;/p&gt;
+
+&lt;h2 id=&quot;refatorando&quot;&gt;Refatorando&lt;/h2&gt;
+
+&lt;p&gt;Se você realmente entendeu o conceito, não irá mais utilizar
+linhas em branco dentro de Métodos de agora em diante.&lt;/p&gt;
+
+&lt;p&gt;Certo?&lt;/p&gt;
+
+&lt;p&gt;Mas você pode ir além. Você pode querer refatorar todo tipo
+de código antigo ou fazer uma refatoração &lt;em&gt;on demand&lt;/em&gt;:
+Refatorar apenas se encontrar Métodos com linhas em branco.&lt;/p&gt;
+
+&lt;p&gt;Você pode seguir esses passos:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Encontre um Método;&lt;/li&gt;
+  &lt;li&gt;Verifique se há linhas em branco separando blocos;&lt;/li&gt;
+  &lt;li&gt;Para cada bloco, extrair o código criando um novo Método;&lt;/li&gt;
+  &lt;li&gt;Faça a chamada do novo Método no mesmo lugar que extraiu
+  o código;&lt;/li&gt;
+  &lt;li&gt;Repita o processo enquanto for necessário.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Parece besteira, mas não é.&lt;/p&gt;
+
+&lt;p&gt;Escrever código qualquer um faz. Mas escrever um &lt;strong&gt;bom&lt;/strong&gt; código, 
+no entanto, não é pra qualquer um. É necessário pensar no
+longo prazo, no acoplamento, na coesão, no &lt;em&gt;design&lt;/em&gt;, deixar 
+as coisas simples… é Engenharia, mas também Arte.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;E a verdadeira Arte está nos detalhes&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 19 Sep 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/</guid>
+      </item>
+    
+      <item>
         <title>A declaração WITH-DO é do Mal?</title>
         <description>&lt;p&gt;Muita gente odeia utilizar a construção WITH-DO do Pascal.
 Dizem que é difícil de ler o código, introduz &lt;em&gt;bugs&lt;/em&gt;… 
@@ -1763,165 +1878,6 @@ else
         <pubDate>Mon, 18 Jul 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/nomeando-unidades/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nomeando-unidades/</guid>
-      </item>
-    
-      <item>
-        <title>Assinatura Digital em Arquivos XML</title>
-        <description>&lt;p&gt;A Assinatura Digital é cada vez mais utilizada devido a segurança de integridade que ela proporciona.
-Nesse artigo vou demostrar como Assinar Digitalmente um arquivo XML utilizando o &lt;em&gt;framework&lt;/em&gt; ACBr.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1430760903787-4d91bbf15384.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;A Assinatura Digital nos dá mais segurança no envio de arquivos entre servidores, utilizando WebServices e/ou Serviços REST.&lt;/p&gt;
-
-&lt;p&gt;No mundo Java e .NET tem-se muitos &lt;em&gt;frameworks&lt;/em&gt; para trabalhar com Assinatura Digital… mas e em &lt;em&gt;Object Pascal&lt;/em&gt;?&lt;/p&gt;
-
-&lt;p&gt;Eu conhecia o &lt;a href=&quot;http://www.projetoacbr.com.br/&quot;&gt;Projeto ACBr&lt;/a&gt; a muito tempo. Eu utilizei esse projeto, anos atrás, para fazer a integração de NF-e para um cliente que, na época, utilizava Delphi 6.&lt;/p&gt;
-
-&lt;p&gt;A integração foi feita em apenas 1 semana — conte com as madrugadas — e tudo funcionou perfeitamente.&lt;/p&gt;
-
-&lt;p&gt;Anos se passaram e eu não tive mais projetos que envolvessem NF-e e/ou Assinatura Digital. Pelo menos não que eu mesmo tivesse que implementá-los.&lt;/p&gt;
-
-&lt;p&gt;Este ano eu tenho um Novo Projeto.&lt;/p&gt;
-
-&lt;p&gt;Nesse projeto tenho que utilizar Assinatura Digital em arquivos XML. Não são Notas Fiscais Eletrônicas (NF-e). São arquivos XML que precisam ser assinados antes do envio e verificados na outra ponta. A segurança é levado muito a sério nesse projeto.&lt;/p&gt;
-
-&lt;p&gt;Lembrei do Projeto ACBr, é claro.&lt;/p&gt;
-
-&lt;h2 id=&quot;utilizando-acbr&quot;&gt;Utilizando o ACBr&lt;/h2&gt;
-
-&lt;p&gt;O ACBr trabalha com dois tipos de Assinadores: CAPICOM (Microsoft) e OpenSSL (OpenSource e crossplataforma).&lt;/p&gt;
-
-&lt;p&gt;Meu cliente só utiliza Windows, então eu escolhi a opção mais óbvia.&lt;/p&gt;
-
-&lt;p&gt;O ACBr compila em Delphi e FreePascal perfeitamente.&lt;/p&gt;
-
-&lt;p&gt;Para instalar no Delphi é mais fácil. O projeto dispõe de um Instalador &lt;em&gt;next-next-finish&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Para instalar no FreePascal eu não sei se é o mesmo instalador. O que fiz foi instalar os pacotes manualmente, pela IDE do Lazarus.&lt;/p&gt;
-
-&lt;p&gt;Então fiz um programa simples para assinar um XML e tentar validar o resultado em um dos WebServices do cliente.&lt;/p&gt;
-
-&lt;p&gt;Precisei criar o XML Template, que é o XML que tenho que enviar ao WebService:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;?&amp;gt;
-&amp;lt;Principal&amp;gt;
-  &amp;lt;Solicitacao Id=&quot;123&quot;&amp;gt;&amp;lt;Parametros Codigo=&quot;Todos&quot; /&amp;gt;&amp;lt;/Solicitacao&amp;gt;
-  &amp;lt;Assinatura&amp;gt;
-    &amp;lt;Signature xmlns=&quot;http://www.w3.org/2000/09/xmldsig#&quot;&amp;gt;
-      &amp;lt;SignedInfo&amp;gt;
-        &amp;lt;CanonicalizationMethod Algorithm=&quot;http://www.w3.org/TR/2001/REC-xml-c14n-20010315&quot; /&amp;gt;
-        &amp;lt;SignatureMethod Algorithm=&quot;http://www.w3.org/2000/09/xmldsig#rsa-sha1&quot; /&amp;gt;
-        &amp;lt;Reference URI=&quot;#123&quot;&amp;gt;
-          &amp;lt;Transforms&amp;gt;
-            &amp;lt;Transform Algorithm=&quot;http://www.w3.org/2000/09/xmldsig#enveloped-signature&quot; /&amp;gt;
-            &amp;lt;Transform Algorithm=&quot;http://www.w3.org/TR/2001/REC-xml-c14n-20010315&quot;/&amp;gt;
-          &amp;lt;/Transforms&amp;gt;
-          &amp;lt;DigestMethod Algorithm=&quot;http://www.w3.org/2000/09/xmldsig#sha1&quot; /&amp;gt;
-          &amp;lt;DigestValue&amp;gt;&amp;lt;/DigestValue&amp;gt;
-        &amp;lt;/Reference&amp;gt;
-      &amp;lt;/SignedInfo&amp;gt;
-    &amp;lt;SignatureValue/&amp;gt;
-    &amp;lt;/Signature&amp;gt;
-  &amp;lt;/Assinatura&amp;gt;
-&amp;lt;/Principal&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Veja que já existe os nós da assinatura (Signature), mas estão em branco ou incompletos. Esse é o template que o ACBr irá utilizar para realmente assinar e gerar um novo XML.&lt;/p&gt;
-
-&lt;p&gt;Então codifiquei um pequeno programa em Object Pascal para fazer os testes.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure TMainForm.Assinar;
-var
-  A: TDFeSSL;
-  I: Integer;
-begin
-  A := TDFeSSL.Create;
-  A.SSLLib := libCapicom;
-  A.SelecionarCertificado;
-  with TStringList.Create do
-  try
-    // carrega o XML de template
-    LoadFromFile(&#39;template.xml&#39;);
-    // obtém o XML assinado no Text do StringList
-    Text := &#39;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;?&amp;gt;&#39;
-          + A.Assinar(Text, &#39;Assinatura&#39;, &#39;&#39;);
-    // salva o XML em disco
-    SaveToFile(&#39;assinado.xml&#39;);
-  finally
-    Free;
-  end;
-  A.Free;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A tela para escolher o certificado — previamente instalado no computador — aparece e o usuário, que pode selecionar qual ele deseja.&lt;/p&gt;
-
-&lt;p&gt;O XML é assinado (&lt;em&gt;node&lt;/em&gt; Assinatura) e tudo parece perfeito… mas o WebService do cliente não valida a Assinatura.&lt;/p&gt;
-
-&lt;p&gt;Algo estava errado.&lt;/p&gt;
-
-&lt;h1 id=&quot;solucao&quot;&gt;Solução&lt;/h1&gt;
-
-&lt;p&gt;Após ajuda do pessoal do ACBr e amigos, chegamos a conclusão que os espaços em branco no Template eram o problema.&lt;/p&gt;
-
-&lt;p&gt;Modifiquei o projeto de teste, intruduzindo algumas linhas de código para retirar os espaços e quebras de linha. Funcionou.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure TMainForm.Assinar;
-var
-  A: TDFeSSL;
-  S: AnsiString;
-  I: Integer;
-begin
-  A := TDFeSSL.Create;
-  A.SSLLib := libCapicom;
-  A.SelecionarCertificado;
-  with TStringList.Create do
-  try
-    // carrega o XML de template
-    LoadFromFile(&#39;template.xml&#39;);
-    S := &#39;&#39;;
-    // retira dos os espaços em braco e quebras de linha
-    for I := 0 to Count-1 do
-    begin
-      S := S + Trim(
-        StringReplace(
-          StringReplace(Strings[I], #13, &#39;&#39;, [rfReplaceAll]),
-          #10, &#39;&#39;, [rfReplaceAll]
-        )
-      )
-    end;
-    // obtém o XML assinado no Text do StringList
-    Text := &#39;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;?&amp;gt;&#39;
-          + A.Assinar(S, &#39;Assinatura&#39;, &#39;&#39;);
-    // salva o XML em disco
-    SaveToFile(&#39;assinado.xml&#39;);
-  finally
-    Free;
-  end;
-  A.Free;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;O Projeto ACBr me ajudou bastante me poupando muito tempo de desenvolvimento.&lt;/p&gt;
-
-&lt;p&gt;Há alguns detalhes que não mencionei. Foram necessários pequenas modificações no código do ACBr devido a alguns &lt;em&gt;nodes&lt;/em&gt; customizados que eu precisa fazer no XML mas que o ACBr original não suportava. Essas modificações foram enviadas aos programadores do ACBr.&lt;/p&gt;
-
-&lt;p&gt;É isso.&lt;/p&gt;
-
-&lt;p&gt;Agradeço a todos os desenvolvedores e amigos que ajudaram na solução.&lt;/p&gt;
-
-&lt;p&gt;Obrigado e até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 11 Jul 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/</guid>
       </item>
     
   </channel>

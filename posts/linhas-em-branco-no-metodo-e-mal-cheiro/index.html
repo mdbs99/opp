@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Não Utilize Casting &#8211; Object Pascal Programming</title>
+    <title>Linhas em Branco no Método é um Mal Cheiro no Código &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Não Utilize Casting em Regras de Negócio.">
+    <meta name="description" content="O motivo é simples: Você está fazendo coisas demais no Método.">
     <meta name="author" content="Marcos Douglas">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Pascal">
-    <meta name="keywords" content="cast, casting">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/nao-utilize-casting/">
+    <meta name="keywords" content="Code">
+    <meta name="keywords" content="mal cheiro, bad smell, blank lines, linhas em branco">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +30,21 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Não Utilize Casting">
-    <meta property="og:description" content="Não Utilize Casting em Regras de Negócio.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/nao-utilize-casting/">
+    <meta property="og:title" content="Linhas em Branco no Método é um Mal Cheiro no Código">
+    <meta property="og:description" content="O motivo é simples: Você está fazendo coisas demais no Método.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1445451983996-ac6b92ffb1fb.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1417309807426-472e833fa5d0.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Não Utilize Casting" />
-    <meta name="twitter:description" content="Não Utilize Casting em Regras de Negócio." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/nao-utilize-casting/" />
+    <meta name="twitter:title" content="Linhas em Branco no Método é um Mal Cheiro no Código" />
+    <meta name="twitter:description" content="O motivo é simples: Você está fazendo coisas demais no Método." />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -170,8 +170,8 @@
 
 
 <div class="post-header mb2">
-  <h1>Não Utilize Casting</h1>
-  <span class="post-meta">Apr 18, 2016</span><br>
+  <h1>Linhas em Branco no Método é um Mal Cheiro no Código</h1>
+  <span class="post-meta">Sep 19, 2016</span><br>
   
   <span class="post-meta small">
   
@@ -181,86 +181,111 @@
 </div>
 
 <article class="post-content">
-  <p>Sua equipe precisa de um programador Object Pascal para trabalhar num projeto que está
-sendo codificado em FreePascal. Este projeto terá integração com um ERP codificado em Java e
-um website codificado em PHP. Tudo utilizando MS SQLServer como SGBD.</p>
-
-<p>Como você iria descrever o anúncio dessa vaga?</p>
+  <p>Pular linhas dentro de um Método é um “mal cheiro”
+no código. Significa que você está fazendo coisas 
+demais num único Método.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1445451983996-ac6b92ffb1fb.jpg" alt="Casting" /></p>
+<p><img src="/images/photo-1417309807426-472e833fa5d0.jpg" alt="Imagem" /></p>
 
-<p>Uma tradução para <em>Casting</em>, em Português, seria <strong>moldagem</strong>. Você recebe algo e o “molda” em outra coisa.</p>
+<h2 id="introducao">Introdução</h2>
 
-<p>Fazemos isso muitas vezes. Temos um <em>Integer</em> e o moldamos em uma <em>String</em> e vice-versa.</p>
+<p>O que significa mal cheiro no código?</p>
 
-<p>Mas será que o uso de <em>Casting</em> é necessário para codificarmos nossas <strong>Regras de Negócio</strong> utilizando
-Objetos?</p>
+<p>Um <a href="https://en.wikipedia.org/wiki/Code_smell">mal cheiro</a>,
+se refere a qualquer sintoma no código-fonte 
+de um programa que possivelmente indica um problema 
+mais profundo.</p>
 
-<center><p><strong>. . .</strong></p></center>
+<p>Eu já falei sobre isso
+<a href="/posts/pensando-em-objetos/#exemplo-1">aqui</a>
+e nesse artigo vou abordar melhor esse assunto.</p>
 
-<p>O arquiteto da equipe — sr. Anderson — já definiu o projeto.</p>
+<p>Você irá entender porque não devemos utilizar 
+linhas em branco dentro de Métodos.</p>
 
-<p>Anderson definiu a API de integração, diagramas de classes, componentes, módulos, etc. Mas o projeto 
-ficou maior que o esperado e agora precisam de um programador experiente para compor a equipe.</p>
+<h2 id="blocos-de-cdigo">Blocos de Código</h2>
 
-<p>O arquiteto solicita ao seu gerente o novo programador, mas sem lhe dar instruções específicas.</p>
+<p>Por que muitos programadores ainda utilizam linhas em
+branco dentro de Métodos?</p>
 
-<p>O gerente repassa o pedido ao pessoal do RH e então eles anunciam a vaga em sites:</p>
+<p>Simples. Eles estão separando o código de um Método
+em blocos. E isso é, errado.</p>
 
-<p><em>“Empresa ACME Inc. precisa de programador experiente.”</em></p>
+<p>Eu mesmo fiz isso por anos.</p>
 
-<p>A empresa recebe currículos com especialidade em COBOL, Delphi, C/C++, Java… PHP foi a maioria. :)</p>
+<p>Algumas vezes eu conseguia enxergar esse mal cheiro, então 
+refatorava — criando outros Métodos — e seguia a vida.</p>
 
-<p>Todos perdem tempo, pois terão muito mais currículos para <strong>analisar e verificar</strong> se o canditato 
-se <strong>encaixa nos critérios</strong>, pois não definiram as <strong>habilidades necessárias</strong> que o programador deve ter
-quando fizeram o anúncio.</p>
+<p>Mas na maioria das vezes eu pensava que estava “organizando o código”.
+Tornando mais legível, mas “limpo”… não era verdade.</p>
 
-<p>O mesmo acontece quando utilizamos <em>Casting</em>. É necessário ter <strong>código de verificação</strong> para o Objeto 
-afim de determinar sua Classe.</p>
+<p>Quando li esse
+<a href="http://www.yegor256.com/2014/11/03/empty-line-code-smell.html">artigo</a>
+eu percebi que sempre houve algo de errado quando eu
+utiliza linhas em branco.</p>
 
-<blockquote>
-  Seus Objetos devem trabalhar sob contratos, ou seja, interfaces. Somente Objetos
-  qualificados — que implementam a Interface — poderão ser utilizados para fazer o serviço.
-</blockquote>
+<p>Quando existem linhas em branco dentro do Método,
+significa que <strong>o Método está fazendo coisas demais</strong>.
+Um único grande procedimento, separado por com blocos 
+de código…</p>
 
-<p>Se você tem um trabalho a fazer, chame um <strong>especialista</strong> apto para fazer o trabalho — ou faça você mesmo.</p>
+<p>Desde então eu não codifico mais dessa forma.</p>
 
-<p>O trabalho é determinado por um <strong>contrato</strong> que especifica as habilidades necessárias que o especialista 
-precisa ter.</p>
+<h2 id="nao-seja-leviano">Não basta retirar as Linhas em Branco</h2>
 
-<p>Na Orientação a Objetos os <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contratos são representados por Interfaces</a>.</p>
+<p>Você entendeu o problema e agora quer abrir seu editor
+e começar a remover as linhas em branco… apenas remover
+as linhas.</p>
 
-<p>Interfaces, <strong>não Classes.</strong></p>
+<p>Não seja leviano.</p>
 
-<center><p><strong>. . .</strong></p></center>
+<p>Não basta abrir seu editor e começar a remover toda
+linha em branco que encontrar dentro dos Métodos.</p>
 
-<p>Anderson precisa de um programador.</p>
+<p>Não!</p>
 
-<p>O RH altera os requisitos da vaga.</p>
+<p>A linha em branco não é o problema em si. 
+Ela só indica que há um problema.</p>
 
-<p>O programador deve saber:</p>
+<p>Apenas retirar essas linhas não vai sanar o problema.</p>
 
-<ul>
-  <li>Object Pascal</li>
-  <li>MS SQLServer</li>
-  <li>Desejável PHP, Java</li>
-</ul>
+<p>O que temos que fazer é <strong>refatorar</strong> o código,
+para depois removê-las.</p>
 
-<p>Agora ficou mais fácil de encontrar o programador específico para o trabalho.</p>
+<h2 id="refatorando">Refatorando</h2>
 
-<p>É isso que você deve fazer no seu código. Especifique Interfaces que definam o contrato necessário para fazer 
-o trabalho.</p>
+<p>Se você realmente entendeu o conceito, não irá mais utilizar
+linhas em branco dentro de Métodos de agora em diante.</p>
 
-<p>Não defina argumentos do tipo de <strong>Classes genéricas</strong> — TObject, etc — sendo necessário utilizar <em>Casting</em> para verificar
-qual o tipo de Classe do Objeto para fazer algum <strong>processamento específico</strong> dependendo da Classe. Não faça isso!</p>
+<p>Certo?</p>
 
-<p>Interfaces são contratos de trabalho.</p>
+<p>Mas você pode ir além. Você pode querer refatorar todo tipo
+de código antigo ou fazer uma refatoração <em>on demand</em>:
+Refatorar apenas se encontrar Métodos com linhas em branco.</p>
 
-<p>Defina bem seus contratos e você não precisará fazer <em>Casting</em> pois saberá que
-somente <strong>Objetos especialistas</strong> irão se “candidatar” ao trabalho. Do contrário não fique surpreso de receber 
-um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)</p>
+<p>Você pode seguir esses passos:</p>
+
+<ol>
+  <li>Encontre um Método;</li>
+  <li>Verifique se há linhas em branco separando blocos;</li>
+  <li>Para cada bloco, extrair o código criando um novo Método;</li>
+  <li>Faça a chamada do novo Método no mesmo lugar que extraiu
+  o código;</li>
+  <li>Repita o processo enquanto for necessário.</li>
+</ol>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Parece besteira, mas não é.</p>
+
+<p>Escrever código qualquer um faz. Mas escrever um <strong>bom</strong> código, 
+no entanto, não é pra qualquer um. É necessário pensar no
+longo prazo, no acoplamento, na coesão, no <em>design</em>, deixar 
+as coisas simples… é Engenharia, mas também Arte.</p>
+
+<p><strong>E a verdadeira Arte está nos detalhes</strong>.</p>
 
 <p>Até logo.</p>
 
@@ -272,33 +297,33 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/nao-utilize-casting/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Não Utilize Casting&via=mdbs99;url=http://objectpascalprogramming.com/posts/nao-utilize-casting/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Linhas em Branco no Método é um Mal Cheiro no Código&via=mdbs99;url=http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/nao-utilize-casting/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/nao-utilize-casting/&title=Não Utilize Casting" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/nao-utilize-casting/&title=Não Utilize Casting" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/&title=Linhas em Branco no Método é um Mal Cheiro no Código" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/nao-utilize-casting/&t=Não Utilize Casting" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/&title=Linhas em Branco no Método é um Mal Cheiro no Código" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/&t=Linhas em Branco no Método é um Mal Cheiro no Código" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -338,20 +363,11 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/interfaces-em-todo-lugar/" class="post-link">
+      <a href="/posts/nomeando-variaveis-e-metodos/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Interfaces em Todo Lugar</li></h4>
+          <h4 class="post-title"><li>Nomeando Variáveis e Métodos</li></h4>
         </ul>
-        <!--<p class="post-summary">Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/objetos-imutaveis/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
-        </ul>
-        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+        <!--<p class="post-summary">A nomenclatura correta de Variáveis e Métodos simplifica o código.</p>-->
       </a>
     </div>
   
@@ -365,45 +381,9 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/objetos-pensam-e-tomam-decisoes/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Objetos pensam e tomam decisões</li></h4>
-        </ul>
-        <!--<p class="post-summary">Objetos pensam e tomam decisões. Eles não precisam de um controlador.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/nomeando-unidades/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
-        </ul>
-        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
         </ul>
         <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
@@ -419,6 +399,33 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     </div>
   
     <div class="post ml2">
+      <a href="/posts/a-declaracao-with-do-e-do-mal/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>A declaração WITH-DO é do Mal?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Reflexões sobre o uso do WITH-DO no código Object Pascal.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
@@ -428,11 +435,29 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     </div>
   
     <div class="post ml2">
-      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
         </ul>
-        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
       </a>
     </div>
   
@@ -443,8 +468,8 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/nao-utilize-casting';
-      var disqus_title      = 'Não Utilize Casting';
+      var disqus_identifier = '/posts/linhas-em-branco-no-metodo-e-mal-cheiro';
+      var disqus_title      = 'Linhas em Branco no Método é um Mal Cheiro no Código';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
