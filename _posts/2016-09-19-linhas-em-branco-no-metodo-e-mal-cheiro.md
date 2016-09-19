@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Linhas em Branco no Método é um Mal Cheiro no Código"
-date: 2016-09-18
+date: 2016-09-19
 description: "O motivo é simples: Você está fazendo coisas demais no Método."
 summary: "O motivo é simples: Você está fazendo coisas demais no Método."
 image: /images/photo-1417309807426-472e833fa5d0.jpg
@@ -45,8 +45,8 @@ linhas em branco dentro de Métodos.
 Por que muitos programadores ainda utilizam linhas em
 branco dentro de Métodos?
 
-Simples. Eles estão separando o código em 
-blocos de código. E isso é, errado.
+Simples. Eles estão separando o código de um Método
+em blocos. E isso é, errado.
 
 Eu mesmo fiz isso por anos. 
 
@@ -57,11 +57,21 @@ Tornando mais legível, mas "limpo"... não era verdade.
 
 Quando li esse
 [artigo](http://www.yegor256.com/2014/11/03/empty-line-code-smell.html)
-eu percebi que sempre houve algo de errado quando 
-utilizamos linhas em branco. Desde então eu não codifico
-mais dessa forma.
+eu percebi que sempre houve algo de errado quando eu
+utiliza linhas em branco. 
+
+Quando existem linhas em branco dentro do Método,
+significa que **o Método está fazendo coisas demais**.
+Um único grande procedimento, separado por com blocos 
+de código...
+
+Desde então eu não codifico mais dessa forma.
 
 ## Não basta retirar as Linhas em Branco {#nao-seja-leviano}
+
+Você entendeu o problema e agora quer abrir seu editor
+e começar a remover as linhas em branco... apenas remover
+as linhas.
 
 Não seja leviano.
 
@@ -70,17 +80,20 @@ linha em branco que encontrar dentro dos Métodos.
 
 Não!
 
-A palavra é **refatoração**.
-
 A linha em branco não é o problema em si. 
-Ela só indica que há um problema, ou seja, seu Método 
-está fazendo coisas demais. Apenas retirar essas linhas 
-não vai sanar o problema.
+Ela só indica que há um problema.
+
+Apenas retirar essas linhas não vai sanar o problema.
+
+O que temos que fazer é **refatorar** o código,
+para depois removê-las.
 
 ## Refatorando {#refatorando}
 
 Se você realmente entendeu o conceito, não irá mais utilizar
 linhas em branco dentro de Métodos de agora em diante.
+
+Certo?
 
 Mas você pode ir além. Você pode querer refatorar todo tipo
 de código antigo ou fazer uma refatoração *on demand*:
