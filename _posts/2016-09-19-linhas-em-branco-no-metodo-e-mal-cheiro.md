@@ -80,8 +80,8 @@ linha em branco que encontrar dentro dos Métodos.
 
 Não!
 
-A linha em branco não é o problema em si. 
-Ela só indica que há um problema.
+**A linha em branco não é o problema em si. 
+Ela só indica que há um problema**.
 
 Apenas retirar essas linhas não vai sanar o problema.
 
