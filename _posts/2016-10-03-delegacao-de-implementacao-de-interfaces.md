@@ -46,7 +46,7 @@ Um ponteiro para um Método é uma implementação para um Evento,
 mas em C# eles deram o nome de
 [*delegates*](https://msdn.microsoft.com/library/900fyy8e.aspx).
 
-Você verá porque essa *feature* tão importante para implementarmos
+Você verá porque essa *feature* é tão importante para implementarmos
 um Objeto da forma mais fiel possível a 
 [Entidade real]({% post_url 2016-02-29-objetos-representam-entidades %})
 que ele representa.
