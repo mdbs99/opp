@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Delegação de Implementação de Interfaces"
-date: 2016-10-01
+date: 2016-10-03
 description: "A beleza da linguagem Object Pascal para implementar delegação entre Objetos"
 summary: "A beleza da linguagem Object Pascal para implementar delegação entre Objetos"
 image: /images/photo-1451650645557-62193a7bed6a.jpg
@@ -68,22 +68,9 @@ Essa *feature* existe na linguagem *Object Pascal* desde sempre e
 seu objetivo é a **delegação de implementação de Interfaces, 
 utilizando Composição de Objetos**.
 
-E eu não dava o valor merecido a essa *feature*, pois não utilizava 
-Orientação a Objetos — mesmo utilizando Classes.
-
 A anos atrás eu só codificava utilizando o 
 [paradigma Procedural]({% post_url 2016-09-05-procedural-e-facil-orientado-a-objetos-e-dificil %})
 então eu apenas ignorava essa *feature*.
-
-Eu penso que a maioria dos desenvolvedores profissionais ignoram
-a linguagem *Object Pascal*... por completo. Talvez eles ainda pensem
-na linguagem na forma que ela foi criada, o *Pascal* procedural, 
-com *records*, *writeln*, abertura de arquivos e ponteiros.
-
-Ledo engano.
-
-Bem, *Object Pascal* é uma linguagem híbrida, ou seja, não é 100%
-Orientada a Objetos... mas nós temos *Delegation* e eles não. :)
 
 Mas antes de começarmos a utilizar *Delegation*, precisamos pensar
 em Contextos.
@@ -138,7 +125,7 @@ Utilizando o exemplo acima teríamos que implementar as Classes:
 Ambas as Classes representam um `Client`, porém em Contextos diferentes,
 com Métodos diferentes.
 
-E esse tipo de implementação funciona em qualquer linguagem com 
+E esse tipo de implementação funciona em qualquer linguagem com suporte a
 Orientação a Objetos.
 
 Eu gosto disso. Gosto de ter soluções simples que funcionam em (quase)
@@ -161,14 +148,12 @@ Vou definir alguns Métodos simples para ambas as Interfaces.
 
     type
       IFinances = interface
-        // total no banco
-        function Current: Currency;
+        function Current: Currency; // total no banco
         function AsString: string;
       end;
       
       IAccess = interface
-        // lista de acessos
-        function List: IDataList;
+        function List: IDataList; // lista de acessos
         function AsString: string;
       end;
 
@@ -188,9 +173,6 @@ que não são nada coesos numa única Classe. Ainda tem o fato de
 ambas as Classes possuirem Métodos iguais, então, se for preciso
 representar as Interfaces como `String`, é necessário definir um
 prefixo com o nome da Interface.
-
-Nesse momento `TSuperClient` não é mais um Objeto. Ele é apenas
-um balde de funções.
 
 ## Como utilizar a Delegação
 
@@ -258,7 +240,5 @@ Classe do tipo `TDataModule` e acham que estão programando Orientado a Objetos 
 reutilizando código.
 
 Temos as ferramentas para programar melhor, mas é preciso olhar "fora da caixa".
-
-Pense. Abra os olhos. Comece hoje.
 
 Até logo.
