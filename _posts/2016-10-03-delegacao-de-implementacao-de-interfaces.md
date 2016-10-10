@@ -174,7 +174,7 @@ ambas as Classes possuirem Métodos iguais, então, se for preciso
 representar as Interfaces como `String`, é necessário definir um
 prefixo com o nome da Interface.
 
-## Como utilizar a Delegação
+## Como utilizar a Delegação {#como-utilizar-a-delegacao}
 
 Para utilizarmos *Delegation*, primeiro precisamos definir os
 reais Objetos que representam as Interfaces:
