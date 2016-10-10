@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Interfaces, Delegação, Problemas e Soluções &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Como utilizar Interfaces e Delegação de Implementação sem vazamentos de memória">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Object Pascal">
+    <meta name="keywords" content="delegation, delegates, delegação, implements, object delegation">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201610101131" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Interfaces, Delegação, Problemas e Soluções">
+    <meta property="og:description" content="Como utilizar Interfaces e Delegação de Implementação sem vazamentos de memória">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1474406716381-8399fe67fbcf.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Interfaces, Delegação, Problemas e Soluções" />
+    <meta name="twitter:description" content="Como utilizar Interfaces e Delegação de Implementação sem vazamentos de memória" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>EBOOK</a>
+<a href="/archive/">ARQUIVO</a>
+<a href="/contact/">CONTATO</a>
+<a href="/about/">SOBRE</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Interfaces, Delegação, Problemas e Soluções</h1>
+  <span class="post-meta">Oct 10, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    9 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Delegação de Implementação através da composição de
+Objetos é uma <em>feature</em> incrível, só disponível na
+Linguagem <em>Object Pascal</em>, porém existem alguns 
+problemas intrínsecos no uso dessa tecnologia.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1474406716381-8399fe67fbcf.jpg" alt="Imagem" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>No <a href="/posts/delegacao-de-implementacao-de-interfaces/">artigo anterior</a>
+escrevi sobre a Delegação de Implementação de Interfaces, 
+utilizando a Composição de Objetos.</p>
+
+<p>É uma <em>feature</em> bem legal.</p>
+
+<p>Infelizmente existem algumas armadilhas quando trabalhamos
+com Interfaces e sua liberação automática de memória.</p>
+
+<p>A Delegação utilizando Objetos também possui armadilhas que,
+se não forem verificadas, podem arruinar seu projeto devido
+aos vazamentos de memória que essa prática pode causar.</p>
+
+<p>Nesse artigo vou lhe mostrar os problemas e propor soluções.</p>
+
+<h2 id="vazamentos-de-memoria">Vazamentos de memória</h2>
+
+<p>A Linguagem Object Pascal nos dá a possibilidade de trabalharmos
+utilizando variáveis do tipo Interface. Essas são liberadas
+automaticamente, pelo compilador, quando saem do escopo de execução
+na qual elas foram criadas.</p>
+
+<p>Essa facilidade nos traz alguns problemas ou cria 
+condições para problemas como, por exemplo, a 
+<a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/">referência circular</a>
+e a <a href="/posts/interfaces-e-o-metodo-estatico-new/">não existência de uma variável</a>
+na construção de um Objeto.</p>
+
+<p>Esse são alguns dos inúmeros equívocos na implementação que geram
+os tão temidos vazamentos de memória.</p>
+
+<p>Outro problema grave tem haver com a 
+<a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">hierarquia de herança</a> 
+que você irá utilizar nas Classes que irão gerar Objetos que 
+implementam Interfaces por delegação.</p>
+
+<h2 id="contador-de-referencias">Contador de Referências</h2>
+
+<p>Vou ser justo e dizer que o problema, em si, não é especificamente sobre
+herança, mas como você implementa os Métodos especiais que são utilizados
+pelo compilador para fazer a liberação da memória automaticamente.</p>
+
+<p>São eles: <code>QueryInterface</code>, <code>_AddRef</code> e <code>_Release</code>.</p>
+
+<p>Esses são Métodos especiais que são utilizados para 
+implementar um Contador de Referências. 
+Eles servem para incrementar e decrementar um contador 
+de referência da instância e, com isso, ter o controle para saber 
+quando liberar o Objeto da memória.</p>
+
+<p>Ao utilizarmos Interfaces, somos obrigados a implementar esses 3 Métodos
+— a não ser que utilizemos Interfaces CORBA, que não tem contagem de
+referência e nem liberação automática da memória.</p>
+
+<p>Então utizamos a herança de alguma Classe que já implemente esses Métodos.</p>
+
+<p>E aqui começam os problemas.</p>
+
+<h2 id="problemas">Problemas</h2>
+
+<p>Como eu não utilizo mais herança de Classes eu não preciso pensar sobre
+hierarquias de Classes e todas as suas complexidades. 
+Todas as minhas Classes herdam de <code>TInterfacedObject</code>, pois essa Classe
+já implementa os 3 Métodos apropriadamente.</p>
+
+<p>Mas para programadores que ainda utilizam
+<a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">herança</a>
+esse pode ser o primeiro problema a enfrentar.</p>
+
+<p>Exemplo. Você vai desenhando toda a sua hierarquia de Classes, “perfeitamente” e 
+descobre que Cão não pode herdar de Mamífero porque você quer utilizar Interfaces
+com contagem de referência… então Cão herda de <code>TInterfacedObject</code> — 
+quebrando a hierarquia — ou você é obrigado a copiar/colar o código 
+de <code>TInterfacedObject</code> dentro da sua Classe — o que também é abominável.</p>
+
+<p>Como eu dizia, todas as minhas Classes herdam de <code>TInterfacedObject</code>.
+Sendo assim, as Classes que serão utilizadas para delegar a implementação
+das Interfaces, também serão filhas de <code>TInterfacedObject</code> e… BUM! 
+Temos vazamento de memória.</p>
+
+<p>Pois é. As Classes delegadas não podem herdar de <code>TInterfacedObject</code>
+se eu quiser instanciar a Classe principal como uma Interface.</p>
+
+<p>Confuso? Eu também fiquei.</p>
+
+<h3 id="exemplo-1">Exemplo 1</h3>
+
+<p>Vamos utilizar o exemplo do
+<a href="/posts/delegacao-de-implementacao-de-interfaces/">artigo anterior</a>
+para explicar onde iríamos ter problemas com vazamento de memória.</p>
+
+<p>A Classe final ficou assim:</p>
+
+<pre><code>  TTheClient = class(TInterfacedObject, IFinances, IAccess)
+  private
+    FFinances: IFinances;
+    FAccess: IAccess;
+    property Finances: IFinances read FFinances implements IFinances;
+    property Access: IAccess read FAccess implements IAccess;
+  end;
+</code></pre>
+
+<p>E os <a href="/posts/delegacao-de-implementacao-de-interfaces/#como-utilizar-a-delegacao">exemplos</a>
+de implementação utilizando delegação foram as Classes <code>TSimpleFinances</code> 
+e <code>TSimpleAccess</code>. Ambas herdando de <code>TInterfacedObject</code>.</p>
+
+<pre><code>  TSimpleFinances = class(TInterfacedObject, IFinances)
+  public
+    construtor ...
+    function Current: Currency;
+    function AsString: string;
+  end;
+  
+  TSimpleAccess = class(TInterfacedObject, IAccess)
+  public
+    construtor ...
+    function List: IDataList;
+    function AsString: string;
+  end;
+</code></pre>
+
+<p>Devido os atributos <code>FFinances</code> e <code>FAccess</code> forem do tipo Interface, haverá
+vazamentos de memória se estanciarmos <code>TTheClient</code> como sendo representante
+de alguma das Interfaces que ele implementa (por delegação).</p>
+
+<p>Isso ocorre porque o compilador irá instanciar 2 Objetos — <code>TTheClient</code>
+e o Objeto delegado que implementa a Interface — mas no nosso código
+só teremos a referência a um Objeto.
+A princípio tudo deveria funcionar, já que também temos a referência ao
+Objeto delegado através do atributo privado, mas não é assim que funciona.</p>
+
+<p>Há dois problemas no código acima, se considerarmos a utilização normal de 
+instâncias com contagem de referência:</p>
+
+<ol>
+  <li>Propriedades e atributos delegados não podem ser Interfaces;</li>
+  <li>Objetos delegados não devem ter <code>TInterfacedObject</code> como herança.</li>
+</ol>
+
+<p>Então a Classe final <code>TTheClient</code> tem um problema.</p>
+
+<p>Vamos ao um exemplo mais completo.</p>
+
+<h3 id="exemplo-2">Exemplo 2</h3>
+
+<p>O exemplo abaixo foi submetido à lista de discussão oficial do FreePascal com
+o título “<em>A serious Memleak using delegates/implements…</em>” no dia 5 de Outubro, 
+o que gerou alguma polêmica por lá.</p>
+
+<p>Se você não faz parte da lista, pode ler as mensagens dessa <em>thread</em> 
+<a href="https://www.mail-archive.com/fpc-pascal@lists.freepascal.org/msg43835.html">aqui</a>.</p>
+
+<pre><code>program Project1;
+
+{$mode objfpc}{$H+}
+
+uses
+  Classes, SysUtils;
+
+type
+  IValue = interface
+    function AsString: string;
+  end;
+
+  TIntegerValue = class(TInterfacedObject, IValue)
+  private
+    FValue: Integer;
+  public
+    constructor Create(Value: Integer);
+    destructor Destroy; override;
+    function AsString: string;
+  end;
+
+  TMyApp = class(TInterfacedObject, IValue)
+  private
+    FValue: IValue;
+  public
+    constructor Create(Value: Integer);
+    destructor Destroy; override;
+    property Value: IValue read FValue implements IValue;
+  end;
+
+{ TIntegerValue }
+
+constructor TIntegerValue.Create(Value: Integer);
+begin
+  inherited Create;
+  FValue := Value;
+  WriteLn('TIntegerValue.Create');
+end;
+
+destructor TIntegerValue.Destroy;
+begin
+  WriteLn('TIntegerValue.Destroy');
+  inherited Destroy;
+end;
+
+function TIntegerValue.AsString: string;
+begin
+  Result := 'Number is ' + IntToStr(FValue);
+end;
+
+{ TMyApp }
+
+constructor TMyApp.Create(Value: Integer);
+begin
+  inherited Create;
+  FValue := TIntegerValue.Create(Value);
+  WriteLn('TMyApp.Create');
+end;
+
+destructor TMyApp.Destroy;
+begin
+  WriteLn('TMyApp.Destroy');
+  inherited Destroy;
+end;
+
+// Program
+
+procedure ExecuteIntegerValue;
+var
+  V: IValue;
+begin
+  WriteLn;
+  WriteLn('IntegerValue:');
+  V := TIntegerValue.Create(5);
+  WriteLn(V.AsString);
+end;
+
+procedure ExecuteMyApp;
+var
+  App: TMyApp;
+begin
+  WriteLn;
+  WriteLn('MyApp:');
+  App := TMyApp.Create(10);
+  try
+    WriteLn(App.Value.AsString);
+  finally
+    App.Free;
+  end;
+end;
+
+procedure ExecuteMyAppAsInterface;
+var
+  V: IValue;
+begin
+  WriteLn;
+  WriteLn('MyAppAsInterface:');
+  V := TMyApp.Create(20);
+  WriteLn(V.AsString);
+end;
+
+begin
+  ExecuteIntegerValue;
+  ExecuteMyApp;
+  ExecuteMyAppAsInterface;
+  ReadLn;
+end.
+</code></pre>
+
+<p>O programa acima compila sem nenhum erro utilizando o FreePascal ou Delphi.
+No entanto, se habilitarmos a saída de verificação de vazamentos
+de memória (chama-se <a href="http://www.freepascal.org/docs-html/rtl/heaptrc/usage.html">Heaptrc</a> no FreePascal)
+podemos ver que o término do programa não foi elegante como deveria:</p>
+
+<pre><code>W:\temp&gt;project1.exe
+
+IntegerValue:
+TIntegerValue.Create
+Number is 5
+TIntegerValue.Destroy
+
+MyApp:
+TIntegerValue.Create
+TMyApp.Create
+Number is 10
+TMyApp.Destroy
+TIntegerValue.Destroy
+
+MyAppAsInterface:
+TIntegerValue.Create
+TMyApp.Create
+Number is 20
+
+Heap dump by heaptrc unit
+83 memory blocks allocated : 2017/2200
+81 memory blocks freed     : 1981/2160
+2 unfreed memory blocks : 36
+True heap size : 229376 (80 used in System startup)
+True free heap : 229104
+Should be : 229128
+Call trace for block $01812928 size 20
+  $004017DA  TMYAPP__CREATE,  line 59 of W:/temp/project1.lpr
+  $00401B82  EXECUTEMYAPPASINTERFACE,  line 101 of W:/temp/project1.lpr
+  $00401C08  main,  line 108 of W:/temp/project1.lpr
+Call trace for block $018128C8 size 16
+  $00401B82  EXECUTEMYAPPASINTERFACE,  line 101 of W:/temp/project1.lpr
+  $00401C08  main,  line 108 of W:/temp/project1.lpr
+
+W:\temp&gt;
+</code></pre>
+
+<p>O problema de vazamento de memória ocorre somente na chamada à função <code>MyAppAsInterface</code>.</p>
+
+<p>Ao vermos isso a primeira impressão é: Delegação de Implementação não funciona.</p>
+
+<p>Bem, funciona sim. Não é tão elegante como eu gostaria que fosse, mas ao
+menos é contornável.</p>
+
+<h2 id="solucoes">Soluções</h2>
+
+<p>A partir de agora, a Classe que você sempre deverá se lembrar, depois da 
+<code>TInterfacedObject</code>, será a Classe <code>TAggregatedObject</code>. 
+Ambas existem no FreePascal e também no Delphi.</p>
+
+<p>A Classe <code>TAggregatedObject</code> também implementa os 3 métodos especiais, mas
+é uma implementação diferente da utilizada em <code>TInterfacedObject</code>.</p>
+
+<p>Essa Classe deverá ser utilizada para implementar Objetos que são utilizados
+na Delegação de Implementação utilizando a sintaxe “<em>implements</em>”.</p>
+
+<p>Em <a href="http://www.freepascal.org/docs-html/rtl/system/taggregatedobject.html">poucas palavras</a>, 
+os Objetos de <code>TAggregatedObject</code> delegam a contagem de 
+referência ao “Objeto controlador”, ou seja, delegam seus próprios “tempos de vida”
+ao Objeto externo que implementa as Interfaces.</p>
+
+<p>Primeiro vamos implementar uma nova Classe que herda de <code>TAggregatedObject</code>:</p>
+
+<pre><code>TDelegatedIntegerValue = class(TAggregatedObject, IValue)
+private
+  FValue: Integer;
+public
+  constructor Create(AController: IInterface; Value: Integer);
+  destructor Destroy; override;
+  function AsString: string;
+end;
+
+{ TDelegatedIntegerValue }
+
+constructor TDelegatedIntegerValue.Create(AController: IInterface;
+  Value: Integer);
+begin
+  inherited Create(AController);
+  FValue := Value;
+  WriteLn('TDelegatedIntegerValue.Create');
+end;
+
+destructor TDelegatedIntegerValue.Destroy;
+begin
+  WriteLn('TDelegatedIntegerValue.Destroy');
+  inherited Destroy;
+end;
+
+function TDelegatedIntegerValue.AsString: string;
+begin
+  Result := 'Number is ' + IntToStr(FValue);
+end;
+</code></pre>
+
+<p>Infelizmente também teremos que alterar a definição da Classe <code>TMyApp</code>,
+redefinindo a propriedade e atributo para um tipo concreto de Classe:</p>
+
+<pre><code>TMyApp = class(TInterfacedObject, IValue)
+private
+  FValue: TDelegatedIntegerValue;
+public
+  constructor Create(Value: Integer);
+  destructor Destroy; override;
+  property Value: TDelegatedIntegerValue read FValue implements IValue;
+end;
+
+{ TMyApp }
+
+constructor TMyApp.Create(Value: Integer);
+begin
+  inherited Create;
+  FValue := TDelegatedIntegerValue.Create(Self, Value);
+  WriteLn('TMyApp.Create');
+end;
+
+destructor TMyApp.Destroy;
+begin
+  FValue.Free;
+  WriteLn('TMyApp.Destroy');
+  inherited Destroy;
+end;
+</code></pre>
+
+<p>Ao criamos a instância <code>FValue</code>, um dos argumentos do construtor
+da Classe <code>TDelegatedIntegerValue</code> é o <em>Controller</em> que irá controlar
+o tempo de vida da instância que, nesse caso, é a instância (<em>Self</em>)
+de <code>TMyApp</code>.</p>
+
+<p>Após compilar e executar novamente a aplicação, podemos ver um novo resultado:</p>
+
+<pre><code>c:\temp&gt;project1.exe
+
+IntegerValue:
+TIntegerValue.Create
+Number is 5
+TIntegerValue.Destroy
+
+MyApp:
+TDelegatedIntegerValue.Create
+TMyApp.Create
+Number is 10
+TDelegatedIntegerValue.Destroy
+TMyApp.Destroy
+
+MyAppAsInterface:
+TDelegatedIntegerValue.Create
+TMyApp.Create
+Number is 20
+TDelegatedIntegerValue.Destroy
+TMyApp.Destroy
+
+Heap dump by heaptrc unit
+83 memory blocks allocated : 2009/2184
+83 memory blocks freed     : 2009/2184
+0 unfreed memory blocks : 0
+True heap size : 196608 (80 used in System startup)
+True free heap : 196528
+
+c:\temp&gt;
+</code></pre>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Os <em>designers</em> da linguagem foram muito infelizes ao criarem “métodos especiais”
+para liberação de memória. Isso é algo difícil de explicar para programadores
+não-Pascal. É até um pouco vergonhoso…</p>
+
+<p>Poderiam ter criado uma Interface especial que só pelo fato de dizer que sua
+a Classe à implementa, o compilador poderia fazer sua mágica.</p>
+
+<p>Felizmente há possíveis soluções para contornar esse erro no <em>design</em>, mas se 
+pudessemos utilizar propriedades de Objetos delegados como sendo do 
+tipo Interface, como sugeri no artigo anterior, seria quase perfeito. Poderíamos
+utilizar Injeção de Dependência através dos construtores dos Objetos, inicializando
+as instâncias delegadas, que seriam do tipo Interface.</p>
+
+<p>Com a implementação atual, até podemos utilizar a Injeção de Dependência, 
+mas os argumentos deverão ser do tipo Classe e não Interface — isso na maioria dos
+casos normais onde queremos utilizar a contagem de referência — 
+então o polimorfismo iria ficar por conta da herança de Classes, o que não é muito bem
+vindo devido aos problemas já relatados em artigos anteriores.</p>
+
+<p>O jeito é instanciar as Classes delegadas internamente. O que não é um real problema.</p>
+
+<p>Se formos pensar bem, todos os métodos de Implementação das Interfaces deveriam ser 
+implementas dentro do Objeto, quando não utilizamos Delegação. Então não estaríamos 
+perdendo muito, apenas estamos deixando de ganhar mais.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Interfaces, Delegação, Problemas e Soluções&via=mdbs99;url=http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/&title=Interfaces, Delegação, Problemas e Soluções" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/&title=Interfaces, Delegação, Problemas e Soluções" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/&t=Interfaces, Delegação, Problemas e Soluções" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/delegacao-de-implementacao-de-interfaces/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Delegação de Implementação de Interfaces</li></h4>
+        </ul>
+        <!--<p class="post-summary">A beleza da linguagem Object Pascal para implementar delegação entre Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-o-metodo-estatico-new/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e o Método estático New</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/interfaces-delegacao-problemas-solucoes';
+      var disqus_title      = 'Interfaces, Delegação, Problemas e Soluções';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
