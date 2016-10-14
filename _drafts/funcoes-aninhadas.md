@@ -11,16 +11,17 @@ image: /images/photo.jpg
 categories: 
   - Object Pascal
 tags:
-  - Language
+  - language
 keywords:
   - funções aninhadas
   - nested functions
   - organização do código
 --- 
 
-Se você tem um Método coeso, que faz uma única tarefa,
-mas mesmo assim o código parece complicado, dificultando
-o entendimento e a manutenção... o que fazer?
+Se você tem um Método coeso, que trabalha em apenas uma única 
+tarefa, mas mesmo assim o código parece complicado, dificultando
+o entendimento e a manutenção... já pensou em refatorar o código
+utilizando Funções Aninhadas?
 
 <!--more-->
 
@@ -35,8 +36,8 @@ A linguagem Pascal tem e acho que devemos aproveitar essa *feature*.
 Funções Aninhadas nada mais são do que funções declaradas dentro de
 outras funções ou Métodos.
 
-Esse artigo irá mostrar os motivos para utilizarmos Funções Aninhadas
-e algumas regras que devemos seguir.
+Esse artigo irá mostrar os motivos e vantagens ao utilizarmos Funções 
+Aninhadas e também algumas regras que devemos seguir.
 
 ## Motivos {#motivos}
 
@@ -48,30 +49,34 @@ de código.
 Cada função já define um bloco, com a vantagem de ser reutilizável em
 outra parte do Método.
 
-Elas estão muito perto do paradigma da Orientação a Objetos (leia esse
+Funções Aninhadas estão muito próximas da Programação Orientada a 
+Objetos (leia esse 
 [artigo](http://blog.synopse.info/post/2012/05/20/Recursive-calls-and-private-objects)
 ).
 
 Cada Método que contenha Funções Aninhadas é como uma Classe Anônima.
-As variáveis locais serão como atributos e as Funções Aninhada serão
+As variáveis locais serão como atributos e as Funções Aninhadas serão
 como Métodos privados.
 
-Funções Aninhadas facilitam o uso correto do
+Funções Aninhadas facilitam a correta utilização do
 [*WITH*]({% post_url 2016-09-12-a-declaracao-with-do-e-do-mal %})
-pois irão evitar o conflito entre identificadores, nos casos em que
-a implementação do Método seja complexa ou utilize muita composição de
-Objetos.
+quando a implementação do Método é complexa ou quando o código utilizad
+muita composição de Objetos.
 
-O código fica bem organizado, fácil de ler e alterar.
+Dividir o código em pequenas funções, diminuirá as chances de termos conflitos
+entre identificadores que utilizam.
+
+O código fica melhor organizado, fácil de ler e alterar.
 
 ## Regras {#regras}
 
-Qualquer *feature* que é utilizada de forma indiscriminada poderá ser um
-problema futuramente.
+Qualquer *feature* utilizada de forma indiscriminada poderá ser um
+potencial problema no futuro, ao invés de uma solução — o mesmo ocorre com 
+o uso indiscriminado do *WITH*.
 
-Precisamos de regras e disciplina.
+Precisamos de **regras** e **disciplina**.
 
-Então cito aqui algumas regras que utilizo em meus projetos.
+Abaixo algumas regras que utilizo em meus projetos.
 
 ### Regra 1: Não utilize mais do que 3 Funções Aninhadas
 
@@ -86,32 +91,36 @@ Existem pouquíssimas exceções a essa regra.
 ### Regra 2: Evite compartilhar as Variáveis Locais
 
 Falei acima que um Método com Funções Aninhadas é como uma Classe
-Anônima. No entanto, sabemos que não são verdadeiras Classes. 
+Anônima, contendo Métodos privados e atributos. 
+No entanto, sabemos que não são verdadeiras Classes.
 
 É melhor que você isole cada Função Aninhada em suas próprias 
-variáveis e argumentos, ou seja, evite compartilhar a variável
-local do Método dentro das Funções Aninhadas.
+variáveis e argumentos, ou seja, evite compartilhar as variáveis
+locais do Método com as Funções Aninhadas.
 
-Essa disciplina irá ajudá-lo na extração e refatoração das 
-Funções Aninhadas para criar outros Métodos com o mínimo de 
-impacto possível.
+Essa disciplina na codificação irá ajudá-lo na extração e 
+refatoração das Funções Aninhadas, se for o caso, para criar outros 
+Métodos com o mínimo de impacto possível.
 
 Ao invés de utilizar a variável local do Método, passe
 a referência como argumento da função, mantendo-as isoladas.
 
 Existem poucas exceções a esta regra. Por exemplo.
-Se as Funções Aninhadas trabalham sempre com
-os mesmos Objetos (variáveis locais), é mais fácil compartilhar
-as variáveis entre as funções; ou refatore e crie uma Classe.
+Se todas as Funções Aninhadas trabalham sempre com
+os mesmos Objetos (variáveis locais) do Método, é mais fácil 
+compartilhar as variáveis — ou refatorar criando uma nova Classe —
+do que ficar repassando às funções. Utilize o bom senso.
 
-### Regra 3: Apenas 1 Nível
+### Regra 3: Apenas 1 Nível de Funções
 
-Não complique. Use apenas um "nível" de Função Aninhada. Se
-você tiver utilizando mais de um nível, é provável que a Função
-deveria ser um Método. 
+Não complique. Use apenas um "nível" de Funções Aninhadas. Se
+você tiver utilizando mais de um nível, é provável que a função
+de "nível 2" deveria ser um Método.
 
-Refatore. Nesse caso o "nível 2" passaria a ser o "nível 1" 
-no novo Método criado.
+Refatore. 
+
+Após a refatoração do código, o "nível 2" de Funções Aninhadas
+passaria a ser o "nível 1" no novo Método criado.
 
 Sem exceções aqui!
 
