@@ -1,13 +1,13 @@
 ---
 layout: post
 title: "Funções Aninhadas Melhoram a Legibilidade do Código"
-date: 2016-10-17
+date: 2016-10-14
 description:
   Funções Aninhadas podem e devem ser utilizadas, pois melhoram
   a legibilidade do Código e sua manutenção.
 summary: 
   Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos
-image: /images/photo.jpg
+image: /images/photo-1476411890462-80309823db3b.jpg
 categories: 
   - Object Pascal
 tags:
@@ -49,22 +49,21 @@ de código.
 Cada função já define um bloco, com a vantagem de ser reutilizável em
 outra parte do Método.
 
-Funções Aninhadas estão muito próximas da Programação Orientada a 
+Funções Aninhadas tem um conceito muito próximo da Programação Orientada a 
 Objetos (leia esse 
 [artigo](http://blog.synopse.info/post/2012/05/20/Recursive-calls-and-private-objects)
 ).
-
-Cada Método que contenha Funções Aninhadas é como uma Classe Anônima.
+Um Método que contém Funções Aninhadas é como uma Classe Anônima.
 As variáveis locais serão como atributos e as Funções Aninhadas serão
 como Métodos privados.
 
 Funções Aninhadas facilitam a correta utilização do
 [*WITH*]({% post_url 2016-09-12-a-declaracao-with-do-e-do-mal %})
-quando a implementação do Método é complexa ou quando o código utilizad
-muita composição de Objetos.
+quando a implementação do Método é complexa ou quando o código utiliza
+composição com muitos Objetos.
 
-Dividir o código em pequenas funções, diminuirá as chances de termos conflitos
-entre identificadores que utilizam.
+Dividir o código em pequenas funções, diminuirá as chances de haver conflitos
+entre identificadores que utilizam o *WITH*.
 
 O código fica melhor organizado, fácil de ler e alterar.
 
