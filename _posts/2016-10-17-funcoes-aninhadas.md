@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Funções Aninhadas"
-date: 2016-10-15
+date: 2016-10-16
 description:
   Funções Aninhadas deixam o código melhor organizado, fácil de ler e alterar.
 summary: 
@@ -140,14 +140,176 @@ o serviço.
 Então, abaixo temos alguns exemplos do que eu considero um bom uso
 de Funções Aninhadas.
 
-### Exemplo 1: Peça Permissão, Faça o Serviço {#exemplo1}
+Observação: Podem haver erros de sintaxe, visto que eu estou escrevendo
+o código diretamente no editor do artigo, sem compilar.
 
+### Exemplo 1: Pergunte, Faça o Serviço {#exemplo1}
+
+Em alguns formulários temos que fazer questionar o usuário sobre
+qual caminho o sistema deve tomar.
+Esses questionamentos, com mensagens *strings* no código, podem 
+diminuir a legibilidade do código. Somado isso com o uso *errado*
+do *WITH*, o código *não* fica elegante. Veja:
+
+    procedure TMainForm.DeleteButtonClick(Sender: TObject);
+    begin
+      with TUserQuestion.New(
+        Format(
+          'Você tem %d registros para excluir.' + #13
+          'Esse processo pode demorar.' + #13
+          'Confirma a execução?', [
+            DataSet.RecordCount
+          ]
+        )
+      ) do
+      begin
+        Show;
+        if Confirmed then
+        begin
+          ExecuteProcessOne;
+          ExecuteProcessTwo;
+          TUserInformation.New('Processo concluído.').Show;
+        end;
+      end;
+    end;
+    
+Nesse exemplo eu utilizei Classes de Mensagens ao usuário.
+Não precisamos de sua implementação para entender o que está 
+ocorrendo aqui. No entanto o código pode parecer um pouco confuso
+para alguns programadores "não iniciados" no uso do *WITH*.
+Por exemplo. O Método `Show` após o primeiro `begin`, pertence ao
+Formulário ou a instância implicitada criada em `TUserQuestion.New`?
+
+Também temos a mensagem em texto com quebra de linha e parâmetros
+concatenados. As vezes essas mensagens são maiores. O código fica 
+uma bagunça.
+
+Vamos refatorar esse código utilizando Funções Aninhadas:
+
+    procedure TMainForm.DeleteButtonClick(Sender: TObject);
+    
+      function Question(Total: Integer): IUserQuestion;
+      begin
+        Result :=
+          TUserQuestion.New(
+            Format(
+              'Você tem %d registros para excluir.' + #13
+              'Esse processo pode demorar.' + #13
+              'Confirma a execução?', [
+                Total
+              ]
+            )
+          ).Show;
+      end;
+    
+    begin
+      if Question(DataSet.RecordCount).Confirmed then
+      begin
+        ExecuteProcessOne;
+        ExecuteProcessTwo;
+        TUserInformation.New('Processo concluído.').Show;
+      end;
+    end;
+
+Mais simples?
+
+Sim, optei por retirar o *WITH*, porque é mais simples dessa forma.
+Mas ele poderia ser utilizado caso o programador necessitasse de 
+mais alguma informação da instância `IUserQuestion`, criada e retornada
+através da função `Question`. Exemplo. Você pode fazer uma pergunta
+ao usuário onde ele deve digitar uma valor. Nesse caso você precisa 
+validar o retorno (`Confirmed`) e também o valor digitado (`Value`):
+
+    with TUserInput.New('Digite o valor') do
+    begin
+      if Confirmed then
+        TUserInformation.New(
+          'Valor digitado: ' + Value.AsString
+        )
+        .Show;
+    end;
+
+Repare, também, que a função `Question` não tem mais dependência
+com o Objeto que vem do Formulário, `DataSet.RecordCount`. A função
+agora está **isolada**. Isso quer dizer que se você precisar dessa
+função em mais de um lugar, pode extraí-la, criar um novo Método e 
+passar o argumento na sua chamada.
 
 ### Exemplo 2: Clicou no "Botão Mágico" que Faz tudo {#exemplo2}
 
+Imagine um Formulário que, ao clique de um botão, o sistema:
 
-### Exemplo 3: Mostre-me o que está acontecendo {#exemplo3}
+  1. Faz validações das informações desejadas
+  2. Pergunta ao usuário se deve continuar
+  3. Salva as informações no banco de dados
+  4. Envia um e-mail notificando alguém
 
+Claro que você terá uma Classe para cada uma dessas funções (certo?).
+Você não deve implementar tudo isso dentro de um evento num botão.
+
+Por outro lado, a implementação mais **correta** seria separar essas ações
+em outras camadas, outras Classes, sem instanciar tais Classes específicas
+dentro do Formulário.
+
+Infelizmente nem sempre temos tempo para fazer o 100% correto. Mas que 
+tal fazer 80% correto para depois, quando tivermos mais tempo, refatorar
+com tranquilidade o código?
+
+Aqui as Funções Aninhadas nos ajudam novamente:
+
+    procedure TMainForm.ConfirmButtonClick(Sender: TObject);
+    
+      function Checked: Boolean;
+      begin
+        Result := False;
+        //if EmailEdit.Text <> '' then
+        // Exit;
+        //...
+        Result := True;
+      end;
+      
+      function Question: IUserQuestion;
+      begin
+        Result := 
+          TUserQuestion.New('Confirma a operação?').Show;
+      end;
+      
+      procedure Save;
+      begin
+        // persistência...
+      end;
+      
+      procedure SendEmail;
+      begin
+        // envia um e-mail...
+      end;
+    
+    begin
+      if Checked then
+        if Question.Confirmed then
+        begin
+          Save;
+          SendMail;
+        end;
+    end;
+
+Tenha em mente que isso é apenas um exemplo. Todas as Funções Aninhadas
+devem seguir o bom senso e ter **poucas linhas**. Caso contrário, refatore.
+
+Haverá muitas dependências entre o Formulário e todas essas Classes 
+especialistas. Mas nem sempre
+precisamos abstrair em camadas. Pode ser um pequeno Formulário de um
+pequeno sistema, onde não haveria problemas em ter essas dependências.
+
+No entanto o código está limpo e elegante, com fácil manutenção.
 
 ## Conclusão {#conclusao}
+
+Funções Aninhadas nos ajudam a codificar de forma mais simples e elegante.
+
+É um dos caminhos para "seguir em frente" sem muitas preocupações com 
+o **purismo** da Orientação a Objetos — devido a falta de tempo — mas sem deixar
+cair a qualidade do código no longo prazo.
+
+Utilize-as com sabedoria.
 

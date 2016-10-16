@@ -44,7 +44,7 @@ sass:
   
 gems:
   - jekyll-redirect-from
-  - jekyll-paginate  
+  - jekyll-paginate
   
 # Optional features
 animated: true
