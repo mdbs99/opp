@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Funções Aninhadas"
-date: 2016-10-16
+date: 2016-10-17
 description:
   Funções Aninhadas deixam o código melhor organizado, fácil de ler e alterar.
 summary: 
@@ -27,16 +27,16 @@ utilizando Funções Aninhadas?
 ![Unsplash image]({{ page.image }})
 
 [Funções Aninhadas](https://en.wikipedia.org/wiki/Nested_function)
-é algo que não tem em todas as linguagens.
+é algo que não existe em todas as linguagens.
 A linguagem Pascal tem e acho que devemos aproveitar essa *feature*.
 
 Funções Aninhadas nada mais são do que funções declaradas dentro de
 outras funções ou Métodos.
 
 Esse artigo irá mostrar os motivos e vantagens ao utilizarmos Funções 
-Aninhadas e também algumas regras que devemos seguir.
+Aninhadas, assim como algumas regras que devemos seguir ao utilizá-las.
 
-## Motivos para utilizá-las {#motivos}
+## Motivos {#motivos}
 
 Funções Aninhadas é uma opção bem melhor do que 
 [pular linhas]({% post_url 2016-09-19-linhas-em-branco-no-metodo-e-mal-cheiro %})
@@ -91,12 +91,12 @@ Falei acima que um Método com Funções Aninhadas é como uma Classe
 Anônima, contendo Métodos privados e atributos. 
 No entanto, sabemos que não são verdadeiras Classes.
 
-É melhor que você isole cada Função Aninhada em suas próprias 
+É melhor que você isole cada Função Aninhada com suas próprias 
 variáveis e argumentos, ou seja, **evite** compartilhar as variáveis
 locais do Método com as Funções Aninhadas.
 
-Essa disciplina na codificação irá ajudá-lo na extração e 
-refatoração das Funções Aninhadas, se for o caso, para criar outros 
+Essa disciplina na codificação irá ajudá-lo na *extração* e 
+*refatoração* das Funções Aninhadas, se for o caso, para criar outros 
 Métodos com o mínimo de impacto possível.
 
 Ao invés de utilizar a variável local do Método, passe
@@ -114,12 +114,20 @@ Não complique. Use *apenas* um "nível" de Funções Aninhadas. Se
 você tiver utilizando mais de um nível, é provável que a função
 de "nível 2" deveria ser um Método.
 
-**Refatore**. 
+*Refatore*. 
 
 Após a refatoração do código, o "nível 2" de Funções Aninhadas
 passaria a ser o "nível 1" no novo Método criado.
 
 Sem exceções aqui!
+
+### Regra 4: Menos é Mais {#regra4}
+
+Cada função deve implementar apenas uma **única** responsabilidade.
+
+Essa é uma regra geral para codificar Métodos e Funções.
+
+Sem exceções.
 
 ## Exemplos {#exemplos}
 
@@ -137,19 +145,21 @@ O usuário acha que apenas uma tarefa foi executada quando, na
 verdade, **inúmeros Objetos** podem ter tido participação para executar
 o serviço. 
 
-Então, abaixo temos alguns exemplos do que eu considero um bom uso
+Então, abaixo temos alguns exemplos do que eu considero um *bom* uso
 de Funções Aninhadas.
 
 Observação: Podem haver erros de sintaxe, visto que eu estou escrevendo
-o código diretamente no editor do artigo, sem compilar.
+o código diretamente no editor do artigo sem compilar.
 
 ### Exemplo 1: Pergunte, Faça o Serviço {#exemplo1}
 
-Em alguns formulários temos que fazer questionar o usuário sobre
+Em alguns formulários temos que questionar o usuário sobre
 qual caminho o sistema deve tomar.
-Esses questionamentos, com mensagens *strings* no código, podem 
-diminuir a legibilidade do código. Somado isso com o uso *errado*
-do *WITH*, o código *não* fica elegante. Veja:
+Esses questionamentos, com mensagens *strings*, podem 
+diminuir a legibilidade do código.
+
+Somado isso com o uso *errado* do *WITH*, o código *não* fica 
+elegante. Veja:
 
     procedure TMainForm.DeleteButtonClick(Sender: TObject);
     begin
@@ -178,7 +188,7 @@ Não precisamos de sua implementação para entender o que está
 ocorrendo aqui. No entanto o código pode parecer um pouco confuso
 para alguns programadores "não iniciados" no uso do *WITH*.
 Por exemplo. O Método `Show` após o primeiro `begin`, pertence ao
-Formulário ou a instância implicitada criada em `TUserQuestion.New`?
+Formulário ou a instância de `TUserQuestion`?
 
 Também temos a mensagem em texto com quebra de linha e parâmetros
 concatenados. As vezes essas mensagens são maiores. O código fica 
@@ -213,12 +223,15 @@ Vamos refatorar esse código utilizando Funções Aninhadas:
 
 Mais simples?
 
-Sim, optei por retirar o *WITH*, porque é mais simples dessa forma.
+Sim, optei por retirar o *WITH*, porque é mais simples dessa forma,
+nesse exemplo.
 Mas ele poderia ser utilizado caso o programador necessitasse de 
 mais alguma informação da instância `IUserQuestion`, criada e retornada
-através da função `Question`. Exemplo. Você pode fazer uma pergunta
-ao usuário onde ele deve digitar uma valor. Nesse caso você precisa 
-validar o retorno (`Confirmed`) e também o valor digitado (`Value`):
+através da função `Question`.
+
+Exemplo. Você pode fazer uma pergunta ao usuário onde ele deve digitar 
+um valor. Nesse caso você precisa validar o retorno (`Confirmed`) e 
+mostrar o valor digitado (`Value`):
 
     with TUserInput.New('Digite o valor') do
     begin
@@ -293,15 +306,17 @@ Aqui as Funções Aninhadas nos ajudam novamente:
         end;
     end;
 
-Tenha em mente que isso é apenas um exemplo. Todas as Funções Aninhadas
-devem seguir o bom senso e ter **poucas linhas**. Caso contrário, refatore.
+Tenha em mente que isso é apenas um exemplo.
+
+Todas as Funções Aninhadas devem seguir o bom senso e ter 
+**poucas linhas**. Caso contrário, *refatore*.
 
 Haverá muitas dependências entre o Formulário e todas essas Classes 
 especialistas. Mas nem sempre
 precisamos abstrair em camadas. Pode ser um pequeno Formulário de um
 pequeno sistema, onde não haveria problemas em ter essas dependências.
 
-No entanto o código está limpo e elegante, com fácil manutenção.
+Mesmo assim o código está *limpo* e *elegante*, com fácil manutenção.
 
 ## Conclusão {#conclusao}
 
