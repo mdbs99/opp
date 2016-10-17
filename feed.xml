@@ -8,6 +8,331 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Funções Aninhadas</title>
+        <description>&lt;p&gt;Se você tem um Método coeso, que trabalha em apenas uma única 
+tarefa, mas mesmo assim o código parece complicado, dificultando
+o entendimento e a manutenção… já pensou em refatorar o código
+utilizando Funções Aninhadas?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1476411890462-80309823db3b.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Nested_function&quot;&gt;Funções Aninhadas&lt;/a&gt;
+é algo que não existe em todas as linguagens.
+A linguagem Pascal tem e acho que devemos aproveitar essa &lt;em&gt;feature&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Funções Aninhadas nada mais são do que funções declaradas dentro de
+outras funções ou Métodos.&lt;/p&gt;
+
+&lt;p&gt;Esse artigo irá mostrar os motivos e vantagens ao utilizarmos Funções 
+Aninhadas, assim como algumas regras que devemos seguir ao utilizá-las.&lt;/p&gt;
+
+&lt;h2 id=&quot;motivos&quot;&gt;Motivos&lt;/h2&gt;
+
+&lt;p&gt;Funções Aninhadas é uma opção bem melhor do que 
+&lt;a href=&quot;/posts/linhas-em-branco-no-metodo-e-mal-cheiro/&quot;&gt;pular linhas&lt;/a&gt;
+dentro da implementação de um Método com o intuito de separar blocos
+de código.&lt;/p&gt;
+
+&lt;p&gt;Cada função já define um bloco, com a vantagem de ser &lt;strong&gt;reutilizável&lt;/strong&gt; em
+outra parte do Método.&lt;/p&gt;
+
+&lt;p&gt;Funções Aninhadas tem um conceito muito próximo da Programação Orientada a 
+Objetos (leia esse 
+&lt;a href=&quot;http://blog.synopse.info/post/2012/05/20/Recursive-calls-and-private-objects&quot;&gt;artigo&lt;/a&gt;
+).
+Um Método que contém Funções Aninhadas é como se fosse uma implementação
+de uma &lt;em&gt;Classe Anônima&lt;/em&gt;. As variáveis locais serão como &lt;em&gt;atributos&lt;/em&gt; e as 
+Funções Aninhadas serão como &lt;em&gt;Métodos privados&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Funções Aninhadas facilitam a correta utilização do
+&lt;a href=&quot;/posts/a-declaracao-with-do-e-do-mal/&quot;&gt;&lt;em&gt;WITH&lt;/em&gt;&lt;/a&gt;
+quando a implementação do Método é complexa ou quando o código utiliza
+composição com muitos Objetos.
+Dividir o código em pequenas funções, diminuirá as chances de haver &lt;strong&gt;conflitos&lt;/strong&gt;
+entre identificadores que utilizam o &lt;em&gt;WITH&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Resumindo: Funções Aninhadas deixam o código melhor organizado, fácil de ler 
+e alterar.&lt;/p&gt;
+
+&lt;h2 id=&quot;regras&quot;&gt;Regras de Uso&lt;/h2&gt;
+
+&lt;p&gt;Qualquer &lt;em&gt;feature&lt;/em&gt; utilizada de forma indiscriminada poderá ser um
+potencial problema no futuro, ao invés de uma solução — o mesmo ocorre com 
+o uso indiscriminado do &lt;em&gt;WITH&lt;/em&gt; por programadores que não sabem exatamente o
+que estão fazendo.&lt;/p&gt;
+
+&lt;p&gt;Precisamos de &lt;strong&gt;regras&lt;/strong&gt; e &lt;strong&gt;disciplina&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Abaixo algumas regras que você deve levar em conta.&lt;/p&gt;
+
+&lt;h3 id=&quot;regra1&quot;&gt;Regra 1: Não utilize mais do que 3 Funções Aninhadas&lt;/h3&gt;
+
+&lt;p&gt;É uma regra óbvia.
+Se você tem muitas Funções Aninhadas dentro e um único Método, 
+é bem provável que ele esteja fazendo &lt;strong&gt;coisas demais&lt;/strong&gt;.
+Pense na refatoração e decomposição em outros Métodos ou mesmo
+na criação de uma nova Classe.&lt;/p&gt;
+
+&lt;p&gt;Existem pouquíssimas exceções a essa regra.&lt;/p&gt;
+
+&lt;h3 id=&quot;regra2&quot;&gt;Regra 2: Evite compartilhar as Variáveis Locais&lt;/h3&gt;
+
+&lt;p&gt;Falei acima que um Método com Funções Aninhadas é como uma Classe
+Anônima, contendo Métodos privados e atributos. 
+No entanto, sabemos que não são verdadeiras Classes.&lt;/p&gt;
+
+&lt;p&gt;É melhor que você isole cada Função Aninhada com suas próprias 
+variáveis e argumentos, ou seja, &lt;strong&gt;evite&lt;/strong&gt; compartilhar as variáveis
+locais do Método com as Funções Aninhadas.&lt;/p&gt;
+
+&lt;p&gt;Essa disciplina na codificação irá ajudá-lo na &lt;em&gt;extração&lt;/em&gt; e 
+&lt;em&gt;refatoração&lt;/em&gt; das Funções Aninhadas, se for o caso, para criar outros 
+Métodos com o mínimo de impacto possível.&lt;/p&gt;
+
+&lt;p&gt;Ao invés de utilizar a variável local do Método, passe
+a referência como argumento da função, mantendo-as &lt;strong&gt;isoladas&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Existem poucas exceções a esta regra. Por exemplo.
+Se todas as Funções Aninhadas trabalham sempre com
+os mesmos Objetos (variáveis locais) do Método, é mais fácil 
+compartilhar as variáveis — ou refatorar criando uma nova Classe —
+do que ficar repassando-as às funções. Utilize o bom senso.&lt;/p&gt;
+
+&lt;h3 id=&quot;regra3&quot;&gt;Regra 3: Apenas 1 Nível de Funções&lt;/h3&gt;
+
+&lt;p&gt;Não complique. Use &lt;em&gt;apenas&lt;/em&gt; um “nível” de Funções Aninhadas. Se
+você tiver utilizando mais de um nível, é provável que a função
+de “nível 2” deveria ser um Método.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Refatore&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Após a refatoração do código, o “nível 2” de Funções Aninhadas
+passaria a ser o “nível 1” no novo Método criado.&lt;/p&gt;
+
+&lt;p&gt;Sem exceções aqui!&lt;/p&gt;
+
+&lt;h3 id=&quot;regra4&quot;&gt;Regra 4: Menos é Mais&lt;/h3&gt;
+
+&lt;p&gt;Cada função deve implementar apenas uma &lt;strong&gt;única&lt;/strong&gt; responsabilidade.&lt;/p&gt;
+
+&lt;p&gt;Essa é uma regra geral para codificar Métodos e Funções.&lt;/p&gt;
+
+&lt;p&gt;Sem exceções.&lt;/p&gt;
+
+&lt;h2 id=&quot;exemplos&quot;&gt;Exemplos&lt;/h2&gt;
+
+&lt;p&gt;Funções Aninhadas podem ser utilizadas em qualquer tipo de Objeto.&lt;/p&gt;
+
+&lt;p&gt;Objetos que lidam com XML, por exemplo, onde é necessário trabalhar
+com recursividade e validações sempre são bons candidatos.&lt;/p&gt;
+
+&lt;p&gt;Mas meu uso pessoal de Funções Aninhadas é, na maioria das vezes, 
+utilizada no código de &lt;em&gt;Forms&lt;/em&gt;.
+O motivo é simples: É natural para o usuário clicar em apenas um
+botão e o sistema fazer &lt;em&gt;inúmeras&lt;/em&gt; tarefas. Para o usuário é
+irrelevante se foi preciso 1 ou 20 Objetos para concluir a tarefa.
+O usuário acha que apenas uma tarefa foi executada quando, na 
+verdade, &lt;strong&gt;inúmeros Objetos&lt;/strong&gt; podem ter tido participação para executar
+o serviço.&lt;/p&gt;
+
+&lt;p&gt;Então, abaixo temos alguns exemplos do que eu considero um &lt;em&gt;bom&lt;/em&gt; uso
+de Funções Aninhadas.&lt;/p&gt;
+
+&lt;p&gt;Observação: Podem haver erros de sintaxe, visto que eu estou escrevendo
+o código diretamente no editor do artigo sem compilar.&lt;/p&gt;
+
+&lt;h3 id=&quot;exemplo1&quot;&gt;Exemplo 1: Pergunte, Faça o Serviço&lt;/h3&gt;
+
+&lt;p&gt;Em alguns formulários temos que questionar o usuário sobre
+qual caminho o sistema deve tomar.
+Esses questionamentos, com mensagens &lt;em&gt;strings&lt;/em&gt;, podem 
+diminuir a legibilidade do código.&lt;/p&gt;
+
+&lt;p&gt;Somado isso com o uso &lt;em&gt;errado&lt;/em&gt; do &lt;em&gt;WITH&lt;/em&gt;, o código &lt;em&gt;não&lt;/em&gt; fica 
+elegante. Veja:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure TMainForm.DeleteButtonClick(Sender: TObject);
+begin
+  with TUserQuestion.New(
+    Format(
+      &#39;Você tem %d registros para excluir.&#39; + #13
+      &#39;Esse processo pode demorar.&#39; + #13
+      &#39;Confirma a execução?&#39;, [
+        DataSet.RecordCount
+      ]
+    )
+  ) do
+  begin
+    Show;
+    if Confirmed then
+    begin
+      ExecuteProcessOne;
+      ExecuteProcessTwo;
+      TUserInformation.New(&#39;Processo concluído.&#39;).Show;
+    end;
+  end;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nesse exemplo eu utilizei Classes de Mensagens ao usuário.
+Não precisamos de sua implementação para entender o que está 
+ocorrendo aqui. No entanto o código pode parecer um pouco confuso
+para alguns programadores “não iniciados” no uso do &lt;em&gt;WITH&lt;/em&gt;.
+Por exemplo. O Método &lt;code&gt;Show&lt;/code&gt; após o primeiro &lt;code&gt;begin&lt;/code&gt;, pertence ao
+Formulário ou a instância de &lt;code&gt;TUserQuestion&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;Também temos a mensagem em texto com quebra de linha e parâmetros
+concatenados. As vezes essas mensagens são maiores. O código fica 
+uma bagunça.&lt;/p&gt;
+
+&lt;p&gt;Vamos refatorar esse código utilizando Funções Aninhadas:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure TMainForm.DeleteButtonClick(Sender: TObject);
+
+  function Question(Total: Integer): IUserQuestion;
+  begin
+    Result :=
+      TUserQuestion.New(
+        Format(
+          &#39;Você tem %d registros para excluir.&#39; + #13
+          &#39;Esse processo pode demorar.&#39; + #13
+          &#39;Confirma a execução?&#39;, [
+            Total
+          ]
+        )
+      ).Show;
+  end;
+
+begin
+  if Question(DataSet.RecordCount).Confirmed then
+  begin
+    ExecuteProcessOne;
+    ExecuteProcessTwo;
+    TUserInformation.New(&#39;Processo concluído.&#39;).Show;
+  end;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Mais simples?&lt;/p&gt;
+
+&lt;p&gt;Sim, optei por retirar o &lt;em&gt;WITH&lt;/em&gt;, porque é mais simples dessa forma,
+nesse exemplo.
+Mas ele poderia ser utilizado caso o programador necessitasse de 
+mais alguma informação da instância &lt;code&gt;IUserQuestion&lt;/code&gt;, criada e retornada
+através da função &lt;code&gt;Question&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Exemplo. Você pode fazer uma pergunta ao usuário onde ele deve digitar 
+um valor. Nesse caso você precisa validar o retorno (&lt;code&gt;Confirmed&lt;/code&gt;) e 
+mostrar o valor digitado (&lt;code&gt;Value&lt;/code&gt;):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;with TUserInput.New(&#39;Digite o valor&#39;) do
+begin
+  if Confirmed then
+    TUserInformation.New(
+      &#39;Valor digitado: &#39; + Value.AsString
+    )
+    .Show;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Repare, também, que a função &lt;code&gt;Question&lt;/code&gt; não tem mais dependência
+com o Objeto que vem do Formulário, &lt;code&gt;DataSet.RecordCount&lt;/code&gt;. A função
+agora está &lt;strong&gt;isolada&lt;/strong&gt;. Isso quer dizer que se você precisar dessa
+função em mais de um lugar, pode extraí-la, criar um novo Método e 
+passar o argumento na sua chamada.&lt;/p&gt;
+
+&lt;h3 id=&quot;exemplo2&quot;&gt;Exemplo 2: Clicou no “Botão Mágico” que Faz tudo&lt;/h3&gt;
+
+&lt;p&gt;Imagine um Formulário que, ao clique de um botão, o sistema:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Faz validações das informações desejadas&lt;/li&gt;
+  &lt;li&gt;Pergunta ao usuário se deve continuar&lt;/li&gt;
+  &lt;li&gt;Salva as informações no banco de dados&lt;/li&gt;
+  &lt;li&gt;Envia um e-mail notificando alguém&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Claro que você terá uma Classe para cada uma dessas funções (certo?).
+Você não deve implementar tudo isso dentro de um evento num botão.&lt;/p&gt;
+
+&lt;p&gt;Por outro lado, a implementação mais &lt;strong&gt;correta&lt;/strong&gt; seria separar essas ações
+em outras camadas, outras Classes, sem instanciar tais Classes específicas
+dentro do Formulário.&lt;/p&gt;
+
+&lt;p&gt;Infelizmente nem sempre temos tempo para fazer o 100% correto. Mas que 
+tal fazer 80% correto para depois, quando tivermos mais tempo, refatorar
+com tranquilidade o código?&lt;/p&gt;
+
+&lt;p&gt;Aqui as Funções Aninhadas nos ajudam novamente:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure TMainForm.ConfirmButtonClick(Sender: TObject);
+
+  function Checked: Boolean;
+  begin
+    Result := False;
+    //if EmailEdit.Text &amp;lt;&amp;gt; &#39;&#39; then
+    // Exit;
+    //...
+    Result := True;
+  end;
+  
+  function Question: IUserQuestion;
+  begin
+    Result := 
+      TUserQuestion.New(&#39;Confirma a operação?&#39;).Show;
+  end;
+  
+  procedure Save;
+  begin
+    // persistência...
+  end;
+  
+  procedure SendEmail;
+  begin
+    // envia um e-mail...
+  end;
+
+begin
+  if Checked then
+    if Question.Confirmed then
+    begin
+      Save;
+      SendMail;
+    end;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Tenha em mente que isso é apenas um exemplo.&lt;/p&gt;
+
+&lt;p&gt;Todas as Funções Aninhadas devem seguir o bom senso e ter 
+&lt;strong&gt;poucas linhas&lt;/strong&gt;. Caso contrário, &lt;em&gt;refatore&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Haverá muitas dependências entre o Formulário e todas essas Classes 
+especialistas. Mas nem sempre
+precisamos abstrair em camadas. Pode ser um pequeno Formulário de um
+pequeno sistema, onde não haveria problemas em ter essas dependências.&lt;/p&gt;
+
+&lt;p&gt;Mesmo assim o código está &lt;em&gt;limpo&lt;/em&gt; e &lt;em&gt;elegante&lt;/em&gt;, com fácil manutenção.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Funções Aninhadas nos ajudam a codificar de forma mais simples e elegante.&lt;/p&gt;
+
+&lt;p&gt;É um dos caminhos para “seguir em frente” sem muitas preocupações com 
+o &lt;strong&gt;purismo&lt;/strong&gt; da Orientação a Objetos — devido a falta de tempo — mas sem deixar
+cair a qualidade do código no longo prazo.&lt;/p&gt;
+
+&lt;p&gt;Utilize-as com sabedoria.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 17 Oct 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/funcoes-aninhadas/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/funcoes-aninhadas/</guid>
+      </item>
+    
+      <item>
         <title>Interfaces, Delegação, Problemas e Soluções</title>
         <description>&lt;p&gt;Delegação de Implementação através da composição de
 Objetos é uma &lt;em&gt;feature&lt;/em&gt; incrível, só disponível na
@@ -2173,123 +2498,6 @@ else
         <pubDate>Mon, 08 Aug 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/microservices-delphi-parte-1/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/microservices-delphi-parte-1/</guid>
-      </item>
-    
-      <item>
-        <title>Classes de Dados</title>
-        <description>&lt;p&gt;Objetos são constituídos de Estado e Comportamento, enviam mensagens uns aos outros e devem representar Entidades reais de tudo que existe fora do Contexto do Software.&lt;/p&gt;
-
-&lt;p&gt;E os Dados, onde estão os Dados?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1457904375453-3e1fc2fc76f4.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Tenho dito, por várias vezes, que um Objeto não deve ser visto ou utilizado como um &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;balde de dados e funções&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Objetos não são &lt;a href=&quot;/posts/datamodule-e-apenas-um-container/&quot;&gt;&lt;em&gt;containers&lt;/em&gt;&lt;/a&gt; de transporte de dados. Eles devem &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;representar uma Entidade&lt;/a&gt; fora do Contexto do Software. Não importa se a Entidade é um objeto, pessoa ou Dados.&lt;/p&gt;
-
-&lt;p&gt;E o que são Dados?&lt;/p&gt;
-
-&lt;p&gt;É difícil definir a diferença entre Dados e o Estado de um Objeto. Ambos, tecnicamente, podem ser considerados Dados. No entanto, eu acredito, há uma diferença teórica entre eles que muda nosso &lt;strong&gt;modo de pensar&lt;/strong&gt; quando estamos construindo um &lt;em&gt;software&lt;/em&gt; Orientado a Objetos.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Dados também são representados por Objetos, pois eles também estão fora do Contexto do Software.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Mas como um Objeto não deve ser um “balde de dados” e ao mesmo tempo deve representar Dados?&lt;/p&gt;
-
-&lt;h2 id=&quot;dados-e-estado&quot;&gt;Dados e Estado&lt;/h2&gt;
-
-&lt;p&gt;Tudo são Objetos.&lt;/p&gt;
-
-&lt;p&gt;Tudo deve ser representado por Objetos.&lt;/p&gt;
-
-&lt;p&gt;Não há diferenças, pensando em termos de Objetos, entre um &lt;strong&gt;Carro&lt;/strong&gt; e o &lt;strong&gt;número 9&lt;/strong&gt;, por exemplo. Ambos são Entidades que deveriam ser representados dentro do &lt;em&gt;software&lt;/em&gt; por Objetos.&lt;/p&gt;
-
-&lt;p&gt;Mas a vida é difícil. Desenvolver &lt;em&gt;software&lt;/em&gt; Orientado a Objetos de forma &lt;em&gt;perfeita&lt;/em&gt; é quase impossível. Precisamos pensar na performance, na alocação de memória, uso de recursos, etc. E aí começa a confusão entre Dados e Estado.&lt;/p&gt;
-
-&lt;p&gt;Vejamos. Se tenho uma Classe &lt;code&gt;TUrl&lt;/code&gt; com uma propriedade privada &lt;code&gt;FValue: string&lt;/code&gt;, a propriedade é um &lt;strong&gt;Dado&lt;/strong&gt; ou o &lt;strong&gt;Estado&lt;/strong&gt; do Objeto?&lt;/p&gt;
-
-&lt;p&gt;Eu diria que representa o Estado do Objeto. A propriedade &lt;code&gt;FValue&lt;/code&gt; é a URL em forma de string.&lt;/p&gt;
-
-&lt;p&gt;Mas como &lt;code&gt;string&lt;/code&gt; é um tipo primitivo (no Pascal), pensamos em termos de Dados e não de Estado do Objeto.&lt;/p&gt;
-
-&lt;p&gt;Vejamos outro exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TFile = class(TInterfacedObject, IFile)
-  private
-    FPath: string;
-    FName: string;
-    FStream: IDataStream;
-  public
-    constructor Create(const Path, Name: string; 
-      Stream: IDataStream);
-    function Path: string;
-    function Name: string;
-    function Stream: IDataStream; 
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;No exemplo acima, tem diferença entre Dados e Estado?&lt;/p&gt;
-
-&lt;p&gt;Sim.&lt;/p&gt;
-
-&lt;p&gt;Todas as 3 propriedades fazem parte do Estado do Objeto, no entanto a propriedade &lt;code&gt;FStream&lt;/code&gt; representa os Dados do arquivo que estão no HD do computador.&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TFile&lt;/code&gt; faz uso da Composição de Objetos. Não olhamos para &lt;code&gt;TFile&lt;/code&gt; como um &lt;em&gt;container&lt;/em&gt; de &lt;em&gt;bytes&lt;/em&gt;, mas como um Objeto que representa um Arquivo no computador.&lt;/p&gt;
-
-&lt;p&gt;Mas, se olharmos apenas para o Objeto &lt;code&gt;FStream&lt;/code&gt; dentro de &lt;code&gt;TFile&lt;/code&gt;, ele poderia ser implementado assim:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TDataStream = class sealed(TInterfacedObject, IDataStream)
-  private
-    FStream: TMemoryStream;
-  public
-    constructor Create(Stream: TStream);
-    destructor Destroy; override;
-    procedure Save(Stream: TStream); overload;
-    procedure Save(const FileName: string); overload;
-    function Size: Int64;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Agora o Contexto mudou.&lt;/p&gt;
-
-&lt;p&gt;A propriedade &lt;code&gt;FStream&lt;/code&gt; na Classe &lt;code&gt;TDataStream&lt;/code&gt; representa o Estado do Objeto e não Dados do Objeto. Essa Classe representa um &lt;em&gt;stream&lt;/em&gt; mas ela não sabe se o &lt;em&gt;stream&lt;/em&gt; é proveniente de um Arquivo ou de registros em uma Tabela.&lt;/p&gt;
-
-&lt;p&gt;Estamos olhando para um novo Contexto e isso muda nossa percepção sobre o que é ou não Dados.&lt;/p&gt;
-
-&lt;p&gt;Veja que internamente &lt;code&gt;TDataStream&lt;/code&gt; foi implementado utilizando um &lt;code&gt;TMemoryStream&lt;/code&gt; para “guardar” o &lt;em&gt;stream&lt;/em&gt; — mais uma vez utilizando Composição de Objetos — mas eu poderia optar por utilizar apenas &lt;em&gt;bytes&lt;/em&gt; e um ponteiro para a memória. Não importa. Isso tudo é privado e ninguém sabe o que acontece dentro de um Objeto. O importante é saber distinguir a diferença entre Dados e Estado do Objeto.&lt;/p&gt;
-
-&lt;h2 id=&quot;dados-na-forma-de-objetos&quot;&gt;Dados na forma de Objetos&lt;/h2&gt;
-
-&lt;p&gt;Classes de Dados são aquelas que geram Objetos que representam Dados.&lt;/p&gt;
-
-&lt;p&gt;Nós utilizamos Dados na forma de Objetos a muito tempo.&lt;/p&gt;
-
-&lt;p&gt;Uma Classe &lt;code&gt;TJsonObject&lt;/code&gt; representa um &lt;em&gt;stream&lt;/em&gt; de JSON, assim como uma Classe &lt;code&gt;TXmlDocument&lt;/code&gt; representa um &lt;em&gt;stream&lt;/em&gt; de XML.&lt;/p&gt;
-
-&lt;p&gt;Se não tivéssemos essas Classes, teríamos que trabalhar os Dados no nível de &lt;em&gt;bytes&lt;/em&gt; e ponteiros na memória. Programação Procedural.&lt;/p&gt;
-
-&lt;p&gt;Queremos utilizar Objetos, pois eles facilitam nossas vidas. Então encapsulamos arquivos, &lt;em&gt;streams&lt;/em&gt;, registros de Tabelas, etc em Classes que geram Objetos para manipular os Dados.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Não há problema se seu Objeto encapsula apenas Dados, contanto que esses Dados fazem parte da Entidade real que seu Objeto está representando.&lt;/p&gt;
-
-&lt;p&gt;Entender a sutil diferença entre Dados e Estado do Objeto irá fazer você codificar Classes melhores.&lt;/p&gt;
-
-&lt;p&gt;Você não irá mais pensar em definir uma única Classe que encapsula todos os Dados, mas sim Classes que representam Entidades, que utilizam a Composição de Objetos para Encapsular outros Objetos que, por fim, irão representar os Dados.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 01 Aug 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/classes-de-dados/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/classes-de-dados/</guid>
       </item>
     
   </channel>

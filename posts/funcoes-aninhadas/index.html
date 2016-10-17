@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Funções Aninhadas &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos">
+    <meta name="author" content="Marcos Douglas">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Object Pascal">
+    <meta name="keywords" content="funções aninhadas, nested functions, organização do código">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/funcoes-aninhadas/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201610170959" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Funções Aninhadas">
+    <meta property="og:description" content="Funções Aninhadas deixam o código melhor organizado, fácil de ler e alterar.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/funcoes-aninhadas/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1476411890462-80309823db3b.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Funções Aninhadas" />
+    <meta name="twitter:description" content="Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/funcoes-aninhadas/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>EBOOK</a>
+<a href="/archive/">ARQUIVO</a>
+<a href="/contact/">CONTATO</a>
+<a href="/about/">SOBRE</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Funções Aninhadas</h1>
+  <span class="post-meta">Oct 17, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    7 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Se você tem um Método coeso, que trabalha em apenas uma única 
+tarefa, mas mesmo assim o código parece complicado, dificultando
+o entendimento e a manutenção… já pensou em refatorar o código
+utilizando Funções Aninhadas?</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1476411890462-80309823db3b.jpg" alt="Unsplash image" /></p>
+
+<p><a href="https://en.wikipedia.org/wiki/Nested_function">Funções Aninhadas</a>
+é algo que não existe em todas as linguagens.
+A linguagem Pascal tem e acho que devemos aproveitar essa <em>feature</em>.</p>
+
+<p>Funções Aninhadas nada mais são do que funções declaradas dentro de
+outras funções ou Métodos.</p>
+
+<p>Esse artigo irá mostrar os motivos e vantagens ao utilizarmos Funções 
+Aninhadas, assim como algumas regras que devemos seguir ao utilizá-las.</p>
+
+<h2 id="motivos">Motivos</h2>
+
+<p>Funções Aninhadas é uma opção bem melhor do que 
+<a href="/posts/linhas-em-branco-no-metodo-e-mal-cheiro/">pular linhas</a>
+dentro da implementação de um Método com o intuito de separar blocos
+de código.</p>
+
+<p>Cada função já define um bloco, com a vantagem de ser <strong>reutilizável</strong> em
+outra parte do Método.</p>
+
+<p>Funções Aninhadas tem um conceito muito próximo da Programação Orientada a 
+Objetos (leia esse 
+<a href="http://blog.synopse.info/post/2012/05/20/Recursive-calls-and-private-objects">artigo</a>
+).
+Um Método que contém Funções Aninhadas é como se fosse uma implementação
+de uma <em>Classe Anônima</em>. As variáveis locais serão como <em>atributos</em> e as 
+Funções Aninhadas serão como <em>Métodos privados</em>.</p>
+
+<p>Funções Aninhadas facilitam a correta utilização do
+<a href="/posts/a-declaracao-with-do-e-do-mal/"><em>WITH</em></a>
+quando a implementação do Método é complexa ou quando o código utiliza
+composição com muitos Objetos.
+Dividir o código em pequenas funções, diminuirá as chances de haver <strong>conflitos</strong>
+entre identificadores que utilizam o <em>WITH</em>.</p>
+
+<p>Resumindo: Funções Aninhadas deixam o código melhor organizado, fácil de ler 
+e alterar.</p>
+
+<h2 id="regras">Regras de Uso</h2>
+
+<p>Qualquer <em>feature</em> utilizada de forma indiscriminada poderá ser um
+potencial problema no futuro, ao invés de uma solução — o mesmo ocorre com 
+o uso indiscriminado do <em>WITH</em> por programadores que não sabem exatamente o
+que estão fazendo.</p>
+
+<p>Precisamos de <strong>regras</strong> e <strong>disciplina</strong>.</p>
+
+<p>Abaixo algumas regras que você deve levar em conta.</p>
+
+<h3 id="regra1">Regra 1: Não utilize mais do que 3 Funções Aninhadas</h3>
+
+<p>É uma regra óbvia.
+Se você tem muitas Funções Aninhadas dentro e um único Método, 
+é bem provável que ele esteja fazendo <strong>coisas demais</strong>.
+Pense na refatoração e decomposição em outros Métodos ou mesmo
+na criação de uma nova Classe.</p>
+
+<p>Existem pouquíssimas exceções a essa regra.</p>
+
+<h3 id="regra2">Regra 2: Evite compartilhar as Variáveis Locais</h3>
+
+<p>Falei acima que um Método com Funções Aninhadas é como uma Classe
+Anônima, contendo Métodos privados e atributos. 
+No entanto, sabemos que não são verdadeiras Classes.</p>
+
+<p>É melhor que você isole cada Função Aninhada com suas próprias 
+variáveis e argumentos, ou seja, <strong>evite</strong> compartilhar as variáveis
+locais do Método com as Funções Aninhadas.</p>
+
+<p>Essa disciplina na codificação irá ajudá-lo na <em>extração</em> e 
+<em>refatoração</em> das Funções Aninhadas, se for o caso, para criar outros 
+Métodos com o mínimo de impacto possível.</p>
+
+<p>Ao invés de utilizar a variável local do Método, passe
+a referência como argumento da função, mantendo-as <strong>isoladas</strong>.</p>
+
+<p>Existem poucas exceções a esta regra. Por exemplo.
+Se todas as Funções Aninhadas trabalham sempre com
+os mesmos Objetos (variáveis locais) do Método, é mais fácil 
+compartilhar as variáveis — ou refatorar criando uma nova Classe —
+do que ficar repassando-as às funções. Utilize o bom senso.</p>
+
+<h3 id="regra3">Regra 3: Apenas 1 Nível de Funções</h3>
+
+<p>Não complique. Use <em>apenas</em> um “nível” de Funções Aninhadas. Se
+você tiver utilizando mais de um nível, é provável que a função
+de “nível 2” deveria ser um Método.</p>
+
+<p><em>Refatore</em>.</p>
+
+<p>Após a refatoração do código, o “nível 2” de Funções Aninhadas
+passaria a ser o “nível 1” no novo Método criado.</p>
+
+<p>Sem exceções aqui!</p>
+
+<h3 id="regra4">Regra 4: Menos é Mais</h3>
+
+<p>Cada função deve implementar apenas uma <strong>única</strong> responsabilidade.</p>
+
+<p>Essa é uma regra geral para codificar Métodos e Funções.</p>
+
+<p>Sem exceções.</p>
+
+<h2 id="exemplos">Exemplos</h2>
+
+<p>Funções Aninhadas podem ser utilizadas em qualquer tipo de Objeto.</p>
+
+<p>Objetos que lidam com XML, por exemplo, onde é necessário trabalhar
+com recursividade e validações sempre são bons candidatos.</p>
+
+<p>Mas meu uso pessoal de Funções Aninhadas é, na maioria das vezes, 
+utilizada no código de <em>Forms</em>.
+O motivo é simples: É natural para o usuário clicar em apenas um
+botão e o sistema fazer <em>inúmeras</em> tarefas. Para o usuário é
+irrelevante se foi preciso 1 ou 20 Objetos para concluir a tarefa.
+O usuário acha que apenas uma tarefa foi executada quando, na 
+verdade, <strong>inúmeros Objetos</strong> podem ter tido participação para executar
+o serviço.</p>
+
+<p>Então, abaixo temos alguns exemplos do que eu considero um <em>bom</em> uso
+de Funções Aninhadas.</p>
+
+<p>Observação: Podem haver erros de sintaxe, visto que eu estou escrevendo
+o código diretamente no editor do artigo sem compilar.</p>
+
+<h3 id="exemplo1">Exemplo 1: Pergunte, Faça o Serviço</h3>
+
+<p>Em alguns formulários temos que questionar o usuário sobre
+qual caminho o sistema deve tomar.
+Esses questionamentos, com mensagens <em>strings</em>, podem 
+diminuir a legibilidade do código.</p>
+
+<p>Somado isso com o uso <em>errado</em> do <em>WITH</em>, o código <em>não</em> fica 
+elegante. Veja:</p>
+
+<pre><code>procedure TMainForm.DeleteButtonClick(Sender: TObject);
+begin
+  with TUserQuestion.New(
+    Format(
+      'Você tem %d registros para excluir.' + #13
+      'Esse processo pode demorar.' + #13
+      'Confirma a execução?', [
+        DataSet.RecordCount
+      ]
+    )
+  ) do
+  begin
+    Show;
+    if Confirmed then
+    begin
+      ExecuteProcessOne;
+      ExecuteProcessTwo;
+      TUserInformation.New('Processo concluído.').Show;
+    end;
+  end;
+end;
+</code></pre>
+
+<p>Nesse exemplo eu utilizei Classes de Mensagens ao usuário.
+Não precisamos de sua implementação para entender o que está 
+ocorrendo aqui. No entanto o código pode parecer um pouco confuso
+para alguns programadores “não iniciados” no uso do <em>WITH</em>.
+Por exemplo. O Método <code>Show</code> após o primeiro <code>begin</code>, pertence ao
+Formulário ou a instância de <code>TUserQuestion</code>?</p>
+
+<p>Também temos a mensagem em texto com quebra de linha e parâmetros
+concatenados. As vezes essas mensagens são maiores. O código fica 
+uma bagunça.</p>
+
+<p>Vamos refatorar esse código utilizando Funções Aninhadas:</p>
+
+<pre><code>procedure TMainForm.DeleteButtonClick(Sender: TObject);
+
+  function Question(Total: Integer): IUserQuestion;
+  begin
+    Result :=
+      TUserQuestion.New(
+        Format(
+          'Você tem %d registros para excluir.' + #13
+          'Esse processo pode demorar.' + #13
+          'Confirma a execução?', [
+            Total
+          ]
+        )
+      ).Show;
+  end;
+
+begin
+  if Question(DataSet.RecordCount).Confirmed then
+  begin
+    ExecuteProcessOne;
+    ExecuteProcessTwo;
+    TUserInformation.New('Processo concluído.').Show;
+  end;
+end;
+</code></pre>
+
+<p>Mais simples?</p>
+
+<p>Sim, optei por retirar o <em>WITH</em>, porque é mais simples dessa forma,
+nesse exemplo.
+Mas ele poderia ser utilizado caso o programador necessitasse de 
+mais alguma informação da instância <code>IUserQuestion</code>, criada e retornada
+através da função <code>Question</code>.</p>
+
+<p>Exemplo. Você pode fazer uma pergunta ao usuário onde ele deve digitar 
+um valor. Nesse caso você precisa validar o retorno (<code>Confirmed</code>) e 
+mostrar o valor digitado (<code>Value</code>):</p>
+
+<pre><code>with TUserInput.New('Digite o valor') do
+begin
+  if Confirmed then
+    TUserInformation.New(
+      'Valor digitado: ' + Value.AsString
+    )
+    .Show;
+end;
+</code></pre>
+
+<p>Repare, também, que a função <code>Question</code> não tem mais dependência
+com o Objeto que vem do Formulário, <code>DataSet.RecordCount</code>. A função
+agora está <strong>isolada</strong>. Isso quer dizer que se você precisar dessa
+função em mais de um lugar, pode extraí-la, criar um novo Método e 
+passar o argumento na sua chamada.</p>
+
+<h3 id="exemplo2">Exemplo 2: Clicou no “Botão Mágico” que Faz tudo</h3>
+
+<p>Imagine um Formulário que, ao clique de um botão, o sistema:</p>
+
+<ol>
+  <li>Faz validações das informações desejadas</li>
+  <li>Pergunta ao usuário se deve continuar</li>
+  <li>Salva as informações no banco de dados</li>
+  <li>Envia um e-mail notificando alguém</li>
+</ol>
+
+<p>Claro que você terá uma Classe para cada uma dessas funções (certo?).
+Você não deve implementar tudo isso dentro de um evento num botão.</p>
+
+<p>Por outro lado, a implementação mais <strong>correta</strong> seria separar essas ações
+em outras camadas, outras Classes, sem instanciar tais Classes específicas
+dentro do Formulário.</p>
+
+<p>Infelizmente nem sempre temos tempo para fazer o 100% correto. Mas que 
+tal fazer 80% correto para depois, quando tivermos mais tempo, refatorar
+com tranquilidade o código?</p>
+
+<p>Aqui as Funções Aninhadas nos ajudam novamente:</p>
+
+<pre><code>procedure TMainForm.ConfirmButtonClick(Sender: TObject);
+
+  function Checked: Boolean;
+  begin
+    Result := False;
+    //if EmailEdit.Text &lt;&gt; '' then
+    // Exit;
+    //...
+    Result := True;
+  end;
+  
+  function Question: IUserQuestion;
+  begin
+    Result := 
+      TUserQuestion.New('Confirma a operação?').Show;
+  end;
+  
+  procedure Save;
+  begin
+    // persistência...
+  end;
+  
+  procedure SendEmail;
+  begin
+    // envia um e-mail...
+  end;
+
+begin
+  if Checked then
+    if Question.Confirmed then
+    begin
+      Save;
+      SendMail;
+    end;
+end;
+</code></pre>
+
+<p>Tenha em mente que isso é apenas um exemplo.</p>
+
+<p>Todas as Funções Aninhadas devem seguir o bom senso e ter 
+<strong>poucas linhas</strong>. Caso contrário, <em>refatore</em>.</p>
+
+<p>Haverá muitas dependências entre o Formulário e todas essas Classes 
+especialistas. Mas nem sempre
+precisamos abstrair em camadas. Pode ser um pequeno Formulário de um
+pequeno sistema, onde não haveria problemas em ter essas dependências.</p>
+
+<p>Mesmo assim o código está <em>limpo</em> e <em>elegante</em>, com fácil manutenção.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Funções Aninhadas nos ajudam a codificar de forma mais simples e elegante.</p>
+
+<p>É um dos caminhos para “seguir em frente” sem muitas preocupações com 
+o <strong>purismo</strong> da Orientação a Objetos — devido a falta de tempo — mas sem deixar
+cair a qualidade do código no longo prazo.</p>
+
+<p>Utilize-as com sabedoria.</p>
+
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/funcoes-aninhadas/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Funções Aninhadas&via=mdbs99;url=http://objectpascalprogramming.com/posts/funcoes-aninhadas/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/funcoes-aninhadas/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/funcoes-aninhadas/&title=Funções Aninhadas" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/funcoes-aninhadas/&title=Funções Aninhadas" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/funcoes-aninhadas/&t=Funções Aninhadas" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-delegacao-problemas-solucoes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces, Delegação, Problemas e Soluções</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar Interfaces e Delegação de Implementação sem vazamentos de memória</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nomeando-unidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
+        </ul>
+        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/delegacao-de-implementacao-de-interfaces/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Delegação de Implementação de Interfaces</li></h4>
+        </ul>
+        <!--<p class="post-summary">A beleza da linguagem Object Pascal para implementar delegação entre Objetos</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/funcoes-aninhadas';
+      var disqus_title      = 'Funções Aninhadas';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
