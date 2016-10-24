@@ -24,7 +24,7 @@ sistema, já que existem ótimas opções mundo afora, que já fazem
 o trabalho específico que queremos implementar.
 
 Mas é prudente utilizar tais *peças de código* sem nos 
-preocuparmos sobre a manutenabilidade, dependências e 
+preocuparmos sobre a manutenibilidade, dependências e 
 encapsulamento?
 
 <!--more-->
@@ -233,7 +233,7 @@ Essa é a forma que eu utilizo e que *recomendo* que você faça.
 A utilização de Unidades Limítrofes nos dá a capacidade de substituir
 *todas* as peças de terceiros em nosso sistema de forma simples, num *único
 lugar* e que irá refletir globalmente em todo o código. Isso facilita a
-*manutenabilidade* do código.
+*manutenibilidade* do código.
 
 Outro ganho com essa técnica é que mantemos o mesmo estilo de nomenclatura
 de Classes e Unidades por todo o sistema, visto que podemos renomear ou
