@@ -104,7 +104,7 @@ Diga que precisa de um tempo para entender tudo.
 
 Não aponte culpados. Ao invés disso, mostre à eles algumas *soluções*.
 
-Não diga que não é culpa não é sua, pois o código já estava ali antes 
+Não diga que a culpa não é sua, só porque o código já estava ali antes 
 de você chegar. Por que, se você assumiu o código, agora ele é seu.
 
 Até logo.
