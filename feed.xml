@@ -8,6 +8,245 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Unidades Limítrofes</title>
+        <description>&lt;p&gt;A maioria dos sistemas utilizam componentes ou &lt;em&gt;libraries&lt;/em&gt;
+de terceiros. Seria perda de tempo codificar cada peça de 
+código específica e necessária ao total funcionamento do 
+sistema, já que existem ótimas opções mundo afora, que já fazem 
+o trabalho específico que queremos implementar.&lt;/p&gt;
+
+&lt;p&gt;Mas é prudente utilizar tais &lt;em&gt;peças de código&lt;/em&gt; sem nos 
+preocuparmos sobre a manutenabilidade, dependências e 
+encapsulamento?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1465447142348-e9952c393450.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Utilizar grupos de &lt;em&gt;componentes&lt;/em&gt; ou &lt;em&gt;libraries&lt;/em&gt; de terceiros 
+com funcionalidades diversas é ótimo, pois nos fazem ganhar 
+tempo na codificação.&lt;/p&gt;
+
+&lt;p&gt;Vou me referir a ambos os grupos como &lt;strong&gt;peças de código&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Muitas peças já estão prontas para uso. Sejam elas &lt;em&gt;Open Source&lt;/em&gt;
+ou comercial, não importa.&lt;/p&gt;
+
+&lt;p&gt;Cada uma dessas peças foram projetadas e codificadas utilizando
+estilos e paradigmas diferentes. Cada projeto utilizou um &lt;em&gt;caminho&lt;/em&gt;
+diferente para implementar e resolver o problema que motivou o
+desenvolvimento da peça.&lt;/p&gt;
+
+&lt;p&gt;Não há um único caminho certo a percorrer, porém uns são menos 
+difícies que outros.&lt;/p&gt;
+
+&lt;p&gt;Seu projeto tem seu próprio caminho e &lt;em&gt;estilo&lt;/em&gt; — ou o estilo da
+empresa na qual você trabalha. Isso &lt;em&gt;precisa&lt;/em&gt; ser respeitado.&lt;/p&gt;
+
+&lt;p&gt;Todas as peças intercambiáveis no seu projeto, que são utilizadas em 
+muitas camadas comuns, devem seguir o mesmo estilo de codificação.&lt;/p&gt;
+
+&lt;p&gt;Esse artigo irá ressaltar os &lt;em&gt;cuidados&lt;/em&gt; que devemos tomar ao utilizarmos
+peças que não foram “feitas em casa” dentro dos nossos projetos.&lt;/p&gt;
+
+&lt;h2 id=&quot;encapsulamento&quot;&gt;Encapsulamento&lt;/h2&gt;
+&lt;p&gt;Um dos pilares da Orientação a Objetos é o
+&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;Encapsulamento&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não estou me referindo apenas ao Encapsulamento que as Classes podem 
+promover, mas sim a qualquer tipo de &lt;em&gt;cápsula&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Uma Função ou Método encapsula variáveis.&lt;/p&gt;
+
+&lt;p&gt;Classes encasulam Estado e Comportamento.&lt;/p&gt;
+
+&lt;p&gt;Unidades (módulos) encapsulam um conjunto de Classes que 
+implementam as Regras de Negócio do nosso sistema.&lt;/p&gt;
+
+&lt;p&gt;Unidades também podem encapsular todo um conjunto de peças de 
+terceiros, para facilitar ou &lt;em&gt;adaptar&lt;/em&gt; o uso das mesmas dentro 
+do nosso projeto.&lt;/p&gt;
+
+&lt;p&gt;Essas Unidades são chamadas de &lt;em&gt;Unidades Limítrofes&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Exemplo. Imagine um sistema para controlar um Hotel. Eu não conheço
+tais Regras de Negócio, mas você pode imaginar cadastros, controle de
+preços, quartos vagos, quartos ocupados e muitas outras.&lt;/p&gt;
+
+&lt;p&gt;Nesse mesmo sistema, no entanto, você necessita de uma conexão HTTP, para
+enviar arquivos, baixar uma nova versão do próprio sistema, atualizar
+dados, etc.&lt;/p&gt;
+
+&lt;p&gt;O protocolo HTTP não faz parte das Regras de Negócio, concorda?&lt;/p&gt;
+
+&lt;p&gt;Não precisamos desenvolver Classes para fazer essa comunicação. Já temos
+isso pronto na Internet, sendo a maioria &lt;em&gt;Open Source&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Ótimo, vamos baixar um componente ou &lt;em&gt;library&lt;/em&gt; e pronto!&lt;/p&gt;
+
+&lt;p&gt;Aqui eu alerto para um problema: &lt;strong&gt;Dependência&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Quando você adiciona um código de terceiro ao seu projeto, automaticamente
+você fica &lt;em&gt;dependende&lt;/em&gt; desse código.&lt;/p&gt;
+
+&lt;h2 id=&quot;componentes-de-terceiros&quot;&gt;Componentes de terceiros&lt;/h2&gt;
+
+&lt;p&gt;Existem algumas ótimas opções de implementação do protocolo HTTP 
+em Object Pascal. Mas, mesmo que a opção seja ótima e muitos usuários
+já utilizam, não quer dizer que o componente terá um ótimo suporte, 
+que sempre estará sendo atualizado ou que o mantenedor nunca irá desistir
+do projeto.&lt;/p&gt;
+
+&lt;p&gt;Pelo contrário. Você já deve ter visto componentes “morrerem” porque
+o mantenedor não quer mais atualizar ou porque não faz mais sentido
+em continuar o projeto, caso tenha outras opções melhores.&lt;/p&gt;
+
+&lt;p&gt;E aí, o que fazer?&lt;/p&gt;
+
+&lt;p&gt;Se o seu código utiliza tal componente em inúmeros lugares, você está 
+com um grande problema nas mãos.&lt;/p&gt;
+
+&lt;p&gt;Você não encapsulou essa tecnologia (HTTP) e agora há Unidades de
+terceiros por todo o seu projeto, utilizando dezenas de Classes,
+constantes e variáveis.&lt;/p&gt;
+
+&lt;p&gt;Se você, no entanto, utilizasse apropriadamente as &lt;strong&gt;Unidades Limítrofes&lt;/strong&gt;,
+encapsulando tudo relacionado a HTTP em Módulos a parte, não teria esse 
+tipo de problema.&lt;/p&gt;
+
+&lt;h2 id=&quot;unidades-limitrofes&quot;&gt;Unidades Limítrofes&lt;/h2&gt;
+
+&lt;p&gt;Límitrofe &lt;a href=&quot;https://pt.wiktionary.org/wiki/lim%C3%ADtrofe&quot;&gt;significa&lt;/a&gt;
+“&lt;em&gt;que se situa ou que vive nos limites de uma extensão, 
+de uma região etc.; que tem limites comuns&lt;/em&gt;”.&lt;/p&gt;
+
+&lt;p&gt;A fronteira entre dois sistemas ou módulos. O limite entre Contextos.&lt;/p&gt;
+
+&lt;p&gt;Sempre que possível, temos que encapsular &lt;em&gt;todas&lt;/em&gt; as peças que
+não tem relação &lt;em&gt;direta&lt;/em&gt; com as Regras de Negócio do seu sistema.&lt;/p&gt;
+
+&lt;p&gt;A maneira de fazer isso é implementar novas Unidades no seu projeto
+apenas para adaptar as peças de terceiros que serão utilizadas.&lt;/p&gt;
+
+&lt;p&gt;Há duas opções quando você for implementar essas novas Unidades. Essas
+opções também podem trabalhar em conjunto. São elas:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Redefinição de tipos&lt;/li&gt;
+  &lt;li&gt;Definição de novas Interfaces e Classes&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;redefinicao-de-tipos&quot;&gt;Redefinição de Tipos&lt;/h2&gt;
+
+&lt;p&gt;Redefinir ou renomear um tipo é algo trivial no Object Pascal.&lt;/p&gt;
+
+&lt;p&gt;Imagine que você baixou um componente para comunicação HTTP. 
+A Unidade que contém a Classe que você quer utilizar chama-se
+&lt;code&gt;FastHTTP.pas&lt;/code&gt; e a Classe foi implementada como &lt;code&gt;TftHttpClient&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Queremos encapsular essa Classe numa Unidade Limítrofe, para que 
+nosso sistema só enxergue a nossa Unidade, que daremos o nome de &lt;code&gt;AcmeWebHttp.pas&lt;/code&gt;, 
+e a nova Classe terá o nome &lt;code&gt;TWebHttp&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então temos:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit AcmeWebHttp;
+
+interface
+
+uses
+  FastHTTP;
+  
+type
+  TWebHttp = FastHTTP.TftHttpClient;
+  
+implementation
+
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Agora &lt;code&gt;TWebHttp&lt;/code&gt; é apenas um atalho — &lt;em&gt;alias&lt;/em&gt; — para a verdadeira
+Classe que implementa o protocolo HTTP.&lt;/p&gt;
+
+&lt;p&gt;Todo o restante do sistema irá utilizar apenas &lt;code&gt;TWebHttp&lt;/code&gt; como se
+essa Classe fosse a responsável por fazer o trabalho.&lt;/p&gt;
+
+&lt;p&gt;Esse é um encapsulamento &lt;strong&gt;simples&lt;/strong&gt;. Ele só deve ser utilizado para 
+coisas simples, pontuais, que não são utilizados em muitas partes do 
+sistema.&lt;/p&gt;
+
+&lt;p&gt;Essa técnica também pode ser utilizada para “concentrar” Classes e
+constantes numa mesma Unidade. Mas, por algum motivo, não funciona
+com tipos enumerados.&lt;/p&gt;
+
+&lt;h2 id=&quot;novas-definicoes&quot;&gt;Definição de novas Interfaces e Classes&lt;/h2&gt;
+
+&lt;p&gt;Para componentes mais complexos ou que são utilizados por todo o
+sistema, o correto é implementarmos um encapsulamento através 
+de &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Componentes costumam ter &lt;em&gt;inúmeros&lt;/em&gt; Métodos e Propriedades mas, 
+na maioria das vezes, você não necessita de todas essas opções.&lt;/p&gt;
+
+&lt;p&gt;Implemente Interfaces apenas com os Métodos que fazem sentido
+dentro do seu projeto e crie uma ou mais Classes que irão implementar
+essa Interface.&lt;/p&gt;
+
+&lt;p&gt;Pelo menos uma dessas novas Classes terá encapsulado
+o componente real, ou seja, a Classe &lt;code&gt;TftHttpClient&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Exemplo. Se você só necessita de um Método para apontar para uma
+URL e retornar seu conteúdo, você poderia implementar:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit AcmeWebHttp;
+
+interface
+
+uses
+  FastHTTP,
+  AcmeData;
+  
+type
+  IWebHttp = interface
+    function Get(const URL: string): IDataStream;
+  end;
+  
+  TWebHttp = class sealed(TInterfacedObject, IWebHttp)
+  private
+    FOrigin: TftHttpClient;
+  public
+    function Get(const URL: string): IDataStream;
+  end;    
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Por todo o sistema seu uso será simples, utilizando somente a Interface
+&lt;code&gt;IWebHttp&lt;/code&gt; que, nesse exemplo, só tem um único Método.&lt;/p&gt;
+
+&lt;p&gt;Essa é a forma que eu utilizo e que &lt;em&gt;recomendo&lt;/em&gt; que você faça.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;A utilização de Unidades Limítrofes nos dá a capacidade de substituir
+&lt;em&gt;todas&lt;/em&gt; as peças de terceiros em nosso sistema de forma simples, num &lt;em&gt;único
+lugar&lt;/em&gt; e que irá refletir globalmente em todo o código. Isso facilita a
+&lt;em&gt;manutenabilidade&lt;/em&gt; do código.&lt;/p&gt;
+
+&lt;p&gt;Outro ganho com essa técnica é que mantemos o mesmo estilo de nomenclatura
+de Classes e Unidades por todo o sistema, visto que podemos renomear ou
+redefinir qualquer peça externa ao projeto.&lt;/p&gt;
+
+&lt;p&gt;Não é algo difícil de se fazer. Dá trabalho, mas os &lt;em&gt;benefícios&lt;/em&gt; como diminuição
+de dependências externas, encapsulamento e estilo de codificação, valem 
+muito a pena no longo prazo.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 24 Oct 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/unidades-limitrofes/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/unidades-limitrofes/</guid>
+      </item>
+    
+      <item>
         <title>Funções Aninhadas</title>
         <description>&lt;p&gt;Se você tem um Método coeso, que trabalha em apenas uma única 
 tarefa, mas mesmo assim o código parece complicado, dificultando
@@ -2178,326 +2417,6 @@ end;
         <pubDate>Mon, 15 Aug 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/</guid>
-      </item>
-    
-      <item>
-        <title>Microservices com Delphi — Parte 1</title>
-        <description>&lt;p&gt;Imagine um grande Sistema ERP codificado em Delphi 7, com Regras de Negócio rigidamente codificadas para serem utilizadas somente numa aplicação Desktop.&lt;/p&gt;
-
-&lt;p&gt;Se você tivesse que evoluir esse sistema para proporcionar uma interoperabilidade com outros Sistemas, versões Web ou mesmo simplificar sua manutenção, o que você faria?&lt;/p&gt;
-
-&lt;p&gt;Minha resposta, Microservices.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1453230806017-56d81464b6c5.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Sistemas Web muitas vezes são preferíveis do que Sistemas Desktop. Não é necessária instalação, drivers, DLL’s… basta apontar seu browser para uma URL e começar a utilizar. Isso é um fato.&lt;/p&gt;
-
-&lt;p&gt;Por outro lado Sistemas Desktop ainda são importantes. Proporcionam uma melhor experiência de UI para o usuário — mas UI Web estão melhorando a cada dia — com uma melhor performance e melhor integração com o Sistema Operacional.&lt;/p&gt;
-
-&lt;p&gt;Não esqueçamos, também, das versões Mobile.&lt;/p&gt;
-
-&lt;p&gt;A chave é criarmos uma API para disponibilizarmos as Regras de Negócio num único lugar, para que sejam utilizadas em qualquer versão do sistema ou mesmo qualquer dispositivo.&lt;/p&gt;
-
-&lt;p&gt;Esse é o problema apresentado em um dos Projetos que estou envolvido.&lt;/p&gt;
-
-&lt;p&gt;Um grande Projeto ERP que deverá ter muitas de suas funcionalidades exportadas, recodificadas e disponibilizadas para uso, seja pelo mesmo Sistema ERP, Web, Mobile ou mesmo outros Sistemas.&lt;/p&gt;
-
-&lt;h2 id=&quot;microservices&quot;&gt;Microservices&lt;/h2&gt;
-
-&lt;p&gt;O que são Microservices?&lt;/p&gt;
-
-&lt;p&gt;Na &lt;a href=&quot;https://en.wikipedia.org/wiki/Microservices&quot;&gt;Wikipedia&lt;/a&gt; temos a seguinte definição:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Microservices são uma interpretação mais concreta e moderna de arquiteturas orientadas a serviços (SOA) usada para construir sistemas de software distribuídos.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;A sigla SOA faz-nos lembrar logo de WebServices e o protocolo SOAP. Mas não estou me referindo a esta tecnologia.&lt;/p&gt;
-
-&lt;p&gt;Microservices, na minha opinião, deve ser algo mais simples de construir e utilizar. Devem utilizar o padrão REST. Devem ser fácies de serem substituídos e reescritos em qualquer linguagem que possa interagir com requisições HTTP.&lt;/p&gt;
-
-&lt;h2 id=&quot;o-projeto&quot;&gt;O Projeto&lt;/h2&gt;
-
-&lt;p&gt;O ERP foi codificado em Delphi 7 e os Microservices — por determinação da empresa — será codificado em Java.&lt;/p&gt;
-
-&lt;p&gt;O protocolo de comunicação é HTTP e REST.&lt;/p&gt;
-
-&lt;p&gt;Os dados serão transportados utilizando XML, mas houveram argumentos em utilizar JSON. Bem, o Delphi 7 não tem uma &lt;em&gt;Lib&lt;/em&gt; padrão de JSON, mas tem uma &lt;em&gt;Lib&lt;/em&gt; padrão para interagir com XML, utilizando &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;, que funciona muito bem.&lt;/p&gt;
-
-&lt;p&gt;Não irei comentar sobre o código em Java, pois é irrelevante. Esses artigos irão demonstrar como codificar a parte &lt;em&gt;Client&lt;/em&gt; e não a &lt;em&gt;Server&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Também não irei entrar em detalhes de cada Microservice, pois trata-se de código privado.&lt;/p&gt;
-
-&lt;p&gt;Mas vou lhe apresentar a infra estrutura, a parte genérica do código que pode ser utilizado por qualquer outro software &lt;em&gt;Object Pascal&lt;/em&gt;. Qualquer outro detalhe mais específico desse projeto será omitido, por questões óbvias.&lt;/p&gt;
-
-&lt;p&gt;Então, a perguta é:&lt;/p&gt;
-
-&lt;p&gt;Como codificar uma API simples e Orientada a Objetos, para o compilador do Delphi 7, que possa ser utilizada em qualquer outro projeto Object Pascal?&lt;/p&gt;
-
-&lt;p&gt;Vamos aos módulos.&lt;/p&gt;
-
-&lt;h2 id=&quot;mdulo-web&quot;&gt;Módulo Web&lt;/h2&gt;
-
-&lt;p&gt;Um sistema precisa ser &lt;a href=&quot;/posts/nomeando-unidades/&quot;&gt;modularizado&lt;/a&gt; o suficiente para haver o reaproveitamento de código em outros sistemas ou em outros módulos.&lt;/p&gt;
-
-&lt;p&gt;Esse Módulo tem 2 &lt;em&gt;units&lt;/em&gt; de Classes que são relevantes para essa implementação.&lt;/p&gt;
-
-&lt;h3 id=&quot;unit-weba&quot;&gt;Unit AcmeWebA.pas&lt;/h3&gt;
-
-&lt;p&gt;Essa &lt;em&gt;unit&lt;/em&gt; encasula tudo que é genérico sobre Web.&lt;/p&gt;
-
-&lt;p&gt;A Classe mais relevante é a &lt;code&gt;TWebURL&lt;/code&gt;, que será utilizada na solução.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TWebURL = class(TInterfacedObject, IWebURL)
-  private
-    FServer: string;
-    FPathInfo: string;
-    FPort: Integer;
-  public
-    constructor Create(const Server, PathInfo: string; 
-      Port: Integer); reintroduce;
-    class function New(const Server, PathInfo: string; 
-      Port: Integer): IWebURL;
-    function Server: string;
-    function PathInfo: string;
-    function Port: Integer;
-    function AsString: string;
-  end;
-
-implementation
-
-{ TWebURL }
-
-constructor TWebURL.Create(const Server, PathInfo: string; 
-  Port: Integer);
-begin
-  inherited Create;
-  FServer := Server;
-  FPathInfo := PathInfo;
-  FPort := Port;
-end;
-
-class function TWebURL.New(const Server, PathInfo: string;
-  Port: Integer): IWebURL;
-begin
-  Result := Create(Server, PathInfo, Port);
-end;
-
-function TWebURL.Server: string;
-begin
-  Result := FServer;
-end;
-
-function TWebURL.PathInfo: string;
-begin
-  Result := FPathInfo;
-end;
-
-function TWebURL.Port: Integer;
-begin
-  Result := FPort;
-end;
-
-function TWebURL.AsString: string;
-begin
-  Result := Format(
-    &#39;http://%s:%d%s&#39;, [
-      FServer, FPort, FPathInfo
-    ]
-  );
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&quot;unit-webhttpa&quot;&gt;Unit AcmeWebHttpA.pas&lt;/h3&gt;
-
-&lt;p&gt;Essa &lt;em&gt;unit&lt;/em&gt; encapsula o protocolo HTTP.&lt;/p&gt;
-
-&lt;p&gt;A Classe mais relevante é a &lt;code&gt;THttpClient&lt;/code&gt;. Essa Classe ainda deve ser refatorada para utilizar instâncias de &lt;code&gt;TWebURL&lt;/code&gt; ao invés de URL’s do tipo &lt;code&gt;string&lt;/code&gt; — código real nunca é perfeito.&lt;/p&gt;
-
-&lt;p&gt;Internamente é utilizada o &lt;em&gt;framework&lt;/em&gt; &lt;a href=&quot;http://synapse.ararat.cz/doku.php/download&quot;&gt;Synapse&lt;/a&gt; que implementa o protocolo HTTP. Quem já conhece esse &lt;em&gt;framework&lt;/em&gt; não terá dificuldade para entender o código. Se ainda não conhece, sugiro baixar seus fontes.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  THttpResponse = class(TInterfacedObject, IHttpResponse)
-  private
-    FCode: Integer;
-    FStream: IDataStream;
-  public
-    constructor Create(Code: Integer; 
-      Stream: IDataStream); reintroduce;
-    class function New(Code: Integer; 
-      Stream: IDataStream): IHttpResponse; overload;
-    function Code: Integer;
-    function Stream: IDataStream;
-  end;
-
-  EHttpClient = class(Exception);
-
-  THttpClient = class(TInterfacedObject, IHttpClient)
-  private
-    FURL: string;
-    FMimeType: string;
-    FStream: TStringStream;
-    function Send(const Method: string): IHttpResponse;
-  public
-    constructor Create(const URL, MimeType: string; 
-      Stream: IDataStream); reintroduce;
-    class function New(const URL, MimeType: string; 
-      Stream: IDataStream): IHttpClient; overload;
-    class function New(const URL, MimeType: string; 
-      Stream: TStream): IHttpClient; overload;
-    class function New(const URL, MimeType: string): IHttpClient; overload;
-    destructor Destroy; override;
-    function Execute(const Verb: string): IHttpResponse;
-    function Get: IHttpResponse;
-    function Post: IHttpResponse;
-  end;
-
-implementation
-
-uses
-  // synapse
-  httpsend, synacode, synautil, ssl_openssl;
-
-{ THttpResponse }
-
-constructor THttpResponse.Create(Code: Integer; 
-  Stream: IDataStream);
-begin
-  inherited Create;
-  FCode := Code;
-  FStream := Stream;
-end;
-
-class function THttpResponse.New(Code: Integer;
-  Stream: IDataStream): IHttpResponse;
-begin
-  Result := Create(Code, Stream);
-end;
-
-function THttpResponse.Code: Integer;
-begin
-  Result := FCode;
-end;
-
-function THttpResponse.Stream: IDataStream;
-begin
-  Result := FStream;
-end;
-
-{ THttpClient }
-
-function THttpClient.Send(const Method: string): IHttpResponse;
-var
-  URL: string;
-begin
-  URL := FURL;
-  with THTTPSend.Create do
-  try
-    try
-      MimeType := FMimeType;
-      if Method = &#39;GET&#39; then
-        URL := URL + FStream.DataString
-      else
-        WriteStrToStream(Document, FStream.DataString);
-      if not HTTPMethod(Method, URL) then
-        raise Exception.Create(Sock.LastErrorDesc);
-      Document.Position := soFromBeginning;
-    except
-      on E: Exception do
-        raise EHttpClient.Create(
-          E.Message +
-          #13&#39;Method: &#39; + Method +
-          #13&#39;Code: &#39; + IntToStr(ResultCode)
-        );
-    end;
-  finally
-    Result := THttpResponse.New(
-      ResultCode, 
-      TDataStream.New(Document)
-    );
-    Free;
-  end;
-end;
-
-constructor THttpClient.Create(const URL, MimeType: string; 
-  Stream: IDataStream);
-begin
-  inherited Create;
-  FURL := URL;
-  FMimeType := MimeType;
-  FStream := TStringStream.Create(&#39;&#39;);
-  Stream.Save(FStream);
-end;
-
-class function THttpClient.New(const URL, MimeType: string; 
-  Stream: IDataStream): IHttpClient;
-begin
-  Result := Create(URL, MimeType, Stream);
-end;
-
-class function THttpClient.New(const URL, MimeType: string; 
-  Stream: TStream): IHttpClient;
-begin
-  Result := New(URL, MimeType, TDataStream.New(Stream));
-end;
-
-class function THttpClient.New(const URL, MimeType: string): IHttpClient;
-begin
-  Result := New(URL, MimeType, TDataStream.New);
-end;
-
-destructor THttpClient.Destroy;
-begin
-  FStream.Free;
-  inherited;
-end;
-
-function THttpClient.Execute(const Verb: string): IHttpResponse;
-begin
-  Result := Send(Verb);
-end;
-
-function THttpClient.Get: IHttpResponse;
-begin
-  Result := Execute(&#39;GET&#39;);
-end;
-
-function THttpClient.Post: IHttpResponse;
-begin
-  if FStream.Size = 0 then
-    raise EHttpClient.Create(&#39;HTTP.Send: No data.&#39;);
-  Result := Execute(&#39;POST&#39;);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O mais importante na Classe &lt;code&gt;THttpClient&lt;/code&gt; é seu método &lt;code&gt;Send&lt;/code&gt;, mas não tem nada complicado.&lt;/p&gt;
-
-&lt;p&gt;Veja essa parte:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;if Method = &#39;GET&#39; then
-  URL := URL + FStream.DataString
-else
-  WriteStrToStream(Document, FStream.DataString);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Caso o VERBO seja GET, então &lt;code&gt;FStream&lt;/code&gt; irá conter um PATH_INFO para complementar a URL. Do contrário, &lt;code&gt;FStream&lt;/code&gt; irá conter um BODY, ou seja, um XML de requisição com os parâmetros necessários para o Microservice.&lt;/p&gt;
-
-&lt;h2 id=&quot;no-proximo-artigo&quot;&gt;No próximo artigo…&lt;/h2&gt;
-
-&lt;p&gt;Até aqui nada de mais. Você viu apenas algumas Classes simples que encapsulam &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidades&lt;/a&gt; reais, utilizando Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;No &lt;a href=&quot;/posts/microservices-delphi-parte-2/&quot;&gt;próximo artigo&lt;/a&gt; escrevo sobre o módulo &lt;code&gt;MicroService&lt;/code&gt; que contém todas as Classes que fazem a comunicação com os Microservices codificados em Java.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 08 Aug 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/microservices-delphi-parte-1/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/microservices-delphi-parte-1/</guid>
       </item>
     
   </channel>
