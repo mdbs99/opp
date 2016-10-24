@@ -239,7 +239,7 @@ Outro ganho com essa técnica é que mantemos o mesmo estilo de nomenclatura
 de Classes e Unidades por todo o sistema, visto que podemos renomear ou
 redefinir qualquer peça externa ao projeto.
 
-Não é algo difícil de se fazer. Dá trabalho, mas os benefícios como diminuição
+Não é algo difícil de se fazer. Dá trabalho, mas os *benefícios* como diminuição
 de dependências externas, encapsulamento e estilo de codificação, valem 
 muito a pena no longo prazo.
 
