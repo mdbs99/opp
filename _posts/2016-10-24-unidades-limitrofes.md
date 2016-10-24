@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Unidades Limítrofes"
-date: 2016-10-17
+date: 2016-10-24
 description:
   Unidades Limítrofes promovem o desacoplamento entre Componentes e Libraries de terceiros.
 summary: 
