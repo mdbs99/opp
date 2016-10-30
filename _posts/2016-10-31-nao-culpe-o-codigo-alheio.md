@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Não Culpe o Código Alheio"
-date: 2016-10-29
+date: 2016-10-31
 description:
   Não culpe o código de outrem sem antes saber sua história, 
   motivos, prazos e quem realmente dava as ordens no projeto.
@@ -85,6 +85,9 @@ outro emprego.
 
 É isso aí! Esse é o correto a se fazer.
 
+<blockquote class="twitter-tweet" data-lang="pt"><p lang="en" dir="ltr">@ job interview:<br>- We need responsible people. Are you of the kind?<br>- Absolutely. At my last gig I was always responsible when shit happened</p>&mdash; Bruno Borges (@brunoborges) <a href="https://twitter.com/brunoborges/status/792277126695096320">29 de outubro de 2016</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 Mas infelizmente a vida não é fácil.
 E para a maioria das pessoas, a vida pode ser *extremamente* difícil.
 
@@ -97,7 +100,7 @@ Muitas vezes esses programadores até tentam fazer o certo,
 mas gerentes de projetos inexperientes dizem para fazer de 
 outra maneira: 
 
-Mais *rápido*, mais *barato*, mais... sem lógica, mais um projeto 
+Mais *rápido*, mais *barato*, mais... sem lógica! Mais um projeto 
 que irá *fracassar*.
 
 E isso é extremamente desmotivamente.
