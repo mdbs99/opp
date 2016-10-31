@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Procedural é fácil, Orientado a Objetos é difícil &#8211; Object Pascal Programming</title>
+    <title>Não Culpe o Código Alheio &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Pascal">
-    <meta name="keywords" content="orientado a objetos, procedural">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/">
+    <meta name="keywords" content="Gerente de Projetos">
+    <meta name="keywords" content="código, code, estilo, estilo de codificação, empresa, gerente, prazo do projeto">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,23 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Procedural é fácil, Orientado a Objetos é difícil">
-    <meta property="og:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
-">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/">
+    <meta property="og:title" content="Não Culpe o Código Alheio">
+    <meta property="og:description" content="Não culpe o código de outrem sem antes saber sua história, motivos, prazos e quem realmente dava as ordens no projeto.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1470208564179-dd5b52a0d010.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1466784828399-9a9921e8bdfd.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Procedural é fácil, Orientado a Objetos é difícil" />
+    <meta name="twitter:title" content="Não Culpe o Código Alheio" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -173,8 +172,8 @@
 
 
 <div class="post-header mb2">
-  <h1>Procedural é fácil, Orientado a Objetos é difícil</h1>
-  <span class="post-meta">Sep 5, 2016</span><br>
+  <h1>Não Culpe o Código Alheio</h1>
+  <span class="post-meta">Oct 31, 2016</span><br>
   
   <span class="post-meta small">
   
@@ -184,71 +183,106 @@
 </div>
 
 <article class="post-content">
-  <p>Por que ainda temos discussões sobre a Programação Procedural ser mais fácil do que a Programação Orientada a Objetos? É claro que Programar no paradigma Procedural é mais fácil.</p>
+  <p>Você fez entrevista numa grande empresa e foi contratado como
+Desenvolvedor Senior.</p>
+
+<p>No primeiro dia que lhe dão acesso ao código para corrigir
+uma pequena falha, você olha o código e pensa:</p>
+
+<p>Mas que P#$@[Piiiiii] é essa?!</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1470208564179-dd5b52a0d010.jpg" alt="Imagem" /></p>
+<p><img src="/images/photo-1466784828399-9a9921e8bdfd.jpg" alt="Unsplash image" /></p>
 
-<p>Você olha para um código com 5 instâncias de Objetos, agumentos de Construtores, consumo de memória, polimorfismo e pensa:</p>
+<p>O código é uma <em>bagunça</em>.</p>
 
-<p><strong>Eu poderia fazer a mesma coisa com 10 linhas de código Procedural.</strong></p>
+<p>Não há divisão lógica entre camadas.</p>
 
-<p>A performance — você diria — poderia ser melhor, iria consumir menos memória e, claro, é muito mais fácil codificar.</p>
+<p>A equipe diz que o código é Orientado a Objetos, mas não há verdadeiros
+<a href="/posts/objetos-representam-entidades/">Objetos</a>.</p>
 
-<p>Eu concordo… em parte.</p>
+<p>Tudo parece ser global, pois não parece haver nenhum tipo de
+<a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">Encapsulamento</a>.</p>
 
-<p>Então por que escolher a <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>?</p>
+<h2 id="e-agora">E agora?</h2>
 
-<p>Por que fazer da maneira “mais difícil”?</p>
+<p>Normalmente, o primeiro sentimento é culpar o último
+programador que trabalhou no código.</p>
 
-<p>Por que criar um <a href="https://en.wikipedia.org/wiki/Overhead_(computing)"><em>overhead</em></a> “desnecessário”?</p>
+<p>Você pensa:</p>
 
-<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fobjectpascalprogramming%2Fposts%2F316968578655967&amp;width=500" width="500" height="180" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+<p><em>“Eu não faria assim!”</em></p>
 
-<p>Se pensarmos apenas no <em>overhead</em> que traz a Orientação a Objetos, vamos então codificar nossos sistemas em apenas um único arquivo, usando <em>GO TO</em> e código ASSEMBLY.</p>
+<p><em>“O que estávam pensando quando codificaram isso aqui?”</em></p>
 
-<p>Orientação a Objetos é sobre <strong>manutenabilidade</strong> no longo prazo.</p>
+<p><em>“Será que alguém aqui sabe o que é normalização das tabelas,
+padronição do código, separação de camadas, responsabilidade
+única…?”</em></p>
 
-<p>É sobre não pensar como um controlador ou CPU, mas como <a href="/posts/objetos-representam-entidades/">Entidades</a> auto-suficientes que <a href="/posts/objetos-pensam-e-tomam-decisoes/">pensam e tomam decisões</a> por conta própria.</p>
+<p>Culpar é <em>fácil</em>.</p>
 
-<p>Não é sobre estar certo ou errado, fazer diagramas bonitos ou porque fica legal por no Currículo.</p>
+<p>Culpar sem nem ao menos saber o histórico do projeto, as 
+motivações envolvidas e os responsáveis pelo projeto é ainda
+mais fácil.</p>
 
-<p><strong>Orientação a Objetos é sobre resolver um problema de forma sustentável.</strong></p>
+<p>Mas, não cometa essa <em>injustiça</em>.</p>
 
-<p>Por isso escolhemos desenvolver seguindo esse paradigma.</p>
+<p>Não pense que somente o último programador é o <em>total</em> responsável
+por toda essa bagunça, pois tem grandes chances dele apenas 
+ter seguindo ordens!</p>
 
-<p>Em 1 hora é possível fazer muita coisa de forma Procedural, enquanto na Orientação a Objetos podemos ficar 1 hora apenas tentando identificar o melhor <a href="/posts/nomeando-classes/">nome para uma Classe</a>, quais são as <a href="/posts/objetos-representam-entidades/">Entidades</a> que fazem parte do problema, quais os Contextos…</p>
+<p>Sim, é verdade.</p>
 
-<p>E se eu lhe dissesse que podemos ficar “apenas” <a href="/posts/pensando-em-objetos/">pensando</a> por 1 ou 2 semanas, sem escrever nenhuma linha de código?</p>
+<p>Claro que isso não exime os programadores da culpa.</p>
 
-<p>É verdade, acontece.</p>
+<h2 id="voce-tambem-e-culpado">Você também é culpado</h2>
 
-<p>Não adianta fazer um sistema rapidamente se seu código não é <strong>sustentável</strong> no longo prazo.</p>
+<p>Se <em>você</em> constrói algo, também é <em>responsabilidade</em> sua que seja 
+feito da forma <em>correta</em>.</p>
 
-<p><em>Softwares</em> sempre <strong>mudam</strong>.</p>
+<p>Se você não concorda com a atitude de seus superiores, procure
+outro emprego.</p>
 
-<p><strong>Orientação a Objetos é sobre organização.</strong></p>
+<p>É isso aí! Esse é o correto a se fazer.</p>
 
-<p>Nós passamos a maior parte do tempo não codificando novas <em>features</em>, mas sim lendo e tentando entender o código.</p>
+<blockquote class="twitter-tweet" data-lang="pt"><p lang="en" dir="ltr">@ job interview:<br />- We need responsible people. Are you of the kind?<br />- Absolutely. At my last gig I was always responsible when shit happened</p>&mdash; Bruno Borges (@brunoborges) <a href="https://twitter.com/brunoborges/status/792277126695096320">29 de outubro de 2016</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<p>De que adianta ter um código de execução mais rápida em 100 ms se daqui a um mês ninguém sabe como alterá-lo?</p>
+<p>Mas infelizmente a vida não é fácil.
+E para a maioria das pessoas, a vida pode ser <em>extremamente</em> difícil.</p>
 
-<p>Orientação a Objetos não é mais difícil de codificar, é apenas é mais trabalhoso.</p>
+<p>Procurar outro emprego demanda tempo. Então a maioria “vai levando a vida”.
+Vai “empurrando pra frente” até onde der pra chegar.
+E essa atitude impacta diretamente nos projetos que essas 
+pessoas estão envolvidas.</p>
 
-<p><strong>Mas vale a pena.</strong></p>
+<p>Muitas vezes esses programadores até tentam fazer o certo,
+mas gerentes de projetos inexperientes dizem para fazer de 
+outra maneira:</p>
 
-<p>Por que no fim você irá trabalhar menos.</p>
+<p>Mais <em>rápido</em>, mais <em>barato</em>, mais… sem lógica! Mais um projeto 
+que irá <em>fracassar</em>.</p>
 
-<p>Talvez com um pouco mais de código, é verdade, mas terá menos <em>bugs</em>.</p>
+<p>E isso é extremamente desmotivamente.</p>
 
-<p>Menos <em>debugging</em>.</p>
+<p>Então, quando tudo já está uma bagunça e você não tem voz
+de decisão para fazer o certo… nada mais importa.</p>
 
-<p>Menos problemas.</p>
+<p>E assim o código vira uma bagunça.</p>
 
-<p>Orientação a Objetos agrega <strong>qualidade</strong>.</p>
+<h2 id="conclusao">Conclusão</h2>
 
-<p>E qualidade, é o que mais importa.</p>
+<p>Quando chegar numa nova empresa, assuma o código.</p>
+
+<p>Diga que precisa de um tempo para entender tudo.</p>
+
+<p>Não aponte culpados. Ao invés disso, mostre à empresa algumas <em>soluções</em>.</p>
+
+<p>E quando alguém apontar um erro no código, não diga que a culpa não é sua 
+só porque o código já estava ali antes de você chegar.</p>
+
+<p>Se você <em>assumiu</em> o código, agora ele é <em>seu</em>.</p>
 
 <p>Até logo.</p>
 
@@ -260,33 +294,33 @@
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Procedural é fácil, Orientado a Objetos é difícil&via=mdbs99;url=http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Não Culpe o Código Alheio&via=mdbs99;url=http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/&title=Procedural é fácil, Orientado a Objetos é difícil" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/&title=Procedural é fácil, Orientado a Objetos é difícil" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/&title=Não Culpe o Código Alheio" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/&t=Procedural é fácil, Orientado a Objetos é difícil" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/&title=Não Culpe o Código Alheio" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/&t=Não Culpe o Código Alheio" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -326,6 +360,33 @@
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/posts/freeandnil-esqueca/" class="post-link">
         <ul>
           <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
@@ -335,11 +396,20 @@
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
         </ul>
         <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/unidades-limitrofes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
+        </ul>
+        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
       </a>
     </div>
   
@@ -362,65 +432,29 @@
     </div>
   
     <div class="post ml2">
-      <a href="/posts/objetos-pensam-e-tomam-decisoes/" class="post-link">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Objetos pensam e tomam decisões</li></h4>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
         </ul>
-        <!--<p class="post-summary">Objetos pensam e tomam decisões. Eles não precisam de um controlador.</p>-->
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+      <a href="/posts/nomeando-unidades/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
         </ul>
-        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/classes-de-dados/" class="post-link">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Classes de Dados</li></h4>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
         </ul>
-        <!--<p class="post-summary">Como manipulamos os Dados em Projetos Orientados a Objetos.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/unidades-limitrofes/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
-        </ul>
-        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
-        </ul>
-        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
-        </ul>
-        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/funcoes-aninhadas/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
-        </ul>
-        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
     </div>
   
@@ -431,8 +465,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/procedural-e-facil-orientado-a-objetos-e-dificil';
-      var disqus_title      = 'Procedural é fácil, Orientado a Objetos é difícil';
+      var disqus_identifier = '/posts/nao-culpe-o-codigo-alheio';
+      var disqus_title      = 'Não Culpe o Código Alheio';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

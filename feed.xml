@@ -8,6 +8,116 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Não Culpe o Código Alheio</title>
+        <description>&lt;p&gt;Você fez entrevista numa grande empresa e foi contratado como
+Desenvolvedor Senior.&lt;/p&gt;
+
+&lt;p&gt;No primeiro dia que lhe dão acesso ao código para corrigir
+uma pequena falha, você olha o código e pensa:&lt;/p&gt;
+
+&lt;p&gt;Mas que P#$@[Piiiiii] é essa?!&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1466784828399-9a9921e8bdfd.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;O código é uma &lt;em&gt;bagunça&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não há divisão lógica entre camadas.&lt;/p&gt;
+
+&lt;p&gt;A equipe diz que o código é Orientado a Objetos, mas não há verdadeiros
+&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Objetos&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Tudo parece ser global, pois não parece haver nenhum tipo de
+&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;Encapsulamento&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;e-agora&quot;&gt;E agora?&lt;/h2&gt;
+
+&lt;p&gt;Normalmente, o primeiro sentimento é culpar o último
+programador que trabalhou no código.&lt;/p&gt;
+
+&lt;p&gt;Você pensa:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;“Eu não faria assim!”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;“O que estávam pensando quando codificaram isso aqui?”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;“Será que alguém aqui sabe o que é normalização das tabelas,
+padronição do código, separação de camadas, responsabilidade
+única…?”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Culpar é &lt;em&gt;fácil&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Culpar sem nem ao menos saber o histórico do projeto, as 
+motivações envolvidas e os responsáveis pelo projeto é ainda
+mais fácil.&lt;/p&gt;
+
+&lt;p&gt;Mas, não cometa essa &lt;em&gt;injustiça&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não pense que somente o último programador é o &lt;em&gt;total&lt;/em&gt; responsável
+por toda essa bagunça, pois tem grandes chances dele apenas 
+ter seguindo ordens!&lt;/p&gt;
+
+&lt;p&gt;Sim, é verdade.&lt;/p&gt;
+
+&lt;p&gt;Claro que isso não exime os programadores da culpa.&lt;/p&gt;
+
+&lt;h2 id=&quot;voce-tambem-e-culpado&quot;&gt;Você também é culpado&lt;/h2&gt;
+
+&lt;p&gt;Se &lt;em&gt;você&lt;/em&gt; constrói algo, também é &lt;em&gt;responsabilidade&lt;/em&gt; sua que seja 
+feito da forma &lt;em&gt;correta&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se você não concorda com a atitude de seus superiores, procure
+outro emprego.&lt;/p&gt;
+
+&lt;p&gt;É isso aí! Esse é o correto a se fazer.&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;pt&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;@ job interview:&lt;br /&gt;- We need responsible people. Are you of the kind?&lt;br /&gt;- Absolutely. At my last gig I was always responsible when shit happened&lt;/p&gt;&amp;mdash; Bruno Borges (@brunoborges) &lt;a href=&quot;https://twitter.com/brunoborges/status/792277126695096320&quot;&gt;29 de outubro de 2016&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Mas infelizmente a vida não é fácil.
+E para a maioria das pessoas, a vida pode ser &lt;em&gt;extremamente&lt;/em&gt; difícil.&lt;/p&gt;
+
+&lt;p&gt;Procurar outro emprego demanda tempo. Então a maioria “vai levando a vida”.
+Vai “empurrando pra frente” até onde der pra chegar.
+E essa atitude impacta diretamente nos projetos que essas 
+pessoas estão envolvidas.&lt;/p&gt;
+
+&lt;p&gt;Muitas vezes esses programadores até tentam fazer o certo,
+mas gerentes de projetos inexperientes dizem para fazer de 
+outra maneira:&lt;/p&gt;
+
+&lt;p&gt;Mais &lt;em&gt;rápido&lt;/em&gt;, mais &lt;em&gt;barato&lt;/em&gt;, mais… sem lógica! Mais um projeto 
+que irá &lt;em&gt;fracassar&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;E isso é extremamente desmotivamente.&lt;/p&gt;
+
+&lt;p&gt;Então, quando tudo já está uma bagunça e você não tem voz
+de decisão para fazer o certo… nada mais importa.&lt;/p&gt;
+
+&lt;p&gt;E assim o código vira uma bagunça.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Quando chegar numa nova empresa, assuma o código.&lt;/p&gt;
+
+&lt;p&gt;Diga que precisa de um tempo para entender tudo.&lt;/p&gt;
+
+&lt;p&gt;Não aponte culpados. Ao invés disso, mostre à empresa algumas &lt;em&gt;soluções&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;E quando alguém apontar um erro no código, não diga que a culpa não é sua 
+só porque o código já estava ali antes de você chegar.&lt;/p&gt;
+
+&lt;p&gt;Se você &lt;em&gt;assumiu&lt;/em&gt; o código, agora ele é &lt;em&gt;seu&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 31 Oct 2016 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/</guid>
+      </item>
+    
+      <item>
         <title>Unidades Limítrofes</title>
         <description>&lt;p&gt;A maioria dos sistemas utilizam componentes ou &lt;em&gt;libraries&lt;/em&gt;
 de terceiros. Seria perda de tempo codificar cada peça de 
@@ -16,7 +126,7 @@ sistema, já que existem ótimas opções mundo afora, que já fazem
 o trabalho específico que queremos implementar.&lt;/p&gt;
 
 &lt;p&gt;Mas é prudente utilizar tais &lt;em&gt;peças de código&lt;/em&gt; sem nos 
-preocuparmos sobre a manutenabilidade, dependências e 
+preocuparmos sobre a manutenibilidade, dependências e 
 encapsulamento?&lt;/p&gt;
 
 &lt;!--more--&gt;
@@ -229,7 +339,7 @@ type
 &lt;p&gt;A utilização de Unidades Limítrofes nos dá a capacidade de substituir
 &lt;em&gt;todas&lt;/em&gt; as peças de terceiros em nosso sistema de forma simples, num &lt;em&gt;único
 lugar&lt;/em&gt; e que irá refletir globalmente em todo o código. Isso facilita a
-&lt;em&gt;manutenabilidade&lt;/em&gt; do código.&lt;/p&gt;
+&lt;em&gt;manutenibilidade&lt;/em&gt; do código.&lt;/p&gt;
 
 &lt;p&gt;Outro ganho com essa técnica é que mantemos o mesmo estilo de nomenclatura
 de Classes e Unidades por todo o sistema, visto que podemos renomear ou
@@ -2170,253 +2280,6 @@ end;
         <pubDate>Mon, 22 Aug 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/</guid>
-      </item>
-    
-      <item>
-        <title>Microservices com Delphi — Parte 2</title>
-        <description>&lt;p&gt;Não basta apenas utilizar um Protocolo HTTP para fazer a comunicação com os Microservices. É necessário, também, codificar um Localizador de Microservices.&lt;/p&gt;
-
-&lt;p&gt;Veja como um implementar um Localizador simples, utilizando um SGBD, e também a implementação de um &lt;em&gt;Client&lt;/em&gt; para fazer a comunicação com qualquer Microservice no nosso &lt;em&gt;framework&lt;/em&gt;.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1457305237443-44c3d5a30b89.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;No &lt;a href=&quot;/posts/microservices-delphi-parte-1/&quot;&gt;artigo anterior&lt;/a&gt; eu escrevi sobre o Projeto codificado em Delphi 7 que está sendo recodificado utilizando Microservices em Java.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo irei falar sobre o Módulo Microservices, que possui todo o necessário para fazer a comunicação com os serviços.&lt;/p&gt;
-
-&lt;h2 id=&quot;modulo-microservice&quot;&gt;Módulo MicroService&lt;/h2&gt;
-
-&lt;p&gt;O Módulo MicroService é composto de apenas 4 simples Interfaces (até agora).&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;IMicroServiceParams&lt;/strong&gt;: Representa um localizador de MicroService;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;IMicroServiceResponse&lt;/strong&gt;: Representa um &lt;code&gt;Response&lt;/code&gt; após uma chamada a um MicroService;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;IMicroServiceClient&lt;/strong&gt;: Representa o &lt;em&gt;Client&lt;/em&gt; para todos os Microservices;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;IMicroServiceAction&lt;/strong&gt;: Representa uma Ação (irei falar sobre essa Interface em outro artigo).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;unit-microservices&quot;&gt;Unit AcmeMicroServices.pas&lt;/h3&gt;
-
-&lt;p&gt;Aqui está a implementação das Interfaces.&lt;/p&gt;
-
-&lt;p&gt;Há algumas dependências que não estarão no escopo desses artigos, mas acredito que seja fácil abstrair as Classes ou Interfaces como, por exemplo, &lt;code&gt;IDataParams&lt;/code&gt; e &lt;code&gt;IXMLDocument&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  IMicroServiceParams = interface
-    function Find: IDataParams;
-  end;
-
-  IMicroServiceResponse = interface
-    function Code: Integer;
-    function Empty: Boolean;
-    function XML: IXMLDocument;
-  end;
-
-  IMicroServiceClient = interface
-    function Send(const Content: string): IMicroServiceResponse; overload;
-    function Send(XML: IXMLDocument): IMicroServiceResponse; overload;
-  end;
-
-  IMicroServiceAction = interface
-    function Act: IMicroServiceResponse;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&quot;localizando-servicos&quot;&gt;Localizando Serviços&lt;/h2&gt;
-
-&lt;p&gt;Se sua aplicação utiliza apenas 3 ou 5 Microservices, não haveria necessidade de implementar um Localizador. Mas se sua aplicação lida com dezenas ou mais de Microservices, então é necessário haver um “índice” de Microservices.&lt;/p&gt;
-
-&lt;p&gt;O índice está no SGBD, em apenas 1 tabela (atualmente), e a localização de qualquer serviço é feita através do seu &lt;em&gt;name&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Sim, é só isso.&lt;/p&gt;
-
-&lt;p&gt;A tabela — vamos dar o nome de Micro_Services para esse artigo — possue algumas colunas.&lt;/p&gt;
-
-&lt;p&gt;As mais relevantes são:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;[name]&lt;/strong&gt;: O nome do serviço. Esse nome deve ser único;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;[server]&lt;/strong&gt;: O IP do servidor onde o MicroService está hospedado;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;[path]&lt;/strong&gt;: O &lt;em&gt;path&lt;/em&gt; do serviço, exemplo: http://10.20.0.10/execute onde “/execute” é o &lt;em&gt;path&lt;/em&gt;;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;[port]&lt;/strong&gt;: A porta onde o serviço está hospedado, exemplo: http://10.20.0.10:8020/execute (8020 é a porta);&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;[encoding]&lt;/strong&gt;: Alguns serviços trabalham com &lt;em&gt;encode&lt;/em&gt; diferente de UTF-8;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;[verb]&lt;/strong&gt;: Existem serviços que utilizam GET outros POST, etc. Essa coluna informa qual verbo HTTP utilizar;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;unit-microservicesa&quot;&gt;Unit AcmeMicroServiceA.pas&lt;/h3&gt;
-
-&lt;p&gt;Essa &lt;em&gt;unit&lt;/em&gt; encapsula as Classes que implementam as Interfaces acima.&lt;/p&gt;
-
-&lt;p&gt;A parte importante por aqui é o método &lt;code&gt;TMicroServiceClient.Response&lt;/code&gt;. Esse método utiliza o resultado de &lt;code&gt;TMicroServiceParams.Find&lt;/code&gt;, que é um localizador de serviços cadastrados, para montar uma requisição HTTP completa.&lt;/p&gt;
-
-&lt;p&gt;Consegue ver a beleza do método &lt;code&gt;TMicroServiceClient.Response&lt;/code&gt; onde (quase) tudo são Objetos conversando e &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;tomando decisões&lt;/a&gt; entre si?&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  EMicroService = class(Exception);
-
-  TMicroServiceParams = class(TInterfacedObject, IMicroServiceParams)
-  private
-    FServiceName: string;
-  public
-    constructor Create(const ServiceName: string);
-    class function New(const ServiceName: string): IMicroServiceParams;
-    function Find: IDataParams; overload;
-  end;
-
-  TMicroServiceResponse = class(TInterfacedObject, IMicroServiceResponse)
-  private
-    FCode: Integer;
-    FXML: IXMLDocument;
-  public
-    constructor Create(Code: Integer; XML: IXMLDocument);
-    class function New(Code: Integer; XML: IXMLDocument): IMicroServiceResponse;
-    function Code: Integer;
-    function Empty: Boolean;
-    function XML: IXMLDocument;
-  end;
-
-  TMicroServiceClient = class(TInterfacedObject, IMicroServiceClient)
-  private
-    FParams: IDataParams;
-    function Response(const Content: string): IHttpResponse;
-  public
-    constructor Create(ServiceParams: IDataParams);
-    class function New(ServiceParams: IDataParams): IMicroServiceClient;
-    function Send(const Content: string): IMicroServiceResponse; overload;
-    function Send(XML: IXMLDocument): IMicroServiceResponse; overload;
-  end;
-
-implementation
-
-uses
-  XMLIntf;
-
-{ TMicroServiceParams }
-
-constructor TMicroServiceParams.Create(const ServiceName: string);
-begin
-  inherited Create;
-  FServiceName := ServiceName;
-end;
-
-class function TMicroServiceParams.New(const ServiceName: string): IMicroServiceParams;
-begin
-  Result := Create(ServiceName);
-end;
-
-function TMicroServiceParams.Find: IDataParams;
-var 
-  Q: ISQLQuery;
-begin
-  // Através de uma Query (instância Q), 
-  // pesquisa pelo nome do serviço (FServiceName).
-  // Utilizando os Fields, retornamos uma instância TDataParams.
-  Result := TDataParams.New(Q.Fields);
-end;
-
-{ TMicroServiceResponse }
-
-constructor TMicroServiceResponse.Create(Code: Integer; XML: IXMLDocument);
-begin
-  inherited Create;
-  FCode := Code;
-  FXML := XML;
-end;
-
-class function TMicroServiceResponse.New(Code: Integer; XML: IXMLDocument): IMicroServiceResponse;
-begin
-  Result := Create(Code, XML);
-end;
-
-function TMicroServiceResponse.Code: Integer;
-begin
-  Result := FCode;
-end;
-
-function TMicroServiceResponse.Empty: Boolean;
-begin
-  Result := (FCode = 204) or (FXML.ChildNodes.Count = 0);
-end;
-
-function TMicroServiceResponse.XML: IXMLDocument;
-begin
-  Result := FXML;
-end;
-
-{ TMicroServiceClient }
-
-function TMicroServiceClient.Response(const Content: string): IHttpResponse;
-begin
-  try
-    Result :=
-      THttpClient.New(
-        TWebURL.New(
-          FParams.Param(&#39;server&#39;).AsString,
-          FParams.Param(&#39;path&#39;).AsString,
-          FParams.Param(&#39;port&#39;).AsInteger
-        )
-        .AsString,
-        &#39;application/xml;charset=&#39; +
-          FParams.Param(&#39;encoding&#39;).AsString,
-        TDataStream.New(Content)
-      )
-      .Execute(FParams.Param(&#39;verb&#39;).AsString);
-  except
-    on E: Exception do
-    begin
-      raise EMicroService.Create(
-        &#39;Service: &#39; + FParams.Param(&#39;name&#39;).AsString + #13 +
-        &#39;Error: &#39; + E.Message
-      );
-    end;
-  end;
-end;
-
-constructor TMicroServiceClient.Create(ServiceParams: IDataParams);
-begin
-  inherited Create;
-  FParams := ServiceParams;
-end;
-
-class function TMicroServiceClient.New(ServiceParams: IDataParams): IMicroServiceClient;
-begin
-  Result := Create(ServiceParams);
-end;
-
-function TMicroServiceClient.Send(const Content: string): IMicroServiceResponse;
-begin
-  with Response(Content) do
-  begin
-    Result := TMicroServiceResponse.New(
-      Code,
-      TXMLFactory.New(&#39;ISO-8859-1&#39;, Stream).Document
-    );
-  end;
-end;
-
-function TMicroServiceClient.Send(XML: IXMLDocument): IMicroServiceResponse;
-begin
-  Result := Send(XML.XML.Text);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&quot;no-proximo-artigo&quot;&gt;No próximo artigo…&lt;/h2&gt;
-
-&lt;p&gt;Isso é código real, em produção!&lt;/p&gt;
-
-&lt;p&gt;E onde está o Tratamento de Exceções, Classes de Negócio, etc?&lt;/p&gt;
-
-&lt;p&gt;No &lt;a href=&quot;/posts/microservices-delphi-parte-3/&quot;&gt;próximo artigo&lt;/a&gt; você irá ver como construir uma &lt;strong&gt;Classe de Negócio&lt;/strong&gt; que faz uso de todo esse arcabouço.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 15 Aug 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/</guid>
       </item>
     
   </channel>
