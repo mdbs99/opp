@@ -109,12 +109,6 @@ estarão utilizando a mesma instância do *DataModule*, compartilhando os mesmos
 
 Eu não quero isso.
 
----
-
-**Dica:** [*Singleton*](https://goo.gl/2zkz3U) é um anti-padrão. 
-
----
-
 A maneira para fazer uma instância do *DataModule* não ser global é chamar <code>RemoveDataModule</code> no seu construtor:
 
     procedure TDataModule1.DataModuleCreate(Sender: TComponent);
