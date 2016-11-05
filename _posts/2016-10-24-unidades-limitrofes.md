@@ -46,7 +46,7 @@ diferente para implementar e resolver o problema que motivou o
 desenvolvimento da peça.
 
 Não há um único caminho certo a percorrer, porém uns são menos 
-difícies que outros.
+difíceis que outros.
 
 Seu projeto tem seu próprio caminho e *estilo* — ou o estilo da
 empresa na qual você trabalha. Isso *precisa* ser respeitado.
