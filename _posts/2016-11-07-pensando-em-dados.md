@@ -1,10 +1,9 @@
 ---
 layout: post
-title: "Relatórios, Objetos e Dados"
-date: 2016-11-05
+title: "Pensando em Dados"
+date: 2016-11-06
 description:
-  Implementar Classes para representar Dados em Relatórios
-  não é Orientação a Objetos.
+  Não implemente Classes que são apenas recipientes de dados.
 image: /images/photo-1460925895917-afdab827c52f.jpg
 categories: 
   - Objetos
@@ -36,6 +35,8 @@ Nenhuma Classe que [representa dados]({% post_url 2016-08-01-classes-de-dados %}
 
 Muitos programadores (ainda) confundem conceitos tão distintos.
 Dados e Objetos são coisas completamente diferentes.
+
+## Dados {#dados}
 
 Enquanto Objetos são criaturas vivas. Dados são apenas registros do passado.
 
@@ -73,7 +74,7 @@ Vemos isso mais no mundo Java ou C#. Nesses ambientes muitos programadores acham
 que por estarem utilizando Objetos, eles estariam programando Orientado a Objetos,
 o que não é, necessariamente, uma verdade.
 
-Programadores *Object Pascal* — na maioria — são orientados a Dados e não a Objetos.
+Programadores *Object Pascal* — maioria — são orientados a Dados e não a Objetos.
 Utilizam a abordagem RAD. Dropam componentes nos formulários, fazem algumas
 ligações e isso é o suficiente para a exibição dos dados em uma *Grid*.
 
@@ -84,7 +85,12 @@ proporcionar um maior *controle* e *manutenibilidade*.
 Porém sou completamente a favor da abordagem RAD se estivermos falando sobre 
 exibição de dados.
 
-Dados são registros. Estejam eles gravados em arquivos, Banco de Dados, em *streams*
+Não tem nada de errado em utilizarmos *queries* para obter os dados de um 
+SGBD e exibir o resultado diretamente na tela ou relatório.
+
+## Conclusão {#conclusao}
+
+Dados são apenas registros. Estejam eles gravados em arquivos, Banco de Dados, em *streams*
 em memória ou provenientes de uma requisição HTTP via Web, não importa. São apenas
 dados, não Objetos.
 
