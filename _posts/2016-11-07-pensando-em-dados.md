@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Pensando em Dados"
-date: 2016-11-06
+date: 2016-11-07
 description:
   Não implemente Classes que são apenas recipientes de dados.
 image: /images/photo-1460925895917-afdab827c52f.jpg
@@ -21,7 +21,7 @@ keywords:
 Você precisa fazer um relatório financeiro num sistema que 
 possui o código Orientado a Objetos.
 
-Quais Classes e Objetos você precisar criar para representar os dados 
+Quais Classes e Objetos você precisa criar para representar os dados 
 que serão exibidos no relatório?
 
 <!--more-->
@@ -36,9 +36,7 @@ Nenhuma Classe que [representa dados]({% post_url 2016-08-01-classes-de-dados %}
 Muitos programadores (ainda) confundem conceitos tão distintos.
 Dados e Objetos são coisas completamente diferentes.
 
-## Dados {#dados}
-
-Enquanto Objetos são criaturas vivas. Dados são apenas registros do passado.
+**Enquanto Objetos são criaturas vivas.** Dados são apenas registros do passado.
 
 Relatórios tabulares, por exemplo, consistem apenas de exibição e formatação de 
 dados no formato de tabela.
@@ -66,7 +64,7 @@ também, seria drasticamente afetada.
 Além disso essa abordagem é totalmente contra os princípios
 da verdadeira [Orientação a Objetos]({% post_url 2015-12-29-o-que-e-orientacao-a-objetos %}).
 
-Mas não é assim que codificamos no *Object Pascal*, certo?
+**Mas não é assim que codificamos no *Object Pascal*, certo?**
 
 Estou ciente de que utilizar Objetos e listas de Objetos para exibição de
 relatórios não é um padrão muito utilizado no mundo *Object Pascal*.
@@ -88,11 +86,9 @@ exibição de dados.
 Não tem nada de errado em utilizarmos *queries* para obter os dados de um 
 SGBD e exibir o resultado diretamente na tela ou relatório.
 
-## Conclusão {#conclusao}
-
-Dados são apenas registros. Estejam eles gravados em arquivos, Banco de Dados, em *streams*
-em memória ou provenientes de uma requisição HTTP via Web, não importa. São apenas
-dados, não Objetos.
+**Dados são apenas registros.** Estejam eles gravados em arquivos, Banco de Dados, em *streams*
+em memória ou provenientes de uma requisição HTTP via Web, não importa. São
+dados, *não* Objetos.
 
 Portanto não trate Objetos como um
 [balde de dados]({% post_url 2015-12-29-o-que-e-orientacao-a-objetos %}#objeto-nao-e-um-balde-de-funcoes-e-dados)
