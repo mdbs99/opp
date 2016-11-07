@@ -8,6 +8,92 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Pensando em Dados</title>
+        <description>&lt;p&gt;Você precisa fazer um relatório financeiro num sistema que 
+possui o código Orientado a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Quais Classes e Objetos você precisa criar para representar os dados 
+que serão exibidos no relatório?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1460925895917-afdab827c52f.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Nenhuma!&lt;/p&gt;
+
+&lt;p&gt;Nenhuma Classe que &lt;a href=&quot;/posts/classes-de-dados/&quot;&gt;representa dados&lt;/a&gt;
+é necessária. Use apenas… &lt;em&gt;dados&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Muitos programadores (ainda) confundem conceitos tão distintos.
+Dados e Objetos são coisas completamente diferentes.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Enquanto Objetos são criaturas vivas.&lt;/strong&gt; Dados são apenas registros do passado.&lt;/p&gt;
+
+&lt;p&gt;Relatórios tabulares, por exemplo, consistem apenas de exibição e formatação de 
+dados no formato de tabela.
+Não precisamos de Objetos, comportamento ou
+&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulamento&lt;/a&gt;
+para fazer essa tarefa — a não ser para obter os dados no lugar onde estão armazenados.&lt;/p&gt;
+
+&lt;p&gt;Objetos, no entanto, podem representar dados na forma de uma
+&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidade&lt;/a&gt;
+que encapsula os dados. Poderíamos ter uma Classe &lt;code&gt;TFinanceReport&lt;/code&gt;, 
+por exemplo, que representa um 
+&lt;a href=&quot;/posts/datamodule-e-apenas-um-container/#implementao-de-um-relatrio&quot;&gt;relatório&lt;/a&gt;,
+porém onde estariam os dados? Em atributos? Não, não especificamente.&lt;/p&gt;
+
+&lt;p&gt;Imagine ter um atributo para cada coluna. Listas de objetos. Listas de
+listas…&lt;/p&gt;
+
+&lt;p&gt;No fim estaríamos trabalhando com &lt;em&gt;objetos anêmicos&lt;/em&gt; que só possuem 
+&lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;Métodos &lt;em&gt;Getters&lt;/em&gt; e &lt;em&gt;Setters&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Isso não seria nada eficaz devido ao grande trabalho que iria ser codificar
+essas Classes — muitas delas — e fazer a manipulação de seus Objetos. A performance,
+também, seria drasticamente afetada.&lt;/p&gt;
+
+&lt;p&gt;Além disso essa abordagem é totalmente contra os princípios
+da verdadeira &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Mas não é assim que codificamos no &lt;em&gt;Object Pascal&lt;/em&gt;, certo?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Estou ciente de que utilizar Objetos e listas de Objetos para exibição de
+relatórios não é um padrão muito utilizado no mundo &lt;em&gt;Object Pascal&lt;/em&gt;.
+Vemos isso mais no mundo Java ou C#. Nesses ambientes muitos programadores acham
+que por estarem utilizando Objetos, eles estariam programando Orientado a Objetos,
+o que não é, necessariamente, uma verdade.&lt;/p&gt;
+
+&lt;p&gt;Programadores &lt;em&gt;Object Pascal&lt;/em&gt; — maioria — são orientados a Dados e não a Objetos.
+Utilizam a abordagem RAD. Dropam componentes nos formulários, fazem algumas
+ligações e isso é o suficiente para a exibição dos dados em uma &lt;em&gt;Grid&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Eu sou contra a abordagem RAD para Regras de Negócio ou para qualquer módulo
+que exija alguma inteligência, onde o encapsulamento e uso de Objetos iria me
+proporcionar um maior &lt;em&gt;controle&lt;/em&gt; e &lt;em&gt;manutenibilidade&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Porém sou completamente a favor da abordagem RAD se estivermos falando sobre 
+exibição de dados.&lt;/p&gt;
+
+&lt;p&gt;Não tem nada de errado em utilizarmos &lt;em&gt;queries&lt;/em&gt; para obter os dados de um 
+SGBD e exibir o resultado diretamente na tela ou relatório.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Dados são apenas registros.&lt;/strong&gt; Estejam eles gravados em arquivos, Banco de Dados, em &lt;em&gt;streams&lt;/em&gt;
+em memória ou provenientes de uma requisição HTTP via Web, não importa. São
+dados, &lt;em&gt;não&lt;/em&gt; Objetos.&lt;/p&gt;
+
+&lt;p&gt;Portanto não trate Objetos como um
+&lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;balde de dados&lt;/a&gt;
+e não trate os Dados como se fossem Objetos que
+&lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;pensam&lt;/a&gt; e tomam decisões.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 07 Nov 2016 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/pensando-em-dados/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/pensando-em-dados/</guid>
+      </item>
+    
+      <item>
         <title>Não Culpe o Código Alheio</title>
         <description>&lt;p&gt;Você fez entrevista numa grande empresa e foi contratado como
 Desenvolvedor Senior.&lt;/p&gt;
@@ -148,7 +234,7 @@ diferente para implementar e resolver o problema que motivou o
 desenvolvimento da peça.&lt;/p&gt;
 
 &lt;p&gt;Não há um único caminho certo a percorrer, porém uns são menos 
-difícies que outros.&lt;/p&gt;
+difíceis que outros.&lt;/p&gt;
 
 &lt;p&gt;Seu projeto tem seu próprio caminho e &lt;em&gt;estilo&lt;/em&gt; — ou o estilo da
 empresa na qual você trabalha. Isso &lt;em&gt;precisa&lt;/em&gt; ser respeitado.&lt;/p&gt;
@@ -1993,293 +2079,6 @@ end;
         <pubDate>Mon, 29 Aug 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/</guid>
-      </item>
-    
-      <item>
-        <title>Microservices com Delphi — Parte 3</title>
-        <description>&lt;p&gt;Podemos utilizar diretamente uma instância de &lt;code&gt;TMicroServiceClient&lt;/code&gt;, passar um XML como parâmetro e obter a resposta. Mas isso não seria o ideal. Devemos ter Classes de Negócio, com suas próprias Regras e entrada/saída de informações.&lt;/p&gt;
-
-&lt;p&gt;Vamos codificar uma Classe de Negócio, que construa seu próprio XML e utilize, internamente, uma instância do &lt;em&gt;Client&lt;/em&gt;.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1448932223592-d1fc686e76ea.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;No &lt;a href=&quot;/posts/microservices-delphi-parte-2/&quot;&gt;artigo anterior&lt;/a&gt; eu escrevi sobre o Módulo MicroService e Localização de Serviços.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo você irá aprender a codificar uma Classe de Negócio que irá consumir um Microservice, utilizando o Módulo já apresentado ateriormente.&lt;/p&gt;
-
-&lt;p&gt;Também aprenderá como transformar XML em dados tabulares para apresentá-los numa &lt;em&gt;Grid&lt;/em&gt;, por exemplo.&lt;/p&gt;
-
-&lt;h2 id=&quot;classe-txmlfactory&quot;&gt;Classe TXMLFactory&lt;/h2&gt;
-
-&lt;p&gt;Uma instância de &lt;code&gt;TXMLFactory&lt;/code&gt; é utilizada no &lt;em&gt;Client&lt;/em&gt;, especificamente no método &lt;code&gt;TMicroServiceClient.Send&lt;/code&gt;, que não foi abordada no artigo anterior.&lt;/p&gt;
-
-&lt;p&gt;É uma Classe simples mas importante, utilizada tanto para montar tanto o XML de envio como o de retorno.&lt;/p&gt;
-
-&lt;p&gt;O Delphi 7 não trabalha com &lt;em&gt;encode&lt;/em&gt; &lt;code&gt;UTF-8&lt;/code&gt; por padrão mas os Microservices em Java trabalham no formato &lt;code&gt;UTF-8&lt;/code&gt;. Então o &lt;em&gt;Client&lt;/em&gt; deve fazer todas as solicitações nesse formato.&lt;/p&gt;
-
-&lt;p&gt;O resultado, no entanto, é convertido para &lt;code&gt;ISO-8859-1&lt;/code&gt; — que é o formato que estou utilizando no Delphi 7 — antes dos dados serem disponibilizados para o resto da aplicação.&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TXMLFactory&lt;/code&gt; facilita o envio e retorno.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TXMLFactory = class(TInterfacedObject, IXMLFactory)
-  private
-    FEncoding: string;
-    FStream: IDataStream;
-  public
-    constructor Create(const Encoding: string; Stream: IDataStream); reintroduce;
-    class function New(const Encoding: string; Stream: IDataStream): IXMLFactory; overload;
-    class function New(const Encoding: string): IXMLFactory; overload;
-    class function New: IXMLFactory; overload;
-    function Document: IXMLDocument;
-  end;
-
-{ TXMLFactory }
-
-constructor TXMLFactory.Create(const Encoding: string; Stream: IDataStream);
-begin
-  inherited Create;
-  FEncoding := Encoding;
-  FStream := Stream;
-end;
-
-class function TXMLFactory.New(const Encoding: string;
-  Stream: IDataStream): IXMLFactory;
-begin
-  Result := Create(Encoding, Stream);
-end;
-
-class function TXMLFactory.New(const Encoding: string): IXMLFactory;
-begin
-  Result := New(Encoding, TDataStream.New);
-end;
-
-class function TXMLFactory.New: IXMLFactory;
-begin
-  Result := New(&#39;UTF-8&#39;);
-end;
-
-function TXMLFactory.Document: IXMLDocument;
-var
-  Buf: TMemoryStream;
-begin
-  Result := TXMLDocument.Create(nil);
-  Buf := TMemoryStream.Create;
-  try
-    Result.Options := [];
-    Result.Active := True;
-    Result.Version := &#39;1.0&#39;;
-    if FStream.Size &amp;gt; 0 then
-    begin
-      FStream.Save(Buf);
-      Result.LoadFromStream(Buf);
-    end;
-    Result.Encoding := FEncoding;
-  finally
-    Buf.Free;
-  end;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&quot;consumindo-um-servico&quot;&gt;Consumindo um Serviço&lt;/h2&gt;
-
-&lt;p&gt;Nesse projeto eu defini que todo consumo de qualquer Microservice será feito através de Classes de Negócio. Então poderei ter o mesmo número de Classes correspondende ao número de Microservices ou até mais, pois uma Classe de Negócio poderia fazer uso de mais de um Microservice.&lt;/p&gt;
-
-&lt;p&gt;Iremos implementar uma Classe de Negócio simples e hipotética, visto que não poderia disponibilizar o código real do sistema quando se trata do negócio da empresa.&lt;/p&gt;
-
-&lt;p&gt;A Classe proposta é a &lt;code&gt;TFaturasService&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;A instância dessa Classe irá receber um parâmetro do tipo &lt;code&gt;IDataUId&lt;/code&gt; — uma classe que encapsula um &lt;em&gt;GUID&lt;/em&gt; — para retornar os dados de uma Fatura.&lt;/p&gt;
-
-&lt;p&gt;Segue sua implementação abaixo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TFaturasService = class(TInterfacedObject, IMicroServiceAction)
-  private
-    FUId: IDataUId;
-  public
-    constructor Create(UId: IDataUId); reintroduce;
-    class function New(UId: IDataUId): IMicroServiceAction;
-    function Act: IMicroServiceResponse;
-  end;
-
-{ TFaturasService }
-
-constructor TFaturasService.Create(UId: IDataUId);
-begin
-  inherited Create;
-  FUId := UId;
-end;
-
-class function TFaturasService.New(
-  UId: IDataUId): IMicroServiceAction;
-begin
-  Result := Create(UId);
-end;
-
-function TFaturasService.Act: IMicroServiceResponse;
-
-  function XML: IXMLDocument;
-  begin
-    Result := TXMLFactory.New.Document;
-    with Result.AddChild(&#39;Params&#39;) do
-    begin
-      AddChild(&#39;uid&#39;).Text := FUId.AsString;
-      AddChild(&#39;active&#39;).Text := &#39;True&#39;;
-    end;
-  end;
-
-begin
-  Result :=
-    TMicroServiceClient.New(
-      TMicroServiceParams.New(
-        &#39;financ:faturas-service&#39;
-      )
-      .Find
-    )
-    .Send(XML)
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&quot;passo-a-passo&quot;&gt;O código passo-a-passo&lt;/h3&gt;
-
-&lt;p&gt;Vamos entender o código juntos:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code&gt;TFaturasService&lt;/code&gt; é uma Classe de Negócio que implementa &lt;code&gt;IMicroServiceAction&lt;/code&gt; (veja &lt;a href=&quot;/posts/microservices-delphi-parte-2/#introducao&quot;&gt;aqui&lt;/a&gt;);&lt;/li&gt;
-  &lt;li&gt;O Objeto &lt;code&gt;TXMLFactory&lt;/code&gt; é utilizado para gerar o XML de envio;&lt;/li&gt;
-  &lt;li&gt;O Objeto &lt;code&gt;TMicroServiceParams&lt;/code&gt; localiza o serviço através do seu &lt;code&gt;name&lt;/code&gt; (único) e traz as informações em forma de parâmetros;&lt;/li&gt;
-  &lt;li&gt;O Objeto &lt;code&gt;TMicroServiceClient&lt;/code&gt; envia o XML de envio e retorna uma instância de &lt;code&gt;IMicroServiceResponse&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;O objeto retornado contém um &lt;code&gt;XML: IXMLDocument&lt;/code&gt; que é a resposta do Microservice codificado em Java;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;E é isso.&lt;/p&gt;
-
-&lt;p&gt;Uma implementação completa de um serviço.&lt;/p&gt;
-
-&lt;p&gt;Se você esperava algo mais complexo, sinto decepcioná-lo, pois a implementação é tão simples quanto isso. :)&lt;/p&gt;
-
-&lt;h3 id=&quot;utilizando-a-classe&quot;&gt;Utilizando a Classe de Negócio&lt;/h3&gt;
-
-&lt;p&gt;Uma vez que a Classe de Negócio foi implementada, poderá ser utilizada em muitas partes do sistema sem haver duplicação de código; não precisará montar o mesmo XML em vários lugares; não precisará passar os mesmos parâmetros para o &lt;em&gt;Client&lt;/em&gt;, etc.&lt;/p&gt;
-
-&lt;p&gt;Então, como utilizar a nova Classe no nosso código?&lt;/p&gt;
-
-&lt;p&gt;Aqui está um exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure TForm1.FillData;
-begin
-  TXMLClientDataSetAdapter.New(
-    FModule.FaturaClient,
-    TFaturasService.New(FUId).Act.XML
-  )
-  .Adapt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;No Delphi 7 utilizamos &lt;code&gt;TClientDataSet&lt;/code&gt; para manter os dados tabulares (linhas e colunas) em memória, exibir numa &lt;em&gt;Grid&lt;/em&gt; ou em qualquer outro &lt;em&gt;widget&lt;/em&gt;. Mas os dados dos Microservices vem no formato de XML. Esses dados precisam ser convertidos para um formato tabular.&lt;/p&gt;
-
-&lt;p&gt;Para isso temos uma outra Classe responsável por fazer essa conversão da forma mais genérica possível.&lt;/p&gt;
-
-&lt;p&gt;Essa Classe é a &lt;code&gt;TXMLClientDataSetAdapter&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Ela recebe 2 parâmetros:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Uma instância de um &lt;code&gt;TClientDataSet&lt;/code&gt;, que no exemplo está em um &lt;code&gt;TDataModule&lt;/code&gt;;&lt;/li&gt;
-  &lt;li&gt;Uma instância de &lt;code&gt;IXMLDocument&lt;/code&gt;, que é obtido através da chamada &lt;code&gt;Act.XML&lt;/code&gt;;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Então executamos o método &lt;code&gt;Adapt&lt;/code&gt; e pronto, temos um XML convertido em dados tabulares.&lt;/p&gt;
-
-&lt;p&gt;Será que o código da Classe &lt;code&gt;TXMLClientDataSetAdapter&lt;/code&gt; é complexo?&lt;/p&gt;
-
-&lt;p&gt;Não. É tão simples quanto a implementação da Classe de Negócio.&lt;/p&gt;
-
-&lt;p&gt;Veja a implementação do método &lt;code&gt;Adapt&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function TXMLClientDataSetAdapter.Adapt: IDataAdapter;
-var
-  I: Integer;
-  Field: TField;
-begin
-  Result := Self;
-  if not Assigned(FSource) then
-    Exit;
-  FDest.DisableControls;
-  try
-    while Assigned(FSource) do
-    begin
-      FDest.Append;
-      for I := 0 to FSource.ChildNodes.Count -1 do
-      begin
-        with FSource.ChildNodes[I] do
-        begin
-          Field := FDest.FindField(NodeName);
-          if Assigned(Field) and (Text &amp;lt;&amp;gt; &#39;&#39;) then
-            Field.Value := Text;
-        end;
-      end;
-      FSource := FSource.NextSibling;
-    end;
-  finally
-    FDest.First;
-    FDest.EnableControls;
-  end;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Ele adapta o XML para o formato tabular e no fim temos uma instância de &lt;code&gt;TClientDataSet&lt;/code&gt; com os dados provenientes do XML.&lt;/p&gt;
-
-&lt;h2 id=&quot;ser-um-substituto-ao-datasnap&quot;&gt;Será um substituto ao &lt;em&gt;DataSnap&lt;/em&gt;?&lt;/h2&gt;
-
-&lt;p&gt;Eu ainda não terminei essa série, porém já recebi alguns e-mails de alguns leitores perguntando se é possível utilizar essa solução como um substituto ao &lt;a href=&quot;http://docwiki.embarcadero.com/RADStudio/Seattle/en/Developing_DataSnap_Applications&quot;&gt;&lt;em&gt;Delphi DataSnap&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Minha resposta é que o &lt;em&gt;DataSnap&lt;/em&gt; tem muito, muito código implementado com inúmeras facilidades para os desenvolvedores. Então não é um substituto — e mesmo se esse fosse o objetivo, estaríamos muito longe de concluí-lo.&lt;/p&gt;
-
-&lt;p&gt;É melhor ou pior?&lt;/p&gt;
-
-&lt;p&gt;Depende do tipo do projeto.&lt;/p&gt;
-
-&lt;p&gt;Nesse projeto a versão do Delphi é a 7. A empresa não quer mais investir no Delphi e vai substituí-lo, aos poucos, por Java ou mesmo C#. Então não haveria motivos em utilizar &lt;em&gt;DataSnap&lt;/em&gt;, visto que a linguagem irá mudar no futuro.&lt;/p&gt;
-
-&lt;h2 id=&quot;desvantagens-by-design&quot;&gt;Desvantagens &lt;em&gt;by design&lt;/em&gt;&lt;/h2&gt;
-
-&lt;p&gt;É claro que há desvantagens na solução proposta. Sempre há desvantagens.&lt;/p&gt;
-
-&lt;p&gt;Uma grande desvantagem é que novas informações não são, necessariamente, visíveis automaticamente quando há alterações nos Microservices.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo.&lt;/p&gt;
-
-&lt;p&gt;Caso o Microservice acima enviasse uma nova informação chamada “status”, ela não iria aparecer automaticamente numa &lt;em&gt;Grid&lt;/em&gt; do Delphi. Esse campo teria que ser incluso, manualmente, no &lt;em&gt;ClientDataSet&lt;/em&gt; que fosse receber os dados.&lt;/p&gt;
-
-&lt;p&gt;O que eu quero dizer é que a aplicação Delphi não se adapta automaticamente as mudanças dos Microservices. É possível fazer, porém exigiria muito mais tempo de desenvolvimento.&lt;/p&gt;
-
-&lt;p&gt;A solução é simples porque estamos utilizando a premissa &lt;a href=&quot;https://en.wikipedia.org/wiki/Convention_over_configuration&quot;&gt;&lt;em&gt;Convention over configuration&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Se há dados, então eles estarão no formato XML;&lt;/li&gt;
-  &lt;li&gt;Os &lt;em&gt;fields&lt;/em&gt; de um &lt;em&gt;ClientDataSet&lt;/em&gt; devem ter o mesmo nome dos &lt;em&gt;fields&lt;/em&gt; que são esperados nos Microservices e vice-versa;&lt;/li&gt;
-  &lt;li&gt;Utilizamos os mesmos formatos para Data, Hora e Números decimais.&lt;/li&gt;
-  &lt;li&gt;Etc.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Apesar de não vermos isso como desvantagens, não deixa de ler uma limitação.&lt;/p&gt;
-
-&lt;h2 id=&quot;no-proximo-artigo&quot;&gt;No próximo artigo…&lt;/h2&gt;
-
-&lt;p&gt;Você acabou de ver uma implementação simples, &lt;em&gt;“made in home”&lt;/em&gt;, para trabalhar com interoperabilidade entre sistemas distintos utilizando Microservices que nada mais são do que requisições HTTP enviando e recebendo XML.&lt;/p&gt;
-
-&lt;p&gt;Finalizaremos essa série no &lt;a href=&quot;/posts/microservices-delphi-parte-final/&quot;&gt;próximo artigo&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 22 Aug 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/microservices-delphi-parte-3/</guid>
       </item>
     
   </channel>

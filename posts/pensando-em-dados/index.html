@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Não Utilize Casting &#8211; Object Pascal Programming</title>
+    <title>Pensando em Dados &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Não Utilize Casting em Regras de Negócio.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Pascal">
-    <meta name="keywords" content="cast, casting">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/nao-utilize-casting/">
+    <meta name="keywords" content="Objetos">
+    <meta name="keywords" content="data, object, data-object, report, relatório, report-data">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/pensando-em-dados/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Não Utilize Casting">
-    <meta property="og:description" content="Não Utilize Casting em Regras de Negócio.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/nao-utilize-casting/">
+    <meta property="og:title" content="Pensando em Dados">
+    <meta property="og:description" content="Não implemente Classes que são apenas recipientes de dados.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/pensando-em-dados/">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1445451983996-ac6b92ffb1fb.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1460925895917-afdab827c52f.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Não Utilize Casting" />
-    <meta name="twitter:description" content="Não Utilize Casting em Regras de Negócio." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/nao-utilize-casting/" />
+    <meta name="twitter:title" content="Pensando em Dados" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/pensando-em-dados/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -170,8 +172,8 @@
 
 
 <div class="post-header mb2">
-  <h1>Não Utilize Casting</h1>
-  <span class="post-meta">Apr 18, 2016</span><br>
+  <h1>Pensando em Dados</h1>
+  <span class="post-meta">Nov 7, 2016</span><br>
   
   <span class="post-meta small">
   
@@ -181,86 +183,82 @@
 </div>
 
 <article class="post-content">
-  <p>Sua equipe precisa de um programador Object Pascal para trabalhar num projeto que está
-sendo codificado em FreePascal. Este projeto terá integração com um ERP codificado em Java e
-um website codificado em PHP. Tudo utilizando MS SQLServer como SGBD.</p>
+  <p>Você precisa fazer um relatório financeiro num sistema que 
+possui o código Orientado a Objetos.</p>
 
-<p>Como você iria descrever o anúncio dessa vaga?</p>
+<p>Quais Classes e Objetos você precisa criar para representar os dados 
+que serão exibidos no relatório?</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1445451983996-ac6b92ffb1fb.jpg" alt="Casting" /></p>
+<p><img src="/images/photo-1460925895917-afdab827c52f.jpg" alt="Unsplash image" /></p>
 
-<p>Uma tradução para <em>Casting</em>, em Português, seria <strong>moldagem</strong>. Você recebe algo e o “molda” em outra coisa.</p>
+<p>Nenhuma!</p>
 
-<p>Fazemos isso muitas vezes. Temos um <em>Integer</em> e o moldamos em uma <em>String</em> e vice-versa.</p>
+<p>Nenhuma Classe que <a href="/posts/classes-de-dados/">representa dados</a>
+é necessária. Use apenas… <em>dados</em>.</p>
 
-<p>Mas será que o uso de <em>Casting</em> é necessário para codificarmos nossas <strong>Regras de Negócio</strong> utilizando
-Objetos?</p>
+<p>Muitos programadores (ainda) confundem conceitos tão distintos.
+Dados e Objetos são coisas completamente diferentes.</p>
 
-<center><p><strong>. . .</strong></p></center>
+<p><strong>Enquanto Objetos são criaturas vivas.</strong> Dados são apenas registros do passado.</p>
 
-<p>O arquiteto da equipe — sr. Anderson — já definiu o projeto.</p>
+<p>Relatórios tabulares, por exemplo, consistem apenas de exibição e formatação de 
+dados no formato de tabela.
+Não precisamos de Objetos, comportamento ou
+<a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">encapsulamento</a>
+para fazer essa tarefa — a não ser para obter os dados no lugar onde estão armazenados.</p>
 
-<p>Anderson definiu a API de integração, diagramas de classes, componentes, módulos, etc. Mas o projeto 
-ficou maior que o esperado e agora precisam de um programador experiente para compor a equipe.</p>
+<p>Objetos, no entanto, podem representar dados na forma de uma
+<a href="/posts/objetos-representam-entidades/">Entidade</a>
+que encapsula os dados. Poderíamos ter uma Classe <code>TFinanceReport</code>, 
+por exemplo, que representa um 
+<a href="/posts/datamodule-e-apenas-um-container/#implementao-de-um-relatrio">relatório</a>,
+porém onde estariam os dados? Em atributos? Não, não especificamente.</p>
 
-<p>O arquiteto solicita ao seu gerente o novo programador, mas sem lhe dar instruções específicas.</p>
+<p>Imagine ter um atributo para cada coluna. Listas de objetos. Listas de
+listas…</p>
 
-<p>O gerente repassa o pedido ao pessoal do RH e então eles anunciam a vaga em sites:</p>
+<p>No fim estaríamos trabalhando com <em>objetos anêmicos</em> que só possuem 
+<a href="/posts/getters-e-setters/">Métodos <em>Getters</em> e <em>Setters</em></a>.</p>
 
-<p><em>“Empresa ACME Inc. precisa de programador experiente.”</em></p>
+<p>Isso não seria nada eficaz devido ao grande trabalho que iria ser codificar
+essas Classes — muitas delas — e fazer a manipulação de seus Objetos. A performance,
+também, seria drasticamente afetada.</p>
 
-<p>A empresa recebe currículos com especialidade em COBOL, Delphi, C/C++, Java… PHP foi a maioria. :)</p>
+<p>Além disso essa abordagem é totalmente contra os princípios
+da verdadeira <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>.</p>
 
-<p>Todos perdem tempo, pois terão muito mais currículos para <strong>analisar e verificar</strong> se o canditato 
-se <strong>encaixa nos critérios</strong>, pois não definiram as <strong>habilidades necessárias</strong> que o programador deve ter
-quando fizeram o anúncio.</p>
+<p><strong>Mas não é assim que codificamos no <em>Object Pascal</em>, certo?</strong></p>
 
-<p>O mesmo acontece quando utilizamos <em>Casting</em>. É necessário ter <strong>código de verificação</strong> para o Objeto 
-afim de determinar sua Classe.</p>
+<p>Estou ciente de que utilizar Objetos e listas de Objetos para exibição de
+relatórios não é um padrão muito utilizado no mundo <em>Object Pascal</em>.
+Vemos isso mais no mundo Java ou C#. Nesses ambientes muitos programadores acham
+que por estarem utilizando Objetos, eles estariam programando Orientado a Objetos,
+o que não é, necessariamente, uma verdade.</p>
 
-<blockquote>
-  Seus Objetos devem trabalhar sob contratos, ou seja, interfaces. Somente Objetos
-  qualificados — que implementam a Interface — poderão ser utilizados para fazer o serviço.
-</blockquote>
+<p>Programadores <em>Object Pascal</em> — maioria — são orientados a Dados e não a Objetos.
+Utilizam a abordagem RAD. Dropam componentes nos formulários, fazem algumas
+ligações e isso é o suficiente para a exibição dos dados em uma <em>Grid</em>.</p>
 
-<p>Se você tem um trabalho a fazer, chame um <strong>especialista</strong> apto para fazer o trabalho — ou faça você mesmo.</p>
+<p>Eu sou contra a abordagem RAD para Regras de Negócio ou para qualquer módulo
+que exija alguma inteligência, onde o encapsulamento e uso de Objetos iria me
+proporcionar um maior <em>controle</em> e <em>manutenibilidade</em>.</p>
 
-<p>O trabalho é determinado por um <strong>contrato</strong> que especifica as habilidades necessárias que o especialista 
-precisa ter.</p>
+<p>Porém sou completamente a favor da abordagem RAD se estivermos falando sobre 
+exibição de dados.</p>
 
-<p>Na Orientação a Objetos os <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contratos são representados por Interfaces</a>.</p>
+<p>Não tem nada de errado em utilizarmos <em>queries</em> para obter os dados de um 
+SGBD e exibir o resultado diretamente na tela ou relatório.</p>
 
-<p>Interfaces, <strong>não Classes.</strong></p>
+<p><strong>Dados são apenas registros.</strong> Estejam eles gravados em arquivos, Banco de Dados, em <em>streams</em>
+em memória ou provenientes de uma requisição HTTP via Web, não importa. São
+dados, <em>não</em> Objetos.</p>
 
-<center><p><strong>. . .</strong></p></center>
-
-<p>Anderson precisa de um programador.</p>
-
-<p>O RH altera os requisitos da vaga.</p>
-
-<p>O programador deve saber:</p>
-
-<ul>
-  <li>Object Pascal</li>
-  <li>MS SQLServer</li>
-  <li>Desejável PHP, Java</li>
-</ul>
-
-<p>Agora ficou mais fácil de encontrar o programador específico para o trabalho.</p>
-
-<p>É isso que você deve fazer no seu código. Especifique Interfaces que definam o contrato necessário para fazer 
-o trabalho.</p>
-
-<p>Não defina argumentos do tipo de <strong>Classes genéricas</strong> — TObject, etc — sendo necessário utilizar <em>Casting</em> para verificar
-qual o tipo de Classe do Objeto para fazer algum <strong>processamento específico</strong> dependendo da Classe. Não faça isso!</p>
-
-<p>Interfaces são contratos de trabalho.</p>
-
-<p>Defina bem seus contratos e você não precisará fazer <em>Casting</em> pois saberá que
-somente <strong>Objetos especialistas</strong> irão se “candidatar” ao trabalho. Do contrário não fique surpreso de receber 
-um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)</p>
+<p>Portanto não trate Objetos como um
+<a href="/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados">balde de dados</a>
+e não trate os Dados como se fossem Objetos que
+<a href="/posts/objetos-pensam-e-tomam-decisoes/">pensam</a> e tomam decisões.</p>
 
 <p>Até logo.</p>
 
@@ -272,33 +270,33 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/nao-utilize-casting/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/pensando-em-dados/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Não Utilize Casting&via=mdbs99;url=http://objectpascalprogramming.com/posts/nao-utilize-casting/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Pensando em Dados&via=mdbs99;url=http://objectpascalprogramming.com/posts/pensando-em-dados/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/nao-utilize-casting/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/pensando-em-dados/" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/nao-utilize-casting/&title=Não Utilize Casting" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/nao-utilize-casting/&title=Não Utilize Casting" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/pensando-em-dados/&title=Pensando em Dados" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/nao-utilize-casting/&t=Não Utilize Casting" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/pensando-em-dados/&title=Pensando em Dados" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/pensando-em-dados/&t=Pensando em Dados" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -338,11 +336,29 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/unidades-limitrofes/" class="post-link">
+      <a href="/posts/getters-e-setters/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
+          <h4 class="post-title"><li>Métodos Getters e Setters</li></h4>
         </ul>
-        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
+        <!--<p class="post-summary">Não codifique Classes anêmicas como se fosse um balde de dados.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-de-dados/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes de Dados</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como manipulamos os Dados em Projetos Orientados a Objetos.</p>-->
       </a>
     </div>
   
@@ -356,15 +372,6 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     </div>
   
     <div class="post ml2">
-      <a href="/posts/objetos-imutaveis/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
-        </ul>
-        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/posts/freeandnil-esqueca/" class="post-link">
         <ul>
           <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
@@ -374,47 +381,20 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     </div>
   
     <div class="post ml2">
-      <a href="/posts/interfaces-em-todo-lugar/" class="post-link">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Interfaces em Todo Lugar</li></h4>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
         </ul>
-        <!--<p class="post-summary">Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>-->
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/nomeando-unidades/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
-        </ul>
-        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 1</li></h4>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
         </ul>
         <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
-        </ul>
-        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
       </a>
     </div>
   
@@ -428,11 +408,29 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
         </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/unidades-limitrofes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
+        </ul>
+        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
       </a>
     </div>
   
@@ -443,8 +441,8 @@ um <strong>tomate</strong> quando você esperava uma <strong>maçã</strong>! :)
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/nao-utilize-casting';
-      var disqus_title      = 'Não Utilize Casting';
+      var disqus_identifier = '/posts/pensando-em-dados';
+      var disqus_title      = 'Pensando em Dados';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
