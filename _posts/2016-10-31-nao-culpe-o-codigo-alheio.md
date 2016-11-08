@@ -53,10 +53,10 @@ Você pensa:
 
 *"Eu não faria assim!"*
 
-*"O que estávam pensando quando codificaram isso aqui?"*
+*"O que estavam pensando quando codificaram isso aqui?"*
 
 *"Será que alguém aqui sabe o que é normalização das tabelas,
-padronição do código, separação de camadas, responsabilidade
+padronização do código, separação de camadas, responsabilidade
 única...?"*
 
 Culpar é *fácil*.
