@@ -43,7 +43,7 @@ Essa é uma forma de [Violação de Encapsulamento]({% post_url 2016-05-30-heran
 
 Repito. É uma violação **teórica**. Isso quer dizer que não tem efeito prático em utilizar ou não o prefixo `Get`. Mas estou falando de intenção, ou seja, qual será o trabalho do método. Usar `Get` como prefixo dá a entender que **algo interno será dado a quem pede**. E isso não é bom.
 
-Mas a linguagem *Object Pascal* tem *properties* — o mesmo conceito copiado para C# :) — e não precisamos utilizar métodos `Get`, encapsulando do mundo exterior como a informação será processada antes de ser retornada. Pode vir de um método `Get` privado ou diretamente do atributo. Ponto positivo para o *Object Pascal*.
+Mas a linguagem *Object Pascal* tem *properties* — o mesmo conceito em C# — e não precisamos utilizar métodos `Get`, encapsulando do mundo exterior como a informação será processada antes de ser retornada. Pode vir de um método `Get` privado ou diretamente do atributo. Ponto positivo para o *Object Pascal*.
 
 ##Métodos Setters {#setters}
 
