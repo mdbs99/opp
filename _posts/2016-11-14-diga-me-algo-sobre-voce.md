@@ -197,7 +197,7 @@ outros Objetos quiserem saber sobre seus dados encapsulados.
 Eu nomeei esse Método de `About`, ou seja, perguntamos ao Objeto
 se ele tem **algo a dizer sobre si mesmo**.
 
-O Método `About` é utilizado em todos os Objetos que preciam
+O Método `About` é utilizado em todos os Objetos que precisam
 informar ao mundo as informações que eles encapsulam.
 
 Essa é uma alternativa viável para darmos o controle
