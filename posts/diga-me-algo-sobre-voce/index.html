@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Diga me algo Sobre você &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Objetos">
+    <meta name="keywords" content="data, about, object data">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201611140901" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Diga me algo Sobre você">
+    <meta property="og:description" content="Envie uma mensagem a um Objeto para que ele lhe diga ou não os dados que ele está encapsulando.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1453738773917-9c3eff1db985.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Diga me algo Sobre você" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>EBOOK</a>
+<a href="/archive/">ARQUIVO</a>
+<a href="/contact/">CONTATO</a>
+<a href="/about/">SOBRE</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Diga me algo Sobre você</h1>
+  <span class="post-meta">Nov 14, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    9 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Quando aprendemos sobre Orientação a Objetos, anos atrás,
+ouvimos dizer que Objetos enviam <em>mensagens</em> uns aos outros.
+No entanto o que realmente vemos na maioria dos códigos de 
+hoje não são verdadeiros Objetos, são apenas estrutura 
+de dados com funções…</p>
+
+<p>Esquecemos o que significa enviar uma mensagem a um Objeto?</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1453738773917-9c3eff1db985.jpg" alt="Unsplash image" /></p>
+
+<h2 id="introducao">Indrodução</h2>
+
+<p>Fazendo a análise de um novo sistema, o arquiteto vê a 
+necessidade de implementar uma Classe para representar um 
+<em>Cliente</em>.</p>
+
+<p>O analista de negócio diz que um Cliente precisa ter 
+<em>Login</em>, Senha e seu Nome.</p>
+
+<p>Você começa a implementação da Classe.</p>
+
+<p>Após 2 horas o analista retorna e diz
+que também precisa ter mais “alguns campos”. Então ele 
+também acrescenta Endereço de correspondência; a Data de
+Nascimento para dar descontos; separa o nome em 2 campos
+(Nome e Sobrenome); e o Cartão de Crédito que
+será a forma de pagamento ao comprar os produtos da empresa.</p>
+
+<p>Como implementamos a nova Classe <code>TCustomer</code> que irá representar
+um Cliente?</p>
+
+<p>Aqui está uma sugestão de implementação bastante utilizada
+pelos desenvolvedores:</p>
+
+<pre><code>type
+  TCustomer = class
+  private
+    FLogin: string;
+    FPassword: string;
+    FFirstName: string;
+    FLastName: string;
+    FAddress: string;
+    FBirthday: TDateTime;
+    FCreditCard: string;
+  public
+    constructor Create;
+    property Login: string read FLogin write FLogin;
+    property Password: string read FPassword write FPassword;
+    property FirstName: string read FFirstName write FFirstName;
+    property LastName: string read FLastName write FLastName;
+    property Address: string read FAddress write FAddress;
+    property Birthday: TDateTime read FBirthday write FBirthday;
+    property CreditCard: string read FCreditCard write FCreditCard;
+  end;
+</code></pre>
+
+<p>Utilizei <em>properties</em>. No <em>Object Pascal</em>, assim como no C# fica até 
+bonito e escrevemos menos. No Java seria o dobro de linhas, pois
+teríamos 7 <em>Getters</em> e 7 <em>Setters</em> para cada atributo.</p>
+
+<p>Bem, tudo certo nessa implementação?</p>
+
+<p>Não.</p>
+
+<p>Infelizmente essa Classe não tem nada a ver com o real uso da 
+<a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>.
+Essa Classe não está representando um Cliente, mas sim uma
+tabela do Banco de Dados.</p>
+
+<p>Além disso, o uso de <em>properties</em> não elimina o fato que, na verdade, 
+essa Classe só possui
+<a href="/posts/getters-e-setters/"><em>Getters</em> e <em>Setters</em></a>,
+que é um anti-padrão.</p>
+
+<h2 id="mensagens">Mensagens</h2>
+
+<p>Uma Classe deve representar uma
+<a href="/posts/objetos-representam-entidades/">Entidade</a>,
+<em>nunca</em> um registro de tabela no Banco de Dados.</p>
+
+<p>Se você tem uma Classe com <em>Getters</em> e <em>Setters</em>, seu pensamento não
+está na Orientação a Objetos. Você está pensando em
+<a href="/posts/pensando-em-dados/">Dados</a>, em tabelas, em
+persistência.</p>
+
+<p>Você não deveria <em>pegar</em> e muito menos <em>alterar</em> um dado de um Objeto
+diretamente!</p>
+
+<p>Pense no mundo real. Quando você pergunta o nome de alguém,
+ele/ela pode lhe responder de diversas maneiras:</p>
+
+<ol>
+  <li>Diz apenas o primeiro nome;</li>
+  <li>Diz apenas o sobrenome;</li>
+  <li>Diz o nome completo;</li>
+  <li>Diz o apelido;</li>
+  <li>Inventa um nome;</li>
+  <li>Não diz nada;</li>
+</ol>
+
+<p>Veja que uma pergunta <em>simples</em> pode ter inúmeras respostas.
+Tudo irá depender do <a href="/posts/delegacao-de-implementacao-de-interfaces/#contextos">contexto</a>.</p>
+
+<p>Todo Objeto deve ser <em>respeitado</em>. Então, o máximo que fazemos é enviar
+uma <strong>mensagem</strong> ao Objeto e aguardar uma resposta.</p>
+
+<p>Vamos a um exemplo.</p>
+
+<p>Compare os dois diálogos abaixo:</p>
+
+<h3 id="dilogo-1">Diálogo 1:</h3>
+
+<p>Carlos quer alugar um carro. Ele entra numa loja e vai falar com o vendedor.</p>
+
+<pre><code>— Bom dia. Gostaria de alugar um carro. — disse Carlos.
+— Bom dia! Qual modelo o senhor está procurando?
+— Procuro um de menor custo, bem simples.
+— Ok. Temos esses 3 modelos...
+— Legal. Quanto custa o hatch?
+— Bem, o senhor está com sorte!
+— Estou? — disse Carlos
+— Sim, hoje é dia de promoção para esse modelo.
+O vendedor vai buscar um catálogo e diz o preço.
+— E vou lhe dar 20% de desconto!
+Carlos fica feliz com a escolha do modelo e 
+preço e resolve alugar.
+— Ok! Vou levar esse!
+— Certo. Preciso que o senhor preencha esse formulário.
+</code></pre>
+
+<h3 id="dilogo-2">Diálogo 2:</h3>
+
+<p>Um <em>Registro</em> quer um carro.</p>
+
+<pre><code>O Controlador pega uma lista de carros;
+O Controlador ordena a lista de forma crescente;
+O Controlador pega o Carro com o menor valor;
+O Controlador verifica a data atual e concede um desconto;
+O Controlador altera o Registro, apontando o carro;
+O Controlador pega os dados do Registro e salva 
+em outra tabela;
+</code></pre>
+
+<p>No primeiro diálogo temos duas pessoas (Objetos no software)
+conversando.</p>
+
+<p>No segundo… bem, na verdade não houve um segundo diálogo.
+Havia apenas um Controlador (você) dando <strong>ordens</strong> e alterando 
+dados. Pegando o que quer, onde quer e alterando dados sempre
+que queria.</p>
+
+<p>Para codificar o primeiro diálogo, precisaremos utilizar mensagens
+entre os Objetos.</p>
+
+<p>Mensagens também são Métodos. Tecnicamente essa é a maneira que temos
+para adicionar comportamento a uma Classe.</p>
+
+<p>Mas diferentemente de um Método <code>Get</code>, onde o dado é <em>tomado a força</em>
+do Objeto, uma mensagem dá o controle ao Objeto para que ele retorne
+as informações que ele desejar.</p>
+
+<p>Repare a diferença entre as 2 últimas linhas dos diálogos:</p>
+
+<ol>
+  <li>“Preciso que o senhor preencha esse formulário”</li>
+  <li>“O Controlador pega os dados do Registro e salva 
+  em outra tabela”</li>
+</ol>
+
+<p>Na mensagem #1 o vendedor solicita o preenchimento de um formulário
+com os dados pessoais de Carlos.</p>
+
+<p>No procedimento #2 o Controlador apenas pega os dados do Registro.</p>
+
+<p>O correto é utilizarmos mensagens e dar o controle da resposta ao
+Objeto.</p>
+
+<h2 id="metodo-about">O Método About</h2>
+
+<p>Todos os Objetos deveriam responder a uma mensagem padrão quando
+outros Objetos quiserem saber sobre seus dados encapsulados.</p>
+
+<p>Eu nomeei esse Método de <code>About</code>, ou seja, perguntamos ao Objeto
+se ele tem <strong>algo a dizer sobre si mesmo</strong>.</p>
+
+<p>O Método <code>About</code> é utilizado em todos os Objetos que preciam
+informar ao mundo as informações que eles encapsulam.</p>
+
+<p>Essa é uma alternativa viável para darmos o controle
+de volta ao Objeto ao invés de tomar o dado dele.</p>
+
+<p>O Objeto tem o total controle sobre quais dados retornar. Dessa
+forma não há uma quebra de
+<a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">Encapsulamento</a></p>
+
+<p>Objetos devem ser capaz de apresentar a si mesmo.
+De dar informações “pessoais” que só eles tem conhecimento.</p>
+
+<p>Essa ideia não é nova. No livro
+<a href="https://www.amazon.com/dp/0735619654/?tag=stackoverfl08-20">Object Thinking</a> o autor aborda esse assunto.</p>
+
+<p>Existem outros artigos na Internet que falam sobre esse tema.
+Dentre esses artigos tem <a href="http://www.yegor256.com/2016/04/05/printers-instead-of-getters.html">esse</a>
+em particular que capta bem essa ideia. No entanto a abordagem do autor
+para implementar esse conceito é diferente da minha abordagem.</p>
+
+<p>Então, o que retorna o Método <code>About</code>?</p>
+
+<p>Retorna um <em>Stream</em> (<code>IDataStream</code>). E, basicamente é isso.</p>
+
+<p>Para implementar o <code>About</code> precisamos definir a Interface:</p>
+
+<pre><code>type
+  IDataStream = interface
+    function Save(Stream: TStream): IDataStream;
+    function Save(Strings: TStrings): IDataStream;
+    function Save(const FileName: string): IDataStream;
+    function AsString: string;
+    function Size: Int64;
+  end;
+</code></pre>
+
+<p>Veja <a href="http://objectpascalprogramming.com/posts/microservices-delphi-parte-1/#comment-2982613320">aqui</a>
+a implementação da Classe que implementa <code>IDataStream</code>.</p>
+
+<p>Aqui há uma grande diferença. Antes o Objeto era passivo. Ele
+estava disponível para dar e receber dados através de seus Métodos,
+o que é <em>extremamente</em> errado se estivermos utilizando Orientação a Objetos.</p>
+
+<p>Agora, com a implementação do Método <code>About</code>, os dados do Objeto continuam encapsulados.
+O Objeto não é mais passivo. Ele não é mais um “balde de dados”. Ele está vivo
+e tem seu próprio comportamento.</p>
+
+<p>Se Objetos externos querem obter os dados de outrem, deverão enviar uma mensagem
+solicitando-os. Cabe ao receptor responder com os dados que <em>ele</em> deseja
+compartilhar.</p>
+
+<h2 id="refatorando">Refatorando</h2>
+
+<p>Nos diálogos acima, Carlos e o “Registro” obtém seus dados da mesma
+tabela, chamada CUSTOMER. Seus campos são os mesmos definidos
+na primeira versão da Classe <code>TCustomer</code>.</p>
+
+<p>O que vamos fazer é refatorar <code>TCustomer</code>, implementando seu Método
+<code>About</code> ao invés de ter todos os seus dados <strong>expostos</strong> em <em>Getters</em> e <em>Setters</em>.</p>
+
+<pre><code>type
+  ICustomer = interface
+    function About: IDataStream;
+  end;
+  
+  TCustomer = class(TInterfacedObject, ICustomer)
+  private
+    FId: IDataGuid;
+  public
+    constructor Create(Id: IDataGuid);
+    class function New(Id: IDataGuid): ICustomer;
+    function About: IDataStream;
+  end;
+  
+  implementation
+  
+  constructor TCustomer.Create(Id: IDataGuid);
+  begin
+    inherited Create;
+    FId := Id;
+  end;
+  
+  class function TCustomer.New(Id: IDataGuid): ICustomer;
+  begin
+    Result := Create(Id);
+  end;
+  
+  function TCustomer.About: IDataStream;
+  begin
+    // 1. get record from Database using Id
+    // 2. choose data
+    // 3. convert to XML
+    Result := TDataStream.New({XML});
+  end;
+</code></pre>
+
+<p>Quando o vendedor diz <em>“Preciso que o senhor preencha esse formulário”</em>
+na verdade é o Formulário — <code>TRentACar</code> — enviando uma mensagem ao Carlos:</p>
+
+<pre><code>TRentACar.New(
+  TCustomer.New(
+    TDataGuid.New('{guid}') // Carlos' guid
+  ).About
+).Rent
+</code></pre>
+
+<p>O Formulário necessita de alguns dados como Nome Completo,
+Endereço e Cartão de Crédito. Esses dados são passados
+no construtor de <code>TRentACar</code>, provenientes da chamada
+ao Método <code>About</code> de <code>TCustomer</code>.</p>
+
+<p>Mas o retorno de <code>About</code> será parecido com isso:</p>
+
+<pre><code>&lt;customer&gt;
+  &lt;Id&gt;{guid}&lt;/Id&gt;
+  &lt;FirstName&gt;Carlos&lt;/FirstName&gt;
+  &lt;LastName&gt;Almeida&lt;/LastName&gt;
+  &lt;Address&gt;Rua 1...&lt;/Address&gt;
+&lt;/customer&gt;
+</code></pre>
+
+<p>Veja que <em>Login</em> e <em>Password</em> não foram retornados, assim como
+a informação do <em>CreditCard</em>.</p>
+
+<p>E aí temos um problema. Tudo bem que o Formulário não necessita
+do <em>Login</em> e <em>Password</em> — essas informações serão salvas caso
+o Cliente opte por fazer um registro online — mas o Cartão de Crédito
+é necessário para concluir a operação.</p>
+
+<p>O que fazer?</p>
+
+<p>Temos 2 opções:</p>
+
+<ol>
+  <li>Retornar todos os dados no XML;</li>
+  <li>Criar Classes especialistas de <code>Customer</code>;</li>
+</ol>
+
+<p>Nesse exemplo é mais fácil retornar todos os dados, é claro. Tudo
+está numa única tabela, num único registro. Mas imagine um sistema
+mais complexo onde um <code>Customer</code> poderia ter várias tabelas (outros 
+endereços, registros financeiros, histórico de aluguel, tickets de
+reclamações…). É possível retornar tudo, num único XML, porém não 
+é performático. Exigiria a consulta em muitas tabelas.</p>
+
+<p>Para esses casos, criamos Classes especialistas. Exemplo:</p>
+
+<pre><code>TCustomerFinances = class(TInterfacedObject, ICustomer)
+</code></pre>
+
+<p>Essa Classe é especializada em Finanças. Ela pode retornar o Cartão
+de Crédito e também todos os registros financeiros. O mais interessante,
+no entanto, é que todas as Classes especialistas deverão implementar
+<code>ICustomer</code>, pois todas representam a mesma Entidade, porém cada uma
+na sua especialidade e em contextos diferentes.</p>
+
+<p>Então, caso você opte por separar as responsabilidades, o registro
+do aluguel do carro poderia ser feita dessa maneira:</p>
+
+<pre><code>TRentACar.New(
+  TCustomerFinances.New(
+    TCustomer.New(
+      TDataGuid.New('{guid}') // Carlos' guid
+    )
+  ).About
+).Rent
+</code></pre>
+
+<p>A Classe <code>TCustomerFinances</code> deverá receber uma instância de
+<code>TCustomer</code> no construtor.
+Na chamada ao <code>About</code> ela irá chamar o <code>About</code> padrão, incluir os 
+dados financeiros e retornar a resposta.</p>
+
+<p>Isso é <a href="/posts/decorator-pattern/">decoração</a> de Objetos.</p>
+
+<p>Para a Classe <code>TRentACar</code> é transparente. Ela está conversando
+com um único Objeto que retorna um <code>IDataStream</code> quando enviar uma
+mensagem <code>About</code>.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Não podemos mais confundir Dados com Objetos.</p>
+
+<p>Vamos parar de criar Objetos anêmicos que mapeiam tabelas no 
+Banco de Dados.</p>
+
+<p>Devemos dar o controle aos Objetos. Eles sabem o que devem ou não
+responder quando estão se comunicando.</p>
+
+<p>Você é apenas o <em>diretor</em> do teatro. Você pode até fazer o roteiro
+e escolher quem irá atuar em cada cena. Mas você <em>não</em> atua.</p>
+
+<p>Quando os <em>atores</em> estiverem atuando, não tente controlá-los,
+deixe-os trabalhar.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Diga me algo Sobre você&via=mdbs99;url=http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/&title=Diga me algo Sobre você" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/&title=Diga me algo Sobre você" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/&t=Diga me algo Sobre você" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-representam-entidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos devem representar Entidades reais</li></h4>
+        </ul>
+        <!--<p class="post-summary">Tudo que existe fora do Contexto do software é uma Entidade que existe na vida real e deve ser representada por um Objeto dentro do programa.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-delegacao-problemas-solucoes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces, Delegação, Problemas e Soluções</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar Interfaces e Delegação de Implementação sem vazamentos de memória</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/delegacao-de-implementacao-de-interfaces/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Delegação de Implementação de Interfaces</li></h4>
+        </ul>
+        <!--<p class="post-summary">A beleza da linguagem Object Pascal para implementar delegação entre Objetos</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/diga-me-algo-sobre-voce';
+      var disqus_title      = 'Diga me algo Sobre você';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

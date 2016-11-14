@@ -8,6 +8,398 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Diga me algo Sobre você</title>
+        <description>&lt;p&gt;Quando aprendemos sobre Orientação a Objetos, anos atrás,
+ouvimos dizer que Objetos enviam &lt;em&gt;mensagens&lt;/em&gt; uns aos outros.
+No entanto o que realmente vemos na maioria dos códigos de 
+hoje não são verdadeiros Objetos, são apenas estrutura 
+de dados com funções…&lt;/p&gt;
+
+&lt;p&gt;Esquecemos o que significa enviar uma mensagem a um Objeto?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-1453738773917-9c3eff1db985.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Indrodução&lt;/h2&gt;
+
+&lt;p&gt;Fazendo a análise de um novo sistema, o arquiteto vê a 
+necessidade de implementar uma Classe para representar um 
+&lt;em&gt;Cliente&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;O analista de negócio diz que um Cliente precisa ter 
+&lt;em&gt;Login&lt;/em&gt;, Senha e seu Nome.&lt;/p&gt;
+
+&lt;p&gt;Você começa a implementação da Classe.&lt;/p&gt;
+
+&lt;p&gt;Após 2 horas o analista retorna e diz
+que também precisa ter mais “alguns campos”. Então ele 
+também acrescenta Endereço de correspondência; a Data de
+Nascimento para dar descontos; separa o nome em 2 campos
+(Nome e Sobrenome); e o Cartão de Crédito que
+será a forma de pagamento ao comprar os produtos da empresa.&lt;/p&gt;
+
+&lt;p&gt;Como implementamos a nova Classe &lt;code&gt;TCustomer&lt;/code&gt; que irá representar
+um Cliente?&lt;/p&gt;
+
+&lt;p&gt;Aqui está uma sugestão de implementação bastante utilizada
+pelos desenvolvedores:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TCustomer = class
+  private
+    FLogin: string;
+    FPassword: string;
+    FFirstName: string;
+    FLastName: string;
+    FAddress: string;
+    FBirthday: TDateTime;
+    FCreditCard: string;
+  public
+    constructor Create;
+    property Login: string read FLogin write FLogin;
+    property Password: string read FPassword write FPassword;
+    property FirstName: string read FFirstName write FFirstName;
+    property LastName: string read FLastName write FLastName;
+    property Address: string read FAddress write FAddress;
+    property Birthday: TDateTime read FBirthday write FBirthday;
+    property CreditCard: string read FCreditCard write FCreditCard;
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Utilizei &lt;em&gt;properties&lt;/em&gt;. No &lt;em&gt;Object Pascal&lt;/em&gt;, assim como no C# fica até 
+bonito e escrevemos menos. No Java seria o dobro de linhas, pois
+teríamos 7 &lt;em&gt;Getters&lt;/em&gt; e 7 &lt;em&gt;Setters&lt;/em&gt; para cada atributo.&lt;/p&gt;
+
+&lt;p&gt;Bem, tudo certo nessa implementação?&lt;/p&gt;
+
+&lt;p&gt;Não.&lt;/p&gt;
+
+&lt;p&gt;Infelizmente essa Classe não tem nada a ver com o real uso da 
+&lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;.
+Essa Classe não está representando um Cliente, mas sim uma
+tabela do Banco de Dados.&lt;/p&gt;
+
+&lt;p&gt;Além disso, o uso de &lt;em&gt;properties&lt;/em&gt; não elimina o fato que, na verdade, 
+essa Classe só possui
+&lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;&lt;em&gt;Getters&lt;/em&gt; e &lt;em&gt;Setters&lt;/em&gt;&lt;/a&gt;,
+que é um anti-padrão.&lt;/p&gt;
+
+&lt;h2 id=&quot;mensagens&quot;&gt;Mensagens&lt;/h2&gt;
+
+&lt;p&gt;Uma Classe deve representar uma
+&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidade&lt;/a&gt;,
+&lt;em&gt;nunca&lt;/em&gt; um registro de tabela no Banco de Dados.&lt;/p&gt;
+
+&lt;p&gt;Se você tem uma Classe com &lt;em&gt;Getters&lt;/em&gt; e &lt;em&gt;Setters&lt;/em&gt;, seu pensamento não
+está na Orientação a Objetos. Você está pensando em
+&lt;a href=&quot;/posts/pensando-em-dados/&quot;&gt;Dados&lt;/a&gt;, em tabelas, em
+persistência.&lt;/p&gt;
+
+&lt;p&gt;Você não deveria &lt;em&gt;pegar&lt;/em&gt; e muito menos &lt;em&gt;alterar&lt;/em&gt; um dado de um Objeto
+diretamente!&lt;/p&gt;
+
+&lt;p&gt;Pense no mundo real. Quando você pergunta o nome de alguém,
+ele/ela pode lhe responder de diversas maneiras:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Diz apenas o primeiro nome;&lt;/li&gt;
+  &lt;li&gt;Diz apenas o sobrenome;&lt;/li&gt;
+  &lt;li&gt;Diz o nome completo;&lt;/li&gt;
+  &lt;li&gt;Diz o apelido;&lt;/li&gt;
+  &lt;li&gt;Inventa um nome;&lt;/li&gt;
+  &lt;li&gt;Não diz nada;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Veja que uma pergunta &lt;em&gt;simples&lt;/em&gt; pode ter inúmeras respostas.
+Tudo irá depender do &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/#contextos&quot;&gt;contexto&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Todo Objeto deve ser &lt;em&gt;respeitado&lt;/em&gt;. Então, o máximo que fazemos é enviar
+uma &lt;strong&gt;mensagem&lt;/strong&gt; ao Objeto e aguardar uma resposta.&lt;/p&gt;
+
+&lt;p&gt;Vamos a um exemplo.&lt;/p&gt;
+
+&lt;p&gt;Compare os dois diálogos abaixo:&lt;/p&gt;
+
+&lt;h3 id=&quot;dilogo-1&quot;&gt;Diálogo 1:&lt;/h3&gt;
+
+&lt;p&gt;Carlos quer alugar um carro. Ele entra numa loja e vai falar com o vendedor.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;— Bom dia. Gostaria de alugar um carro. — disse Carlos.
+— Bom dia! Qual modelo o senhor está procurando?
+— Procuro um de menor custo, bem simples.
+— Ok. Temos esses 3 modelos...
+— Legal. Quanto custa o hatch?
+— Bem, o senhor está com sorte!
+— Estou? — disse Carlos
+— Sim, hoje é dia de promoção para esse modelo.
+O vendedor vai buscar um catálogo e diz o preço.
+— E vou lhe dar 20% de desconto!
+Carlos fica feliz com a escolha do modelo e 
+preço e resolve alugar.
+— Ok! Vou levar esse!
+— Certo. Preciso que o senhor preencha esse formulário.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;dilogo-2&quot;&gt;Diálogo 2:&lt;/h3&gt;
+
+&lt;p&gt;Um &lt;em&gt;Registro&lt;/em&gt; quer um carro.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;O Controlador pega uma lista de carros;
+O Controlador ordena a lista de forma crescente;
+O Controlador pega o Carro com o menor valor;
+O Controlador verifica a data atual e concede um desconto;
+O Controlador altera o Registro, apontando o carro;
+O Controlador pega os dados do Registro e salva 
+em outra tabela;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;No primeiro diálogo temos duas pessoas (Objetos no software)
+conversando.&lt;/p&gt;
+
+&lt;p&gt;No segundo… bem, na verdade não houve um segundo diálogo.
+Havia apenas um Controlador (você) dando &lt;strong&gt;ordens&lt;/strong&gt; e alterando 
+dados. Pegando o que quer, onde quer e alterando dados sempre
+que queria.&lt;/p&gt;
+
+&lt;p&gt;Para codificar o primeiro diálogo, precisaremos utilizar mensagens
+entre os Objetos.&lt;/p&gt;
+
+&lt;p&gt;Mensagens também são Métodos. Tecnicamente essa é a maneira que temos
+para adicionar comportamento a uma Classe.&lt;/p&gt;
+
+&lt;p&gt;Mas diferentemente de um Método &lt;code&gt;Get&lt;/code&gt;, onde o dado é &lt;em&gt;tomado a força&lt;/em&gt;
+do Objeto, uma mensagem dá o controle ao Objeto para que ele retorne
+as informações que ele desejar.&lt;/p&gt;
+
+&lt;p&gt;Repare a diferença entre as 2 últimas linhas dos diálogos:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;“Preciso que o senhor preencha esse formulário”&lt;/li&gt;
+  &lt;li&gt;“O Controlador pega os dados do Registro e salva 
+  em outra tabela”&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Na mensagem #1 o vendedor solicita o preenchimento de um formulário
+com os dados pessoais de Carlos.&lt;/p&gt;
+
+&lt;p&gt;No procedimento #2 o Controlador apenas pega os dados do Registro.&lt;/p&gt;
+
+&lt;p&gt;O correto é utilizarmos mensagens e dar o controle da resposta ao
+Objeto.&lt;/p&gt;
+
+&lt;h2 id=&quot;metodo-about&quot;&gt;O Método About&lt;/h2&gt;
+
+&lt;p&gt;Todos os Objetos deveriam responder a uma mensagem padrão quando
+outros Objetos quiserem saber sobre seus dados encapsulados.&lt;/p&gt;
+
+&lt;p&gt;Eu nomeei esse Método de &lt;code&gt;About&lt;/code&gt;, ou seja, perguntamos ao Objeto
+se ele tem &lt;strong&gt;algo a dizer sobre si mesmo&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;O Método &lt;code&gt;About&lt;/code&gt; é utilizado em todos os Objetos que preciam
+informar ao mundo as informações que eles encapsulam.&lt;/p&gt;
+
+&lt;p&gt;Essa é uma alternativa viável para darmos o controle
+de volta ao Objeto ao invés de tomar o dado dele.&lt;/p&gt;
+
+&lt;p&gt;O Objeto tem o total controle sobre quais dados retornar. Dessa
+forma não há uma quebra de
+&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;Encapsulamento&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Objetos devem ser capaz de apresentar a si mesmo.
+De dar informações “pessoais” que só eles tem conhecimento.&lt;/p&gt;
+
+&lt;p&gt;Essa ideia não é nova. No livro
+&lt;a href=&quot;https://www.amazon.com/dp/0735619654/?tag=stackoverfl08-20&quot;&gt;Object Thinking&lt;/a&gt; o autor aborda esse assunto.&lt;/p&gt;
+
+&lt;p&gt;Existem outros artigos na Internet que falam sobre esse tema.
+Dentre esses artigos tem &lt;a href=&quot;http://www.yegor256.com/2016/04/05/printers-instead-of-getters.html&quot;&gt;esse&lt;/a&gt;
+em particular que capta bem essa ideia. No entanto a abordagem do autor
+para implementar esse conceito é diferente da minha abordagem.&lt;/p&gt;
+
+&lt;p&gt;Então, o que retorna o Método &lt;code&gt;About&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;Retorna um &lt;em&gt;Stream&lt;/em&gt; (&lt;code&gt;IDataStream&lt;/code&gt;). E, basicamente é isso.&lt;/p&gt;
+
+&lt;p&gt;Para implementar o &lt;code&gt;About&lt;/code&gt; precisamos definir a Interface:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  IDataStream = interface
+    function Save(Stream: TStream): IDataStream;
+    function Save(Strings: TStrings): IDataStream;
+    function Save(const FileName: string): IDataStream;
+    function AsString: string;
+    function Size: Int64;
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Veja &lt;a href=&quot;http://objectpascalprogramming.com/posts/microservices-delphi-parte-1/#comment-2982613320&quot;&gt;aqui&lt;/a&gt;
+a implementação da Classe que implementa &lt;code&gt;IDataStream&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Aqui há uma grande diferença. Antes o Objeto era passivo. Ele
+estava disponível para dar e receber dados através de seus Métodos,
+o que é &lt;em&gt;extremamente&lt;/em&gt; errado se estivermos utilizando Orientação a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Agora, com a implementação do Método &lt;code&gt;About&lt;/code&gt;, os dados do Objeto continuam encapsulados.
+O Objeto não é mais passivo. Ele não é mais um “balde de dados”. Ele está vivo
+e tem seu próprio comportamento.&lt;/p&gt;
+
+&lt;p&gt;Se Objetos externos querem obter os dados de outrem, deverão enviar uma mensagem
+solicitando-os. Cabe ao receptor responder com os dados que &lt;em&gt;ele&lt;/em&gt; deseja
+compartilhar.&lt;/p&gt;
+
+&lt;h2 id=&quot;refatorando&quot;&gt;Refatorando&lt;/h2&gt;
+
+&lt;p&gt;Nos diálogos acima, Carlos e o “Registro” obtém seus dados da mesma
+tabela, chamada CUSTOMER. Seus campos são os mesmos definidos
+na primeira versão da Classe &lt;code&gt;TCustomer&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;O que vamos fazer é refatorar &lt;code&gt;TCustomer&lt;/code&gt;, implementando seu Método
+&lt;code&gt;About&lt;/code&gt; ao invés de ter todos os seus dados &lt;strong&gt;expostos&lt;/strong&gt; em &lt;em&gt;Getters&lt;/em&gt; e &lt;em&gt;Setters&lt;/em&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  ICustomer = interface
+    function About: IDataStream;
+  end;
+  
+  TCustomer = class(TInterfacedObject, ICustomer)
+  private
+    FId: IDataGuid;
+  public
+    constructor Create(Id: IDataGuid);
+    class function New(Id: IDataGuid): ICustomer;
+    function About: IDataStream;
+  end;
+  
+  implementation
+  
+  constructor TCustomer.Create(Id: IDataGuid);
+  begin
+    inherited Create;
+    FId := Id;
+  end;
+  
+  class function TCustomer.New(Id: IDataGuid): ICustomer;
+  begin
+    Result := Create(Id);
+  end;
+  
+  function TCustomer.About: IDataStream;
+  begin
+    // 1. get record from Database using Id
+    // 2. choose data
+    // 3. convert to XML
+    Result := TDataStream.New({XML});
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Quando o vendedor diz &lt;em&gt;“Preciso que o senhor preencha esse formulário”&lt;/em&gt;
+na verdade é o Formulário — &lt;code&gt;TRentACar&lt;/code&gt; — enviando uma mensagem ao Carlos:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TRentACar.New(
+  TCustomer.New(
+    TDataGuid.New(&#39;{guid}&#39;) // Carlos&#39; guid
+  ).About
+).Rent
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O Formulário necessita de alguns dados como Nome Completo,
+Endereço e Cartão de Crédito. Esses dados são passados
+no construtor de &lt;code&gt;TRentACar&lt;/code&gt;, provenientes da chamada
+ao Método &lt;code&gt;About&lt;/code&gt; de &lt;code&gt;TCustomer&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas o retorno de &lt;code&gt;About&lt;/code&gt; será parecido com isso:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;customer&amp;gt;
+  &amp;lt;Id&amp;gt;{guid}&amp;lt;/Id&amp;gt;
+  &amp;lt;FirstName&amp;gt;Carlos&amp;lt;/FirstName&amp;gt;
+  &amp;lt;LastName&amp;gt;Almeida&amp;lt;/LastName&amp;gt;
+  &amp;lt;Address&amp;gt;Rua 1...&amp;lt;/Address&amp;gt;
+&amp;lt;/customer&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Veja que &lt;em&gt;Login&lt;/em&gt; e &lt;em&gt;Password&lt;/em&gt; não foram retornados, assim como
+a informação do &lt;em&gt;CreditCard&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;E aí temos um problema. Tudo bem que o Formulário não necessita
+do &lt;em&gt;Login&lt;/em&gt; e &lt;em&gt;Password&lt;/em&gt; — essas informações serão salvas caso
+o Cliente opte por fazer um registro online — mas o Cartão de Crédito
+é necessário para concluir a operação.&lt;/p&gt;
+
+&lt;p&gt;O que fazer?&lt;/p&gt;
+
+&lt;p&gt;Temos 2 opções:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Retornar todos os dados no XML;&lt;/li&gt;
+  &lt;li&gt;Criar Classes especialistas de &lt;code&gt;Customer&lt;/code&gt;;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Nesse exemplo é mais fácil retornar todos os dados, é claro. Tudo
+está numa única tabela, num único registro. Mas imagine um sistema
+mais complexo onde um &lt;code&gt;Customer&lt;/code&gt; poderia ter várias tabelas (outros 
+endereços, registros financeiros, histórico de aluguel, tickets de
+reclamações…). É possível retornar tudo, num único XML, porém não 
+é performático. Exigiria a consulta em muitas tabelas.&lt;/p&gt;
+
+&lt;p&gt;Para esses casos, criamos Classes especialistas. Exemplo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TCustomerFinances = class(TInterfacedObject, ICustomer)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Essa Classe é especializada em Finanças. Ela pode retornar o Cartão
+de Crédito e também todos os registros financeiros. O mais interessante,
+no entanto, é que todas as Classes especialistas deverão implementar
+&lt;code&gt;ICustomer&lt;/code&gt;, pois todas representam a mesma Entidade, porém cada uma
+na sua especialidade e em contextos diferentes.&lt;/p&gt;
+
+&lt;p&gt;Então, caso você opte por separar as responsabilidades, o registro
+do aluguel do carro poderia ser feita dessa maneira:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TRentACar.New(
+  TCustomerFinances.New(
+    TCustomer.New(
+      TDataGuid.New(&#39;{guid}&#39;) // Carlos&#39; guid
+    )
+  ).About
+).Rent
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A Classe &lt;code&gt;TCustomerFinances&lt;/code&gt; deverá receber uma instância de
+&lt;code&gt;TCustomer&lt;/code&gt; no construtor.
+Na chamada ao &lt;code&gt;About&lt;/code&gt; ela irá chamar o &lt;code&gt;About&lt;/code&gt; padrão, incluir os 
+dados financeiros e retornar a resposta.&lt;/p&gt;
+
+&lt;p&gt;Isso é &lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;decoração&lt;/a&gt; de Objetos.&lt;/p&gt;
+
+&lt;p&gt;Para a Classe &lt;code&gt;TRentACar&lt;/code&gt; é transparente. Ela está conversando
+com um único Objeto que retorna um &lt;code&gt;IDataStream&lt;/code&gt; quando enviar uma
+mensagem &lt;code&gt;About&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Não podemos mais confundir Dados com Objetos.&lt;/p&gt;
+
+&lt;p&gt;Vamos parar de criar Objetos anêmicos que mapeiam tabelas no 
+Banco de Dados.&lt;/p&gt;
+
+&lt;p&gt;Devemos dar o controle aos Objetos. Eles sabem o que devem ou não
+responder quando estão se comunicando.&lt;/p&gt;
+
+&lt;p&gt;Você é apenas o &lt;em&gt;diretor&lt;/em&gt; do teatro. Você pode até fazer o roteiro
+e escolher quem irá atuar em cada cena. Mas você &lt;em&gt;não&lt;/em&gt; atua.&lt;/p&gt;
+
+&lt;p&gt;Quando os &lt;em&gt;atores&lt;/em&gt; estiverem atuando, não tente controlá-los,
+deixe-os trabalhar.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 14 Nov 2016 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/</guid>
+      </item>
+    
+      <item>
         <title>Pensando em Dados</title>
         <description>&lt;p&gt;Você precisa fazer um relatório financeiro num sistema que 
 possui o código Orientado a Objetos.&lt;/p&gt;
@@ -126,10 +518,10 @@ programador que trabalhou no código.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;“Eu não faria assim!”&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;“O que estávam pensando quando codificaram isso aqui?”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;“O que estavam pensando quando codificaram isso aqui?”&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;“Será que alguém aqui sabe o que é normalização das tabelas,
-padronição do código, separação de camadas, responsabilidade
+padronização do código, separação de camadas, responsabilidade
 única…?”&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Culpar é &lt;em&gt;fácil&lt;/em&gt;.&lt;/p&gt;
@@ -1971,114 +2363,6 @@ tudo o que já temos nessa &lt;strong&gt;elegante linguagem&lt;/strong&gt; chama
         <pubDate>Mon, 05 Sep 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/procedural-e-facil-orientado-a-objetos-e-dificil/</guid>
-      </item>
-    
-      <item>
-        <title>Microservices com Delphi — Parte Final</title>
-        <description>&lt;p&gt;Uma arquitetura que utiliza Microservices tem seus prós e contras como qualquer outra tecnologia. Será que essa arquitetura foi uma boa escolha para o projeto?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1454023989775-79520f04322c.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;No &lt;a href=&quot;/posts/microservices-delphi-parte-3/&quot;&gt;artigo anterior&lt;/a&gt; eu lhe mostrei como codificar uma Classe de Negócio para fazer a comunicação com um Microservice utilizando todo o arcabouço apresentado na primeira parte dessa série.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo você irá ver:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;strong&gt;Tratamento de Exceções&lt;/strong&gt;: Quando algo dá errado nos Microservices ou na comunicação com eles;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Links&lt;/strong&gt;: Separei alguns artigos interessantes sobre o assunto;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;tratamento-de-excecoes&quot;&gt;Tratamento de Exceções&lt;/h2&gt;
-
-&lt;p&gt;Todo &lt;em&gt;software&lt;/em&gt; precisa tratar erros e exceções, e é claro que estamos fazendo isso.&lt;/p&gt;
-
-&lt;p&gt;Na Unit &lt;a href=&quot;/posts/microservices-delphi-parte-2/#unit-microservicesa&quot;&gt;AcmeMicroServiceA.pas&lt;/a&gt; o tratamento de exceções é feito no método &lt;code&gt;TMicroServiceClient.Send&lt;/code&gt;, verificando o &lt;code&gt;Code&lt;/code&gt; de retorno do protocolo HTTP.&lt;/p&gt;
-
-&lt;p&gt;Se houver erro, definimos um protocolo privado que descreve como a mensagem para o &lt;em&gt;Client&lt;/em&gt; deve ser. Nada mais é do que um XML com &lt;em&gt;nodes&lt;/em&gt; específicos que descrevem o erro ou exceção.&lt;/p&gt;
-
-&lt;p&gt;Abaixo o código modificado que trata erros e exceções. O código em produção é um pouco mais elaborado, no entanto acredito que com esse exemplo você irá entender como o tratamento ocorre no projeto real.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function TMicroServiceClient.Send(
-  const Content: string): IMicroServiceResponse;
-begin
-  with Response(Content) do
-  begin
-    Result := TMicroServiceResponse.New(
-      Code,
-      TXMLFactory.New(&#39;ISO-8859-1&#39;, Stream).Document
-    );
-    case Code of
-      // BAD REQUEST
-      400..499:
-        raise EMicroService.Create(
-          Result
-            .XML
-            .DocumentElement
-            .ChildNodes[&#39;UserMessage&#39;].Text
-        );
-      // SERVER ERROR
-      500..510:
-        raise EMicroService.Create(
-          Result
-            .XML
-            .DocumentElement
-            .ChildNodes[&#39;DevMessage&#39;].Text
-        );
-    end;
-  end;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Repare que para cada tipo de erro/exceção, um &lt;em&gt;node&lt;/em&gt; (ou &lt;em&gt;nodes&lt;/em&gt;) específico é utilizado para obter a informação.&lt;/p&gt;
-
-&lt;p&gt;No &lt;em&gt;Client&lt;/em&gt; Delphi, o &lt;code&gt;Code&lt;/code&gt; também é acessível através da Interface &lt;code&gt;IMicroServiceResponse&lt;/code&gt;, então o &lt;em&gt;Client&lt;/em&gt; pode tomar decisões específicas para casos que não gerem uma exceção.&lt;/p&gt;
-
-&lt;p&gt;Veja &lt;a href=&quot;http://www.restapitutorial.com/httpstatuscodes.html&quot;&gt;aqui&lt;/a&gt; uma lista de &lt;em&gt;HTTP Status Codes&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;links&quot;&gt;Links&lt;/h2&gt;
-
-&lt;p&gt;Separei alguns links interessantes de artigos e vídeos que serviram de inspiração para escrever essa série, assim como foram fontes de informações para o projeto.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://www.infoq.com/br/presentations/vantagens-e-desvantagens-de-uma-arquitetura-microservices&quot;&gt;Vantagens e desvantagens de uma arquitetura microservices: uma abordagem rica em exemplos&lt;/a&gt; é uma apresentação em vídeo de quase 1 hora que fala sobre os prós e contras em utilizar essa arquitetura. O autor fala sobre &lt;a href=&quot;http://www.martinfowler.com/bliki/StranglerApplication.html&quot;&gt;Strangler Application&lt;/a&gt; que é o mesmo princípio que estamos utilizando no projeto.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://www.infoq.com/br/articles/seven-uservices-antipatterns&quot;&gt;Sete antipadrões para microservices&lt;/a&gt; alerta sobre algumas coisas que devem ser evitadas, na opinião do autor, quando utilizamos a arquitetura de Microservices.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://medium.com/@mwhitt.w/preventing-tight-data-coupling-between-microservices-df30e1e24311#.wl6r7hcfz&quot;&gt;Preventing Tight Data Coupling Between Microservices&lt;/a&gt; é um artigo em Inglês interessante sobre acoplamento de dados.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://medium.com/@skamille/microservices-real-architectural-patterns-68bd83bbb6cd#.hrsdvq3rj&quot;&gt;Microservices: Real Architectural Patterns&lt;/a&gt; é outro artigo em Inglês que fala sobre arquitetura e CRUD.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;A escolha pela arquitetura de Microservices está sendo satisfatória.&lt;/p&gt;
-
-&lt;p&gt;Microservices são como &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;instâncias de Objetos&lt;/a&gt; pela rede.&lt;/p&gt;
-
-&lt;p&gt;Assim como Objetos, cada Microservice deve implementar apenas &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;uma única responsabilidade&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Quando falamos sobre Microservices, WebServices, Multi-camadas, protocolos… tudo isso parece muito complicado. Mas se você souber como as coisas funcionam, poderá remover tudo que é &lt;strong&gt;desnecessário&lt;/strong&gt; para o &lt;strong&gt;seu negócio&lt;/strong&gt; e se concentrar apenas no &lt;strong&gt;essencial&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Você não precisa implementar &lt;strong&gt;tudo&lt;/strong&gt; o que dizem para implementar. Utilize tecnologias que fazem sentido para seu negócio e comece simples.&lt;/p&gt;
-
-&lt;p&gt;A migração está longe de estar concluída. O sistema tem poucos meses, mas apenas poucos dias de trabalho &lt;em&gt;full time&lt;/em&gt; na codificação e integração dos Microservices.&lt;/p&gt;
-
-&lt;p&gt;Por enquanto estamos indo bem.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 29 Aug 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/</guid>
       </item>
     
   </channel>
