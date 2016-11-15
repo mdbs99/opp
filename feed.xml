@@ -8,7 +8,7 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Diga me algo Sobre você</title>
+        <title>Diga-me algo Sobre você</title>
         <description>&lt;p&gt;Quando aprendemos sobre Orientação a Objetos, anos atrás,
 ouvimos dizer que Objetos enviam &lt;em&gt;mensagens&lt;/em&gt; uns aos outros.
 No entanto o que realmente vemos na maioria dos códigos de 
@@ -196,7 +196,7 @@ outros Objetos quiserem saber sobre seus dados encapsulados.&lt;/p&gt;
 &lt;p&gt;Eu nomeei esse Método de &lt;code&gt;About&lt;/code&gt;, ou seja, perguntamos ao Objeto
 se ele tem &lt;strong&gt;algo a dizer sobre si mesmo&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;O Método &lt;code&gt;About&lt;/code&gt; é utilizado em todos os Objetos que preciam
+&lt;p&gt;O Método &lt;code&gt;About&lt;/code&gt; é utilizado em todos os Objetos que precisam
 informar ao mundo as informações que eles encapsulam.&lt;/p&gt;
 
 &lt;p&gt;Essa é uma alternativa viável para darmos o controle
