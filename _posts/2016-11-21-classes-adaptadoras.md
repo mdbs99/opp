@@ -3,7 +3,7 @@ layout: post
 title: "Classes Adaptadoras"
 date: 2016-11-20
 description:
-  Classes Adaptadoras são responsáveis...............................
+  Classes Adaptadoras são conectores. Elas adaptam as interfaces, adaptam os contratos.
 image: /images/photo-1428954376791-d9ae785dfb2d.jpg
 categories: 
   - Objetos
@@ -41,29 +41,28 @@ Sabemos o que fazer quando queremos saber informações sobre um determinado
 Objeto. Basta utilizar seu
 [Método *About*]({% post_url 2016-11-14-diga-me-algo-sobre-voce %}#metodo-about).
 
-O problema é que você, programador, sabe o que fazer com esses dados pois
-você detém o conhecimento sobre todas as Classes e Objetos. No entanto, são
+Você, programador, sabe o que fazer com esses dados pois
+você detém o conhecimento sobre todas as Classes e Objetos. No entanto são
 os Objetos que devem [conversar]({% post_url 2016-03-14-objetos-pensam-e-tomam-decisoes %})
-entre eles mesmos. Você está *fora* dessa conversa.
+entre eles mesmos. Você está *fora* dessa conversa. Você não pode ajudá-los.
+Esse é o problema.
 
 Então deve haver uma maneira do Objeto emissor conversar com o Objeto receptor,
-utilizando um mesmo dialeto, sem que você faça conversões explícitas para que
+utilizando um mesmo dialeto, sem que *você* faça conversões explícitas para que
 essa conversa aconteça.
 
-Para isso existem as Classes Adaptadoras.
-
-## Dados para Formulários {#dados-para-formularios}
+## Dados entre Formulários {#dados-entre-formularios}
 
 Sempre que utilizamos formulários — ou qualquer tipo de *view* — é porque
 queremos exibir alguma informação para que o usuário tome alguma decisão ou 
-execute alguma coisa.
+execute alguma tarefa.
 
 Esses formulários podem obter seus dados quando são criados ou posteriormente,
 devido a alguma ação do usuário.
 
 Vamos nos concentrar nesses dados inicias.
 
-Imagine que, num sistema Financeiro, há dois formulários:
+Imagine um sistema Financeiro. Há dois formulários:
 
   1. Faturas a Pagar
   2. Opções de Pagamento
@@ -78,7 +77,7 @@ Opções de Pagamento no seu
 
 Bem, isso depende.
 
-Antes precisamos definir nesse pequeno exemplo, o que é uma Fatura a Pagar,
+Antes precisamos definir, nesse pequeno exemplo, o que é uma Fatura a Pagar,
 assim como o que são Opções de Pagamento.
 
 Vamos nos concentrar nos dados:
@@ -143,7 +142,7 @@ Já sabemos que
 [herança]({% post_url 2016-05-23-heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1 %})
 não foi feita para compartilhar código e que ela pode piorar (e muito) a arquitetura do projeto.
 
-Essa seria a pior opção.
+Essa seria uma das piores opções.
 
 ### 4- Manualmente {#manual}
 
@@ -158,7 +157,7 @@ Sabendo que o formulário de Opções de Pagamento pode ser utilizado por outros
 se houver alguma alteração nos dados que ele espera receber, será muito difícil
 procurar em todos esses lugares para fazer alterações. Cada equipe que trabalha em 
 módulos distintos — mas que utiliza esse mesmo formulário — criou suas próprias versões
-do XML para enviar ao formulário. O código foi duplicado.
+do XML para enviar ao formulário. O código foi duplicado. Terrível.
 
 ### 5- Classes Adaptadoras {#classes-adaptadoras}
 
@@ -168,19 +167,114 @@ Elas poderão ser muitas. Vai depender de quantos módulos/classes irão utiliza
 o formulário de Opções de Pagamentos.
 
 Classes Adaptadoras são **conectores**. Elas adaptam as interfaces, adaptam os
-[contratos]({% post_url 2016-01-18-interfaces-em-todo-lugar %}#interfaces-sao-contratos).
+[contratos]({% post_url 2016-01-18-interfaces-em-todo-lugar %}#interfaces-sao-contratos)
+que cada Objeto tem para com o sistema.
 
 Elas tornam possível uma *Classe-A* trabalhar em conjunto com a uma *Classe-B*,
 mesmo que ambas não se conheçam.
 
-Os programadores só precisam saber que esses conectores existem e onde estão 
-guardados, quando eles precisarem.
+Os programadores só precisam saber que essas Classes Adaptadoras existem e onde estão 
+guardadas, quando eles precisarem delas.
 
 ## Adaptando {#adaptando}
 
+No formulário de Faturas a Pagar teremos, no mínimo, mais duas Classes que irão fazer
+parte da conversa. São elas:
 
+  1. A Classe `TGridSelectedRows`
+  2. A Classe `TInvoiceMedia`
+
+A Classe `TGridSelectedRows` é responsável por *adaptar* as linhas selecionadas para o
+formato XML — ou qualquer outro formato que lhe agrade — e seu resultado é utilizado ou
+validado pela `TInvoiceMedia`.
+
+    TInvoiceMedia.New(
+      TGridSelectedRows.New(
+        InvoiceGrid, 'invoices', 'invoice'
+      )
+      .Stream
+    )
+
+A chamada a `TGridSelectedRows::Stream` irá retorna uma instância de
+`IDataStream` (veja [aqui](http://objectpascalprogramming.com/posts/microservices-delphi-parte-1/#comment-2982613320)
+a implementação). Os outros argumentos são utilizados para criar o XML dessa forma:
+
+    <invoices>
+      <invoice>
+        <number...
+        <value...
+      </invoice>
+      <invoice>
+        <number...
+        <value...
+      </invoice>
+    </invoices>
+
+A implementação de `TGridSelectedRows` não é relevante para o entendimento do problema.
+
+Nesse exemplo `TInvoiceMedia` implementa `IDataStream`. Mas essa classe também terá a
+inteligência para validar o XML (stream) que foi lhe passado.
+
+Então temos o XML válido com todas as faturas encapsulado em `TInvoiceMedia`. Precisamos
+agora de uma Classe Adaptadora para transformar Faturas no formato que Opções de Pagamento
+entenda.
+
+E aqui vai uma **dica** importante: A Classes que adaptam um conceito devem estar "próximas"
+umas das outras para que seja fácil para o programador achá-las e utilizá-las.
+
+Vamos dar nomes as outras Classes:
+
+  * Formulário Opções de Pagamento: `TPaymentOptionsForm`
+  * Formulário espera receber no construtor: `IPaymentOptionsMedia`
+  * Classe Adaptadora de Faturas para Opções: `TPaymentOptionsForInvoices`
+  
+O código do evento no botão para exibir as Opções de Pagamento, ou seja, a 
+chamada do formulário, seria parecido com o código abaixo:
+
+    with
+      TPaymentOptionsForm.Create(
+        TPaymentOptionsForInvoices.New(
+          TInvoiceMedia.New(
+            TGridSelectedRows.New(
+              InvoiceGrid, 'invoices', 'invoice'
+            )
+            .Stream
+          )
+        )
+      )
+    do
+      try
+        ShowModal;
+      finally
+        Free;
+      end;
+
+A Classe `TPaymentOptionsForInvoices` irá receber o XML de Faturas a Pagar
+e irá *adaptar* num XML de Opções de Pagamento (somar todos os valores das
+faturas, verificar alguma insconcistência, etc).
+
+O formulário de Opções de Pagamento só *conhece* implementações de *IPaymentOptionsMedia*,
+que é a Interface implementada por `TPaymentOptionsForInvoices`.
+
+Para todos os outros casos de pagamentos, basta criar outra Classe Adaptadora especialista
+com o mesmo prefixo `TPaymentOptionsFor...` para facilitar o *code-completion* quando
+o programador estiver procurando um *conector*.
+
+Dessa forma, quando houver alguma alteração no XML que o formulário Opções de Pagamento
+recebe, basta alterar as Classes Adaptadoras. Você saberá exatamente onde procurar. E,
+tão importante quanto, é ter em mente que essas Classes poderão compartilhar código entre
+elas bastando criar mais Classes especialistas — talvez privada na unidade. 
 
 ## Conclusão {#conclusao}
 
+Classes Adaptadoras e Interfaces é como plugamos as peças dentro de um software Orientado
+a Objetos.
+
+Em alguns casos pode ser bem difícil identificar essas Classes ou a melhor forma de
+implementá-las. Mas, não desista, pois vale muito a pena. Seu código irá ficar mais 
+desacoplado, sem duplicação e muito mais reutilizável.
+
+Dessa forma um Objeto receptor saberá ler os dados de Objeto emissores mesmo sem
+conhecê-los intimamente.
 
 Até logo.
