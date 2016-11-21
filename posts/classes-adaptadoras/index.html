@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Classes Adaptadoras &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Objetos">
+    <meta name="keywords" content="data, about, apdater class, classes adaptadoras">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/classes-adaptadoras/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201611210046" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Classes Adaptadoras">
+    <meta property="og:description" content="Classes Adaptadoras são conectores. Elas adaptam as interfaces, adaptam os contratos.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/classes-adaptadoras/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1428954376791-d9ae785dfb2d.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Classes Adaptadoras" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/classes-adaptadoras/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>EBOOK</a>
+<a href="/archive/">ARQUIVO</a>
+<a href="/contact/">CONTATO</a>
+<a href="/about/">SOBRE</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Classes Adaptadoras</h1>
+  <span class="post-meta">Nov 21, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    7 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Os dados sempre deverão estar encapsulados em Objetos que conversam
+entre si enviando mensagens uns aos outros. No entanto essas mensagens
+podem conter dados no formato que só o Objeto emissor conhece.</p>
+
+<p>Como o Objeto receptor irá saber ler esses dados que, outrora, estavam
+encapsulados no Objeto emissor?</p>
+
+<!--more-->
+
+<p><img src="/images/photo-1428954376791-d9ae785dfb2d.jpg" alt="Unsplash image" /></p>
+
+<h2 id="introducao">Indrodução</h2>
+
+<p>Cada Objeto detém o conhecimento sobre seus próprios dados encapsulados.
+Ninguém mais.</p>
+
+<p>Para um sistema funcionar esses Objetos devem conversar entre si, enviando
+<a href="/posts/diga-me-algo-sobre-voce/#mensagens">mensagens</a>
+uns aos outros.</p>
+
+<p>Sabemos o que fazer quando queremos saber informações sobre um determinado
+Objeto. Basta utilizar seu
+<a href="/posts/diga-me-algo-sobre-voce/#metodo-about">Método <em>About</em></a>.</p>
+
+<p>Você, programador, sabe o que fazer com esses dados pois
+você detém o conhecimento sobre todas as Classes e Objetos. No entanto são
+os Objetos que devem <a href="/posts/objetos-pensam-e-tomam-decisoes/">conversar</a>
+entre eles mesmos. Você está <em>fora</em> dessa conversa. Você não pode ajudá-los.
+Esse é o problema.</p>
+
+<p>Então deve haver uma maneira do Objeto emissor conversar com o Objeto receptor,
+utilizando um mesmo dialeto, sem que <em>você</em> faça conversões explícitas para que
+essa conversa aconteça.</p>
+
+<h2 id="dados-entre-formularios">Dados entre Formulários</h2>
+
+<p>Sempre que utilizamos formulários — ou qualquer tipo de <em>view</em> — é porque
+queremos exibir alguma informação para que o usuário tome alguma decisão ou 
+execute alguma tarefa.</p>
+
+<p>Esses formulários podem obter seus dados quando são criados ou posteriormente,
+devido a alguma ação do usuário.</p>
+
+<p>Vamos nos concentrar nesses dados inicias.</p>
+
+<p>Imagine um sistema Financeiro. Há dois formulários:</p>
+
+<ol>
+  <li>Faturas a Pagar</li>
+  <li>Opções de Pagamento</li>
+</ol>
+
+<p>No formulário de Faturas a Pagar o usuário irá selecionar as faturas, clicar
+em algum botão para pagar e, nesse momento, um outro formulário com as Opções
+de Pagamento será exibido.</p>
+
+<p>O que o formulário de Faturas a Pagar deveria enviar para o formulário de 
+Opções de Pagamento no seu
+<a href="/posts/construtores-da-classe-primario-secundarios/">construtor</a>?</p>
+
+<p>Bem, isso depende.</p>
+
+<p>Antes precisamos definir, nesse pequeno exemplo, o que é uma Fatura a Pagar,
+assim como o que são Opções de Pagamento.</p>
+
+<p>Vamos nos concentrar nos dados:</p>
+
+<ol>
+  <li>
+    <p>Uma Fatura encapsula um número sequencial, um valor a pagar original, um valor
+  a pagar atual (com multa e juros), uma data, uma descrição, itens…
+  vamos parar aqui.</p>
+  </li>
+  <li>
+    <p>Uma Opção de Pagamento encapsula opções (dinheiro, cartão de crédito, etc),
+  valor para cada opção, valor total a pagar e… tudo bem, já está bom.</p>
+  </li>
+</ol>
+
+<h2 id="opcoes-de-implementacao">Oções de Implementação</h2>
+
+<p>Agora que temos algumas definições, podemos pensar no modelo que iremos
+seguir para determinar como será feita a implementação.</p>
+
+<p>Vamos ver as opções.</p>
+
+<h3 id="banco-de-dados-e-registros">1- Banco de dados e registros</h3>
+
+<p>Não pense em <a href="/posts/pensando-em-dados/">dados</a> provenientes de
+um banco de dados, <em>queries</em> ou <em>DataSet</em>. Os dados já estão no formulário, numa 
+<em>grid</em> listando todas as faturas.</p>
+
+<p>Você já tem tudo que precisa nos <em>widgets</em> do formulário. Não há necessidade
+de fazer uma nova requisição de dados.</p>
+
+<p>E agora, ficou mais fácil?</p>
+
+<p>Ainda não.</p>
+
+<p>Se toda Entidade deve ser
+<a href="/posts/objetos-representam-entidades/">representada</a>
+por um Objeto, você já sabe que não são apenas 2 Objetos (formulários) que irão
+fazer parte dessa conversa. Haverá outros Objetos.</p>
+
+<p>Mas lembre-se que ainda estamos falando de dados.</p>
+
+<h3 id="objetos-anemicos-e-listas">2- Objetos anêmicos e listas</h3>
+
+<p>Não pense em criar Classes Anêmicas
+como <code>TInvoice</code> com todos os campos acima, utilizando 
+<a href="/posts/getters-e-setters/">Getters e Setters</a>
+e uma lista <code>TInvoices</code> para passar ao formulário de Opções de Pagamento.</p>
+
+<p>Pensou nisso mesmo?</p>
+
+<p>Essa é uma opção de implementação que irá acoplar ambos os formulários
+a essa lista de Faturas. E isso irá restringir o formulário de Opções de 
+Pagamento.</p>
+
+<p>Então vamos adicionar um complicador:</p>
+
+<ul>
+  <li>O formulário de Opções de Pagamento será utilizado
+  para pagar <em>qualquer coisa</em> dentro do sistema, ou seja, não <em>apenas</em> Faturas.</li>
+</ul>
+
+<p>Nesse caso uma refatoração seria necessária.</p>
+
+<p>Ainda acha que criar uma lista de Faturas seria a melhor opção?</p>
+
+<h3 id="heranca-e-esperanca">3- Herança e esperança</h3>
+
+<p>Ora, vamos criar uma lista genérica ou Interface, utilizar herança para <code>TInvoices</code>
+e refatorar o formulário para receber essa lista.</p>
+
+<p>É claro que não.</p>
+
+<p>Já sabemos que
+<a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">herança</a>
+não foi feita para compartilhar código e que ela pode piorar (e muito) a arquitetura do projeto.</p>
+
+<p>Essa seria uma das piores opções. Esqueça-a.</p>
+
+<h3 id="manual">4- Manualmente</h3>
+
+<p>Então você, o programador, manipula os dados do formulário de Faturas, criando 
+um XML que você sabe que o formulário de Opções de Pagamento espera receber — 
+porque você pode ver o código-fonte de todas as Classes — e então repassa esse XML
+para o formulário de Opções de Pagamento.</p>
+
+<p>É, talvez irá funcionar… mas por quanto tempo?</p>
+
+<p>Sabendo que o formulário de Opções de Pagamento pode ser utilizado por outros módulos,
+se houver alguma alteração nos dados que ele espera receber, será muito difícil
+procurar em todos esses lugares para fazer alterações. Cada equipe que trabalha em 
+módulos distintos — mas que utiliza esse mesmo formulário — pode ter criado suas próprias
+versões do XML para enviar ao formulário. O código foi duplicado. Terrível.</p>
+
+<h3 id="classes-adaptadoras">5- Classes Adaptadoras</h3>
+
+<p>Minha sugestão é utilizarmos Classes Adaptadoras.</p>
+
+<p>Elas poderão ser muitas. Vai depender de quantos módulos/classes irão utilizar 
+o formulário de Opções de Pagamentos.</p>
+
+<p>Classes Adaptadoras são <strong>conectores</strong>. Elas adaptam as interfaces, adaptam os
+<a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contratos</a>
+que cada Objeto tem para com o sistema.</p>
+
+<p>Elas tornam possível uma <em>Classe-A</em> trabalhar em conjunto com a uma <em>Classe-B</em>,
+mesmo que ambas não se conheçam.</p>
+
+<p>Os programadores só precisam saber que essas Classes Adaptadoras existem e onde estão 
+guardadas, quando eles precisarem delas.</p>
+
+<h2 id="adaptando">Adaptando</h2>
+
+<p>No formulário de Faturas a Pagar teremos, no mínimo, mais duas Classes que irão fazer
+parte da conversa. São elas:</p>
+
+<ol>
+  <li>A Classe <code>TGridSelectedRows</code></li>
+  <li>A Classe <code>TInvoiceMedia</code></li>
+</ol>
+
+<p>A Classe <code>TGridSelectedRows</code> é responsável por <em>adaptar</em> as linhas selecionadas da <em>grid</em> para o
+formato XML — ou qualquer outro formato que lhe agrade — e seu resultado é utilizado ou
+validado pela <code>TInvoiceMedia</code>.</p>
+
+<pre><code>TInvoiceMedia.New(
+  TGridSelectedRows.New(
+    InvoiceGrid, 'invoices', 'invoice'
+  )
+  .Stream
+)
+</code></pre>
+
+<p>A chamada a <code>TGridSelectedRows::Stream</code> irá retorna uma instância de
+<code>IDataStream</code> (veja <a href="http://objectpascalprogramming.com/posts/microservices-delphi-parte-1/#comment-2982613320">aqui</a>
+a implementação). Os outros argumentos são utilizados para criar o XML dessa forma:</p>
+
+<pre><code>&lt;invoices&gt;
+  &lt;invoice&gt;
+    &lt;number...
+    &lt;value...
+  &lt;/invoice&gt;
+  &lt;invoice&gt;
+    &lt;number...
+    &lt;value...
+  &lt;/invoice&gt;
+&lt;/invoices&gt;
+</code></pre>
+
+<p>A implementação de <code>TGridSelectedRows</code> não é relevante para o entendimento do problema.</p>
+
+<p>Nesse exemplo <code>TInvoiceMedia</code> implementa <code>IDataStream</code>. Mas essa classe também terá a
+inteligência para validar o XML (stream) que foi lhe passado no construtor.</p>
+
+<p>Então temos o XML válido com todas as faturas encapsulado em <code>TInvoiceMedia</code>. Precisamos
+agora de uma Classe Adaptadora para transformar Faturas no formato que Opções de Pagamento
+entenda.</p>
+
+<p>E aqui vai uma <strong>dica</strong> importante: A Classes que adaptam um conceito devem estar “próximas”
+umas das outras para que seja fácil para o programador achá-las e utilizá-las.</p>
+
+<p>Vamos dar nomes as outras Classes:</p>
+
+<ul>
+  <li>Formulário Opções de Pagamento: <code>TPaymentOptionsForm</code></li>
+  <li>Tipo do argumento no construtor do Formulário: <code>IPaymentOptionsMedia</code></li>
+  <li>Classe Adaptadora de Faturas para Opções: <code>TPaymentOptionsForInvoices</code></li>
+</ul>
+
+<p>O código do evento no botão para exibir as Opções de Pagamento, ou seja, a 
+chamada do formulário, seria parecido com o código abaixo:</p>
+
+<pre><code>with
+  TPaymentOptionsForm.Create(
+    TPaymentOptionsForInvoices.New(
+      TInvoiceMedia.New(
+        TGridSelectedRows.New(
+          InvoiceGrid, 'invoices', 'invoice'
+        )
+        .Stream
+      )
+    )
+  )
+do
+  try
+    ShowModal;
+  finally
+    Free;
+  end;
+</code></pre>
+
+<p>A Classe <code>TPaymentOptionsForInvoices</code> irá receber o XML de Faturas a Pagar
+e irá <em>adaptar</em> num XML de Opções de Pagamento (somar todos os valores das
+faturas, verificar alguma insconcistência, etc).</p>
+
+<p>O formulário de Opções de Pagamento só <em>conhece</em> implementações de <em>IPaymentOptionsMedia</em>,
+que é a Interface implementada por <code>TPaymentOptionsForInvoices</code>.</p>
+
+<p>Para todos os outros casos de pagamentos, basta criar outra Classe Adaptadora especialista
+com o mesmo prefixo <code>TPaymentOptionsFor...</code> para facilitar o <em>code-completion</em> quando
+o programador estiver procurando um <em>conector</em>.</p>
+
+<p>Quando houver alguma alteração no XML que o formulário Opções de Pagamento
+recebe, basta alterar as Classes Adaptadoras. Você saberá exatamente onde procurar. E,
+tão importante quanto, é ter em mente que essas Classes poderão compartilhar código entre
+elas bastando criar mais Classes especialistas — talvez privada na unidade.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Classes Adaptadoras e Interfaces é como plugamos as <em>peças</em> dentro de um software Orientado
+a Objetos.</p>
+
+<p>Em alguns casos pode ser bem difícil identificar essas Classes ou a melhor forma de
+implementá-las. Mas, não desista, pois vale muito a pena. Seu código irá ficar mais 
+desacoplado, sem duplicação e muito mais reutilizável.</p>
+
+<p>Dessa forma um Objeto receptor saberá ler os dados de Objetos emissores mesmo sem
+conhecê-los intimamente.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/classes-adaptadoras/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Classes Adaptadoras&via=mdbs99;url=http://objectpascalprogramming.com/posts/classes-adaptadoras/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/classes-adaptadoras/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/classes-adaptadoras/&title=Classes Adaptadoras" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/classes-adaptadoras/&title=Classes Adaptadoras" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/classes-adaptadoras/&t=Classes Adaptadoras" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nomeando-unidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
+        </ul>
+        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/unidades-limitrofes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
+        </ul>
+        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/classes-adaptadoras';
+      var disqus_title      = 'Classes Adaptadoras';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
