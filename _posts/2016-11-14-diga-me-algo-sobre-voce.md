@@ -29,7 +29,7 @@ Esquecemos o que significa enviar uma mensagem a um Objeto?
 
 ![Unsplash image]({{ page.image }})
 
-## Indrodução {#introducao}
+## Introdução {#introducao}
 
 Fazendo a análise de um novo sistema, o arquiteto vê a 
 necessidade de implementar uma Classe para representar um 

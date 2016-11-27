@@ -28,7 +28,7 @@ encapsulados no Objeto emissor?
 
 ![Unsplash image]({{ page.image }})
 
-## Indrodução {#introducao}
+## Introdução {#introducao}
 
 Cada Objeto detém o conhecimento sobre seus próprios dados encapsulados.
 Ninguém mais.
