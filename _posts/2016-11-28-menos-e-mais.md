@@ -139,7 +139,7 @@ Sim, estou falando das *units*.
 Cada [Unidade]({% post_url 2016-10-24-unidades-limitrofes %}) pode conter Classes 
 públicas ou privadas.
 
-O número ideal para Classes dentro da mesma Unidade está entre **1 e 10**.
+O número ideal para Classes dentro da mesma Unidade está entre **1 e 11**.
 
 Dificilmente eu utilizo Classes privadas, pois sempre acho que elas podem 
 ser utilizadas em outros módulos. No entanto, se necessário, Classe privadas — 
