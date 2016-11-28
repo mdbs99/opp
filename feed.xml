@@ -8,6 +8,164 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Menos é Mais</title>
+        <description>&lt;p&gt;Já pensou qual seria a quantidade ideal para argumentos em um 
+método? E a quantidade de métodos em uma Interface ou Classe?
+E quantas Classes você codificaria dentro de uma única unidade?&lt;/p&gt;
+
+&lt;p&gt;Vamos tentar obter alguns números.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-14541995559820-04de78c094e9.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;O tamanho de uma Classe, ou seja, a quantidade de métodos que
+ela implementa diz muito sobre ela. Uma Classe com muitos métodos
+está fazendo coisas demais, possui
+&lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;responsabilidades&lt;/a&gt;
+demais.&lt;/p&gt;
+
+&lt;p&gt;Podemos utilizar o mesmo princípio para argumentos de métodos. 
+Mais argumentos, mais informação, mais comunicações com outros
+Objetos. Então, teoricamente, o método está fazendo coisas demais.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo vou lhe mostrar alguns números ideais.&lt;/p&gt;
+
+&lt;p&gt;Não presumo que você irá concordar com tudo o que ler abaixo mas, 
+concordando ou não, esses são &lt;em&gt;meus&lt;/em&gt; números.&lt;/p&gt;
+
+&lt;h2 id=&quot;metodos&quot;&gt;Métodos&lt;/h2&gt;
+
+&lt;p&gt;Interfaces devem ser pequenas, com poucos métodos.
+Não é por que a Interface representa
+um &lt;code&gt;Carro&lt;/code&gt; que ela deverá conter todos os métodos inimagináveis
+para implementar o comportamento de um Carro.&lt;/p&gt;
+
+&lt;p&gt;Cada Interface deve ter o número de métodos que represente uma
+&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;entidade&lt;/a&gt;
+num contexto bem &lt;em&gt;delimitado&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;O número de métodos ideal está entre &lt;strong&gt;1 e 5&lt;/strong&gt; para Interfaces e,
+consequentemente, é o mesmo para Classes.&lt;/p&gt;
+
+&lt;p&gt;No entanto eu não considero a sobrecarga de métodos nessa contagem, ou seja, se
+a Classe possui 3 métodos &lt;code&gt;Save&lt;/code&gt; sobrecarregados, eu considero apenas
+como 1 método. Mas, mesmo que possa haver muitos métodos sobrecarregados,
+não quer dizer que a inteligência está dentro desses métodos. Não.
+Quase tudo pode ser &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/&quot;&gt;delegado&lt;/a&gt;
+à outros Objetos mais especialistas.&lt;/p&gt;
+
+&lt;h2 id=&quot;construtores&quot;&gt;Construtores&lt;/h2&gt;
+
+&lt;p&gt;Os construtores &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;primários e secundários&lt;/a&gt;
+sempre serão sobrecargas. Então você poderá ter quantos quiser.&lt;/p&gt;
+
+&lt;p&gt;Mas eu prefiro ter apenas 1 construtor e muitos
+&lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Métodos &lt;em&gt;New&lt;/em&gt;&lt;/a&gt;. Assim eu me
+beneficio de duas maneiras: a) A Classe só terá um meio para construir
+Objetos e b) Os métodos &lt;em&gt;New&lt;/em&gt; obrigam outros desenvolvedores a utilizarem 
+instâncias de Interfaces e não instâncias de Classe.&lt;/p&gt;
+
+&lt;h2 id=&quot;argumentos&quot;&gt;Argumentos&lt;/h2&gt;
+
+&lt;p&gt;Utilize a menor quantidade possível de argumentos nos métodos.
+Um método com muitos argumentos é difícil de escrever, entender e ler.
+Lembre-se que a maior parte do trabalho de um programador é &lt;em&gt;ler&lt;/em&gt; o código e não
+escrevê-lo.&lt;/p&gt;
+
+&lt;p&gt;O mesmo para argumentos dos &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt;
+da Classe.&lt;/p&gt;
+
+&lt;p&gt;O número ideal para os argumentos está entre &lt;strong&gt;0 e 5&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;variaveis-locais&quot;&gt;Variáveis locais&lt;/h2&gt;
+
+&lt;p&gt;Antes de utilizar a técnica do &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método &lt;em&gt;New&lt;/em&gt;&lt;/a&gt;,
+eu precisava utilizar um número maior de variáveis, somente para
+ter a &lt;a href=&quot;http://docwiki.embarcadero.com/RADStudio/Seattle/en/Using_Reference_Counting&quot;&gt;contagem de referência&lt;/a&gt;
+funcionando sem vazamentos de memória.&lt;/p&gt;
+
+&lt;p&gt;Não mais.&lt;/p&gt;
+
+&lt;p&gt;Agora eu utilizo cada vez menos variáveis locais e esse é um indício
+de um código mais Orientado a Objetos. Variáveis locais são utilizados
+em código &lt;em&gt;procedural&lt;/em&gt;. Você precisa de uma variável para &lt;em&gt;guardar&lt;/em&gt; algum
+valor, enquanto executa outro processamento, e então utiliza a variável
+que guardou em outro processamento… procedural.&lt;/p&gt;
+
+&lt;p&gt;O número ideal para variáveis locais está entre &lt;strong&gt;0 e 3&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;atributos&quot;&gt;Atributos&lt;/h2&gt;
+
+&lt;p&gt;Os atributos de um Objeto devem estar em conformidade com o que
+ele representa. Se você tem um método que retorna o Objeto no formato
+de XML, por exemplo, mas não utiliza esse formato em nenhum outro 
+método, então você não deveria ter um atributo que representa um XML.
+Em vez disso, crie o Objeto só quando ele for necessário, ou seja, 
+quanto o método que retorna um XML for requisitado.&lt;/p&gt;
+
+&lt;p&gt;O número ideal para atributos está entre &lt;strong&gt;1 e 7&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Aqui, no entanto, você pode quebrar essa regra &lt;em&gt;temporariamente&lt;/em&gt; se
+necessário, devido a prazos, complexidade, etc. Você pode aumentar
+o número de atributos e refatorar depois sem problemas, pois eles estarão 
+&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulados&lt;/a&gt;
+dentro da Classe.&lt;/p&gt;
+
+&lt;p&gt;Ninguém sabe o que acontece dentro de um Objeto, não é?&lt;/p&gt;
+
+&lt;p&gt;O que não pode ocorrer é ter um Objeto que não encapsula &lt;em&gt;nenhum&lt;/em&gt; atributo.
+Um Objeto &lt;em&gt;sempre&lt;/em&gt; deve encapsular alguma coisa, porque ele representa
+algo. Ele deve ter algum &lt;a href=&quot;/posts/objetos-sem-estado/&quot;&gt;estado&lt;/a&gt;
+que é implementado por seus atributos.&lt;/p&gt;
+
+&lt;h2 id=&quot;classes&quot;&gt;Classes na Unidade&lt;/h2&gt;
+
+&lt;p&gt;A linguagem Object Pascal foi uma das primeiras a implementar o conceito
+de &lt;em&gt;packages&lt;/em&gt; ou &lt;em&gt;namespaces&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Sim, estou falando das &lt;em&gt;units&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Cada &lt;a href=&quot;/posts/unidades-limitrofes/&quot;&gt;Unidade&lt;/a&gt; pode conter Classes 
+públicas ou privadas.&lt;/p&gt;
+
+&lt;p&gt;O número ideal para Classes dentro da mesma Unidade está entre &lt;strong&gt;1 e 10&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Dificilmente eu utilizo Classes privadas, pois sempre acho que elas podem 
+ser utilizadas em outros módulos. No entanto, se necessário, Classe privadas — 
+não importa se é privado no nível de Classe ou de Unidade — podem ser implementadas 
+seguindo as mesmas regras dos atributos. 
+Como são privadas, podem ser alteradas sem problemas futuramente.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Definir números máximos de usabilidade, é o mesmo que &lt;em&gt;restringir&lt;/em&gt;.
+E restrição pode ser uma coisa boa. Restrição nos faz pensar em como tornar as
+coisas mais &lt;em&gt;eficazes&lt;/em&gt; e com menos &lt;em&gt;desperdícios&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Pense bem. Para fazer uma viagem para fora do seu país, por exemplo, você precisa 
+planejar com cuidado o que levar na mochila.
+Você deve escolher o que é mais &lt;em&gt;importante&lt;/em&gt; e &lt;em&gt;essencial&lt;/em&gt;, e nada a mais.
+O motivo é viajar &lt;em&gt;leve&lt;/em&gt; e curtir ao máximo, sem se preocupar com inúmeros objetos
+ou malas cheias de coisas que você estaria arrastando com você.&lt;/p&gt;
+
+&lt;p&gt;É muito mais difícil &lt;em&gt;pensar&lt;/em&gt; no que é essencial ao invés de “por tudo na mala”,
+mas é um exercício que vale a pena fazer. Você fica abismado ao saber que necessita
+de tão pouco.&lt;/p&gt;
+
+&lt;p&gt;O mesmo vale para o seu código. Mantenha tudo &lt;em&gt;leve&lt;/em&gt; e &lt;em&gt;simples&lt;/em&gt;.
+Apenas com o essencial. Porque &lt;strong&gt;menos, é mais&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 28 Nov 2016 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/menos-e-mais/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/menos-e-mais/</guid>
+      </item>
+    
+      <item>
         <title>Classes Adaptadoras</title>
         <description>&lt;p&gt;Os dados sempre deverão estar encapsulados em Objetos que conversam
 entre si enviando mensagens uns aos outros. No entanto essas mensagens
@@ -20,7 +178,7 @@ encapsulados no Objeto emissor?&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/photo-1428954376791-d9ae785dfb2d.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;introducao&quot;&gt;Indrodução&lt;/h2&gt;
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
 
 &lt;p&gt;Cada Objeto detém o conhecimento sobre seus próprios dados encapsulados.
 Ninguém mais.&lt;/p&gt;
@@ -313,7 +471,7 @@ de dados com funções…&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/photo-1453738773917-9c3eff1db985.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;introducao&quot;&gt;Indrodução&lt;/h2&gt;
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
 
 &lt;p&gt;Fazendo a análise de um novo sistema, o arquiteto vê a 
 necessidade de implementar uma Classe para representar um 
@@ -2279,307 +2437,6 @@ as coisas simples… é Engenharia, mas também Arte.&lt;/p&gt;
         <pubDate>Mon, 19 Sep 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/</guid>
-      </item>
-    
-      <item>
-        <title>A declaração WITH-DO é do Mal?</title>
-        <description>&lt;p&gt;Muita gente odeia utilizar a construção WITH-DO do Pascal.
-Dizem que é difícil de ler o código, introduz &lt;em&gt;bugs&lt;/em&gt;… 
-esqueçam que WITH-DO existe! Eles dizem.&lt;/p&gt;
-
-&lt;p&gt;Mas será que WITH-DO é mesmo do mal ou esses programadores é 
-que não sabem utilizá-lo no momento certo?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-8bc72ed7.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Se você não sabe o que é WITH-DO, 
-&lt;a href=&quot;http://www.freepascal.org/docs-html/ref/refsu63.html&quot;&gt;aqui&lt;/a&gt;
-está uma boa explicação técnica.&lt;/p&gt;
-
-&lt;p&gt;Então você define um &lt;strong&gt;bloco&lt;/strong&gt; ou &lt;strong&gt;contexto&lt;/strong&gt; e pode acessar os 
-métodos e atributos de um Objeto sem a referência explícita à uma 
-variável.&lt;/p&gt;
-
-&lt;p&gt;A primeira vista parece que o objetivo é escrever menos e,
-como bem sabemos, a maioria dos programadores são preguiçosos.&lt;/p&gt;
-
-&lt;p&gt;Eu utilizo WITH-DO. Muito. E é claro, também quero escrever menos.&lt;/p&gt;
-
-&lt;p&gt;Mas tento escrever menos da maneira correta. Não para poupar &lt;em&gt;bytes&lt;/em&gt;,
-mas para deixar o código &lt;strong&gt;mais legível&lt;/strong&gt;, &lt;strong&gt;menos verboso&lt;/strong&gt; e 
-&lt;strong&gt;menos acoplado&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Ao longo de muitos anos utilizando WITH-DO eu posso contar 
-nos dedos de apenas uma mão a quantidade de problemas que já 
-tive ao utilizar essa construção, ou seja, acho que seu uso vale
-a pena.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo você aprenderá a utilizar a declaração WITH-DO.&lt;/p&gt;
-
-&lt;h2 id=&quot;imperativo&quot;&gt;Imperativo&lt;/h2&gt;
-
-&lt;p&gt;Creio que o &lt;strong&gt;mal&lt;/strong&gt; que WITH-DO nos traz é devido ao seu uso 100%
-&lt;a href=&quot;https://pt.wikipedia.org/wiki/Programa%C3%A7%C3%A3o_imperativa&quot;&gt;imperativo&lt;/a&gt;,
-sem nenhum contexto determinando onde começa ou termina seu uso.&lt;/p&gt;
-
-&lt;p&gt;Veja &lt;a href=&quot;http://forum.lazarus.freepascal.org/index.php?topic=32889.0&quot;&gt;aqui&lt;/a&gt; 
-um exemplo de mal uso da declaração WITH-DO, postado no fórum 
-do Lazarus.&lt;/p&gt;
-
-&lt;p&gt;Vou replicar o código abaixo, caso o &lt;em&gt;link&lt;/em&gt; não esteja mais
-disponível:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;try
-  btnOK.Enabled:=False;
-  with datamodule.qryRegister do begin
-    datamodule.connection.AutoCommit:=True;
-    datamodule.connection.StartTransaction;
-    SQL.Clear;
-    SQL.Text:=
-      &#39;INSERT INTO table VALUES (:name, :sex, :dateofbirth, :maritalstatus)&#39;;
-    ParamByName(&#39;name&#39;).AsString:=teName.Text;
-    ParamByName(&#39;sex&#39;).AsInteger:=cbSex.ItemIndex;
-    ParamByName(&#39;dateofbirth&#39;).AsDate:=StrToDate(teDateOfBirth.Text);
-    ParamByName(&#39;maritalstatus&#39;).AsInteger:=cbMaritalStatus.ItemIndex;          
-    SQL.Clear;
-    SQL.Text:=&#39;SELECT LAST_INSERT_ID() AS iddb FROM table&#39;;
-    Open;
-    idUser:=FieldByName(&#39;iddb&#39;).AsInteger;
-    ExecSQL;
-    Close;        
-    try
-      datamodule.connection.Commit;
-      clearFields;
-    except
-      datamodule.connection.Rollback;
-      ShowMessage(&#39;Error&#39;);
-    end;
-end; //with ends statement
-except
-  ShowMessage(&#39;Error: no connection to the database&#39;);
-end;
-bntOK.Enabled:=True;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O que é questionado nesse &lt;em&gt;post&lt;/em&gt; é irrelevante.&lt;/p&gt;
-
-&lt;p&gt;Apenas analisem o código e vejam como o autor está utilizando
-o WITH-DO:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Ele inicia uma transação;&lt;/li&gt;
-  &lt;li&gt;Configura uma cláusula SQL;&lt;/li&gt;
-  &lt;li&gt;Passa parâmetros;&lt;/li&gt;
-  &lt;li&gt;Limpa a &lt;em&gt;query&lt;/em&gt;(?)&lt;/li&gt;
-  &lt;li&gt;Executa a &lt;em&gt;query&lt;/em&gt;;&lt;/li&gt;
-  &lt;li&gt;Commit… ClearFields…&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;É um código totalmente procedural, imperativo e confuso!&lt;/p&gt;
-
-&lt;p&gt;É muito difícil saber o que está sendo utilizado pelo 
-WITH-DO e o que não está, concorda?&lt;/p&gt;
-
-&lt;p&gt;Nesses casos, quando há ambiguidade entre métodos utilizados
-pelo WITH-DO que não deveriam ser utilizados, alguns programadores
-culpam o WITH-DO quando, na verdade, deveriam culpar a si mesmos
-por escrever um código dessa maneira.&lt;/p&gt;
-
-&lt;p&gt;Essa é uma maneira imperativa de codificação. Procedural.
-Um código altamente acoplado que, realmente, não deveria utilizar
-WITH-DO porque só piora as coisas.&lt;/p&gt;
-
-&lt;h2 id=&quot;declarativo&quot;&gt;Declarativo&lt;/h2&gt;
-
-&lt;p&gt;A codificação declarativa é utilizada nas linguagens funcionais.
-Também é utilizada, por exemplo, quando codificamos SQL.&lt;/p&gt;
-
-&lt;p&gt;Na codificação declarativa você define &lt;strong&gt;o que fazer&lt;/strong&gt;, mas não se
-importa &lt;strong&gt;como será feito&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;SELECT * FROM Clients ORDER BY name;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Quando escrevemos o código SQL acima, não nos preocupamos como o
-SGBD irá trazer o resultado; quais índices; quais tuplas. Apenas
-queremos o resultado o mais rápido possível.&lt;/p&gt;
-
-&lt;p&gt;Assim deve ser a codificação 
-&lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientada a Objetos&lt;/a&gt;,
-onde os Objetos
-&lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;pensam e tomam as próprias decisões&lt;/a&gt;,
-sem que tenha um “controlador” informando &lt;strong&gt;como fazer&lt;/strong&gt; linha a linha.&lt;/p&gt;
-
-&lt;p&gt;E o que isso tem haver com o uso do WITH-DO?&lt;/p&gt;
-
-&lt;p&gt;Bem, o WITH-DO nos ajuda a transformar um código procedural em algo mais
-declarativo, mais Orientado a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Um código mais Orientado a Objetos é mais &lt;strong&gt;legível&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Um código com menos declarações de variáveis, é menos &lt;strong&gt;verboso&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;E se você não declara variáveis de tipos específicos, automaticamente
-seu código é &lt;strong&gt;menos acoplado&lt;/strong&gt;, com menos usos de Units para determinar
-os tipos das variáveis.&lt;/p&gt;
-
-&lt;p&gt;Vou lhe mostrar como.&lt;/p&gt;
-
-&lt;p&gt;Vamos pegar o mesmo código procedural acima e reescrever utilizando
-WITH-DO.&lt;/p&gt;
-
-&lt;p&gt;Esse código será apenas &lt;strong&gt;um pouco mais&lt;/strong&gt; Orientado a Objetos, com
-uma melhor legibilidade que o primeiro:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;try
-  btnOK.Enabled := False;
-  with TDatabase.Instance.StartTransaction do
-  try
-    with 
-      TQuery.New(
-        &#39;INSERT INTO table VALUES (&#39; +
-        &#39;  :name, :sex, :dateofbirth, :maritalstatus)&#39;
-      )
-    do
-    begin
-      Params
-        .Add(&#39;name&#39;, ftString, teName.Text)
-        .Add(&#39;sex&#39;, ftInteger, cbSex.ItemIndex)
-        .Add(&#39;dateofbirth&#39;, ftDateTime, StrToDate(teDateOfBirth.Text))
-        .Add(&#39;maritalstatus&#39;, ftInteger, cbMaritalStatus.ItemIndex)
-      Execute;
-    end;
-    idUser := 
-      TQuery.New(&#39;SELECT LAST_INSERT_ID() AS iddb FROM table&#39;)
-        .Open
-        .Field(&#39;iddb&#39;).AsInteger;
-    Commit;
-  except
-    Rollback;
-    raise;
-  end;
-except
-  ShowMessage(&#39;Error: no connection to the database&#39;);
-end;
-bntOK.Enabled:=True;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;O código continua ruim, porém melhor.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Há muita coisa acontecendo num único método.&lt;/p&gt;
-
-&lt;p&gt;Não deveríamos parar a refatoração agora.
-Cada execução deveria estar num método a parte…&lt;/p&gt;
-
-&lt;p&gt;No entanto o objetivo é mostrar o uso do WITH-DO e 
-acho que dá pra ver a diferença, certo?&lt;/p&gt;
-
-&lt;p&gt;Ao todo são apenas 2 declarações de WITH-DO. Cada declaração tem 
-um &lt;strong&gt;contexto&lt;/strong&gt; bem definido por &lt;em&gt;TRY-EXCEPT&lt;/em&gt; ou &lt;em&gt;BEGIN-END&lt;/em&gt;. 
-Não há ambiguidade.&lt;/p&gt;
-
-&lt;p&gt;A declaração &lt;code&gt;TDatabase.Instance.StartTransaction&lt;/code&gt; irá retornar um
-Objeto do tipo &lt;code&gt;ITransaction&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;A declaração &lt;code&gt;TQuery.New&lt;/code&gt; irá retornar um Objeto do tipo &lt;code&gt;IQuery&lt;/code&gt;, 
-através do &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;O código ficou mais legível.&lt;/p&gt;
-
-&lt;p&gt;Não há declarações de variáveis.&lt;/p&gt;
-
-&lt;p&gt;Não há variáveis globais como existe no código procedural — 
-&lt;code&gt;datamodule.qryRegister&lt;/code&gt; é um Objeto global que, possivelmente, é 
-reutilizado em toda a aplicação, sendo um &lt;em&gt;design&lt;/em&gt; muito errado, 
-não &lt;em&gt;thread-safe&lt;/em&gt; e gerador de problemas.&lt;/p&gt;
-
-&lt;h2 id=&quot;orientado-a-objetos&quot;&gt;Orientado a Objetos&lt;/h2&gt;
-
-&lt;p&gt;A declaração WITH-DO nos ajuda a escrever um código mais simples e elegante.
-Mas sejamos sinceros. Utilizamos WITH-DO para produzirmos código
-procedural. E não tem nada de errado nisso, visto que é quase
-impossível codificar 100% Orientado a Objetos em linguagens que
-são imperativas.&lt;/p&gt;
-
-&lt;p&gt;Uma vez que WITH-DO define uma variável implícita, o programador
-pode chamar os &lt;strong&gt;métodos na sequência&lt;/strong&gt;, linha a linha.&lt;/p&gt;
-
-&lt;p&gt;O uso de WITH-DO deixa o código melhor, mas se dá pra codificar
-Orientado a Objetos, é o que devemos fazer.&lt;/p&gt;
-
-&lt;p&gt;Então vou reescrever o código.&lt;/p&gt;
-
-&lt;p&gt;Não há espaço aqui para a definição das Classes utilizadas
-no exemplo.&lt;/p&gt;
-
-&lt;p&gt;Qualquer dúvida, basta postar nos comentários.&lt;/p&gt;
-
-&lt;p&gt;Abaixo um hipotético código &lt;strong&gt;declarativo&lt;/strong&gt; e &lt;strong&gt;Orientado a Objetos&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;btnOK.Enabled := False;
-try
-  idUser :=  
-    TDatabase.Instance.Transaction(
-      TTasks.New
-        .Add(
-          TQueryTask.New(
-            &#39;INSERT INTO table VALUES (&#39; +
-            &#39;  :name, :sex, :dateofbirth, :maritalstatus)&#39;,
-            TDataParams.New
-              .Add(&#39;name&#39;, ftString, teName.Text)
-              .Add(&#39;sex&#39;, ftInteger, cbSex.ItemIndex)
-              .Add(&#39;dateofbirth&#39;, ftDateTime, teDateOfBirth.Text)
-              .Add(&#39;maritalstatus&#39;, ftInteger, cbMaritalStatus.ItemIndex)
-          )
-        )
-        .Add(
-          TQueryTask.New(&#39;SELECT LAST_INSERT_ID() AS iddb FROM table&#39;)            
-        )
-    )
-    .Results
-    .Get(&#39;iddb&#39;).AsInteger;
-finally      
-  bntOK.Enabled := True;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O que está ocorrendo aqui?&lt;/p&gt;
-
-&lt;p&gt;Bem, temos &lt;code&gt;TQueryTask&lt;/code&gt; que implementa &lt;code&gt;ITask&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Temos uma lista de &lt;em&gt;tasks&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;A lista é passada para &lt;code&gt;Transaction&lt;/code&gt; que, internamente, irá executar
-cada &lt;em&gt;task&lt;/em&gt; — chamando o método &lt;code&gt;Execute&lt;/code&gt; que não está explícito no
-código — dentro de uma transação.&lt;/p&gt;
-
-&lt;p&gt;Por fim &lt;code&gt;Transaction&lt;/code&gt; tem um método &lt;code&gt;Results&lt;/code&gt; que pode ser do tipo
-&lt;code&gt;IDataParams&lt;/code&gt; e através de &lt;code&gt;Get&lt;/code&gt; é retornado um valor.&lt;/p&gt;
-
-&lt;p&gt;O que acontece dentro desses Objetos é de responsabilidade deles.
-O programador é apenas o &lt;strong&gt;orquestrador&lt;/strong&gt; dessa comunicação.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Na minha opinião WITH-DO pode e deve ser utilizado.&lt;/p&gt;
-
-&lt;p&gt;Muita gente deseja cada vez mais &lt;em&gt;features&lt;/em&gt; para a linguagem
-Object Pascal. Mas será que já sabemos utilizar, de forma eficaz,
-tudo o que já temos nessa &lt;strong&gt;elegante linguagem&lt;/strong&gt; chamada Object Pascal?&lt;/p&gt;
-
-&lt;p&gt;Até onde eu sei, essa &lt;em&gt;feature&lt;/em&gt; não existe em nenhuma outra linguagem.&lt;/p&gt;
-
-&lt;p&gt;Apenas nós temos o WITH-DO!&lt;/p&gt;
-
-&lt;p&gt;Mas será que sou o único que usa e aprecia essa &lt;em&gt;feature&lt;/em&gt;? :)&lt;/p&gt;
-</description>
-        <pubDate>Mon, 12 Sep 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/a-declaracao-with-do-e-do-mal/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/a-declaracao-with-do-e-do-mal/</guid>
       </item>
     
   </channel>

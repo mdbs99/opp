@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Menos é Mais &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Objetos">
+    <meta name="keywords" content="menos é mais, quantidade de atributos, quantidade de argumentos, quantidade de métodos">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/menos-e-mais/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201611280125" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Menos é Mais">
+    <meta property="og:description" content="Existe uma quantidade ideal para a quantidade de argumentos, métodos, atributos e classes dentro de uma unidade.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/menos-e-mais/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-14541995559820-04de78c094e9.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Menos é Mais" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/menos-e-mais/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>EBOOK</a>
+<a href="/archive/">ARQUIVO</a>
+<a href="/contact/">CONTATO</a>
+<a href="/about/">SOBRE</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Menos é Mais</h1>
+  <span class="post-meta">Nov 28, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    4 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Já pensou qual seria a quantidade ideal para argumentos em um 
+método? E a quantidade de métodos em uma Interface ou Classe?
+E quantas Classes você codificaria dentro de uma única unidade?</p>
+
+<p>Vamos tentar obter alguns números.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-14541995559820-04de78c094e9.jpg" alt="Unsplash image" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>O tamanho de uma Classe, ou seja, a quantidade de métodos que
+ela implementa diz muito sobre ela. Uma Classe com muitos métodos
+está fazendo coisas demais, possui
+<a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">responsabilidades</a>
+demais.</p>
+
+<p>Podemos utilizar o mesmo princípio para argumentos de métodos. 
+Mais argumentos, mais informação, mais comunicações com outros
+Objetos. Então, teoricamente, o método está fazendo coisas demais.</p>
+
+<p>Nesse artigo vou lhe mostrar alguns números ideais.</p>
+
+<p>Não presumo que você irá concordar com tudo o que ler abaixo mas, 
+concordando ou não, esses são <em>meus</em> números.</p>
+
+<h2 id="metodos">Métodos</h2>
+
+<p>Interfaces devem ser pequenas, com poucos métodos.
+Não é por que a Interface representa
+um <code>Carro</code> que ela deverá conter todos os métodos inimagináveis
+para implementar o comportamento de um Carro.</p>
+
+<p>Cada Interface deve ter o número de métodos que represente uma
+<a href="/posts/objetos-representam-entidades/">entidade</a>
+num contexto bem <em>delimitado</em>.</p>
+
+<p>O número de métodos ideal está entre <strong>1 e 5</strong> para Interfaces e,
+consequentemente, é o mesmo para Classes.</p>
+
+<p>No entanto eu não considero a sobrecarga de métodos nessa contagem, ou seja, se
+a Classe possui 3 métodos <code>Save</code> sobrecarregados, eu considero apenas
+como 1 método. Mas, mesmo que possa haver muitos métodos sobrecarregados,
+não quer dizer que a inteligência está dentro desses métodos. Não.
+Quase tudo pode ser <a href="/posts/delegacao-de-implementacao-de-interfaces/">delegado</a>
+à outros Objetos mais especialistas.</p>
+
+<h2 id="construtores">Construtores</h2>
+
+<p>Os construtores <a href="/posts/construtores-da-classe-primario-secundarios/">primários e secundários</a>
+sempre serão sobrecargas. Então você poderá ter quantos quiser.</p>
+
+<p>Mas eu prefiro ter apenas 1 construtor e muitos
+<a href="/posts/interfaces-e-o-metodo-estatico-new/">Métodos <em>New</em></a>. Assim eu me
+beneficio de duas maneiras: a) A Classe só terá um meio para construir
+Objetos e b) Os métodos <em>New</em> obrigam outros desenvolvedores a utilizarem 
+instâncias de Interfaces e não instâncias de Classe.</p>
+
+<h2 id="argumentos">Argumentos</h2>
+
+<p>Utilize a menor quantidade possível de argumentos nos métodos.
+Um método com muitos argumentos é difícil de escrever, entender e ler.
+Lembre-se que a maior parte do trabalho de um programador é <em>ler</em> o código e não
+escrevê-lo.</p>
+
+<p>O mesmo para argumentos dos <a href="/posts/construtores-da-classe-primario-secundarios/">construtores</a>
+da Classe.</p>
+
+<p>O número ideal para os argumentos está entre <strong>0 e 5</strong>.</p>
+
+<h2 id="variaveis-locais">Variáveis locais</h2>
+
+<p>Antes de utilizar a técnica do <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método <em>New</em></a>,
+eu precisava utilizar um número maior de variáveis, somente para
+ter a <a href="http://docwiki.embarcadero.com/RADStudio/Seattle/en/Using_Reference_Counting">contagem de referência</a>
+funcionando sem vazamentos de memória.</p>
+
+<p>Não mais.</p>
+
+<p>Agora eu utilizo cada vez menos variáveis locais e esse é um indício
+de um código mais Orientado a Objetos. Variáveis locais são utilizados
+em código <em>procedural</em>. Você precisa de uma variável para <em>guardar</em> algum
+valor, enquanto executa outro processamento, e então utiliza a variável
+que guardou em outro processamento… procedural.</p>
+
+<p>O número ideal para variáveis locais está entre <strong>0 e 3</strong>.</p>
+
+<h2 id="atributos">Atributos</h2>
+
+<p>Os atributos de um Objeto devem estar em conformidade com o que
+ele representa. Se você tem um método que retorna o Objeto no formato
+de XML, por exemplo, mas não utiliza esse formato em nenhum outro 
+método, então você não deveria ter um atributo que representa um XML.
+Em vez disso, crie o Objeto só quando ele for necessário, ou seja, 
+quanto o método que retorna um XML for requisitado.</p>
+
+<p>O número ideal para atributos está entre <strong>1 e 7</strong>.</p>
+
+<p>Aqui, no entanto, você pode quebrar essa regra <em>temporariamente</em> se
+necessário, devido a prazos, complexidade, etc. Você pode aumentar
+o número de atributos e refatorar depois sem problemas, pois eles estarão 
+<a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">encapsulados</a>
+dentro da Classe.</p>
+
+<p>Ninguém sabe o que acontece dentro de um Objeto, não é?</p>
+
+<p>O que não pode ocorrer é ter um Objeto que não encapsula <em>nenhum</em> atributo.
+Um Objeto <em>sempre</em> deve encapsular alguma coisa, porque ele representa
+algo. Ele deve ter algum <a href="/posts/objetos-sem-estado/">estado</a>
+que é implementado por seus atributos.</p>
+
+<h2 id="classes">Classes na Unidade</h2>
+
+<p>A linguagem Object Pascal foi uma das primeiras a implementar o conceito
+de <em>packages</em> ou <em>namespaces</em>.</p>
+
+<p>Sim, estou falando das <em>units</em>.</p>
+
+<p>Cada <a href="/posts/unidades-limitrofes/">Unidade</a> pode conter Classes 
+públicas ou privadas.</p>
+
+<p>O número ideal para Classes dentro da mesma Unidade está entre <strong>1 e 10</strong>.</p>
+
+<p>Dificilmente eu utilizo Classes privadas, pois sempre acho que elas podem 
+ser utilizadas em outros módulos. No entanto, se necessário, Classe privadas — 
+não importa se é privado no nível de Classe ou de Unidade — podem ser implementadas 
+seguindo as mesmas regras dos atributos. 
+Como são privadas, podem ser alteradas sem problemas futuramente.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Definir números máximos de usabilidade, é o mesmo que <em>restringir</em>.
+E restrição pode ser uma coisa boa. Restrição nos faz pensar em como tornar as
+coisas mais <em>eficazes</em> e com menos <em>desperdícios</em>.</p>
+
+<p>Pense bem. Para fazer uma viagem para fora do seu país, por exemplo, você precisa 
+planejar com cuidado o que levar na mochila.
+Você deve escolher o que é mais <em>importante</em> e <em>essencial</em>, e nada a mais.
+O motivo é viajar <em>leve</em> e curtir ao máximo, sem se preocupar com inúmeros objetos
+ou malas cheias de coisas que você estaria arrastando com você.</p>
+
+<p>É muito mais difícil <em>pensar</em> no que é essencial ao invés de “por tudo na mala”,
+mas é um exercício que vale a pena fazer. Você fica abismado ao saber que necessita
+de tão pouco.</p>
+
+<p>O mesmo vale para o seu código. Mantenha tudo <em>leve</em> e <em>simples</em>.
+Apenas com o essencial. Porque <strong>menos, é mais</strong>.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/menos-e-mais/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Menos é Mais&via=mdbs99;url=http://objectpascalprogramming.com/posts/menos-e-mais/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/menos-e-mais/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/menos-e-mais/&title=Menos é Mais" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/menos-e-mais/&title=Menos é Mais" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/menos-e-mais/&t=Menos é Mais" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-adaptadoras/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nomeando-variaveis-e-metodos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Variáveis e Métodos</li></h4>
+        </ul>
+        <!--<p class="post-summary">A nomenclatura correta de Variáveis e Métodos simplifica o código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-delegacao-problemas-solucoes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces, Delegação, Problemas e Soluções</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar Interfaces e Delegação de Implementação sem vazamentos de memória</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/menos-e-mais';
+      var disqus_title      = 'Menos é Mais';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
