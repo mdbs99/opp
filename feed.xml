@@ -131,7 +131,7 @@ de &lt;em&gt;packages&lt;/em&gt; ou &lt;em&gt;namespaces&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;Cada &lt;a href=&quot;/posts/unidades-limitrofes/&quot;&gt;Unidade&lt;/a&gt; pode conter Classes 
 públicas ou privadas.&lt;/p&gt;
 
-&lt;p&gt;O número ideal para Classes dentro da mesma Unidade está entre &lt;strong&gt;1 e 10&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;O número ideal para Classes dentro da mesma Unidade está entre &lt;strong&gt;1 e 11&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Dificilmente eu utilizo Classes privadas, pois sempre acho que elas podem 
 ser utilizadas em outros módulos. No entanto, se necessário, Classe privadas — 
