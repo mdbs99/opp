@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Objetos Agregados &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Objetos">
+    <meta name="keywords" content="aggregated object, objetos agregados, taggregatedobject, implements, delegation, delegação">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/objetos-agregados/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201612050225" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Objetos Agregados">
+    <meta property="og:description" content="Existe uma quantidade ideal para a quantidade de argumentos, métodos, atributos e classes dentro de uma unidade.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/objetos-agregados/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/icfxslgjq50-james-garcia.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Objetos Agregados" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/objetos-agregados/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>EBOOK</a>
+<a href="/archive/">ARQUIVO</a>
+<a href="/contact/">CONTATO</a>
+<a href="/about/">SOBRE</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/objectpascalprogramming"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Objetos Agregados</h1>
+  <span class="post-meta">Dec 5, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    5 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Objetos Agregados é uma <em>feature</em> da linguagem <em>Object Pascal</em>. 
+Ela nos permite delegar uma implementação
+de uma Interface para outro Objeto, utilizando uma sintaxe especial.</p>
+
+<p>No entanto existe um grande problema
+no <em>design</em> dessa <em>feature</em> que não permite o programador utilizá-la em
+sua plenitude. Estou falando dos terríveis vazamentos de memória.</p>
+
+<p>Muitos programadores desistem de utilizar Objetos Agregados devido
+a esses problemas…</p>
+
+<p>Bem, não mais.</p>
+
+<!--more-->
+
+<p><img src="/images/icfxslgjq50-james-garcia.jpg" alt="Unsplash image" /></p>
+
+<p>Já faz algum tempo que venho pesquisando uma maneira de utilizar Objetos Agregados
+sem comprometer o <em>software</em> com vazamentos de memória.</p>
+
+<p>Mas como minhas Interfaces possuem <a href="/posts/menos-e-mais/#metodos">poucos métodos</a>,
+é fácil implementar os métodos (as assinaturas) e delegar para um Objeto privado,
+ou seja, aquele que realmente irá fazer o trabalho.</p>
+
+<p>Infelizmente essa abordagem é verbosa, ineficiente e nos leva a duplicação de código.</p>
+
+<h2 id="voce-lembra">Você lembra?</h2>
+
+<p>A primeira vez que falei sobre esse assunto foi nesse
+<a href="/posts/delegacao-de-implementacao-de-interfaces/">artigo</a>, no entanto
+a implementação original possui vazamentos de memória.</p>
+
+<p>Enviei um <a href="https://www.mail-archive.com/fpc-pascal@lists.freepascal.org/msg43835.html">email</a>
+sobre esse problema <strong>crítico</strong> na lista oficial do FreePascal e ninguém deu alguma 
+solução plausível.</p>
+
+<p>Utilizando o mesmo código de exemplo que enviei a lista, fiz algumas considerações
+e publiquei um novo <a href="/posts/interfaces-delegacao-problemas-solucoes/">artigo</a>
+com uma possível solução.</p>
+
+<p>A solução para corrigir o código do exemplo foi implementar a classe <code>TDelegatedIntegerValue</code>.</p>
+
+<p>Mas eu estava <strong>errado</strong>.</p>
+
+<p>O motivo era simples, a <em>duplicação</em> de código continuava.</p>
+
+<p>A Classe <code>TDelegatedIntegerValue</code> tem sua própria implementação.
+Não há nenhuma reutilização da <code>TIntegerValue</code> original.</p>
+
+<p>Eu poderia utilizar <code>TIntegerValue</code> como um atributo privado de <code>TDelegatedIntegerValue</code> e 
+repassar as mensagens. Estaria correto. É o que todos fazem. Trivial.</p>
+
+<p>Mas mesmo assim não ficaria satisfeito.</p>
+
+<p>Para cada Classe que faz o real trabalho, eu teria
+que ter uma outra Classe, herdada de <code>TAggregatedObject</code> que seria utilizada nas agregações.
+Sempre teria um par de Classes: uma normal e outra para agregação.</p>
+
+<p>Eu não queria ter <em>pares</em> de Classes para fazer o mesmo trabalho.</p>
+
+<p>Eu não queria ter Classes que só poderiam ser utilizadas como <em>agregadas</em>.</p>
+
+<p>Eu não queria ter Classes que só poderiam ser utilizadas <em>diretamente</em>.</p>
+
+<p>O que eu queria era ter apenas uma <strong>única classe</strong> que pudesse ser utilizada <em>diretamente</em> ou
+<em>agregada</em> a outro Objeto. E, claro, sem vazamentos de memória.</p>
+
+<h2 id="codigo-perfeito">Em busca do “código perfeito”</h2>
+
+<p>Então eu comecei a implementação de um método que permitisse que qualquer Classe
+fosse utilizada <em>diretamente</em> ou na forma <em>agregada</em>.</p>
+
+<p>Comecei essa implementação no Delphi 7.</p>
+
+<p>Tenho alguns (grandes) projetos que ainda
+utilizam essa versão do Delphi. Nesses projetos você encontra de tudo:</p>
+
+<ul>
+  <li>Código Procedural</li>
+  <li>Código que <em>parece</em> Orientado a Objetos</li>
+  <li>Código que <em>realmente</em> é Orientado a Objetos</li>
+  <li>Código RAD</li>
+  <li>e muito mais.</li>
+</ul>
+
+<p>Então quando tenho que fazer alguma manutenção neles, é uma boa hora
+para fazer uma refatoração.</p>
+
+<p>Tive uma ideia que, a princípio, pareceu brilhante:</p>
+
+<p>Iria unir as Classes <code>TInterfacedObject</code> e <code>TAggregatedObject</code> numa única nova Classe 
+e herdaria todas as minhas Classes a partir daí.</p>
+
+<p>Perfeito!</p>
+
+<p>Certo? Err…</p>
+
+<p>Bem, não tão rápido.</p>
+
+<p>Se você abrir o código da RTL e localizar ambas as Classes, verão que elas divergem
+muito na implementação. Para unir as duas eu tive que fazer várias condições — IF’s —
+em várias chamadas de métodos.</p>
+
+<p>Exemplo. Se o argumento <code>Controller</code> que <code>TAggregatedObject</code> utiliza não é <code>nil</code>, então o
+Objeto iria agir de um jeito, do contrário agiria de outra maneira.</p>
+
+<p>Tive que copiar/colar o código de ambas as Classes;
+estava trabalhando com o <a href="/posts/nao-utilize-nil-ou-null/">anti-padrão</a> <code>nil/NULL</code>;
+a Classe estava complexa e não estava mais implementando apenas uma
+<a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">única responsabilidade</a>.</p>
+
+<p>A “solução” estava criando um monstro.</p>
+
+<p>Isso estava indo contra muitas ideias que eu <em>defendo</em> como <em>corretas</em>.</p>
+
+<p>Então…</p>
+
+<p>Joguei tudo fora, esqueci do assunto e continuei minha vida.</p>
+
+<p>Nenhuma outra linguagem tem isso — eu pensei — então por que continuar nessa busca?</p>
+
+<p>Isso não funciona. Desisto.</p>
+
+<h2 id="uma-soluo-absurdamente-simples">Uma solução absurdamente simples</h2>
+
+<p>O tempo passou.</p>
+
+<p>Então num belo dia tive uma <em>inspiração</em>.</p>
+
+<p>Todo esse tempo eu queria uma solução simples, mas estava pensando de forma errada… novamente!</p>
+
+<p>Não tenho que ter apenas uma única Classe. Tenho que utilizar a
+<a href="/posts/decorator-pattern/">decoração</a> e composição de Objetos.</p>
+
+<p>Voltei o exemplo original do
+<a href="/posts/interfaces-delegacao-problemas-solucoes/#exemplo-2">artigo anterior</a>
+e, ao invés de implementar <code>TDelegatedIntegerValue</code>, implementei a Classe <code>TAggregateValue</code>.</p>
+
+<p>Pouquíssimas linhas de código. Sem copiar/colar. Sem complexidade. Simples.</p>
+
+<p>E isso fez <strong>toda</strong> diferença.</p>
+
+<p>Veja o código completo do programa anterior, reescrito:</p>
+
+<script src="https://gist.github.com/mdbs99/a37d69af39bf859c0c9da77ce48f6a3b.js"></script>
+
+<p>A Classe <code>TAggregateValue</code> implementa <code>IValue</code>, porém ela não tem uma própria implementação. 
+Essa Classe apenas repassa as mensagens a instância <code>FOrigin</code> — argumento passado no construtor —
+que também implementa <code>IValue</code>.</p>
+
+<p>Em outras palavras, para cada Interface no seu código você terá uma, e apenas uma, implementação agregada 
+que poderá ser utilizada com qualquer outra “classe normal” que implemente a mesma Interface.</p>
+
+<p>A Classe <code>TMyApp</code> continua implementando <code>IValue</code>, mas seu atributo privado que realmente
+implementa <code>IValue</code> através da delegação, é 
+<a href="https://gist.github.com/mdbs99/a37d69af39bf859c0c9da77ce48f6a3b#file-project-lpr-L75-L83">inicializado</a>
+através de uma composição/decoração entre <code>TAggregateValue</code> e <code>TIntegerValue</code>.</p>
+
+<p>Apesar de continuarmos com 2 Classes como no exemplo anterior, veja que é possível codificar 
+infinitas Classes que implementem <code>IValue</code>, mas utilizar apenas 1 Classe agregadora em todos 
+os casos.</p>
+
+<p>E tão bom quanto isso tudo é não ter vazamentos de memória:</p>
+
+<pre><code>IntegerValue:
+TIntegerValue.Create
+Number is 5
+TIntegerValue.Destroy
+
+MyApp:
+TIntegerValue.Create
+TMyApp.Create
+Number is 10
+TMyApp.Destroy
+TIntegerValue.Destroy
+
+MyAppAsInterface:
+TIntegerValue.Create
+TMyApp.Create
+Number is 20
+TMyApp.Destroy
+TIntegerValue.Destroy
+
+Heap dump by heaptrc unit
+85 memory blocks allocated : 2049/2232
+85 memory blocks freed     : 2049/2232
+0 unfreed memory blocks : 0
+True heap size : 196608 (128 used in System startup)
+True free heap : 196480
+</code></pre>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Todas as minhas soluções anteriores iriam, de alguma forma, mudar a implementação
+original das Classes que já estavam funcionando por todo o sistema. Esse é um dos
+indícios que <strong>A)</strong> suas classes foram mal implementadas ou <strong>B)</strong> sua abordagem atual está 
+errada porque você não deveria alterar Classes que já funcionam para adaptá-las a
+novas exigências.</p>
+
+<p>Eu estava insistindo na opção B, enquanto a resposta sempre esteve comigo.</p>
+
+<p><strong>Decoração e Composição de Objetos</strong>.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/objetos-agregados/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Objetos Agregados&via=mdbs99;url=http://objectpascalprogramming.com/posts/objetos-agregados/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/objetos-agregados/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/objetos-agregados/&title=Objetos Agregados" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/objetos-agregados/&title=Objetos Agregados" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/objetos-agregados/&t=Objetos Agregados" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-delegacao-problemas-solucoes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces, Delegação, Problemas e Soluções</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar Interfaces e Delegação de Implementação sem vazamentos de memória</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-adaptadoras/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/delegacao-de-implementacao-de-interfaces/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Delegação de Implementação de Interfaces</li></h4>
+        </ul>
+        <!--<p class="post-summary">A beleza da linguagem Object Pascal para implementar delegação entre Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/objetos-agregados';
+      var disqus_title      = 'Objetos Agregados';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
