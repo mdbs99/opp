@@ -3,8 +3,7 @@ layout: post
 title: "Objetos Agregados"
 date: 2016-12-05
 description:
-  Existe uma quantidade ideal para a quantidade de argumentos, 
-  métodos, atributos e classes dentro de uma unidade.
+  Veja como utilizar Objetos Agregados, que implementam Interfaces, sem vazamentos de memória.
 image: /images/icfxslgjq50-james-garcia.jpg
 categories: 
   - Objetos
