@@ -3,7 +3,8 @@ layout: post
 title: "Desenvolvimento Profissional"
 date: 2016-12-11
 description:
-  Comece a mudar o seu mindset sobre como desenvolver software profissionalmente.
+  Para desenvolver software profissionalmente você precisa ter
+  disciplina, conhecimento e as ferramentas certas.
 image: /images/photo-gitlab86186324.jpg
 categories: 
   - Professional
@@ -24,8 +25,8 @@ Eu quero dizer, os requisitos, fontes,
 tickets, *releases*, documentação... ou seja, todo os
 artefatos do software.
 
-Eu utilizo Git, *Tickets*, *Wikis* e GitLab para o controle
-de todos os meus softwares privados.
+Eu utilizo Git, *Tickets*, *Wikis* e **GitLab** para o controle
+de todos os meus projetos privados.
 
 <!--more-->
 
@@ -62,7 +63,7 @@ de versões e documentação.
 As ferramentas para esse tipo de controle existem e estão a disposição para
 qualquer desenvolvedor, mas nem todos as utilizam.
 
-O uso dessas ferramentas separam os *amadores* dos verdadeiros *profissionais*.
+O uso dessas ferramentas separam os *amadores* dos *profissionais*.
 
 ## Ferramentas {#ferramentas}
 
