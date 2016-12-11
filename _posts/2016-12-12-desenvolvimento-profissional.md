@@ -217,8 +217,6 @@ Esse controle é feito utilizando ferramentas especializadas.
 Acima você pode ver quais foram as minhas escolhas.
 
 Mas, antes de tudo, é necessário ter disciplina e conhecimento. Do contrário nenhuma ferramenta 
-será suficiente para lhe ajudar a controlar o desenvolvimento.
-
-Mude seu *mindset* sobre o que é desenvolver software profissionalmente.
+será suficiente.
 
 Até logo.
