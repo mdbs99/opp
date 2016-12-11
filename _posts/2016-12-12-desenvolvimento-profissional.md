@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Software Profissional"
+title: "Desenvolvimento Profissional"
 date: 2016-12-11
 description:
   Comece a mudar o seu mindset sobre como desenvolver software profissionalmente.
@@ -168,36 +168,36 @@ no Github:
   1. *Tickets* com [anexo](https://help.github.com/articles/file-attachments-on-issues-and-pull-requests/)
   2. [Time tracking](https://about.gitlab.com/2016/11/03/track-your-time-in-the-same-tool-you-do-your-work/)
 
-Dar a possibilidade ao usuário para anexar um relatório, um documento, um *prinscreen*
-ou um esboço de tela era/é imprescindível pra mim.
+Dar a possibilidade ao usuário para anexar um relatório, documento, *prinscreen*
+ou um esboço de tela sempre foi imprescindível pra mim.
 
 *Time tracking* é uma *feature* nova que estou começando a utilizar. É aquele tipo de coisa
 que falamos: "Como ninguém havia pensando nisso antes?"
 
 E você ainda tem a possibilidade de ajudar no desenvolvimento do projeto e propor melhorias.
-É tudo OpenSource — mas eles comercializam uma versão paga.
+É tudo OpenSource — mas eles comercializam uma versão paga — e codificado em Ruby.
 
-A companhia responsável pelo desenvolvimento do GitLab parece crescer a cada dia.
+A companhia responsável pelo desenvolvimento do GitLab não para de crescer.
 
 <blockquote class="twitter-tweet" data-lang="pt"><p lang="en" dir="ltr">Thanks <a href="https://twitter.com/businessinsider">@businessinsider</a> for including us on your list of &quot;enterprise <a href="https://twitter.com/hashtag/startups?src=hash">#startups</a> to bet your career on&quot;<a href="https://t.co/YFuLfGFheS">https://t.co/YFuLfGFheS</a> <a href="https://t.co/4DmHdbAcZs">pic.twitter.com/4DmHdbAcZs</a></p>&mdash; GitLab (@gitlab) <a href="https://twitter.com/gitlab/status/806489296261812224">7 de dezembro de 2016</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-Na minha opinião, é um ótimo serviço de uma grande companhia. Não teria restrições se tivesse
-que pagar por ele no futuro, caso meus projetos ficassem maiores do que a versão gratuita
-é capaz de suportar.
+Por isso tudo acho que este é ótimo serviço de uma grande companhia.
+Não teria restrições se tivesse que pagar por ele no futuro, caso meus 
+projetos ficassem maiores do que a versão gratuita é capaz de suportar.
 
 Eu posso começar pequeno, com projetos privados e gratuitos, testar
 todo o sistema e ver se me adapto à ele antes de começar a pagar. Perfeito.
 
 O único problema que tive até agora no uso do GitLab é encontrar o serviço temporariamente 
-desativado por estar sendo atualizado. Eles utilizam o GitLab para fazer o GitLab.
-Então a cada nova versão liberada o serviço pode ficar indisponível.
+indisponível por estar sendo atualizado. Eles utilizam o GitLab para fazer o GitLab.
+Então a cada nova versão liberada o serviço pode ficar intermitente.
 
 <blockquote class="twitter-tweet" data-lang="pt"><p lang="en" dir="ltr">We&#39;ll be deploying 8.14.4 shortly. No downtime is expected but you may see intermittent errors during this time.</p>&mdash; GitLab.com Status (@gitlabstatus) <a href="https://twitter.com/gitlabstatus/status/806931030674460673">8 de dezembro de 2016</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 Mas quando você não está pagamento nada e ainda é avisado — por Twitter — antes
-do problema acontecer bem, você não teria o direito de reclamar, teria?
+do serviço ficar indisponível bem, você não teria o direito de reclamar, teria?
 
 A verdade é que estou utilizando o GitLab a apenas 1 mês. Mas como tenho bastante
 conhecimento dos outros serviços, posso dizer que o GitLab superou minhas expectativas.
@@ -216,7 +216,9 @@ o controle sobre todos os artefatos.
 Esse controle é feito utilizando ferramentas especializadas.
 Acima você pode ver quais foram as minhas escolhas.
 
-Mas nenhuma ferramenta será suficiente sem que antes você mude o seu *mindset* sobre
-o que é desenvolver software profissionalmente.
+Mas, antes de tudo, é necessário ter disciplina e conhecimento. Do contrário nenhuma ferramenta 
+será suficiente para lhe ajudar a controlar o desenvolvimento.
+
+Mude seu *mindset* sobre o que é desenvolver software profissionalmente.
 
 Até logo.
