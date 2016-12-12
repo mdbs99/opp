@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Desenvolvimento Profissional &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Professional">
+    <meta name="keywords" content="gitlab, github, bitbucket, professional, software professional, development">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/desenvolvimento-profissional/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201612120059" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Desenvolvimento Profissional">
+    <meta property="og:description" content="Para desenvolver software profissionalmente você precisa ter disciplina, conhecimento e as ferramentas certas.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/desenvolvimento-profissional/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-gitlab86186324.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Desenvolvimento Profissional" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/desenvolvimento-profissional/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>EBOOK</a>
+<a href="/archive/">ARQUIVO</a>
+<a href="/contact/">CONTATO</a>
+<a href="/about/">SOBRE</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Desenvolvimento Profissional</h1>
+  <span class="post-meta">Dec 12, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    7 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Como você controla o desenvolvimento dos seus projetos?</p>
+
+<p>Eu quero dizer, os requisitos, fontes, 
+tickets, <em>releases</em>, documentação… ou seja, todo os
+artefatos do software.</p>
+
+<p>Eu utilizo Git, <em>Tickets</em>, <em>Wikis</em> e <strong>GitLab</strong> para o controle
+de todos os meus projetos privados.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-gitlab86186324.jpg" alt="Unsplash image" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Codificar um software hoje em dia não é tão difícil.
+São tantas ferramentas automatizadas, vídeos com tutoriais
+completos ou IDE’s fantásticas, que praticamente qualquer
+pessoa que realmente se interesse pelo assunto iria conseguir 
+fazer um software.</p>
+
+<p>Isso é incrível.</p>
+
+<p>Mas existe uma <em>grande diferença</em> entre fazer um simples programa
+e desenvolver um projeto <em>profissional</em>.</p>
+
+<h2 id="controle">Controle</h2>
+
+<p>Como desenvolvedor, arquiteto e gerente de projetos pessoais ou 
+de clientes, preciso ter o controle de todos os artefatos que compõe
+todos os softwares para qual eu trabalho.</p>
+
+<p>Sendo o software um trabalho de engenharia, mas também arte e trabalho
+manual, ter o controle 100% de todos os detalhes é impossível.</p>
+
+<p>No entanto precisamos ter o controle da <em>qualidade</em>, <em>prazo</em> e <em>orçamento</em>.</p>
+
+<p>É necessário haver ferramentas para controlar tudo, desde o levantamento
+de requisitos, codificação, testes, acompanhamento de problemas, lançamento
+de versões e documentação.</p>
+
+<p>As ferramentas para esse tipo de controle existem e estão a disposição para
+qualquer desenvolvedor, mas nem todos as utilizam.</p>
+
+<p>O uso dessas ferramentas separam os <em>amadores</em> dos <em>profissionais</em>.</p>
+
+<h2 id="ferramentas">Ferramentas</h2>
+
+<p>Qualquer ferramenta que realmente ajude no controle do desenvolvimento de
+software é válida. No entanto algumas dessas ferramentas já foram e são utilizadas
+diariamente e, por serem tão eficazes, considero-as como um padrão
+no mundo do desenvolvimento de software. E é sobre elas que irei falar.</p>
+
+<p><strong><em>Git</em></strong>, segundo a <a href="https://pt.wikipedia.org/wiki/Git">Wikipedia</a>,
+é um sistema de controle de versão distribuído e um sistema de gerenciamento de 
+código fonte, com ênfase em velocidade. O Git foi inicialmente projetado e desenvolvido 
+por Linus Torvalds para o desenvolvimento do kernel Linux, mas foi adotado por muitos 
+outros projetos.</p>
+
+<p>Ele é o padrão atual para o controle de versão de softwares. Mas, não apenas por isso,
+você <em>deve</em> utilizá-lo porque não há nenhum outro concorrente que seja tão <em>simples</em> 
+e <em>eficaz</em>.</p>
+
+<p><strong><em>Ticket</em> ou <em>Issue</em></strong> é a ferramenta mais utilizada por um profissional.
+Tudo sobre o software deverá estar registrado em <em>tickets</em>. Desde uma 
+dúvida do usuário sobre uma documentação, até a resolução de um <em>bug</em> complicado.
+Tudo, <em>absolutamente tudo</em>, deverá ser registrado <em>antes</em> do desenvolvimento
+ou execução da solicitação.</p>
+
+<p>Eles mantém todo o histórico de solicitações e <em>decisões</em> desde o início do desenvolvimento.</p>
+
+<p><strong><em>Wikis</em></strong> são sites que permitem a edição colaborativa de seu conteúdo e 
+estrutura pelos usuários do sistema. Os usuários são os arquitetos, desenvolvedores
+e <em>stakeholders</em> (partes interessadas).</p>
+
+<p>Esses sites fazem parte da documentação do projeto. 
+Todas as Regras de Negócio, configurações, manuais e informações gerais deverão estar
+preservados nas páginas desses sites.
+No entanto algumas poucas informações não deverão estar nesse formato, como 
+configurações de usuário/senha, orçamentos e contratos.</p>
+
+<p><strong><em>Branches</em></strong> são ramificações do código indo em outras direções do <em>branch</em> principal,
+o <em>master</em>. O objetivo é manter o <em>branch</em> principal <em>master</em> sempre com a última versão
+liberada para o usuário, enquanto o desenvolvimento vai sendo feito em outros <em>branches</em>.</p>
+
+<p>Todo projeto deve ter no <em>mínimo</em> dois <em>branches</em>: <em>master</em> e <em>develop</em>.</p>
+
+<p>Enquanto o <em>master</em> é “intocável” pela maioria dos desenvolvedores, o <em>develop</em> está em
+constante desenvolvimento.
+Você pode até utilizar outros nomes, mas é isso aí.</p>
+
+<p>Cada <em>ticket</em> poderá gerar um novo <em>branch</em>, porém temporario. Após mesclar o
+<em>branch</em> temporário no <em>develop</em>, ele poderá ser apagado. Isso melhora a rastreabilidade
+das modificações do código.</p>
+
+<p>No momento que o <em>develop</em> está pronto para ser liberado como uma nova versão do sistema,
+uma mesclagem de todo o desenvolvimento deve ser feito no <em>master</em>.</p>
+
+<p><strong><em>Tags</em></strong> são como <em>branches</em> imutáveis. A cada <em>release</em> do software devemos criar uma
+<em>tag</em> correspondente a versão. Uma vez criada uma <em>tag</em>, seu código não poderá ser mais
+alterado. Elas devem contar a história de todas as versões do software.</p>
+
+<h2 id="servicos">Serviços</h2>
+
+<p>Existem vários serviços para o controle do desenvolvimento de softwares, no entanto vou
+escrever apenas sobre os três maiores, que são os mesmos no qual tenho maior experiência.</p>
+
+<p><strong><a href="https://github.com/">Github</a> é um portal de projetos</strong> OpenSource incrível.
+Como o próprio nome diz, ele oferece repositórios <em>Git</em>. Todo mundo utiliza.
+Desde programadores amadores até grandes corporações privadas.</p>
+
+<p>Eu o <a href="https://github.com/mdbs99">utilizo</a> diariamente.</p>
+
+<p>Essa <a href="https://github.com/mdbs99/opp">página</a> que você está lendo agora está hospedado lá,
+assim com alguns dos meus <a href="https://github.com/mdbs99?tab=repositories">projetos</a> OpenSource.
+Também contribuo em outros projetos e utilizo bastante
+<em>libs</em> e <em>frameworks</em>. É fácil encontrar outros projetos. Fácil de usar. Fantástico.</p>
+
+<p>Mas se você quiser ter um projeto privado lá, terá que pagar. Não é caro, 
+na verdade, porém nem todo mundo quer ou pode pagar. Talvez você apenas queira
+trabalhar num projeto acadêmico ou talvez só armazenar alguns exemplos de código…
+não importa o motivo, você não quer pagar um valor mensal.</p>
+
+<p><strong><a href="https://bitbucket.org/">BitBucket</a> é outro serviço</strong> um pouco diferente do Github.
+Ele também oferece repositórios <em>Git</em> e outros serviços que são “instalados” se 
+você quiser. No entanto sua interface e usabilidade não são tão <em>simples</em> como no Github.</p>
+
+<p>A boa notícia é que ele dá direito a repositórios privados e gratuitos. Esse foi um 
+dos fatores que me fez escolher o BitBucket como meu serviço para projetos privados
+desde 2012. Mas esses repositórios privados, somados todos,
+<a href="https://bitbucket.org/product/pricing/">só podem ter</a> até 5 desenvolvedores.
+Então quando seus  projetos começarem a crescer e você ainda não quiser pagar ou 
+não estiver satisfeito com o funcionamento geral do sistema, você terá que procurar 
+outra solução.</p>
+
+<p><strong><a href="https://gitlab.com/">GitLab</a> é o melhor</strong> dentre eles pois une o que ambos
+acima tem de melhor: projetos privados, gratuitos, ótima interface e usabilidade.</p>
+
+<p>Quem me indicou o GitLab foi meu amigo <a href="https://github.com/fabriciofx">Fabricio Cabral</a>,
+que também estava em busca de algo parecido com o Github.</p>
+
+<p>O GitLab tem a interface parecida com o Github. Simples e elegante. No entanto o Github
+ainda consegue ser “perfeito” nesse quesito.</p>
+
+<p>Mas o GitLab tem outras features que, até o momento — ou até onde eu saiba —, não existem
+no Github:</p>
+
+<ol>
+  <li><em>Tickets</em> com <a href="https://help.github.com/articles/file-attachments-on-issues-and-pull-requests/">anexo</a></li>
+  <li><a href="https://about.gitlab.com/2016/11/03/track-your-time-in-the-same-tool-you-do-your-work/">Time tracking</a></li>
+</ol>
+
+<p>Dar a possibilidade ao usuário para anexar um relatório, documento, <em>prinscreen</em>
+ou um esboço de tela sempre foi imprescindível pra mim.</p>
+
+<p><em>Time tracking</em> é uma <em>feature</em> nova que estou começando a utilizar. É aquele tipo de coisa
+que falamos: “Como ninguém havia pensando nisso antes?”</p>
+
+<p>E você ainda tem a possibilidade de ajudar no desenvolvimento do projeto e propor melhorias.
+É tudo OpenSource — mas eles comercializam uma versão paga — e codificado em Ruby.</p>
+
+<p>A companhia responsável pelo desenvolvimento do GitLab não para de crescer.</p>
+
+<blockquote class="twitter-tweet" data-lang="pt"><p lang="en" dir="ltr">Thanks <a href="https://twitter.com/businessinsider">@businessinsider</a> for including us on your list of &quot;enterprise <a href="https://twitter.com/hashtag/startups?src=hash">#startups</a> to bet your career on&quot;<a href="https://t.co/YFuLfGFheS">https://t.co/YFuLfGFheS</a> <a href="https://t.co/4DmHdbAcZs">pic.twitter.com/4DmHdbAcZs</a></p>&mdash; GitLab (@gitlab) <a href="https://twitter.com/gitlab/status/806489296261812224">7 de dezembro de 2016</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Por isso tudo acho que este é ótimo serviço de uma grande companhia.
+Não teria restrições se tivesse que pagar por ele no futuro, caso meus 
+projetos ficassem maiores do que a versão gratuita é capaz de suportar.</p>
+
+<p>Eu posso começar pequeno, com projetos privados e gratuitos, testar
+todo o sistema e ver se me adapto à ele antes de começar a pagar. Perfeito.</p>
+
+<p>O único problema que tive até agora no uso do GitLab é encontrar o serviço temporariamente 
+indisponível por estar sendo atualizado. Eles utilizam o GitLab para fazer o GitLab.
+Então a cada nova versão liberada o serviço pode ficar intermitente.</p>
+
+<blockquote class="twitter-tweet" data-lang="pt"><p lang="en" dir="ltr">We&#39;ll be deploying 8.14.4 shortly. No downtime is expected but you may see intermittent errors during this time.</p>&mdash; GitLab.com Status (@gitlabstatus) <a href="https://twitter.com/gitlabstatus/status/806931030674460673">8 de dezembro de 2016</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Mas quando você não está pagamento nada e ainda é avisado — por Twitter — antes
+do serviço ficar indisponível bem, você não teria o direito de reclamar, teria?</p>
+
+<p>A verdade é que estou utilizando o GitLab a apenas 1 mês. Mas como tenho bastante
+conhecimento dos outros serviços, posso dizer que o GitLab superou minhas expectativas.</p>
+
+<p>Atualmente estou migrando todos os meus projetos privados do BitBucket para o GitLab — ele tem
+um <em>importador de projetos</em> que facilita muito esse trabalho.</p>
+
+<p>Mesmo em tão pouco tempo posso afirmar que o GitLab é um grande concorrente, senão o melhor.
+E, até agora, estou bastante satisfeito.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Projetos profissionais não são feitos apenas com código e boa intensão. Temos que ter
+o controle sobre todos os artefatos.</p>
+
+<p>Esse controle é feito utilizando ferramentas especializadas.
+Acima você pode ver quais foram as minhas escolhas.</p>
+
+<p>Mas, antes de tudo, é necessário ter disciplina e conhecimento. Do contrário nenhuma ferramenta 
+será suficiente.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/desenvolvimento-profissional/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Desenvolvimento Profissional&via=mdbs99;url=http://objectpascalprogramming.com/posts/desenvolvimento-profissional/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/desenvolvimento-profissional/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/desenvolvimento-profissional/&title=Desenvolvimento Profissional" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/desenvolvimento-profissional/&title=Desenvolvimento Profissional" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/desenvolvimento-profissional/&t=Desenvolvimento Profissional" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/unidades-limitrofes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
+        </ul>
+        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-adaptadoras/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/awslib-a-historia-e-o-novo-suporte-a-ses/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>AWS Lib: A História e o novo suporte a SES</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como tudo começou e o novo Suporte a SES.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nomeando-unidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
+        </ul>
+        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/desenvolvimento-profissional';
+      var disqus_title      = 'Desenvolvimento Profissional';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

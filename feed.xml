@@ -8,6 +8,218 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Desenvolvimento Profissional</title>
+        <description>&lt;p&gt;Como você controla o desenvolvimento dos seus projetos?&lt;/p&gt;
+
+&lt;p&gt;Eu quero dizer, os requisitos, fontes, 
+tickets, &lt;em&gt;releases&lt;/em&gt;, documentação… ou seja, todo os
+artefatos do software.&lt;/p&gt;
+
+&lt;p&gt;Eu utilizo Git, &lt;em&gt;Tickets&lt;/em&gt;, &lt;em&gt;Wikis&lt;/em&gt; e &lt;strong&gt;GitLab&lt;/strong&gt; para o controle
+de todos os meus projetos privados.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-gitlab86186324.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Codificar um software hoje em dia não é tão difícil.
+São tantas ferramentas automatizadas, vídeos com tutoriais
+completos ou IDE’s fantásticas, que praticamente qualquer
+pessoa que realmente se interesse pelo assunto iria conseguir 
+fazer um software.&lt;/p&gt;
+
+&lt;p&gt;Isso é incrível.&lt;/p&gt;
+
+&lt;p&gt;Mas existe uma &lt;em&gt;grande diferença&lt;/em&gt; entre fazer um simples programa
+e desenvolver um projeto &lt;em&gt;profissional&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;controle&quot;&gt;Controle&lt;/h2&gt;
+
+&lt;p&gt;Como desenvolvedor, arquiteto e gerente de projetos pessoais ou 
+de clientes, preciso ter o controle de todos os artefatos que compõe
+todos os softwares para qual eu trabalho.&lt;/p&gt;
+
+&lt;p&gt;Sendo o software um trabalho de engenharia, mas também arte e trabalho
+manual, ter o controle 100% de todos os detalhes é impossível.&lt;/p&gt;
+
+&lt;p&gt;No entanto precisamos ter o controle da &lt;em&gt;qualidade&lt;/em&gt;, &lt;em&gt;prazo&lt;/em&gt; e &lt;em&gt;orçamento&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;É necessário haver ferramentas para controlar tudo, desde o levantamento
+de requisitos, codificação, testes, acompanhamento de problemas, lançamento
+de versões e documentação.&lt;/p&gt;
+
+&lt;p&gt;As ferramentas para esse tipo de controle existem e estão a disposição para
+qualquer desenvolvedor, mas nem todos as utilizam.&lt;/p&gt;
+
+&lt;p&gt;O uso dessas ferramentas separam os &lt;em&gt;amadores&lt;/em&gt; dos &lt;em&gt;profissionais&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;ferramentas&quot;&gt;Ferramentas&lt;/h2&gt;
+
+&lt;p&gt;Qualquer ferramenta que realmente ajude no controle do desenvolvimento de
+software é válida. No entanto algumas dessas ferramentas já foram e são utilizadas
+diariamente e, por serem tão eficazes, considero-as como um padrão
+no mundo do desenvolvimento de software. E é sobre elas que irei falar.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Git&lt;/em&gt;&lt;/strong&gt;, segundo a &lt;a href=&quot;https://pt.wikipedia.org/wiki/Git&quot;&gt;Wikipedia&lt;/a&gt;,
+é um sistema de controle de versão distribuído e um sistema de gerenciamento de 
+código fonte, com ênfase em velocidade. O Git foi inicialmente projetado e desenvolvido 
+por Linus Torvalds para o desenvolvimento do kernel Linux, mas foi adotado por muitos 
+outros projetos.&lt;/p&gt;
+
+&lt;p&gt;Ele é o padrão atual para o controle de versão de softwares. Mas, não apenas por isso,
+você &lt;em&gt;deve&lt;/em&gt; utilizá-lo porque não há nenhum outro concorrente que seja tão &lt;em&gt;simples&lt;/em&gt; 
+e &lt;em&gt;eficaz&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Ticket&lt;/em&gt; ou &lt;em&gt;Issue&lt;/em&gt;&lt;/strong&gt; é a ferramenta mais utilizada por um profissional.
+Tudo sobre o software deverá estar registrado em &lt;em&gt;tickets&lt;/em&gt;. Desde uma 
+dúvida do usuário sobre uma documentação, até a resolução de um &lt;em&gt;bug&lt;/em&gt; complicado.
+Tudo, &lt;em&gt;absolutamente tudo&lt;/em&gt;, deverá ser registrado &lt;em&gt;antes&lt;/em&gt; do desenvolvimento
+ou execução da solicitação.&lt;/p&gt;
+
+&lt;p&gt;Eles mantém todo o histórico de solicitações e &lt;em&gt;decisões&lt;/em&gt; desde o início do desenvolvimento.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Wikis&lt;/em&gt;&lt;/strong&gt; são sites que permitem a edição colaborativa de seu conteúdo e 
+estrutura pelos usuários do sistema. Os usuários são os arquitetos, desenvolvedores
+e &lt;em&gt;stakeholders&lt;/em&gt; (partes interessadas).&lt;/p&gt;
+
+&lt;p&gt;Esses sites fazem parte da documentação do projeto. 
+Todas as Regras de Negócio, configurações, manuais e informações gerais deverão estar
+preservados nas páginas desses sites.
+No entanto algumas poucas informações não deverão estar nesse formato, como 
+configurações de usuário/senha, orçamentos e contratos.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Branches&lt;/em&gt;&lt;/strong&gt; são ramificações do código indo em outras direções do &lt;em&gt;branch&lt;/em&gt; principal,
+o &lt;em&gt;master&lt;/em&gt;. O objetivo é manter o &lt;em&gt;branch&lt;/em&gt; principal &lt;em&gt;master&lt;/em&gt; sempre com a última versão
+liberada para o usuário, enquanto o desenvolvimento vai sendo feito em outros &lt;em&gt;branches&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Todo projeto deve ter no &lt;em&gt;mínimo&lt;/em&gt; dois &lt;em&gt;branches&lt;/em&gt;: &lt;em&gt;master&lt;/em&gt; e &lt;em&gt;develop&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Enquanto o &lt;em&gt;master&lt;/em&gt; é “intocável” pela maioria dos desenvolvedores, o &lt;em&gt;develop&lt;/em&gt; está em
+constante desenvolvimento.
+Você pode até utilizar outros nomes, mas é isso aí.&lt;/p&gt;
+
+&lt;p&gt;Cada &lt;em&gt;ticket&lt;/em&gt; poderá gerar um novo &lt;em&gt;branch&lt;/em&gt;, porém temporario. Após mesclar o
+&lt;em&gt;branch&lt;/em&gt; temporário no &lt;em&gt;develop&lt;/em&gt;, ele poderá ser apagado. Isso melhora a rastreabilidade
+das modificações do código.&lt;/p&gt;
+
+&lt;p&gt;No momento que o &lt;em&gt;develop&lt;/em&gt; está pronto para ser liberado como uma nova versão do sistema,
+uma mesclagem de todo o desenvolvimento deve ser feito no &lt;em&gt;master&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Tags&lt;/em&gt;&lt;/strong&gt; são como &lt;em&gt;branches&lt;/em&gt; imutáveis. A cada &lt;em&gt;release&lt;/em&gt; do software devemos criar uma
+&lt;em&gt;tag&lt;/em&gt; correspondente a versão. Uma vez criada uma &lt;em&gt;tag&lt;/em&gt;, seu código não poderá ser mais
+alterado. Elas devem contar a história de todas as versões do software.&lt;/p&gt;
+
+&lt;h2 id=&quot;servicos&quot;&gt;Serviços&lt;/h2&gt;
+
+&lt;p&gt;Existem vários serviços para o controle do desenvolvimento de softwares, no entanto vou
+escrever apenas sobre os três maiores, que são os mesmos no qual tenho maior experiência.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/&quot;&gt;Github&lt;/a&gt; é um portal de projetos&lt;/strong&gt; OpenSource incrível.
+Como o próprio nome diz, ele oferece repositórios &lt;em&gt;Git&lt;/em&gt;. Todo mundo utiliza.
+Desde programadores amadores até grandes corporações privadas.&lt;/p&gt;
+
+&lt;p&gt;Eu o &lt;a href=&quot;https://github.com/mdbs99&quot;&gt;utilizo&lt;/a&gt; diariamente.&lt;/p&gt;
+
+&lt;p&gt;Essa &lt;a href=&quot;https://github.com/mdbs99/opp&quot;&gt;página&lt;/a&gt; que você está lendo agora está hospedado lá,
+assim com alguns dos meus &lt;a href=&quot;https://github.com/mdbs99?tab=repositories&quot;&gt;projetos&lt;/a&gt; OpenSource.
+Também contribuo em outros projetos e utilizo bastante
+&lt;em&gt;libs&lt;/em&gt; e &lt;em&gt;frameworks&lt;/em&gt;. É fácil encontrar outros projetos. Fácil de usar. Fantástico.&lt;/p&gt;
+
+&lt;p&gt;Mas se você quiser ter um projeto privado lá, terá que pagar. Não é caro, 
+na verdade, porém nem todo mundo quer ou pode pagar. Talvez você apenas queira
+trabalhar num projeto acadêmico ou talvez só armazenar alguns exemplos de código…
+não importa o motivo, você não quer pagar um valor mensal.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://bitbucket.org/&quot;&gt;BitBucket&lt;/a&gt; é outro serviço&lt;/strong&gt; um pouco diferente do Github.
+Ele também oferece repositórios &lt;em&gt;Git&lt;/em&gt; e outros serviços que são “instalados” se 
+você quiser. No entanto sua interface e usabilidade não são tão &lt;em&gt;simples&lt;/em&gt; como no Github.&lt;/p&gt;
+
+&lt;p&gt;A boa notícia é que ele dá direito a repositórios privados e gratuitos. Esse foi um 
+dos fatores que me fez escolher o BitBucket como meu serviço para projetos privados
+desde 2012. Mas esses repositórios privados, somados todos,
+&lt;a href=&quot;https://bitbucket.org/product/pricing/&quot;&gt;só podem ter&lt;/a&gt; até 5 desenvolvedores.
+Então quando seus  projetos começarem a crescer e você ainda não quiser pagar ou 
+não estiver satisfeito com o funcionamento geral do sistema, você terá que procurar 
+outra solução.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://gitlab.com/&quot;&gt;GitLab&lt;/a&gt; é o melhor&lt;/strong&gt; dentre eles pois une o que ambos
+acima tem de melhor: projetos privados, gratuitos, ótima interface e usabilidade.&lt;/p&gt;
+
+&lt;p&gt;Quem me indicou o GitLab foi meu amigo &lt;a href=&quot;https://github.com/fabriciofx&quot;&gt;Fabricio Cabral&lt;/a&gt;,
+que também estava em busca de algo parecido com o Github.&lt;/p&gt;
+
+&lt;p&gt;O GitLab tem a interface parecida com o Github. Simples e elegante. No entanto o Github
+ainda consegue ser “perfeito” nesse quesito.&lt;/p&gt;
+
+&lt;p&gt;Mas o GitLab tem outras features que, até o momento — ou até onde eu saiba —, não existem
+no Github:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;em&gt;Tickets&lt;/em&gt; com &lt;a href=&quot;https://help.github.com/articles/file-attachments-on-issues-and-pull-requests/&quot;&gt;anexo&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://about.gitlab.com/2016/11/03/track-your-time-in-the-same-tool-you-do-your-work/&quot;&gt;Time tracking&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Dar a possibilidade ao usuário para anexar um relatório, documento, &lt;em&gt;prinscreen&lt;/em&gt;
+ou um esboço de tela sempre foi imprescindível pra mim.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Time tracking&lt;/em&gt; é uma &lt;em&gt;feature&lt;/em&gt; nova que estou começando a utilizar. É aquele tipo de coisa
+que falamos: “Como ninguém havia pensando nisso antes?”&lt;/p&gt;
+
+&lt;p&gt;E você ainda tem a possibilidade de ajudar no desenvolvimento do projeto e propor melhorias.
+É tudo OpenSource — mas eles comercializam uma versão paga — e codificado em Ruby.&lt;/p&gt;
+
+&lt;p&gt;A companhia responsável pelo desenvolvimento do GitLab não para de crescer.&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;pt&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Thanks &lt;a href=&quot;https://twitter.com/businessinsider&quot;&gt;@businessinsider&lt;/a&gt; for including us on your list of &amp;quot;enterprise &lt;a href=&quot;https://twitter.com/hashtag/startups?src=hash&quot;&gt;#startups&lt;/a&gt; to bet your career on&amp;quot;&lt;a href=&quot;https://t.co/YFuLfGFheS&quot;&gt;https://t.co/YFuLfGFheS&lt;/a&gt; &lt;a href=&quot;https://t.co/4DmHdbAcZs&quot;&gt;pic.twitter.com/4DmHdbAcZs&lt;/a&gt;&lt;/p&gt;&amp;mdash; GitLab (@gitlab) &lt;a href=&quot;https://twitter.com/gitlab/status/806489296261812224&quot;&gt;7 de dezembro de 2016&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Por isso tudo acho que este é ótimo serviço de uma grande companhia.
+Não teria restrições se tivesse que pagar por ele no futuro, caso meus 
+projetos ficassem maiores do que a versão gratuita é capaz de suportar.&lt;/p&gt;
+
+&lt;p&gt;Eu posso começar pequeno, com projetos privados e gratuitos, testar
+todo o sistema e ver se me adapto à ele antes de começar a pagar. Perfeito.&lt;/p&gt;
+
+&lt;p&gt;O único problema que tive até agora no uso do GitLab é encontrar o serviço temporariamente 
+indisponível por estar sendo atualizado. Eles utilizam o GitLab para fazer o GitLab.
+Então a cada nova versão liberada o serviço pode ficar intermitente.&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;pt&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;We&amp;#39;ll be deploying 8.14.4 shortly. No downtime is expected but you may see intermittent errors during this time.&lt;/p&gt;&amp;mdash; GitLab.com Status (@gitlabstatus) &lt;a href=&quot;https://twitter.com/gitlabstatus/status/806931030674460673&quot;&gt;8 de dezembro de 2016&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Mas quando você não está pagamento nada e ainda é avisado — por Twitter — antes
+do serviço ficar indisponível bem, você não teria o direito de reclamar, teria?&lt;/p&gt;
+
+&lt;p&gt;A verdade é que estou utilizando o GitLab a apenas 1 mês. Mas como tenho bastante
+conhecimento dos outros serviços, posso dizer que o GitLab superou minhas expectativas.&lt;/p&gt;
+
+&lt;p&gt;Atualmente estou migrando todos os meus projetos privados do BitBucket para o GitLab — ele tem
+um &lt;em&gt;importador de projetos&lt;/em&gt; que facilita muito esse trabalho.&lt;/p&gt;
+
+&lt;p&gt;Mesmo em tão pouco tempo posso afirmar que o GitLab é um grande concorrente, senão o melhor.
+E, até agora, estou bastante satisfeito.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Projetos profissionais não são feitos apenas com código e boa intensão. Temos que ter
+o controle sobre todos os artefatos.&lt;/p&gt;
+
+&lt;p&gt;Esse controle é feito utilizando ferramentas especializadas.
+Acima você pode ver quais foram as minhas escolhas.&lt;/p&gt;
+
+&lt;p&gt;Mas, antes de tudo, é necessário ter disciplina e conhecimento. Do contrário nenhuma ferramenta 
+será suficiente.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 12 Dec 2016 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/desenvolvimento-profissional/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/desenvolvimento-profissional/</guid>
+      </item>
+    
+      <item>
         <title>Objetos Agregados</title>
         <description>&lt;p&gt;Objetos Agregados é uma &lt;em&gt;feature&lt;/em&gt; da linguagem &lt;em&gt;Object Pascal&lt;/em&gt;. 
 Ela nos permite delegar uma implementação
@@ -2293,247 +2505,6 @@ perdendo muito, apenas estamos deixando de ganhar mais.&lt;/p&gt;
         <pubDate>Mon, 10 Oct 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/</guid>
-      </item>
-    
-      <item>
-        <title>Delegação de Implementação de Interfaces</title>
-        <description>&lt;p&gt;Existe uma bela &lt;em&gt;feature&lt;/em&gt; na linguagem &lt;em&gt;Object Pascal&lt;/em&gt;
-que nem todos sabem que existem. Aqueles que sabem pouco
-utilizam e, talvez, não tenham percebido o potencial dessa 
-&lt;em&gt;feature&lt;/em&gt; para a implementação da Orientação a Objetos
-numa linguagem de programação.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1451650645557-62193a7bed6a.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;A bela &lt;em&gt;feature&lt;/em&gt; que existe no &lt;em&gt;Object Pascal&lt;/em&gt; e que — até onde
-eu sei — não existe em nenhuma outra linguagem de programação chama-se
-&lt;a href=&quot;http://docwiki.embarcadero.com/RADStudio/Seattle/en/Using_Implements_for_Delegation&quot;&gt;Delegation&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Java não tem.&lt;/p&gt;
-
-&lt;p&gt;Ruby não tem.&lt;/p&gt;
-
-&lt;p&gt;C# não tem.&lt;/p&gt;
-
-&lt;p&gt;Os engenheiros da linguagem C# utilizaram a mesma nomenclatura 
-para implementar o que nós — Programadores &lt;em&gt;Object Pascal&lt;/em&gt; — 
-damos o nome de Eventos. 
-Um ponteiro para um Método é uma implementação para um Evento, 
-mas em C# eles deram o nome de
-&lt;a href=&quot;https://msdn.microsoft.com/library/900fyy8e.aspx&quot;&gt;&lt;em&gt;delegates&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Você verá porque essa &lt;em&gt;feature&lt;/em&gt; é tão importante para implementarmos
-um Objeto da forma mais fiel possível a 
-&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidade real&lt;/a&gt;
-que ele representa.&lt;/p&gt;
-
-&lt;p&gt;Verá que é possível escrever menos e ainda deixar o código mais 
-flexível para implementações de &lt;strong&gt;comportamentos dinâmicos&lt;/strong&gt;, 
-utilizando a composição de Objetos.&lt;/p&gt;
-
-&lt;h2 id=&quot;delegation--implements&quot;&gt;Delegation / Implements&lt;/h2&gt;
-
-&lt;p&gt;&lt;em&gt;Delegation&lt;/em&gt; no &lt;em&gt;Object Pascal&lt;/em&gt; também pode ser conhecido pela
-palavra &lt;em&gt;Implements&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Ambas as nomenclaturas estão corretas.
-Sendo &lt;em&gt;delegation&lt;/em&gt; a técnica e &lt;em&gt;implements&lt;/em&gt; a palavra-reservada
-que a implementa.&lt;/p&gt;
-
-&lt;p&gt;Essa &lt;em&gt;feature&lt;/em&gt; existe na linguagem &lt;em&gt;Object Pascal&lt;/em&gt; desde sempre e
-seu objetivo é a &lt;strong&gt;delegação de implementação de Interfaces, 
-utilizando Composição de Objetos&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;A anos atrás eu só codificava utilizando o 
-&lt;a href=&quot;/posts/procedural-e-facil-orientado-a-objetos-e-dificil/&quot;&gt;paradigma Procedural&lt;/a&gt;
-então eu apenas ignorava essa &lt;em&gt;feature&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Mas antes de começarmos a utilizar &lt;em&gt;Delegation&lt;/em&gt;, precisamos pensar
-em Contextos.&lt;/p&gt;
-
-&lt;h2 id=&quot;contextos&quot;&gt;Contextos&lt;/h2&gt;
-
-&lt;p&gt;Já falei muito sobre Contextos em &lt;a href=&quot;/archive/&quot;&gt;artigos anteriores&lt;/a&gt;.
-Um &lt;em&gt;software&lt;/em&gt; deve ser codificado utilizando Contextos. Cada Contexto
-é um agrupamento de ideias, Classes, Objetos, Regras de Negócio, etc.&lt;/p&gt;
-
-&lt;p&gt;No &lt;a href=&quot;https://en.wikipedia.org/wiki/Domain-driven_design&quot;&gt;DDD&lt;/a&gt; 
-dá-se o nome de 
-&lt;a href=&quot;http://martinfowler.com/bliki/BoundedContext.html&quot;&gt;Bounded Context&lt;/a&gt;.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Bounded Context é um conceito muito importante do DDD e pode ser a 
-solução para a boa modelagem do seu domínio. Bounded Context é um 
-conceito tão importante quanto o entendimento da separação de 
-responsabilidades das camadas do DDD. — Google search&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Em termos práticos, isso quer dizer o seguinte:&lt;/p&gt;
-
-&lt;p&gt;Imagine que você tem uma Entidade &lt;code&gt;Client&lt;/code&gt;. Um &lt;code&gt;Client&lt;/code&gt; teria Regras de
-Negócio de acessos mas também teria Regras de Negócio sobre suas Finanças,
-considerando um sistema hipotético.&lt;/p&gt;
-
-&lt;p&gt;Se cada Classe deve
-&lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;representar apenas uma responsabilidade&lt;/a&gt;,
-como construir um Objeto que A) tenha Regras de Acesso e B) tenha Regras de Finanças ao mesmo tempo?&lt;/p&gt;
-
-&lt;p&gt;Por agora, a resposta é: Você &lt;strong&gt;não&lt;/strong&gt; deve fazer isso.&lt;/p&gt;
-
-&lt;p&gt;Por quê não?&lt;/p&gt;
-
-&lt;p&gt;Bem, se você tem uma Interface &lt;code&gt;IFinances&lt;/code&gt; e outra &lt;code&gt;IAccess&lt;/code&gt;, por exemplo,
-e tivesse que implementar os métodos de ambas numa única Classe, você 
-estaria quebrando a regra de &lt;strong&gt;Implementar apenas uma Responsabilidade&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;A Classe ficaria “inchada”. Métodos demais. Responsabilidades demais.&lt;/p&gt;
-
-&lt;p&gt;Se daqui a algumas semanas tivesse que acrescentar outras regras, ou seja,
-implementar outra Interface… imagine onde isso iria parar! 
-A manutenção ficaria extremamente comprometida.&lt;/p&gt;
-
-&lt;p&gt;A maneira mais eficaz e segura é implementar Classes diferentes para
-cada Contexto, mas que representem a mesma Entidade.&lt;/p&gt;
-
-&lt;p&gt;Utilizando o exemplo acima teríamos que implementar as Classes:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;TClientFinances (IFinances)&lt;/li&gt;
-  &lt;li&gt;TClientAccess (IAccess)&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Ambas as Classes representam um &lt;code&gt;Client&lt;/code&gt;, porém em Contextos diferentes,
-com Métodos diferentes.&lt;/p&gt;
-
-&lt;p&gt;E esse tipo de implementação funciona em qualquer linguagem com suporte a
-Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Eu gosto disso. Gosto de ter soluções simples que funcionam em (quase)
-qualquer linguagem, sem precisar utilizar &lt;em&gt;features&lt;/em&gt; específicas de
-cada linguagem.&lt;/p&gt;
-
-&lt;p&gt;No entanto…&lt;/p&gt;
-
-&lt;p&gt;Nem todo Objeto é tão simples. Há casos em que Objetos mais complexos
-podem simplificar o código, pois se a complexidade está dentro do Objeto
-mas seu uso é simples, então vale a pena, certo?&lt;/p&gt;
-
-&lt;p&gt;Então digamos que gostaríamos de ter um Objeto que representasse
-&lt;code&gt;Finances&lt;/code&gt; mas também &lt;code&gt;Access&lt;/code&gt;, por algum motivo, mas sem quebrar a 
-regra da responsabilidade única.&lt;/p&gt;
-
-&lt;h2 id=&quot;o-problema&quot;&gt;O Problema&lt;/h2&gt;
-
-&lt;p&gt;Vou definir alguns Métodos simples para ambas as Interfaces.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  IFinances = interface
-    function Current: Currency; // total no banco
-    function AsString: string;
-  end;
-  
-  IAccess = interface
-    function List: IDataList; // lista de acessos
-    function AsString: string;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Se tivéssemos uma Classe que implementa ambas as Interfaces, 
-teríamos algo como:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  TSuperClient = class(TInterfacedObject, IFinances, IAccess)
-  public
-    function Current: Currency;
-    function List: IDataList;
-    function IFinances.AsString: string;
-    function IAccess.AsString: string;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Veja que com apenas duas Interfaces simples já temos 4 métodos
-que não são nada coesos numa única Classe. Ainda tem o fato de 
-ambas as Classes possuirem Métodos iguais, então, se for preciso
-representar as Interfaces como &lt;code&gt;String&lt;/code&gt;, é necessário definir um
-prefixo com o nome da Interface.&lt;/p&gt;
-
-&lt;h2 id=&quot;como-utilizar-a-delegacao&quot;&gt;Como utilizar a Delegação&lt;/h2&gt;
-
-&lt;p&gt;Para utilizarmos &lt;em&gt;Delegation&lt;/em&gt;, primeiro precisamos definir os
-reais Objetos que representam as Interfaces:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TSimpleFinances = class(TInterfacedObject, IFinances)
-  public
-    construtor ...
-    function Current: Currency;
-    function AsString: string;
-  end;
-  
-  TSimpleAccess = class(TInterfacedObject, IAccess)
-  public
-    construtor ...
-    function List: IDataList;
-    function AsString: string;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Essas são Classes que implementam, de forma genérica, as Interfaces 
-acima.&lt;/p&gt;
-
-&lt;p&gt;Agora podemos implementar uma Classe que represente um &lt;code&gt;Client&lt;/code&gt;
-dessa forma:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  TTheClient = class(TInterfacedObject, IFinances, IAccess)
-  private
-    FFinances: IFinances;
-    FAccess: IAccess;
-    property Finances: IFinances read FFinances implements IFinances;
-    property Access: IAccess read FAccess implements IAccess;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Veja agora que &lt;code&gt;TTheClient&lt;/code&gt; não implementa mais os Métodos de ambas as
-Interfaces, ele &lt;strong&gt;delega&lt;/strong&gt; para outras Classes, especialistas no assunto!&lt;/p&gt;
-
-&lt;p&gt;No entanto &lt;code&gt;TTheClient&lt;/code&gt; pode ser 
-&lt;a href=&quot;/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos&quot;&gt;contratado&lt;/a&gt;
-para trabalhar em qualquer especialidade definida pelas Interfaces que ele 
-implementa (por delegação).&lt;/p&gt;
-
-&lt;p&gt;Veja que ambas as propriedades são privadas. Sim. Você irá trabalhar com 
-&lt;code&gt;TTheClient&lt;/code&gt; instanciando um tipo de Interface. Você não deve trabalhar com 
-a Classe diretamente. Sempre trabalhe com o(s) tipo(s) da(s) Interface(s) 
-que a Classe representa.&lt;/p&gt;
-
-&lt;p&gt;As possibilidades de evolução do código com essa técnica são muitas. Por exemplo.
-Agora que temos a Classe genérica (simples) &lt;code&gt;TSimpleFinances&lt;/code&gt;, ela pode ser 
-reutilizada por outras Classes, similares a &lt;code&gt;TTheClient&lt;/code&gt;, apenas definindo 
-uma propriedade. Essas Classes deverão possuir construtores que as inicialize
-de acordo com as Classes que as consome. Por exemplo, &lt;code&gt;TSimpleFinances&lt;/code&gt; poderia
-ser inicializa com o &lt;code&gt;ID&lt;/code&gt; do Client ou algum outro identificador.&lt;/p&gt;
-
-&lt;p&gt;Outra possibilidade: A Classe &lt;code&gt;TTheClient&lt;/code&gt; pode ter em seu construtor um argumento do
-tipo &lt;code&gt;IFinances&lt;/code&gt;, indicando que ela pode ser inicializada com qualquer tipo de
-Classe que implemente &lt;code&gt;IFinances&lt;/code&gt;, inicializando, assim, o atributo &lt;code&gt;FFinances&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Conseguimos fazer isso em &lt;em&gt;Object Pascal&lt;/em&gt;, mas parece que a maioria prefere
-definir Classes com 30 métodos do tipo Getter/Setter ou adicionam 40 Métodos numa
-Classe do tipo &lt;code&gt;TDataModule&lt;/code&gt; e acham que estão programando Orientado a Objetos e
-reutilizando código.&lt;/p&gt;
-
-&lt;p&gt;Temos as ferramentas para programar melhor, mas é preciso olhar “fora da caixa”.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 03 Oct 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/delegacao-de-implementacao-de-interfaces/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/delegacao-de-implementacao-de-interfaces/</guid>
       </item>
     
   </channel>

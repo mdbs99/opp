@@ -898,7 +898,7 @@ table {
     padding: 12px;
     line-height: 1.2;
     vertical-align: top;
-    border-top: 1px solid #333; }
+    /* border-top: 1px solid #333; */ }
   table > thead > tr > th {
     vertical-align: bottom;
     border-bottom: 2px solid #333; }
