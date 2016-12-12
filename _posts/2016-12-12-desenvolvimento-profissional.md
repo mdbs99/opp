@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Desenvolvimento Profissional"
-date: 2016-12-11
+date: 2016-12-12
 description:
   Para desenvolver software profissionalmente você precisa ter
   disciplina, conhecimento e as ferramentas certas.
