@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Simplicidade &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Codificando">
+    <meta name="keywords" content="simplicidade, simplicity, simples, simple, simple code">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/simplicidade/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201612190221" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Simplicidade">
+    <meta property="og:description" content="Concentre-se no essencial, nos fundamentos, e mantenha simples.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/simplicidade/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-hdnslau35ky-jeffrey-wegrzyn.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Simplicidade" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/simplicidade/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>EBOOK</a>
+<a href="/archive/">ARQUIVO</a>
+<a href="/contact/">CONTATO</a>
+<a href="/about/">SOBRE</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Simplicidade</h1>
+  <span class="post-meta">Dec 19, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    5 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Hoje em dia temos acesso a dezenas de linguagens com
+inúmeros recursos como Orientação a Objetos, Generics, Classes 
+anônimas, paradigma Funcional, Lambdas, Paralelismo…</p>
+
+<p>Mas nós já dominamos o básico antes de começar a usar tais
+<em>features</em>?</p>
+
+<!--more-->
+
+<p><img src="/images/photo-hdnslau35ky-jeffrey-wegrzyn.jpg" alt="Unsplash image" /></p>
+
+<blockquote>
+  <p>“When there is freedom from mechanical conditioning, there is
+simplicity. The classical man is just a bundle of routine, ideas 
+and tradition. If you follow the classical pattern, you are 
+understanding the routine, the tradition, the shadow — you are 
+not understanding yourself” — Bruce Lee</p>
+</blockquote>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Me considero um programador <em>old-school</em>. Já desenvolvi/estudei com
+linguagens como C, C++, COBOL, Pascal, <em>Object Pascal</em>, Visual Basic,
+JavaScript, Java, PHP, C#, Lua e talvez algumas outras que tenha 
+esquecido agora.</p>
+
+<p>Apesar de ter estudado várias linguagens e utilizado algumas delas em 
+projetos reais, o que tenho aprendido ao longo desses anos é que eu
+poderia fazer (quase) tudo com apenas algumas linguagens, poucas
+ferramentas.</p>
+
+<p>Então escolhi <em>Object Pascal</em> para meus projetos. É uma linguagem
+simples, elegante, fácil de ler/escrever, fortemente tipada e
+possui (possuía) poucas features. Com ela eu consigo fazer desde um
+simples projeto de fim de semana até grandes sistemas com centenas de
+linhas de código.</p>
+
+<p>Mas a “linguagem morta” — Object Pascal — cresce a cada dia, adicionando
+mais e mais <em>features</em>, tentanto seguir outras linguagens.
+E eu não gosto disso.</p>
+
+<h2 id="ferramenta">Uma Ferramenta para cada tipo de Problema</h2>
+
+<p>É eu também já ouvi isso. Devemos usar a ferramenta apropriada
+para cada tipo de problema. É claro que todos concordam.
+Mas se você consegue ter 80% de eficácia investindo apenas 20%
+do seu tempo e energia em algumas poucas ferramentas, por que acha
+necessário aprender outras dezenas de linguagens e ferramentas complexas,
+investindo mais tempo e dinheiro para conseguir produzir “apenas” 
+20% a mais?
+Lembre-se que segundo
+<a href="https://pt.wikipedia.org/wiki/Princ%C3%ADpio_de_Pareto">Paretto</a>, 
+você irá precisar investir 80% a mais de recursos para conseguir
+aumentar a produtividade em 20%. Vale a pena?</p>
+
+<p>Bem, talvez sim, talvez não. Depende.</p>
+
+<p>Que tipos de projetos você faz hoje?</p>
+
+<p>Ou melhor: Os tipos de projetos que você fazia a 3 anos ou mais são
+os mesmos tipos de projetos em que trabalha hoje?
+Se sim, quais são as grandes diferenças que uma mudança de linguagem
+faria para toda a equipe?</p>
+
+<p>Muitas mudanças positivas? Pode ser.
+Mas será que o problema é a linguagem ou o problema é com a equipe
+que A) não domina a linguagem que utiliza e B) não domina os requisitos
+do sistema?</p>
+
+<p>Talvez você diga que precisa de novas <em>features</em> para facilitar
+o desenvolvimento. Sim, algumas <em>features</em> melhoraram muito o
+desenvolvimento — a Orientação a Objetos, por exemplo — no entanto
+outras não são tão essenciais assim.</p>
+
+<p>O que eu vejo, na verdade, é que muitos programadores utilizam
+novas <em>features</em> apenas porque são
+<a href="https://medium.freecodecamp.com/constant-confusion-why-i-still-use-javascript-function-statements-984ece0b72fd#.8b7hytmfk">legais ou “<em>sexy</em>”</a>
+mas isso, na minha opinião, não deveria ser motivo para utilizá-las.</p>
+
+<h2 id="dia-a-dia">Dia a Dia</h2>
+
+<p>No meu trabalho diário vejo problemas que seriam evitados se o código
+tivesse um <em>design</em> mais simples.</p>
+
+<p>Os programadores desejam mais e mais utilizar as novas <em>features</em>
+sem pensar se uma adição de complexidade irá beneficiar o projeto 
+no longo prazo.</p>
+
+<blockquote>
+  <p>“It’s not the daily increase but daily decrease.
+Hack away at the unessential.” — Bruce Lee</p>
+</blockquote>
+
+<p>Alguns projetos em Java, por exemplo, são pura magia pra mim. São tantos 
+artefatos que devem se interconectar que você perde a noção do que é
+seu e do que faz parte das dezenas de <em>libs</em> e <em>frameworks</em>. Você
+não codifica, apenas dá à esses <em>frameworks</em> o que eles querem.</p>
+
+<p>É ótimo quando tudo funciona, mas quando há um problema…</p>
+
+<p>Objetos são criados por “pura magia”, pois foram “injetados” por
+alguma entidade; registros não são salvos porque o <em>Session</em> não 
+for marcado com “atributos especiais”; classes são “mapeadas” em
+tabelas utilizando-se de dezenas de “atributos” que parece haver
+mais código do que o próprio código da Classe! Mas a maioria acha
+tudo isso bem legal. Programadores que não codificam. Esse é o mundo
+hoje…</p>
+
+<p>Você já parou pra pensar que talvez seja mais simples utilizar
+<a href="/posts/menos-e-mais/">menos</a> artefatos do que 
+tentar aprender e aplicar todas as novidades que nos apresentam
+diariamente?</p>
+
+<p>Saint-Exupéry disse: <em>“Você sabe que alcançou a perfeição em design,
+não quando não há mais nada para adicionar, mas quando já não há
+mais nada que se possa retirar”</em>.</p>
+
+<p>Ao invés de aumentar a complexidade e uso de artefatos, tente
+diminuí-los.</p>
+
+<p>Busque a simplicidade, não o contrário.</p>
+
+<h2 id="simplicidade">Simplicidade</h2>
+
+<p>Eu vejo a Simplicidade como a <a href="http://www.extremeprogramming.org/rules/simple.html">chave</a>
+para minimizar 80% de todos os problemas existentes em projetos
+de <em>software</em>. Bem, na verdade em qualquer tipo de projeto,
+não apenas <em>software</em>.</p>
+
+<p>Eu tento aplicar a simplicidade em tudo que eu faço. Diariamente.</p>
+
+<p>Mas o que é simples para uns, pode ser complexo para outros.
+Por exemplo. Um sistema pode ser altamente complexo, mas seus
+desenvolvedores o consideram simples. Isso acontece porque eles
+já estão acostumados e conhecem todos os módulos e problemas.</p>
+
+<blockquote>
+  <p>“Simplicity is complex. It’s never simple to keep things simple.
+Simple solutions require the most advanced thinking”
+― Richie Norton</p>
+</blockquote>
+
+<p>Então como saber se algo é realmente simples? Há alguma medida?</p>
+
+<p>Em minhas pesquisas por essa definição, encontrei uma palestra
+intitulada “Rumo a Ciência da Simplicidade” por George Whitesides.
+Eu a tenho arquivada desde 2012 e agora compartilho o link com você.</p>
+
+<iframe src="https://embed.ted.com/talks/lang/pt-br/george_whitesides_toward_a_science_of_simplicity" width="640" height="360" frameborder="0" scrolling="no" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+
+<p>Para um Objeto ser considerável simples deve ter uma função 
+<em>previsível</em> e <em>confiável</em>, com <em>baixo custo</em> e característica de servir,
+ou ter o potencial de servir, como <em>blocos modulares</em>.</p>
+
+<p>Não deixe de ver o vídeo. Pois essa é a melhor definição de 
+Simplicidade que eu já ouvi. Perfeito.</p>
+
+<p>Desde então eu tento seguir essa linha de raciocínio.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Abrace a simplicidade em todas as parte do projeto.
+Faça com que suas Classes e Objetos sejam previsíveis, confiáveis,
+de baixo custo computacional e que ajam como blocos modulares
+que possam ser conectados entre si.</p>
+
+<blockquote>
+  <p>“Simplicity is the ultimate sophistication” — Leonardo da Vinci</p>
+</blockquote>
+
+<p>Quanto mais simples, menos <em>bugs</em>, menos <em>debug</em>, menos curva de
+aprendizado, menos releitura do código.</p>
+
+<p>Meu objetivo principal nos meus projetos é <em>qualidade</em>. 
+Quero construí-los, entregá-los e esquecê-los. 
+Não quero ficar fazendo remendos.
+Quero fazê-los certo logo na primeira vez. 
+Pra isso sua base de código deve ser simples.</p>
+
+<p>Esse é o caminho.</p>
+
+<p>Ou talvez eu seja apenas um “velho” programador,
+avesso as “novidades”… você decide.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/simplicidade/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Simplicidade&via=mdbs99;url=http://objectpascalprogramming.com/posts/simplicidade/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/simplicidade/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/simplicidade/&title=Simplicidade" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/simplicidade/&title=Simplicidade" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/simplicidade/&t=Simplicidade" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/desenvolvimento-profissional/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Desenvolvimento Profissional</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-adaptadoras/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/unidades-limitrofes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
+        </ul>
+        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nomeando-unidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
+        </ul>
+        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/simplicidade';
+      var disqus_title      = 'Simplicidade';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

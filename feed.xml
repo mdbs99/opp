@@ -8,6 +8,199 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Simplicidade</title>
+        <description>&lt;p&gt;Hoje em dia temos acesso a dezenas de linguagens com
+inúmeros recursos como Orientação a Objetos, Generics, Classes 
+anônimas, paradigma Funcional, Lambdas, Paralelismo…&lt;/p&gt;
+
+&lt;p&gt;Mas nós já dominamos o básico antes de começar a usar tais
+&lt;em&gt;features&lt;/em&gt;?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-hdnslau35ky-jeffrey-wegrzyn.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“When there is freedom from mechanical conditioning, there is
+simplicity. The classical man is just a bundle of routine, ideas 
+and tradition. If you follow the classical pattern, you are 
+understanding the routine, the tradition, the shadow — you are 
+not understanding yourself” — Bruce Lee&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Me considero um programador &lt;em&gt;old-school&lt;/em&gt;. Já desenvolvi/estudei com
+linguagens como C, C++, COBOL, Pascal, &lt;em&gt;Object Pascal&lt;/em&gt;, Visual Basic,
+JavaScript, Java, PHP, C#, Lua e talvez algumas outras que tenha 
+esquecido agora.&lt;/p&gt;
+
+&lt;p&gt;Apesar de ter estudado várias linguagens e utilizado algumas delas em 
+projetos reais, o que tenho aprendido ao longo desses anos é que eu
+poderia fazer (quase) tudo com apenas algumas linguagens, poucas
+ferramentas.&lt;/p&gt;
+
+&lt;p&gt;Então escolhi &lt;em&gt;Object Pascal&lt;/em&gt; para meus projetos. É uma linguagem
+simples, elegante, fácil de ler/escrever, fortemente tipada e
+possui (possuía) poucas features. Com ela eu consigo fazer desde um
+simples projeto de fim de semana até grandes sistemas com centenas de
+linhas de código.&lt;/p&gt;
+
+&lt;p&gt;Mas a “linguagem morta” — Object Pascal — cresce a cada dia, adicionando
+mais e mais &lt;em&gt;features&lt;/em&gt;, tentanto seguir outras linguagens.
+E eu não gosto disso.&lt;/p&gt;
+
+&lt;h2 id=&quot;ferramenta&quot;&gt;Uma Ferramenta para cada tipo de Problema&lt;/h2&gt;
+
+&lt;p&gt;É eu também já ouvi isso. Devemos usar a ferramenta apropriada
+para cada tipo de problema. É claro que todos concordam.
+Mas se você consegue ter 80% de eficácia investindo apenas 20%
+do seu tempo e energia em algumas poucas ferramentas, por que acha
+necessário aprender outras dezenas de linguagens e ferramentas complexas,
+investindo mais tempo e dinheiro para conseguir produzir “apenas” 
+20% a mais?
+Lembre-se que segundo
+&lt;a href=&quot;https://pt.wikipedia.org/wiki/Princ%C3%ADpio_de_Pareto&quot;&gt;Paretto&lt;/a&gt;, 
+você irá precisar investir 80% a mais de recursos para conseguir
+aumentar a produtividade em 20%. Vale a pena?&lt;/p&gt;
+
+&lt;p&gt;Bem, talvez sim, talvez não. Depende.&lt;/p&gt;
+
+&lt;p&gt;Que tipos de projetos você faz hoje?&lt;/p&gt;
+
+&lt;p&gt;Ou melhor: Os tipos de projetos que você fazia a 3 anos ou mais são
+os mesmos tipos de projetos em que trabalha hoje?
+Se sim, quais são as grandes diferenças que uma mudança de linguagem
+faria para toda a equipe?&lt;/p&gt;
+
+&lt;p&gt;Muitas mudanças positivas? Pode ser.
+Mas será que o problema é a linguagem ou o problema é com a equipe
+que A) não domina a linguagem que utiliza e B) não domina os requisitos
+do sistema?&lt;/p&gt;
+
+&lt;p&gt;Talvez você diga que precisa de novas &lt;em&gt;features&lt;/em&gt; para facilitar
+o desenvolvimento. Sim, algumas &lt;em&gt;features&lt;/em&gt; melhoraram muito o
+desenvolvimento — a Orientação a Objetos, por exemplo — no entanto
+outras não são tão essenciais assim.&lt;/p&gt;
+
+&lt;p&gt;O que eu vejo, na verdade, é que muitos programadores utilizam
+novas &lt;em&gt;features&lt;/em&gt; apenas porque são
+&lt;a href=&quot;https://medium.freecodecamp.com/constant-confusion-why-i-still-use-javascript-function-statements-984ece0b72fd#.8b7hytmfk&quot;&gt;legais ou “&lt;em&gt;sexy&lt;/em&gt;”&lt;/a&gt;
+mas isso, na minha opinião, não deveria ser motivo para utilizá-las.&lt;/p&gt;
+
+&lt;h2 id=&quot;dia-a-dia&quot;&gt;Dia a Dia&lt;/h2&gt;
+
+&lt;p&gt;No meu trabalho diário vejo problemas que seriam evitados se o código
+tivesse um &lt;em&gt;design&lt;/em&gt; mais simples.&lt;/p&gt;
+
+&lt;p&gt;Os programadores desejam mais e mais utilizar as novas &lt;em&gt;features&lt;/em&gt;
+sem pensar se uma adição de complexidade irá beneficiar o projeto 
+no longo prazo.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“It’s not the daily increase but daily decrease.
+Hack away at the unessential.” — Bruce Lee&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Alguns projetos em Java, por exemplo, são pura magia pra mim. São tantos 
+artefatos que devem se interconectar que você perde a noção do que é
+seu e do que faz parte das dezenas de &lt;em&gt;libs&lt;/em&gt; e &lt;em&gt;frameworks&lt;/em&gt;. Você
+não codifica, apenas dá à esses &lt;em&gt;frameworks&lt;/em&gt; o que eles querem.&lt;/p&gt;
+
+&lt;p&gt;É ótimo quando tudo funciona, mas quando há um problema…&lt;/p&gt;
+
+&lt;p&gt;Objetos são criados por “pura magia”, pois foram “injetados” por
+alguma entidade; registros não são salvos porque o &lt;em&gt;Session&lt;/em&gt; não 
+for marcado com “atributos especiais”; classes são “mapeadas” em
+tabelas utilizando-se de dezenas de “atributos” que parece haver
+mais código do que o próprio código da Classe! Mas a maioria acha
+tudo isso bem legal. Programadores que não codificam. Esse é o mundo
+hoje…&lt;/p&gt;
+
+&lt;p&gt;Você já parou pra pensar que talvez seja mais simples utilizar
+&lt;a href=&quot;/posts/menos-e-mais/&quot;&gt;menos&lt;/a&gt; artefatos do que 
+tentar aprender e aplicar todas as novidades que nos apresentam
+diariamente?&lt;/p&gt;
+
+&lt;p&gt;Saint-Exupéry disse: &lt;em&gt;“Você sabe que alcançou a perfeição em design,
+não quando não há mais nada para adicionar, mas quando já não há
+mais nada que se possa retirar”&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Ao invés de aumentar a complexidade e uso de artefatos, tente
+diminuí-los.&lt;/p&gt;
+
+&lt;p&gt;Busque a simplicidade, não o contrário.&lt;/p&gt;
+
+&lt;h2 id=&quot;simplicidade&quot;&gt;Simplicidade&lt;/h2&gt;
+
+&lt;p&gt;Eu vejo a Simplicidade como a &lt;a href=&quot;http://www.extremeprogramming.org/rules/simple.html&quot;&gt;chave&lt;/a&gt;
+para minimizar 80% de todos os problemas existentes em projetos
+de &lt;em&gt;software&lt;/em&gt;. Bem, na verdade em qualquer tipo de projeto,
+não apenas &lt;em&gt;software&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Eu tento aplicar a simplicidade em tudo que eu faço. Diariamente.&lt;/p&gt;
+
+&lt;p&gt;Mas o que é simples para uns, pode ser complexo para outros.
+Por exemplo. Um sistema pode ser altamente complexo, mas seus
+desenvolvedores o consideram simples. Isso acontece porque eles
+já estão acostumados e conhecem todos os módulos e problemas.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Simplicity is complex. It’s never simple to keep things simple.
+Simple solutions require the most advanced thinking”
+― Richie Norton&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Então como saber se algo é realmente simples? Há alguma medida?&lt;/p&gt;
+
+&lt;p&gt;Em minhas pesquisas por essa definição, encontrei uma palestra
+intitulada “Rumo a Ciência da Simplicidade” por George Whitesides.
+Eu a tenho arquivada desde 2012 e agora compartilho o link com você.&lt;/p&gt;
+
+&lt;iframe src=&quot;https://embed.ted.com/talks/lang/pt-br/george_whitesides_toward_a_science_of_simplicity&quot; width=&quot;640&quot; height=&quot;360&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; webkitallowfullscreen=&quot;&quot; mozallowfullscreen=&quot;&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Para um Objeto ser considerável simples deve ter uma função 
+&lt;em&gt;previsível&lt;/em&gt; e &lt;em&gt;confiável&lt;/em&gt;, com &lt;em&gt;baixo custo&lt;/em&gt; e característica de servir,
+ou ter o potencial de servir, como &lt;em&gt;blocos modulares&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não deixe de ver o vídeo. Pois essa é a melhor definição de 
+Simplicidade que eu já ouvi. Perfeito.&lt;/p&gt;
+
+&lt;p&gt;Desde então eu tento seguir essa linha de raciocínio.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Abrace a simplicidade em todas as parte do projeto.
+Faça com que suas Classes e Objetos sejam previsíveis, confiáveis,
+de baixo custo computacional e que ajam como blocos modulares
+que possam ser conectados entre si.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Simplicity is the ultimate sophistication” — Leonardo da Vinci&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Quanto mais simples, menos &lt;em&gt;bugs&lt;/em&gt;, menos &lt;em&gt;debug&lt;/em&gt;, menos curva de
+aprendizado, menos releitura do código.&lt;/p&gt;
+
+&lt;p&gt;Meu objetivo principal nos meus projetos é &lt;em&gt;qualidade&lt;/em&gt;. 
+Quero construí-los, entregá-los e esquecê-los. 
+Não quero ficar fazendo remendos.
+Quero fazê-los certo logo na primeira vez. 
+Pra isso sua base de código deve ser simples.&lt;/p&gt;
+
+&lt;p&gt;Esse é o caminho.&lt;/p&gt;
+
+&lt;p&gt;Ou talvez eu seja apenas um “velho” programador,
+avesso as “novidades”… você decide.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 19 Dec 2016 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/simplicidade/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/simplicidade/</guid>
+      </item>
+    
+      <item>
         <title>Desenvolvimento Profissional</title>
         <description>&lt;p&gt;Como você controla o desenvolvimento dos seus projetos?&lt;/p&gt;
 
@@ -2031,480 +2224,6 @@ cair a qualidade do código no longo prazo.&lt;/p&gt;
         <pubDate>Mon, 17 Oct 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/funcoes-aninhadas/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/funcoes-aninhadas/</guid>
-      </item>
-    
-      <item>
-        <title>Interfaces, Delegação, Problemas e Soluções</title>
-        <description>&lt;p&gt;Delegação de Implementação através da composição de
-Objetos é uma &lt;em&gt;feature&lt;/em&gt; incrível, só disponível na
-Linguagem &lt;em&gt;Object Pascal&lt;/em&gt;, porém existem alguns 
-problemas intrínsecos no uso dessa tecnologia.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1474406716381-8399fe67fbcf.jpg&quot; alt=&quot;Imagem&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;No &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/&quot;&gt;artigo anterior&lt;/a&gt;
-escrevi sobre a Delegação de Implementação de Interfaces, 
-utilizando a Composição de Objetos.&lt;/p&gt;
-
-&lt;p&gt;É uma &lt;em&gt;feature&lt;/em&gt; bem legal.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente existem algumas armadilhas quando trabalhamos
-com Interfaces e sua liberação automática de memória.&lt;/p&gt;
-
-&lt;p&gt;A Delegação utilizando Objetos também possui armadilhas que,
-se não forem verificadas, podem arruinar seu projeto devido
-aos vazamentos de memória que essa prática pode causar.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo vou lhe mostrar os problemas e propor soluções.&lt;/p&gt;
-
-&lt;h2 id=&quot;vazamentos-de-memoria&quot;&gt;Vazamentos de memória&lt;/h2&gt;
-
-&lt;p&gt;A Linguagem Object Pascal nos dá a possibilidade de trabalharmos
-utilizando variáveis do tipo Interface. Essas são liberadas
-automaticamente, pelo compilador, quando saem do escopo de execução
-na qual elas foram criadas.&lt;/p&gt;
-
-&lt;p&gt;Essa facilidade nos traz alguns problemas ou cria 
-condições para problemas como, por exemplo, a 
-&lt;a href=&quot;/posts/interfaces-e-a-referencia-circular-entre-objetos/&quot;&gt;referência circular&lt;/a&gt;
-e a &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;não existência de uma variável&lt;/a&gt;
-na construção de um Objeto.&lt;/p&gt;
-
-&lt;p&gt;Esse são alguns dos inúmeros equívocos na implementação que geram
-os tão temidos vazamentos de memória.&lt;/p&gt;
-
-&lt;p&gt;Outro problema grave tem haver com a 
-&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;hierarquia de herança&lt;/a&gt; 
-que você irá utilizar nas Classes que irão gerar Objetos que 
-implementam Interfaces por delegação.&lt;/p&gt;
-
-&lt;h2 id=&quot;contador-de-referencias&quot;&gt;Contador de Referências&lt;/h2&gt;
-
-&lt;p&gt;Vou ser justo e dizer que o problema, em si, não é especificamente sobre
-herança, mas como você implementa os Métodos especiais que são utilizados
-pelo compilador para fazer a liberação da memória automaticamente.&lt;/p&gt;
-
-&lt;p&gt;São eles: &lt;code&gt;QueryInterface&lt;/code&gt;, &lt;code&gt;_AddRef&lt;/code&gt; e &lt;code&gt;_Release&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Esses são Métodos especiais que são utilizados para 
-implementar um Contador de Referências. 
-Eles servem para incrementar e decrementar um contador 
-de referência da instância e, com isso, ter o controle para saber 
-quando liberar o Objeto da memória.&lt;/p&gt;
-
-&lt;p&gt;Ao utilizarmos Interfaces, somos obrigados a implementar esses 3 Métodos
-— a não ser que utilizemos Interfaces CORBA, que não tem contagem de
-referência e nem liberação automática da memória.&lt;/p&gt;
-
-&lt;p&gt;Então utizamos a herança de alguma Classe que já implemente esses Métodos.&lt;/p&gt;
-
-&lt;p&gt;E aqui começam os problemas.&lt;/p&gt;
-
-&lt;h2 id=&quot;problemas&quot;&gt;Problemas&lt;/h2&gt;
-
-&lt;p&gt;Como eu não utilizo mais herança de Classes eu não preciso pensar sobre
-hierarquias de Classes e todas as suas complexidades. 
-Todas as minhas Classes herdam de &lt;code&gt;TInterfacedObject&lt;/code&gt;, pois essa Classe
-já implementa os 3 Métodos apropriadamente.&lt;/p&gt;
-
-&lt;p&gt;Mas para programadores que ainda utilizam
-&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;herança&lt;/a&gt;
-esse pode ser o primeiro problema a enfrentar.&lt;/p&gt;
-
-&lt;p&gt;Exemplo. Você vai desenhando toda a sua hierarquia de Classes, “perfeitamente” e 
-descobre que Cão não pode herdar de Mamífero porque você quer utilizar Interfaces
-com contagem de referência… então Cão herda de &lt;code&gt;TInterfacedObject&lt;/code&gt; — 
-quebrando a hierarquia — ou você é obrigado a copiar/colar o código 
-de &lt;code&gt;TInterfacedObject&lt;/code&gt; dentro da sua Classe — o que também é abominável.&lt;/p&gt;
-
-&lt;p&gt;Como eu dizia, todas as minhas Classes herdam de &lt;code&gt;TInterfacedObject&lt;/code&gt;.
-Sendo assim, as Classes que serão utilizadas para delegar a implementação
-das Interfaces, também serão filhas de &lt;code&gt;TInterfacedObject&lt;/code&gt; e… BUM! 
-Temos vazamento de memória.&lt;/p&gt;
-
-&lt;p&gt;Pois é. As Classes delegadas não podem herdar de &lt;code&gt;TInterfacedObject&lt;/code&gt;
-se eu quiser instanciar a Classe principal como uma Interface.&lt;/p&gt;
-
-&lt;p&gt;Confuso? Eu também fiquei.&lt;/p&gt;
-
-&lt;h3 id=&quot;exemplo-1&quot;&gt;Exemplo 1&lt;/h3&gt;
-
-&lt;p&gt;Vamos utilizar o exemplo do
-&lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/&quot;&gt;artigo anterior&lt;/a&gt;
-para explicar onde iríamos ter problemas com vazamento de memória.&lt;/p&gt;
-
-&lt;p&gt;A Classe final ficou assim:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  TTheClient = class(TInterfacedObject, IFinances, IAccess)
-  private
-    FFinances: IFinances;
-    FAccess: IAccess;
-    property Finances: IFinances read FFinances implements IFinances;
-    property Access: IAccess read FAccess implements IAccess;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;E os &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/#como-utilizar-a-delegacao&quot;&gt;exemplos&lt;/a&gt;
-de implementação utilizando delegação foram as Classes &lt;code&gt;TSimpleFinances&lt;/code&gt; 
-e &lt;code&gt;TSimpleAccess&lt;/code&gt;. Ambas herdando de &lt;code&gt;TInterfacedObject&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  TSimpleFinances = class(TInterfacedObject, IFinances)
-  public
-    construtor ...
-    function Current: Currency;
-    function AsString: string;
-  end;
-  
-  TSimpleAccess = class(TInterfacedObject, IAccess)
-  public
-    construtor ...
-    function List: IDataList;
-    function AsString: string;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Devido os atributos &lt;code&gt;FFinances&lt;/code&gt; e &lt;code&gt;FAccess&lt;/code&gt; forem do tipo Interface, haverá
-vazamentos de memória se estanciarmos &lt;code&gt;TTheClient&lt;/code&gt; como sendo representante
-de alguma das Interfaces que ele implementa (por delegação).&lt;/p&gt;
-
-&lt;p&gt;Isso ocorre porque o compilador irá instanciar 2 Objetos — &lt;code&gt;TTheClient&lt;/code&gt;
-e o Objeto delegado que implementa a Interface — mas no nosso código
-só teremos a referência a um Objeto.
-A princípio tudo deveria funcionar, já que também temos a referência ao
-Objeto delegado através do atributo privado, mas não é assim que funciona.&lt;/p&gt;
-
-&lt;p&gt;Há dois problemas no código acima, se considerarmos a utilização normal de 
-instâncias com contagem de referência:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Propriedades e atributos delegados não podem ser Interfaces;&lt;/li&gt;
-  &lt;li&gt;Objetos delegados não devem ter &lt;code&gt;TInterfacedObject&lt;/code&gt; como herança.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Então a Classe final &lt;code&gt;TTheClient&lt;/code&gt; tem um problema.&lt;/p&gt;
-
-&lt;p&gt;Vamos ao um exemplo mais completo.&lt;/p&gt;
-
-&lt;h3 id=&quot;exemplo-2&quot;&gt;Exemplo 2&lt;/h3&gt;
-
-&lt;p&gt;O exemplo abaixo foi submetido à lista de discussão oficial do FreePascal com
-o título “&lt;em&gt;A serious Memleak using delegates/implements…&lt;/em&gt;” no dia 5 de Outubro, 
-o que gerou alguma polêmica por lá.&lt;/p&gt;
-
-&lt;p&gt;Se você não faz parte da lista, pode ler as mensagens dessa &lt;em&gt;thread&lt;/em&gt; 
-&lt;a href=&quot;https://www.mail-archive.com/fpc-pascal@lists.freepascal.org/msg43835.html&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;program Project1;
-
-{$mode objfpc}{$H+}
-
-uses
-  Classes, SysUtils;
-
-type
-  IValue = interface
-    function AsString: string;
-  end;
-
-  TIntegerValue = class(TInterfacedObject, IValue)
-  private
-    FValue: Integer;
-  public
-    constructor Create(Value: Integer);
-    destructor Destroy; override;
-    function AsString: string;
-  end;
-
-  TMyApp = class(TInterfacedObject, IValue)
-  private
-    FValue: IValue;
-  public
-    constructor Create(Value: Integer);
-    destructor Destroy; override;
-    property Value: IValue read FValue implements IValue;
-  end;
-
-{ TIntegerValue }
-
-constructor TIntegerValue.Create(Value: Integer);
-begin
-  inherited Create;
-  FValue := Value;
-  WriteLn(&#39;TIntegerValue.Create&#39;);
-end;
-
-destructor TIntegerValue.Destroy;
-begin
-  WriteLn(&#39;TIntegerValue.Destroy&#39;);
-  inherited Destroy;
-end;
-
-function TIntegerValue.AsString: string;
-begin
-  Result := &#39;Number is &#39; + IntToStr(FValue);
-end;
-
-{ TMyApp }
-
-constructor TMyApp.Create(Value: Integer);
-begin
-  inherited Create;
-  FValue := TIntegerValue.Create(Value);
-  WriteLn(&#39;TMyApp.Create&#39;);
-end;
-
-destructor TMyApp.Destroy;
-begin
-  WriteLn(&#39;TMyApp.Destroy&#39;);
-  inherited Destroy;
-end;
-
-// Program
-
-procedure ExecuteIntegerValue;
-var
-  V: IValue;
-begin
-  WriteLn;
-  WriteLn(&#39;IntegerValue:&#39;);
-  V := TIntegerValue.Create(5);
-  WriteLn(V.AsString);
-end;
-
-procedure ExecuteMyApp;
-var
-  App: TMyApp;
-begin
-  WriteLn;
-  WriteLn(&#39;MyApp:&#39;);
-  App := TMyApp.Create(10);
-  try
-    WriteLn(App.Value.AsString);
-  finally
-    App.Free;
-  end;
-end;
-
-procedure ExecuteMyAppAsInterface;
-var
-  V: IValue;
-begin
-  WriteLn;
-  WriteLn(&#39;MyAppAsInterface:&#39;);
-  V := TMyApp.Create(20);
-  WriteLn(V.AsString);
-end;
-
-begin
-  ExecuteIntegerValue;
-  ExecuteMyApp;
-  ExecuteMyAppAsInterface;
-  ReadLn;
-end.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O programa acima compila sem nenhum erro utilizando o FreePascal ou Delphi.
-No entanto, se habilitarmos a saída de verificação de vazamentos
-de memória (chama-se &lt;a href=&quot;http://www.freepascal.org/docs-html/rtl/heaptrc/usage.html&quot;&gt;Heaptrc&lt;/a&gt; no FreePascal)
-podemos ver que o término do programa não foi elegante como deveria:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;W:\temp&amp;gt;project1.exe
-
-IntegerValue:
-TIntegerValue.Create
-Number is 5
-TIntegerValue.Destroy
-
-MyApp:
-TIntegerValue.Create
-TMyApp.Create
-Number is 10
-TMyApp.Destroy
-TIntegerValue.Destroy
-
-MyAppAsInterface:
-TIntegerValue.Create
-TMyApp.Create
-Number is 20
-
-Heap dump by heaptrc unit
-83 memory blocks allocated : 2017/2200
-81 memory blocks freed     : 1981/2160
-2 unfreed memory blocks : 36
-True heap size : 229376 (80 used in System startup)
-True free heap : 229104
-Should be : 229128
-Call trace for block $01812928 size 20
-  $004017DA  TMYAPP__CREATE,  line 59 of W:/temp/project1.lpr
-  $00401B82  EXECUTEMYAPPASINTERFACE,  line 101 of W:/temp/project1.lpr
-  $00401C08  main,  line 108 of W:/temp/project1.lpr
-Call trace for block $018128C8 size 16
-  $00401B82  EXECUTEMYAPPASINTERFACE,  line 101 of W:/temp/project1.lpr
-  $00401C08  main,  line 108 of W:/temp/project1.lpr
-
-W:\temp&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O problema de vazamento de memória ocorre somente na chamada à função &lt;code&gt;MyAppAsInterface&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Ao vermos isso a primeira impressão é: Delegação de Implementação não funciona.&lt;/p&gt;
-
-&lt;p&gt;Bem, funciona sim. Não é tão elegante como eu gostaria que fosse, mas ao
-menos é contornável.&lt;/p&gt;
-
-&lt;h2 id=&quot;solucoes&quot;&gt;Soluções&lt;/h2&gt;
-
-&lt;p&gt;A partir de agora, a Classe que você sempre deverá se lembrar, depois da 
-&lt;code&gt;TInterfacedObject&lt;/code&gt;, será a Classe &lt;code&gt;TAggregatedObject&lt;/code&gt;. 
-Ambas existem no FreePascal e também no Delphi.&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TAggregatedObject&lt;/code&gt; também implementa os 3 métodos especiais, mas
-é uma implementação diferente da utilizada em &lt;code&gt;TInterfacedObject&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa Classe deverá ser utilizada para implementar Objetos que são utilizados
-na Delegação de Implementação utilizando a sintaxe “&lt;em&gt;implements&lt;/em&gt;”.&lt;/p&gt;
-
-&lt;p&gt;Em &lt;a href=&quot;http://www.freepascal.org/docs-html/rtl/system/taggregatedobject.html&quot;&gt;poucas palavras&lt;/a&gt;, 
-os Objetos de &lt;code&gt;TAggregatedObject&lt;/code&gt; delegam a contagem de 
-referência ao “Objeto controlador”, ou seja, delegam seus próprios “tempos de vida”
-ao Objeto externo que implementa as Interfaces.&lt;/p&gt;
-
-&lt;p&gt;Primeiro vamos implementar uma nova Classe que herda de &lt;code&gt;TAggregatedObject&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;TDelegatedIntegerValue = class(TAggregatedObject, IValue)
-private
-  FValue: Integer;
-public
-  constructor Create(AController: IInterface; Value: Integer);
-  destructor Destroy; override;
-  function AsString: string;
-end;
-
-{ TDelegatedIntegerValue }
-
-constructor TDelegatedIntegerValue.Create(AController: IInterface;
-  Value: Integer);
-begin
-  inherited Create(AController);
-  FValue := Value;
-  WriteLn(&#39;TDelegatedIntegerValue.Create&#39;);
-end;
-
-destructor TDelegatedIntegerValue.Destroy;
-begin
-  WriteLn(&#39;TDelegatedIntegerValue.Destroy&#39;);
-  inherited Destroy;
-end;
-
-function TDelegatedIntegerValue.AsString: string;
-begin
-  Result := &#39;Number is &#39; + IntToStr(FValue);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Infelizmente também teremos que alterar a definição da Classe &lt;code&gt;TMyApp&lt;/code&gt;,
-redefinindo a propriedade e atributo para um tipo concreto de Classe:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;TMyApp = class(TInterfacedObject, IValue)
-private
-  FValue: TDelegatedIntegerValue;
-public
-  constructor Create(Value: Integer);
-  destructor Destroy; override;
-  property Value: TDelegatedIntegerValue read FValue implements IValue;
-end;
-
-{ TMyApp }
-
-constructor TMyApp.Create(Value: Integer);
-begin
-  inherited Create;
-  FValue := TDelegatedIntegerValue.Create(Self, Value);
-  WriteLn(&#39;TMyApp.Create&#39;);
-end;
-
-destructor TMyApp.Destroy;
-begin
-  FValue.Free;
-  WriteLn(&#39;TMyApp.Destroy&#39;);
-  inherited Destroy;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Ao criamos a instância &lt;code&gt;FValue&lt;/code&gt;, um dos argumentos do construtor
-da Classe &lt;code&gt;TDelegatedIntegerValue&lt;/code&gt; é o &lt;em&gt;Controller&lt;/em&gt; que irá controlar
-o tempo de vida da instância que, nesse caso, é a instância (&lt;em&gt;Self&lt;/em&gt;)
-de &lt;code&gt;TMyApp&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Após compilar e executar novamente a aplicação, podemos ver um novo resultado:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;c:\temp&amp;gt;project1.exe
-
-IntegerValue:
-TIntegerValue.Create
-Number is 5
-TIntegerValue.Destroy
-
-MyApp:
-TDelegatedIntegerValue.Create
-TMyApp.Create
-Number is 10
-TDelegatedIntegerValue.Destroy
-TMyApp.Destroy
-
-MyAppAsInterface:
-TDelegatedIntegerValue.Create
-TMyApp.Create
-Number is 20
-TDelegatedIntegerValue.Destroy
-TMyApp.Destroy
-
-Heap dump by heaptrc unit
-83 memory blocks allocated : 2009/2184
-83 memory blocks freed     : 2009/2184
-0 unfreed memory blocks : 0
-True heap size : 196608 (80 used in System startup)
-True free heap : 196528
-
-c:\temp&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Os &lt;em&gt;designers&lt;/em&gt; da linguagem foram muito infelizes ao criarem “métodos especiais”
-para liberação de memória. Isso é algo difícil de explicar para programadores
-não-Pascal. É até um pouco vergonhoso…&lt;/p&gt;
-
-&lt;p&gt;Poderiam ter criado uma Interface especial que só pelo fato de dizer que sua
-a Classe à implementa, o compilador poderia fazer sua mágica.&lt;/p&gt;
-
-&lt;p&gt;Felizmente há possíveis soluções para contornar esse erro no &lt;em&gt;design&lt;/em&gt;, mas se 
-pudessemos utilizar propriedades de Objetos delegados como sendo do 
-tipo Interface, como sugeri no artigo anterior, seria quase perfeito. Poderíamos
-utilizar Injeção de Dependência através dos construtores dos Objetos, inicializando
-as instâncias delegadas, que seriam do tipo Interface.&lt;/p&gt;
-
-&lt;p&gt;Com a implementação atual, até podemos utilizar a Injeção de Dependência, 
-mas os argumentos deverão ser do tipo Classe e não Interface — isso na maioria dos
-casos normais onde queremos utilizar a contagem de referência — 
-então o polimorfismo iria ficar por conta da herança de Classes, o que não é muito bem
-vindo devido aos problemas já relatados em artigos anteriores.&lt;/p&gt;
-
-&lt;p&gt;O jeito é instanciar as Classes delegadas internamente. O que não é um real problema.&lt;/p&gt;
-
-&lt;p&gt;Se formos pensar bem, todos os métodos de Implementação das Interfaces deveriam ser 
-implementas dentro do Objeto, quando não utilizamos Delegação. Então não estaríamos 
-perdendo muito, apenas estamos deixando de ganhar mais.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 10 Oct 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/interfaces-delegacao-problemas-solucoes/</guid>
       </item>
     
   </channel>
