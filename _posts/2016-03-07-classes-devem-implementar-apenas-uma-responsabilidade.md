@@ -321,6 +321,7 @@ Eu poderia, mas não devo. Falarei sobre herança em próximos posts. Por enquan
 e prosseguir com o exemplo.
 
 Falta a Classe de *Log* que envia e-mails, sem esquecer de Injetar a Dependência de <code>Mail</code> no *construtor*:
+
     type
       TLogToMail = class(TInterfacedObject, ILog)
       private
