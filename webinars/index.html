@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Contato &#8211; Object Pascal Programming</title>
+    <title>Webinários &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
@@ -11,7 +11,7 @@
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
     
     
-    <link rel="canonical" href="http://objectpascalprogramming.com/contact/">
+    <link rel="canonical" href="http://objectpascalprogramming.com/webinars/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,10 +31,10 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Contato">
+    <meta property="og:title" content="Webinários">
     <meta property="og:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
-    <meta property="og:url" content="http://objectpascalprogramming.com/contact/">
+    <meta property="og:url" content="http://objectpascalprogramming.com/webinars/">
     <meta property="og:site_name" content="Object Pascal Programming">
     
     <!-- Twitter Card -->
@@ -42,10 +42,10 @@
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Contato" />
+    <meta name="twitter:title" content="Webinários" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/contact/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/webinars/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -187,54 +187,19 @@
       <!--<hr size="1" width="100%" align="center" noshade>-->
         <div class="post">
   <header class="post-header">
-    <h1 class="h2">Contato</h1>
+    <h1 class="h2">Webinários</h1>
   </header>
   <article class="post-content">
-  <div class="py2">
-  
-    <form class="form-stacked">
-      <input type="text" name="email" class="field-light" placeholder="Seu e-mail">
-      <textarea type="text" name="content" class="field-light" rows="5" placeholder="O que você gostaria de dizer?"></textarea>
-      <input type="hidden" name="_subject" value="New submission!" />
-      <input type="text" name="_gotcha" style="display:none" />
-      <button type='submit' class="button button-blue button-big mobile-block">Enviar</button>
-    </form>
-  
-</div>
+  <p>Aqui estão disponíveis todos os Webinários que eu realizei
+sobre Orientação a Objetos e Desenvolvimento de Software.</p>
 
+<h4 id="mudando-o-mindset--0--27-dez-2016">Mudando o Mindset | #0 — 27 Dez 2016</h4>
 
-  <script>
-    var contactForm = document.querySelector('form'),
-    inputEmail = contactForm.querySelector('[name="email"]'),
-    textAreaMessage = contactForm.querySelector('[name="content"]'),
-    sendButton = contactForm.querySelector('button');
-
-    sendButton.addEventListener('click', function(event){
-      event.preventDefault();
-
-      sendButton.innerHTML = 'Enviando..';
-
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', '//formspree.io/opp@delfire.net', true);
-      xhr.setRequestHeader("Accept", "application/json")
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-
-      xhr.send(
-        "email=" + inputEmail.value +
-        "&message=" + textAreaMessage.value);
-
-      xhr.onloadend = function (res) {
-        if (res.target.status === 200){
-          sendButton.innerHTML = 'Mensagem enviada!';
-        }
-        else {
-          sendButton.innerHTML = 'Erro!';
-        }
-      }
-    });
-</script>
-
-
+<p>Esse foi o início de tudo, meu primeiro Webinário no dia do
+aniversário do blog.
+Nós discutimos sobre a mudança 
+de <em>mindset</em> do paradigma Procedural para o Orientado a Objetos.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YKzXZmo0rh0" frameborder="0" allowfullscreen=""></iframe>
 
   </article>
 </div>

@@ -8,6 +8,142 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Retrospectiva 2016</title>
+        <description>&lt;p&gt;A um ano atrás eu tinha a minha frente um oceano infinito de Blogs.&lt;/p&gt;
+
+&lt;p&gt;Há espaço para mais um blog?
+Como fazer diferença?
+Como ser notado nesse oceano que cresce exponencialmente
+todos os dias?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-34343-cbjdurrrka-daiga-ellaby.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;inicio&quot;&gt;A apenas 1 ano atrás…&lt;/h2&gt;
+
+&lt;p&gt;Mais um ano se foi, mas para esse blog foi apenas o primeiro
+ano de vida.&lt;/p&gt;
+
+&lt;p&gt;Nas minhas Férias em 2015 tive a ideia de criar um blog para
+escrever sobre desenvolvimento de &lt;em&gt;software&lt;/em&gt; com foco na 
+linguagem Object Pascal.&lt;/p&gt;
+
+&lt;p&gt;Quando escrevia o primeiro artigo eu quase desisti.&lt;/p&gt;
+
+&lt;p&gt;Pensei: — Mais um blog fará diferença dentre muitos outros?&lt;/p&gt;
+
+&lt;p&gt;Eu não sabia se faria diferença, mas sentia que deveria escrever
+um pouco sobre minha experiência, meu dia-a-dia e sobre a Orientação
+a Objetos verdadeiramente aplicada.&lt;/p&gt;
+
+&lt;p&gt;Os assuntos que eu queria escrever eu não encontrava em 
+nenhum outro blog em Português, então, por quê não?&lt;/p&gt;
+
+&lt;p&gt;Não desisti.&lt;/p&gt;
+
+&lt;p&gt;Aqui estamos. Ano 2017. Total de &lt;a href=&quot;/archive/&quot;&gt;50 artigos&lt;/a&gt;.
+Agora, 51 artigos.&lt;/p&gt;
+
+&lt;p&gt;Minha meta era escrever 1 artigo semanalmente, durante 1 ano,
+sem se importar se alguém estaria lendo. Sem se importar se 
+alguém estaria se identificando com as ideias. Sem se importar
+se faria diferença… apenas escrever e ver os resultados após
+um ano.&lt;/p&gt;
+
+&lt;p&gt;Falar sobre Object Pascal, uma linguagem “morta”?&lt;/p&gt;
+
+&lt;p&gt;O fato é que fez diferença… e continua fazendo.&lt;/p&gt;
+
+&lt;p&gt;As &lt;a href=&quot;/lista-vip/&quot;&gt;inscrições&lt;/a&gt; para fazer parte da minha Lista VIP
+cresce a cada dia.&lt;/p&gt;
+
+&lt;p&gt;Incrivelmente há também um aumento no número de inscritos que,
+em muitos casos, não desenvolvem em Object Pascal mas estão 
+conosco para fazer parte desse &lt;em&gt;mindset&lt;/em&gt; sobre Orientação a Objetos.&lt;/p&gt;
+
+&lt;p&gt;O sucesso do blog superou todas as minhas expectativas.&lt;/p&gt;
+
+&lt;h2 id=&quot;melhores-artigos&quot;&gt;Melhores Artigos&lt;/h2&gt;
+
+&lt;p&gt;Selecionei os melhores artigos de 2016. Não houve uma ciência para
+escolher esses artigos. Apenas selecionei os 10 mais relevantes pra
+mim ou para os leitores baseados no &lt;em&gt;feedback&lt;/em&gt; e comentários.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Interfaces e o Método estático New&lt;/a&gt;
+É sem dúvida um artigo que eu adoro porque essa “técnica” mudou a 
+maneira que eu trabalho com Object Pascal e Interfaces.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces em Todo Lugar&lt;/a&gt;
+Mostra que com a utilização do Método &lt;code&gt;New&lt;/code&gt; é possível  utilizar Interfaces em todo o código,
+sem problemas com vazamentos de memória.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Objetos devem representar Entidades reais&lt;/a&gt;
+Diz que cada Objeto deverá representar uma Entidade num determinado
+momento para um determinado Contexto.
+Sempre tenham em mente a dupla Entidade e Contexto, quando estiverem
+programando Orientado a Objetos.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;Classes devem Implementar apenas uma Responsabilidade&lt;/a&gt;
+É uma regra que todos conhecem mas quase ninguém respeita. Porque é difícil.
+Mas é difícil quando utilizamos o pensamento Procedural para (tentar)
+codificar um Objeto. Não pense nos procedimentos, pense no comportamento
+do Objeto apenas para um Contexto específico e essa regra ficará mais fácil
+de ser cumprida.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;Objetos pensam e tomam decisões&lt;/a&gt;
+É um conceito difícil para quem ainda não entendeu, realmente, a
+programação Orientada a Objetos. No modelo Procedural você tem um 
+Controlador (você); no Modelo Orientado a Objetos, há apenas Objetos
+que sabem o que fazer.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/posts/validacoes-no-construtor/&quot;&gt;Validações no Construtor&lt;/a&gt;
+É um conceito que eu conhecia, mas não seguia. Mas ele faz todo o sentido.
+Você não deve validar (todo) o Objeto no construtor. Se existisse um mundo 
+onde todos os Objetos fossem validados antes de serem criados, então 
+seria um mundo perfeito com Objetos perfeitos. E perfeição não existe.
+Dê um voto de confiança aos seus Objetos e deixe-os tentar executar o
+trabalho.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;Herança pode ser o Mal da Orientação a Objetos&lt;/a&gt;
+Foi uma série de 5 artigos. Uma série provocativa que gerou
+dúvidas, argumentações, mas também admiração e sintonia com outros 
+leitores que pensam da mesma forma.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/posts/classes-de-dados/&quot;&gt;Classe de Dados&lt;/a&gt;
+Pode ser uma ideia controversa quando pensamos em Objetos. Será?
+Quando leio sobre Orientação a Objetos em outros blogs,
+livros ou publicações, fica claro que os autores dizem ser errado o pensamento
+procedural, o pensamento em dados. Mas eles não explicam como utilizamos
+dados puros dentro de um código Orientado a Objetos. Essa é a maneira que eu 
+utilizo nos meus sistemas.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/posts/procedural-e-facil-orientado-a-objetos-e-dificil/&quot;&gt;Procedural é fácil, Orientado a Objetos é difícil&lt;/a&gt;
+É um artigo simples, de 2 minutos de leitura, que foi escrito em menos de
+30 minutos… e mesmo assim teve uma ótima repercussão para os leitores.
+Incrível.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/posts/diga-me-algo-sobre-voce/&quot;&gt;Diga-me algo Sobre você&lt;/a&gt;
+É uma ideia pessoal, mas baseada no conceito que um Objeto deve ser
+auto-suficiente para descrever a si mesmo, sem quebra de encapsulamento,
+sem &lt;em&gt;Getters&lt;/em&gt;, sem ser um &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;“balde de dados”&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;e-sobre-o-futuro&quot;&gt;E sobre o Futuro…&lt;/h2&gt;
+
+&lt;p&gt;Os artigos continuarão a serem publicados semanalmente, mas vou
+expandir. Haverá também vídeos no meu novo
+&lt;a href=&quot;https://www.youtube.com/c/mdbs99&quot;&gt;Canal do YouTube&lt;/a&gt; que irão falar
+sobre os artigos do blog, desenvolvimento de &lt;em&gt;software&lt;/em&gt; e, claro,
+Orientação a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Está sendo uma experiência única compartilhar ideias que somente eu 
+e poucas pessoas que trabalham comigo tinham acesso.&lt;/p&gt;
+
+&lt;p&gt;Agradeço sua leitura, seus comentários e os e-mails de incentivo.&lt;/p&gt;
+
+&lt;p&gt;Obrigado e FELIZ 2017!&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 02 Jan 2017 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/retrospectiva-2016/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/retrospectiva-2016/</guid>
+      </item>
+    
+      <item>
         <title>Simplicidade</title>
         <description>&lt;p&gt;Hoje em dia temos acesso a dezenas de linguagens com
 inúmeros recursos como Orientação a Objetos, Generics, Classes 
@@ -1899,331 +2035,6 @@ muito a pena no longo prazo.&lt;/p&gt;
         <pubDate>Mon, 24 Oct 2016 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/unidades-limitrofes/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/unidades-limitrofes/</guid>
-      </item>
-    
-      <item>
-        <title>Funções Aninhadas</title>
-        <description>&lt;p&gt;Se você tem um Método coeso, que trabalha em apenas uma única 
-tarefa, mas mesmo assim o código parece complicado, dificultando
-o entendimento e a manutenção… já pensou em refatorar o código
-utilizando Funções Aninhadas?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1476411890462-80309823db3b.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Nested_function&quot;&gt;Funções Aninhadas&lt;/a&gt;
-é algo que não existe em todas as linguagens.
-A linguagem Pascal tem e acho que devemos aproveitar essa &lt;em&gt;feature&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Funções Aninhadas nada mais são do que funções declaradas dentro de
-outras funções ou Métodos.&lt;/p&gt;
-
-&lt;p&gt;Esse artigo irá mostrar os motivos e vantagens ao utilizarmos Funções 
-Aninhadas, assim como algumas regras que devemos seguir ao utilizá-las.&lt;/p&gt;
-
-&lt;h2 id=&quot;motivos&quot;&gt;Motivos&lt;/h2&gt;
-
-&lt;p&gt;Funções Aninhadas é uma opção bem melhor do que 
-&lt;a href=&quot;/posts/linhas-em-branco-no-metodo-e-mal-cheiro/&quot;&gt;pular linhas&lt;/a&gt;
-dentro da implementação de um Método com o intuito de separar blocos
-de código.&lt;/p&gt;
-
-&lt;p&gt;Cada função já define um bloco, com a vantagem de ser &lt;strong&gt;reutilizável&lt;/strong&gt; em
-outra parte do Método.&lt;/p&gt;
-
-&lt;p&gt;Funções Aninhadas tem um conceito muito próximo da Programação Orientada a 
-Objetos (leia esse 
-&lt;a href=&quot;http://blog.synopse.info/post/2012/05/20/Recursive-calls-and-private-objects&quot;&gt;artigo&lt;/a&gt;
-).
-Um Método que contém Funções Aninhadas é como se fosse uma implementação
-de uma &lt;em&gt;Classe Anônima&lt;/em&gt;. As variáveis locais serão como &lt;em&gt;atributos&lt;/em&gt; e as 
-Funções Aninhadas serão como &lt;em&gt;Métodos privados&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Funções Aninhadas facilitam a correta utilização do
-&lt;a href=&quot;/posts/a-declaracao-with-do-e-do-mal/&quot;&gt;&lt;em&gt;WITH&lt;/em&gt;&lt;/a&gt;
-quando a implementação do Método é complexa ou quando o código utiliza
-composição com muitos Objetos.
-Dividir o código em pequenas funções, diminuirá as chances de haver &lt;strong&gt;conflitos&lt;/strong&gt;
-entre identificadores que utilizam o &lt;em&gt;WITH&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Resumindo: Funções Aninhadas deixam o código melhor organizado, fácil de ler 
-e alterar.&lt;/p&gt;
-
-&lt;h2 id=&quot;regras&quot;&gt;Regras de Uso&lt;/h2&gt;
-
-&lt;p&gt;Qualquer &lt;em&gt;feature&lt;/em&gt; utilizada de forma indiscriminada poderá ser um
-potencial problema no futuro, ao invés de uma solução — o mesmo ocorre com 
-o uso indiscriminado do &lt;em&gt;WITH&lt;/em&gt; por programadores que não sabem exatamente o
-que estão fazendo.&lt;/p&gt;
-
-&lt;p&gt;Precisamos de &lt;strong&gt;regras&lt;/strong&gt; e &lt;strong&gt;disciplina&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Abaixo algumas regras que você deve levar em conta.&lt;/p&gt;
-
-&lt;h3 id=&quot;regra1&quot;&gt;Regra 1: Não utilize mais do que 3 Funções Aninhadas&lt;/h3&gt;
-
-&lt;p&gt;É uma regra óbvia.
-Se você tem muitas Funções Aninhadas dentro e um único Método, 
-é bem provável que ele esteja fazendo &lt;strong&gt;coisas demais&lt;/strong&gt;.
-Pense na refatoração e decomposição em outros Métodos ou mesmo
-na criação de uma nova Classe.&lt;/p&gt;
-
-&lt;p&gt;Existem pouquíssimas exceções a essa regra.&lt;/p&gt;
-
-&lt;h3 id=&quot;regra2&quot;&gt;Regra 2: Evite compartilhar as Variáveis Locais&lt;/h3&gt;
-
-&lt;p&gt;Falei acima que um Método com Funções Aninhadas é como uma Classe
-Anônima, contendo Métodos privados e atributos. 
-No entanto, sabemos que não são verdadeiras Classes.&lt;/p&gt;
-
-&lt;p&gt;É melhor que você isole cada Função Aninhada com suas próprias 
-variáveis e argumentos, ou seja, &lt;strong&gt;evite&lt;/strong&gt; compartilhar as variáveis
-locais do Método com as Funções Aninhadas.&lt;/p&gt;
-
-&lt;p&gt;Essa disciplina na codificação irá ajudá-lo na &lt;em&gt;extração&lt;/em&gt; e 
-&lt;em&gt;refatoração&lt;/em&gt; das Funções Aninhadas, se for o caso, para criar outros 
-Métodos com o mínimo de impacto possível.&lt;/p&gt;
-
-&lt;p&gt;Ao invés de utilizar a variável local do Método, passe
-a referência como argumento da função, mantendo-as &lt;strong&gt;isoladas&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Existem poucas exceções a esta regra. Por exemplo.
-Se todas as Funções Aninhadas trabalham sempre com
-os mesmos Objetos (variáveis locais) do Método, é mais fácil 
-compartilhar as variáveis — ou refatorar criando uma nova Classe —
-do que ficar repassando-as às funções. Utilize o bom senso.&lt;/p&gt;
-
-&lt;h3 id=&quot;regra3&quot;&gt;Regra 3: Apenas 1 Nível de Funções&lt;/h3&gt;
-
-&lt;p&gt;Não complique. Use &lt;em&gt;apenas&lt;/em&gt; um “nível” de Funções Aninhadas. Se
-você tiver utilizando mais de um nível, é provável que a função
-de “nível 2” deveria ser um Método.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Refatore&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Após a refatoração do código, o “nível 2” de Funções Aninhadas
-passaria a ser o “nível 1” no novo Método criado.&lt;/p&gt;
-
-&lt;p&gt;Sem exceções aqui!&lt;/p&gt;
-
-&lt;h3 id=&quot;regra4&quot;&gt;Regra 4: Menos é Mais&lt;/h3&gt;
-
-&lt;p&gt;Cada função deve implementar apenas uma &lt;strong&gt;única&lt;/strong&gt; responsabilidade.&lt;/p&gt;
-
-&lt;p&gt;Essa é uma regra geral para codificar Métodos e Funções.&lt;/p&gt;
-
-&lt;p&gt;Sem exceções.&lt;/p&gt;
-
-&lt;h2 id=&quot;exemplos&quot;&gt;Exemplos&lt;/h2&gt;
-
-&lt;p&gt;Funções Aninhadas podem ser utilizadas em qualquer tipo de Objeto.&lt;/p&gt;
-
-&lt;p&gt;Objetos que lidam com XML, por exemplo, onde é necessário trabalhar
-com recursividade e validações sempre são bons candidatos.&lt;/p&gt;
-
-&lt;p&gt;Mas meu uso pessoal de Funções Aninhadas é, na maioria das vezes, 
-utilizada no código de &lt;em&gt;Forms&lt;/em&gt;.
-O motivo é simples: É natural para o usuário clicar em apenas um
-botão e o sistema fazer &lt;em&gt;inúmeras&lt;/em&gt; tarefas. Para o usuário é
-irrelevante se foi preciso 1 ou 20 Objetos para concluir a tarefa.
-O usuário acha que apenas uma tarefa foi executada quando, na 
-verdade, &lt;strong&gt;inúmeros Objetos&lt;/strong&gt; podem ter tido participação para executar
-o serviço.&lt;/p&gt;
-
-&lt;p&gt;Então, abaixo temos alguns exemplos do que eu considero um &lt;em&gt;bom&lt;/em&gt; uso
-de Funções Aninhadas.&lt;/p&gt;
-
-&lt;p&gt;Observação: Podem haver erros de sintaxe, visto que eu estou escrevendo
-o código diretamente no editor do artigo sem compilar.&lt;/p&gt;
-
-&lt;h3 id=&quot;exemplo1&quot;&gt;Exemplo 1: Pergunte, Faça o Serviço&lt;/h3&gt;
-
-&lt;p&gt;Em alguns formulários temos que questionar o usuário sobre
-qual caminho o sistema deve tomar.
-Esses questionamentos, com mensagens &lt;em&gt;strings&lt;/em&gt;, podem 
-diminuir a legibilidade do código.&lt;/p&gt;
-
-&lt;p&gt;Somado isso com o uso &lt;em&gt;errado&lt;/em&gt; do &lt;em&gt;WITH&lt;/em&gt;, o código &lt;em&gt;não&lt;/em&gt; fica 
-elegante. Veja:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure TMainForm.DeleteButtonClick(Sender: TObject);
-begin
-  with TUserQuestion.New(
-    Format(
-      &#39;Você tem %d registros para excluir.&#39; + #13
-      &#39;Esse processo pode demorar.&#39; + #13
-      &#39;Confirma a execução?&#39;, [
-        DataSet.RecordCount
-      ]
-    )
-  ) do
-  begin
-    Show;
-    if Confirmed then
-    begin
-      ExecuteProcessOne;
-      ExecuteProcessTwo;
-      TUserInformation.New(&#39;Processo concluído.&#39;).Show;
-    end;
-  end;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Nesse exemplo eu utilizei Classes de Mensagens ao usuário.
-Não precisamos de sua implementação para entender o que está 
-ocorrendo aqui. No entanto o código pode parecer um pouco confuso
-para alguns programadores “não iniciados” no uso do &lt;em&gt;WITH&lt;/em&gt;.
-Por exemplo. O Método &lt;code&gt;Show&lt;/code&gt; após o primeiro &lt;code&gt;begin&lt;/code&gt;, pertence ao
-Formulário ou a instância de &lt;code&gt;TUserQuestion&lt;/code&gt;?&lt;/p&gt;
-
-&lt;p&gt;Também temos a mensagem em texto com quebra de linha e parâmetros
-concatenados. As vezes essas mensagens são maiores. O código fica 
-uma bagunça.&lt;/p&gt;
-
-&lt;p&gt;Vamos refatorar esse código utilizando Funções Aninhadas:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure TMainForm.DeleteButtonClick(Sender: TObject);
-
-  function Question(Total: Integer): IUserQuestion;
-  begin
-    Result :=
-      TUserQuestion.New(
-        Format(
-          &#39;Você tem %d registros para excluir.&#39; + #13
-          &#39;Esse processo pode demorar.&#39; + #13
-          &#39;Confirma a execução?&#39;, [
-            Total
-          ]
-        )
-      ).Show;
-  end;
-
-begin
-  if Question(DataSet.RecordCount).Confirmed then
-  begin
-    ExecuteProcessOne;
-    ExecuteProcessTwo;
-    TUserInformation.New(&#39;Processo concluído.&#39;).Show;
-  end;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Mais simples?&lt;/p&gt;
-
-&lt;p&gt;Sim, optei por retirar o &lt;em&gt;WITH&lt;/em&gt;, porque é mais simples dessa forma,
-nesse exemplo.
-Mas ele poderia ser utilizado caso o programador necessitasse de 
-mais alguma informação da instância &lt;code&gt;IUserQuestion&lt;/code&gt;, criada e retornada
-através da função &lt;code&gt;Question&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Exemplo. Você pode fazer uma pergunta ao usuário onde ele deve digitar 
-um valor. Nesse caso você precisa validar o retorno (&lt;code&gt;Confirmed&lt;/code&gt;) e 
-mostrar o valor digitado (&lt;code&gt;Value&lt;/code&gt;):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;with TUserInput.New(&#39;Digite o valor&#39;) do
-begin
-  if Confirmed then
-    TUserInformation.New(
-      &#39;Valor digitado: &#39; + Value.AsString
-    )
-    .Show;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Repare, também, que a função &lt;code&gt;Question&lt;/code&gt; não tem mais dependência
-com o Objeto que vem do Formulário, &lt;code&gt;DataSet.RecordCount&lt;/code&gt;. A função
-agora está &lt;strong&gt;isolada&lt;/strong&gt;. Isso quer dizer que se você precisar dessa
-função em mais de um lugar, pode extraí-la, criar um novo Método e 
-passar o argumento na sua chamada.&lt;/p&gt;
-
-&lt;h3 id=&quot;exemplo2&quot;&gt;Exemplo 2: Clicou no “Botão Mágico” que Faz tudo&lt;/h3&gt;
-
-&lt;p&gt;Imagine um Formulário que, ao clique de um botão, o sistema:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Faz validações das informações desejadas&lt;/li&gt;
-  &lt;li&gt;Pergunta ao usuário se deve continuar&lt;/li&gt;
-  &lt;li&gt;Salva as informações no banco de dados&lt;/li&gt;
-  &lt;li&gt;Envia um e-mail notificando alguém&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Claro que você terá uma Classe para cada uma dessas funções (certo?).
-Você não deve implementar tudo isso dentro de um evento num botão.&lt;/p&gt;
-
-&lt;p&gt;Por outro lado, a implementação mais &lt;strong&gt;correta&lt;/strong&gt; seria separar essas ações
-em outras camadas, outras Classes, sem instanciar tais Classes específicas
-dentro do Formulário.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente nem sempre temos tempo para fazer o 100% correto. Mas que 
-tal fazer 80% correto para depois, quando tivermos mais tempo, refatorar
-com tranquilidade o código?&lt;/p&gt;
-
-&lt;p&gt;Aqui as Funções Aninhadas nos ajudam novamente:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure TMainForm.ConfirmButtonClick(Sender: TObject);
-
-  function Checked: Boolean;
-  begin
-    Result := False;
-    //if EmailEdit.Text &amp;lt;&amp;gt; &#39;&#39; then
-    // Exit;
-    //...
-    Result := True;
-  end;
-  
-  function Question: IUserQuestion;
-  begin
-    Result := 
-      TUserQuestion.New(&#39;Confirma a operação?&#39;).Show;
-  end;
-  
-  procedure Save;
-  begin
-    // persistência...
-  end;
-  
-  procedure SendEmail;
-  begin
-    // envia um e-mail...
-  end;
-
-begin
-  if Checked then
-    if Question.Confirmed then
-    begin
-      Save;
-      SendMail;
-    end;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Tenha em mente que isso é apenas um exemplo.&lt;/p&gt;
-
-&lt;p&gt;Todas as Funções Aninhadas devem seguir o bom senso e ter 
-&lt;strong&gt;poucas linhas&lt;/strong&gt;. Caso contrário, &lt;em&gt;refatore&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Haverá muitas dependências entre o Formulário e todas essas Classes 
-especialistas. Mas nem sempre
-precisamos abstrair em camadas. Pode ser um pequeno Formulário de um
-pequeno sistema, onde não haveria problemas em ter essas dependências.&lt;/p&gt;
-
-&lt;p&gt;Mesmo assim o código está &lt;em&gt;limpo&lt;/em&gt; e &lt;em&gt;elegante&lt;/em&gt;, com fácil manutenção.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Funções Aninhadas nos ajudam a codificar de forma mais simples e elegante.&lt;/p&gt;
-
-&lt;p&gt;É um dos caminhos para “seguir em frente” sem muitas preocupações com 
-o &lt;strong&gt;purismo&lt;/strong&gt; da Orientação a Objetos — devido a falta de tempo — mas sem deixar
-cair a qualidade do código no longo prazo.&lt;/p&gt;
-
-&lt;p&gt;Utilize-as com sabedoria.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 17 Oct 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/funcoes-aninhadas/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/funcoes-aninhadas/</guid>
       </item>
     
   </channel>
