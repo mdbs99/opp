@@ -113,7 +113,7 @@ Queremos utilizar Objetos, pois eles facilitam nossas vidas. Então encapsulamos
   
 ##Conclusão {#conclusao}
 
-Não há problema se seu Objeto encapsula apenas Dados, contanto que esses Dados fazem parte da Entidade real que seu Objeto está representando.
+Não há problema se seu Objeto encapsula apenas Dados, contanto que esses Dados façam parte da Entidade real que seu Objeto está representando.
 
 Entender a sutil diferença entre Dados e Estado do Objeto irá fazer você codificar Classes melhores. 
 
