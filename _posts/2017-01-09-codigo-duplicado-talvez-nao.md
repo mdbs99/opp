@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Código Duplicado, Talvez Não
-date: 2017-01-08
+date: 2017-01-09
 description:
   É quase impossível não haver duplicação de código num programa.
   O importante é saber se essa duplicação é de Infraestrutura ou de Negócio.
@@ -48,8 +48,8 @@ pode — ou não deveria — duplicar Código de Regras de Negócio.
 
 Simples assim.
 
-Mas num sistema tudo é código.
-Como saber a diferença entre um tipo e outro?
+Mas num sistema onde tudo é código, como saber a diferença entre
+um tipo e outro?
 
 Nesse artigo você aprenderá a dinstinção entre eles.
 
