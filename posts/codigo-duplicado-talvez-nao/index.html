@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Código Duplicado, Talvez Não &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Code">
+    <meta name="keywords" content="code, código, object pascal, duplication, duplicação">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201701090001" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Código Duplicado, Talvez Não">
+    <meta property="og:description" content="É quase impossível não haver duplicação de código num programa. O importante é saber se essa duplicação é de Infraestrutura ou de Negócio.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-ceukkv42o40-aaron-burden.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Código Duplicado, Talvez Não" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>EBOOK</a>
+<a href="/archive/">ARQUIVO</a>
+<a href="/webinars/">WEBINÁRIOS</a>
+<a href="/contact/">CONTATO</a>
+<a href="/about/">SOBRE</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Código Duplicado, Talvez Não</h1>
+  <span class="post-meta">Jan 9, 2017</span><br>
+  
+  <span class="post-meta small">
+  
+    4 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>É quase impossível não haver duplicação de código num programa real,
+com pelo menos algumas dezenas de linhas.</p>
+
+<p>O importante é saber se essa duplicação é de Infraestrutura ou
+de Regras de Negócio.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-ceukkv42o40-aaron-burden.jpg" alt="Unsplash image" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Sempre ouvimos falar que não se deve ter código duplicado num
+sistema, mas eu tenho certeza que isso é quase impossível de 
+conseguir.</p>
+
+<p>O que é uma duplicação de código?</p>
+
+<p>Se você tem duas linhas iguais, elas estão duplicadas?</p>
+
+<p>Bem, depende muito do <em>ponto de vista</em>.</p>
+
+<p>Pra mim existem dois tipos de código: <em>Infraestrutura</em> e <em>Regras de Negócio</em>.</p>
+
+<p>Código de Infraestrutura pode estar duplicado mas você <em>não</em>
+pode — ou não deveria — duplicar Código de Regras de Negócio.</p>
+
+<p>Simples assim.</p>
+
+<p>Mas num sistema onde tudo é código, como saber a diferença entre
+um tipo e outro?</p>
+
+<p>Nesse artigo você aprenderá a dinstinção entre eles.</p>
+
+<h2 id="infraestrutura">Infraestrutura</h2>
+
+<p>Dou esse nome para todo código que faz parte da infraestrutura
+para criação de Classes, implementação de Interfaces, instanciação
+de Objetos, chamadas aos métodos, etc.</p>
+
+<p>Vou lhe dar um exemplo. Imagine que você tem uma Classe com três
+argumentos no construtor. Toda vez que você instanciar um Objeto
+dessa Classe você terá que <em>duplicar</em> a mesma construção:</p>
+
+<pre><code>Ob1 := TFoo.New('a', 1, 'z');
+Ob2 := TFoo.New('b', 5, 'a');
+  
+// in other place...
+Ob3 := TFoo.New('a', 1, 'z');
+</code></pre>
+
+<p>O código acima parece duplicado, não?</p>
+
+<p>Bem os Objetos <code>Ob1</code> e <code>Ob2</code> tem argumentos diferentes, então essas
+linhas não são totalmente iguais, apenas bem similares. Então o que
+você acha? Há duplicação aqui?</p>
+
+<p>Não.</p>
+
+<p>Mas e o <code>Ob3</code>? Ele foi construído com a mesma assinatura de <code>Ob1</code> 
+mas em outra parte do programa. Isso é uma duplicação?</p>
+
+<p>Também não.</p>
+
+<p>O fato de haver 2 chamadas iguais num mesmo projeto não quer dizer 
+que há uma duplicação de código. Se assim fosse, toda vez que você
+codifica um <code>TStringList.Create</code> estaria duplicando código.</p>
+
+<p>Quer outro exemplo? Vamos lá.</p>
+
+<p>Você tem uma Interface com dois métodos.
+Toda Classe que implementar essa Interface terá que, obrigatoriamente,
+<em>duplicar</em> os dois métodos dessa Interface na Classe.</p>
+
+<p>Isso é uma duplicação? Não.</p>
+
+<p>Isso é <em>Código de Infraestrutura</em>.</p>
+
+<p>Poderia ser menos verboso implementar uma Interface? Talvez. 
+Mas se a linguagem <em>exige</em> que seja dessa forma,
+então não é duplicação.</p>
+
+<p>O código de Infraestrutura são como “tijolos” no seu projeto.
+Eles são iguais — ou bem parecidos — e você precisa deles dessa forma.</p>
+
+<p>Você irá vê-los por todo o projeto. As vezes ficará tentado a refatorar,
+criando uma função — ou mesmo outro Objeto — para agrupar chamadas iguais
+removendo, assim, a “duplicação” de código… mas, espere, essa nova função
+também será duplicada toda vez que você utilizá-la, pois sempre será a 
+mesma assinatura. Então, talvez…</p>
+
+<p>Impossível.</p>
+
+<h2 id="regras-de-negocio">Regras de Negócio</h2>
+
+<p>As Regras de Negócio são todo o tipo de código que não é de Infraestrutura.
+São as implementações do Negócio do seu Cliente. São as Regras que os usuários
+já utilizam mesmo sem haver um sistema informatizado. São os cálculos, as validações,
+as restrições… as regras.</p>
+
+<p>Aqui <em>não</em> pode haver duplicação. Se, por exemplo, há um cálculo de desconto
+para determinado grupo de produtos, a implementação desse cálculo deverá estar em
+apenas uma Classe.</p>
+
+<p>Isso é <em>Código de Regras de Negócio</em>.</p>
+
+<p>Seu Cliente poderá mudar essas regras e você deverá alterar a implementação de cada
+uma delas apenas uma vez, num único ponto no código, para cada uma das Regras.</p>
+
+<p>Para toda Regra de Negócio deve existir um ou mais testes automatizados.
+Esses Objetos que implementam as Regras não devem ter dependências externas que
+impeçam os testes. Não podem depender de recursos como Banco de Dados ou arquivos
+no disco. Todos os seus argumentos devem ser passados através dos
+<a href="/posts/construtores-da-classe-primario-secundarios/">construtores</a>
+de suas Classes e, preferencialmente, todos esses Objetos devem ser
+<a href="/posts/objetos-imutaveis/">imutáveis</a>, garantindo que uma vez
+criados eles não podem ser corrompidos de nenhuma forma.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Se você leu até aqui deve estar pensando: Ora, isso é óbvio!</p>
+
+<p>Bem, nem tanto, pois ainda tem programadores que desenvolvem suas Classes 
+pensando apenas na reutilização e na não-duplicação de código de Infraestrutura.
+A <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">herança de Classes</a>
+é o caminho mais utilizado para isso… erroneamente, é claro.</p>
+
+<p>Você deveria codificar suas Classes pelo que elas são sem se preocupar com 
+reaproveitamento de <em>Código de Infraestrutura</em>.</p>
+
+<p>Uma asa-delta pode voar e fazer acrobacias como um pássaro, no entanto eles 
+não devem ter uma subclasse em comum para “reutilizar” Código de Infraestrutura
+afim de escrever menos.</p>
+
+<p>O <em>Código de Regras de Negócio</em> é bem diferente. Não deve haver duplicações. Nunca.
+Esse tipo de código é como um Manual de construção, ou seja, as Regras de construção.</p>
+
+<p>Você pode <em>duplicar</em> as paredes da sua casa, mas não as <em>regras</em> de como
+fazer isso.</p>
+
+<p>Saiba distinguir essas diferenças.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Código Duplicado, Talvez Não&via=mdbs99;url=http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/&title=Código Duplicado, Talvez Não" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/&title=Código Duplicado, Talvez Não" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/&t=Código Duplicado, Talvez Não" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-adaptadoras/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/unidades-limitrofes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
+        </ul>
+        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/codigo-duplicado-talvez-nao';
+      var disqus_title      = 'Código Duplicado, Talvez Não';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
