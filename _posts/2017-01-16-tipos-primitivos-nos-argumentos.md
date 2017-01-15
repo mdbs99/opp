@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Tipos Primitivos nos Argumentos
-date: 2017-01-14
+date: 2017-01-15
 description:
   Utilizar tipos primitivos em argumentos de Métodos
   é uma prática que deve ser evitada quando programamos
@@ -150,14 +150,14 @@ primeiros caracteres — basta utilizar o Método `AsShortString`.
 Se eu quiser o próprio `TGuid` basta chamar `Value`.
 
 Seria mais simples ficar fazendo conversões por todo o código
-utilizando funções auxiliares ou utilizar um Objeto desses?
+utilizando funções auxiliares ou utilizar um Objeto como esse?
 
 Acho que não há dúvidas aqui.
 
 ## Conclusão {#conclusao}
 
 Quando você implementa Objetos da forma correta, o código
-é simplificado.
+é *simplificado*.
 
 Essa ideia vai contra o pensamento da maioria dos programadores
 procedurais que acham que utilizando tipos primitivos e funções
@@ -166,9 +166,9 @@ deixaria o código mais simples de entender e alterar.
 Ledo engano.
 
 É claro que podemos e devemos utilizar os tipos primitivos, mas
-utilíze-os apenas como argumentos de Métodos privados ou em 
-variáveis locais.
+utilíze-os apenas como argumentos de Métodos privados, 
+variáveis locais ou para Classes de infraestrutura.
 
-Para a comunicação entre Objetos, utilize Objetos.
+Para a comunicação entre Objetos de Negócio, utilize Objetos.
 
 Até logo.
