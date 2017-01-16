@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Tipos Primitivos nos Argumentos
-date: 2017-01-15
+date: 2017-01-16
 description:
   Utilizar tipos primitivos em argumentos de Métodos
   é uma prática que deve ser evitada quando programamos
@@ -13,11 +13,10 @@ tags:
   - code
   - object pascal
 keywords:
-  - code
-  - código
-  - object pascal
-  - duplication
-  - duplicação
+  - argumentos
+  - arguments
+  - tipos primitivos
+  - primitive obsession
 --- 
 
 Se os Objetos conversam entre si utilizando mensagens, 
