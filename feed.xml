@@ -8,6 +8,166 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Tipos Primitivos nos Argumentos</title>
+        <description>&lt;p&gt;Se os Objetos conversam entre si utilizando mensagens, 
+ou seja, através dos seus Métodos, por que utilizaríamos
+Tipos Primitivos nos argumentos desses Métodos ao invés
+de utilizarmos Objetos?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-3_i4nvi9d1k-randall-bruder.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Os Objetos conectam-se uns aos outros através de seus 
+&lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt;
+e Métodos, enviando argumentos uns aos outros.&lt;/p&gt;
+
+&lt;p&gt;No paradigma da Orientação a Objetos, tudo são Objetos.
+Inclusive os argumentos.
+Bem, deveriam ser, pelo menos na maioria dos casos.&lt;/p&gt;
+
+&lt;p&gt;Imagine um um formulário onde o usuário precisa digitar
+seu &lt;em&gt;login&lt;/em&gt;. Esse formulário, que contém Objetos visuais
+para capturar a digitação, irá enviar o &lt;em&gt;login&lt;/em&gt; digitado
+à outro Objeto para validar a identificação.&lt;/p&gt;
+
+&lt;p&gt;Seria o &lt;em&gt;login&lt;/em&gt; um Objeto ou apenas texto?&lt;/p&gt;
+
+&lt;p&gt;Você pode pensar que o &lt;em&gt;login&lt;/em&gt; é apenas uma informação
+simples, um tipo &lt;em&gt;string&lt;/em&gt;, apenas texto puro, não havendo
+necessidade de um Objeto.&lt;/p&gt;
+
+&lt;p&gt;Mas, não seria esse &lt;em&gt;“texto puro”&lt;/em&gt; também um Objeto?&lt;/p&gt;
+
+&lt;p&gt;Tudo são Objetos na Orientação a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Confuso?&lt;/p&gt;
+
+&lt;h2 id=&quot;argumentos&quot;&gt;Argumentos&lt;/h2&gt;
+
+&lt;p&gt;Tudo são Objetos, mas nem sempre os requisitos são
+implementados como tal.
+Os motivos são diversos, mas &lt;em&gt;simplicidade&lt;/em&gt; e &lt;em&gt;performance&lt;/em&gt;
+sempre são citados como motivos plausíveis para o uso
+de tipos primitivos nos argumentos.&lt;/p&gt;
+
+&lt;p&gt;Utilizar tipos primitivos nos argumentos é um anti-padrão chamado
+&lt;a href=&quot;http://enterprisecraftsmanship.com/2015/03/07/functional-c-primitive-obsession/&quot;&gt;&lt;em&gt;“Primitive Obsession”&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então vamos ver esses motivos e tentar dismitificá-los.&lt;/p&gt;
+
+&lt;h3 id=&quot;performance&quot;&gt;Performance&lt;/h3&gt;
+
+&lt;p&gt;É claro que Objetos são “mais lentos” para trabalhar e
+consomem “mais recursos” que os tipos primitivos.
+No entanto a Orientação a Objetos é sobre a arquitetura
+do sistema, deixando a performance por conta do compilador
+e código de máquina gerado.&lt;/p&gt;
+
+&lt;p&gt;A diminuição da performance — mesmo que mínima —
+em sistemas Orientado a Objetos é um preço justo a se 
+pagar devido a melhoria na arquitetura que o paradigma
+da Orientação a Objetos nos traz.&lt;/p&gt;
+
+&lt;p&gt;Na minha experiência, utilizando Objetos pequenos e simples,
+que implementam apenas
+&lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;uma única responsabilidade&lt;/a&gt;,
+não há perda de performance significativa.&lt;/p&gt;
+
+&lt;p&gt;Mas, ainda assim, se seu maior requisito for performance,
+talvez a Orientação a Objetos não sirva para seu projeto…
+talvez.&lt;/p&gt;
+
+&lt;h3 id=&quot;simplicidade&quot;&gt;Simplicidade&lt;/h3&gt;
+
+&lt;p&gt;Seriam os tipos primitivos mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt;
+de usar do que Objetos?&lt;/p&gt;
+
+&lt;p&gt;De acordo com a minha experiência, na maioria das vezes, não.&lt;/p&gt;
+
+&lt;p&gt;Pense bem: Quantas vezes você teve que passar uma &lt;em&gt;“Data de Nascimento”&lt;/em&gt;
+como argumento de um Método e lá dentro ter que convertê-la
+em &lt;em&gt;String&lt;/em&gt;, por exemplo, para exibir ao usuário?&lt;/p&gt;
+
+&lt;p&gt;Quantas vezes passou um &lt;em&gt;“Nome Completo”&lt;/em&gt; por parâmetro como
+sendo apenas uma &lt;em&gt;String&lt;/em&gt; mas depois teve que usar uma função
+&lt;code&gt;Copy&lt;/code&gt; porque só queria exibir o &lt;em&gt;“Primeiro Nome”&lt;/em&gt; ou a primeira
+parte do nome?&lt;/p&gt;
+
+&lt;p&gt;Sem falar na &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/&quot;&gt;repetição de código&lt;/a&gt;
+que poderia ocorrer com o uso dessas funções auxiliares em 
+várias partes do código.&lt;/p&gt;
+
+&lt;p&gt;Com Objetos seria &lt;strong&gt;muito mais simples&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Veja. Um Objeto &lt;em&gt;“Data de Nascimento”&lt;/em&gt; seria responsável por
+algum cálculo de idade, além de retornar a si mesmo no formato
+&lt;em&gt;String&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Um Objeto &lt;em&gt;“Nome Completo”&lt;/em&gt; seria responsável por retornar
+o primeiro nome e sobrenome; talvez retornar tudo em maiúsculo
+seria outro Método.&lt;/p&gt;
+
+&lt;p&gt;Quer outro exemplo?&lt;/p&gt;
+
+&lt;p&gt;Trabalho bastante com &lt;em&gt;GUID’s&lt;/em&gt;. Elas são utilizadas em meus
+sistemas como chaves-primárias de registros.&lt;/p&gt;
+
+&lt;p&gt;Se não me engano, o tipo &lt;code&gt;TGuid&lt;/code&gt; no &lt;em&gt;Object Pascal&lt;/em&gt; é um &lt;em&gt;record&lt;/em&gt;.
+Não lembro, pois eu não o utilizo mais, não diretamente.&lt;/p&gt;
+
+&lt;p&gt;Eu tenho minha própria Classe &lt;code&gt;TDataGuid&lt;/code&gt; que implementa uma
+Interface &lt;code&gt;IDataGuid&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Essa Classe tem alguns construtores com argumentos diferentes
+para inicializar o &lt;a href=&quot;/posts/objetos-sem-estado/&quot;&gt;estado&lt;/a&gt;
+do Objeto, que internamente é um &lt;code&gt;TGuid&lt;/code&gt;.
+Posso receber uma &lt;em&gt;String&lt;/em&gt; com ou sem “{…}”, posso receber um &lt;code&gt;TGuid&lt;/code&gt;
+ou mesmo não receber nada e inicializar o estado internamente.&lt;/p&gt;
+
+&lt;p&gt;Por quê um Objeto ao invés de um “simples” &lt;em&gt;record&lt;/em&gt;?&lt;/p&gt;
+
+&lt;p&gt;Nos meus sistemas, um &lt;em&gt;GUID&lt;/em&gt; tem &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;comportamento&lt;/a&gt;.
+Ele não é apenas um &lt;a href=&quot;/posts/pensando-em-dados/&quot;&gt;dado&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo. Para exibição de um &lt;em&gt;GUID&lt;/em&gt; para o usuário basta
+utilizar o Método &lt;code&gt;AsString&lt;/code&gt;.
+Se eu quiser exibir apenas o “formato de digitação” — os 8
+primeiros caracteres — basta utilizar o Método &lt;code&gt;AsShortString&lt;/code&gt;.
+Se eu quiser o próprio &lt;code&gt;TGuid&lt;/code&gt; basta chamar &lt;code&gt;Value&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Seria mais simples ficar fazendo conversões por todo o código
+utilizando funções auxiliares ou utilizar um Objeto como esse?&lt;/p&gt;
+
+&lt;p&gt;Acho que não há dúvidas aqui.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Quando você implementa Objetos da forma correta, o código
+é &lt;em&gt;simplificado&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Essa ideia vai contra o pensamento da maioria dos programadores
+procedurais que acham que utilizando tipos primitivos e funções
+deixaria o código mais simples de entender e alterar.&lt;/p&gt;
+
+&lt;p&gt;Ledo engano.&lt;/p&gt;
+
+&lt;p&gt;É claro que podemos e devemos utilizar os tipos primitivos, mas
+utilíze-os apenas como argumentos de Métodos privados, 
+variáveis locais ou para Classes de infraestrutura.&lt;/p&gt;
+
+&lt;p&gt;Para a comunicação entre Objetos de Negócio, utilize Objetos.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 16 Jan 2017 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/</guid>
+      </item>
+    
+      <item>
         <title>Código Duplicado, Talvez Não</title>
         <description>&lt;p&gt;É quase impossível não haver duplicação de código num programa real,
 com pelo menos algumas dezenas de linhas.&lt;/p&gt;
@@ -1837,116 +1997,6 @@ e não trate os Dados como se fossem Objetos que
         <pubDate>Mon, 07 Nov 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/pensando-em-dados/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/pensando-em-dados/</guid>
-      </item>
-    
-      <item>
-        <title>Não Culpe o Código Alheio</title>
-        <description>&lt;p&gt;Você fez entrevista numa grande empresa e foi contratado como
-Desenvolvedor Senior.&lt;/p&gt;
-
-&lt;p&gt;No primeiro dia que lhe dão acesso ao código para corrigir
-uma pequena falha, você olha o código e pensa:&lt;/p&gt;
-
-&lt;p&gt;Mas que P#$@[Piiiiii] é essa?!&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1466784828399-9a9921e8bdfd.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;O código é uma &lt;em&gt;bagunça&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Não há divisão lógica entre camadas.&lt;/p&gt;
-
-&lt;p&gt;A equipe diz que o código é Orientado a Objetos, mas não há verdadeiros
-&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Objetos&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Tudo parece ser global, pois não parece haver nenhum tipo de
-&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;Encapsulamento&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;e-agora&quot;&gt;E agora?&lt;/h2&gt;
-
-&lt;p&gt;Normalmente, o primeiro sentimento é culpar o último
-programador que trabalhou no código.&lt;/p&gt;
-
-&lt;p&gt;Você pensa:&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;“Eu não faria assim!”&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;“O que estavam pensando quando codificaram isso aqui?”&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;“Será que alguém aqui sabe o que é normalização das tabelas,
-padronização do código, separação de camadas, responsabilidade
-única…?”&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Culpar é &lt;em&gt;fácil&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Culpar sem nem ao menos saber o histórico do projeto, as 
-motivações envolvidas e os responsáveis pelo projeto é ainda
-mais fácil.&lt;/p&gt;
-
-&lt;p&gt;Mas, não cometa essa &lt;em&gt;injustiça&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Não pense que somente o último programador é o &lt;em&gt;total&lt;/em&gt; responsável
-por toda essa bagunça, pois tem grandes chances dele apenas 
-ter seguindo ordens!&lt;/p&gt;
-
-&lt;p&gt;Sim, é verdade.&lt;/p&gt;
-
-&lt;p&gt;Claro que isso não exime os programadores da culpa.&lt;/p&gt;
-
-&lt;h2 id=&quot;voce-tambem-e-culpado&quot;&gt;Você também é culpado&lt;/h2&gt;
-
-&lt;p&gt;Se &lt;em&gt;você&lt;/em&gt; constrói algo, também é &lt;em&gt;responsabilidade&lt;/em&gt; sua que seja 
-feito da forma &lt;em&gt;correta&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se você não concorda com a atitude de seus superiores, procure
-outro emprego.&lt;/p&gt;
-
-&lt;p&gt;É isso aí! Esse é o correto a se fazer.&lt;/p&gt;
-
-&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;pt&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;@ job interview:&lt;br /&gt;- We need responsible people. Are you of the kind?&lt;br /&gt;- Absolutely. At my last gig I was always responsible when shit happened&lt;/p&gt;&amp;mdash; Bruno Borges (@brunoborges) &lt;a href=&quot;https://twitter.com/brunoborges/status/792277126695096320&quot;&gt;29 de outubro de 2016&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Mas infelizmente a vida não é fácil.
-E para a maioria das pessoas, a vida pode ser &lt;em&gt;extremamente&lt;/em&gt; difícil.&lt;/p&gt;
-
-&lt;p&gt;Procurar outro emprego demanda tempo. Então a maioria “vai levando a vida”.
-Vai “empurrando pra frente” até onde der pra chegar.
-E essa atitude impacta diretamente nos projetos que essas 
-pessoas estão envolvidas.&lt;/p&gt;
-
-&lt;p&gt;Muitas vezes esses programadores até tentam fazer o certo,
-mas gerentes de projetos inexperientes dizem para fazer de 
-outra maneira:&lt;/p&gt;
-
-&lt;p&gt;Mais &lt;em&gt;rápido&lt;/em&gt;, mais &lt;em&gt;barato&lt;/em&gt;, mais… sem lógica! Mais um projeto 
-que irá &lt;em&gt;fracassar&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;E isso é extremamente desmotivamente.&lt;/p&gt;
-
-&lt;p&gt;Então, quando tudo já está uma bagunça e você não tem voz
-de decisão para fazer o certo… nada mais importa.&lt;/p&gt;
-
-&lt;p&gt;E assim o código vira uma bagunça.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Quando chegar numa nova empresa, assuma o código.&lt;/p&gt;
-
-&lt;p&gt;Diga que precisa de um tempo para entender tudo.&lt;/p&gt;
-
-&lt;p&gt;Não aponte culpados. Ao invés disso, mostre à empresa algumas &lt;em&gt;soluções&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;E quando alguém apontar um erro no código, não diga que a culpa não é sua 
-só porque o código já estava ali antes de você chegar.&lt;/p&gt;
-
-&lt;p&gt;Se você &lt;em&gt;assumiu&lt;/em&gt; o código, agora ele é &lt;em&gt;seu&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 31 Oct 2016 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/</guid>
       </item>
     
   </channel>
