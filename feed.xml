@@ -8,6 +8,132 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>A Definição de Objeto</title>
+        <description>&lt;p&gt;Nesse artigo/vídeo eu explico a definição correta de Objeto dentro do paradigma da Orientação a Objetos.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;iframe width=&quot;600&quot; height=&quot;355&quot; src=&quot;https://www.youtube.com/embed/nia7UqcpOAc&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Então, o que é um Objeto?&lt;/p&gt;
+
+&lt;p&gt;Para responder a essa pergunta precisamos 
+saber o &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/#contextos&quot;&gt;Contexto&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;No contexto puramente técnico, um Objeto 
+nada mais é do que uma estrutura com dados
+e funções.&lt;/p&gt;
+
+&lt;p&gt;No contexto da &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;,
+no  entanto, um Objeto é a representação 
+abstraída de uma Entidade.&lt;/p&gt;
+
+&lt;p&gt;Uma &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidade&lt;/a&gt; pode ser uma pessoa, um animal, 
+uma bola, um pixel, um relatório, um arquivo,
+um diretório… qualquer coisa que deva ser 
+representado dentro do software é um forte 
+candidato a ser um Objeto.&lt;/p&gt;
+
+&lt;p&gt;Mas muitos desenvolvedores não conseguem 
+fazer essa distinção, entre o contexto técnico e o contexto da arquitetura.&lt;/p&gt;
+
+&lt;p&gt;Eles continuam enxergando um Objeto (apenas) 
+como uma estrutura de dados e funções e não 
+conseguem entender a diferença entre programação 
+Procedural e a Orientada a Objetos.&lt;/p&gt;
+
+&lt;h2 id=&quot;abstracoes-e-camadas&quot;&gt;Abstrações e Camadas&lt;/h2&gt;
+
+&lt;p&gt;Desenvolvedores precisam entender que existem 
+abstrações e camadas para o contexto Técnico 
+e também para o contexto da Arquitetura.&lt;/p&gt;
+
+&lt;p&gt;Desde a época do cartão perfurado, passando 
+pela linguagem ASSEMBLY, até as linguagens 
+mais modernas de hoje em dia, os engenheiros 
+foram adicionando mais e mais camadas e 
+abstrações às linguagens.&lt;/p&gt;
+
+&lt;p&gt;As linguagens mais modernas hoje são frutos 
+dessas adições de abstrações e camadas técnicas, 
+com o objetivo de melhorar o código e a 
+codificação em si.&lt;/p&gt;
+
+&lt;p&gt;Paradigmas como a Orientação a Objetos 
+adicionam abstrações para melhorar a arquitetura.&lt;/p&gt;
+
+&lt;p&gt;Mas cada abstração ou camada, seja técnica ou 
+arquitetural, são apenas simplificações da 
+realidade, pois para o computador, no fim, 
+tudo será representado por “zeros e uns”.&lt;/p&gt;
+
+&lt;p&gt;A maioria dos programadores entendem e utilizam 
+as abstrações técnicas no dia-a-dia sem nem 
+mesmo pensar sobre isso.&lt;/p&gt;
+
+&lt;p&gt;Estou falando do uso de estruturas de repetição
+ como FOR ou WHILE e estruturas condicionais 
+ como IF ou CASE.&lt;/p&gt;
+
+&lt;p&gt;Quando você utiliza uma estrutura FOR, por 
+exemplo, o compilador irá gerar uma série de 
+comandos ASSEMBLY com instruções GOTO.&lt;/p&gt;
+
+&lt;p&gt;Você não pensa sobre isso, não é? É como se 
+a estrutura FOR fosse um Objeto e você apenas 
+espera que ele exerça seu trabalho depois de 
+passar os argumentos de inicialização.&lt;/p&gt;
+
+&lt;p&gt;Você deveria ter esse mesmo pensamento quanto 
+estiver trabalhando com Objetos, dentro do 
+paradigma da Orientação a Objetos.&lt;/p&gt;
+
+&lt;h2 id=&quot;objetos&quot;&gt;Objetos&lt;/h2&gt;
+
+&lt;p&gt;Olhe para um Objeto do mesmo modo que você 
+olha para uma estrutura FOR, WHILE, IF, etc., 
+ou seja, você não pensa como essas estruturas 
+funcionam internamente (encapsulamento). 
+Você só sabe quais são seus argumentos de 
+inicialização (construtor) e espera que eles 
+trabalhem (comportamento) corretamente.&lt;/p&gt;
+
+&lt;p&gt;Orientação a Objetos é isso, apenas mais 
+uma camada, mais uma abstração de arquitetura 
+acima do código procedural.&lt;/p&gt;
+
+&lt;p&gt;Entender esse conceito sutil é o início 
+para você começar a utilizar a Orientação a 
+Objetos da forma mais correta.&lt;/p&gt;
+
+&lt;p&gt;Orientação Objetos não substitui o paradigma 
+Procedural, ela o complementa; o aprimora.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Os computadores continuam trabalhando com a 
+mesma  premissa procedural desde que eles 
+foram inventados.&lt;/p&gt;
+
+&lt;p&gt;O fato é que estamos presos a isso, de certa
+forma.&lt;/p&gt;
+
+&lt;p&gt;Mas podemos abstrair, podemos adicionar 
+camadas que facilitem o desenvolvimento da 
+arquitetura e entendimento do código. 
+A Orientação a Objetos faz isso muito bem 
+utilizando artefatos que nós chamamos de… Objetos.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 23 Jan 2017 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/o-que-e-um-objeto/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/o-que-e-um-objeto/</guid>
+      </item>
+    
+      <item>
         <title>Tipos Primitivos nos Argumentos</title>
         <description>&lt;p&gt;Se os Objetos conversam entre si utilizando mensagens, 
 ou seja, através dos seus Métodos, por que utilizaríamos
@@ -1911,92 +2037,6 @@ deixe-os trabalhar.&lt;/p&gt;
         <pubDate>Mon, 14 Nov 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/</guid>
-      </item>
-    
-      <item>
-        <title>Pensando em Dados</title>
-        <description>&lt;p&gt;Você precisa fazer um relatório financeiro num sistema que 
-possui o código Orientado a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Quais Classes e Objetos você precisa criar para representar os dados 
-que serão exibidos no relatório?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1460925895917-afdab827c52f.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Nenhuma!&lt;/p&gt;
-
-&lt;p&gt;Nenhuma Classe que &lt;a href=&quot;/posts/classes-de-dados/&quot;&gt;representa dados&lt;/a&gt;
-é necessária. Use apenas… &lt;em&gt;dados&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Muitos programadores (ainda) confundem conceitos tão distintos.
-Dados e Objetos são coisas completamente diferentes.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Enquanto Objetos são criaturas vivas.&lt;/strong&gt; Dados são apenas registros do passado.&lt;/p&gt;
-
-&lt;p&gt;Relatórios tabulares, por exemplo, consistem apenas de exibição e formatação de 
-dados no formato de tabela.
-Não precisamos de Objetos, comportamento ou
-&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulamento&lt;/a&gt;
-para fazer essa tarefa — a não ser para obter os dados no lugar onde estão armazenados.&lt;/p&gt;
-
-&lt;p&gt;Objetos, no entanto, podem representar dados na forma de uma
-&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidade&lt;/a&gt;
-que encapsula os dados. Poderíamos ter uma Classe &lt;code&gt;TFinanceReport&lt;/code&gt;, 
-por exemplo, que representa um 
-&lt;a href=&quot;/posts/datamodule-e-apenas-um-container/#implementao-de-um-relatrio&quot;&gt;relatório&lt;/a&gt;,
-porém onde estariam os dados? Em atributos? Não, não especificamente.&lt;/p&gt;
-
-&lt;p&gt;Imagine ter um atributo para cada coluna. Listas de objetos. Listas de
-listas…&lt;/p&gt;
-
-&lt;p&gt;No fim estaríamos trabalhando com &lt;em&gt;objetos anêmicos&lt;/em&gt; que só possuem 
-&lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;Métodos &lt;em&gt;Getters&lt;/em&gt; e &lt;em&gt;Setters&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Isso não seria nada eficaz devido ao grande trabalho que iria ser codificar
-essas Classes — muitas delas — e fazer a manipulação de seus Objetos. A performance,
-também, seria drasticamente afetada.&lt;/p&gt;
-
-&lt;p&gt;Além disso essa abordagem é totalmente contra os princípios
-da verdadeira &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Mas não é assim que codificamos no &lt;em&gt;Object Pascal&lt;/em&gt;, certo?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Estou ciente de que utilizar Objetos e listas de Objetos para exibição de
-relatórios não é um padrão muito utilizado no mundo &lt;em&gt;Object Pascal&lt;/em&gt;.
-Vemos isso mais no mundo Java ou C#. Nesses ambientes muitos programadores acham
-que por estarem utilizando Objetos, eles estariam programando Orientado a Objetos,
-o que não é, necessariamente, uma verdade.&lt;/p&gt;
-
-&lt;p&gt;Programadores &lt;em&gt;Object Pascal&lt;/em&gt; — maioria — são orientados a Dados e não a Objetos.
-Utilizam a abordagem RAD. Dropam componentes nos formulários, fazem algumas
-ligações e isso é o suficiente para a exibição dos dados em uma &lt;em&gt;Grid&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Eu sou contra a abordagem RAD para Regras de Negócio ou para qualquer módulo
-que exija alguma inteligência, onde o encapsulamento e uso de Objetos iria me
-proporcionar um maior &lt;em&gt;controle&lt;/em&gt; e &lt;em&gt;manutenibilidade&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Porém sou completamente a favor da abordagem RAD se estivermos falando sobre 
-exibição de dados.&lt;/p&gt;
-
-&lt;p&gt;Não tem nada de errado em utilizarmos &lt;em&gt;queries&lt;/em&gt; para obter os dados de um 
-SGBD e exibir o resultado diretamente na tela ou relatório.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Dados são apenas registros.&lt;/strong&gt; Estejam eles gravados em arquivos, Banco de Dados, em &lt;em&gt;streams&lt;/em&gt;
-em memória ou provenientes de uma requisição HTTP via Web, não importa. São
-dados, &lt;em&gt;não&lt;/em&gt; Objetos.&lt;/p&gt;
-
-&lt;p&gt;Portanto não trate Objetos como um
-&lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;balde de dados&lt;/a&gt;
-e não trate os Dados como se fossem Objetos que
-&lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;pensam&lt;/a&gt; e tomam decisões.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 07 Nov 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/pensando-em-dados/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/pensando-em-dados/</guid>
       </item>
     
   </channel>
