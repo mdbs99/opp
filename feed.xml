@@ -8,6 +8,105 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Métodos Privados</title>
+        <description>&lt;p&gt;Existe um pensamento que diz que todo Método Privado deveria ser, na verdade, a implementação de outro Objeto.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-q6vbepqsojc-rita-morais.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Dizemos que todo Objeto deve implementar apenas uma única &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;responsabilidade&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então a ideia que todo Método Privado deveria ser outro Objeto faz sentido, pelo menos na teoria.&lt;/p&gt;
+
+&lt;p&gt;Se o Objeto deveria ter apenas uma única responsabilidade, por que eu teria mais Métodos (privados) além dos Métodos Públicos?&lt;/p&gt;
+
+&lt;p&gt;Não seriam os Métodos Públicos suficientes para implementar apenas uma única responsabilidade?&lt;/p&gt;
+
+&lt;p&gt;É o que vamos tentar entender nesse artigo.&lt;/p&gt;
+
+&lt;h2 id=&quot;implementando-um-objeto&quot;&gt;Implementando um Objeto&lt;/h2&gt;
+
+&lt;p&gt;Um Objeto deve ser a &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;representação&lt;/a&gt; de uma Entidade. Mas não a representação total da Entidade. Isso seria quase impossível ou muito complexo.&lt;/p&gt;
+
+&lt;p&gt;Temos que abstrair ao máximo, ou seja, implementar apenas o comportamento relevante para o software.&lt;/p&gt;
+
+&lt;p&gt;Por isso é possível termos Objetos pequenos, coesos e que implementam apenas uma única responsabilidade.&lt;/p&gt;
+
+&lt;p&gt;Vejamos alguns exemplos para determinarmos se há sentido termos Métodos Privados, mesmo em Objetos simples.&lt;/p&gt;
+
+&lt;h4 id=&quot;exemplo-1&quot;&gt;Exemplo 1&lt;/h4&gt;
+
+&lt;p&gt;No código abaixo temos uma Classe que é inicilizada com uma &lt;code&gt;string&lt;/code&gt; que representa o nome do empregado.&lt;/p&gt;
+
+&lt;p&gt;Há uma Método Privado para “limpar” o nome. Essa limpeza consiste em retirar os espaços em branco do início e do fim do nome. Depois há uma verificação se a &lt;code&gt;string&lt;/code&gt; não ficou em branco no final. Bem simples.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/bbdc509810890ea5724a94a021f16791.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Apesar dessa simplicidade aparente, esse código possui vários erros ou violações de princípios.&lt;/p&gt;
+
+&lt;p&gt;O primeiro problema é conceitual: Você não deve fazer &lt;a href=&quot;/posts/validacoes-no-construtor/&quot;&gt;validações no construtor&lt;/a&gt;, pois segundo Alan Kay — inventor do nome/conceito Orientação a Objetos — &lt;a href=&quot;http://userpage.fu-berlin.de/~ram/pub/pub_jf47ht81Ht/doc_kay_oop_en&quot;&gt;aqui&lt;/a&gt; nesse email, ele diz: &lt;em&gt;“Programação Orientada a Objetos (para mim) significa apenas mensagens, encapsular e esconder estado, e &lt;strong&gt;extrema ligação tardia de todas as coisas&lt;/strong&gt;“&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Primeiro você cria os Objetos, depois eles interagem. Se você for validando e/ou executando rotinas a medida que vai criando seus Objetos, você não está programando Orientado a Objetos, isso é Programação Procedural.&lt;/p&gt;
+
+&lt;p&gt;Você nem deve chamar nenhum Método no construtor, pois esses Métodos podem gerar algum problema e o Objeto pode não ser criado.&lt;/p&gt;
+
+&lt;p&gt;O segundo problema é que um Empregado não deveria “limpar o nome recebido”. Não faz sentido.&lt;/p&gt;
+
+&lt;p&gt;O Nome deveria ser um &lt;a href=&quot;https://www.youtube.com/watch?v=nia7UqcpOAc&quot;&gt;Objeto&lt;/a&gt; e ele iria validar a si mesmo; retornar uma string válida, sem espaços, formatada, talvez até com o nome do meio abreviado.&lt;/p&gt;
+
+&lt;p&gt;Em outras palavras, o Método &lt;code&gt;CleanName&lt;/code&gt; não deveria existir, mesmo sendo privado.&lt;/p&gt;
+
+&lt;h4 id=&quot;exemplo-2&quot;&gt;Exemplo 2&lt;/h4&gt;
+
+&lt;p&gt;Então para corrigir o exemplo acima, vamos implementar a Classe &lt;code&gt;TEmployeeName&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Agora sabemos que essa Classe deve ser responsável por tudo que envolve &lt;code&gt;Nome&lt;/code&gt;, então vamos incrementar e por alguns Métodos como &lt;code&gt;FirstName&lt;/code&gt; e &lt;code&gt;LastName&lt;/code&gt;. Assim esses Métodos poderão ser reutilizados por toda a aplicação e você não precisará ficar fazendo esses algoritmos em partes do código que não tem nada haver com manipulação de &lt;code&gt;Nome&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas veja que eu introduzi um Método Privado.&lt;/p&gt;
+
+&lt;p&gt;Esse Método tem três responsabilidades — portanto não está 100% correto, mas serve de exemplo — que é 1) implementar o algoritmo para obter o &lt;code&gt;FirstName&lt;/code&gt;, 2) implementar outro algoritmo para obter o &lt;code&gt;LastName&lt;/code&gt; e 3) também está fazendo &lt;em&gt;cache&lt;/em&gt; dos dados.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/a303d0bf83930fcf580aee818ee23a52.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Essa Classe é tão simples que não haveria necessidade de existir esse Método Privado, porém imagine que um Objeto dessa Classe seja muito utilizado e precisa de muita performance.&lt;/p&gt;
+
+&lt;p&gt;Nesse caso o Método Privado está fazendo um &lt;em&gt;cache&lt;/em&gt; dos dados, assim não será necessário “calcular” as partes dos nomes sempre que executarmos esses Métodos.&lt;/p&gt;
+
+&lt;p&gt;Essa é das ocasições que um Método Privado ajuda e é bem vindo. O Objeto é criado sem interferências, rápido, sem cálculos. Depois, se um de seus Métodos for realmente executado, o Objeto faz as devidas validações e execuções. Para o mundo externo é indiferente, já que ninguém sabe o que acontece dentro de um Objeto.&lt;/p&gt;
+
+&lt;p&gt;Se você está curioso para saber como seria a “implementação pura” Orientada a Objetos, teríamos que implementar outra Classe para &lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;decorar&lt;/a&gt; a &lt;code&gt;TEmployeeName&lt;/code&gt; somente para fazermos o &lt;em&gt;cache&lt;/em&gt; dos dados. Então cada Método de &lt;code&gt;TEmployeeName&lt;/code&gt; teria a implementação dos cálculos de partes do nome nos próprios Métodos Público — a Classe ficaria com menos código e mais simples.&lt;/p&gt;
+
+&lt;p&gt;A Classe decoradora ficaria mais ou menos assim:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/f9f7aa261bd2e317df503f974429560f.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Mas você sempre teria que instanciar esses dois Objetos, um decorando o outro.&lt;/p&gt;
+
+&lt;p&gt;Se vale ou não a pena criar essa Classe, é você quem decide ou as Regras de Négócio decidem por você.&lt;/p&gt;
+
+&lt;p&gt;Bom é saber que temos opções. Talvez começar a implementação com Métodos Privados e depois, se for o caso, refatorá-los.&lt;/p&gt;
+
+&lt;p&gt;Veja que é possível fazer um design melhor, sem Métodos Privados, mas sempre temos que ver os prós e contras.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Em teoria um Objeto não deveria ter Métodos Privados, porém vimos que existem casos de natureza tecnológica no qual os Métodos Privados auxiliam a codificação.&lt;/p&gt;
+
+&lt;p&gt;Como eu já disse em outro &lt;a href=&quot;/posts/singleton-e-um-anti-padrao/&quot;&gt;artigo&lt;/a&gt;: &lt;em&gt;“Não devemos ser puristas em Orientação a Objetos se não há nenhum benefício”&lt;/em&gt; ou se o benefício for apenas estético, talvez.&lt;/p&gt;
+
+&lt;p&gt;Então fique atento sobre os Métodos Privados que você está criando. Veja se eles deveriam estar em outro Objeto. Mas não perca tempo buscando a perfeição, pois um Método Privado sempre poderá ser refatorado no futuro sem nenhum problema.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 30 Jan 2017 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/metodos-privados/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/metodos-privados/</guid>
+      </item>
+    
+      <item>
         <title>A Definição de Objeto</title>
         <description>&lt;p&gt;Nesse artigo/vídeo eu explico a definição correta de Objeto dentro do paradigma da Orientação a Objetos.&lt;/p&gt;
 
@@ -1645,398 +1744,6 @@ conhecê-los intimamente.&lt;/p&gt;
         <pubDate>Mon, 21 Nov 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/classes-adaptadoras/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/classes-adaptadoras/</guid>
-      </item>
-    
-      <item>
-        <title>Diga-me algo Sobre você</title>
-        <description>&lt;p&gt;Quando aprendemos sobre Orientação a Objetos, anos atrás,
-ouvimos dizer que Objetos enviam &lt;em&gt;mensagens&lt;/em&gt; uns aos outros.
-No entanto o que realmente vemos na maioria dos códigos de 
-hoje não são verdadeiros Objetos, são apenas estrutura 
-de dados com funções…&lt;/p&gt;
-
-&lt;p&gt;Esquecemos o que significa enviar uma mensagem a um Objeto?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1453738773917-9c3eff1db985.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Fazendo a análise de um novo sistema, o arquiteto vê a 
-necessidade de implementar uma Classe para representar um 
-&lt;em&gt;Cliente&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;O analista de negócio diz que um Cliente precisa ter 
-&lt;em&gt;Login&lt;/em&gt;, Senha e seu Nome.&lt;/p&gt;
-
-&lt;p&gt;Você começa a implementação da Classe.&lt;/p&gt;
-
-&lt;p&gt;Após 2 horas o analista retorna e diz
-que também precisa ter mais “alguns campos”. Então ele 
-também acrescenta Endereço de correspondência; a Data de
-Nascimento para dar descontos; separa o nome em 2 campos
-(Nome e Sobrenome); e o Cartão de Crédito que
-será a forma de pagamento ao comprar os produtos da empresa.&lt;/p&gt;
-
-&lt;p&gt;Como implementamos a nova Classe &lt;code&gt;TCustomer&lt;/code&gt; que irá representar
-um Cliente?&lt;/p&gt;
-
-&lt;p&gt;Aqui está uma sugestão de implementação bastante utilizada
-pelos desenvolvedores:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TCustomer = class
-  private
-    FLogin: string;
-    FPassword: string;
-    FFirstName: string;
-    FLastName: string;
-    FAddress: string;
-    FBirthday: TDateTime;
-    FCreditCard: string;
-  public
-    constructor Create;
-    property Login: string read FLogin write FLogin;
-    property Password: string read FPassword write FPassword;
-    property FirstName: string read FFirstName write FFirstName;
-    property LastName: string read FLastName write FLastName;
-    property Address: string read FAddress write FAddress;
-    property Birthday: TDateTime read FBirthday write FBirthday;
-    property CreditCard: string read FCreditCard write FCreditCard;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Utilizei &lt;em&gt;properties&lt;/em&gt;. No &lt;em&gt;Object Pascal&lt;/em&gt;, assim como no C# fica até 
-bonito e escrevemos menos. No Java seria o dobro de linhas, pois
-teríamos 7 &lt;em&gt;Getters&lt;/em&gt; e 7 &lt;em&gt;Setters&lt;/em&gt; para cada atributo.&lt;/p&gt;
-
-&lt;p&gt;Bem, tudo certo nessa implementação?&lt;/p&gt;
-
-&lt;p&gt;Não.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente essa Classe não tem nada a ver com o real uso da 
-&lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;.
-Essa Classe não está representando um Cliente, mas sim uma
-tabela do Banco de Dados.&lt;/p&gt;
-
-&lt;p&gt;Além disso, o uso de &lt;em&gt;properties&lt;/em&gt; não elimina o fato que, na verdade, 
-essa Classe só possui
-&lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;&lt;em&gt;Getters&lt;/em&gt; e &lt;em&gt;Setters&lt;/em&gt;&lt;/a&gt;,
-que é um anti-padrão.&lt;/p&gt;
-
-&lt;h2 id=&quot;mensagens&quot;&gt;Mensagens&lt;/h2&gt;
-
-&lt;p&gt;Uma Classe deve representar uma
-&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidade&lt;/a&gt;,
-&lt;em&gt;nunca&lt;/em&gt; um registro de tabela no Banco de Dados.&lt;/p&gt;
-
-&lt;p&gt;Se você tem uma Classe com &lt;em&gt;Getters&lt;/em&gt; e &lt;em&gt;Setters&lt;/em&gt;, seu pensamento não
-está na Orientação a Objetos. Você está pensando em
-&lt;a href=&quot;/posts/pensando-em-dados/&quot;&gt;Dados&lt;/a&gt;, em tabelas, em
-persistência.&lt;/p&gt;
-
-&lt;p&gt;Você não deveria &lt;em&gt;pegar&lt;/em&gt; e muito menos &lt;em&gt;alterar&lt;/em&gt; um dado de um Objeto
-diretamente!&lt;/p&gt;
-
-&lt;p&gt;Pense no mundo real. Quando você pergunta o nome de alguém,
-ele/ela pode lhe responder de diversas maneiras:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Diz apenas o primeiro nome;&lt;/li&gt;
-  &lt;li&gt;Diz apenas o sobrenome;&lt;/li&gt;
-  &lt;li&gt;Diz o nome completo;&lt;/li&gt;
-  &lt;li&gt;Diz o apelido;&lt;/li&gt;
-  &lt;li&gt;Inventa um nome;&lt;/li&gt;
-  &lt;li&gt;Não diz nada;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Veja que uma pergunta &lt;em&gt;simples&lt;/em&gt; pode ter inúmeras respostas.
-Tudo irá depender do &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/#contextos&quot;&gt;contexto&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Todo Objeto deve ser &lt;em&gt;respeitado&lt;/em&gt;. Então, o máximo que fazemos é enviar
-uma &lt;strong&gt;mensagem&lt;/strong&gt; ao Objeto e aguardar uma resposta.&lt;/p&gt;
-
-&lt;p&gt;Vamos a um exemplo.&lt;/p&gt;
-
-&lt;p&gt;Compare os dois diálogos abaixo:&lt;/p&gt;
-
-&lt;h3 id=&quot;dilogo-1&quot;&gt;Diálogo 1:&lt;/h3&gt;
-
-&lt;p&gt;Carlos quer alugar um carro. Ele entra numa loja e vai falar com o vendedor.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;— Bom dia. Gostaria de alugar um carro. — disse Carlos.
-— Bom dia! Qual modelo o senhor está procurando?
-— Procuro um de menor custo, bem simples.
-— Ok. Temos esses 3 modelos...
-— Legal. Quanto custa o hatch?
-— Bem, o senhor está com sorte!
-— Estou? — disse Carlos
-— Sim, hoje é dia de promoção para esse modelo.
-O vendedor vai buscar um catálogo e diz o preço.
-— E vou lhe dar 20% de desconto!
-Carlos fica feliz com a escolha do modelo e 
-preço e resolve alugar.
-— Ok! Vou levar esse!
-— Certo. Preciso que o senhor preencha esse formulário.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&quot;dilogo-2&quot;&gt;Diálogo 2:&lt;/h3&gt;
-
-&lt;p&gt;Um &lt;em&gt;Registro&lt;/em&gt; quer um carro.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;O Controlador pega uma lista de carros;
-O Controlador ordena a lista de forma crescente;
-O Controlador pega o Carro com o menor valor;
-O Controlador verifica a data atual e concede um desconto;
-O Controlador altera o Registro, apontando o carro;
-O Controlador pega os dados do Registro e salva 
-em outra tabela;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;No primeiro diálogo temos duas pessoas (Objetos no software)
-conversando.&lt;/p&gt;
-
-&lt;p&gt;No segundo… bem, na verdade não houve um segundo diálogo.
-Havia apenas um Controlador (você) dando &lt;strong&gt;ordens&lt;/strong&gt; e alterando 
-dados. Pegando o que quer, onde quer e alterando dados sempre
-que queria.&lt;/p&gt;
-
-&lt;p&gt;Para codificar o primeiro diálogo, precisaremos utilizar mensagens
-entre os Objetos.&lt;/p&gt;
-
-&lt;p&gt;Mensagens também são Métodos. Tecnicamente essa é a maneira que temos
-para adicionar comportamento a uma Classe.&lt;/p&gt;
-
-&lt;p&gt;Mas diferentemente de um Método &lt;code&gt;Get&lt;/code&gt;, onde o dado é &lt;em&gt;tomado a força&lt;/em&gt;
-do Objeto, uma mensagem dá o controle ao Objeto para que ele retorne
-as informações que ele desejar.&lt;/p&gt;
-
-&lt;p&gt;Repare a diferença entre as 2 últimas linhas dos diálogos:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;“Preciso que o senhor preencha esse formulário”&lt;/li&gt;
-  &lt;li&gt;“O Controlador pega os dados do Registro e salva 
-  em outra tabela”&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Na mensagem #1 o vendedor solicita o preenchimento de um formulário
-com os dados pessoais de Carlos.&lt;/p&gt;
-
-&lt;p&gt;No procedimento #2 o Controlador apenas pega os dados do Registro.&lt;/p&gt;
-
-&lt;p&gt;O correto é utilizarmos mensagens e dar o controle da resposta ao
-Objeto.&lt;/p&gt;
-
-&lt;h2 id=&quot;metodo-about&quot;&gt;O Método About&lt;/h2&gt;
-
-&lt;p&gt;Todos os Objetos deveriam responder a uma mensagem padrão quando
-outros Objetos quiserem saber sobre seus dados encapsulados.&lt;/p&gt;
-
-&lt;p&gt;Eu nomeei esse Método de &lt;code&gt;About&lt;/code&gt;, ou seja, perguntamos ao Objeto
-se ele tem &lt;strong&gt;algo a dizer sobre si mesmo&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;O Método &lt;code&gt;About&lt;/code&gt; é utilizado em todos os Objetos que precisam
-informar ao mundo as informações que eles encapsulam.&lt;/p&gt;
-
-&lt;p&gt;Essa é uma alternativa viável para darmos o controle
-de volta ao Objeto ao invés de tomar o dado dele.&lt;/p&gt;
-
-&lt;p&gt;O Objeto tem o total controle sobre quais dados retornar. Dessa
-forma não há uma quebra de
-&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;Encapsulamento&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Objetos devem ser capaz de apresentar a si mesmo.
-De dar informações “pessoais” que só eles tem conhecimento.&lt;/p&gt;
-
-&lt;p&gt;Essa ideia não é nova. No livro
-&lt;a href=&quot;https://www.amazon.com/dp/0735619654/?tag=stackoverfl08-20&quot;&gt;Object Thinking&lt;/a&gt; o autor aborda esse assunto.&lt;/p&gt;
-
-&lt;p&gt;Existem outros artigos na Internet que falam sobre esse tema.
-Dentre esses artigos tem &lt;a href=&quot;http://www.yegor256.com/2016/04/05/printers-instead-of-getters.html&quot;&gt;esse&lt;/a&gt;
-em particular que capta bem essa ideia. No entanto a abordagem do autor
-para implementar esse conceito é diferente da minha abordagem.&lt;/p&gt;
-
-&lt;p&gt;Então, o que retorna o Método &lt;code&gt;About&lt;/code&gt;?&lt;/p&gt;
-
-&lt;p&gt;Retorna um &lt;em&gt;Stream&lt;/em&gt; (&lt;code&gt;IDataStream&lt;/code&gt;). E, basicamente é isso.&lt;/p&gt;
-
-&lt;p&gt;Para implementar o &lt;code&gt;About&lt;/code&gt; precisamos definir a Interface:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  IDataStream = interface
-    function Save(Stream: TStream): IDataStream;
-    function Save(Strings: TStrings): IDataStream;
-    function Save(const FileName: string): IDataStream;
-    function AsString: string;
-    function Size: Int64;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Veja &lt;a href=&quot;http://objectpascalprogramming.com/posts/microservices-delphi-parte-1/#comment-2982613320&quot;&gt;aqui&lt;/a&gt;
-a implementação da Classe que implementa &lt;code&gt;IDataStream&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Aqui há uma grande diferença. Antes o Objeto era passivo. Ele
-estava disponível para dar e receber dados através de seus Métodos,
-o que é &lt;em&gt;extremamente&lt;/em&gt; errado se estivermos utilizando Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Agora, com a implementação do Método &lt;code&gt;About&lt;/code&gt;, os dados do Objeto continuam encapsulados.
-O Objeto não é mais passivo. Ele não é mais um “balde de dados”. Ele está vivo
-e tem seu próprio comportamento.&lt;/p&gt;
-
-&lt;p&gt;Se Objetos externos querem obter os dados de outrem, deverão enviar uma mensagem
-solicitando-os. Cabe ao receptor responder com os dados que &lt;em&gt;ele&lt;/em&gt; deseja
-compartilhar.&lt;/p&gt;
-
-&lt;h2 id=&quot;refatorando&quot;&gt;Refatorando&lt;/h2&gt;
-
-&lt;p&gt;Nos diálogos acima, Carlos e o “Registro” obtém seus dados da mesma
-tabela, chamada CUSTOMER. Seus campos são os mesmos definidos
-na primeira versão da Classe &lt;code&gt;TCustomer&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;O que vamos fazer é refatorar &lt;code&gt;TCustomer&lt;/code&gt;, implementando seu Método
-&lt;code&gt;About&lt;/code&gt; ao invés de ter todos os seus dados &lt;strong&gt;expostos&lt;/strong&gt; em &lt;em&gt;Getters&lt;/em&gt; e &lt;em&gt;Setters&lt;/em&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  ICustomer = interface
-    function About: IDataStream;
-  end;
-  
-  TCustomer = class(TInterfacedObject, ICustomer)
-  private
-    FId: IDataGuid;
-  public
-    constructor Create(Id: IDataGuid);
-    class function New(Id: IDataGuid): ICustomer;
-    function About: IDataStream;
-  end;
-  
-  implementation
-  
-  constructor TCustomer.Create(Id: IDataGuid);
-  begin
-    inherited Create;
-    FId := Id;
-  end;
-  
-  class function TCustomer.New(Id: IDataGuid): ICustomer;
-  begin
-    Result := Create(Id);
-  end;
-  
-  function TCustomer.About: IDataStream;
-  begin
-    // 1. get record from Database using Id
-    // 2. choose data
-    // 3. convert to XML
-    Result := TDataStream.New({XML});
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Quando o vendedor diz &lt;em&gt;“Preciso que o senhor preencha esse formulário”&lt;/em&gt;
-na verdade é o Formulário — &lt;code&gt;TRentACar&lt;/code&gt; — enviando uma mensagem ao Carlos:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;TRentACar.New(
-  TCustomer.New(
-    TDataGuid.New(&#39;{guid}&#39;) // Carlos&#39; guid
-  ).About
-).Rent
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O Formulário necessita de alguns dados como Nome Completo,
-Endereço e Cartão de Crédito. Esses dados são passados
-no construtor de &lt;code&gt;TRentACar&lt;/code&gt;, provenientes da chamada
-ao Método &lt;code&gt;About&lt;/code&gt; de &lt;code&gt;TCustomer&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Mas o retorno de &lt;code&gt;About&lt;/code&gt; será parecido com isso:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;customer&amp;gt;
-  &amp;lt;Id&amp;gt;{guid}&amp;lt;/Id&amp;gt;
-  &amp;lt;FirstName&amp;gt;Carlos&amp;lt;/FirstName&amp;gt;
-  &amp;lt;LastName&amp;gt;Almeida&amp;lt;/LastName&amp;gt;
-  &amp;lt;Address&amp;gt;Rua 1...&amp;lt;/Address&amp;gt;
-&amp;lt;/customer&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Veja que &lt;em&gt;Login&lt;/em&gt; e &lt;em&gt;Password&lt;/em&gt; não foram retornados, assim como
-a informação do &lt;em&gt;CreditCard&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;E aí temos um problema. Tudo bem que o Formulário não necessita
-do &lt;em&gt;Login&lt;/em&gt; e &lt;em&gt;Password&lt;/em&gt; — essas informações serão salvas caso
-o Cliente opte por fazer um registro online — mas o Cartão de Crédito
-é necessário para concluir a operação.&lt;/p&gt;
-
-&lt;p&gt;O que fazer?&lt;/p&gt;
-
-&lt;p&gt;Temos 2 opções:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Retornar todos os dados no XML;&lt;/li&gt;
-  &lt;li&gt;Criar Classes especialistas de &lt;code&gt;Customer&lt;/code&gt;;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Nesse exemplo é mais fácil retornar todos os dados, é claro. Tudo
-está numa única tabela, num único registro. Mas imagine um sistema
-mais complexo onde um &lt;code&gt;Customer&lt;/code&gt; poderia ter várias tabelas (outros 
-endereços, registros financeiros, histórico de aluguel, tickets de
-reclamações…). É possível retornar tudo, num único XML, porém não 
-é performático. Exigiria a consulta em muitas tabelas.&lt;/p&gt;
-
-&lt;p&gt;Para esses casos, criamos Classes especialistas. Exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;TCustomerFinances = class(TInterfacedObject, ICustomer)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Essa Classe é especializada em Finanças. Ela pode retornar o Cartão
-de Crédito e também todos os registros financeiros. O mais interessante,
-no entanto, é que todas as Classes especialistas deverão implementar
-&lt;code&gt;ICustomer&lt;/code&gt;, pois todas representam a mesma Entidade, porém cada uma
-na sua especialidade e em contextos diferentes.&lt;/p&gt;
-
-&lt;p&gt;Então, caso você opte por separar as responsabilidades, o registro
-do aluguel do carro poderia ser feita dessa maneira:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;TRentACar.New(
-  TCustomerFinances.New(
-    TCustomer.New(
-      TDataGuid.New(&#39;{guid}&#39;) // Carlos&#39; guid
-    )
-  ).About
-).Rent
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TCustomerFinances&lt;/code&gt; deverá receber uma instância de
-&lt;code&gt;TCustomer&lt;/code&gt; no construtor.
-Na chamada ao &lt;code&gt;About&lt;/code&gt; ela irá chamar o &lt;code&gt;About&lt;/code&gt; padrão, incluir os 
-dados financeiros e retornar a resposta.&lt;/p&gt;
-
-&lt;p&gt;Isso é &lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;decoração&lt;/a&gt; de Objetos.&lt;/p&gt;
-
-&lt;p&gt;Para a Classe &lt;code&gt;TRentACar&lt;/code&gt; é transparente. Ela está conversando
-com um único Objeto que retorna um &lt;code&gt;IDataStream&lt;/code&gt; quando enviar uma
-mensagem &lt;code&gt;About&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Não podemos mais confundir Dados com Objetos.&lt;/p&gt;
-
-&lt;p&gt;Vamos parar de criar Objetos anêmicos que mapeiam tabelas no 
-Banco de Dados.&lt;/p&gt;
-
-&lt;p&gt;Devemos dar o controle aos Objetos. Eles sabem o que devem ou não
-responder quando estão se comunicando.&lt;/p&gt;
-
-&lt;p&gt;Você é apenas o &lt;em&gt;diretor&lt;/em&gt; do teatro. Você pode até fazer o roteiro
-e escolher quem irá atuar em cada cena. Mas você &lt;em&gt;não&lt;/em&gt; atua.&lt;/p&gt;
-
-&lt;p&gt;Quando os &lt;em&gt;atores&lt;/em&gt; estiverem atuando, não tente controlá-los,
-deixe-os trabalhar.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 14 Nov 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/diga-me-algo-sobre-voce/</guid>
       </item>
     
   </channel>

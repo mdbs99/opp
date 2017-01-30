@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Código Duplicado, Talvez Não &#8211; Object Pascal Programming</title>
+    <title>Métodos Privados &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Code">
-    <meta name="keywords" content="code, código, object pascal, duplication, duplicação">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/">
+    <meta name="keywords" content="OOP">
+    <meta name="keywords" content="métodos privados, private methods, orientacao a objetos, object-oriented">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/metodos-privados/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Código Duplicado, Talvez Não">
-    <meta property="og:description" content="É quase impossível não haver duplicação de código num programa. O importante é saber se essa duplicação é de Infraestrutura ou de Negócio.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/">
+    <meta property="og:title" content="Métodos Privados">
+    <meta property="og:description" content="Existe um pensamento que diz que todo Método Privado deveria ser, na verdade, a implementação de outro Objeto.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/metodos-privados/">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-ceukkv42o40-aaron-burden.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-q6vbepqsojc-rita-morais.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Código Duplicado, Talvez Não" />
+    <meta name="twitter:title" content="Métodos Privados" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/metodos-privados/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -190,8 +190,8 @@
 
 
 <div class="post-header mb2">
-  <h1>Código Duplicado, Talvez Não</h1>
-  <span class="post-meta">Jan 9, 2017</span><br>
+  <h1>Métodos Privados</h1>
+  <span class="post-meta">Jan 30, 2017</span><br>
   
   <span class="post-meta small">
   
@@ -201,147 +201,95 @@
 </div>
 
 <article class="post-content">
-  <p>É quase impossível não haver duplicação de código num programa real,
-com pelo menos algumas dezenas de linhas.</p>
-
-<p>O importante é saber se essa duplicação é de Infraestrutura ou
-de Regras de Negócio.</p>
+  <p>Existe um pensamento que diz que todo Método Privado deveria ser, na verdade, a implementação de outro Objeto.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-ceukkv42o40-aaron-burden.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/photo-q6vbepqsojc-rita-morais.jpg" alt="Unsplash image" /></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>Sempre ouvimos falar que não se deve ter código duplicado num
-sistema, mas eu tenho certeza que isso é quase impossível de 
-conseguir.</p>
+<p>Dizemos que todo Objeto deve implementar apenas uma única <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">responsabilidade</a>.</p>
 
-<p>O que é uma duplicação de código?</p>
+<p>Então a ideia que todo Método Privado deveria ser outro Objeto faz sentido, pelo menos na teoria.</p>
 
-<p>Se você tem duas linhas iguais, elas estão duplicadas?</p>
+<p>Se o Objeto deveria ter apenas uma única responsabilidade, por que eu teria mais Métodos (privados) além dos Métodos Públicos?</p>
 
-<p>Bem, depende muito do <em>ponto de vista</em>.</p>
+<p>Não seriam os Métodos Públicos suficientes para implementar apenas uma única responsabilidade?</p>
 
-<p>Pra mim existem dois tipos de código: <em>Infraestrutura</em> e <em>Regras de Negócio</em>.</p>
+<p>É o que vamos tentar entender nesse artigo.</p>
 
-<p>Código de Infraestrutura pode estar duplicado mas você <em>não</em>
-pode — ou não deveria — duplicar Código de Regras de Negócio.</p>
+<h2 id="implementando-um-objeto">Implementando um Objeto</h2>
 
-<p>Simples assim.</p>
+<p>Um Objeto deve ser a <a href="/posts/objetos-representam-entidades/">representação</a> de uma Entidade. Mas não a representação total da Entidade. Isso seria quase impossível ou muito complexo.</p>
 
-<p>Mas num sistema onde tudo é código, como saber a diferença entre
-um tipo e outro?</p>
+<p>Temos que abstrair ao máximo, ou seja, implementar apenas o comportamento relevante para o software.</p>
 
-<p>Nesse artigo você aprenderá a dinstinção entre eles.</p>
+<p>Por isso é possível termos Objetos pequenos, coesos e que implementam apenas uma única responsabilidade.</p>
 
-<h2 id="infraestrutura">Infraestrutura</h2>
+<p>Vejamos alguns exemplos para determinarmos se há sentido termos Métodos Privados, mesmo em Objetos simples.</p>
 
-<p>Dou esse nome para todo código que faz parte da infraestrutura
-para criação de Classes, implementação de Interfaces, instanciação
-de Objetos, chamadas aos métodos, etc.</p>
+<h4 id="exemplo-1">Exemplo 1</h4>
 
-<p>Vou lhe dar um exemplo. Imagine que você tem uma Classe com três
-argumentos no construtor. Toda vez que você instanciar um Objeto
-dessa Classe você terá que <em>duplicar</em> a mesma construção:</p>
+<p>No código abaixo temos uma Classe que é inicilizada com uma <code>string</code> que representa o nome do empregado.</p>
 
-<pre><code>Ob1 := TFoo.New('a', 1, 'z');
-Ob2 := TFoo.New('b', 5, 'a');
-  
-// in other place...
-Ob3 := TFoo.New('a', 1, 'z');
-</code></pre>
+<p>Há uma Método Privado para “limpar” o nome. Essa limpeza consiste em retirar os espaços em branco do início e do fim do nome. Depois há uma verificação se a <code>string</code> não ficou em branco no final. Bem simples.</p>
 
-<p>O código acima parece duplicado, não?</p>
+<script src="https://gist.github.com/mdbs99/bbdc509810890ea5724a94a021f16791.js"></script>
 
-<p>Bem os Objetos <code>Ob1</code> e <code>Ob2</code> tem argumentos diferentes, então essas
-linhas não são totalmente iguais, apenas bem similares. Então o que
-você acha? Há duplicação aqui?</p>
+<p>Apesar dessa simplicidade aparente, esse código possui vários erros ou violações de princípios.</p>
 
-<p>Não.</p>
+<p>O primeiro problema é conceitual: Você não deve fazer <a href="/posts/validacoes-no-construtor/">validações no construtor</a>, pois segundo Alan Kay — inventor do nome/conceito Orientação a Objetos — <a href="http://userpage.fu-berlin.de/~ram/pub/pub_jf47ht81Ht/doc_kay_oop_en">aqui</a> nesse email, ele diz: <em>“Programação Orientada a Objetos (para mim) significa apenas mensagens, encapsular e esconder estado, e <strong>extrema ligação tardia de todas as coisas</strong>“</em>.</p>
 
-<p>Mas e o <code>Ob3</code>? Ele foi construído com a mesma assinatura de <code>Ob1</code> 
-mas em outra parte do programa. Isso é uma duplicação?</p>
+<p>Primeiro você cria os Objetos, depois eles interagem. Se você for validando e/ou executando rotinas a medida que vai criando seus Objetos, você não está programando Orientado a Objetos, isso é Programação Procedural.</p>
 
-<p>Também não.</p>
+<p>Você nem deve chamar nenhum Método no construtor, pois esses Métodos podem gerar algum problema e o Objeto pode não ser criado.</p>
 
-<p>O fato de haver 2 chamadas iguais num mesmo projeto não quer dizer 
-que há uma duplicação de código. Se assim fosse, toda vez que você
-codifica um <code>TStringList.Create</code> estaria duplicando código.</p>
+<p>O segundo problema é que um Empregado não deveria “limpar o nome recebido”. Não faz sentido.</p>
 
-<p>Quer outro exemplo? Vamos lá.</p>
+<p>O Nome deveria ser um <a href="https://www.youtube.com/watch?v=nia7UqcpOAc">Objeto</a> e ele iria validar a si mesmo; retornar uma string válida, sem espaços, formatada, talvez até com o nome do meio abreviado.</p>
 
-<p>Você tem uma Interface com dois métodos.
-Toda Classe que implementar essa Interface terá que, obrigatoriamente,
-<em>duplicar</em> os dois métodos dessa Interface na Classe.</p>
+<p>Em outras palavras, o Método <code>CleanName</code> não deveria existir, mesmo sendo privado.</p>
 
-<p>Isso é uma duplicação? Não.</p>
+<h4 id="exemplo-2">Exemplo 2</h4>
 
-<p>Isso é <em>Código de Infraestrutura</em>.</p>
+<p>Então para corrigir o exemplo acima, vamos implementar a Classe <code>TEmployeeName</code>.</p>
 
-<p>Poderia ser menos verboso implementar uma Interface? Talvez. 
-Mas se a linguagem <em>exige</em> que seja dessa forma,
-então não é duplicação.</p>
+<p>Agora sabemos que essa Classe deve ser responsável por tudo que envolve <code>Nome</code>, então vamos incrementar e por alguns Métodos como <code>FirstName</code> e <code>LastName</code>. Assim esses Métodos poderão ser reutilizados por toda a aplicação e você não precisará ficar fazendo esses algoritmos em partes do código que não tem nada haver com manipulação de <code>Nome</code>.</p>
 
-<p>O código de Infraestrutura são como “tijolos” no seu projeto.
-Eles são iguais — ou bem parecidos — e você precisa deles dessa forma.</p>
+<p>Mas veja que eu introduzi um Método Privado.</p>
 
-<p>Você irá vê-los por todo o projeto. As vezes ficará tentado a refatorar,
-criando uma função — ou mesmo outro Objeto — para agrupar chamadas iguais
-removendo, assim, a “duplicação” de código… mas, espere, essa nova função
-também será duplicada toda vez que você utilizá-la, pois sempre será a 
-mesma assinatura. Então, talvez…</p>
+<p>Esse Método tem três responsabilidades — portanto não está 100% correto, mas serve de exemplo — que é 1) implementar o algoritmo para obter o <code>FirstName</code>, 2) implementar outro algoritmo para obter o <code>LastName</code> e 3) também está fazendo <em>cache</em> dos dados.</p>
 
-<p>Impossível.</p>
+<script src="https://gist.github.com/mdbs99/a303d0bf83930fcf580aee818ee23a52.js"></script>
 
-<h2 id="regras-de-negocio">Regras de Negócio</h2>
+<p>Essa Classe é tão simples que não haveria necessidade de existir esse Método Privado, porém imagine que um Objeto dessa Classe seja muito utilizado e precisa de muita performance.</p>
 
-<p>As Regras de Negócio são todo o tipo de código que não é de Infraestrutura.
-São as implementações do Negócio do seu Cliente. São as Regras que os usuários
-já utilizam mesmo sem haver um sistema informatizado. São os cálculos, as validações,
-as restrições… as regras.</p>
+<p>Nesse caso o Método Privado está fazendo um <em>cache</em> dos dados, assim não será necessário “calcular” as partes dos nomes sempre que executarmos esses Métodos.</p>
 
-<p>Aqui <em>não</em> pode haver duplicação. Se, por exemplo, há um cálculo de desconto
-para determinado grupo de produtos, a implementação desse cálculo deverá estar em
-apenas uma Classe.</p>
+<p>Essa é das ocasições que um Método Privado ajuda e é bem vindo. O Objeto é criado sem interferências, rápido, sem cálculos. Depois, se um de seus Métodos for realmente executado, o Objeto faz as devidas validações e execuções. Para o mundo externo é indiferente, já que ninguém sabe o que acontece dentro de um Objeto.</p>
 
-<p>Isso é <em>Código de Regras de Negócio</em>.</p>
+<p>Se você está curioso para saber como seria a “implementação pura” Orientada a Objetos, teríamos que implementar outra Classe para <a href="/posts/decorator-pattern/">decorar</a> a <code>TEmployeeName</code> somente para fazermos o <em>cache</em> dos dados. Então cada Método de <code>TEmployeeName</code> teria a implementação dos cálculos de partes do nome nos próprios Métodos Público — a Classe ficaria com menos código e mais simples.</p>
 
-<p>Seu Cliente poderá mudar essas regras e você deverá alterar a implementação de cada
-uma delas apenas uma vez, num único ponto no código, para cada uma das Regras.</p>
+<p>A Classe decoradora ficaria mais ou menos assim:</p>
 
-<p>Para toda Regra de Negócio deve existir um ou mais testes automatizados.
-Esses Objetos que implementam as Regras não devem ter dependências externas que
-impeçam os testes. Não podem depender de recursos como Banco de Dados ou arquivos
-no disco. Todos os seus argumentos devem ser passados através dos
-<a href="/posts/construtores-da-classe-primario-secundarios/">construtores</a>
-de suas Classes e, preferencialmente, todos esses Objetos devem ser
-<a href="/posts/objetos-imutaveis/">imutáveis</a>, garantindo que uma vez
-criados eles não podem ser corrompidos de nenhuma forma.</p>
+<script src="https://gist.github.com/mdbs99/f9f7aa261bd2e317df503f974429560f.js"></script>
+
+<p>Mas você sempre teria que instanciar esses dois Objetos, um decorando o outro.</p>
+
+<p>Se vale ou não a pena criar essa Classe, é você quem decide ou as Regras de Négócio decidem por você.</p>
+
+<p>Bom é saber que temos opções. Talvez começar a implementação com Métodos Privados e depois, se for o caso, refatorá-los.</p>
+
+<p>Veja que é possível fazer um design melhor, sem Métodos Privados, mas sempre temos que ver os prós e contras.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Se você leu até aqui deve estar pensando: Ora, isso é óbvio!</p>
+<p>Em teoria um Objeto não deveria ter Métodos Privados, porém vimos que existem casos de natureza tecnológica no qual os Métodos Privados auxiliam a codificação.</p>
 
-<p>Bem, nem tanto, pois ainda tem programadores que desenvolvem suas Classes 
-pensando apenas na reutilização e na não-duplicação de código de Infraestrutura.
-A <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">herança de Classes</a>
-é o caminho mais utilizado para isso… erroneamente, é claro.</p>
+<p>Como eu já disse em outro <a href="/posts/singleton-e-um-anti-padrao/">artigo</a>: <em>“Não devemos ser puristas em Orientação a Objetos se não há nenhum benefício”</em> ou se o benefício for apenas estético, talvez.</p>
 
-<p>Você deveria codificar suas Classes pelo que elas são sem se preocupar com 
-reaproveitamento de <em>Código de Infraestrutura</em>.</p>
-
-<p>Uma asa-delta pode voar e fazer acrobacias como um pássaro, no entanto eles 
-não devem ter uma subclasse em comum para “reutilizar” Código de Infraestrutura
-afim de escrever menos.</p>
-
-<p>O <em>Código de Regras de Negócio</em> é bem diferente. Não deve haver duplicações. Nunca.
-Esse tipo de código é como um Manual de construção, ou seja, as Regras de construção.</p>
-
-<p>Você pode <em>duplicar</em> as paredes da sua casa, mas não as <em>regras</em> de como
-fazer isso.</p>
-
-<p>Saiba distinguir essas diferenças.</p>
+<p>Então fique atento sobre os Métodos Privados que você está criando. Veja se eles deveriam estar em outro Objeto. Mas não perca tempo buscando a perfeição, pois um Método Privado sempre poderá ser refatorado no futuro sem nenhum problema.</p>
 
 <p>Até logo.</p>
 
@@ -353,33 +301,33 @@ fazer isso.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/metodos-privados/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Código Duplicado, Talvez Não&via=mdbs99;url=http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Métodos Privados&via=mdbs99;url=http://objectpascalprogramming.com/posts/metodos-privados/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/metodos-privados/" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/&title=Código Duplicado, Talvez Não" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/&title=Código Duplicado, Talvez Não" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/metodos-privados/&title=Métodos Privados" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/&t=Código Duplicado, Talvez Não" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/metodos-privados/&title=Métodos Privados" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/metodos-privados/&t=Métodos Privados" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -419,11 +367,20 @@ fazer isso.</p>
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/classes-adaptadoras/" class="post-link">
+      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
       </a>
     </div>
   
@@ -446,11 +403,11 @@ fazer isso.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/freeandnil-esqueca/" class="post-link">
+      <a href="/posts/nomeando-variaveis-e-metodos/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+          <h4 class="post-title"><li>Nomeando Variáveis e Métodos</li></h4>
         </ul>
-        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+        <!--<p class="post-summary">A nomenclatura correta de Variáveis e Métodos simplifica o código.</p>-->
       </a>
     </div>
   
@@ -464,29 +421,11 @@ fazer isso.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
         </ul>
-        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/unidades-limitrofes/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
-        </ul>
-        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
       </a>
     </div>
   
@@ -500,20 +439,29 @@ fazer isso.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
+      <a href="/posts/classes-adaptadoras/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
+          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
         </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+        <!--<p class="post-summary"></p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nomeando-unidades/" class="post-link">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
         </ul>
-        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
     </div>
   
@@ -524,8 +472,8 @@ fazer isso.</p>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/codigo-duplicado-talvez-nao';
-      var disqus_title      = 'Código Duplicado, Talvez Não';
+      var disqus_identifier = '/posts/metodos-privados';
+      var disqus_title      = 'Métodos Privados';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
