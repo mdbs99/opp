@@ -8,6 +8,90 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Scripts para Compilar FreePascal e Lazarus no Windows</title>
+        <description>&lt;p&gt;Saiba como compilar uma nova versão do compilador FreePascal ou atualizar a IDE Lazarus utilizando diretamente o código fonte.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-v0zxmzw_-e0-john-mark-kuznietsov.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;A maneira mais fácil de começar a utilizar o FreePascal e Lazarus não é tentando compilar o compilador ou a IDE utilizando Scripts.&lt;/p&gt;
+
+&lt;p&gt;Hoje em dia temos algumas opções de instalação:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;http://freepascal.org/download.var&quot;&gt;FPC Oficial&lt;/a&gt; ➝ apenas o compilador&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.lazarus-ide.org/&quot;&gt;Lazarus Oficial&lt;/a&gt; ➝ FPC + IDE&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.getlazarus.org/setup/?download&quot;&gt;GetLazarus&lt;/a&gt; ➝ FPC+Lazarus (versão modificada)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://newpascal.org/download.html&quot;&gt;NewPascal&lt;/a&gt; ➝ FPC+Lazarus (versão modificada)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.pilotlogic.com/&quot;&gt;CodeTyphon&lt;/a&gt; ➝ versão ultra-modificada&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Caso você queira se aventurar em outra IDE que não é compatível com o Delphi mas é multiplataforma — todos os &lt;em&gt;widgets&lt;/em&gt; tem a mesma aparência em qualque Sistema Operacional — você pode tentar a IDE &lt;a href=&quot;http://www.msegui.com/&quot;&gt;MSE+GUI&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se você só “ouviu falar” de Lazarus e não sabia que existiam tantas opções para programar em &lt;em&gt;Object Pascal&lt;/em&gt; bem, deve ter sido uma boa surpresa, não?&lt;/p&gt;
+
+&lt;h2 id=&quot;porque-utilizar-scripts&quot;&gt;Por que utilizar Scripts&lt;/h2&gt;
+
+&lt;p&gt;Se existem tantas opções de instaladores automatizados, por quê precisamos de scripts para compilação manual?&lt;/p&gt;
+
+&lt;p&gt;Há aqueles programadores que querem ter o controle total de seu compilador e IDE.&lt;/p&gt;
+
+&lt;p&gt;Há aqueles que modificam o compilador, FCL ou RTL.&lt;/p&gt;
+
+&lt;p&gt;Há aqueles que modificam a IDE, a LCL, os componentes e as ferramentas.&lt;/p&gt;
+
+&lt;p&gt;Há aqueles que ajudam a comunidade FreePascal. Baixam as últimas versões do código fonte, compilam, testam e mandam &lt;em&gt;feedback&lt;/em&gt; através do &lt;a href=&quot;http://bugs.freepascal.org/main_page.php&quot;&gt;Mantis&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se você é um desses, você &lt;strong&gt;precisa&lt;/strong&gt; saber como compilar e instalar o FreePascal e Lazarus, utilizando diretamente o código fonte.&lt;/p&gt;
+
+&lt;h2 id=&quot;compilar-com-scripts&quot;&gt;Compilar utilizando Scripts&lt;/h2&gt;
+
+&lt;p&gt;Eu nunca executei nenhum instalador do FreePascal ou Lazarus. Na época que comecei a utilizar tais ferramentas, os instaladores não eram tão bons. Além disso eu queria me manter atualizado com os fontes, pois melhorias eram (ainda são) feitas diariamente.&lt;/p&gt;
+
+&lt;p&gt;Você sabia que o compilador FreePascal é compilado em FreePascal? Isso mesmo! Você precisa ter a última versão do compilador estável para poder compilar uma nova versão do próprio compilador. Isso é chamdo de &lt;a href=&quot;https://en.wikipedia.org/wiki/Self-hosting&quot;&gt;Self-hosting&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A única maneira de estar sempre atualizado é acompanhar as mudanças dos fontes (FreePascal e Lazarus) através do SVN ou &lt;em&gt;feed&lt;/em&gt;, atualizar seus fontes local e compilar ambos no seu computador.&lt;/p&gt;
+
+&lt;p&gt;Então eu precisava ter um script mínimo para fazer essa tarefa. Na época eu utilizava Windows XP (ainda utilizo em alguns lugares), então um Script &lt;em&gt;Batch&lt;/em&gt; seria simples e eficaz.&lt;/p&gt;
+
+&lt;p&gt;Eu utilizava a versão 2.”alguma coisa” do compilador FreePascal. Fiz o script e, depois de algum tempo de uso, publiquei-o para a comunidade &lt;a href=&quot;http://wiki.freepascal.org/Installing_Lazarus#Compiling.2Finstalling_FPC_and_Lazarus_from_Sources_of_SVN_.28Win32.29&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Dias atrás eu descobri que o script vem sendo atualizado pela comunidade — OpenSource é legal, não? — e isso me inspirou escrever esse artigo.&lt;/p&gt;
+
+&lt;h2 id=&quot;aprimoramentos&quot;&gt;Aprimoramentos&lt;/h2&gt;
+
+&lt;p&gt;Fui utilizando esse script inicial por bastante tempo, mas como eu fazia testes com novas funcionailidades do FPC e Lazarus, precisei ir incrementando o script — hoje tenho alguns scripts — conforme minhas necessidades pessoais.&lt;/p&gt;
+
+&lt;p&gt;Hoje em dia tudo está mais fácil. Se você quiser instalar FPC e Lazarus, utilizando o fontes e sem querer aprender sobre esse processo, poderá utilizar o projeto &lt;a href=&quot;http://wiki.lazarus.freepascal.org/fpcup&quot;&gt;fpCup&lt;/a&gt;. Tem até um aprimoramento desse projeto chamado &lt;a href=&quot;https://github.com/newpascal/fpcupdeluxe&quot;&gt;fpCup Deluxe&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Bem, eu não tinha nada disso na época, então fui aprimorando meus scripts que alias, funcionam muito bem até hoje, obrigado.&lt;/p&gt;
+
+&lt;p&gt;Ontem eu transformei esses scripts num projeto no GitHub para que a comunidade também possa aprimorá-los.&lt;/p&gt;
+
+&lt;p&gt;Eu nomeei esse projeto de &lt;strong&gt;fp-scripts&lt;/strong&gt;. 
+Aqui está o &lt;a href=&quot;https://github.com/mdbs99/fp-scripts&quot;&gt;link&lt;/a&gt; do projeto no GitHub. Não deixe de ler o &lt;a href=&quot;https://github.com/mdbs99/fp-scripts/blob/master/README.md&quot;&gt;README&lt;/a&gt; do projeto.&lt;/p&gt;
+
+&lt;p&gt;Futuramente vou subir para o GitHub minha versão do FPC, Lazarus e Libs que utilizo nos meus projetos em produção.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Esse artigo mostrou opções de instalação do FreePascal, Lazarus ou outros “sabores” para desenvolvimento em &lt;em&gt;Object Pascal&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Vimos também que é necessário conhecermos a compilação através de scripts para termos um maior controle e opções sobre nosso ambiente.&lt;/p&gt;
+
+&lt;p&gt;Criei um novo projeto no GitHub chamado &lt;a href=&quot;https://github.com/mdbs99/fp-scripts&quot;&gt;fp-scripts&lt;/a&gt; que contém scripts para compilação e instalação do FPC e Lazarus, no Windows, através de simples scripts em &lt;em&gt;Batch&lt;/em&gt;. Espero que você e a comunidade goste.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 06 Feb 2017 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/scripts-para-compilar-fpc-e-lazarus-no-windows/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/scripts-para-compilar-fpc-e-lazarus-no-windows/</guid>
+      </item>
+    
+      <item>
         <title>Métodos Privados</title>
         <description>&lt;p&gt;Existe um pensamento que diz que todo Método Privado deveria ser, na verdade, a implementação de outro Objeto.&lt;/p&gt;
 
@@ -1452,298 +1536,6 @@ Apenas com o essencial. Porque &lt;strong&gt;menos, é mais&lt;/strong&gt;.&lt;/
         <pubDate>Mon, 28 Nov 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/menos-e-mais/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/menos-e-mais/</guid>
-      </item>
-    
-      <item>
-        <title>Classes Adaptadoras</title>
-        <description>&lt;p&gt;Os dados sempre deverão estar encapsulados em Objetos que conversam
-entre si enviando mensagens uns aos outros. No entanto essas mensagens
-podem conter dados no formato que só o Objeto emissor conhece.&lt;/p&gt;
-
-&lt;p&gt;Como o Objeto receptor irá saber ler esses dados que, outrora, estavam
-encapsulados no Objeto emissor?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-1428954376791-d9ae785dfb2d.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Cada Objeto detém o conhecimento sobre seus próprios dados encapsulados.
-Ninguém mais.&lt;/p&gt;
-
-&lt;p&gt;Para um sistema funcionar esses Objetos devem conversar entre si, enviando
-&lt;a href=&quot;/posts/diga-me-algo-sobre-voce/#mensagens&quot;&gt;mensagens&lt;/a&gt;
-uns aos outros.&lt;/p&gt;
-
-&lt;p&gt;Sabemos o que fazer quando queremos saber informações sobre um determinado
-Objeto. Basta utilizar seu
-&lt;a href=&quot;/posts/diga-me-algo-sobre-voce/#metodo-about&quot;&gt;Método &lt;em&gt;About&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Você, programador, sabe o que fazer com esses dados pois
-você detém o conhecimento sobre todas as Classes e Objetos. No entanto são
-os Objetos que devem &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;conversar&lt;/a&gt;
-entre eles mesmos. Você está &lt;em&gt;fora&lt;/em&gt; dessa conversa. Você não pode ajudá-los.
-Esse é o problema.&lt;/p&gt;
-
-&lt;p&gt;Então deve haver uma maneira do Objeto emissor conversar com o Objeto receptor,
-utilizando um mesmo dialeto, sem que &lt;em&gt;você&lt;/em&gt; faça conversões explícitas para que
-essa conversa aconteça.&lt;/p&gt;
-
-&lt;h2 id=&quot;dados-entre-formularios&quot;&gt;Dados entre Formulários&lt;/h2&gt;
-
-&lt;p&gt;Sempre que utilizamos formulários — ou qualquer tipo de &lt;em&gt;view&lt;/em&gt; — é porque
-queremos exibir alguma informação para que o usuário tome alguma decisão ou 
-execute alguma tarefa.&lt;/p&gt;
-
-&lt;p&gt;Esses formulários podem obter seus dados quando são criados ou posteriormente,
-devido a alguma ação do usuário.&lt;/p&gt;
-
-&lt;p&gt;Vamos nos concentrar nesses dados inicias.&lt;/p&gt;
-
-&lt;p&gt;Imagine um sistema Financeiro. Há dois formulários:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Faturas a Pagar&lt;/li&gt;
-  &lt;li&gt;Opções de Pagamento&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;No formulário de Faturas a Pagar o usuário irá selecionar as faturas, clicar
-em algum botão para pagar e, nesse momento, um outro formulário com as Opções
-de Pagamento será exibido.&lt;/p&gt;
-
-&lt;p&gt;O que o formulário de Faturas a Pagar deveria enviar para o formulário de 
-Opções de Pagamento no seu
-&lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt;?&lt;/p&gt;
-
-&lt;p&gt;Bem, isso depende.&lt;/p&gt;
-
-&lt;p&gt;Antes precisamos definir, nesse pequeno exemplo, o que é uma Fatura a Pagar,
-assim como o que são Opções de Pagamento.&lt;/p&gt;
-
-&lt;p&gt;Vamos nos concentrar nos dados:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Uma Fatura encapsula um número sequencial, um valor a pagar original, um valor
-  a pagar atual (com multa e juros), uma data, uma descrição, itens…
-  vamos parar aqui.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Uma Opção de Pagamento encapsula opções (dinheiro, cartão de crédito, etc),
-  valor para cada opção, valor total a pagar e… tudo bem, já está bom.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;opcoes-de-implementacao&quot;&gt;Oções de Implementação&lt;/h2&gt;
-
-&lt;p&gt;Agora que temos algumas definições, podemos pensar no modelo que iremos
-seguir para determinar como será feita a implementação.&lt;/p&gt;
-
-&lt;p&gt;Vamos ver as opções.&lt;/p&gt;
-
-&lt;h3 id=&quot;banco-de-dados-e-registros&quot;&gt;1- Banco de dados e registros&lt;/h3&gt;
-
-&lt;p&gt;Não pense em &lt;a href=&quot;/posts/pensando-em-dados/&quot;&gt;dados&lt;/a&gt; provenientes de
-um banco de dados, &lt;em&gt;queries&lt;/em&gt; ou &lt;em&gt;DataSet&lt;/em&gt;. Os dados já estão no formulário, numa 
-&lt;em&gt;grid&lt;/em&gt; listando todas as faturas.&lt;/p&gt;
-
-&lt;p&gt;Você já tem tudo que precisa nos &lt;em&gt;widgets&lt;/em&gt; do formulário. Não há necessidade
-de fazer uma nova requisição de dados.&lt;/p&gt;
-
-&lt;p&gt;E agora, ficou mais fácil?&lt;/p&gt;
-
-&lt;p&gt;Ainda não.&lt;/p&gt;
-
-&lt;p&gt;Se toda Entidade deve ser
-&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;representada&lt;/a&gt;
-por um Objeto, você já sabe que não são apenas 2 Objetos (formulários) que irão
-fazer parte dessa conversa. Haverá outros Objetos.&lt;/p&gt;
-
-&lt;p&gt;Mas lembre-se que ainda estamos falando de dados.&lt;/p&gt;
-
-&lt;h3 id=&quot;objetos-anemicos-e-listas&quot;&gt;2- Objetos anêmicos e listas&lt;/h3&gt;
-
-&lt;p&gt;Não pense em criar Classes Anêmicas
-como &lt;code&gt;TInvoice&lt;/code&gt; com todos os campos acima, utilizando 
-&lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;Getters e Setters&lt;/a&gt;
-e uma lista &lt;code&gt;TInvoices&lt;/code&gt; para passar ao formulário de Opções de Pagamento.&lt;/p&gt;
-
-&lt;p&gt;Pensou nisso mesmo?&lt;/p&gt;
-
-&lt;p&gt;Essa é uma opção de implementação que irá acoplar ambos os formulários
-a essa lista de Faturas. E isso irá restringir o formulário de Opções de 
-Pagamento.&lt;/p&gt;
-
-&lt;p&gt;Então vamos adicionar um complicador:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;O formulário de Opções de Pagamento será utilizado
-  para pagar &lt;em&gt;qualquer coisa&lt;/em&gt; dentro do sistema, ou seja, não &lt;em&gt;apenas&lt;/em&gt; Faturas.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Nesse caso uma refatoração seria necessária.&lt;/p&gt;
-
-&lt;p&gt;Ainda acha que criar uma lista de Faturas seria a melhor opção?&lt;/p&gt;
-
-&lt;h3 id=&quot;heranca-e-esperanca&quot;&gt;3- Herança e esperança&lt;/h3&gt;
-
-&lt;p&gt;Ora, vamos criar uma lista genérica ou Interface, utilizar herança para &lt;code&gt;TInvoices&lt;/code&gt;
-e refatorar o formulário para receber essa lista.&lt;/p&gt;
-
-&lt;p&gt;É claro que não.&lt;/p&gt;
-
-&lt;p&gt;Já sabemos que
-&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;herança&lt;/a&gt;
-não foi feita para compartilhar código e que ela pode piorar (e muito) a arquitetura do projeto.&lt;/p&gt;
-
-&lt;p&gt;Essa seria uma das piores opções. Esqueça-a.&lt;/p&gt;
-
-&lt;h3 id=&quot;manual&quot;&gt;4- Manualmente&lt;/h3&gt;
-
-&lt;p&gt;Então você, o programador, manipula os dados do formulário de Faturas, criando 
-um XML que você sabe que o formulário de Opções de Pagamento espera receber — 
-porque você pode ver o código-fonte de todas as Classes — e então repassa esse XML
-para o formulário de Opções de Pagamento.&lt;/p&gt;
-
-&lt;p&gt;É, talvez irá funcionar… mas por quanto tempo?&lt;/p&gt;
-
-&lt;p&gt;Sabendo que o formulário de Opções de Pagamento pode ser utilizado por outros módulos,
-se houver alguma alteração nos dados que ele espera receber, será muito difícil
-procurar em todos esses lugares para fazer alterações. Cada equipe que trabalha em 
-módulos distintos — mas que utiliza esse mesmo formulário — pode ter criado suas próprias
-versões do XML para enviar ao formulário. O código foi duplicado. Terrível.&lt;/p&gt;
-
-&lt;h3 id=&quot;classes-adaptadoras&quot;&gt;5- Classes Adaptadoras&lt;/h3&gt;
-
-&lt;p&gt;Minha sugestão é utilizarmos Classes Adaptadoras.&lt;/p&gt;
-
-&lt;p&gt;Elas poderão ser muitas. Vai depender de quantos módulos/classes irão utilizar 
-o formulário de Opções de Pagamentos.&lt;/p&gt;
-
-&lt;p&gt;Classes Adaptadoras são &lt;strong&gt;conectores&lt;/strong&gt;. Elas adaptam as interfaces, adaptam os
-&lt;a href=&quot;/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos&quot;&gt;contratos&lt;/a&gt;
-que cada Objeto tem para com o sistema.&lt;/p&gt;
-
-&lt;p&gt;Elas tornam possível uma &lt;em&gt;Classe-A&lt;/em&gt; trabalhar em conjunto com a uma &lt;em&gt;Classe-B&lt;/em&gt;,
-mesmo que ambas não se conheçam.&lt;/p&gt;
-
-&lt;p&gt;Os programadores só precisam saber que essas Classes Adaptadoras existem e onde estão 
-guardadas, quando eles precisarem delas.&lt;/p&gt;
-
-&lt;h2 id=&quot;adaptando&quot;&gt;Adaptando&lt;/h2&gt;
-
-&lt;p&gt;No formulário de Faturas a Pagar teremos, no mínimo, mais duas Classes que irão fazer
-parte da conversa. São elas:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;A Classe &lt;code&gt;TGridSelectedRows&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;A Classe &lt;code&gt;TInvoiceMedia&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TGridSelectedRows&lt;/code&gt; é responsável por &lt;em&gt;adaptar&lt;/em&gt; as linhas selecionadas da &lt;em&gt;grid&lt;/em&gt; para o
-formato XML — ou qualquer outro formato que lhe agrade — e seu resultado é utilizado ou
-validado pela &lt;code&gt;TInvoiceMedia&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;TInvoiceMedia.New(
-  TGridSelectedRows.New(
-    InvoiceGrid, &#39;invoices&#39;, &#39;invoice&#39;
-  )
-  .Stream
-)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A chamada a &lt;code&gt;TGridSelectedRows::Stream&lt;/code&gt; irá retorna uma instância de
-&lt;code&gt;IDataStream&lt;/code&gt; (veja &lt;a href=&quot;http://objectpascalprogramming.com/posts/microservices-delphi-parte-1/#comment-2982613320&quot;&gt;aqui&lt;/a&gt;
-a implementação). Os outros argumentos são utilizados para criar o XML dessa forma:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;invoices&amp;gt;
-  &amp;lt;invoice&amp;gt;
-    &amp;lt;number...
-    &amp;lt;value...
-  &amp;lt;/invoice&amp;gt;
-  &amp;lt;invoice&amp;gt;
-    &amp;lt;number...
-    &amp;lt;value...
-  &amp;lt;/invoice&amp;gt;
-&amp;lt;/invoices&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A implementação de &lt;code&gt;TGridSelectedRows&lt;/code&gt; não é relevante para o entendimento do problema.&lt;/p&gt;
-
-&lt;p&gt;Nesse exemplo &lt;code&gt;TInvoiceMedia&lt;/code&gt; implementa &lt;code&gt;IDataStream&lt;/code&gt;. Mas essa classe também terá a
-inteligência para validar o XML (stream) que foi lhe passado no construtor.&lt;/p&gt;
-
-&lt;p&gt;Então temos o XML válido com todas as faturas encapsulado em &lt;code&gt;TInvoiceMedia&lt;/code&gt;. Precisamos
-agora de uma Classe Adaptadora para transformar Faturas no formato que Opções de Pagamento
-entenda.&lt;/p&gt;
-
-&lt;p&gt;E aqui vai uma &lt;strong&gt;dica&lt;/strong&gt; importante: A Classes que adaptam um conceito devem estar “próximas”
-umas das outras para que seja fácil para o programador achá-las e utilizá-las.&lt;/p&gt;
-
-&lt;p&gt;Vamos dar nomes as outras Classes:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Formulário Opções de Pagamento: &lt;code&gt;TPaymentOptionsForm&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Tipo do argumento no construtor do Formulário: &lt;code&gt;IPaymentOptionsMedia&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Classe Adaptadora de Faturas para Opções: &lt;code&gt;TPaymentOptionsForInvoices&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;O código do evento no botão para exibir as Opções de Pagamento, ou seja, a 
-chamada do formulário, seria parecido com o código abaixo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;with
-  TPaymentOptionsForm.Create(
-    TPaymentOptionsForInvoices.New(
-      TInvoiceMedia.New(
-        TGridSelectedRows.New(
-          InvoiceGrid, &#39;invoices&#39;, &#39;invoice&#39;
-        )
-        .Stream
-      )
-    )
-  )
-do
-  try
-    ShowModal;
-  finally
-    Free;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TPaymentOptionsForInvoices&lt;/code&gt; irá receber o XML de Faturas a Pagar
-e irá &lt;em&gt;adaptar&lt;/em&gt; num XML de Opções de Pagamento (somar todos os valores das
-faturas, verificar alguma insconcistência, etc).&lt;/p&gt;
-
-&lt;p&gt;O formulário de Opções de Pagamento só &lt;em&gt;conhece&lt;/em&gt; implementações de &lt;em&gt;IPaymentOptionsMedia&lt;/em&gt;,
-que é a Interface implementada por &lt;code&gt;TPaymentOptionsForInvoices&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Para todos os outros casos de pagamentos, basta criar outra Classe Adaptadora especialista
-com o mesmo prefixo &lt;code&gt;TPaymentOptionsFor...&lt;/code&gt; para facilitar o &lt;em&gt;code-completion&lt;/em&gt; quando
-o programador estiver procurando um &lt;em&gt;conector&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Quando houver alguma alteração no XML que o formulário Opções de Pagamento
-recebe, basta alterar as Classes Adaptadoras. Você saberá exatamente onde procurar. E,
-tão importante quanto, é ter em mente que essas Classes poderão compartilhar código entre
-elas bastando criar mais Classes especialistas — talvez privada na unidade.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Classes Adaptadoras e Interfaces é como plugamos as &lt;em&gt;peças&lt;/em&gt; dentro de um software Orientado
-a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Em alguns casos pode ser bem difícil identificar essas Classes ou a melhor forma de
-implementá-las. Mas, não desista, pois vale muito a pena. Seu código irá ficar mais 
-desacoplado, sem duplicação e muito mais reutilizável.&lt;/p&gt;
-
-&lt;p&gt;Dessa forma um Objeto receptor saberá ler os dados de Objetos emissores mesmo sem
-conhecê-los intimamente.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 21 Nov 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/classes-adaptadoras/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/classes-adaptadoras/</guid>
       </item>
     
   </channel>

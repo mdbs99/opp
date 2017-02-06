@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>A Definição de Objeto &#8211; Object Pascal Programming</title>
+    <title>Scripts para Compilar FreePascal e Lazarus no Windows &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Video">
-    <meta name="keywords" content="orientação a objetos, object oriented, object, objetos">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/o-que-e-um-objeto/">
+    <meta name="keywords" content="Scripts">
+    <meta name="keywords" content="scripts, compilar, compiler, freepascal, lazarus">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/scripts-para-compilar-fpc-e-lazarus-no-windows/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,20 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="A Definição de Objeto">
-    <meta property="og:description" content="Nesse artigo/vídeo eu explico a definição correta de Objeto dentro do paradigma da Orientação a Objetos.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/o-que-e-um-objeto/">
+    <meta property="og:title" content="Scripts para Compilar FreePascal e Lazarus no Windows">
+    <meta property="og:description" content="Saiba como compilar uma nova versão do compilador FreePascal ou atualizar a IDE Lazarus utilizando diretamente o código fonte.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/scripts-para-compilar-fpc-e-lazarus-no-windows/">
     <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-v0zxmzw_-e0-john-mark-kuznietsov.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="A Definição de Objeto" />
+    <meta name="twitter:title" content="Scripts para Compilar FreePascal e Lazarus no Windows" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/o-que-e-um-objeto/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/scripts-para-compilar-fpc-e-lazarus-no-windows/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -188,133 +190,91 @@
 
 
 <div class="post-header mb2">
-  <h1>A Definição de Objeto</h1>
-  <span class="post-meta">Jan 23, 2017</span><br>
+  <h1>Scripts para Compilar FreePascal e Lazarus no Windows</h1>
+  <span class="post-meta">Feb 6, 2017</span><br>
   
   <span class="post-meta small">
   
-    2 minute read
+    3 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Nesse artigo/vídeo eu explico a definição correta de Objeto dentro do paradigma da Orientação a Objetos.</p>
+  <p>Saiba como compilar uma nova versão do compilador FreePascal ou atualizar a IDE Lazarus utilizando diretamente o código fonte.</p>
 
 <!--more-->
 
-<iframe width="600" height="355" src="https://www.youtube.com/embed/nia7UqcpOAc" frameborder="0" allowfullscreen=""></iframe>
+<p><img src="/images/photo-v0zxmzw_-e0-john-mark-kuznietsov.jpg" alt="Unsplash image" /></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>Então, o que é um Objeto?</p>
+<p>A maneira mais fácil de começar a utilizar o FreePascal e Lazarus não é tentando compilar o compilador ou a IDE utilizando Scripts.</p>
 
-<p>Para responder a essa pergunta precisamos 
-saber o <a href="/posts/delegacao-de-implementacao-de-interfaces/#contextos">Contexto</a>.</p>
+<p>Hoje em dia temos algumas opções de instalação:</p>
 
-<p>No contexto puramente técnico, um Objeto 
-nada mais é do que uma estrutura com dados
-e funções.</p>
+<ol>
+  <li><a href="http://freepascal.org/download.var">FPC Oficial</a> ➝ apenas o compilador</li>
+  <li><a href="http://www.lazarus-ide.org/">Lazarus Oficial</a> ➝ FPC + IDE</li>
+  <li><a href="https://www.getlazarus.org/setup/?download">GetLazarus</a> ➝ FPC+Lazarus (versão modificada)</li>
+  <li><a href="http://newpascal.org/download.html">NewPascal</a> ➝ FPC+Lazarus (versão modificada)</li>
+  <li><a href="http://www.pilotlogic.com/">CodeTyphon</a> ➝ versão ultra-modificada</li>
+</ol>
 
-<p>No contexto da <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>,
-no  entanto, um Objeto é a representação 
-abstraída de uma Entidade.</p>
+<p>Caso você queira se aventurar em outra IDE que não é compatível com o Delphi mas é multiplataforma — todos os <em>widgets</em> tem a mesma aparência em qualque Sistema Operacional — você pode tentar a IDE <a href="http://www.msegui.com/">MSE+GUI</a>.</p>
 
-<p>Uma <a href="/posts/objetos-representam-entidades/">Entidade</a> pode ser uma pessoa, um animal, 
-uma bola, um pixel, um relatório, um arquivo,
-um diretório… qualquer coisa que deva ser 
-representado dentro do software é um forte 
-candidato a ser um Objeto.</p>
+<p>Se você só “ouviu falar” de Lazarus e não sabia que existiam tantas opções para programar em <em>Object Pascal</em> bem, deve ter sido uma boa surpresa, não?</p>
 
-<p>Mas muitos desenvolvedores não conseguem 
-fazer essa distinção, entre o contexto técnico e o contexto da arquitetura.</p>
+<h2 id="porque-utilizar-scripts">Por que utilizar Scripts</h2>
 
-<p>Eles continuam enxergando um Objeto (apenas) 
-como uma estrutura de dados e funções e não 
-conseguem entender a diferença entre programação 
-Procedural e a Orientada a Objetos.</p>
+<p>Se existem tantas opções de instaladores automatizados, por quê precisamos de scripts para compilação manual?</p>
 
-<h2 id="abstracoes-e-camadas">Abstrações e Camadas</h2>
+<p>Há aqueles programadores que querem ter o controle total de seu compilador e IDE.</p>
 
-<p>Desenvolvedores precisam entender que existem 
-abstrações e camadas para o contexto Técnico 
-e também para o contexto da Arquitetura.</p>
+<p>Há aqueles que modificam o compilador, FCL ou RTL.</p>
 
-<p>Desde a época do cartão perfurado, passando 
-pela linguagem ASSEMBLY, até as linguagens 
-mais modernas de hoje em dia, os engenheiros 
-foram adicionando mais e mais camadas e 
-abstrações às linguagens.</p>
+<p>Há aqueles que modificam a IDE, a LCL, os componentes e as ferramentas.</p>
 
-<p>As linguagens mais modernas hoje são frutos 
-dessas adições de abstrações e camadas técnicas, 
-com o objetivo de melhorar o código e a 
-codificação em si.</p>
+<p>Há aqueles que ajudam a comunidade FreePascal. Baixam as últimas versões do código fonte, compilam, testam e mandam <em>feedback</em> através do <a href="http://bugs.freepascal.org/main_page.php">Mantis</a>.</p>
 
-<p>Paradigmas como a Orientação a Objetos 
-adicionam abstrações para melhorar a arquitetura.</p>
+<p>Se você é um desses, você <strong>precisa</strong> saber como compilar e instalar o FreePascal e Lazarus, utilizando diretamente o código fonte.</p>
 
-<p>Mas cada abstração ou camada, seja técnica ou 
-arquitetural, são apenas simplificações da 
-realidade, pois para o computador, no fim, 
-tudo será representado por “zeros e uns”.</p>
+<h2 id="compilar-com-scripts">Compilar utilizando Scripts</h2>
 
-<p>A maioria dos programadores entendem e utilizam 
-as abstrações técnicas no dia-a-dia sem nem 
-mesmo pensar sobre isso.</p>
+<p>Eu nunca executei nenhum instalador do FreePascal ou Lazarus. Na época que comecei a utilizar tais ferramentas, os instaladores não eram tão bons. Além disso eu queria me manter atualizado com os fontes, pois melhorias eram (ainda são) feitas diariamente.</p>
 
-<p>Estou falando do uso de estruturas de repetição
- como FOR ou WHILE e estruturas condicionais 
- como IF ou CASE.</p>
+<p>Você sabia que o compilador FreePascal é compilado em FreePascal? Isso mesmo! Você precisa ter a última versão do compilador estável para poder compilar uma nova versão do próprio compilador. Isso é chamdo de <a href="https://en.wikipedia.org/wiki/Self-hosting">Self-hosting</a>.</p>
 
-<p>Quando você utiliza uma estrutura FOR, por 
-exemplo, o compilador irá gerar uma série de 
-comandos ASSEMBLY com instruções GOTO.</p>
+<p>A única maneira de estar sempre atualizado é acompanhar as mudanças dos fontes (FreePascal e Lazarus) através do SVN ou <em>feed</em>, atualizar seus fontes local e compilar ambos no seu computador.</p>
 
-<p>Você não pensa sobre isso, não é? É como se 
-a estrutura FOR fosse um Objeto e você apenas 
-espera que ele exerça seu trabalho depois de 
-passar os argumentos de inicialização.</p>
+<p>Então eu precisava ter um script mínimo para fazer essa tarefa. Na época eu utilizava Windows XP (ainda utilizo em alguns lugares), então um Script <em>Batch</em> seria simples e eficaz.</p>
 
-<p>Você deveria ter esse mesmo pensamento quanto 
-estiver trabalhando com Objetos, dentro do 
-paradigma da Orientação a Objetos.</p>
+<p>Eu utilizava a versão 2.”alguma coisa” do compilador FreePascal. Fiz o script e, depois de algum tempo de uso, publiquei-o para a comunidade <a href="http://wiki.freepascal.org/Installing_Lazarus#Compiling.2Finstalling_FPC_and_Lazarus_from_Sources_of_SVN_.28Win32.29">aqui</a>.</p>
 
-<h2 id="objetos">Objetos</h2>
+<p>Dias atrás eu descobri que o script vem sendo atualizado pela comunidade — OpenSource é legal, não? — e isso me inspirou escrever esse artigo.</p>
 
-<p>Olhe para um Objeto do mesmo modo que você 
-olha para uma estrutura FOR, WHILE, IF, etc., 
-ou seja, você não pensa como essas estruturas 
-funcionam internamente (encapsulamento). 
-Você só sabe quais são seus argumentos de 
-inicialização (construtor) e espera que eles 
-trabalhem (comportamento) corretamente.</p>
+<h2 id="aprimoramentos">Aprimoramentos</h2>
 
-<p>Orientação a Objetos é isso, apenas mais 
-uma camada, mais uma abstração de arquitetura 
-acima do código procedural.</p>
+<p>Fui utilizando esse script inicial por bastante tempo, mas como eu fazia testes com novas funcionailidades do FPC e Lazarus, precisei ir incrementando o script — hoje tenho alguns scripts — conforme minhas necessidades pessoais.</p>
 
-<p>Entender esse conceito sutil é o início 
-para você começar a utilizar a Orientação a 
-Objetos da forma mais correta.</p>
+<p>Hoje em dia tudo está mais fácil. Se você quiser instalar FPC e Lazarus, utilizando o fontes e sem querer aprender sobre esse processo, poderá utilizar o projeto <a href="http://wiki.lazarus.freepascal.org/fpcup">fpCup</a>. Tem até um aprimoramento desse projeto chamado <a href="https://github.com/newpascal/fpcupdeluxe">fpCup Deluxe</a>.</p>
 
-<p>Orientação Objetos não substitui o paradigma 
-Procedural, ela o complementa; o aprimora.</p>
+<p>Bem, eu não tinha nada disso na época, então fui aprimorando meus scripts que alias, funcionam muito bem até hoje, obrigado.</p>
+
+<p>Ontem eu transformei esses scripts num projeto no GitHub para que a comunidade também possa aprimorá-los.</p>
+
+<p>Eu nomeei esse projeto de <strong>fp-scripts</strong>. 
+Aqui está o <a href="https://github.com/mdbs99/fp-scripts">link</a> do projeto no GitHub. Não deixe de ler o <a href="https://github.com/mdbs99/fp-scripts/blob/master/README.md">README</a> do projeto.</p>
+
+<p>Futuramente vou subir para o GitHub minha versão do FPC, Lazarus e Libs que utilizo nos meus projetos em produção.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Os computadores continuam trabalhando com a 
-mesma  premissa procedural desde que eles 
-foram inventados.</p>
+<p>Esse artigo mostrou opções de instalação do FreePascal, Lazarus ou outros “sabores” para desenvolvimento em <em>Object Pascal</em>.</p>
 
-<p>O fato é que estamos presos a isso, de certa
-forma.</p>
+<p>Vimos também que é necessário conhecermos a compilação através de scripts para termos um maior controle e opções sobre nosso ambiente.</p>
 
-<p>Mas podemos abstrair, podemos adicionar 
-camadas que facilitem o desenvolvimento da 
-arquitetura e entendimento do código. 
-A Orientação a Objetos faz isso muito bem 
-utilizando artefatos que nós chamamos de… Objetos.</p>
+<p>Criei um novo projeto no GitHub chamado <a href="https://github.com/mdbs99/fp-scripts">fp-scripts</a> que contém scripts para compilação e instalação do FPC e Lazarus, no Windows, através de simples scripts em <em>Batch</em>. Espero que você e a comunidade goste.</p>
 
 <p>Até logo.</p>
 
@@ -326,33 +286,33 @@ utilizando artefatos que nós chamamos de… Objetos.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/o-que-e-um-objeto/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/scripts-para-compilar-fpc-e-lazarus-no-windows/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=A Definição de Objeto&via=mdbs99;url=http://objectpascalprogramming.com/posts/o-que-e-um-objeto/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Scripts para Compilar FreePascal e Lazarus no Windows&via=mdbs99;url=http://objectpascalprogramming.com/posts/scripts-para-compilar-fpc-e-lazarus-no-windows/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/o-que-e-um-objeto/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/scripts-para-compilar-fpc-e-lazarus-no-windows/" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/o-que-e-um-objeto/&title=A Definição de Objeto" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/o-que-e-um-objeto/&title=A Definição de Objeto" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/scripts-para-compilar-fpc-e-lazarus-no-windows/&title=Scripts para Compilar FreePascal e Lazarus no Windows" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/o-que-e-um-objeto/&t=A Definição de Objeto" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/scripts-para-compilar-fpc-e-lazarus-no-windows/&title=Scripts para Compilar FreePascal e Lazarus no Windows" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/scripts-para-compilar-fpc-e-lazarus-no-windows/&t=Scripts para Compilar FreePascal e Lazarus no Windows" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -392,11 +352,20 @@ utilizando artefatos que nós chamamos de… Objetos.</p>
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/objetos-imutaveis/" class="post-link">
+      <a href="/posts/desenvolvimento-profissional/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+          <h4 class="post-title"><li>Desenvolvimento Profissional</li></h4>
         </ul>
-        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/awslib-a-historia-e-o-novo-suporte-a-ses/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>AWS Lib: A História e o novo suporte a SES</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como tudo começou e o novo Suporte a SES.</p>-->
       </a>
     </div>
   
@@ -419,20 +388,29 @@ utilizando artefatos que nós chamamos de… Objetos.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
+      <a href="/posts/unidades-limitrofes/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Você sabe, com certeza, o que é Orientação a Objetos?</li></h4>
+          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
         </ul>
-        <!--<p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.</p>-->
+        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/tipos-primitivos-nos-argumentos/" class="post-link">
+      <a href="/posts/nomeando-unidades/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Tipos Primitivos nos Argumentos</li></h4>
+          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
         </ul>
-        <!--<p class="post-summary"></p>-->
+        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
       </a>
     </div>
   
@@ -446,20 +424,11 @@ utilizando artefatos que nós chamamos de… Objetos.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/classes-de-dados/" class="post-link">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Classes de Dados</li></h4>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
         </ul>
-        <!--<p class="post-summary">Como manipulamos os Dados em Projetos Orientados a Objetos.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/delegacao-de-implementacao-de-interfaces/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Delegação de Implementação de Interfaces</li></h4>
-        </ul>
-        <!--<p class="post-summary">A beleza da linguagem Object Pascal para implementar delegação entre Objetos</p>-->
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
       </a>
     </div>
   
@@ -473,20 +442,11 @@ utilizando artefatos que nós chamamos de… Objetos.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/funcoes-aninhadas/" class="post-link">
+      <a href="/posts/pensando-em-objetos/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
+          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
         </ul>
-        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/simplicidade/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Simplicidade</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
+        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
       </a>
     </div>
   
@@ -497,8 +457,8 @@ utilizando artefatos que nós chamamos de… Objetos.</p>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/o-que-e-um-objeto';
-      var disqus_title      = 'A Definição de Objeto';
+      var disqus_identifier = '/posts/scripts-para-compilar-fpc-e-lazarus-no-windows';
+      var disqus_title      = 'Scripts para Compilar FreePascal e Lazarus no Windows';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
