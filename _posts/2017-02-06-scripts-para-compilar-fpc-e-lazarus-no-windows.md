@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Scripts para Compilar FreePascal e Lazarus no Windows
-date: 2017-02-05
+date: 2017-02-06
 description:
   Saiba como compilar uma nova versão do compilador FreePascal ou atualizar a IDE Lazarus utilizando diretamente o código fonte.
 image: /images/photo-v0zxmzw_-e0-john-mark-kuznietsov.jpg
