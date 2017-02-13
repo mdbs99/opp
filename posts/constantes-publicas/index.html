@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Constantes Públicas &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Linguagem">
+    <meta name="keywords" content="constante, constant, public constant, delphi, freepascal, lazarus">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/constantes-publicas/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201702130006" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Constantes Públicas">
+    <meta property="og:description" content="Constantes Públicas não deveriam ser utilizadas em projetos Orientados a Objetos.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/constantes-publicas/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-ty8v7jjcgvg-pierre-bouillot.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Constantes Públicas" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/constantes-publicas/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>EBOOK</a>
+<a href="/archive/">ARQUIVO</a>
+<a href="/webinars/">WEBINÁRIOS</a>
+<a href="/contact/">CONTATO</a>
+<a href="/about/">SOBRE</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Constantes Públicas</h1>
+  <span class="post-meta">Feb 13, 2017</span><br>
+  
+  <span class="post-meta small">
+  
+    3 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Quantas vezes você precisou instanciar uma Classe mas não sabia, com exatidão, o valor a passar em algum argumento do construtor? Essa dúvida quase sempre acontece com argumentos do tipo <em>String</em> e a maioria das API’s disponibilizam constantes para serem utilizados nos argumentos.</p>
+
+<p>Bem, Constantes Públicas não deveriam ser utilizadas em projetos Orientados a Objetos.</p>
+
+<!--more-->
+
+<p><img src="/images/photo-ty8v7jjcgvg-pierre-bouillot.jpg" alt="Unsplash image" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Em linguagens puramente procedurais como <code>C</code>, por exemplo, constantes são normalmente utilizadas. Não há nada de errado com isso.</p>
+
+<p>No entanto, em projetos Orientados a Objetos, não há sentido em continuarmos utilizando o pensamento procedural de <code>C</code>, ou seja, disponibilizando <em>Constantes Públicas</em> para serem utilizadas como argumentos de Métodos e <a href="/posts/construtores-da-classe-primario-secundarios/">Construtores</a>.</p>
+
+<h2 id="constantes-publicas">Constantes Públicas</h2>
+
+<p>Eu já expliquei nesse <a href="/posts/tipos-primitivos-nos-argumentos/">artigo</a> que utilizar tipos primitivos em argumentos não é uma boa ideia na maioria dos casos. O problema é agravado quando utilizamos argumentos do tipo <em>String</em>, pois o valor pode ser qualquer sequência de caracteres.</p>
+
+<p>Vejamos um exemplo:</p>
+
+<pre><code>var
+  S: IString;
+begin
+  S := TStringBuilder.New(
+    TFile.New('foo.txt').Stream,
+    'UTF-8'
+  );
+end;
+</code></pre>
+
+<p>As Classes acima não fazem parte da RTL, são apenas exemplos.</p>
+
+<p>Vejamos. Uma Classe <code>TStringBuilder</code> recebe dois argumentos:</p>
+
+<ol>
+  <li>Um <em>Stream</em> de dados;</li>
+  <li>Uma <em>String</em> que corresponde ao <em>encoding</em> que será utilizado.</li>
+</ol>
+
+<p>Quais as chances do programador passar um argumento inválido no segundo parâmetro? Ele poderia escrever assim <code>UTF-8</code>, assim <code>UTF8</code>, assim <code>utf-8</code>, assim <code>utf8</code>…</p>
+
+<p>Para não haver erros de digitação, os programadores de API’s disponibilizam Constantes Públicas, exemplo:</p>
+
+<pre><code>var
+  S: IString;
+begin
+  S := TStringBuilder.New(
+    TFile.New('foo.txt').Stream,
+    UTF8_ENCODING
+  );
+end;
+</code></pre>
+
+<p>Ah, agora tá “perfeito”. Não haverá erro de digitação, pois não é mais uma <em>String</em>, mas sim uma Constante que o compilador pode checar.</p>
+
+<p>O problema, no entanto, é que o <a href="/posts/tipos-primitivos-nos-argumentos/#argumento">argumento</a> continua sendo do tipo <em>String</em> e mesmo o <em>code-completion</em> não pode ajudá-lo para lhe mostrar onde está a Constante (se existir!) para utilizá-la no argumento.</p>
+
+<p>O que fazer?</p>
+
+<h2 id="objetos">Objetos</h2>
+
+<p>Se você quer representar um <code>UTF8String</code> por quê não criar uma Classe que instancia um Objeto que representa exatamente o que você precisa?</p>
+
+<p>Vamos refatorar o código:</p>
+
+<pre><code>var
+  S: IString;
+begin
+  S := TUTF8String.New(
+    TFile.New('foo.txt').Stream
+  );
+end;
+</code></pre>
+
+<p>Muito mais <a href="/posts/menos-e-mais/">simples</a> e direto, não acha?</p>
+
+<p>Então você pensa: “Mas eu terei uma Classe para cada tipo de <em>encoding</em> no meu código?”</p>
+
+<p>Sim! Mas não pense que você terá duplicação de código por causa disso.</p>
+
+<h2 id="reutilizando">Reutilizando</h2>
+
+<p>Sabemos que já existem muitas funções para trabalhar com <em>encoding</em> de <em>String</em> em qualquer linguagem. Mas aqui trabalhamos com Objetos, então… criamos Objetos.</p>
+
+<p>No entanto, não queremos “reinventar a roda”. Precisamos reutilizar as funções já existentes, sejam funções <em>built-in</em> ou de alguma <em>lib</em> de terceiros. Não importa.</p>
+
+<p>No seu código Orientado a Objetos você não deve expor esses <em>detalhes tecnológicos</em> para seu <em>domínio</em>.</p>
+
+<p>Então, como fazer?</p>
+
+<p>Na sua <em>Unit</em>, você irá implementar uma Classe Privada. Essa Classe irá receber sim, um argumento do tipo <em>String</em>. Mas não há problema, pois a Classe é privada à <em>Unit</em>.</p>
+
+<p>Essa Classe teria uma implementação assim:</p>
+
+<pre><code>type
+  TEncodedString = class(TInterfacedObject, IString)
+  private
+    FEncoding: string;
+  public
+    constructor Create(
+      Stream: IDataStream; 
+      const Encoding: string
+    );
+    class function New(
+      Stream: IDataStream; 
+      const Encoding: string
+    ): IString;
+    function Value: string;
+    // more methods...
+  end;
+</code></pre>
+
+<p>Cada Classe especialista, como a <code>TUTF8String</code> por exemplo irá delegar para a <code>TEncodedString</code> a construção da <em>String</em> de retorno.</p>
+
+<p>O argumento <code>Encoding</code> poderá ser uma <em>String</em> pura ou uma <strong>Constante Privada</strong> — seja uma Constante privada da Classe ou da <em>Unit</em>, não importa.</p>
+
+<p>Então, considerando que <code>IString</code> tem o método <code>function Value: string</code>, a implementação desse método em <code>TUTF8String</code> seria algo assim:</p>
+
+<pre><code>function TUTF8String.Value: string;
+begin
+  Result := 
+    TEncodedString.New(
+      FStream, 'UTF-8'
+    ).Value
+end;
+</code></pre>
+
+<p>Nesse exemplo vemos que <code>TUTF8String</code> está delegando o trabalho para <code>TEncodedString</code> passando sua instância de <code>FStream</code> e o <em>encoding</em> alvo.</p>
+
+<p>Mas para todo o sistema, <code>TEncodedString</code> não existe.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Constantes Públicas não devem ser utilizadas na programação Orientada a Objetos pelas razões explicadas acima. Porém, devido a questões tecnológicas e detalhes de implementação, as Constantes Privadas ainda são úteis, mas não essenciais.</p>
+
+<p>Ao invés de tentar deixar uma Classe mais genérica possível, com inúmeras possibilidades de parametrização por constantes, divida-a em várias Classes <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">especialistas</a>.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/constantes-publicas/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Constantes Públicas&via=mdbs99;url=http://objectpascalprogramming.com/posts/constantes-publicas/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/constantes-publicas/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/constantes-publicas/&title=Constantes Públicas" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/constantes-publicas/&title=Constantes Públicas" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/constantes-publicas/&t=Constantes Públicas" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
+        </ul>
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-delegacao-problemas-solucoes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces, Delegação, Problemas e Soluções</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar Interfaces e Delegação de Implementação sem vazamentos de memória</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-adaptadoras/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/delegacao-de-implementacao-de-interfaces/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Delegação de Implementação de Interfaces</li></h4>
+        </ul>
+        <!--<p class="post-summary">A beleza da linguagem Object Pascal para implementar delegação entre Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/microservices-delphi-parte-3/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Microservices com Delphi — Parte 3</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como implementar uma simples API para fazer a comunicação com Microservices em Java.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/constantes-publicas';
+      var disqus_title      = 'Constantes Públicas';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

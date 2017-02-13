@@ -8,6 +8,152 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Constantes Públicas</title>
+        <description>&lt;p&gt;Quantas vezes você precisou instanciar uma Classe mas não sabia, com exatidão, o valor a passar em algum argumento do construtor? Essa dúvida quase sempre acontece com argumentos do tipo &lt;em&gt;String&lt;/em&gt; e a maioria das API’s disponibilizam constantes para serem utilizados nos argumentos.&lt;/p&gt;
+
+&lt;p&gt;Bem, Constantes Públicas não deveriam ser utilizadas em projetos Orientados a Objetos.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-ty8v7jjcgvg-pierre-bouillot.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Em linguagens puramente procedurais como &lt;code&gt;C&lt;/code&gt;, por exemplo, constantes são normalmente utilizadas. Não há nada de errado com isso.&lt;/p&gt;
+
+&lt;p&gt;No entanto, em projetos Orientados a Objetos, não há sentido em continuarmos utilizando o pensamento procedural de &lt;code&gt;C&lt;/code&gt;, ou seja, disponibilizando &lt;em&gt;Constantes Públicas&lt;/em&gt; para serem utilizadas como argumentos de Métodos e &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;Construtores&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;constantes-publicas&quot;&gt;Constantes Públicas&lt;/h2&gt;
+
+&lt;p&gt;Eu já expliquei nesse &lt;a href=&quot;/posts/tipos-primitivos-nos-argumentos/&quot;&gt;artigo&lt;/a&gt; que utilizar tipos primitivos em argumentos não é uma boa ideia na maioria dos casos. O problema é agravado quando utilizamos argumentos do tipo &lt;em&gt;String&lt;/em&gt;, pois o valor pode ser qualquer sequência de caracteres.&lt;/p&gt;
+
+&lt;p&gt;Vejamos um exemplo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var
+  S: IString;
+begin
+  S := TStringBuilder.New(
+    TFile.New(&#39;foo.txt&#39;).Stream,
+    &#39;UTF-8&#39;
+  );
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As Classes acima não fazem parte da RTL, são apenas exemplos.&lt;/p&gt;
+
+&lt;p&gt;Vejamos. Uma Classe &lt;code&gt;TStringBuilder&lt;/code&gt; recebe dois argumentos:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Um &lt;em&gt;Stream&lt;/em&gt; de dados;&lt;/li&gt;
+  &lt;li&gt;Uma &lt;em&gt;String&lt;/em&gt; que corresponde ao &lt;em&gt;encoding&lt;/em&gt; que será utilizado.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Quais as chances do programador passar um argumento inválido no segundo parâmetro? Ele poderia escrever assim &lt;code&gt;UTF-8&lt;/code&gt;, assim &lt;code&gt;UTF8&lt;/code&gt;, assim &lt;code&gt;utf-8&lt;/code&gt;, assim &lt;code&gt;utf8&lt;/code&gt;…&lt;/p&gt;
+
+&lt;p&gt;Para não haver erros de digitação, os programadores de API’s disponibilizam Constantes Públicas, exemplo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var
+  S: IString;
+begin
+  S := TStringBuilder.New(
+    TFile.New(&#39;foo.txt&#39;).Stream,
+    UTF8_ENCODING
+  );
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ah, agora tá “perfeito”. Não haverá erro de digitação, pois não é mais uma &lt;em&gt;String&lt;/em&gt;, mas sim uma Constante que o compilador pode checar.&lt;/p&gt;
+
+&lt;p&gt;O problema, no entanto, é que o &lt;a href=&quot;/posts/tipos-primitivos-nos-argumentos/#argumento&quot;&gt;argumento&lt;/a&gt; continua sendo do tipo &lt;em&gt;String&lt;/em&gt; e mesmo o &lt;em&gt;code-completion&lt;/em&gt; não pode ajudá-lo para lhe mostrar onde está a Constante (se existir!) para utilizá-la no argumento.&lt;/p&gt;
+
+&lt;p&gt;O que fazer?&lt;/p&gt;
+
+&lt;h2 id=&quot;objetos&quot;&gt;Objetos&lt;/h2&gt;
+
+&lt;p&gt;Se você quer representar um &lt;code&gt;UTF8String&lt;/code&gt; por quê não criar uma Classe que instancia um Objeto que representa exatamente o que você precisa?&lt;/p&gt;
+
+&lt;p&gt;Vamos refatorar o código:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var
+  S: IString;
+begin
+  S := TUTF8String.New(
+    TFile.New(&#39;foo.txt&#39;).Stream
+  );
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Muito mais &lt;a href=&quot;/posts/menos-e-mais/&quot;&gt;simples&lt;/a&gt; e direto, não acha?&lt;/p&gt;
+
+&lt;p&gt;Então você pensa: “Mas eu terei uma Classe para cada tipo de &lt;em&gt;encoding&lt;/em&gt; no meu código?”&lt;/p&gt;
+
+&lt;p&gt;Sim! Mas não pense que você terá duplicação de código por causa disso.&lt;/p&gt;
+
+&lt;h2 id=&quot;reutilizando&quot;&gt;Reutilizando&lt;/h2&gt;
+
+&lt;p&gt;Sabemos que já existem muitas funções para trabalhar com &lt;em&gt;encoding&lt;/em&gt; de &lt;em&gt;String&lt;/em&gt; em qualquer linguagem. Mas aqui trabalhamos com Objetos, então… criamos Objetos.&lt;/p&gt;
+
+&lt;p&gt;No entanto, não queremos “reinventar a roda”. Precisamos reutilizar as funções já existentes, sejam funções &lt;em&gt;built-in&lt;/em&gt; ou de alguma &lt;em&gt;lib&lt;/em&gt; de terceiros. Não importa.&lt;/p&gt;
+
+&lt;p&gt;No seu código Orientado a Objetos você não deve expor esses &lt;em&gt;detalhes tecnológicos&lt;/em&gt; para seu &lt;em&gt;domínio&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então, como fazer?&lt;/p&gt;
+
+&lt;p&gt;Na sua &lt;em&gt;Unit&lt;/em&gt;, você irá implementar uma Classe Privada. Essa Classe irá receber sim, um argumento do tipo &lt;em&gt;String&lt;/em&gt;. Mas não há problema, pois a Classe é privada à &lt;em&gt;Unit&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Essa Classe teria uma implementação assim:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TEncodedString = class(TInterfacedObject, IString)
+  private
+    FEncoding: string;
+  public
+    constructor Create(
+      Stream: IDataStream; 
+      const Encoding: string
+    );
+    class function New(
+      Stream: IDataStream; 
+      const Encoding: string
+    ): IString;
+    function Value: string;
+    // more methods...
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cada Classe especialista, como a &lt;code&gt;TUTF8String&lt;/code&gt; por exemplo irá delegar para a &lt;code&gt;TEncodedString&lt;/code&gt; a construção da &lt;em&gt;String&lt;/em&gt; de retorno.&lt;/p&gt;
+
+&lt;p&gt;O argumento &lt;code&gt;Encoding&lt;/code&gt; poderá ser uma &lt;em&gt;String&lt;/em&gt; pura ou uma &lt;strong&gt;Constante Privada&lt;/strong&gt; — seja uma Constante privada da Classe ou da &lt;em&gt;Unit&lt;/em&gt;, não importa.&lt;/p&gt;
+
+&lt;p&gt;Então, considerando que &lt;code&gt;IString&lt;/code&gt; tem o método &lt;code&gt;function Value: string&lt;/code&gt;, a implementação desse método em &lt;code&gt;TUTF8String&lt;/code&gt; seria algo assim:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function TUTF8String.Value: string;
+begin
+  Result := 
+    TEncodedString.New(
+      FStream, &#39;UTF-8&#39;
+    ).Value
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nesse exemplo vemos que &lt;code&gt;TUTF8String&lt;/code&gt; está delegando o trabalho para &lt;code&gt;TEncodedString&lt;/code&gt; passando sua instância de &lt;code&gt;FStream&lt;/code&gt; e o &lt;em&gt;encoding&lt;/em&gt; alvo.&lt;/p&gt;
+
+&lt;p&gt;Mas para todo o sistema, &lt;code&gt;TEncodedString&lt;/code&gt; não existe.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Constantes Públicas não devem ser utilizadas na programação Orientada a Objetos pelas razões explicadas acima. Porém, devido a questões tecnológicas e detalhes de implementação, as Constantes Privadas ainda são úteis, mas não essenciais.&lt;/p&gt;
+
+&lt;p&gt;Ao invés de tentar deixar uma Classe mais genérica possível, com inúmeras possibilidades de parametrização por constantes, divida-a em várias Classes &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;especialistas&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 13 Feb 2017 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/constantes-publicas/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/constantes-publicas/</guid>
+      </item>
+    
+      <item>
         <title>Scripts para Compilar FreePascal e Lazarus no Windows</title>
         <description>&lt;p&gt;Saiba como compilar uma nova versão do compilador FreePascal ou atualizar a IDE Lazarus utilizando diretamente o código fonte.&lt;/p&gt;
 
@@ -1378,164 +1524,6 @@ novas exigências.&lt;/p&gt;
         <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/objetos-agregados/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-agregados/</guid>
-      </item>
-    
-      <item>
-        <title>Menos é Mais</title>
-        <description>&lt;p&gt;Já pensou qual seria a quantidade ideal para argumentos em um 
-método? E a quantidade de métodos em uma Interface ou Classe?
-E quantas Classes você codificaria dentro de uma única unidade?&lt;/p&gt;
-
-&lt;p&gt;Vamos tentar obter alguns números.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-14541995559820-04de78c094e9.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;O tamanho de uma Classe, ou seja, a quantidade de métodos que
-ela implementa diz muito sobre ela. Uma Classe com muitos métodos
-está fazendo coisas demais, possui
-&lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;responsabilidades&lt;/a&gt;
-demais.&lt;/p&gt;
-
-&lt;p&gt;Podemos utilizar o mesmo princípio para argumentos de métodos. 
-Mais argumentos, mais informação, mais comunicações com outros
-Objetos. Então, teoricamente, o método está fazendo coisas demais.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo vou lhe mostrar alguns números ideais.&lt;/p&gt;
-
-&lt;p&gt;Não presumo que você irá concordar com tudo o que ler abaixo mas, 
-concordando ou não, esses são &lt;em&gt;meus&lt;/em&gt; números.&lt;/p&gt;
-
-&lt;h2 id=&quot;metodos&quot;&gt;Métodos&lt;/h2&gt;
-
-&lt;p&gt;Interfaces devem ser pequenas, com poucos métodos.
-Não é por que a Interface representa
-um &lt;code&gt;Carro&lt;/code&gt; que ela deverá conter todos os métodos inimagináveis
-para implementar o comportamento de um Carro.&lt;/p&gt;
-
-&lt;p&gt;Cada Interface deve ter o número de métodos que represente uma
-&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;entidade&lt;/a&gt;
-num contexto bem &lt;em&gt;delimitado&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;O número de métodos ideal está entre &lt;strong&gt;1 e 5&lt;/strong&gt; para Interfaces e,
-consequentemente, é o mesmo para Classes.&lt;/p&gt;
-
-&lt;p&gt;No entanto eu não considero a sobrecarga de métodos nessa contagem, ou seja, se
-a Classe possui 3 métodos &lt;code&gt;Save&lt;/code&gt; sobrecarregados, eu considero apenas
-como 1 método. Mas, mesmo que possa haver muitos métodos sobrecarregados,
-não quer dizer que a inteligência está dentro desses métodos. Não.
-Quase tudo pode ser &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/&quot;&gt;delegado&lt;/a&gt;
-à outros Objetos mais especialistas.&lt;/p&gt;
-
-&lt;h2 id=&quot;construtores&quot;&gt;Construtores&lt;/h2&gt;
-
-&lt;p&gt;Os construtores &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;primários e secundários&lt;/a&gt;
-sempre serão sobrecargas. Então você poderá ter quantos quiser.&lt;/p&gt;
-
-&lt;p&gt;Mas eu prefiro ter apenas 1 construtor e muitos
-&lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Métodos &lt;em&gt;New&lt;/em&gt;&lt;/a&gt;. Assim eu me
-beneficio de duas maneiras: a) A Classe só terá um meio para construir
-Objetos e b) Os métodos &lt;em&gt;New&lt;/em&gt; obrigam outros desenvolvedores a utilizarem 
-instâncias de Interfaces e não instâncias de Classe.&lt;/p&gt;
-
-&lt;h2 id=&quot;argumentos&quot;&gt;Argumentos&lt;/h2&gt;
-
-&lt;p&gt;Utilize a menor quantidade possível de argumentos nos métodos.
-Um método com muitos argumentos é difícil de escrever, entender e ler.
-Lembre-se que a maior parte do trabalho de um programador é &lt;em&gt;ler&lt;/em&gt; o código e não
-escrevê-lo.&lt;/p&gt;
-
-&lt;p&gt;O mesmo para argumentos dos &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt;
-da Classe.&lt;/p&gt;
-
-&lt;p&gt;O número ideal para os argumentos está entre &lt;strong&gt;0 e 5&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;variaveis-locais&quot;&gt;Variáveis locais&lt;/h2&gt;
-
-&lt;p&gt;Antes de utilizar a técnica do &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método &lt;em&gt;New&lt;/em&gt;&lt;/a&gt;,
-eu precisava utilizar um número maior de variáveis, somente para
-ter a &lt;a href=&quot;http://docwiki.embarcadero.com/RADStudio/Seattle/en/Using_Reference_Counting&quot;&gt;contagem de referência&lt;/a&gt;
-funcionando sem vazamentos de memória.&lt;/p&gt;
-
-&lt;p&gt;Não mais.&lt;/p&gt;
-
-&lt;p&gt;Agora eu utilizo cada vez menos variáveis locais e esse é um indício
-de um código mais Orientado a Objetos. Variáveis locais são utilizados
-em código &lt;em&gt;procedural&lt;/em&gt;. Você precisa de uma variável para &lt;em&gt;guardar&lt;/em&gt; algum
-valor, enquanto executa outro processamento, e então utiliza a variável
-que guardou em outro processamento… procedural.&lt;/p&gt;
-
-&lt;p&gt;O número ideal para variáveis locais está entre &lt;strong&gt;0 e 3&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;atributos&quot;&gt;Atributos&lt;/h2&gt;
-
-&lt;p&gt;Os atributos de um Objeto devem estar em conformidade com o que
-ele representa. Se você tem um método que retorna o Objeto no formato
-de XML, por exemplo, mas não utiliza esse formato em nenhum outro 
-método, então você não deveria ter um atributo que representa um XML.
-Em vez disso, crie o Objeto só quando ele for necessário, ou seja, 
-quanto o método que retorna um XML for requisitado.&lt;/p&gt;
-
-&lt;p&gt;O número ideal para atributos está entre &lt;strong&gt;1 e 7&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Aqui, no entanto, você pode quebrar essa regra &lt;em&gt;temporariamente&lt;/em&gt; se
-necessário, devido a prazos, complexidade, etc. Você pode aumentar
-o número de atributos e refatorar depois sem problemas, pois eles estarão 
-&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulados&lt;/a&gt;
-dentro da Classe.&lt;/p&gt;
-
-&lt;p&gt;Ninguém sabe o que acontece dentro de um Objeto, não é?&lt;/p&gt;
-
-&lt;p&gt;O que não pode ocorrer é ter um Objeto que não encapsula &lt;em&gt;nenhum&lt;/em&gt; atributo.
-Um Objeto &lt;em&gt;sempre&lt;/em&gt; deve encapsular alguma coisa, porque ele representa
-algo. Ele deve ter algum &lt;a href=&quot;/posts/objetos-sem-estado/&quot;&gt;estado&lt;/a&gt;
-que é implementado por seus atributos.&lt;/p&gt;
-
-&lt;h2 id=&quot;classes&quot;&gt;Classes na Unidade&lt;/h2&gt;
-
-&lt;p&gt;A linguagem Object Pascal foi uma das primeiras a implementar o conceito
-de &lt;em&gt;packages&lt;/em&gt; ou &lt;em&gt;namespaces&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Sim, estou falando das &lt;em&gt;units&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Cada &lt;a href=&quot;/posts/unidades-limitrofes/&quot;&gt;Unidade&lt;/a&gt; pode conter Classes 
-públicas ou privadas.&lt;/p&gt;
-
-&lt;p&gt;O número ideal para Classes dentro da mesma Unidade está entre &lt;strong&gt;1 e 11&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Dificilmente eu utilizo Classes privadas, pois sempre acho que elas podem 
-ser utilizadas em outros módulos. No entanto, se necessário, Classe privadas — 
-não importa se é privado no nível de Classe ou de Unidade — podem ser implementadas 
-seguindo as mesmas regras dos atributos. 
-Como são privadas, podem ser alteradas sem problemas futuramente.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Definir números máximos de usabilidade, é o mesmo que &lt;em&gt;restringir&lt;/em&gt;.
-E restrição pode ser uma coisa boa. Restrição nos faz pensar em como tornar as
-coisas mais &lt;em&gt;eficazes&lt;/em&gt; e com menos &lt;em&gt;desperdícios&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Pense bem. Para fazer uma viagem para fora do seu país, por exemplo, você precisa 
-planejar com cuidado o que levar na mochila.
-Você deve escolher o que é mais &lt;em&gt;importante&lt;/em&gt; e &lt;em&gt;essencial&lt;/em&gt;, e nada a mais.
-O motivo é viajar &lt;em&gt;leve&lt;/em&gt; e curtir ao máximo, sem se preocupar com inúmeros objetos
-ou malas cheias de coisas que você estaria arrastando com você.&lt;/p&gt;
-
-&lt;p&gt;É muito mais difícil &lt;em&gt;pensar&lt;/em&gt; no que é essencial ao invés de “por tudo na mala”,
-mas é um exercício que vale a pena fazer. Você fica abismado ao saber que necessita
-de tão pouco.&lt;/p&gt;
-
-&lt;p&gt;O mesmo vale para o seu código. Mantenha tudo &lt;em&gt;leve&lt;/em&gt; e &lt;em&gt;simples&lt;/em&gt;.
-Apenas com o essencial. Porque &lt;strong&gt;menos, é mais&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 28 Nov 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/menos-e-mais/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/menos-e-mais/</guid>
       </item>
     
   </channel>
