@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>A Definição de Objeto &#8211; Object Pascal Programming</title>
+    <title>Classes de Exceção &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Video">
-    <meta name="keywords" content="orientação a objetos, object oriented, object, objetos">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/o-que-e-um-objeto/">
+    <meta name="keywords" content="Linguagem">
+    <meta name="keywords" content="exception, exceções, raise exception, delphi, freepascal, lazarus">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/classes-de-excecao/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,20 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="A Definição de Objeto">
-    <meta property="og:description" content="Nesse artigo/vídeo eu explico a definição correta de Objeto dentro do paradigma da Orientação a Objetos.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/o-que-e-um-objeto/">
+    <meta property="og:title" content="Classes de Exceção">
+    <meta property="og:description" content="Devemos codificar uma Classe para cada tipo de Exceção ou utilizar apenas um único tipo?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/classes-de-excecao/">
     <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-hans-eiskonen-136904.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="A Definição de Objeto" />
+    <meta name="twitter:title" content="Classes de Exceção" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/o-que-e-um-objeto/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/classes-de-excecao/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -188,8 +190,8 @@
 
 
 <div class="post-header mb2">
-  <h1>A Definição de Objeto</h1>
-  <span class="post-meta">Jan 23, 2017</span><br>
+  <h1>Classes de Exceção</h1>
+  <span class="post-meta">Feb 20, 2017</span><br>
   
   <span class="post-meta small">
   
@@ -199,122 +201,63 @@
 </div>
 
 <article class="post-content">
-  <p>Nesse artigo/vídeo eu explico a definição correta de Objeto dentro do paradigma da Orientação a Objetos.</p>
+  <p>Devemos codificar uma Classe para cada tipo de Exceção ou utilizar apenas um único tipo?</p>
 
 <!--more-->
 
-<iframe width="600" height="355" src="https://www.youtube.com/embed/nia7UqcpOAc" frameborder="0" allowfullscreen=""></iframe>
+<p><img src="/images/photo-hans-eiskonen-136904.jpg" alt="Unsplash image" /></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>Então, o que é um Objeto?</p>
+<p>O conceito de Exceção foi criado para simplificar o código, removendo condicionais e verificações, para que o programador fique focado na lógica que o programa deve fazer ao invés de se preocupar em testar cada linha do código.</p>
 
-<p>Para responder a essa pergunta precisamos 
-saber o <a href="/posts/delegacao-de-implementacao-de-interfaces/#contextos">Contexto</a>.</p>
+<p>A idéia principal é fazer com que todos os possíveis erros (exceções) sejam concentrados e verificados num ponto em comum.</p>
 
-<p>No contexto puramente técnico, um Objeto 
-nada mais é do que uma estrutura com dados
-e funções.</p>
+<p>Esse ponto em comum pode ser único para todo o sistema, mas também pode ser um ponto em comum por Módulo, por <em>Unit</em>, por Classe. Depende. Mas isso é um assunto para outro artigo.</p>
 
-<p>No contexto da <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>,
-no  entanto, um Objeto é a representação 
-abstraída de uma Entidade.</p>
+<p>Nesse artigo o foco é outro. Vamos ter uma conversa se devemos criar ou não novos tipos de exceção para cada tipo de erro ou problema.</p>
 
-<p>Uma <a href="/posts/objetos-representam-entidades/">Entidade</a> pode ser uma pessoa, um animal, 
-uma bola, um pixel, um relatório, um arquivo,
-um diretório… qualquer coisa que deva ser 
-representado dentro do software é um forte 
-candidato a ser um Objeto.</p>
+<h2 id="classes-de-excecao">Classes de Exceção</h2>
 
-<p>Mas muitos desenvolvedores não conseguem 
-fazer essa distinção, entre o contexto técnico e o contexto da arquitetura.</p>
+<p>Divisão por zero. Erro na leitura de um <em>stream</em>. Erro de banco de dados…</p>
 
-<p>Eles continuam enxergando um Objeto (apenas) 
-como uma estrutura de dados e funções e não 
-conseguem entender a diferença entre programação 
-Procedural e a Orientada a Objetos.</p>
+<p>Temos Classes de Exceção definida para cada um desses erros. Em qualquer linguagem é assim.</p>
 
-<h2 id="abstracoes-e-camadas">Abstrações e Camadas</h2>
+<p>Por quê?</p>
 
-<p>Desenvolvedores precisam entender que existem 
-abstrações e camadas para o contexto Técnico 
-e também para o contexto da Arquitetura.</p>
+<p>Não é para tomada de decisões, com certeza. Você não deve mudar o fluxo de um programa de acordo com a exceção gerada. Todas as exceções tem um único objetivo: parar o fluxo normal do programa.</p>
 
-<p>Desde a época do cartão perfurado, passando 
-pela linguagem ASSEMBLY, até as linguagens 
-mais modernas de hoje em dia, os engenheiros 
-foram adicionando mais e mais camadas e 
-abstrações às linguagens.</p>
+<p>Para o usuário não importa o Tipo da Classe, mas sim a <strong>mensagem</strong> que é exibida quando um erro ocorre.</p>
 
-<p>As linguagens mais modernas hoje são frutos 
-dessas adições de abstrações e camadas técnicas, 
-com o objetivo de melhorar o código e a 
-codificação em si.</p>
+<p>Uma exceção define um ponto de ruptura no fluxo do código. A execução normal é interrompida e o fluxo vai para o ponto de tratamento das exceções.</p>
 
-<p>Paradigmas como a Orientação a Objetos 
-adicionam abstrações para melhorar a arquitetura.</p>
+<p>Então não haveria necessidade de criar novos tipos de Classes.
+Basta informar ao usuário o que ocorreu. A mensagem.</p>
 
-<p>Mas cada abstração ou camada, seja técnica ou 
-arquitetural, são apenas simplificações da 
-realidade, pois para o computador, no fim, 
-tudo será representado por “zeros e uns”.</p>
+<p>No entanto… eu vejo um motivo para criar novos Tipos de Exceções: <a href="/posts/codigo-duplicado-talvez-nao/">Reaproveitamento</a> de código.</p>
 
-<p>A maioria dos programadores entendem e utilizam 
-as abstrações técnicas no dia-a-dia sem nem 
-mesmo pensar sobre isso.</p>
+<p>Por exemplo, se um arquivo não é encontrado poderíamos gerar uma exceção do tipo <code>Exception</code> — a exceção mais genérica — ou criar uma nova Classe <code>EFileNotFound</code>.</p>
 
-<p>Estou falando do uso de estruturas de repetição
- como FOR ou WHILE e estruturas condicionais 
- como IF ou CASE.</p>
+<p>Para dar a informação ao usuário, as duas exceções abaixo são equivalentes:</p>
 
-<p>Quando você utiliza uma estrutura FOR, por 
-exemplo, o compilador irá gerar uma série de 
-comandos ASSEMBLY com instruções GOTO.</p>
+<pre><code>raise Exception.CreateFmt('File %s not found', ['foo.txt']);
 
-<p>Você não pensa sobre isso, não é? É como se 
-a estrutura FOR fosse um Objeto e você apenas 
-espera que ele exerça seu trabalho depois de 
-passar os argumentos de inicialização.</p>
+raise EFileNotFound.Create('foo.txt');
+</code></pre>
 
-<p>Você deveria ter esse mesmo pensamento quanto 
-estiver trabalhando com Objetos, dentro do 
-paradigma da Orientação a Objetos.</p>
+<p>A diferença é que <code>EFileNotFound</code> já encapsula a mensagem <em>“File %s not found”</em> e não precisamos repetir a mesma mensagem toda vez que quisermos dizer ao usuário que um arquivo não foi encontrado.</p>
 
-<h2 id="objetos">Objetos</h2>
-
-<p>Olhe para um Objeto do mesmo modo que você 
-olha para uma estrutura FOR, WHILE, IF, etc., 
-ou seja, você não pensa como essas estruturas 
-funcionam internamente (encapsulamento). 
-Você só sabe quais são seus argumentos de 
-inicialização (construtor) e espera que eles 
-trabalhem (comportamento) corretamente.</p>
-
-<p>Orientação a Objetos é isso, apenas mais 
-uma camada, mais uma abstração de arquitetura 
-acima do código procedural.</p>
-
-<p>Entender esse conceito sutil é o início 
-para você começar a utilizar a Orientação a 
-Objetos da forma mais correta.</p>
-
-<p>Orientação Objetos não substitui o paradigma 
-Procedural, ela o complementa; o aprimora.</p>
+<p>Assim fica fácil mudar a mensagem num único ponto no código.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Os computadores continuam trabalhando com a 
-mesma  premissa procedural desde que eles 
-foram inventados.</p>
+<p>Não utilize Tipos de Classes de Exceção para controlar o fluxo do programa. Isso é errado.</p>
 
-<p>O fato é que estamos presos a isso, de certa
-forma.</p>
+<p>Toda Exceção <em>deve</em> definir um ponto de ruptura. Algo de muito errado aconteceu. Para tudo. Não importa o Tipo de Classe.</p>
 
-<p>Mas podemos abstrair, podemos adicionar 
-camadas que facilitem o desenvolvimento da 
-arquitetura e entendimento do código. 
-A Orientação a Objetos faz isso muito bem 
-utilizando artefatos que nós chamamos de… Objetos.</p>
+<p>Para o usuário apenas a mensagem importa. Basta ser bem explicativa.</p>
+
+<p>Devemos criar novas Classe de Exceção apenas para reaproveitar e encapsular informações.</p>
 
 <p>Até logo.</p>
 
@@ -326,33 +269,33 @@ utilizando artefatos que nós chamamos de… Objetos.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/o-que-e-um-objeto/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/classes-de-excecao/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=A Definição de Objeto&via=mdbs99;url=http://objectpascalprogramming.com/posts/o-que-e-um-objeto/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Classes de Exceção&via=mdbs99;url=http://objectpascalprogramming.com/posts/classes-de-excecao/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/o-que-e-um-objeto/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/classes-de-excecao/" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/o-que-e-um-objeto/&title=A Definição de Objeto" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/o-que-e-um-objeto/&title=A Definição de Objeto" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/classes-de-excecao/&title=Classes de Exceção" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/o-que-e-um-objeto/&t=A Definição de Objeto" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/classes-de-excecao/&title=Classes de Exceção" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/classes-de-excecao/&t=Classes de Exceção" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -392,20 +335,29 @@ utilizando artefatos que nós chamamos de… Objetos.</p>
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/freeandnil-esqueca/" class="post-link">
+      <a href="/posts/codigo-duplicado-talvez-nao/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+          <h4 class="post-title"><li>Código Duplicado, Talvez Não</li></h4>
         </ul>
-        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+        <!--<p class="post-summary"></p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/objetos-imutaveis/" class="post-link">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
         </ul>
-        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
       </a>
     </div>
   
@@ -419,47 +371,11 @@ utilizando artefatos que nós chamamos de… Objetos.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/classes-adaptadoras/" class="post-link">
+      <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+          <h4 class="post-title"><li>Classes devem Implementar apenas uma Responsabilidade</li></h4>
         </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/o-que-e-orientacao-a-objetos/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Você sabe, com certeza, o que é Orientação a Objetos?</li></h4>
-        </ul>
-        <!--<p class="post-summary">Não pense que você programa Orientado a Objetos só porque utiliza Classes, Herança, Encapsulamento e, talvez, Polimorfismo.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/tipos-primitivos-nos-argumentos/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Tipos Primitivos nos Argumentos</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/delegacao-de-implementacao-de-interfaces/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Delegação de Implementação de Interfaces</li></h4>
-        </ul>
-        <!--<p class="post-summary">A beleza da linguagem Object Pascal para implementar delegação entre Objetos</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
+        <!--<p class="post-summary">Uma Classe com apenas uma Responsabilidade é simples para usar, modificar e reutilizar.</p>-->
       </a>
     </div>
   
@@ -473,20 +389,47 @@ utilizando artefatos que nós chamamos de… Objetos.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/pensando-em-objetos/" class="post-link">
+      <a href="/posts/classes-adaptadoras/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Pensando em Objetos</li></h4>
+          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
         </ul>
-        <!--<p class="post-summary">Pensar em Objetos é uma mudança de paradigma enorme para quem começou a programar em linguagens procedurais como C, ASM ou Pascal.</p>-->
+        <!--<p class="post-summary"></p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
         </ul>
-        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/unidades-limitrofes/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
+        </ul>
+        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 2</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
     </div>
   
@@ -497,8 +440,8 @@ utilizando artefatos que nós chamamos de… Objetos.</p>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/o-que-e-um-objeto';
-      var disqus_title      = 'A Definição de Objeto';
+      var disqus_identifier = '/posts/classes-de-excecao';
+      var disqus_title      = 'Classes de Exceção';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

@@ -8,6 +8,73 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Classes de Exceção</title>
+        <description>&lt;p&gt;Devemos codificar uma Classe para cada tipo de Exceção ou utilizar apenas um único tipo?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-hans-eiskonen-136904.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;O conceito de Exceção foi criado para simplificar o código, removendo condicionais e verificações, para que o programador fique focado na lógica que o programa deve fazer ao invés de se preocupar em testar cada linha do código.&lt;/p&gt;
+
+&lt;p&gt;A idéia principal é fazer com que todos os possíveis erros (exceções) sejam concentrados e verificados num ponto em comum.&lt;/p&gt;
+
+&lt;p&gt;Esse ponto em comum pode ser único para todo o sistema, mas também pode ser um ponto em comum por Módulo, por &lt;em&gt;Unit&lt;/em&gt;, por Classe. Depende. Mas isso é um assunto para outro artigo.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo o foco é outro. Vamos ter uma conversa se devemos criar ou não novos tipos de exceção para cada tipo de erro ou problema.&lt;/p&gt;
+
+&lt;h2 id=&quot;classes-de-excecao&quot;&gt;Classes de Exceção&lt;/h2&gt;
+
+&lt;p&gt;Divisão por zero. Erro na leitura de um &lt;em&gt;stream&lt;/em&gt;. Erro de banco de dados…&lt;/p&gt;
+
+&lt;p&gt;Temos Classes de Exceção definida para cada um desses erros. Em qualquer linguagem é assim.&lt;/p&gt;
+
+&lt;p&gt;Por quê?&lt;/p&gt;
+
+&lt;p&gt;Não é para tomada de decisões, com certeza. Você não deve mudar o fluxo de um programa de acordo com a exceção gerada. Todas as exceções tem um único objetivo: parar o fluxo normal do programa.&lt;/p&gt;
+
+&lt;p&gt;Para o usuário não importa o Tipo da Classe, mas sim a &lt;strong&gt;mensagem&lt;/strong&gt; que é exibida quando um erro ocorre.&lt;/p&gt;
+
+&lt;p&gt;Uma exceção define um ponto de ruptura no fluxo do código. A execução normal é interrompida e o fluxo vai para o ponto de tratamento das exceções.&lt;/p&gt;
+
+&lt;p&gt;Então não haveria necessidade de criar novos tipos de Classes.
+Basta informar ao usuário o que ocorreu. A mensagem.&lt;/p&gt;
+
+&lt;p&gt;No entanto… eu vejo um motivo para criar novos Tipos de Exceções: &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/&quot;&gt;Reaproveitamento&lt;/a&gt; de código.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo, se um arquivo não é encontrado poderíamos gerar uma exceção do tipo &lt;code&gt;Exception&lt;/code&gt; — a exceção mais genérica — ou criar uma nova Classe &lt;code&gt;EFileNotFound&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Para dar a informação ao usuário, as duas exceções abaixo são equivalentes:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;raise Exception.CreateFmt(&#39;File %s not found&#39;, [&#39;foo.txt&#39;]);
+
+raise EFileNotFound.Create(&#39;foo.txt&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A diferença é que &lt;code&gt;EFileNotFound&lt;/code&gt; já encapsula a mensagem &lt;em&gt;“File %s not found”&lt;/em&gt; e não precisamos repetir a mesma mensagem toda vez que quisermos dizer ao usuário que um arquivo não foi encontrado.&lt;/p&gt;
+
+&lt;p&gt;Assim fica fácil mudar a mensagem num único ponto no código.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Não utilize Tipos de Classes de Exceção para controlar o fluxo do programa. Isso é errado.&lt;/p&gt;
+
+&lt;p&gt;Toda Exceção &lt;em&gt;deve&lt;/em&gt; definir um ponto de ruptura. Algo de muito errado aconteceu. Para tudo. Não importa o Tipo de Classe.&lt;/p&gt;
+
+&lt;p&gt;Para o usuário apenas a mensagem importa. Basta ser bem explicativa.&lt;/p&gt;
+
+&lt;p&gt;Devemos criar novas Classe de Exceção apenas para reaproveitar e encapsular informações.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 20 Feb 2017 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/classes-de-excecao/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/classes-de-excecao/</guid>
+      </item>
+    
+      <item>
         <title>Constantes Públicas</title>
         <description>&lt;p&gt;Quantas vezes você precisou instanciar uma Classe mas não sabia, com exatidão, o valor a passar em algum argumento do construtor? Essa dúvida quase sempre acontece com argumentos do tipo &lt;em&gt;String&lt;/em&gt; e a maioria das API’s disponibilizam constantes para serem utilizados nos argumentos.&lt;/p&gt;
 
@@ -1312,218 +1379,6 @@ será suficiente.&lt;/p&gt;
         <pubDate>Mon, 12 Dec 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/desenvolvimento-profissional/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/desenvolvimento-profissional/</guid>
-      </item>
-    
-      <item>
-        <title>Objetos Agregados</title>
-        <description>&lt;p&gt;Objetos Agregados é uma &lt;em&gt;feature&lt;/em&gt; da linguagem &lt;em&gt;Object Pascal&lt;/em&gt;. 
-Ela nos permite delegar uma implementação
-de uma Interface para outro Objeto, utilizando uma sintaxe especial.&lt;/p&gt;
-
-&lt;p&gt;No entanto existe um grande problema
-no &lt;em&gt;design&lt;/em&gt; dessa &lt;em&gt;feature&lt;/em&gt; que não permite o programador utilizá-la em
-sua plenitude. Estou falando dos terríveis vazamentos de memória.&lt;/p&gt;
-
-&lt;p&gt;Muitos programadores desistem de utilizar Objetos Agregados devido
-a esses problemas…&lt;/p&gt;
-
-&lt;p&gt;Bem, não mais.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/icfxslgjq50-james-garcia.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Já faz algum tempo que venho pesquisando uma maneira de utilizar Objetos Agregados
-sem comprometer o &lt;em&gt;software&lt;/em&gt; com vazamentos de memória.&lt;/p&gt;
-
-&lt;p&gt;Mas como minhas Interfaces possuem &lt;a href=&quot;/posts/menos-e-mais/#metodos&quot;&gt;poucos métodos&lt;/a&gt;,
-é fácil implementar os métodos (as assinaturas) e delegar para um Objeto privado,
-ou seja, aquele que realmente irá fazer o trabalho.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente essa abordagem é verbosa, ineficiente e nos leva a duplicação de código.&lt;/p&gt;
-
-&lt;h2 id=&quot;voce-lembra&quot;&gt;Você lembra?&lt;/h2&gt;
-
-&lt;p&gt;A primeira vez que falei sobre esse assunto foi nesse
-&lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/&quot;&gt;artigo&lt;/a&gt;, no entanto
-a implementação original possui vazamentos de memória.&lt;/p&gt;
-
-&lt;p&gt;Enviei um &lt;a href=&quot;https://www.mail-archive.com/fpc-pascal@lists.freepascal.org/msg43835.html&quot;&gt;email&lt;/a&gt;
-sobre esse problema &lt;strong&gt;crítico&lt;/strong&gt; na lista oficial do FreePascal e ninguém deu alguma 
-solução plausível.&lt;/p&gt;
-
-&lt;p&gt;Utilizando o mesmo código de exemplo que enviei a lista, fiz algumas considerações
-e publiquei um novo &lt;a href=&quot;/posts/interfaces-delegacao-problemas-solucoes/&quot;&gt;artigo&lt;/a&gt;
-com uma possível solução.&lt;/p&gt;
-
-&lt;p&gt;A solução para corrigir o código do exemplo foi implementar a classe &lt;code&gt;TDelegatedIntegerValue&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Mas eu estava &lt;strong&gt;errado&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;O motivo era simples, a &lt;em&gt;duplicação&lt;/em&gt; de código continuava.&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TDelegatedIntegerValue&lt;/code&gt; tem sua própria implementação.
-Não há nenhuma reutilização da &lt;code&gt;TIntegerValue&lt;/code&gt; original.&lt;/p&gt;
-
-&lt;p&gt;Eu poderia utilizar &lt;code&gt;TIntegerValue&lt;/code&gt; como um atributo privado de &lt;code&gt;TDelegatedIntegerValue&lt;/code&gt; e 
-repassar as mensagens. Estaria correto. É o que todos fazem. Trivial.&lt;/p&gt;
-
-&lt;p&gt;Mas mesmo assim não ficaria satisfeito.&lt;/p&gt;
-
-&lt;p&gt;Para cada Classe que faz o real trabalho, eu teria
-que ter uma outra Classe, herdada de &lt;code&gt;TAggregatedObject&lt;/code&gt; que seria utilizada nas agregações.
-Sempre teria um par de Classes: uma normal e outra para agregação.&lt;/p&gt;
-
-&lt;p&gt;Eu não queria ter &lt;em&gt;pares&lt;/em&gt; de Classes para fazer o mesmo trabalho.&lt;/p&gt;
-
-&lt;p&gt;Eu não queria ter Classes que só poderiam ser utilizadas como &lt;em&gt;agregadas&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Eu não queria ter Classes que só poderiam ser utilizadas &lt;em&gt;diretamente&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;O que eu queria era ter apenas uma &lt;strong&gt;única classe&lt;/strong&gt; que pudesse ser utilizada &lt;em&gt;diretamente&lt;/em&gt; ou
-&lt;em&gt;agregada&lt;/em&gt; a outro Objeto. E, claro, sem vazamentos de memória.&lt;/p&gt;
-
-&lt;h2 id=&quot;codigo-perfeito&quot;&gt;Em busca do “código perfeito”&lt;/h2&gt;
-
-&lt;p&gt;Então eu comecei a implementação de um método que permitisse que qualquer Classe
-fosse utilizada &lt;em&gt;diretamente&lt;/em&gt; ou na forma &lt;em&gt;agregada&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Comecei essa implementação no Delphi 7.&lt;/p&gt;
-
-&lt;p&gt;Tenho alguns (grandes) projetos que ainda
-utilizam essa versão do Delphi. Nesses projetos você encontra de tudo:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Código Procedural&lt;/li&gt;
-  &lt;li&gt;Código que &lt;em&gt;parece&lt;/em&gt; Orientado a Objetos&lt;/li&gt;
-  &lt;li&gt;Código que &lt;em&gt;realmente&lt;/em&gt; é Orientado a Objetos&lt;/li&gt;
-  &lt;li&gt;Código RAD&lt;/li&gt;
-  &lt;li&gt;e muito mais.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Então quando tenho que fazer alguma manutenção neles, é uma boa hora
-para fazer uma refatoração.&lt;/p&gt;
-
-&lt;p&gt;Tive uma ideia que, a princípio, pareceu brilhante:&lt;/p&gt;
-
-&lt;p&gt;Iria unir as Classes &lt;code&gt;TInterfacedObject&lt;/code&gt; e &lt;code&gt;TAggregatedObject&lt;/code&gt; numa única nova Classe 
-e herdaria todas as minhas Classes a partir daí.&lt;/p&gt;
-
-&lt;p&gt;Perfeito!&lt;/p&gt;
-
-&lt;p&gt;Certo? Err…&lt;/p&gt;
-
-&lt;p&gt;Bem, não tão rápido.&lt;/p&gt;
-
-&lt;p&gt;Se você abrir o código da RTL e localizar ambas as Classes, verão que elas divergem
-muito na implementação. Para unir as duas eu tive que fazer várias condições — IF’s —
-em várias chamadas de métodos.&lt;/p&gt;
-
-&lt;p&gt;Exemplo. Se o argumento &lt;code&gt;Controller&lt;/code&gt; que &lt;code&gt;TAggregatedObject&lt;/code&gt; utiliza não é &lt;code&gt;nil&lt;/code&gt;, então o
-Objeto iria agir de um jeito, do contrário agiria de outra maneira.&lt;/p&gt;
-
-&lt;p&gt;Tive que copiar/colar o código de ambas as Classes;
-estava trabalhando com o &lt;a href=&quot;/posts/nao-utilize-nil-ou-null/&quot;&gt;anti-padrão&lt;/a&gt; &lt;code&gt;nil/NULL&lt;/code&gt;;
-a Classe estava complexa e não estava mais implementando apenas uma
-&lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;única responsabilidade&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;A “solução” estava criando um monstro.&lt;/p&gt;
-
-&lt;p&gt;Isso estava indo contra muitas ideias que eu &lt;em&gt;defendo&lt;/em&gt; como &lt;em&gt;corretas&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então…&lt;/p&gt;
-
-&lt;p&gt;Joguei tudo fora, esqueci do assunto e continuei minha vida.&lt;/p&gt;
-
-&lt;p&gt;Nenhuma outra linguagem tem isso — eu pensei — então por que continuar nessa busca?&lt;/p&gt;
-
-&lt;p&gt;Isso não funciona. Desisto.&lt;/p&gt;
-
-&lt;h2 id=&quot;uma-soluo-absurdamente-simples&quot;&gt;Uma solução absurdamente simples&lt;/h2&gt;
-
-&lt;p&gt;O tempo passou.&lt;/p&gt;
-
-&lt;p&gt;Então num belo dia tive uma &lt;em&gt;inspiração&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Todo esse tempo eu queria uma solução simples, mas estava pensando de forma errada… novamente!&lt;/p&gt;
-
-&lt;p&gt;Não tenho que ter apenas uma única Classe. Tenho que utilizar a
-&lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;decoração&lt;/a&gt; e composição de Objetos.&lt;/p&gt;
-
-&lt;p&gt;Voltei o exemplo original do
-&lt;a href=&quot;/posts/interfaces-delegacao-problemas-solucoes/#exemplo-2&quot;&gt;artigo anterior&lt;/a&gt;
-e, ao invés de implementar &lt;code&gt;TDelegatedIntegerValue&lt;/code&gt;, implementei a Classe &lt;code&gt;TAggregateValue&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Pouquíssimas linhas de código. Sem copiar/colar. Sem complexidade. Simples.&lt;/p&gt;
-
-&lt;p&gt;E isso fez &lt;strong&gt;toda&lt;/strong&gt; diferença.&lt;/p&gt;
-
-&lt;p&gt;Veja o código completo do programa anterior, reescrito:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/a37d69af39bf859c0c9da77ce48f6a3b.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TAggregateValue&lt;/code&gt; implementa &lt;code&gt;IValue&lt;/code&gt;, porém ela não tem uma própria implementação. 
-Essa Classe apenas repassa as mensagens a instância &lt;code&gt;FOrigin&lt;/code&gt; — argumento passado no construtor —
-que também implementa &lt;code&gt;IValue&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Em outras palavras, para cada Interface no seu código você terá uma, e apenas uma, implementação agregada 
-que poderá ser utilizada com qualquer outra “classe normal” que implemente a mesma Interface.&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TMyApp&lt;/code&gt; continua implementando &lt;code&gt;IValue&lt;/code&gt;, mas seu atributo privado que realmente
-implementa &lt;code&gt;IValue&lt;/code&gt; através da delegação, é 
-&lt;a href=&quot;https://gist.github.com/mdbs99/a37d69af39bf859c0c9da77ce48f6a3b#file-project-lpr-L75-L83&quot;&gt;inicializado&lt;/a&gt;
-através de uma composição/decoração entre &lt;code&gt;TAggregateValue&lt;/code&gt; e &lt;code&gt;TIntegerValue&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Apesar de continuarmos com 2 Classes como no exemplo anterior, veja que é possível codificar 
-infinitas Classes que implementem &lt;code&gt;IValue&lt;/code&gt;, mas utilizar apenas 1 Classe agregadora em todos 
-os casos.&lt;/p&gt;
-
-&lt;p&gt;E tão bom quanto isso tudo é não ter vazamentos de memória:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;IntegerValue:
-TIntegerValue.Create
-Number is 5
-TIntegerValue.Destroy
-
-MyApp:
-TIntegerValue.Create
-TMyApp.Create
-Number is 10
-TMyApp.Destroy
-TIntegerValue.Destroy
-
-MyAppAsInterface:
-TIntegerValue.Create
-TMyApp.Create
-Number is 20
-TMyApp.Destroy
-TIntegerValue.Destroy
-
-Heap dump by heaptrc unit
-85 memory blocks allocated : 2049/2232
-85 memory blocks freed     : 2049/2232
-0 unfreed memory blocks : 0
-True heap size : 196608 (128 used in System startup)
-True free heap : 196480
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Todas as minhas soluções anteriores iriam, de alguma forma, mudar a implementação
-original das Classes que já estavam funcionando por todo o sistema. Esse é um dos
-indícios que &lt;strong&gt;A)&lt;/strong&gt; suas classes foram mal implementadas ou &lt;strong&gt;B)&lt;/strong&gt; sua abordagem atual está 
-errada porque você não deveria alterar Classes que já funcionam para adaptá-las a
-novas exigências.&lt;/p&gt;
-
-&lt;p&gt;Eu estava insistindo na opção B, enquanto a resposta sempre esteve comigo.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Decoração e Composição de Objetos&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/objetos-agregados/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-agregados/</guid>
       </item>
     
   </channel>
