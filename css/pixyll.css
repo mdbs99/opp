@@ -123,7 +123,7 @@ p,
 dl,
 ol,
 ul {
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin-top: 0;
   margin-bottom: 1rem; }
 
@@ -135,11 +135,11 @@ pre,
 code,
 samp {
   font-family: "Source Code Pro", Consolas, monospace;
-  font-size: inherit; }
+  font-size: 0.875rem; }
 
 pre {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   overflow-x: scroll; }
 
 hr {
@@ -172,7 +172,7 @@ h3,
 
 h4,
 .h4 {
-  font-size: 1rem; }
+  font-size: 0.9rem; }
 
 h5,
 .h5 {
@@ -631,7 +631,6 @@ body {
 
 a {
   color: #0076df;
-  background-image: linear-gradient(to top, transparent 13%, rgba(0, 118, 223, 0.8) 13%, rgba(0, 118, 223, 0.8) 18%, transparent 17%);
   text-shadow: white 1px 0px 0px, white -1px 0px 0px; }
 
 a:hover,
@@ -678,7 +677,7 @@ code {
   font-family: "Source Code Pro", Consolas, monospace; }
 
 code {
-  color: #333333; }
+  color: #444; }
 
 pre {
   padding: 1.125em;
@@ -1076,14 +1075,14 @@ blockquote footer {
     margin-top: 0; }
 
   .site-header a {
-    font-size: 1rem; }
+    font-size: 0.9rem; }
 
   .site-header .site-title {
     font-size: 2.998rem;
     float: left; }
 
   .site-header .site-nav {
-    margin: 3.75rem auto 20px; }
+    margin: 7.75rem auto 5px; }
 
   blockquote {
     margin-left: 2rem;
@@ -1102,7 +1101,7 @@ blockquote footer {
     font-size: 20px; } }
 @media screen and (min-width: 78em) {
   em img {
-    max-width: 56rem;
+    max-width: 47rem;
     margin-left: -7em; } }
 .gist,
 .gist .highlight .p {
@@ -1113,7 +1112,7 @@ blockquote footer {
 
 .measure {
   margin: 0 auto;
-  max-width: 42rem; }
+  max-width: 33rem; }
 
 .pagination {
   font-size: 1rem;
