@@ -31,10 +31,6 @@ Se você escreveu algo parecido e não está na lista, porfavor aponte o link pa
 
 [![Testemunho]({{ page.image_path }}carlos-eduardo.png)](http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/#comment-2617771905)
 
-[![Testemunho]({{ page.image_path }}manoel-pedro-junior.png)](http://objectpascalprogramming.com/posts/retrospectiva-2016/#comment-3079759369)
-
-[![Testemunho]({{ page.image_path }}anderson-junior-gado-da-silva.png)](http://objectpascalprogramming.com/posts/retrospectiva-2016/#comment-3084970161)
-
 [![Testemunho]({{ page.image_path }}rubens-nascimento.png)](http://objectpascalprogramming.com/posts/nao-utilize-casting/#comment-2629865788)
 
 [![Testemunho]({{ page.image_path }}diego-maccari.png)](http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/#comment-2691799122)
@@ -53,6 +49,9 @@ Se você escreveu algo parecido e não está na lista, porfavor aponte o link pa
 
 [![Testemunho]({{ page.image_path }}vitor-barbieri.png)](http://objectpascalprogramming.com/posts/objetos-agregados/#comment-3038150112)
 
+[![Testemunho]({{ page.image_path }}manoel-pedro-junior.png)](http://objectpascalprogramming.com/posts/retrospectiva-2016/#comment-3079759369)
+
+[![Testemunho]({{ page.image_path }}anderson-junior-gado-da-silva.png)](http://objectpascalprogramming.com/posts/retrospectiva-2016/#comment-3084970161)
 
 [![Testemunho]({{ page.image_path }}amauri-alves.png)](http://objectpascalprogramming.com/posts/retrospectiva-2016/#comment-3079855710)
 
