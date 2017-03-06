@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Como Utilizar Herança Apropriadamente
-date: 2017-03-05
+date: 2017-03-06
 description:
   Sempre favoreça a Composição de Objetos ao invés de Herança de Classe, mas se você ainda quiser ou precisar utilizar a Herança, sabia como utilizá-la apropriadamente.
 image: /images/photo-joanna-kosinska-37665.jpg
@@ -41,7 +41,7 @@ Então qual o motivo para escrever artigo?
 
 A Herança de Classe é uma ferramenta e, como tal, está disponível para ser utilizada. Se você conseguir fazer isso apropriadamente, poderia obter algum benefício prático e, ao mesmo tempo, minimizar os [males]({% post_url 2016-05-23-heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1 %}#os-males) que a Herança de Classe traz consigo.
 
-Então compilei algumas *regras* que, na minha opinião, são essenciais para o uso da Herança de Classe.
+Então compilei algumas *regras* que, na minha opinião, são essenciais para o bom uso da Herança de Classe.
 
 ## Não utilize Herança (apenas) para Reaproveitamento de Código {#reaproveitamento-de-codigo}
 
