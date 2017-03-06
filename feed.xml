@@ -8,6 +8,136 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Como Utilizar Herança Apropriadamente</title>
+        <description>&lt;p&gt;Sempre favoreça a Composição de Objetos ao invés de Herança de Classe, mas se você ainda quiser ou precisar utilizar a Herança, sabia como utilizá-la apropriadamente.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-joanna-kosinska-37665.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Eu já escrevi uma &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;série de 5 partes&lt;/a&gt; aqui no blog sobre como a Herança pode ser o mal da Orientação a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Meu entendimento sobre esse assunto continua o mesmo: Herança de Classe deve ser &lt;em&gt;evitada&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então qual o motivo para escrever artigo?&lt;/p&gt;
+
+&lt;p&gt;A Herança de Classe é uma ferramenta e, como tal, está disponível para ser utilizada. Se você conseguir fazer isso apropriadamente, poderia obter algum benefício prático e, ao mesmo tempo, minimizar os &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/#os-males&quot;&gt;males&lt;/a&gt; que a Herança de Classe traz consigo.&lt;/p&gt;
+
+&lt;p&gt;Então compilei algumas &lt;em&gt;regras&lt;/em&gt; que, na minha opinião, são essenciais para o bom uso da Herança de Classe.&lt;/p&gt;
+
+&lt;h2 id=&quot;reaproveitamento-de-codigo&quot;&gt;Não utilize Herança (apenas) para Reaproveitamento de Código&lt;/h2&gt;
+
+&lt;p&gt;A maioria dos desenvolvedores utilizam Herança pensando em Reaproveitamento de Código. Esse é o início de todos os outros problemas relacionados à Herança de Classe.&lt;/p&gt;
+
+&lt;p&gt;Herança de Classe não foi projetada para Reaproveitamento de Código — isso é apenas um &lt;em&gt;efeito colateral&lt;/em&gt; — mas sim para construir hierarquias do tipo &lt;strong&gt;é-um&lt;/strong&gt;. Um gato &lt;em&gt;é um&lt;/em&gt; animal; cachorro &lt;em&gt;é um&lt;/em&gt; mamífero; tubarão &lt;em&gt;é um&lt;/em&gt; peixe; etc.&lt;/p&gt;
+
+&lt;p&gt;Assim como os ciêntistas classificam um animal apenas colocando-o numa hierarquia &lt;em&gt;não&lt;/em&gt; baseada no seu comportamento, mas sim nas suas características físicas, na Orientação a Objetos isso também pode ser feito utilizando Interfaces com um mínimo de esforço na manutenção do código. Por exemplo, se um animal fosse retirado ou movido para outro ponto na hierarquia, bastaria retirar ou reescrever apenas algumas assinaturas de métodos.&lt;/p&gt;
+
+&lt;p&gt;O problema está nas Classes. Especialmente naquelas Classes abstratas e/ou métodos abstratos que são codificadas apenas para reutilizar código.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Quando você estiver projetando seu sistema, é o Domínio que irá sugerir quais Classes deverão ser implementadas.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Se o software que você está desenvolvendo é sobre venda de Carros e Motos, não pense em codificar uma Classe &lt;code&gt;TAbstractVehicle&lt;/code&gt; para compartilhar código entre &lt;code&gt;TCarro&lt;/code&gt; e &lt;code&gt;TMoto&lt;/code&gt;. Se essa abstração não existe no Domínio, você não deveria criá-la.&lt;/p&gt;
+
+&lt;p&gt;Mas se no Domínio já existir o conceito de hierarquia como, por exemplo, &lt;em&gt;Carro Alemão&lt;/em&gt;, &lt;em&gt;Carro Francês&lt;/em&gt; e &lt;em&gt;Carro Americano&lt;/em&gt;, então talvez você possa definir uma Hierarquia de Classes onde os carros da marca BMW e Audi &lt;strong&gt;é-um&lt;/strong&gt; &lt;em&gt;Carro Alemão&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não porque você &lt;em&gt;precisa&lt;/em&gt; compartilhar código, mas sim porque seu Domínio &lt;em&gt;exige&lt;/em&gt; que assim seja, por algum motivo.&lt;/p&gt;
+
+&lt;p&gt;Então, antes de implementar alguma hierarquia, verifique se está de acordo com o seu Domínio.&lt;/p&gt;
+
+&lt;h2 id=&quot;classes-de-suporte&quot;&gt;Classes de Domínio não podem Herdar de Classes de Suporte&lt;/h2&gt;
+
+&lt;p&gt;Um dos grandes erros que você desenvolvedor pode cometer é herdar suas &lt;em&gt;Classes de Domínio&lt;/em&gt; de &lt;em&gt;Classes de Suporte&lt;/em&gt;. Estou utilizando essa nomenclatura (Suporte) para todas as Classes &lt;em&gt;built-in&lt;/em&gt;, ou seja, Classes disponíveis nas &lt;em&gt;libs&lt;/em&gt; do Compilador (VCL/LCL ou RTL) ou mesmo &lt;em&gt;libs&lt;/em&gt; de terceiros.&lt;/p&gt;
+
+&lt;p&gt;Se o Domínio lhe diz que é necessário uma “Lista de Veículos”, por exemplo, o que fazem a maioria dos desenvolvedores?&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Procuram uma Classe de Suporte que implementa uma Lista para poderem utilizar herança ou ;&lt;/li&gt;
+  &lt;li&gt;Procuram uma Classe de Suporte que implementa uma Lista utilizando &lt;em&gt;Generics&lt;/em&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;A segunda opção parece ser a mais “sofisticada” hoje em dia — todos amam &lt;em&gt;generics&lt;/em&gt;, não é? — mas lhe digo que ambas as opções estão erradas.&lt;/p&gt;
+
+&lt;p&gt;Uma “Lista de Veículos” &lt;em&gt;é-um&lt;/em&gt; &lt;code&gt;TList&lt;/code&gt;, &lt;code&gt;TStringList&lt;/code&gt;, &lt;code&gt;TInterfaceList&lt;/code&gt; ou &lt;code&gt;sua-classe-de-lista-preferida-aqui&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;Não necessariamente.&lt;/p&gt;
+
+&lt;p&gt;As Classes do Domínio não podem ser “contaminadas” pelas Classes de Suporte através da Herança de Classe.&lt;/p&gt;
+
+&lt;p&gt;As Classes de Suporte devem ser utilizadas na Composição de Objetos. Em outras palavras, você implementa sua &lt;code&gt;TVehicleList&lt;/code&gt; e, internamente, utiliza alguma Classe de Suporte que implementa o conceito de lista — nem é necessário o uso de &lt;em&gt;Generics&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Seu Domínio não pode depender de implementações de Classes de Suporte de outras &lt;em&gt;libs&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então, não utilize Herança a partir de Classes de Suporte.&lt;/p&gt;
+
+&lt;h2 id=&quot;dominios-distintos&quot;&gt;Não pode haver Herança de Classes entre Domínios distintos&lt;/h2&gt;
+
+&lt;p&gt;Suas Classes de Domínio e Classes de Suporte pertencem a Domínios ou &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/#contextos&quot;&gt;Contextos&lt;/a&gt; distintos. Somente isso já seria um forte motivo para não utilizar herança entre essas Classes.&lt;/p&gt;
+
+&lt;p&gt;A explicação é simples: Um objeto (A) não é, necessariamente, do mesmo &lt;em&gt;tipo&lt;/em&gt; que um objeto (B) apenas porque eles são &lt;em&gt;similares&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Um cachorro é similar a um lobo — pelo menos pra mim — no entanto podemos afirmar que ambos descendem de uma única Classe? Caso a resposta seja sim, alterar qualquer coisa nessa Classe Ancestral iria alterar o comportamento de duas criaturas que são similares na &lt;em&gt;aparência&lt;/em&gt; porém bem diferentes, em muitos aspectos, no &lt;em&gt;comportamento&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Domínios e Contextos distintos podem e devem evoluir independentemente.&lt;/p&gt;
+
+&lt;p&gt;Então, não utilize Herança entre Domínios distintos. Se deseja reutilização de Código é melhor utilizar Composição de Objetos ao invés de Herança de Classe.&lt;/p&gt;
+
+&lt;h2 id=&quot;metodos-protegidos&quot;&gt;Não utilize Atributos ou Métodos Protegidos Apenas para Uso em Subclasses&lt;/h2&gt;
+
+&lt;p&gt;Uma das “vantagens” da Herança de Classe é implementarmos Atributos e Métodos protegidos — muitas vezes eles são abstratos — para serem utilizados ou sobrescritos nas Subclasses.&lt;/p&gt;
+
+&lt;p&gt;Não faça isso.&lt;/p&gt;
+
+&lt;p&gt;É o mesmo que programar procedural, mas utilizando Classes.&lt;/p&gt;
+
+&lt;p&gt;Se você codifica uma Classe abstrata apenas para codificar atributos (variáveis globais?) e métodos abstratos (“pontos de execução”?) para Subclasses é o mesmo que criar Procedimentos que tem outros  Procedimentos (ponteiros) como argumentos. Isso não é Orientação a Objetos.&lt;/p&gt;
+
+&lt;p&gt;As Classes devem ser &lt;em&gt;sólidas&lt;/em&gt;. A implementação delas não deve estar “fatiada” entre outras “Classes” (procedimentos?).&lt;/p&gt;
+
+&lt;p&gt;A Herança de Classe faz isso, ou seja, divide o comportamento em várias Classes. Porém, se a Herança for bem feita, uma Classe Ancestral terá comportamento independentemente se há ou não Subclasses para implementar ou sobrescrever quaisquer metódos.&lt;/p&gt;
+
+&lt;p&gt;Então, não implemente Classes que dependam de Subclasses para ter algum comportamento útil.&lt;/p&gt;
+
+&lt;h2 id=&quot;sempre-adicione&quot;&gt;Sempre Adicione, nunca Altere ou Remova Funcionalidades&lt;/h2&gt;
+
+&lt;p&gt;Se você costuma sobrescrever Métodos de Classes ancestrais para “desativá-los” (removendo a implementação) ou não chama a execução do Método Ancestral (herdado) &lt;em&gt;antes&lt;/em&gt; ou &lt;em&gt;depois&lt;/em&gt; de adicionar comportamento, é bem provável que sua hierarquia de Classes está &lt;em&gt;errada&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se sua Subclasse deveria ter um comportamento diferente da Classe Ancestral, a ponto de você querer reimplementar todo o Método ou desativá-lo, então esse comportamento não deveria estar na Classe Ancestral ou a Herança entre essas Classes não deveria existir.&lt;/p&gt;
+
+&lt;p&gt;Com a Herança de Classe você quer herdar todos os contratos (Interfaces) que a Classe implementa assim como todo o seu comportamento. Não faz sentido, então, querer eliminar ou refazer alguma coisa. É um desperdício.&lt;/p&gt;
+
+&lt;p&gt;Um pato pode ter duas pernas, porém ele não &lt;em&gt;corre&lt;/em&gt; como um ser humano. Não faz sentido ambos terem uma Classe em comum apenas para reaproveitar 2 pernas, mas mudar o comportamento quando ambos estão correndo.&lt;/p&gt;
+
+&lt;p&gt;Então, pense na Hierarquia de Classes para determinar tipos em comum, não comportamento em comum.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;A Orientação a Objetos implementa o conceito de Composição de Objetos que é o suficiente para implementar Objetos simples, sólidos e que implementam apenas uma única &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;responsabilidade&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas ela também nos dá outra ferramenta: A Herança de Classe.&lt;/p&gt;
+
+&lt;p&gt;Você pode ter uma melhor arquitura substituindo Herança por &lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;Decoradores&lt;/a&gt;, com a única desvantagem de escrever mais.&lt;/p&gt;
+
+&lt;p&gt;Vale a pena? Depende.&lt;/p&gt;
+
+&lt;p&gt;Pode ter casos que a Herança facilita ou até mesmo é necessária? Talvez.&lt;/p&gt;
+
+&lt;p&gt;Resumindo: A melhor ferramenta vai depender do tipo de trabalho a ser feito.&lt;/p&gt;
+
+&lt;p&gt;No meu carro, os problemas do dia-a-dia eu resolvo com um par de chaves-de-fenda, um alicate, Silver-tape e WD. Mas tem problemas que só podem ser resolvidos com ferramentas espefícias. Entende?&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 06 Mar 2017 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/posts/como-utilizar-heranca-apropriadamente/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/como-utilizar-heranca-apropriadamente/</guid>
+      </item>
+    
+      <item>
         <title>Classes de Exceção</title>
         <description>&lt;p&gt;Devemos codificar uma Classe para cada tipo de Exceção ou utilizar apenas um único tipo?&lt;/p&gt;
 
@@ -1167,218 +1297,6 @@ avesso as “novidades”… você decide.&lt;/p&gt;
         <pubDate>Mon, 19 Dec 2016 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/simplicidade/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/simplicidade/</guid>
-      </item>
-    
-      <item>
-        <title>Desenvolvimento Profissional</title>
-        <description>&lt;p&gt;Como você controla o desenvolvimento dos seus projetos?&lt;/p&gt;
-
-&lt;p&gt;Eu quero dizer, os requisitos, fontes, 
-tickets, &lt;em&gt;releases&lt;/em&gt;, documentação… ou seja, todo os
-artefatos do software.&lt;/p&gt;
-
-&lt;p&gt;Eu utilizo Git, &lt;em&gt;Tickets&lt;/em&gt;, &lt;em&gt;Wikis&lt;/em&gt; e &lt;strong&gt;GitLab&lt;/strong&gt; para o controle
-de todos os meus projetos privados.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-gitlab86186324.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Codificar um software hoje em dia não é tão difícil.
-São tantas ferramentas automatizadas, vídeos com tutoriais
-completos ou IDE’s fantásticas, que praticamente qualquer
-pessoa que realmente se interesse pelo assunto iria conseguir 
-fazer um software.&lt;/p&gt;
-
-&lt;p&gt;Isso é incrível.&lt;/p&gt;
-
-&lt;p&gt;Mas existe uma &lt;em&gt;grande diferença&lt;/em&gt; entre fazer um simples programa
-e desenvolver um projeto &lt;em&gt;profissional&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;controle&quot;&gt;Controle&lt;/h2&gt;
-
-&lt;p&gt;Como desenvolvedor, arquiteto e gerente de projetos pessoais ou 
-de clientes, preciso ter o controle de todos os artefatos que compõe
-todos os softwares para qual eu trabalho.&lt;/p&gt;
-
-&lt;p&gt;Sendo o software um trabalho de engenharia, mas também arte e trabalho
-manual, ter o controle 100% de todos os detalhes é impossível.&lt;/p&gt;
-
-&lt;p&gt;No entanto precisamos ter o controle da &lt;em&gt;qualidade&lt;/em&gt;, &lt;em&gt;prazo&lt;/em&gt; e &lt;em&gt;orçamento&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;É necessário haver ferramentas para controlar tudo, desde o levantamento
-de requisitos, codificação, testes, acompanhamento de problemas, lançamento
-de versões e documentação.&lt;/p&gt;
-
-&lt;p&gt;As ferramentas para esse tipo de controle existem e estão a disposição para
-qualquer desenvolvedor, mas nem todos as utilizam.&lt;/p&gt;
-
-&lt;p&gt;O uso dessas ferramentas separam os &lt;em&gt;amadores&lt;/em&gt; dos &lt;em&gt;profissionais&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;ferramentas&quot;&gt;Ferramentas&lt;/h2&gt;
-
-&lt;p&gt;Qualquer ferramenta que realmente ajude no controle do desenvolvimento de
-software é válida. No entanto algumas dessas ferramentas já foram e são utilizadas
-diariamente e, por serem tão eficazes, considero-as como um padrão
-no mundo do desenvolvimento de software. E é sobre elas que irei falar.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Git&lt;/em&gt;&lt;/strong&gt;, segundo a &lt;a href=&quot;https://pt.wikipedia.org/wiki/Git&quot;&gt;Wikipedia&lt;/a&gt;,
-é um sistema de controle de versão distribuído e um sistema de gerenciamento de 
-código fonte, com ênfase em velocidade. O Git foi inicialmente projetado e desenvolvido 
-por Linus Torvalds para o desenvolvimento do kernel Linux, mas foi adotado por muitos 
-outros projetos.&lt;/p&gt;
-
-&lt;p&gt;Ele é o padrão atual para o controle de versão de softwares. Mas, não apenas por isso,
-você &lt;em&gt;deve&lt;/em&gt; utilizá-lo porque não há nenhum outro concorrente que seja tão &lt;em&gt;simples&lt;/em&gt; 
-e &lt;em&gt;eficaz&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Ticket&lt;/em&gt; ou &lt;em&gt;Issue&lt;/em&gt;&lt;/strong&gt; é a ferramenta mais utilizada por um profissional.
-Tudo sobre o software deverá estar registrado em &lt;em&gt;tickets&lt;/em&gt;. Desde uma 
-dúvida do usuário sobre uma documentação, até a resolução de um &lt;em&gt;bug&lt;/em&gt; complicado.
-Tudo, &lt;em&gt;absolutamente tudo&lt;/em&gt;, deverá ser registrado &lt;em&gt;antes&lt;/em&gt; do desenvolvimento
-ou execução da solicitação.&lt;/p&gt;
-
-&lt;p&gt;Eles mantém todo o histórico de solicitações e &lt;em&gt;decisões&lt;/em&gt; desde o início do desenvolvimento.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Wikis&lt;/em&gt;&lt;/strong&gt; são sites que permitem a edição colaborativa de seu conteúdo e 
-estrutura pelos usuários do sistema. Os usuários são os arquitetos, desenvolvedores
-e &lt;em&gt;stakeholders&lt;/em&gt; (partes interessadas).&lt;/p&gt;
-
-&lt;p&gt;Esses sites fazem parte da documentação do projeto. 
-Todas as Regras de Negócio, configurações, manuais e informações gerais deverão estar
-preservados nas páginas desses sites.
-No entanto algumas poucas informações não deverão estar nesse formato, como 
-configurações de usuário/senha, orçamentos e contratos.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Branches&lt;/em&gt;&lt;/strong&gt; são ramificações do código indo em outras direções do &lt;em&gt;branch&lt;/em&gt; principal,
-o &lt;em&gt;master&lt;/em&gt;. O objetivo é manter o &lt;em&gt;branch&lt;/em&gt; principal &lt;em&gt;master&lt;/em&gt; sempre com a última versão
-liberada para o usuário, enquanto o desenvolvimento vai sendo feito em outros &lt;em&gt;branches&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Todo projeto deve ter no &lt;em&gt;mínimo&lt;/em&gt; dois &lt;em&gt;branches&lt;/em&gt;: &lt;em&gt;master&lt;/em&gt; e &lt;em&gt;develop&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Enquanto o &lt;em&gt;master&lt;/em&gt; é “intocável” pela maioria dos desenvolvedores, o &lt;em&gt;develop&lt;/em&gt; está em
-constante desenvolvimento.
-Você pode até utilizar outros nomes, mas é isso aí.&lt;/p&gt;
-
-&lt;p&gt;Cada &lt;em&gt;ticket&lt;/em&gt; poderá gerar um novo &lt;em&gt;branch&lt;/em&gt;, porém temporario. Após mesclar o
-&lt;em&gt;branch&lt;/em&gt; temporário no &lt;em&gt;develop&lt;/em&gt;, ele poderá ser apagado. Isso melhora a rastreabilidade
-das modificações do código.&lt;/p&gt;
-
-&lt;p&gt;No momento que o &lt;em&gt;develop&lt;/em&gt; está pronto para ser liberado como uma nova versão do sistema,
-uma mesclagem de todo o desenvolvimento deve ser feito no &lt;em&gt;master&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Tags&lt;/em&gt;&lt;/strong&gt; são como &lt;em&gt;branches&lt;/em&gt; imutáveis. A cada &lt;em&gt;release&lt;/em&gt; do software devemos criar uma
-&lt;em&gt;tag&lt;/em&gt; correspondente a versão. Uma vez criada uma &lt;em&gt;tag&lt;/em&gt;, seu código não poderá ser mais
-alterado. Elas devem contar a história de todas as versões do software.&lt;/p&gt;
-
-&lt;h2 id=&quot;servicos&quot;&gt;Serviços&lt;/h2&gt;
-
-&lt;p&gt;Existem vários serviços para o controle do desenvolvimento de softwares, no entanto vou
-escrever apenas sobre os três maiores, que são os mesmos no qual tenho maior experiência.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/&quot;&gt;Github&lt;/a&gt; é um portal de projetos&lt;/strong&gt; OpenSource incrível.
-Como o próprio nome diz, ele oferece repositórios &lt;em&gt;Git&lt;/em&gt;. Todo mundo utiliza.
-Desde programadores amadores até grandes corporações privadas.&lt;/p&gt;
-
-&lt;p&gt;Eu o &lt;a href=&quot;https://github.com/mdbs99&quot;&gt;utilizo&lt;/a&gt; diariamente.&lt;/p&gt;
-
-&lt;p&gt;Essa &lt;a href=&quot;https://github.com/mdbs99/opp&quot;&gt;página&lt;/a&gt; que você está lendo agora está hospedado lá,
-assim com alguns dos meus &lt;a href=&quot;https://github.com/mdbs99?tab=repositories&quot;&gt;projetos&lt;/a&gt; OpenSource.
-Também contribuo em outros projetos e utilizo bastante
-&lt;em&gt;libs&lt;/em&gt; e &lt;em&gt;frameworks&lt;/em&gt;. É fácil encontrar outros projetos. Fácil de usar. Fantástico.&lt;/p&gt;
-
-&lt;p&gt;Mas se você quiser ter um projeto privado lá, terá que pagar. Não é caro, 
-na verdade, porém nem todo mundo quer ou pode pagar. Talvez você apenas queira
-trabalhar num projeto acadêmico ou talvez só armazenar alguns exemplos de código…
-não importa o motivo, você não quer pagar um valor mensal.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://bitbucket.org/&quot;&gt;BitBucket&lt;/a&gt; é outro serviço&lt;/strong&gt; um pouco diferente do Github.
-Ele também oferece repositórios &lt;em&gt;Git&lt;/em&gt; e outros serviços que são “instalados” se 
-você quiser. No entanto sua interface e usabilidade não são tão &lt;em&gt;simples&lt;/em&gt; como no Github.&lt;/p&gt;
-
-&lt;p&gt;A boa notícia é que ele dá direito a repositórios privados e gratuitos. Esse foi um 
-dos fatores que me fez escolher o BitBucket como meu serviço para projetos privados
-desde 2012. Mas esses repositórios privados, somados todos,
-&lt;a href=&quot;https://bitbucket.org/product/pricing/&quot;&gt;só podem ter&lt;/a&gt; até 5 desenvolvedores.
-Então quando seus  projetos começarem a crescer e você ainda não quiser pagar ou 
-não estiver satisfeito com o funcionamento geral do sistema, você terá que procurar 
-outra solução.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://gitlab.com/&quot;&gt;GitLab&lt;/a&gt; é o melhor&lt;/strong&gt; dentre eles pois une o que ambos
-acima tem de melhor: projetos privados, gratuitos, ótima interface e usabilidade.&lt;/p&gt;
-
-&lt;p&gt;Quem me indicou o GitLab foi meu amigo &lt;a href=&quot;https://github.com/fabriciofx&quot;&gt;Fabricio Cabral&lt;/a&gt;,
-que também estava em busca de algo parecido com o Github.&lt;/p&gt;
-
-&lt;p&gt;O GitLab tem a interface parecida com o Github. Simples e elegante. No entanto o Github
-ainda consegue ser “perfeito” nesse quesito.&lt;/p&gt;
-
-&lt;p&gt;Mas o GitLab tem outras features que, até o momento — ou até onde eu saiba —, não existem
-no Github:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;em&gt;Tickets&lt;/em&gt; com &lt;a href=&quot;https://help.github.com/articles/file-attachments-on-issues-and-pull-requests/&quot;&gt;anexo&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://about.gitlab.com/2016/11/03/track-your-time-in-the-same-tool-you-do-your-work/&quot;&gt;Time tracking&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Dar a possibilidade ao usuário para anexar um relatório, documento, &lt;em&gt;prinscreen&lt;/em&gt;
-ou um esboço de tela sempre foi imprescindível pra mim.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Time tracking&lt;/em&gt; é uma &lt;em&gt;feature&lt;/em&gt; nova que estou começando a utilizar. É aquele tipo de coisa
-que falamos: “Como ninguém havia pensando nisso antes?”&lt;/p&gt;
-
-&lt;p&gt;E você ainda tem a possibilidade de ajudar no desenvolvimento do projeto e propor melhorias.
-É tudo OpenSource — mas eles comercializam uma versão paga — e codificado em Ruby.&lt;/p&gt;
-
-&lt;p&gt;A companhia responsável pelo desenvolvimento do GitLab não para de crescer.&lt;/p&gt;
-
-&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;pt&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Thanks &lt;a href=&quot;https://twitter.com/businessinsider&quot;&gt;@businessinsider&lt;/a&gt; for including us on your list of &amp;quot;enterprise &lt;a href=&quot;https://twitter.com/hashtag/startups?src=hash&quot;&gt;#startups&lt;/a&gt; to bet your career on&amp;quot;&lt;a href=&quot;https://t.co/YFuLfGFheS&quot;&gt;https://t.co/YFuLfGFheS&lt;/a&gt; &lt;a href=&quot;https://t.co/4DmHdbAcZs&quot;&gt;pic.twitter.com/4DmHdbAcZs&lt;/a&gt;&lt;/p&gt;&amp;mdash; GitLab (@gitlab) &lt;a href=&quot;https://twitter.com/gitlab/status/806489296261812224&quot;&gt;7 de dezembro de 2016&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Por isso tudo acho que este é ótimo serviço de uma grande companhia.
-Não teria restrições se tivesse que pagar por ele no futuro, caso meus 
-projetos ficassem maiores do que a versão gratuita é capaz de suportar.&lt;/p&gt;
-
-&lt;p&gt;Eu posso começar pequeno, com projetos privados e gratuitos, testar
-todo o sistema e ver se me adapto à ele antes de começar a pagar. Perfeito.&lt;/p&gt;
-
-&lt;p&gt;O único problema que tive até agora no uso do GitLab é encontrar o serviço temporariamente 
-indisponível por estar sendo atualizado. Eles utilizam o GitLab para fazer o GitLab.
-Então a cada nova versão liberada o serviço pode ficar intermitente.&lt;/p&gt;
-
-&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;pt&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;We&amp;#39;ll be deploying 8.14.4 shortly. No downtime is expected but you may see intermittent errors during this time.&lt;/p&gt;&amp;mdash; GitLab.com Status (@gitlabstatus) &lt;a href=&quot;https://twitter.com/gitlabstatus/status/806931030674460673&quot;&gt;8 de dezembro de 2016&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Mas quando você não está pagamento nada e ainda é avisado — por Twitter — antes
-do serviço ficar indisponível bem, você não teria o direito de reclamar, teria?&lt;/p&gt;
-
-&lt;p&gt;A verdade é que estou utilizando o GitLab a apenas 1 mês. Mas como tenho bastante
-conhecimento dos outros serviços, posso dizer que o GitLab superou minhas expectativas.&lt;/p&gt;
-
-&lt;p&gt;Atualmente estou migrando todos os meus projetos privados do BitBucket para o GitLab — ele tem
-um &lt;em&gt;importador de projetos&lt;/em&gt; que facilita muito esse trabalho.&lt;/p&gt;
-
-&lt;p&gt;Mesmo em tão pouco tempo posso afirmar que o GitLab é um grande concorrente, senão o melhor.
-E, até agora, estou bastante satisfeito.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Projetos profissionais não são feitos apenas com código e boa intensão. Temos que ter
-o controle sobre todos os artefatos.&lt;/p&gt;
-
-&lt;p&gt;Esse controle é feito utilizando ferramentas especializadas.
-Acima você pode ver quais foram as minhas escolhas.&lt;/p&gt;
-
-&lt;p&gt;Mas, antes de tudo, é necessário ter disciplina e conhecimento. Do contrário nenhuma ferramenta 
-será suficiente.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 12 Dec 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/desenvolvimento-profissional/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/desenvolvimento-profissional/</guid>
       </item>
     
   </channel>
