@@ -51,7 +51,7 @@ Herança de Classe não foi projetada para Reaproveitamento de Código — isso 
 
 Assim como os ciêntistas classificam um animal apenas colocando-o numa hierarquia *não* baseada no seu comportamento, mas sim nas suas características físicas, na Orientação a Objetos isso também pode ser feito utilizando Interfaces com um mínimo de esforço na manutenção do código. Por exemplo, se um animal fosse retirado ou movido para outro ponto na hierarquia, bastaria retirar ou reescrever apenas algumas assinaturas de métodos.
 
-O problema está nas Classes. Especialmente naquelas Classes abstratas e/ou métodos abstratos que são codificadas apenas para reutilizar código.
+O problema está nas Classes. Especialmente naquelas Classes abstratas e/ou métodos abstratos que são codificadas apenas servirem como "ponto de execução", que serão sobrescritos em Subclasses.
 
 > Quando você estiver projetando seu sistema, é o Domínio que irá sugerir quais Classes deverão ser implementadas.
 
