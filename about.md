@@ -13,6 +13,6 @@ Muitos dos conceitos apresentados aqui poderão ser aplicados na maioria das lin
 <p />
 <a href="http://github.com/mdbs99/" target="_blank">Marcos Douglas B. dos Santos</a> é Pós graduado em Engenharia de Software.
 
-Especialista em Análise e Implementação de Projetos utilizando Orientação a Objetos a mais de 15 anos.
+Especialista em Análise e Implementação de Projetos utilizando Orientação a Objetos a mais de 17 anos.
 
 Consultor e CTO da Delfire desde 2005.
