@@ -55,7 +55,9 @@ O problema está nas Classes. Especialmente naquelas Classes abstratas e/ou mét
 
 > Quando você estiver projetando seu sistema, é o Domínio que irá sugerir quais Classes deverão ser implementadas.
 
-Se o software que você está desenvolvendo é sobre venda de Carros e Motos, não pense em codificar uma Classe `TAbstractVehicle` para compartilhar código entre `TCarro` e `TMoto`. Se essa abstração não existe no Domínio, você não deveria criá-la.
+Se o software que você está desenvolvendo é sobre venda de Carros e Motos, não pense em codificar uma Classe `TAbstractVehicle` para compartilhar código entre `TCar` e `TMotorcycle`. Se essa abstração não existe no Domínio, você não deveria criá-la.
+
+<script src="https://gist.github.com/mdbs99/5187bdb34667bddbcfd13553b45c726b.js"></script>
 
 Mas se no Domínio já existir o conceito de hierarquia como, por exemplo, *Carro Alemão*, *Carro Francês* e *Carro Americano*, então talvez você possa definir uma Hierarquia de Classes onde os carros da marca BMW e Audi **é-um** *Carro Alemão*.
 
@@ -82,6 +84,8 @@ As Classes do Domínio não podem ser "contaminadas" pelas Classes de Suporte at
 
 As Classes de Suporte devem ser utilizadas na Composição de Objetos. Em outras palavras, você implementa sua `TVehicleList` e, internamente, utiliza alguma Classe de Suporte que implementa o conceito de lista — nem é necessário o uso de *Generics*.
 
+<script src="https://gist.github.com/mdbs99/8a07a099674e2f0c7b790ed3bb921564.js"></script>
+
 Seu Domínio não pode depender de implementações de Classes de Suporte de outras *libs*.
 
 Então, não utilize Herança a partir de Classes de Suporte.
@@ -93,6 +97,10 @@ Suas Classes de Domínio e Classes de Suporte pertencem a Domínios ou [Contexto
 A explicação é simples: Um objeto (A) não é, necessariamente, do mesmo *tipo* que um objeto (B) apenas porque eles são *similares*.
 
 Um cachorro é similar a um lobo — pelo menos pra mim — no entanto podemos afirmar que ambos descendem de uma única Classe? Caso a resposta seja sim, alterar qualquer coisa nessa Classe Ancestral iria alterar o comportamento de duas criaturas que são similares na *aparência* porém bem diferentes, em muitos aspectos, no *comportamento*.
+
+Veja um exemplo sobre duas unidades (Financeiro e Jurídico) onde há uma herança entre dois Domínios completamente distintos:
+
+<script src="https://gist.github.com/mdbs99/79db85b3bd9637c2d354a8ad8008b3a3.js"></script>
 
 Domínios e Contextos distintos podem e devem evoluir independentemente.
 
@@ -107,6 +115,8 @@ Não faça isso.
 É o mesmo que programar procedural, mas utilizando Classes.
 
 Se você codifica uma Classe abstrata apenas para codificar atributos (variáveis globais?) e métodos abstratos ("pontos de execução"?) para Subclasses é o mesmo que criar Procedimentos que tem outros  Procedimentos (ponteiros) como argumentos. Isso não é Orientação a Objetos.
+
+<script src="https://gist.github.com/mdbs99/f891e60140694c267dcb79bcdb91f3ba.js"></script>
 
 As Classes devem ser *sólidas*. A implementação delas não deve estar "fatiada" entre outras "Classes" (procedimentos?).
 
@@ -123,6 +133,14 @@ Se sua Subclasse deveria ter um comportamento diferente da Classe Ancestral, a p
 Com a Herança de Classe você quer herdar todos os contratos (Interfaces) que a Classe implementa assim como todo o seu comportamento. Não faz sentido, então, querer eliminar ou refazer alguma coisa. É um desperdício.
 
 Um pato pode ter duas pernas, porém ele não *corre* como um ser humano. Não faz sentido ambos terem uma Classe em comum apenas para reaproveitar 2 pernas, mas mudar o comportamento quando ambos estão correndo.
+
+Talvez um exemplo mais comum facilite o entendimento.
+
+Imagine uma Classe de Log que salva as informações num arquivo em disco. Tudo funciona.
+
+Então você precisa de um Log que irá salvar as informações no Banco de Dados. Qual o caminho mais simples? Herança... mas não faça isso.
+
+<script src="https://gist.github.com/mdbs99/f0607cff28ed603367e9fc63a7053c19.js"></script>
 
 Então, pense na Hierarquia de Classes para determinar tipos em comum, não comportamento em comum. 
 
