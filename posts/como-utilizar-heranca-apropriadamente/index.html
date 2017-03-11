@@ -15,7 +15,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201703060228" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201703111433" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -196,7 +196,7 @@
   
   <span class="post-meta small">
   
-    6 minute read
+    7 minute read
   
   </span>
 </div>
@@ -220,7 +220,7 @@
 
 <p>Então compilei algumas <em>regras</em> que, na minha opinião, são essenciais para o bom uso da Herança de Classe.</p>
 
-<h2 id="reaproveitamento-de-codigo">Não utilize Herança (apenas) para Reaproveitamento de Código</h2>
+<h2 id="reaproveitamento-de-codigo">1-Não utilize Herança (apenas) para Reaproveitamento de Código</h2>
 
 <p>A maioria dos desenvolvedores utilizam Herança pensando em Reaproveitamento de Código. Esse é o início de todos os outros problemas relacionados à Herança de Classe.</p>
 
@@ -228,13 +228,15 @@
 
 <p>Assim como os ciêntistas classificam um animal apenas colocando-o numa hierarquia <em>não</em> baseada no seu comportamento, mas sim nas suas características físicas, na Orientação a Objetos isso também pode ser feito utilizando Interfaces com um mínimo de esforço na manutenção do código. Por exemplo, se um animal fosse retirado ou movido para outro ponto na hierarquia, bastaria retirar ou reescrever apenas algumas assinaturas de métodos.</p>
 
-<p>O problema está nas Classes. Especialmente naquelas Classes abstratas e/ou métodos abstratos que são codificadas apenas para reutilizar código.</p>
+<p>O problema está nas Classes. Especialmente naquelas Classes abstratas e/ou métodos abstratos que são codificadas apenas para servirem como “ponto de execução” que serão sobrescritos em Subclasses.</p>
 
 <blockquote>
   <p>Quando você estiver projetando seu sistema, é o Domínio que irá sugerir quais Classes deverão ser implementadas.</p>
 </blockquote>
 
-<p>Se o software que você está desenvolvendo é sobre venda de Carros e Motos, não pense em codificar uma Classe <code>TAbstractVehicle</code> para compartilhar código entre <code>TCarro</code> e <code>TMoto</code>. Se essa abstração não existe no Domínio, você não deveria criá-la.</p>
+<p>Se o software que você está desenvolvendo é sobre venda de Carros e Motos, não pense em codificar uma Classe <code>TAbstractVehicle</code> para compartilhar código entre <code>TCar</code> e <code>TMotorcycle</code>. Se essa abstração não existe no Domínio, você não deveria criá-la.</p>
+
+<script src="https://gist.github.com/mdbs99/5187bdb34667bddbcfd13553b45c726b.js"></script>
 
 <p>Mas se no Domínio já existir o conceito de hierarquia como, por exemplo, <em>Carro Alemão</em>, <em>Carro Francês</em> e <em>Carro Americano</em>, então talvez você possa definir uma Hierarquia de Classes onde os carros da marca BMW e Audi <strong>é-um</strong> <em>Carro Alemão</em>.</p>
 
@@ -242,7 +244,7 @@
 
 <p>Então, antes de implementar alguma hierarquia, verifique se está de acordo com o seu Domínio.</p>
 
-<h2 id="classes-de-suporte">Classes de Domínio não podem Herdar de Classes de Suporte</h2>
+<h2 id="classes-de-suporte">2-Classes de Domínio não podem Herdar de Classes de Suporte</h2>
 
 <p>Um dos grandes erros que você desenvolvedor pode cometer é herdar suas <em>Classes de Domínio</em> de <em>Classes de Suporte</em>. Estou utilizando essa nomenclatura (Suporte) para todas as Classes <em>built-in</em>, ou seja, Classes disponíveis nas <em>libs</em> do Compilador (VCL/LCL ou RTL) ou mesmo <em>libs</em> de terceiros.</p>
 
@@ -263,11 +265,13 @@
 
 <p>As Classes de Suporte devem ser utilizadas na Composição de Objetos. Em outras palavras, você implementa sua <code>TVehicleList</code> e, internamente, utiliza alguma Classe de Suporte que implementa o conceito de lista — nem é necessário o uso de <em>Generics</em>.</p>
 
+<script src="https://gist.github.com/mdbs99/8a07a099674e2f0c7b790ed3bb921564.js"></script>
+
 <p>Seu Domínio não pode depender de implementações de Classes de Suporte de outras <em>libs</em>.</p>
 
 <p>Então, não utilize Herança a partir de Classes de Suporte.</p>
 
-<h2 id="dominios-distintos">Não pode haver Herança de Classes entre Domínios distintos</h2>
+<h2 id="dominios-distintos">3-Não pode haver Herança de Classes entre Domínios distintos</h2>
 
 <p>Suas Classes de Domínio e Classes de Suporte pertencem a Domínios ou <a href="/posts/delegacao-de-implementacao-de-interfaces/#contextos">Contextos</a> distintos. Somente isso já seria um forte motivo para não utilizar herança entre essas Classes.</p>
 
@@ -275,11 +279,15 @@
 
 <p>Um cachorro é similar a um lobo — pelo menos pra mim — no entanto podemos afirmar que ambos descendem de uma única Classe? Caso a resposta seja sim, alterar qualquer coisa nessa Classe Ancestral iria alterar o comportamento de duas criaturas que são similares na <em>aparência</em> porém bem diferentes, em muitos aspectos, no <em>comportamento</em>.</p>
 
+<p>Veja um exemplo sobre duas unidades (Financeiro e Jurídico) onde há uma herança entre dois Domínios completamente distintos:</p>
+
+<script src="https://gist.github.com/mdbs99/79db85b3bd9637c2d354a8ad8008b3a3.js"></script>
+
 <p>Domínios e Contextos distintos podem e devem evoluir independentemente.</p>
 
 <p>Então, não utilize Herança entre Domínios distintos. Se deseja reutilização de Código é melhor utilizar Composição de Objetos ao invés de Herança de Classe.</p>
 
-<h2 id="metodos-protegidos">Não utilize Atributos ou Métodos Protegidos Apenas para Uso em Subclasses</h2>
+<h2 id="metodos-protegidos">4-Não utilize Atributos ou Métodos Protegidos Apenas para Uso em Subclasses</h2>
 
 <p>Uma das “vantagens” da Herança de Classe é implementarmos Atributos e Métodos protegidos — muitas vezes eles são abstratos — para serem utilizados ou sobrescritos nas Subclasses.</p>
 
@@ -289,13 +297,15 @@
 
 <p>Se você codifica uma Classe abstrata apenas para codificar atributos (variáveis globais?) e métodos abstratos (“pontos de execução”?) para Subclasses é o mesmo que criar Procedimentos que tem outros  Procedimentos (ponteiros) como argumentos. Isso não é Orientação a Objetos.</p>
 
+<script src="https://gist.github.com/mdbs99/f891e60140694c267dcb79bcdb91f3ba.js"></script>
+
 <p>As Classes devem ser <em>sólidas</em>. A implementação delas não deve estar “fatiada” entre outras “Classes” (procedimentos?).</p>
 
 <p>A Herança de Classe faz isso, ou seja, divide o comportamento em várias Classes. Porém, se a Herança for bem feita, uma Classe Ancestral terá comportamento independentemente se há ou não Subclasses para implementar ou sobrescrever quaisquer metódos.</p>
 
 <p>Então, não implemente Classes que dependam de Subclasses para ter algum comportamento útil.</p>
 
-<h2 id="sempre-adicione">Sempre Adicione, nunca Altere ou Remova Funcionalidades</h2>
+<h2 id="sempre-adicione">5-Sempre Adicione, nunca Altere ou Remova Funcionalidades</h2>
 
 <p>Se você costuma sobrescrever Métodos de Classes ancestrais para “desativá-los” (removendo a implementação) ou não chama a execução do Método Ancestral (herdado) <em>antes</em> ou <em>depois</em> de adicionar comportamento, é bem provável que sua hierarquia de Classes está <em>errada</em>.</p>
 
@@ -304,6 +314,14 @@
 <p>Com a Herança de Classe você quer herdar todos os contratos (Interfaces) que a Classe implementa assim como todo o seu comportamento. Não faz sentido, então, querer eliminar ou refazer alguma coisa. É um desperdício.</p>
 
 <p>Um pato pode ter duas pernas, porém ele não <em>corre</em> como um ser humano. Não faz sentido ambos terem uma Classe em comum apenas para reaproveitar 2 pernas, mas mudar o comportamento quando ambos estão correndo.</p>
+
+<p>Talvez um exemplo mais comum facilite o entendimento.</p>
+
+<p>Imagine uma Classe de Log que salva as informações num arquivo em disco. Tudo funciona.</p>
+
+<p>Então você precisa de um Log que irá salvar as informações no Banco de Dados. Qual o caminho mais simples? Herança… mas não faça isso.</p>
+
+<script src="https://gist.github.com/mdbs99/f0607cff28ed603367e9fc63a7053c19.js"></script>
 
 <p>Então, pense na Hierarquia de Classes para determinar tipos em comum, não comportamento em comum.</p>
 
@@ -444,6 +462,15 @@
     </div>
   
     <div class="post ml2">
+      <a href="/posts/classes-adaptadoras/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/posts/freeandnil-esqueca/" class="post-link">
         <ul>
           <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
@@ -462,9 +489,9 @@
     </div>
   
     <div class="post ml2">
-      <a href="/posts/classes-adaptadoras/" class="post-link">
+      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
       </a>
@@ -480,20 +507,11 @@
     </div>
   
     <div class="post ml2">
-      <a href="/posts/delegacao-de-implementacao-de-interfaces/" class="post-link">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Delegação de Implementação de Interfaces</li></h4>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
         </ul>
-        <!--<p class="post-summary">A beleza da linguagem Object Pascal para implementar delegação entre Objetos</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
       </a>
     </div>
   
