@@ -43,7 +43,7 @@ A Herança de Classe é uma ferramenta e, como tal, está disponível para ser u
 
 Então compilei algumas *regras* que, na minha opinião, são essenciais para o bom uso da Herança de Classe.
 
-## Não utilize Herança (apenas) para Reaproveitamento de Código {#reaproveitamento-de-codigo}
+## 1-Não utilize Herança (apenas) para Reaproveitamento de Código {#reaproveitamento-de-codigo}
 
 A maioria dos desenvolvedores utilizam Herança pensando em Reaproveitamento de Código. Esse é o início de todos os outros problemas relacionados à Herança de Classe.
 
@@ -63,7 +63,7 @@ Não porque você *precisa* compartilhar código, mas sim porque seu Domínio *e
 
 Então, antes de implementar alguma hierarquia, verifique se está de acordo com o seu Domínio.
 
-## Classes de Domínio não podem Herdar de Classes de Suporte {#classes-de-suporte}
+## 2-Classes de Domínio não podem Herdar de Classes de Suporte {#classes-de-suporte}
 
 Um dos grandes erros que você desenvolvedor pode cometer é herdar suas *Classes de Domínio* de *Classes de Suporte*. Estou utilizando essa nomenclatura (Suporte) para todas as Classes *built-in*, ou seja, Classes disponíveis nas *libs* do Compilador (VCL/LCL ou RTL) ou mesmo *libs* de terceiros.
 
@@ -86,7 +86,7 @@ Seu Domínio não pode depender de implementações de Classes de Suporte de out
 
 Então, não utilize Herança a partir de Classes de Suporte.
 
-## Não pode haver Herança de Classes entre Domínios distintos {#dominios-distintos}
+## 3-Não pode haver Herança de Classes entre Domínios distintos {#dominios-distintos}
 
 Suas Classes de Domínio e Classes de Suporte pertencem a Domínios ou [Contextos]({% post_url 2016-10-03-delegacao-de-implementacao-de-interfaces %}#contextos) distintos. Somente isso já seria um forte motivo para não utilizar herança entre essas Classes.
 
@@ -98,7 +98,7 @@ Domínios e Contextos distintos podem e devem evoluir independentemente.
 
 Então, não utilize Herança entre Domínios distintos. Se deseja reutilização de Código é melhor utilizar Composição de Objetos ao invés de Herança de Classe.
 
-## Não utilize Atributos ou Métodos Protegidos Apenas para Uso em Subclasses {#metodos-protegidos}
+## 4-Não utilize Atributos ou Métodos Protegidos Apenas para Uso em Subclasses {#metodos-protegidos}
 
 Uma das "vantagens" da Herança de Classe é implementarmos Atributos e Métodos protegidos — muitas vezes eles são abstratos — para serem utilizados ou sobrescritos nas Subclasses.
 
@@ -114,7 +114,7 @@ A Herança de Classe faz isso, ou seja, divide o comportamento em várias Classe
 
 Então, não implemente Classes que dependam de Subclasses para ter algum comportamento útil.
 
-## Sempre Adicione, nunca Altere ou Remova Funcionalidades {#sempre-adicione}
+## 5-Sempre Adicione, nunca Altere ou Remova Funcionalidades {#sempre-adicione}
 
 Se você costuma sobrescrever Métodos de Classes ancestrais para "desativá-los" (removendo a implementação) ou não chama a execução do Método Ancestral (herdado) *antes* ou *depois* de adicionar comportamento, é bem provável que sua hierarquia de Classes está *errada*.
 
