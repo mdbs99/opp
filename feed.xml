@@ -8,6 +8,110 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Stored Procedures na Orientação a Objetos</title>
+        <description>&lt;p&gt;Stored Procedures são sub-rotinas armazenadas no SGBD disponíveis às aplicações que o acessam.&lt;/p&gt;
+
+&lt;p&gt;Será que as Stored Procedures ainda são necessárias ou a Orientação a Objetos é suficiente e podemos jogar fora essa &lt;em&gt;antiga tecnologia&lt;/em&gt;?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-clem-onojeghuo-143740.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Todo SGBD disponibiliza &lt;em&gt;Stored Procedures&lt;/em&gt; (SP’s) para o DBA e desenvolvedores construirem e executarem scripts SQL.&lt;/p&gt;
+
+&lt;p&gt;As SP’s podem retornar um cursor de dados, atualizar registros, executar rotinas de manutenção do SGBD, etc.&lt;/p&gt;
+
+&lt;p&gt;As SP’s também podem conter estruturas de controle e repetição como &lt;code&gt;IF&lt;/code&gt;, &lt;code&gt;WHILE&lt;/code&gt;, &lt;code&gt;LOOP&lt;/code&gt;, &lt;code&gt;REPEAT&lt;/code&gt;, &lt;code&gt;FOR&lt;/code&gt;, &lt;code&gt;CASE&lt;/code&gt;, etc.&lt;/p&gt;
+
+&lt;p&gt;No entanto as SP’s nos fazem lembrar de &lt;em&gt;procedimentos&lt;/em&gt;, programas imperativos e sequenciais. E é exatamente essa &lt;a href=&quot;/posts/pensando-em-dados/&quot;&gt;visão&lt;/a&gt; que não queremos ter quando programamos utilizando o paradigma da Orientação a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Então podemos declarar a &lt;em&gt;morte&lt;/em&gt; das SP’s e utilizar apenas a Orientação a Objetos a partir de agora?&lt;/p&gt;
+
+&lt;p&gt;Definitivamente, não.&lt;/p&gt;
+
+&lt;h2 id=&quot;ferramenta-de-dados&quot;&gt;Ferramenta de Dados&lt;/h2&gt;
+
+&lt;p&gt;As &lt;em&gt;Stored Procedures&lt;/em&gt; são ferramentas para trabalhar com &lt;em&gt;dados&lt;/em&gt;. Elas conseguem ter uma melhor performance do que qualquer outra linguagem fora do SGBD no qual ela reside.&lt;/p&gt;
+
+&lt;p&gt;Só isso já seria um argumento suficiente para continuarmos a utilizar SP’s em nossos sistemas.&lt;/p&gt;
+
+&lt;p&gt;Mas nem todos pensam assim.&lt;/p&gt;
+
+&lt;p&gt;Tenho alguns amigos desenvolvedores que abandonaram completamente as SP’s, codificando seus sistemas &lt;em&gt;apenas&lt;/em&gt; utilizando alguma linguagem de programação com suporte a Orientação a Objetos.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;
+Stored Procedures podem  reduzir o tráfego na rede, visto que os comandos são executados diretamente no servidor. Além de melhorar a performance, criar mecanismos de segurança entre a manipulação dos dados do Banco de Dados. 
+  &lt;/p&gt;
+  &lt;footer&gt;&lt;cite title=&quot;Wikipedia&quot;&gt;— Wikipedia&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;No entanto, esses desenvolvedores esquecem que cada ferramenta é focada em resolver determinados problemas.&lt;/p&gt;
+
+&lt;p&gt;O foco das Stored Procedures são os dados. Na manipulação dos dados e assuntos relacionados ao Banco de Dados.&lt;/p&gt;
+
+&lt;p&gt;O foco da Orientação a Objetos são os &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Objetos&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;São contextos completamente diferentes.&lt;/p&gt;
+
+&lt;p&gt;Então por que usaríamos uma ferramenta &lt;em&gt;pior&lt;/em&gt; ou menos eficaz para a manipulação de dados?&lt;/p&gt;
+
+&lt;h2 id=&quot;regras-de-negocio&quot;&gt;Regras de Negócio&lt;/h2&gt;
+
+&lt;p&gt;Meus amigos afirmam que as &lt;em&gt;Regras de Negócio&lt;/em&gt; não devem ser codificadas em (Argh!) procedimentos!&lt;/p&gt;
+
+&lt;p&gt;Utilizamos uma linguagem de auto nível com suporte a &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;Objetos inteligentes&lt;/a&gt;, &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulamento&lt;/a&gt;, polimorfismo… não queremos trabalhar com algo tão &lt;a href=&quot;/posts/tipos-primitivos-nos-argumentos/&quot;&gt;primitivo&lt;/a&gt; — eles dizem.&lt;/p&gt;
+
+&lt;p&gt;E eu concordo com eles.&lt;/p&gt;
+
+&lt;p&gt;Em aplicações Orientadas a Objetos, as Regras de Negócio devem estar codificadas em Classes.&lt;/p&gt;
+
+&lt;p&gt;Utilizamos as Classes e Objetos para &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;representar&lt;/a&gt; as entidades que irão interagir entre si.&lt;/p&gt;
+
+&lt;p&gt;Os Dados, no entanto, não interagem entre si. São &lt;em&gt;passivos&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Os Dados precisam que algum &lt;em&gt;procedimento&lt;/em&gt; ou &lt;em&gt;Objeto&lt;/em&gt; que os anime.&lt;/p&gt;
+
+&lt;p&gt;Os Objetos podem e devem &lt;a href=&quot;/posts/classes-de-dados/&quot;&gt;trabalhar com dados&lt;/a&gt;, mas a manipulação dos &lt;em&gt;dados em massa&lt;/em&gt; é trabalho para Stored Procedures; são imbatíveis.&lt;/p&gt;
+
+&lt;p&gt;A combinação entre Objetos e Stored Procedures é a chave para um sistema Orientado a Objetos com ótima manutenabilidade mas, também, com ótima performance na manipulação dos dados.&lt;/p&gt;
+
+&lt;h2 id=&quot;scripts-dinamicos&quot;&gt;Scripts dinâmicos&lt;/h2&gt;
+
+&lt;p&gt;Outro equívoco é pensar que somos obrigados a criar Scripts SQL no código da aplicação porque somente assim conseguiremos fazer filtros otimizados, combinando as informações que os usuários desejam para construir o melhor e mais otimizado SQL.&lt;/p&gt;
+
+&lt;p&gt;Em parte isso faz sentido, mas na maioria das vezes é apenas falta de conhecimento do SGBD em uso.&lt;/p&gt;
+
+&lt;p&gt;Alguns SGBD’s como o Microsoft SQL Server, por exemplo, podem receber argumentos XML. Esses argumentos podem ser lidos e utilizados como filtros dinâmicos nas SP’s.&lt;/p&gt;
+
+&lt;p&gt;Isso é muito melhor que ter “pedaços” de código SQL espalhados no código para concatenar de acordo com os filtros que os usuários desejam.&lt;/p&gt;
+
+&lt;p&gt;Alguns desenvolvedores poderão afirmar que utilizam algum framework ORM que tem embutido uma pseudo-linguagem que simula o SQL, mas utilizando Objetos. Assim eles não teríam SQL espalhado pelo código.&lt;/p&gt;
+
+&lt;p&gt;O conceito de ORM na Orientação a Objetos é errado. Mas esse assunto foge do escopo desse artigo. No entanto, se você utiliza um ORM para fazer &lt;em&gt;queries&lt;/em&gt; dinâmicas eu posso lhe afirmar o seguinte: Você pode até tentar, mas nunca fará queries mais performáticas e/ou com o código mais simples do que utilizando SQL puro.&lt;/p&gt;
+
+&lt;p&gt;Não estou falando sobre Objetos que retornam pequenas listas de objetos-filhos utilizando a pseudo-linguagem do ORM. Estou falando sobre &lt;em&gt;queries&lt;/em&gt; de 5 páginas ou mais de script que trazem dados para relatórios pesados em aplicações reais. Tentar reproduzir um script dessa magnitude utilizando Objetos é, no mínimo, ingenuidade…&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;As &lt;em&gt;Stored Procedures&lt;/em&gt; continuaram a existir, enquanto houverem SGBD’s relacionais.&lt;/p&gt;
+
+&lt;p&gt;Continuaram a existir enquanto não inventarem algo com mais performance.&lt;/p&gt;
+
+&lt;p&gt;Utilizar &lt;em&gt;Stored Procedures&lt;/em&gt; não torna seu software &lt;em&gt;menos&lt;/em&gt; Orientado a Objetos, se você as utiliza apenas para a manipulação de dados e não para as Regras de Negócio.&lt;/p&gt;
+
+&lt;p&gt;Utilize a ferramenta certa para cada tipo de problema.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 20 Mar 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/</guid>
+      </item>
+    
+      <item>
         <title>Como Utilizar Herança Apropriadamente</title>
         <description>&lt;p&gt;Sempre favoreça a Composição de Objetos ao invés de Herança de Classe, mas se você ainda quiser ou precisar utilizar a Herança, sabia como utilizá-la apropriadamente.&lt;/p&gt;
 
@@ -1122,199 +1226,6 @@ e poucas pessoas que trabalham comigo tinham acesso.&lt;/p&gt;
         <pubDate>Mon, 02 Jan 2017 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/retrospectiva-2016/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/retrospectiva-2016/</guid>
-      </item>
-    
-      <item>
-        <title>Simplicidade</title>
-        <description>&lt;p&gt;Hoje em dia temos acesso a dezenas de linguagens com
-inúmeros recursos como Orientação a Objetos, Generics, Classes 
-anônimas, paradigma Funcional, Lambdas, Paralelismo…&lt;/p&gt;
-
-&lt;p&gt;Mas nós já dominamos o básico antes de começar a usar tais
-&lt;em&gt;features&lt;/em&gt;?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-hdnslau35ky-jeffrey-wegrzyn.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“When there is freedom from mechanical conditioning, there is
-simplicity. The classical man is just a bundle of routine, ideas 
-and tradition. If you follow the classical pattern, you are 
-understanding the routine, the tradition, the shadow — you are 
-not understanding yourself” — Bruce Lee&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Me considero um programador &lt;em&gt;old-school&lt;/em&gt;. Já desenvolvi/estudei com
-linguagens como C, C++, COBOL, Pascal, &lt;em&gt;Object Pascal&lt;/em&gt;, Visual Basic,
-JavaScript, Java, PHP, C#, Lua e talvez algumas outras que tenha 
-esquecido agora.&lt;/p&gt;
-
-&lt;p&gt;Apesar de ter estudado várias linguagens e utilizado algumas delas em 
-projetos reais, o que tenho aprendido ao longo desses anos é que eu
-poderia fazer (quase) tudo com apenas algumas linguagens, poucas
-ferramentas.&lt;/p&gt;
-
-&lt;p&gt;Então escolhi &lt;em&gt;Object Pascal&lt;/em&gt; para meus projetos. É uma linguagem
-simples, elegante, fácil de ler/escrever, fortemente tipada e
-possui (possuía) poucas features. Com ela eu consigo fazer desde um
-simples projeto de fim de semana até grandes sistemas com centenas de
-linhas de código.&lt;/p&gt;
-
-&lt;p&gt;Mas a “linguagem morta” — Object Pascal — cresce a cada dia, adicionando
-mais e mais &lt;em&gt;features&lt;/em&gt;, tentanto seguir outras linguagens.
-E eu não gosto disso.&lt;/p&gt;
-
-&lt;h2 id=&quot;ferramenta&quot;&gt;Uma Ferramenta para cada tipo de Problema&lt;/h2&gt;
-
-&lt;p&gt;É eu também já ouvi isso. Devemos usar a ferramenta apropriada
-para cada tipo de problema. É claro que todos concordam.
-Mas se você consegue ter 80% de eficácia investindo apenas 20%
-do seu tempo e energia em algumas poucas ferramentas, por que acha
-necessário aprender outras dezenas de linguagens e ferramentas complexas,
-investindo mais tempo e dinheiro para conseguir produzir “apenas” 
-20% a mais?
-Lembre-se que segundo
-&lt;a href=&quot;https://pt.wikipedia.org/wiki/Princ%C3%ADpio_de_Pareto&quot;&gt;Paretto&lt;/a&gt;, 
-você irá precisar investir 80% a mais de recursos para conseguir
-aumentar a produtividade em 20%. Vale a pena?&lt;/p&gt;
-
-&lt;p&gt;Bem, talvez sim, talvez não. Depende.&lt;/p&gt;
-
-&lt;p&gt;Que tipos de projetos você faz hoje?&lt;/p&gt;
-
-&lt;p&gt;Ou melhor: Os tipos de projetos que você fazia a 3 anos ou mais são
-os mesmos tipos de projetos em que trabalha hoje?
-Se sim, quais são as grandes diferenças que uma mudança de linguagem
-faria para toda a equipe?&lt;/p&gt;
-
-&lt;p&gt;Muitas mudanças positivas? Pode ser.
-Mas será que o problema é a linguagem ou o problema é com a equipe
-que A) não domina a linguagem que utiliza e B) não domina os requisitos
-do sistema?&lt;/p&gt;
-
-&lt;p&gt;Talvez você diga que precisa de novas &lt;em&gt;features&lt;/em&gt; para facilitar
-o desenvolvimento. Sim, algumas &lt;em&gt;features&lt;/em&gt; melhoraram muito o
-desenvolvimento — a Orientação a Objetos, por exemplo — no entanto
-outras não são tão essenciais assim.&lt;/p&gt;
-
-&lt;p&gt;O que eu vejo, na verdade, é que muitos programadores utilizam
-novas &lt;em&gt;features&lt;/em&gt; apenas porque são
-&lt;a href=&quot;https://medium.freecodecamp.com/constant-confusion-why-i-still-use-javascript-function-statements-984ece0b72fd#.8b7hytmfk&quot;&gt;legais ou “&lt;em&gt;sexy&lt;/em&gt;”&lt;/a&gt;
-mas isso, na minha opinião, não deveria ser motivo para utilizá-las.&lt;/p&gt;
-
-&lt;h2 id=&quot;dia-a-dia&quot;&gt;Dia a Dia&lt;/h2&gt;
-
-&lt;p&gt;No meu trabalho diário vejo problemas que seriam evitados se o código
-tivesse um &lt;em&gt;design&lt;/em&gt; mais simples.&lt;/p&gt;
-
-&lt;p&gt;Os programadores desejam mais e mais utilizar as novas &lt;em&gt;features&lt;/em&gt;
-sem pensar se uma adição de complexidade irá beneficiar o projeto 
-no longo prazo.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“It’s not the daily increase but daily decrease.
-Hack away at the unessential.” — Bruce Lee&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Alguns projetos em Java, por exemplo, são pura magia pra mim. São tantos 
-artefatos que devem se interconectar que você perde a noção do que é
-seu e do que faz parte das dezenas de &lt;em&gt;libs&lt;/em&gt; e &lt;em&gt;frameworks&lt;/em&gt;. Você
-não codifica, apenas dá à esses &lt;em&gt;frameworks&lt;/em&gt; o que eles querem.&lt;/p&gt;
-
-&lt;p&gt;É ótimo quando tudo funciona, mas quando há um problema…&lt;/p&gt;
-
-&lt;p&gt;Objetos são criados por “pura magia”, pois foram “injetados” por
-alguma entidade; registros não são salvos porque o &lt;em&gt;Session&lt;/em&gt; não 
-for marcado com “atributos especiais”; classes são “mapeadas” em
-tabelas utilizando-se de dezenas de “atributos” que parece haver
-mais código do que o próprio código da Classe! Mas a maioria acha
-tudo isso bem legal. Programadores que não codificam. Esse é o mundo
-hoje…&lt;/p&gt;
-
-&lt;p&gt;Você já parou pra pensar que talvez seja mais simples utilizar
-&lt;a href=&quot;/posts/menos-e-mais/&quot;&gt;menos&lt;/a&gt; artefatos do que 
-tentar aprender e aplicar todas as novidades que nos apresentam
-diariamente?&lt;/p&gt;
-
-&lt;p&gt;Saint-Exupéry disse: &lt;em&gt;“Você sabe que alcançou a perfeição em design,
-não quando não há mais nada para adicionar, mas quando já não há
-mais nada que se possa retirar”&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Ao invés de aumentar a complexidade e uso de artefatos, tente
-diminuí-los.&lt;/p&gt;
-
-&lt;p&gt;Busque a simplicidade, não o contrário.&lt;/p&gt;
-
-&lt;h2 id=&quot;simplicidade&quot;&gt;Simplicidade&lt;/h2&gt;
-
-&lt;p&gt;Eu vejo a Simplicidade como a &lt;a href=&quot;http://www.extremeprogramming.org/rules/simple.html&quot;&gt;chave&lt;/a&gt;
-para minimizar 80% de todos os problemas existentes em projetos
-de &lt;em&gt;software&lt;/em&gt;. Bem, na verdade em qualquer tipo de projeto,
-não apenas &lt;em&gt;software&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Eu tento aplicar a simplicidade em tudo que eu faço. Diariamente.&lt;/p&gt;
-
-&lt;p&gt;Mas o que é simples para uns, pode ser complexo para outros.
-Por exemplo. Um sistema pode ser altamente complexo, mas seus
-desenvolvedores o consideram simples. Isso acontece porque eles
-já estão acostumados e conhecem todos os módulos e problemas.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“Simplicity is complex. It’s never simple to keep things simple.
-Simple solutions require the most advanced thinking”
-― Richie Norton&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Então como saber se algo é realmente simples? Há alguma medida?&lt;/p&gt;
-
-&lt;p&gt;Em minhas pesquisas por essa definição, encontrei uma palestra
-intitulada “Rumo a Ciência da Simplicidade” por George Whitesides.
-Eu a tenho arquivada desde 2012 e agora compartilho o link com você.&lt;/p&gt;
-
-&lt;iframe src=&quot;https://embed.ted.com/talks/lang/pt-br/george_whitesides_toward_a_science_of_simplicity&quot; width=&quot;640&quot; height=&quot;360&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; webkitallowfullscreen=&quot;&quot; mozallowfullscreen=&quot;&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;Para um Objeto ser considerável simples deve ter uma função 
-&lt;em&gt;previsível&lt;/em&gt; e &lt;em&gt;confiável&lt;/em&gt;, com &lt;em&gt;baixo custo&lt;/em&gt; e característica de servir,
-ou ter o potencial de servir, como &lt;em&gt;blocos modulares&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Não deixe de ver o vídeo. Pois essa é a melhor definição de 
-Simplicidade que eu já ouvi. Perfeito.&lt;/p&gt;
-
-&lt;p&gt;Desde então eu tento seguir essa linha de raciocínio.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Abrace a simplicidade em todas as parte do projeto.
-Faça com que suas Classes e Objetos sejam previsíveis, confiáveis,
-de baixo custo computacional e que ajam como blocos modulares
-que possam ser conectados entre si.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“Simplicity is the ultimate sophistication” — Leonardo da Vinci&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Quanto mais simples, menos &lt;em&gt;bugs&lt;/em&gt;, menos &lt;em&gt;debug&lt;/em&gt;, menos curva de
-aprendizado, menos releitura do código.&lt;/p&gt;
-
-&lt;p&gt;Meu objetivo principal nos meus projetos é &lt;em&gt;qualidade&lt;/em&gt;. 
-Quero construí-los, entregá-los e esquecê-los. 
-Não quero ficar fazendo remendos.
-Quero fazê-los certo logo na primeira vez. 
-Pra isso sua base de código deve ser simples.&lt;/p&gt;
-
-&lt;p&gt;Esse é o caminho.&lt;/p&gt;
-
-&lt;p&gt;Ou talvez eu seja apenas um “velho” programador,
-avesso as “novidades”… você decide.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 19 Dec 2016 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/simplicidade/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/simplicidade/</guid>
       </item>
     
   </channel>
