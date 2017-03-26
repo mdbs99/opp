@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Identificador Único Universal
-date: 2017-03-26
+date: 2017-03-27
 description:
   O uso do Identificador Único Universal (UUID) simplifica o desenvolvimento Orientado a Objetos e também o relacionamento entre as Tabelas do Sistema.
 image: /images/photo-greg-rakozy-38802.jpg
@@ -84,7 +84,7 @@ O ID é um número.
 
 Um exemplo seria termos uma tabela `PEDIDO` e outra `PEDIDO_ITENS`. Se eu quero relacionar essas tabelas (1..N, respectivamente) basta fazer uma FK dessa forma:
 
-`PEDIDO.ID <-> PEDIDO_ITENS.PEDIDO_ID`
+`PEDIDO.id <-> PEDIDO_ITENS.pedido_id`
 
 Agora a duplicação de valor é de apenas um campo numérico que é bem mais simples e eficaz, ocupando menos espaço em disco, gerando menos transferência de dados rede.
 
@@ -104,7 +104,7 @@ Temos algumas opções.
 
 #### 1- Tabela FATURAS com 2 campos ID's {#ex-1}
 
-A tabela `FATURAS` iria ter 2 ID's (`PESSOA_FISICA_ID` e `PESSOA_JURIDICA_ID`).
+A tabela `FATURAS` iria ter 2 ID's (`pessoa_fisica_id` e `pessoa_juridica_id`).
 
 Nesse tipo de *design* um dos campos sempre estaria [NULO]({% post_url 2016-04-11-nao-utilize-nil-ou-null %}).
 
@@ -116,11 +116,14 @@ Se houver mais "tipos de pessoa", você teria que ir acrescentando mais e mais c
 
 Nessa opção a tabela `FATURAS` iria ter 2 campos identificadores: 
 
-  1. Um campo `PESSOA_ID int` que identifica o valor numérico; 
+  1. Um campo `pessoa_id int` que identifica o valor numérico; 
   
-  2. Um campo `PESSOA_TIPO char(1)` que identifica o "tipo de pessoa" ("F" = Física; "J" = Jurídica);
+  2. Um campo `pessoa_tipo char(1)` que identifica o "tipo de pessoa" ("F" = Física; "J" = Jurídica);
 
-Nesse tipo de *design*, você não precisa acrescentar mais campos se houverem mais "tipos de pessoa" no futuro. Basta identificar por um `char` o tipo. Enquanto o campo `PESSOA_ID` iria se relacionar com o registros específico da tabela específica do "tipo de pessoa".
+Nesse tipo de *design*, você não precisa acrescentar mais campos se 
+houverem mais "tipos de pessoa" no futuro. Basta identificar por um 
+`char` o tipo. Enquanto o campo `pessoa_id` iria se relacionar com o 
+registros específico da tabela específica do "tipo de pessoa".
 
 Mas continua bem deselegante. Eu diria, pior.
 
@@ -136,7 +139,7 @@ Uma terceira opção seria refatorar ambas as tabelas de Pessoa, criando uma ter
             |               |
       PESSOA_FISICA     PESSOA_JURIDICA
 
-Então, `FATURAS` iria ter um campo `PESSOA_ID` somente. Teria uma FK "forte" pois realmente iria estar relacionada com `PESSOA` através do campo `PESSOA_ID`.
+Então, `FATURAS` iria ter um campo `pessoa_id` somente. Teria uma FK "forte" pois realmente iria estar relacionada com `PESSOA` através do campo `pessoa_id`.
 
 Tudo certo?
 
@@ -160,9 +163,9 @@ Uma opção mais voltada para "conjuntos de dados" é criamos outras tabelas de 
 
 Então, teríamos esses relacionamentos:
 
-  1. `PESSOA_FISICA.ID <-> FATURAS_FISICA.PESSOA_ID`
+  1. `PESSOA_FISICA.id <-> FATURAS_FISICA.pessoa_id`
   
-  2. `PESSOA_JURIDICA.ID <-> FATURAS_JURIDICA.PESSOA_ID`
+  2. `PESSOA_JURIDICA.id <-> FATURAS_JURIDICA.pessoa_id`
 
 Todas as FK funcionam.
 
@@ -207,6 +210,62 @@ Essa é a nova velha opção que a maioria dos desenvolvedores (atuais) não uti
 Você entenderá agora porque o UUID é tão importante para o desenvolvimento Orientados a Objetos e como ele irá simplificar seu código e *excluir* tabelas em seu modelo. 
 
 Vamos continuar com o mesmo exemplo básico acima, mas reescrito para demostrar todo o conceito.
+
+Com UUID eu consigo implementar o mesmo exemplo dessa forma:
+
+                    FATURAS (pessoa_uid)
+                       ^
+            -----------|-----------
+            |                     |
+      PESSOA_FISICA (uid)   PESSOA_JURIDICA (uid)
+
+Não há "tipos" e há apenas 1 campo de identificação de registro por tabela. Para todas e quaisquer tabelas, na verdade.
+
+Como isso é possível?
+
+Todo UUID é **único** em toda a base de dados. Não importa a tabela ou contexto no qual o UUID existe. Ele é único.
+
+Ok, mas como você sabe qual tabela de Pessoa está relacionada com o valor do campo `pessoa_uid` na tabela de `FATURAS`, na linha 5043?
+
+Você não sabe.
+
+E a beleza disso é que você não precisa saber!
+
+Essa é uma informação [encapsulada]({% post_url 2016-05-30-heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2 %}#encapsulamento) no Modelo de Dados.
+
+Ainda confuso? 
+
+Vou lhe mostrar então como obtemos todas as Faturas somente de Pessoas Físicas:
+
+    SELECT 
+      f.*
+    FROM FATURAS f
+    INNER JOIN PESSOA_FISICA p
+      ON p.id = f.pessoa_id
+      
+E de Pessoas Jurídicas:
+
+    SELECT 
+      f.*
+    FROM FATURAS f
+    INNER JOIN PESSOA_JURIDICA p
+      ON p.id = f.pessoa_id
+
+A *query* só irá trazer os dados relacionados entre as tabelas no *JOIN*, todo o resto será ignorado. 
+
+Nesse modelo os "tipos" são determinados pelas tabelas que fazem parte da *query* e não por campos "fantasmas" ou *strings* como "F" ou "J".
+
+Se houver mais "tipos de clientes" no futuro, nada será alterado nas tabelas já existentes.
+
+A performance será excelente, visto que haverá poucas tabelas a serem relacionadas.
+
+Só há uma desvantagem considerável: Não há FK's reais entre as tabelas, apenas índices. Não seria possível o campo `pessoa_uid` de `FATURAS` ter uma restrição em mais de uma tabela Pessoa. Mas antes que você comece a "atirar pedras" em mim, dá uma olhada em como o pessoal do NoSQL (muito utilizado hoje em dia) mantém a integridade dos dados, Ok?
+
+No entanto você poderá utilizar *triggers* para manter a integridade dos registros ou não.
+
+Pensa bem: não atualizamos `ID's` ou `UID's`. O único problema seria deletarmos um registro da `PESSOA_FISICA`, por exemplo, sem deletar suas `FATURAS`, certo?
+
+Mas porque você ainda está excluindo registros da sua base de dados?! Registros devem ser preservados como uma linha do tempo. Então, apenas desative-os, sem exclusões, sem problemas.
 
 ## Conclusão {#conclusao}
 
