@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Identificador Único Universal &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Database">
+    <meta name="keywords" content="freepascal, delphi, lazarus, c#, csharp, java, object-oriented, oop, mdbs99, uuid, guid, oid">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/identificador-unico-universal/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201703270216" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Identificador Único Universal">
+    <meta property="og:description" content="O uso do Identificador Único Universal (UUID) simplifica o desenvolvimento Orientado a Objetos e também o relacionamento entre as Tabelas do Sistema.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/identificador-unico-universal/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-greg-rakozy-38802.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Identificador Único Universal" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/identificador-unico-universal/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>E-Book</a>
+<a href="/archive/">Arquivo</a>
+<a href="/testimonials/">Testemunhos</a>
+<a href="/webinars/">Webinários</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Identificador Único Universal</h1>
+  <span class="post-meta">Mar 27, 2017</span><br>
+  
+  <span class="post-meta small">
+  
+    10 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Como identificar unicamente seus Objetos?</p>
+
+<p>Como fazer migração de dados sem se preocupar com campos auto-incremento e <em>foreign key</em> entre as tabelas?</p>
+
+<p>Como diminuir o número de tabelas?</p>
+
+<!--more-->
+
+<p><img src="/images/photo-greg-rakozy-38802.jpg" alt="Unsplash image" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>O <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier"><em>Universally Unique Identifier</em></a> (UUID) é um número de 128-bit utilizado para identificar uma informação unicamente.</p>
+
+<p>A Microsoft utiliza o termo <em>Globally Unique Identifier</em> (GUID), mas na prática é a mesma coisa.</p>
+
+<p>Nesse artigo você vai aprender como utilizá-lo.</p>
+
+<h2 id="tabelas-e-relacionamentos">Tabelas e Relacionamentos</h2>
+
+<p>A muitos anos atrás eu estava fazendo um curso de Programação de Computadores onde uma das matérias era sobre Sistemas Gerenciadores de Banco de Dados (SGBD’s).</p>
+
+<p>Nesse curso ensinavam que tabelas são relacionadas entre si através das <em>Foreign Keys</em> (FK’s). Um ou mais campos na tabela <code>A</code> deveria ter sua contra-parte na tabela <code>B</code>, ou seja, os mesmos campos com os mesmos valores.</p>
+
+<p>Executando um comando no SGBD para criar uma FK entre essas tabelas, você garante que ambas estão relacionadas entre si e que esse vínculo não pode ser quebrado (normalmente) alterando ou excluindo registros em apenas um dos lados.</p>
+
+<p>E isso não mudou.</p>
+
+<p>O conceito continua o mesmo e ainda é muito utilizado hoje em dia para manter a integridade dos dados.</p>
+
+<p>Um campo “chave”, na época que eu estava fazendo o curso, era o Cadastro de Pessoa Física (CPF). Por ser “único”, esse era um dos campos escolhidos quando trabalhávamos com Pessoas Físicas.</p>
+
+<p>Mas anos atrás era comum uma mulher casada apresentar e utilizar o CPF do marido. Eu não sei quem teve essa ideia idiota, mas o fato é que era <em>aceitável</em> naqueles dias.</p>
+
+<p>Então muitos desenvolvedores construíam seu Modelo de Dados com <em>Chaves Estrangeiras Compostas</em>. Poderia ser o CPF e Data de Nascimento, por exemplo.</p>
+
+<p>Mas e se marido e mulher nasceram no mesmo dia? Nesse casos a chave composta ficaria duplicada.</p>
+
+<p>Ah, então a chave será CPF, Data de Nascimento e Nome. É impossível eles terem o mesmo nome. Agora sim, problema resolvido?!</p>
+
+<p>Bem, a FK poderia estar “correta”, no entanto agora você está <em>duplicando</em> as informações de 3 campos entre essas tabelas.</p>
+
+<p>Toda vez que você atualizar o nome, teria que atualizar em ambas as tabelas. Claro, você poderia fazer isso através da FK (ON UPDATE CASCADE) ou através de <em>triggers</em>, mas o fato é que os dados continuariam duplicados.</p>
+
+<p>Multiplicando esses mesmos campos em dezenas de tabelas com milhões de dados, é um grande desperdício. Desperdício de armazenamento em disco e de transferencia de dados entre o servidor e a aplicação.</p>
+
+<p>Então criaram o “conceito” de “Identificador Numérico”.</p>
+
+<h2 id="identificador-numerico">Identificador Numérico</h2>
+
+<p>Eu não sei se há realmente um conceito ou <em>paper</em> por trás dessa ideia, muito menos o autor ou autores originais — se você sabe, posta nos comentários por favor.</p>
+
+<p>Então alguém — ou muitos ao mesmo tempo — pensou que seria mais fácil ter apenas um único campo para representar a FK entre as tabelas.</p>
+
+<p>Esse tipo de campo é conhecido hoje em dia por todos os desenvolvedores como o Identificador, Identificador Numérico ou apenas ID.</p>
+
+<p>O ID é um número.</p>
+
+<p>Um exemplo seria termos uma tabela <code>PEDIDO</code> e outra <code>PEDIDO_ITENS</code>. Se eu quero relacionar essas tabelas (1..N, respectivamente) basta fazer uma FK dessa forma:</p>
+
+<p><code>PEDIDO.id &lt;-&gt; PEDIDO_ITENS.pedido_id</code></p>
+
+<p>Agora a duplicação de valor é de apenas um campo numérico que é bem mais simples e eficaz, ocupando menos espaço em disco, gerando menos transferência de dados rede.</p>
+
+<p>Frameworks foram e são baseados nesse conceito (RubyOnRails por exemplo).</p>
+
+<p>Até mesmo alguns <em>Widgets</em> tinham propriedades do “tipo ID” para identificação de registros na tabela.</p>
+
+<p>Parecia estar tudo resolvido, até você ter que modelar algo assim:</p>
+
+<p>Imagine que no seu Modelo de Dados você tem uma tabela para <code>PESSOA_FISICA</code> e outra de <code>PESSOA_JURIDICA</code>. São, digamos, os “tipos de clientes” que você tem. São tabelas diferentes porque os campos são bem diferentes.</p>
+
+<p>Então você tem uma tabela de <code>FATURAS</code> onde quer concentrar todas as faturas de todos os Clientes.</p>
+
+<p>Como fazer esse relacionamento?</p>
+
+<p>Temos algumas opções.</p>
+
+<h4 id="ex-1">1- Tabela FATURAS com 2 campos ID’s</h4>
+
+<p>A tabela <code>FATURAS</code> iria ter 2 ID’s (<code>pessoa_fisica_id</code> e <code>pessoa_juridica_id</code>).</p>
+
+<p>Nesse tipo de <em>design</em> um dos campos sempre estaria <a href="/posts/nao-utilize-nil-ou-null/">NULO</a>.</p>
+
+<p>Se houver mais “tipos de pessoa”, você teria que ir acrescentando mais e mais campos.</p>
+
+<p>É um tipo de <em>design</em> muito deselegante, no <em>mínimo</em>.</p>
+
+<h4 id="ex-2">2- Tabela FATURAS com 1 campo ID e 1 campo Tipo</h4>
+
+<p>Nessa opção a tabela <code>FATURAS</code> iria ter 2 campos identificadores:</p>
+
+<ol>
+  <li>
+    <p>Um campo <code>pessoa_id int</code> que identifica o valor numérico;</p>
+  </li>
+  <li>
+    <p>Um campo <code>pessoa_tipo char(1)</code> que identifica o “tipo de pessoa” (“F” = Física; “J” = Jurídica);</p>
+  </li>
+</ol>
+
+<p>Nesse tipo de <em>design</em>, você não precisa acrescentar mais campos se 
+houverem mais “tipos de pessoa” no futuro. Basta identificar por um 
+<code>char</code> o tipo. Enquanto o campo <code>pessoa_id</code> iria se relacionar com o 
+registros específico da tabela específica do “tipo de pessoa”.</p>
+
+<p>Mas continua bem deselegante. Eu diria, pior.</p>
+
+<p>Além disso, a FK é apenas “virtual”, pois você não pode ter um único campo que é relacionado com mais de 1 tabela.</p>
+
+<h4 id="ex-3">3- Tabela FATURAS com FK apenas para PESSOA</h4>
+
+<p>Uma terceira opção seria refatorar ambas as tabelas de Pessoa, criando uma terceira tabela <code>PESSOA</code> e fazendo com que as tabelas “herdem” os campos comuns dessa nova tabela.</p>
+
+<pre><code>              PESSOA ------- FATURAS (pessoa_id)
+                ^
+        --------|--------
+        |               |
+  PESSOA_FISICA     PESSOA_JURIDICA
+</code></pre>
+
+<p>Então, <code>FATURAS</code> iria ter um campo <code>pessoa_id</code> somente. Teria uma FK “forte” pois realmente iria estar relacionada com <code>PESSOA</code> através do campo <code>pessoa_id</code>.</p>
+
+<p>Tudo certo?</p>
+
+<p>De fato esse <em>design</em> parece mais <em>limpo</em>, mas profissional e até mais “Orientado a Objetos”, pois agora temos até o conceito de “herança” em tabelas(!)</p>
+
+<p>Porém, essa abordagem tem os mesmos problemas do uso da <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">Herança de Classe</a>:</p>
+
+<ol>
+  <li>
+    <p>É difícil de fazer uma hierarquia desde o início, quando os requisitos ainda não estão bem definidos;</p>
+  </li>
+  <li>
+    <p>Uma Tabela pode ter sido criada com a “herança” errada e agora será difícil refatorar todas as <em>queries</em> já em produção;</p>
+  </li>
+  <li>
+    <p>É mais verboso escrever <em>queries</em>, visto que agora você sempre terá mais uma tabela <code>PESSOA</code> para fazer o relacionamento;</p>
+  </li>
+  <li>
+    <p>A performance tende a cair, visto que haverá mais tabelas envolvidas;</p>
+  </li>
+</ol>
+
+<p>Interessante, porém na prática é ineficiente.</p>
+
+<h4 id="ex-4">4- Novas Tabelas de FATURAS</h4>
+
+<p>Uma opção mais voltada para “conjuntos de dados” é criamos outras tabelas de Faturas: <code>FATURAS_FISICA</code> e <code>FATURAS_JURIDICA</code></p>
+
+<p>Então, teríamos esses relacionamentos:</p>
+
+<ol>
+  <li>
+    <p><code>PESSOA_FISICA.id &lt;-&gt; FATURAS_FISICA.pessoa_id</code></p>
+  </li>
+  <li>
+    <p><code>PESSOA_JURIDICA.id &lt;-&gt; FATURAS_JURIDICA.pessoa_id</code></p>
+  </li>
+</ol>
+
+<p>Todas as FK funcionam.</p>
+
+<p>Não haveria problema de performance, visto que você só iria utilizar as tabelas do mesmo “contexto de dados”.</p>
+
+<p>O grande problema é que ambas as tabelas são iguais e se houver alguma manutenção relacionado a Faturas, teria que ser feito em ambas as tabelas.</p>
+
+<p>Se houver mais um “tipo de pessoa” futuramente, teríamos que criar uma nova tabela, o que não é nada bom.</p>
+
+<h4 id="ex-5">5- Combinar as Opções 3 e 4</h4>
+
+<p>Repare que você pode combinar as Opções #3 e #4.</p>
+
+<p>Poderia continuar existindo a Tabela <code>FATURAS</code> que estaria relacionada com as novas Tabelas <code>FATURAS_FISICA</code> e <code>FATURAS_JURIDICA</code>.</p>
+
+<p>No entanto, essa é uma opção “virtual” que só existe se você utilizar as oções #3 e #4 num mesmo Modelo.</p>
+
+<h4 id="sua-escolha-">Sua escolha é?</h4>
+
+<p>Pois bem. Considerando os exemplos acima, qual das opções você diria que tem a “melhor” abordagem?</p>
+
+<p>Pense um pouco sobre isso antes de continuar lendo o artigo — e se você tiver outra opção não mencionada aqui, eu gostaria de ler lá nos comentários, Ok?</p>
+
+<p>Pense nos prós e contras de cada uma das opções… escolheu?</p>
+
+<p>Certo.</p>
+
+<p>Quer saber qual é a minha escolha?</p>
+
+<p>Tendo eu utilizado todas as opções acima — e variações destas no decorrer de anos — tenho o prazer de lhe dizer que a minha escolha é: <em>Nenhuma das opções acima</em>.</p>
+
+<h2 id="uuid">UUID é a Solução</h2>
+
+<p>E se eu lhe dissesse que podemos unir (quase) tudo de bom das opções acima num único conceito mais simples, com menos tabelas, apenas 1 campo para FK e com performance igual ao uso de um ID numérico?</p>
+
+<blockquote>
+  <p>O uso UUID simplifica o desenvolvimento Orientado a Objetos e também o relacionamento entre as Tabelas do Sistema.</p>
+</blockquote>
+
+<p>Essa é a nova velha opção que a maioria dos desenvolvedores (atuais) não utilizam em seus Modelos de Dados:</p>
+
+<p><em>Utilizar o UUID como identificador de registros.</em></p>
+
+<p>Você entenderá agora porque o UUID é tão importante para o desenvolvimento Orientados a Objetos e como ele irá simplificar seu código e <em>excluir</em> tabelas em seu modelo.</p>
+
+<p>Vamos continuar com o mesmo exemplo básico acima, mas reescrito para demostrar todo o conceito.</p>
+
+<p>Com UUID eu consigo implementar o mesmo exemplo dessa forma:</p>
+
+<pre><code>                FATURAS (pessoa_uid)
+                   ^
+        -----------|-----------
+        |                     |
+  PESSOA_FISICA (uid)   PESSOA_JURIDICA (uid)
+</code></pre>
+
+<p>Não há “tipos” e há apenas 1 campo de identificação de registro por tabela. Para todas e quaisquer tabelas, na verdade.</p>
+
+<p>Como isso é possível?</p>
+
+<p>Todo UUID é <strong>único</strong> em toda a base de dados. Não importa a tabela ou contexto no qual o UUID existe. Ele é único.</p>
+
+<p>Ok, mas como você sabe qual tabela de Pessoa está relacionada com o valor do campo <code>pessoa_uid</code> na tabela de <code>FATURAS</code>, na linha 5043?</p>
+
+<p>Você não sabe.</p>
+
+<p>E a beleza disso é que você não precisa saber!</p>
+
+<p>Essa é uma informação <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">encapsulada</a> no Modelo de Dados.</p>
+
+<p>Ainda confuso?</p>
+
+<p>Vou lhe mostrar então como obtemos todas as Faturas somente de Pessoas Físicas:</p>
+
+<pre><code>SELECT 
+  f.*
+FROM FATURAS f
+INNER JOIN PESSOA_FISICA p
+  ON p.id = f.pessoa_id
+</code></pre>
+
+<p>E de Pessoas Jurídicas:</p>
+
+<pre><code>SELECT 
+  f.*
+FROM FATURAS f
+INNER JOIN PESSOA_JURIDICA p
+  ON p.id = f.pessoa_id
+</code></pre>
+
+<p>A <em>query</em> só irá trazer os dados relacionados entre as tabelas no <em>JOIN</em>, todo o resto será ignorado.</p>
+
+<p>Nesse modelo os “tipos” são determinados pelas tabelas que fazem parte da <em>query</em> e não por campos “fantasmas” ou <em>strings</em> como “F” ou “J”.</p>
+
+<p>Se houver mais “tipos de clientes” no futuro, nada será alterado nas tabelas já existentes.</p>
+
+<p>A performance será excelente, visto que haverá poucas tabelas a serem relacionadas.</p>
+
+<p>Só há uma desvantagem considerável: Não há FK’s reais entre as tabelas, apenas índices. Não seria possível o campo <code>pessoa_uid</code> de <code>FATURAS</code> ter uma restrição em mais de uma tabela Pessoa. Mas antes que você comece a “atirar pedras” em mim, dá uma olhada em como o pessoal do NoSQL (muito utilizado hoje em dia) mantém a integridade dos dados, Ok?</p>
+
+<p>No entanto você poderá utilizar <em>triggers</em> para manter a integridade dos registros ou não.</p>
+
+<p>Pensa bem: não atualizamos <code>ID's</code> ou <code>UID's</code>. O único problema seria deletarmos um registro da <code>PESSOA_FISICA</code>, por exemplo, sem deletar suas <code>FATURAS</code>, certo?</p>
+
+<p>Mas porque você ainda está excluindo registros da sua base de dados?! Registros devem ser preservados como uma linha do tempo. Então, apenas desative-os, sem exclusões, sem problemas.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Não há modelo perfeito. Sempre haverá prós e contras. Mas é importante trabalharmos com Modelos mais próximos da realidade e dos requisitos do Cliente quando utilizamos Orientação a Objetos.</p>
+
+<p>A utilização do UUID torna isso possível.</p>
+
+<p>O UUID simplifica o modelo diminuindo a quantidade e relacionamentos de tabelas. E isso facilita a nomenclatura pois haverá menos tabelas a serem nomeadas. Facilita, também, a construção de <em>queries</em> com mais performance por utilizar menos tabelas.</p>
+
+<p>O UUID proteje a identificação de registros na web, dificultando a vida de <em>bots</em> que escaneiam sites fazendo requisições <em>GET/POST</em> apenas incrementando o ID inicial.</p>
+
+<p>Enfim, o UUID não é perfeito, mas é a solução mais <em>eficaz</em>, na minha opinião, para construírmos sistemas mais <em>simples</em> e <em>robustos</em>.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/identificador-unico-universal/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Identificador Único Universal&via=mdbs99;url=http://objectpascalprogramming.com/posts/identificador-unico-universal/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/identificador-unico-universal/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/identificador-unico-universal/&title=Identificador Único Universal" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/identificador-unico-universal/&title=Identificador Único Universal" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/identificador-unico-universal/&t=Identificador Único Universal" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-adaptadoras/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/como-utilizar-heranca-apropriadamente/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Como Utilizar Herança Apropriadamente</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/desenvolvimento-profissional/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Desenvolvimento Profissional</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nomeando-unidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
+        </ul>
+        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/identificador-unico-universal';
+      var disqus_title      = 'Identificador Único Universal';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

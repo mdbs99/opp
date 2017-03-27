@@ -8,6 +8,293 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Identificador Único Universal</title>
+        <description>&lt;p&gt;Como identificar unicamente seus Objetos?&lt;/p&gt;
+
+&lt;p&gt;Como fazer migração de dados sem se preocupar com campos auto-incremento e &lt;em&gt;foreign key&lt;/em&gt; entre as tabelas?&lt;/p&gt;
+
+&lt;p&gt;Como diminuir o número de tabelas?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-greg-rakozy-38802.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;O &lt;a href=&quot;https://en.wikipedia.org/wiki/Universally_unique_identifier&quot;&gt;&lt;em&gt;Universally Unique Identifier&lt;/em&gt;&lt;/a&gt; (UUID) é um número de 128-bit utilizado para identificar uma informação unicamente.&lt;/p&gt;
+
+&lt;p&gt;A Microsoft utiliza o termo &lt;em&gt;Globally Unique Identifier&lt;/em&gt; (GUID), mas na prática é a mesma coisa.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo você vai aprender como utilizá-lo.&lt;/p&gt;
+
+&lt;h2 id=&quot;tabelas-e-relacionamentos&quot;&gt;Tabelas e Relacionamentos&lt;/h2&gt;
+
+&lt;p&gt;A muitos anos atrás eu estava fazendo um curso de Programação de Computadores onde uma das matérias era sobre Sistemas Gerenciadores de Banco de Dados (SGBD’s).&lt;/p&gt;
+
+&lt;p&gt;Nesse curso ensinavam que tabelas são relacionadas entre si através das &lt;em&gt;Foreign Keys&lt;/em&gt; (FK’s). Um ou mais campos na tabela &lt;code&gt;A&lt;/code&gt; deveria ter sua contra-parte na tabela &lt;code&gt;B&lt;/code&gt;, ou seja, os mesmos campos com os mesmos valores.&lt;/p&gt;
+
+&lt;p&gt;Executando um comando no SGBD para criar uma FK entre essas tabelas, você garante que ambas estão relacionadas entre si e que esse vínculo não pode ser quebrado (normalmente) alterando ou excluindo registros em apenas um dos lados.&lt;/p&gt;
+
+&lt;p&gt;E isso não mudou.&lt;/p&gt;
+
+&lt;p&gt;O conceito continua o mesmo e ainda é muito utilizado hoje em dia para manter a integridade dos dados.&lt;/p&gt;
+
+&lt;p&gt;Um campo “chave”, na época que eu estava fazendo o curso, era o Cadastro de Pessoa Física (CPF). Por ser “único”, esse era um dos campos escolhidos quando trabalhávamos com Pessoas Físicas.&lt;/p&gt;
+
+&lt;p&gt;Mas anos atrás era comum uma mulher casada apresentar e utilizar o CPF do marido. Eu não sei quem teve essa ideia idiota, mas o fato é que era &lt;em&gt;aceitável&lt;/em&gt; naqueles dias.&lt;/p&gt;
+
+&lt;p&gt;Então muitos desenvolvedores construíam seu Modelo de Dados com &lt;em&gt;Chaves Estrangeiras Compostas&lt;/em&gt;. Poderia ser o CPF e Data de Nascimento, por exemplo.&lt;/p&gt;
+
+&lt;p&gt;Mas e se marido e mulher nasceram no mesmo dia? Nesse casos a chave composta ficaria duplicada.&lt;/p&gt;
+
+&lt;p&gt;Ah, então a chave será CPF, Data de Nascimento e Nome. É impossível eles terem o mesmo nome. Agora sim, problema resolvido?!&lt;/p&gt;
+
+&lt;p&gt;Bem, a FK poderia estar “correta”, no entanto agora você está &lt;em&gt;duplicando&lt;/em&gt; as informações de 3 campos entre essas tabelas.&lt;/p&gt;
+
+&lt;p&gt;Toda vez que você atualizar o nome, teria que atualizar em ambas as tabelas. Claro, você poderia fazer isso através da FK (ON UPDATE CASCADE) ou através de &lt;em&gt;triggers&lt;/em&gt;, mas o fato é que os dados continuariam duplicados.&lt;/p&gt;
+
+&lt;p&gt;Multiplicando esses mesmos campos em dezenas de tabelas com milhões de dados, é um grande desperdício. Desperdício de armazenamento em disco e de transferencia de dados entre o servidor e a aplicação.&lt;/p&gt;
+
+&lt;p&gt;Então criaram o “conceito” de “Identificador Numérico”.&lt;/p&gt;
+
+&lt;h2 id=&quot;identificador-numerico&quot;&gt;Identificador Numérico&lt;/h2&gt;
+
+&lt;p&gt;Eu não sei se há realmente um conceito ou &lt;em&gt;paper&lt;/em&gt; por trás dessa ideia, muito menos o autor ou autores originais — se você sabe, posta nos comentários por favor.&lt;/p&gt;
+
+&lt;p&gt;Então alguém — ou muitos ao mesmo tempo — pensou que seria mais fácil ter apenas um único campo para representar a FK entre as tabelas.&lt;/p&gt;
+
+&lt;p&gt;Esse tipo de campo é conhecido hoje em dia por todos os desenvolvedores como o Identificador, Identificador Numérico ou apenas ID.&lt;/p&gt;
+
+&lt;p&gt;O ID é um número.&lt;/p&gt;
+
+&lt;p&gt;Um exemplo seria termos uma tabela &lt;code&gt;PEDIDO&lt;/code&gt; e outra &lt;code&gt;PEDIDO_ITENS&lt;/code&gt;. Se eu quero relacionar essas tabelas (1..N, respectivamente) basta fazer uma FK dessa forma:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;PEDIDO.id &amp;lt;-&amp;gt; PEDIDO_ITENS.pedido_id&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Agora a duplicação de valor é de apenas um campo numérico que é bem mais simples e eficaz, ocupando menos espaço em disco, gerando menos transferência de dados rede.&lt;/p&gt;
+
+&lt;p&gt;Frameworks foram e são baseados nesse conceito (RubyOnRails por exemplo).&lt;/p&gt;
+
+&lt;p&gt;Até mesmo alguns &lt;em&gt;Widgets&lt;/em&gt; tinham propriedades do “tipo ID” para identificação de registros na tabela.&lt;/p&gt;
+
+&lt;p&gt;Parecia estar tudo resolvido, até você ter que modelar algo assim:&lt;/p&gt;
+
+&lt;p&gt;Imagine que no seu Modelo de Dados você tem uma tabela para &lt;code&gt;PESSOA_FISICA&lt;/code&gt; e outra de &lt;code&gt;PESSOA_JURIDICA&lt;/code&gt;. São, digamos, os “tipos de clientes” que você tem. São tabelas diferentes porque os campos são bem diferentes.&lt;/p&gt;
+
+&lt;p&gt;Então você tem uma tabela de &lt;code&gt;FATURAS&lt;/code&gt; onde quer concentrar todas as faturas de todos os Clientes.&lt;/p&gt;
+
+&lt;p&gt;Como fazer esse relacionamento?&lt;/p&gt;
+
+&lt;p&gt;Temos algumas opções.&lt;/p&gt;
+
+&lt;h4 id=&quot;ex-1&quot;&gt;1- Tabela FATURAS com 2 campos ID’s&lt;/h4&gt;
+
+&lt;p&gt;A tabela &lt;code&gt;FATURAS&lt;/code&gt; iria ter 2 ID’s (&lt;code&gt;pessoa_fisica_id&lt;/code&gt; e &lt;code&gt;pessoa_juridica_id&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Nesse tipo de &lt;em&gt;design&lt;/em&gt; um dos campos sempre estaria &lt;a href=&quot;/posts/nao-utilize-nil-ou-null/&quot;&gt;NULO&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se houver mais “tipos de pessoa”, você teria que ir acrescentando mais e mais campos.&lt;/p&gt;
+
+&lt;p&gt;É um tipo de &lt;em&gt;design&lt;/em&gt; muito deselegante, no &lt;em&gt;mínimo&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;ex-2&quot;&gt;2- Tabela FATURAS com 1 campo ID e 1 campo Tipo&lt;/h4&gt;
+
+&lt;p&gt;Nessa opção a tabela &lt;code&gt;FATURAS&lt;/code&gt; iria ter 2 campos identificadores:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Um campo &lt;code&gt;pessoa_id int&lt;/code&gt; que identifica o valor numérico;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Um campo &lt;code&gt;pessoa_tipo char(1)&lt;/code&gt; que identifica o “tipo de pessoa” (“F” = Física; “J” = Jurídica);&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Nesse tipo de &lt;em&gt;design&lt;/em&gt;, você não precisa acrescentar mais campos se 
+houverem mais “tipos de pessoa” no futuro. Basta identificar por um 
+&lt;code&gt;char&lt;/code&gt; o tipo. Enquanto o campo &lt;code&gt;pessoa_id&lt;/code&gt; iria se relacionar com o 
+registros específico da tabela específica do “tipo de pessoa”.&lt;/p&gt;
+
+&lt;p&gt;Mas continua bem deselegante. Eu diria, pior.&lt;/p&gt;
+
+&lt;p&gt;Além disso, a FK é apenas “virtual”, pois você não pode ter um único campo que é relacionado com mais de 1 tabela.&lt;/p&gt;
+
+&lt;h4 id=&quot;ex-3&quot;&gt;3- Tabela FATURAS com FK apenas para PESSOA&lt;/h4&gt;
+
+&lt;p&gt;Uma terceira opção seria refatorar ambas as tabelas de Pessoa, criando uma terceira tabela &lt;code&gt;PESSOA&lt;/code&gt; e fazendo com que as tabelas “herdem” os campos comuns dessa nova tabela.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;              PESSOA ------- FATURAS (pessoa_id)
+                ^
+        --------|--------
+        |               |
+  PESSOA_FISICA     PESSOA_JURIDICA
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Então, &lt;code&gt;FATURAS&lt;/code&gt; iria ter um campo &lt;code&gt;pessoa_id&lt;/code&gt; somente. Teria uma FK “forte” pois realmente iria estar relacionada com &lt;code&gt;PESSOA&lt;/code&gt; através do campo &lt;code&gt;pessoa_id&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Tudo certo?&lt;/p&gt;
+
+&lt;p&gt;De fato esse &lt;em&gt;design&lt;/em&gt; parece mais &lt;em&gt;limpo&lt;/em&gt;, mas profissional e até mais “Orientado a Objetos”, pois agora temos até o conceito de “herança” em tabelas(!)&lt;/p&gt;
+
+&lt;p&gt;Porém, essa abordagem tem os mesmos problemas do uso da &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;Herança de Classe&lt;/a&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;É difícil de fazer uma hierarquia desde o início, quando os requisitos ainda não estão bem definidos;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Uma Tabela pode ter sido criada com a “herança” errada e agora será difícil refatorar todas as &lt;em&gt;queries&lt;/em&gt; já em produção;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;É mais verboso escrever &lt;em&gt;queries&lt;/em&gt;, visto que agora você sempre terá mais uma tabela &lt;code&gt;PESSOA&lt;/code&gt; para fazer o relacionamento;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;A performance tende a cair, visto que haverá mais tabelas envolvidas;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Interessante, porém na prática é ineficiente.&lt;/p&gt;
+
+&lt;h4 id=&quot;ex-4&quot;&gt;4- Novas Tabelas de FATURAS&lt;/h4&gt;
+
+&lt;p&gt;Uma opção mais voltada para “conjuntos de dados” é criamos outras tabelas de Faturas: &lt;code&gt;FATURAS_FISICA&lt;/code&gt; e &lt;code&gt;FATURAS_JURIDICA&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Então, teríamos esses relacionamentos:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code&gt;PESSOA_FISICA.id &amp;lt;-&amp;gt; FATURAS_FISICA.pessoa_id&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code&gt;PESSOA_JURIDICA.id &amp;lt;-&amp;gt; FATURAS_JURIDICA.pessoa_id&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Todas as FK funcionam.&lt;/p&gt;
+
+&lt;p&gt;Não haveria problema de performance, visto que você só iria utilizar as tabelas do mesmo “contexto de dados”.&lt;/p&gt;
+
+&lt;p&gt;O grande problema é que ambas as tabelas são iguais e se houver alguma manutenção relacionado a Faturas, teria que ser feito em ambas as tabelas.&lt;/p&gt;
+
+&lt;p&gt;Se houver mais um “tipo de pessoa” futuramente, teríamos que criar uma nova tabela, o que não é nada bom.&lt;/p&gt;
+
+&lt;h4 id=&quot;ex-5&quot;&gt;5- Combinar as Opções 3 e 4&lt;/h4&gt;
+
+&lt;p&gt;Repare que você pode combinar as Opções #3 e #4.&lt;/p&gt;
+
+&lt;p&gt;Poderia continuar existindo a Tabela &lt;code&gt;FATURAS&lt;/code&gt; que estaria relacionada com as novas Tabelas &lt;code&gt;FATURAS_FISICA&lt;/code&gt; e &lt;code&gt;FATURAS_JURIDICA&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;No entanto, essa é uma opção “virtual” que só existe se você utilizar as oções #3 e #4 num mesmo Modelo.&lt;/p&gt;
+
+&lt;h4 id=&quot;sua-escolha-&quot;&gt;Sua escolha é?&lt;/h4&gt;
+
+&lt;p&gt;Pois bem. Considerando os exemplos acima, qual das opções você diria que tem a “melhor” abordagem?&lt;/p&gt;
+
+&lt;p&gt;Pense um pouco sobre isso antes de continuar lendo o artigo — e se você tiver outra opção não mencionada aqui, eu gostaria de ler lá nos comentários, Ok?&lt;/p&gt;
+
+&lt;p&gt;Pense nos prós e contras de cada uma das opções… escolheu?&lt;/p&gt;
+
+&lt;p&gt;Certo.&lt;/p&gt;
+
+&lt;p&gt;Quer saber qual é a minha escolha?&lt;/p&gt;
+
+&lt;p&gt;Tendo eu utilizado todas as opções acima — e variações destas no decorrer de anos — tenho o prazer de lhe dizer que a minha escolha é: &lt;em&gt;Nenhuma das opções acima&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;uuid&quot;&gt;UUID é a Solução&lt;/h2&gt;
+
+&lt;p&gt;E se eu lhe dissesse que podemos unir (quase) tudo de bom das opções acima num único conceito mais simples, com menos tabelas, apenas 1 campo para FK e com performance igual ao uso de um ID numérico?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;O uso UUID simplifica o desenvolvimento Orientado a Objetos e também o relacionamento entre as Tabelas do Sistema.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Essa é a nova velha opção que a maioria dos desenvolvedores (atuais) não utilizam em seus Modelos de Dados:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Utilizar o UUID como identificador de registros.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Você entenderá agora porque o UUID é tão importante para o desenvolvimento Orientados a Objetos e como ele irá simplificar seu código e &lt;em&gt;excluir&lt;/em&gt; tabelas em seu modelo.&lt;/p&gt;
+
+&lt;p&gt;Vamos continuar com o mesmo exemplo básico acima, mas reescrito para demostrar todo o conceito.&lt;/p&gt;
+
+&lt;p&gt;Com UUID eu consigo implementar o mesmo exemplo dessa forma:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;                FATURAS (pessoa_uid)
+                   ^
+        -----------|-----------
+        |                     |
+  PESSOA_FISICA (uid)   PESSOA_JURIDICA (uid)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Não há “tipos” e há apenas 1 campo de identificação de registro por tabela. Para todas e quaisquer tabelas, na verdade.&lt;/p&gt;
+
+&lt;p&gt;Como isso é possível?&lt;/p&gt;
+
+&lt;p&gt;Todo UUID é &lt;strong&gt;único&lt;/strong&gt; em toda a base de dados. Não importa a tabela ou contexto no qual o UUID existe. Ele é único.&lt;/p&gt;
+
+&lt;p&gt;Ok, mas como você sabe qual tabela de Pessoa está relacionada com o valor do campo &lt;code&gt;pessoa_uid&lt;/code&gt; na tabela de &lt;code&gt;FATURAS&lt;/code&gt;, na linha 5043?&lt;/p&gt;
+
+&lt;p&gt;Você não sabe.&lt;/p&gt;
+
+&lt;p&gt;E a beleza disso é que você não precisa saber!&lt;/p&gt;
+
+&lt;p&gt;Essa é uma informação &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulada&lt;/a&gt; no Modelo de Dados.&lt;/p&gt;
+
+&lt;p&gt;Ainda confuso?&lt;/p&gt;
+
+&lt;p&gt;Vou lhe mostrar então como obtemos todas as Faturas somente de Pessoas Físicas:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SELECT 
+  f.*
+FROM FATURAS f
+INNER JOIN PESSOA_FISICA p
+  ON p.id = f.pessoa_id
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;E de Pessoas Jurídicas:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SELECT 
+  f.*
+FROM FATURAS f
+INNER JOIN PESSOA_JURIDICA p
+  ON p.id = f.pessoa_id
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A &lt;em&gt;query&lt;/em&gt; só irá trazer os dados relacionados entre as tabelas no &lt;em&gt;JOIN&lt;/em&gt;, todo o resto será ignorado.&lt;/p&gt;
+
+&lt;p&gt;Nesse modelo os “tipos” são determinados pelas tabelas que fazem parte da &lt;em&gt;query&lt;/em&gt; e não por campos “fantasmas” ou &lt;em&gt;strings&lt;/em&gt; como “F” ou “J”.&lt;/p&gt;
+
+&lt;p&gt;Se houver mais “tipos de clientes” no futuro, nada será alterado nas tabelas já existentes.&lt;/p&gt;
+
+&lt;p&gt;A performance será excelente, visto que haverá poucas tabelas a serem relacionadas.&lt;/p&gt;
+
+&lt;p&gt;Só há uma desvantagem considerável: Não há FK’s reais entre as tabelas, apenas índices. Não seria possível o campo &lt;code&gt;pessoa_uid&lt;/code&gt; de &lt;code&gt;FATURAS&lt;/code&gt; ter uma restrição em mais de uma tabela Pessoa. Mas antes que você comece a “atirar pedras” em mim, dá uma olhada em como o pessoal do NoSQL (muito utilizado hoje em dia) mantém a integridade dos dados, Ok?&lt;/p&gt;
+
+&lt;p&gt;No entanto você poderá utilizar &lt;em&gt;triggers&lt;/em&gt; para manter a integridade dos registros ou não.&lt;/p&gt;
+
+&lt;p&gt;Pensa bem: não atualizamos &lt;code&gt;ID&#39;s&lt;/code&gt; ou &lt;code&gt;UID&#39;s&lt;/code&gt;. O único problema seria deletarmos um registro da &lt;code&gt;PESSOA_FISICA&lt;/code&gt;, por exemplo, sem deletar suas &lt;code&gt;FATURAS&lt;/code&gt;, certo?&lt;/p&gt;
+
+&lt;p&gt;Mas porque você ainda está excluindo registros da sua base de dados?! Registros devem ser preservados como uma linha do tempo. Então, apenas desative-os, sem exclusões, sem problemas.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Não há modelo perfeito. Sempre haverá prós e contras. Mas é importante trabalharmos com Modelos mais próximos da realidade e dos requisitos do Cliente quando utilizamos Orientação a Objetos.&lt;/p&gt;
+
+&lt;p&gt;A utilização do UUID torna isso possível.&lt;/p&gt;
+
+&lt;p&gt;O UUID simplifica o modelo diminuindo a quantidade e relacionamentos de tabelas. E isso facilita a nomenclatura pois haverá menos tabelas a serem nomeadas. Facilita, também, a construção de &lt;em&gt;queries&lt;/em&gt; com mais performance por utilizar menos tabelas.&lt;/p&gt;
+
+&lt;p&gt;O UUID proteje a identificação de registros na web, dificultando a vida de &lt;em&gt;bots&lt;/em&gt; que escaneiam sites fazendo requisições &lt;em&gt;GET/POST&lt;/em&gt; apenas incrementando o ID inicial.&lt;/p&gt;
+
+&lt;p&gt;Enfim, o UUID não é perfeito, mas é a solução mais &lt;em&gt;eficaz&lt;/em&gt;, na minha opinião, para construírmos sistemas mais &lt;em&gt;simples&lt;/em&gt; e &lt;em&gt;robustos&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 27 Mar 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/identificador-unico-universal/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/identificador-unico-universal/</guid>
+      </item>
+    
+      <item>
         <title>Stored Procedures na Orientação a Objetos</title>
         <description>&lt;p&gt;Stored Procedures são sub-rotinas armazenadas no SGBD disponíveis às aplicações que o acessam.&lt;/p&gt;
 
@@ -1090,142 +1377,6 @@ fazer isso.&lt;/p&gt;
         <pubDate>Mon, 09 Jan 2017 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/</guid>
-      </item>
-    
-      <item>
-        <title>Retrospectiva 2016</title>
-        <description>&lt;p&gt;A um ano atrás eu tinha a minha frente um oceano infinito de Blogs.&lt;/p&gt;
-
-&lt;p&gt;Há espaço para mais um blog?
-Como fazer diferença?
-Como ser notado nesse oceano que cresce exponencialmente
-todos os dias?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-34343-cbjdurrrka-daiga-ellaby.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;inicio&quot;&gt;A apenas 1 ano atrás…&lt;/h2&gt;
-
-&lt;p&gt;Mais um ano se foi, mas para esse blog foi apenas o primeiro
-ano de vida.&lt;/p&gt;
-
-&lt;p&gt;Nas minhas Férias em 2015 tive a ideia de criar um blog para
-escrever sobre desenvolvimento de &lt;em&gt;software&lt;/em&gt; com foco na 
-linguagem Object Pascal.&lt;/p&gt;
-
-&lt;p&gt;Quando escrevia o primeiro artigo eu quase desisti.&lt;/p&gt;
-
-&lt;p&gt;Pensei: — Mais um blog fará diferença dentre muitos outros?&lt;/p&gt;
-
-&lt;p&gt;Eu não sabia se faria diferença, mas sentia que deveria escrever
-um pouco sobre minha experiência, meu dia-a-dia e sobre a Orientação
-a Objetos verdadeiramente aplicada.&lt;/p&gt;
-
-&lt;p&gt;Os assuntos que eu queria escrever eu não encontrava em 
-nenhum outro blog em Português, então, por quê não?&lt;/p&gt;
-
-&lt;p&gt;Não desisti.&lt;/p&gt;
-
-&lt;p&gt;Aqui estamos. Ano 2017. Total de &lt;a href=&quot;/archive/&quot;&gt;50 artigos&lt;/a&gt;.
-Agora, 51 artigos.&lt;/p&gt;
-
-&lt;p&gt;Minha meta era escrever 1 artigo semanalmente, durante 1 ano,
-sem se importar se alguém estaria lendo. Sem se importar se 
-alguém estaria se identificando com as ideias. Sem se importar
-se faria diferença… apenas escrever e ver os resultados após
-um ano.&lt;/p&gt;
-
-&lt;p&gt;Falar sobre Object Pascal, uma linguagem “morta”?&lt;/p&gt;
-
-&lt;p&gt;O fato é que fez diferença… e continua fazendo.&lt;/p&gt;
-
-&lt;p&gt;As &lt;a href=&quot;/lista-vip/&quot;&gt;inscrições&lt;/a&gt; para fazer parte da minha Lista VIP
-cresce a cada dia.&lt;/p&gt;
-
-&lt;p&gt;Incrivelmente há também um aumento no número de inscritos que,
-em muitos casos, não desenvolvem em Object Pascal mas estão 
-conosco para fazer parte desse &lt;em&gt;mindset&lt;/em&gt; sobre Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;O sucesso do blog superou todas as minhas expectativas.&lt;/p&gt;
-
-&lt;h2 id=&quot;melhores-artigos&quot;&gt;Melhores Artigos&lt;/h2&gt;
-
-&lt;p&gt;Selecionei os melhores artigos de 2016. Não houve uma ciência para
-escolher esses artigos. Apenas selecionei os 10 mais relevantes pra
-mim ou para os leitores baseados no &lt;em&gt;feedback&lt;/em&gt; e comentários.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Interfaces e o Método estático New&lt;/a&gt;
-É sem dúvida um artigo que eu adoro porque essa “técnica” mudou a 
-maneira que eu trabalho com Object Pascal e Interfaces.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces em Todo Lugar&lt;/a&gt;
-Mostra que com a utilização do Método &lt;code&gt;New&lt;/code&gt; é possível  utilizar Interfaces em todo o código,
-sem problemas com vazamentos de memória.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Objetos devem representar Entidades reais&lt;/a&gt;
-Diz que cada Objeto deverá representar uma Entidade num determinado
-momento para um determinado Contexto.
-Sempre tenham em mente a dupla Entidade e Contexto, quando estiverem
-programando Orientado a Objetos.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;Classes devem Implementar apenas uma Responsabilidade&lt;/a&gt;
-É uma regra que todos conhecem mas quase ninguém respeita. Porque é difícil.
-Mas é difícil quando utilizamos o pensamento Procedural para (tentar)
-codificar um Objeto. Não pense nos procedimentos, pense no comportamento
-do Objeto apenas para um Contexto específico e essa regra ficará mais fácil
-de ser cumprida.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;Objetos pensam e tomam decisões&lt;/a&gt;
-É um conceito difícil para quem ainda não entendeu, realmente, a
-programação Orientada a Objetos. No modelo Procedural você tem um 
-Controlador (você); no Modelo Orientado a Objetos, há apenas Objetos
-que sabem o que fazer.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/posts/validacoes-no-construtor/&quot;&gt;Validações no Construtor&lt;/a&gt;
-É um conceito que eu conhecia, mas não seguia. Mas ele faz todo o sentido.
-Você não deve validar (todo) o Objeto no construtor. Se existisse um mundo 
-onde todos os Objetos fossem validados antes de serem criados, então 
-seria um mundo perfeito com Objetos perfeitos. E perfeição não existe.
-Dê um voto de confiança aos seus Objetos e deixe-os tentar executar o
-trabalho.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;Herança pode ser o Mal da Orientação a Objetos&lt;/a&gt;
-Foi uma série de 5 artigos. Uma série provocativa que gerou
-dúvidas, argumentações, mas também admiração e sintonia com outros 
-leitores que pensam da mesma forma.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/posts/classes-de-dados/&quot;&gt;Classe de Dados&lt;/a&gt;
-Pode ser uma ideia controversa quando pensamos em Objetos. Será?
-Quando leio sobre Orientação a Objetos em outros blogs,
-livros ou publicações, fica claro que os autores dizem ser errado o pensamento
-procedural, o pensamento em dados. Mas eles não explicam como utilizamos
-dados puros dentro de um código Orientado a Objetos. Essa é a maneira que eu 
-utilizo nos meus sistemas.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/posts/procedural-e-facil-orientado-a-objetos-e-dificil/&quot;&gt;Procedural é fácil, Orientado a Objetos é difícil&lt;/a&gt;
-É um artigo simples, de 2 minutos de leitura, que foi escrito em menos de
-30 minutos… e mesmo assim teve uma ótima repercussão para os leitores.
-Incrível.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/posts/diga-me-algo-sobre-voce/&quot;&gt;Diga-me algo Sobre você&lt;/a&gt;
-É uma ideia pessoal, mas baseada no conceito que um Objeto deve ser
-auto-suficiente para descrever a si mesmo, sem quebra de encapsulamento,
-sem &lt;em&gt;Getters&lt;/em&gt;, sem ser um &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;“balde de dados”&lt;/a&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;e-sobre-o-futuro&quot;&gt;E sobre o Futuro…&lt;/h2&gt;
-
-&lt;p&gt;Os artigos continuarão a serem publicados semanalmente, mas vou
-expandir. Haverá também vídeos no meu novo
-&lt;a href=&quot;https://www.youtube.com/c/mdbs99&quot;&gt;Canal do YouTube&lt;/a&gt; que irão falar
-sobre os artigos do blog, desenvolvimento de &lt;em&gt;software&lt;/em&gt; e, claro,
-Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Está sendo uma experiência única compartilhar ideias que somente eu 
-e poucas pessoas que trabalham comigo tinham acesso.&lt;/p&gt;
-
-&lt;p&gt;Agradeço sua leitura, seus comentários e os e-mails de incentivo.&lt;/p&gt;
-
-&lt;p&gt;Obrigado e FELIZ 2017!&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 02 Jan 2017 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/retrospectiva-2016/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/retrospectiva-2016/</guid>
       </item>
     
   </channel>
