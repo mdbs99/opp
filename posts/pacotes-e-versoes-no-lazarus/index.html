@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Não Culpe o Código Alheio &#8211; Object Pascal Programming</title>
+    <title>Pacotes e Versões no Lazarus &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Gerente de Projetos">
-    <meta name="keywords" content="código, code, estilo, estilo de codificação, empresa, gerente, prazo do projeto">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/">
+    <meta name="keywords" content="Lazarus">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, c#, csharp, java, object-oriented, oop, mdbs99, package, packages, version, versioning">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Não Culpe o Código Alheio">
-    <meta property="og:description" content="Não culpe o código de outrem sem antes saber sua história, motivos, prazos e quem realmente dava as ordens no projeto.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/">
+    <meta property="og:title" content="Pacotes e Versões no Lazarus">
+    <meta property="og:description" content="Veja como utilizar versões diferentes do mesmo Package no Lazarus.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1466784828399-9a9921e8bdfd.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-samuel-zeller-118195.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Não Culpe o Código Alheio" />
+    <meta name="twitter:title" content="Pacotes e Versões no Lazarus" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,117 +191,112 @@
 
 
 <div class="post-header mb2">
-  <h1>Não Culpe o Código Alheio</h1>
-  <span class="post-meta">Oct 31, 2016</span><br>
+  <h1>Pacotes e Versões no Lazarus</h1>
+  <span class="post-meta">Apr 3, 2017</span><br>
   
   <span class="post-meta small">
   
-    2 minute read
+    4 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Você fez entrevista numa grande empresa e foi contratado como
-Desenvolvedor Senior.</p>
-
-<p>No primeiro dia que lhe dão acesso ao código para corrigir
-uma pequena falha, você olha o código e pensa:</p>
-
-<p>Mas que P#$@[Piiiiii] é essa?!</p>
+  <p>Se você já precisou trabalhar com versões diferentes de um mesmo Pacote de componentes no Lazarus, esse artigo pode ser útil.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1466784828399-9a9921e8bdfd.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/photo-samuel-zeller-118195.jpg" alt="Unsplash image" /></p>
 
-<p>O código é uma <em>bagunça</em>.</p>
+<h2 id="introducao">Introdução</h2>
 
-<p>Não há divisão lógica entre camadas.</p>
+<p>Os <em>frameworks</em> e <em>libs</em> sempre são disponibilizados no formato de Pacotes.</p>
 
-<p>A equipe diz que o código é Orientado a Objetos, mas não há verdadeiros
-<a href="/posts/objetos-representam-entidades/">Objetos</a>.</p>
+<p>No Delphi são os arquivos *.dpk e no Lazarus são os arquivos *.lpk.</p>
 
-<p>Tudo parece ser global, pois não parece haver nenhum tipo de
-<a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">Encapsulamento</a>.</p>
+<p>Os Pacotes são ótimos. Ajudam na separação lógica do código e reutilização, mesmo dentro de um único projeto.</p>
 
-<h2 id="e-agora">E agora?</h2>
+<p>Os Pacotes também servem para empacotar componentes que serão instalados na IDE.</p>
 
-<p>Normalmente, o primeiro sentimento é culpar o último
-programador que trabalhou no código.</p>
+<p>Mas se você precisar utilizar uma versão diferente (mais atualizada) de um Pacote num projeto, mas não quer alterar o código de outros projetos mais antigos que também utilizam esse Pacote, o que fazer?</p>
 
-<p>Você pensa:</p>
+<h2 id="problemas">Problemas</h2>
 
-<p><em>“Eu não faria assim!”</em></p>
+<p>Pode ser sorte, mas a anos eu trabalho com componentes, frameworks ou libs (vou utilizar a nomenclatura <em>Libs</em> agora) de terceiros e quase nunca tive problemas em atualizar os fontes.</p>
 
-<p><em>“O que estavam pensando quando codificaram isso aqui?”</em></p>
+<p>Talvez minha sorte tenha haver com o fato de que eu quase não atualizo as <em>Libs</em> que estão funcionando.</p>
 
-<p><em>“Será que alguém aqui sabe o que é normalização das tabelas,
-padronização do código, separação de camadas, responsabilidade
-única…?”</em></p>
+<p>Por outro lado não posso ficar “parado no tempo” pois quando atulizar o código muita coisa pode ter mudado e levará um tempo até fazer todas as correções.</p>
 
-<p>Culpar é <em>fácil</em>.</p>
+<p>Então, precisamos atualizar alguma hora.</p>
 
-<p>Culpar sem nem ao menos saber o histórico do projeto, as 
-motivações envolvidas e os responsáveis pelo projeto é ainda
-mais fácil.</p>
+<p>As vezes tenho que fazer pequenas correções no meu código ou mesmo envio <em>patches</em> para outros autores de componentes <em>Open Source</em>, mas nunca tive um problema grave.</p>
 
-<p>Mas, não cometa essa <em>injustiça</em>.</p>
+<p>Por isso sempre mantive apenas 1 source para cada <em>Lib</em>. Para projetos mais organizados que mantém <em>branches</em> imutáveis (<em>labels</em>) de versões, era ainda mais seguro.</p>
 
-<p>Não pense que somente o último programador é o <em>total</em> responsável
-por toda essa bagunça, pois tem grandes chances dele apenas 
-ter seguindo ordens!</p>
+<p>Bem, não mais.</p>
 
-<p>Sim, é verdade.</p>
+<p>Parece que minha sorte acabou e venho tendo alguns problemas de incompatibilidade entre esses Pacotes.</p>
 
-<p>Claro que isso não exime os programadores da culpa.</p>
+<p>São alguns problemas, não muitos.</p>
 
-<h2 id="voce-tambem-e-culpado">Você também é culpado</h2>
+<p>As vezes uma atualização de algum Pacote não compila com a versão mais nova do Lazarus; outras vezes não compila com a versão mais nova do FPC; outras vezes o código foi tão alterado que fico receoso em atualizar, pois tenho projetos que não tem <em>Unit Tests</em> apropriados.</p>
 
-<p>Se <em>você</em> constrói algo, também é <em>responsabilidade</em> sua que seja 
-feito da forma <em>correta</em>.</p>
+<p>Então vi que era hora de me preocupar com isso e vou lhe explicar como estou fazendo atualmente.</p>
 
-<p>Se você não concorda com a atitude de seus superiores, procure
-outro emprego.</p>
+<h2 id="versionando">Versionando</h2>
 
-<p>É isso aí! Esse é o correto a se fazer.</p>
+<p>Primeiramente eu entrei em contato com a <a href="http://lists.lazarus.freepascal.org/pipermail/lazarus/">Lista Oficial do Lazarus</a> e (resumindo) <a href="http://lists.lazarus.freepascal.org/pipermail/lazarus/2017-March/231269.html">perguntei</a> como eu poderia manter mais de uma versão de um mesmo Pacote.</p>
 
-<blockquote class="twitter-tweet" data-lang="pt"><p lang="en" dir="ltr">@ job interview:<br />- We need responsible people. Are you of the kind?<br />- Absolutely. At my last gig I was always responsible when shit happened</p>&mdash; Bruno Borges (@brunoborges) <a href="https://twitter.com/brunoborges/status/792277126695096320">29 de outubro de 2016</a></blockquote>
-<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Ao que parece o Lazarus IDE é bem <em>esperto</em> e consegue fazer o carregamento do Pacote correspondende a versão que você sinalizou que gostaria de utilizar quando adicionou o Pacote como dependência no seu Projeto.</p>
 
-<p>Mas infelizmente a vida não é fácil.
-E para a maioria das pessoas, a vida pode ser <em>extremamente</em> difícil.</p>
+<p>No exemplo abaixo eu estou adicinando o Pacote AWS a partir da versão 0.4:</p>
 
-<p>Procurar outro emprego demanda tempo. Então a maioria “vai levando a vida”.
-Vai “empurrando pra frente” até onde der pra chegar.
-E essa atitude impacta diretamente nos projetos que essas 
-pessoas estão envolvidas.</p>
+<p><img src="/images/photo-new-requirement-8287.jpg" alt="Lazarus New Requirement" /></p>
 
-<p>Muitas vezes esses programadores até tentam fazer o certo,
-mas gerentes de projetos inexperientes dizem para fazer de 
-outra maneira:</p>
+<p>Significa que se um Projeto estiver utilizando a versão 0.3 é esse Pacote que está disponível, mas se você abrir um novo projeto que utiliza a versão 0.4, por exemplo, a IDE irá recarregar a nova versão do Pacote.</p>
 
-<p>Mais <em>rápido</em>, mais <em>barato</em>, mais… sem lógica! Mais um projeto 
-que irá <em>fracassar</em>.</p>
+<p>Legal, mas não resolve 100%.</p>
 
-<p>E isso é extremamente desmotivamente.</p>
+<h2 id="preferencial">Definindo Pacotes Preferenciais</h2>
 
-<p>Então, quando tudo já está uma bagunça e você não tem voz
-de decisão para fazer o certo… nada mais importa.</p>
+<p>Muitas vezes o autor não versiona o Pacote, ou seja, ele não define os números de <em>Min</em> e <em>Max</em>. Nesse caso, não há como a IDE carregar o Pacote correto, pois todos teriam o mesmo número de versão.</p>
 
-<p>E assim o código vira uma bagunça.</p>
+<p>Então mais uma vez o Lazarus me surpreendeu me dando a opção de marcar um <a href="http://wiki.freepascal.org/IDE_Window:_Project_Inspector#Store_file_name_as_preferred_for_this_dependency">Pacote como preferencial</a>, apontando diretamente para o <em>path</em> do *.lpk.</p>
+
+<p>Quase perfeito, mas…</p>
+
+<p>Não há opção na IDE para configurar o <em>path</em>. Ao utilizar a oção de <em>preferencial</em> você vai salvar o <em>path</em> nas configurações do seu projeto, mas ele vai salvar o <em>path</em> do Pacote que já está carregado.</p>
+
+<p>Eu <a href="http://lists.lazarus.freepascal.org/pipermail/lazarus/2017-April/231287.html">sugeri</a> que deveria haver essa opção lá na lista, porém não sei se não entenderam ou talvez eu não tenha entendido como o mecanismo funciona — ou talvez os autores estão curtindo o fim de semana merecido e irão responder outra hora — enfim.</p>
+
+<p>De qualquer forma estou pensando em fazer esse <em>patch</em> para o Lazarus, ou seja, poder adicionar uma dependência apontando para um <em>path</em> relativo.</p>
+
+<p>Enquanto não há essa opção, sigo em frente.</p>
+
+<p>Estou utilizando no mínimo 3 diretórios com a cópia dos fontes de diferentes versões para o mesmo Pacote.</p>
+
+<p>São eles:</p>
+
+<ol>
+  <li>master — diretório com a versão de produção;</li>
+  <li>develop — diretório com a versão modificada, testes, patchs, etc;</li>
+  <li>snapshot — diretório com a versão original do autor;</li>
+</ol>
+
+<p>Felizmente esses diretórios são <strong>facilmente</strong> alterados no XML *.lpi de configuração do Projeto. É manual, porém bem fácil (como a maioria das coisas são no <em>Object Pascal</em>).</p>
+
+<p>Caso eu queria mudar a versão de um Pacote, basta mudar o diretório com a versão correspondente e dar um <em>build</em> no Projeto.</p>
+
+<p>Simples assim.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Quando chegar numa nova empresa, assuma o código.</p>
+<p>Os Pacotes são uma ótima maneira de modularizar seus Projetos em unidades lógicas que podem ser compartilhadas entre outros Projetos.</p>
 
-<p>Diga que precisa de um tempo para entender tudo.</p>
+<p>No entanto, manter a organização de várias versões não é um trabalho fácil. A IDE ajuda com o carregamento das versões corretas, porém nem sempre isso irá funcionar.</p>
 
-<p>Não aponte culpados. Ao invés disso, mostre à empresa algumas <em>soluções</em>.</p>
-
-<p>E quando alguém apontar um erro no código, não diga que a culpa não é sua 
-só porque o código já estava ali antes de você chegar.</p>
-
-<p>Se você <em>assumiu</em> o código, agora ele é <em>seu</em>.</p>
+<p>Eu prefiro as coisas mais <a href="/posts/simplicidade/">simples</a>, mais minimalista. Não quero ficar “dependente” da IDE para gerenciar meu trabalho. Então eu estou versionando meus Pacotes utilizando os diretórios e toda vez que adiciono uma nova dependência, marco como <em>preferencial</em> para que a IDE sempre abra a versão configurada.</p>
 
 <p>Até logo.</p>
 
@@ -313,33 +308,33 @@ só porque o código já estava ali antes de você chegar.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Não Culpe o Código Alheio&via=mdbs99;url=http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Pacotes e Versões no Lazarus&via=mdbs99;url=http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/&title=Não Culpe o Código Alheio" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/&title=Não Culpe o Código Alheio" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/&title=Pacotes e Versões no Lazarus" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/nao-culpe-o-codigo-alheio/&t=Não Culpe o Código Alheio" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/&title=Pacotes e Versões no Lazarus" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/&t=Pacotes e Versões no Lazarus" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -388,38 +383,38 @@ só porque o código já estava ali antes de você chegar.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
         </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
+      <a href="/posts/desenvolvimento-profissional/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
+          <h4 class="post-title"><li>Desenvolvimento Profissional</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/simplicidade/" class="post-link">
+      <a href="/posts/como-utilizar-heranca-apropriadamente/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Simplicidade</li></h4>
+          <h4 class="post-title"><li>Como Utilizar Herança Apropriadamente</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/objetos-imutaveis/" class="post-link">
+      <a href="/posts/unidades-limitrofes/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
         </ul>
-        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
       </a>
     </div>
   
@@ -433,20 +428,20 @@ só porque o código já estava ali antes de você chegar.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-3/" class="post-link">
+      <a href="/posts/awslib-a-historia-e-o-novo-suporte-a-ses/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte 3</li></h4>
+          <h4 class="post-title"><li>AWS Lib: A História e o novo suporte a SES</li></h4>
         </ul>
-        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+        <!--<p class="post-summary">Como tudo começou e o novo Suporte a SES.</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nomeando-unidades/" class="post-link">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
         </ul>
-        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
       </a>
     </div>
   
@@ -460,20 +455,20 @@ só porque o código já estava ali antes de você chegar.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/freeandnil-esqueca/" class="post-link">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
         </ul>
-        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/objetos-agregados/" class="post-link">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Objetos Agregados</li></h4>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
         </ul>
-        <!--<p class="post-summary"></p>-->
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
       </a>
     </div>
   
@@ -484,8 +479,8 @@ só porque o código já estava ali antes de você chegar.</p>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/nao-culpe-o-codigo-alheio';
-      var disqus_title      = 'Não Culpe o Código Alheio';
+      var disqus_identifier = '/posts/pacotes-e-versoes-no-lazarus';
+      var disqus_title      = 'Pacotes e Versões no Lazarus';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

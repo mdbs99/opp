@@ -8,6 +8,111 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Pacotes e Versões no Lazarus</title>
+        <description>&lt;p&gt;Se você já precisou trabalhar com versões diferentes de um mesmo Pacote de componentes no Lazarus, esse artigo pode ser útil.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-samuel-zeller-118195.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Os &lt;em&gt;frameworks&lt;/em&gt; e &lt;em&gt;libs&lt;/em&gt; sempre são disponibilizados no formato de Pacotes.&lt;/p&gt;
+
+&lt;p&gt;No Delphi são os arquivos *.dpk e no Lazarus são os arquivos *.lpk.&lt;/p&gt;
+
+&lt;p&gt;Os Pacotes são ótimos. Ajudam na separação lógica do código e reutilização, mesmo dentro de um único projeto.&lt;/p&gt;
+
+&lt;p&gt;Os Pacotes também servem para empacotar componentes que serão instalados na IDE.&lt;/p&gt;
+
+&lt;p&gt;Mas se você precisar utilizar uma versão diferente (mais atualizada) de um Pacote num projeto, mas não quer alterar o código de outros projetos mais antigos que também utilizam esse Pacote, o que fazer?&lt;/p&gt;
+
+&lt;h2 id=&quot;problemas&quot;&gt;Problemas&lt;/h2&gt;
+
+&lt;p&gt;Pode ser sorte, mas a anos eu trabalho com componentes, frameworks ou libs (vou utilizar a nomenclatura &lt;em&gt;Libs&lt;/em&gt; agora) de terceiros e quase nunca tive problemas em atualizar os fontes.&lt;/p&gt;
+
+&lt;p&gt;Talvez minha sorte tenha haver com o fato de que eu quase não atualizo as &lt;em&gt;Libs&lt;/em&gt; que estão funcionando.&lt;/p&gt;
+
+&lt;p&gt;Por outro lado não posso ficar “parado no tempo” pois quando atulizar o código muita coisa pode ter mudado e levará um tempo até fazer todas as correções.&lt;/p&gt;
+
+&lt;p&gt;Então, precisamos atualizar alguma hora.&lt;/p&gt;
+
+&lt;p&gt;As vezes tenho que fazer pequenas correções no meu código ou mesmo envio &lt;em&gt;patches&lt;/em&gt; para outros autores de componentes &lt;em&gt;Open Source&lt;/em&gt;, mas nunca tive um problema grave.&lt;/p&gt;
+
+&lt;p&gt;Por isso sempre mantive apenas 1 source para cada &lt;em&gt;Lib&lt;/em&gt;. Para projetos mais organizados que mantém &lt;em&gt;branches&lt;/em&gt; imutáveis (&lt;em&gt;labels&lt;/em&gt;) de versões, era ainda mais seguro.&lt;/p&gt;
+
+&lt;p&gt;Bem, não mais.&lt;/p&gt;
+
+&lt;p&gt;Parece que minha sorte acabou e venho tendo alguns problemas de incompatibilidade entre esses Pacotes.&lt;/p&gt;
+
+&lt;p&gt;São alguns problemas, não muitos.&lt;/p&gt;
+
+&lt;p&gt;As vezes uma atualização de algum Pacote não compila com a versão mais nova do Lazarus; outras vezes não compila com a versão mais nova do FPC; outras vezes o código foi tão alterado que fico receoso em atualizar, pois tenho projetos que não tem &lt;em&gt;Unit Tests&lt;/em&gt; apropriados.&lt;/p&gt;
+
+&lt;p&gt;Então vi que era hora de me preocupar com isso e vou lhe explicar como estou fazendo atualmente.&lt;/p&gt;
+
+&lt;h2 id=&quot;versionando&quot;&gt;Versionando&lt;/h2&gt;
+
+&lt;p&gt;Primeiramente eu entrei em contato com a &lt;a href=&quot;http://lists.lazarus.freepascal.org/pipermail/lazarus/&quot;&gt;Lista Oficial do Lazarus&lt;/a&gt; e (resumindo) &lt;a href=&quot;http://lists.lazarus.freepascal.org/pipermail/lazarus/2017-March/231269.html&quot;&gt;perguntei&lt;/a&gt; como eu poderia manter mais de uma versão de um mesmo Pacote.&lt;/p&gt;
+
+&lt;p&gt;Ao que parece o Lazarus IDE é bem &lt;em&gt;esperto&lt;/em&gt; e consegue fazer o carregamento do Pacote correspondende a versão que você sinalizou que gostaria de utilizar quando adicionou o Pacote como dependência no seu Projeto.&lt;/p&gt;
+
+&lt;p&gt;No exemplo abaixo eu estou adicinando o Pacote AWS a partir da versão 0.4:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-new-requirement-8287.jpg&quot; alt=&quot;Lazarus New Requirement&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Significa que se um Projeto estiver utilizando a versão 0.3 é esse Pacote que está disponível, mas se você abrir um novo projeto que utiliza a versão 0.4, por exemplo, a IDE irá recarregar a nova versão do Pacote.&lt;/p&gt;
+
+&lt;p&gt;Legal, mas não resolve 100%.&lt;/p&gt;
+
+&lt;h2 id=&quot;preferencial&quot;&gt;Definindo Pacotes Preferenciais&lt;/h2&gt;
+
+&lt;p&gt;Muitas vezes o autor não versiona o Pacote, ou seja, ele não define os números de &lt;em&gt;Min&lt;/em&gt; e &lt;em&gt;Max&lt;/em&gt;. Nesse caso, não há como a IDE carregar o Pacote correto, pois todos teriam o mesmo número de versão.&lt;/p&gt;
+
+&lt;p&gt;Então mais uma vez o Lazarus me surpreendeu me dando a opção de marcar um &lt;a href=&quot;http://wiki.freepascal.org/IDE_Window:_Project_Inspector#Store_file_name_as_preferred_for_this_dependency&quot;&gt;Pacote como preferencial&lt;/a&gt;, apontando diretamente para o &lt;em&gt;path&lt;/em&gt; do *.lpk.&lt;/p&gt;
+
+&lt;p&gt;Quase perfeito, mas…&lt;/p&gt;
+
+&lt;p&gt;Não há opção na IDE para configurar o &lt;em&gt;path&lt;/em&gt;. Ao utilizar a oção de &lt;em&gt;preferencial&lt;/em&gt; você vai salvar o &lt;em&gt;path&lt;/em&gt; nas configurações do seu projeto, mas ele vai salvar o &lt;em&gt;path&lt;/em&gt; do Pacote que já está carregado.&lt;/p&gt;
+
+&lt;p&gt;Eu &lt;a href=&quot;http://lists.lazarus.freepascal.org/pipermail/lazarus/2017-April/231287.html&quot;&gt;sugeri&lt;/a&gt; que deveria haver essa opção lá na lista, porém não sei se não entenderam ou talvez eu não tenha entendido como o mecanismo funciona — ou talvez os autores estão curtindo o fim de semana merecido e irão responder outra hora — enfim.&lt;/p&gt;
+
+&lt;p&gt;De qualquer forma estou pensando em fazer esse &lt;em&gt;patch&lt;/em&gt; para o Lazarus, ou seja, poder adicionar uma dependência apontando para um &lt;em&gt;path&lt;/em&gt; relativo.&lt;/p&gt;
+
+&lt;p&gt;Enquanto não há essa opção, sigo em frente.&lt;/p&gt;
+
+&lt;p&gt;Estou utilizando no mínimo 3 diretórios com a cópia dos fontes de diferentes versões para o mesmo Pacote.&lt;/p&gt;
+
+&lt;p&gt;São eles:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;master — diretório com a versão de produção;&lt;/li&gt;
+  &lt;li&gt;develop — diretório com a versão modificada, testes, patchs, etc;&lt;/li&gt;
+  &lt;li&gt;snapshot — diretório com a versão original do autor;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Felizmente esses diretórios são &lt;strong&gt;facilmente&lt;/strong&gt; alterados no XML *.lpi de configuração do Projeto. É manual, porém bem fácil (como a maioria das coisas são no &lt;em&gt;Object Pascal&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;Caso eu queria mudar a versão de um Pacote, basta mudar o diretório com a versão correspondente e dar um &lt;em&gt;build&lt;/em&gt; no Projeto.&lt;/p&gt;
+
+&lt;p&gt;Simples assim.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Os Pacotes são uma ótima maneira de modularizar seus Projetos em unidades lógicas que podem ser compartilhadas entre outros Projetos.&lt;/p&gt;
+
+&lt;p&gt;No entanto, manter a organização de várias versões não é um trabalho fácil. A IDE ajuda com o carregamento das versões corretas, porém nem sempre isso irá funcionar.&lt;/p&gt;
+
+&lt;p&gt;Eu prefiro as coisas mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt;, mais minimalista. Não quero ficar “dependente” da IDE para gerenciar meu trabalho. Então eu estou versionando meus Pacotes utilizando os diretórios e toda vez que adiciono uma nova dependência, marco como &lt;em&gt;preferencial&lt;/em&gt; para que a IDE sempre abra a versão configurada.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 03 Apr 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/</guid>
+      </item>
+    
+      <item>
         <title>Identificador Único Universal</title>
         <description>&lt;p&gt;Como identificar unicamente seus Objetos?&lt;/p&gt;
 
@@ -1226,157 +1331,6 @@ variáveis locais ou para Classes de infraestrutura.&lt;/p&gt;
         <pubDate>Mon, 16 Jan 2017 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/</guid>
-      </item>
-    
-      <item>
-        <title>Código Duplicado, Talvez Não</title>
-        <description>&lt;p&gt;É quase impossível não haver duplicação de código num programa real,
-com pelo menos algumas dezenas de linhas.&lt;/p&gt;
-
-&lt;p&gt;O importante é saber se essa duplicação é de Infraestrutura ou
-de Regras de Negócio.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-ceukkv42o40-aaron-burden.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Sempre ouvimos falar que não se deve ter código duplicado num
-sistema, mas eu tenho certeza que isso é quase impossível de 
-conseguir.&lt;/p&gt;
-
-&lt;p&gt;O que é uma duplicação de código?&lt;/p&gt;
-
-&lt;p&gt;Se você tem duas linhas iguais, elas estão duplicadas?&lt;/p&gt;
-
-&lt;p&gt;Bem, depende muito do &lt;em&gt;ponto de vista&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Pra mim existem dois tipos de código: &lt;em&gt;Infraestrutura&lt;/em&gt; e &lt;em&gt;Regras de Negócio&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Código de Infraestrutura pode estar duplicado mas você &lt;em&gt;não&lt;/em&gt;
-pode — ou não deveria — duplicar Código de Regras de Negócio.&lt;/p&gt;
-
-&lt;p&gt;Simples assim.&lt;/p&gt;
-
-&lt;p&gt;Mas num sistema onde tudo é código, como saber a diferença entre
-um tipo e outro?&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo você aprenderá a dinstinção entre eles.&lt;/p&gt;
-
-&lt;h2 id=&quot;infraestrutura&quot;&gt;Infraestrutura&lt;/h2&gt;
-
-&lt;p&gt;Dou esse nome para todo código que faz parte da infraestrutura
-para criação de Classes, implementação de Interfaces, instanciação
-de Objetos, chamadas aos métodos, etc.&lt;/p&gt;
-
-&lt;p&gt;Vou lhe dar um exemplo. Imagine que você tem uma Classe com três
-argumentos no construtor. Toda vez que você instanciar um Objeto
-dessa Classe você terá que &lt;em&gt;duplicar&lt;/em&gt; a mesma construção:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Ob1 := TFoo.New(&#39;a&#39;, 1, &#39;z&#39;);
-Ob2 := TFoo.New(&#39;b&#39;, 5, &#39;a&#39;);
-  
-// in other place...
-Ob3 := TFoo.New(&#39;a&#39;, 1, &#39;z&#39;);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O código acima parece duplicado, não?&lt;/p&gt;
-
-&lt;p&gt;Bem os Objetos &lt;code&gt;Ob1&lt;/code&gt; e &lt;code&gt;Ob2&lt;/code&gt; tem argumentos diferentes, então essas
-linhas não são totalmente iguais, apenas bem similares. Então o que
-você acha? Há duplicação aqui?&lt;/p&gt;
-
-&lt;p&gt;Não.&lt;/p&gt;
-
-&lt;p&gt;Mas e o &lt;code&gt;Ob3&lt;/code&gt;? Ele foi construído com a mesma assinatura de &lt;code&gt;Ob1&lt;/code&gt; 
-mas em outra parte do programa. Isso é uma duplicação?&lt;/p&gt;
-
-&lt;p&gt;Também não.&lt;/p&gt;
-
-&lt;p&gt;O fato de haver 2 chamadas iguais num mesmo projeto não quer dizer 
-que há uma duplicação de código. Se assim fosse, toda vez que você
-codifica um &lt;code&gt;TStringList.Create&lt;/code&gt; estaria duplicando código.&lt;/p&gt;
-
-&lt;p&gt;Quer outro exemplo? Vamos lá.&lt;/p&gt;
-
-&lt;p&gt;Você tem uma Interface com dois métodos.
-Toda Classe que implementar essa Interface terá que, obrigatoriamente,
-&lt;em&gt;duplicar&lt;/em&gt; os dois métodos dessa Interface na Classe.&lt;/p&gt;
-
-&lt;p&gt;Isso é uma duplicação? Não.&lt;/p&gt;
-
-&lt;p&gt;Isso é &lt;em&gt;Código de Infraestrutura&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Poderia ser menos verboso implementar uma Interface? Talvez. 
-Mas se a linguagem &lt;em&gt;exige&lt;/em&gt; que seja dessa forma,
-então não é duplicação.&lt;/p&gt;
-
-&lt;p&gt;O código de Infraestrutura são como “tijolos” no seu projeto.
-Eles são iguais — ou bem parecidos — e você precisa deles dessa forma.&lt;/p&gt;
-
-&lt;p&gt;Você irá vê-los por todo o projeto. As vezes ficará tentado a refatorar,
-criando uma função — ou mesmo outro Objeto — para agrupar chamadas iguais
-removendo, assim, a “duplicação” de código… mas, espere, essa nova função
-também será duplicada toda vez que você utilizá-la, pois sempre será a 
-mesma assinatura. Então, talvez…&lt;/p&gt;
-
-&lt;p&gt;Impossível.&lt;/p&gt;
-
-&lt;h2 id=&quot;regras-de-negocio&quot;&gt;Regras de Negócio&lt;/h2&gt;
-
-&lt;p&gt;As Regras de Negócio são todo o tipo de código que não é de Infraestrutura.
-São as implementações do Negócio do seu Cliente. São as Regras que os usuários
-já utilizam mesmo sem haver um sistema informatizado. São os cálculos, as validações,
-as restrições… as regras.&lt;/p&gt;
-
-&lt;p&gt;Aqui &lt;em&gt;não&lt;/em&gt; pode haver duplicação. Se, por exemplo, há um cálculo de desconto
-para determinado grupo de produtos, a implementação desse cálculo deverá estar em
-apenas uma Classe.&lt;/p&gt;
-
-&lt;p&gt;Isso é &lt;em&gt;Código de Regras de Negócio&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Seu Cliente poderá mudar essas regras e você deverá alterar a implementação de cada
-uma delas apenas uma vez, num único ponto no código, para cada uma das Regras.&lt;/p&gt;
-
-&lt;p&gt;Para toda Regra de Negócio deve existir um ou mais testes automatizados.
-Esses Objetos que implementam as Regras não devem ter dependências externas que
-impeçam os testes. Não podem depender de recursos como Banco de Dados ou arquivos
-no disco. Todos os seus argumentos devem ser passados através dos
-&lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt;
-de suas Classes e, preferencialmente, todos esses Objetos devem ser
-&lt;a href=&quot;/posts/objetos-imutaveis/&quot;&gt;imutáveis&lt;/a&gt;, garantindo que uma vez
-criados eles não podem ser corrompidos de nenhuma forma.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Se você leu até aqui deve estar pensando: Ora, isso é óbvio!&lt;/p&gt;
-
-&lt;p&gt;Bem, nem tanto, pois ainda tem programadores que desenvolvem suas Classes 
-pensando apenas na reutilização e na não-duplicação de código de Infraestrutura.
-A &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;herança de Classes&lt;/a&gt;
-é o caminho mais utilizado para isso… erroneamente, é claro.&lt;/p&gt;
-
-&lt;p&gt;Você deveria codificar suas Classes pelo que elas são sem se preocupar com 
-reaproveitamento de &lt;em&gt;Código de Infraestrutura&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Uma asa-delta pode voar e fazer acrobacias como um pássaro, no entanto eles 
-não devem ter uma subclasse em comum para “reutilizar” Código de Infraestrutura
-afim de escrever menos.&lt;/p&gt;
-
-&lt;p&gt;O &lt;em&gt;Código de Regras de Negócio&lt;/em&gt; é bem diferente. Não deve haver duplicações. Nunca.
-Esse tipo de código é como um Manual de construção, ou seja, as Regras de construção.&lt;/p&gt;
-
-&lt;p&gt;Você pode &lt;em&gt;duplicar&lt;/em&gt; as paredes da sua casa, mas não as &lt;em&gt;regras&lt;/em&gt; de como
-fazer isso.&lt;/p&gt;
-
-&lt;p&gt;Saiba distinguir essas diferenças.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 09 Jan 2017 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/codigo-duplicado-talvez-nao/</guid>
       </item>
     
   </channel>
