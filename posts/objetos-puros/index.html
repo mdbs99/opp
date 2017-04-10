@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Objetos Puros &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="OOP">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, c#, csharp, java, object-oriented, oop, mdbs99, pure-object, objetos puros">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/objetos-puros/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201704100217" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Objetos Puros">
+    <meta property="og:description" content="Da mesma forma que temos as Funções Puras no Paradigma Funcional, podemos ter os Objetos Puros no Paradigma Orientado a Objetos.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/objetos-puros/">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-florian-klauer-489.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Objetos Puros" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/objetos-puros/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>E-Book</a>
+<a href="/archive/">Arquivo</a>
+<a href="/testimonials/">Testemunhos</a>
+<a href="/webinars/">Webinários</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Objetos Puros</h1>
+  <span class="post-meta">Apr 10, 2017</span><br>
+  
+  <span class="post-meta small">
+  
+    5 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Mesmo que você tenha utilizado linguagens imperativas por toda a sua vida, você já deve ter ouvido falar em linguagens funcionais, assim como o termo <em>Funções Puras</em>.</p>
+
+<p>E sobre <em>Objetos Puros</em>, você já ouviu algo a respeito?</p>
+
+<!--more-->
+
+<p><img src="/images/photo-florian-klauer-489.jpg" alt="Unsplash image" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Se você não conhece o termo <a href="https://en.wikipedia.org/wiki/Pure_function">Funções Puras</a> ou linguagens funcionais, bem, você deveria.</p>
+
+<p>A verdadeira <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a> tem muito em comum com a Programação Funcional.</p>
+
+<p>Por exemplo:</p>
+
+<p>A Programação Funcional é declarativa. Você não deve dizer ao compilador o que fazer linha-a-linha. Assim como na Orientação a Objetos.</p>
+
+<p>A Programação Funcional trabalha com estruturas <a href="/posts/objetos-imutaveis/">imutáveis</a>, que é um ótimo conceito para simplificar a interperabilidade entre Objetos na Programação Orientada a Objetos.</p>
+
+<p>A Programação Funcional também tem o conceito de Funções Puras ou Impuras.</p>
+
+<p>Será que esse mesmo conceito tem algo em comum com a Orientação a Objetos?</p>
+
+<h2 id="funcoes-puras">Funções Puras</h2>
+
+<p>Segundo a <a href="https://en.wikipedia.org/wiki/Pure_function">Wikipedia</a>, para uma função ser considerada <em>Pura</em>, as seguintes afirmações abaixo devem ser verdadeiras (tradução livre):</p>
+
+<ol>
+  <li>A função sempre avalia o mesmo valor de resultado dado o mesmo valor do(s) argumento(s). O valor do resultado da função não pode depender de nenhuma informação oculta ou estado que possa mudar enquanto a execução do programa prossegue ou entre diferentes execuções do programa, nem pode depender de qualquer entrada externa dos dispositivos de E/S.</li>
+  <li>A avaliação do resultado não causa qualquer efeito ou saída secundária observável semanticamente, como a mutação de objetos mutáveis ​​ou a saída para dispositivos de E/S.</li>
+</ol>
+
+<p>Se ambas as afirmações não forem verdadeiras, a função é considerada <em>Impura</em>.</p>
+
+<p>Eu acho que essas afirmações são cabíveis na Orientação a Objetos, pois é bem possível criar um Objeto que cumpre ambas as afirmações.</p>
+
+<p>Mas Objetos podem se mais complexos que funções. Os Objetos tem <em>estado</em> encapsulado. Podem ser mutáveis ou imutáveis.</p>
+
+<p>Então, é possível considerarmos um Objeto como puro?</p>
+
+<h2 id="objetos-puros">Objetos Puros</h2>
+
+<p>Eu não encontrei esse termo na Web então, será que posso dizer que eu cunhei o termo?</p>
+
+<p>Na verdade eu não me importo, visto que não é uma ideia 100% original. Eu me inspirei nas Funções Puras e apenas ampliei o conceito para a Programação Orientada a Objetos.</p>
+
+<p>Em primeiro lugar, um Objeto Puro deve ter as mesmas características que uma Função Pura.</p>
+
+<p>Um Objeto Puro também não deve criar outro Objeto internamente.</p>
+
+<p>Em outras palavras, para um Objeto ser considerado Puro, toda dependência deve ser injetada pelo <a href="/posts/construtores-da-classe-primario-secundarios/">construtor</a> da Classe.</p>
+
+<p>Vamos ver alguns exemplos.</p>
+
+<h4 id="exemplo-1">Exemplo 1 — Objeto Impuro</h4>
+
+<p>Abaixo temos um exemplo de uma Classe <code>TBMWCar</code> que implementa a Interface <code>ICar</code>.</p>
+
+<p>Então instanciamos um <code>Car</code> e depois mostramos na tela o valor do sensor de velocidade do motor — acho que tem sensores mais antigos que calculam a partir das rodas, mas isso é irrelevante.</p>
+
+<pre><code>var
+  Car: ICar;
+begin
+  Car := TBMWCar.New;
+  Print(Car.Engine.Sensors['speed'].Value);
+end;
+</code></pre>
+
+<p>Eu diria que essa Classe <code>TBMWCar</code> é impura.</p>
+
+<p>O motivo é que temos um método <code>Engine</code> (Método ou Propriedade, dá no mesmo) que retorna um Objeto interno que <a href="/posts/objetos-representam-entidades/">representa</a> o motor do carro.</p>
+
+<p>Como essa instância de motor foi criada?</p>
+
+<p>Olhando apenas o exemplo, podemos concluir que a instância foi criada no construtor da Classe ou mesmo diretamente na chamada do Método <code>Engine</code>.</p>
+
+<p>E sobre os <code>Sensors</code>? Também não sabemos como foram criados.</p>
+
+<p>Não temos o controle do que será instanciado dentro da Classe <code>TBMWCar</code> se quisermos utilizá-la.</p>
+
+<p>O Objeto tem o controle e isso está <em>correto</em>.</p>
+
+<p>Você compra um carro e, normalmente, apenas utiliza sua interface (volante, marcha, pedais, painel, etc). Todo ele já vem montado e perfeito.</p>
+
+<p>Talvez você não saiba o tipo de motor, tecnologia ou fornecedores que fabricaram suas peças.</p>
+
+<p>O carro apenas existe, pronto para sua função.</p>
+
+<p>Mas… Isso retrata a vida real ou estamos pulando algumas etapas?</p>
+
+<p>Na verdade, antes do carro chegar até suas mãos, ele foi <em>montado na fábrica</em> utilizando centenas ou milhares de peças.</p>
+
+<p>Quando olhamos para o carro montado, concluído, perfeito, não pensamos nessa etapa de montagem, queremos apenas utilizá-lo. Não queremos <em>montar</em> o carro toda vez que tivermos que utilizá-lo, certo?</p>
+
+<p>Ele já deve vir concluído e pronto para uso.</p>
+
+<p>O problema dessa abordagem, no entanto, é que não podemos <em>testar</em> o carro — a Classe <code>TBMWCar</code> — apropriadamente ou isoladamente, utilizando <em>Unit Tests</em>, sem que o “motor original” seja “ativado”.</p>
+
+<p>Para fazer esses testes, temos que voltar algumas etapas para ser possível desmontar ou montar o carro com “outras peças”.</p>
+
+<p>Temos que voltar à “fábrica” para podermos escolher quais peças irão compor o carro.</p>
+
+<h4 id="exemplo-2">Exemplo 2 — Objeto Puro</h4>
+
+<p>Vamos refazer o exemplo anterior, <em>injetando</em> o motor que quisermos quando formos criar a instância do nosso BMW.</p>
+
+<pre><code>Car := 
+  TBMWCar.New(
+    TV8Engine.New(
+      // more arguments
+    )
+  );
+</code></pre>
+
+<p>No código atualizado, sabemos que tipo de motor está sendo utilizado. Trata-se de um modelo V8. Legal!</p>
+
+<p>Estamos utilizando <a href="https://en.wikipedia.org/wiki/Dependency_injection">Injeção de Dependência</a> aqui.</p>
+
+<p>Essa técnica, em conjunto com a Composição de Objetos, é crucial para um desenvolvimento elegante e eficaz na Programação Orientada a Objetos.</p>
+
+<p>E por quê é “melhor” fazer dessa forma?</p>
+
+<p>O motivo é que agora podemos testar o carro sem “ligar o motor original” se assim o desejarmos. Vejamos:</p>
+
+<pre><code>Car := 
+  TBMWCar.New(
+    TFakeEngine.New
+  );
+</code></pre>
+
+<p>Podemos testar o carro, mas ele estará utilizando um “motor falso” ou pense em sensores falsos (utilize sua imaginação).</p>
+
+<p>Esse Objeto é <em>puro</em>.</p>
+
+<p>Ele não cria nada internamente. Todas as suas dependências são injetadas através do construtor da Classe.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Para um Objeto ser considerado puro ele deve ter o comportamento de uma Função Pura e também não deve criar nada internamente.</p>
+
+<p>Da mesma forma que temos as Funções Puras no Paradigma Funcional, podemos ter os Objetos Puros no Paradigma Orientado a Objetos. Para isto, precisamos que estes Objetos sejam imutáveis e que as suas dependências sejam injetadas explicitamente, passadas por meio do construtor do Objeto.</p>
+
+<p>A vantagem de termos Objetos Puros é que estes são menos desacoplados e assim mais fáceis de serem testados.</p>
+
+<p>Mas se tudo são Objetos, onde as instâncias serão criadas?</p>
+
+<p>Em apenas 2 lugares: Dentro de Construtores <a href="/posts/construtores-da-classe-primario-secundarios/">Secundários</a> ou através de Métodos de Objetos Impuros.</p>
+
+<p>Mas esse é um assunto para outro artigo.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/objetos-puros/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Objetos Puros&via=mdbs99;url=http://objectpascalprogramming.com/posts/objetos-puros/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/objetos-puros/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/objetos-puros/&title=Objetos Puros" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/objetos-puros/&title=Objetos Puros" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/objetos-puros/&t=Objetos Puros" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/funcoes-aninhadas/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/freeandnil-esqueca/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>FreeAndNil... Esqueça</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não utilize FreeAndNil na programação Orientada a Objetos.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+        </ul>
+        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/identificador-unico-universal/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Identificador Único Universal</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Utilizando Métodos Estáticos, qual Objeto irá executar a tarefa? Nenhum.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-adaptadoras/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/como-utilizar-heranca-apropriadamente/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Como Utilizar Herança Apropriadamente</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-final/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança pode ser o Mal da Orientação a Objetos — Parte Final</li></h4>
+        </ul>
+        <!--<p class="post-summary">Não faça da Herança a sua primeira escolha para reutilizar código.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces e a Referência Circular entre Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary">Um Objeto A aponta para um Objeto B e este aponta para o Objeto A... e nunca serão desalocados da memória automaticamente pelo compilador.</p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/posts/objetos-puros';
+      var disqus_title      = 'Objetos Puros';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

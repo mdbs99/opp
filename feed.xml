@@ -8,6 +8,166 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Objetos Puros</title>
+        <description>&lt;p&gt;Mesmo que você tenha utilizado linguagens imperativas por toda a sua vida, você já deve ter ouvido falar em linguagens funcionais, assim como o termo &lt;em&gt;Funções Puras&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;E sobre &lt;em&gt;Objetos Puros&lt;/em&gt;, você já ouviu algo a respeito?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-florian-klauer-489.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Se você não conhece o termo &lt;a href=&quot;https://en.wikipedia.org/wiki/Pure_function&quot;&gt;Funções Puras&lt;/a&gt; ou linguagens funcionais, bem, você deveria.&lt;/p&gt;
+
+&lt;p&gt;A verdadeira &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt; tem muito em comum com a Programação Funcional.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo:&lt;/p&gt;
+
+&lt;p&gt;A Programação Funcional é declarativa. Você não deve dizer ao compilador o que fazer linha-a-linha. Assim como na Orientação a Objetos.&lt;/p&gt;
+
+&lt;p&gt;A Programação Funcional trabalha com estruturas &lt;a href=&quot;/posts/objetos-imutaveis/&quot;&gt;imutáveis&lt;/a&gt;, que é um ótimo conceito para simplificar a interperabilidade entre Objetos na Programação Orientada a Objetos.&lt;/p&gt;
+
+&lt;p&gt;A Programação Funcional também tem o conceito de Funções Puras ou Impuras.&lt;/p&gt;
+
+&lt;p&gt;Será que esse mesmo conceito tem algo em comum com a Orientação a Objetos?&lt;/p&gt;
+
+&lt;h2 id=&quot;funcoes-puras&quot;&gt;Funções Puras&lt;/h2&gt;
+
+&lt;p&gt;Segundo a &lt;a href=&quot;https://en.wikipedia.org/wiki/Pure_function&quot;&gt;Wikipedia&lt;/a&gt;, para uma função ser considerada &lt;em&gt;Pura&lt;/em&gt;, as seguintes afirmações abaixo devem ser verdadeiras (tradução livre):&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;A função sempre avalia o mesmo valor de resultado dado o mesmo valor do(s) argumento(s). O valor do resultado da função não pode depender de nenhuma informação oculta ou estado que possa mudar enquanto a execução do programa prossegue ou entre diferentes execuções do programa, nem pode depender de qualquer entrada externa dos dispositivos de E/S.&lt;/li&gt;
+  &lt;li&gt;A avaliação do resultado não causa qualquer efeito ou saída secundária observável semanticamente, como a mutação de objetos mutáveis ​​ou a saída para dispositivos de E/S.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Se ambas as afirmações não forem verdadeiras, a função é considerada &lt;em&gt;Impura&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Eu acho que essas afirmações são cabíveis na Orientação a Objetos, pois é bem possível criar um Objeto que cumpre ambas as afirmações.&lt;/p&gt;
+
+&lt;p&gt;Mas Objetos podem se mais complexos que funções. Os Objetos tem &lt;em&gt;estado&lt;/em&gt; encapsulado. Podem ser mutáveis ou imutáveis.&lt;/p&gt;
+
+&lt;p&gt;Então, é possível considerarmos um Objeto como puro?&lt;/p&gt;
+
+&lt;h2 id=&quot;objetos-puros&quot;&gt;Objetos Puros&lt;/h2&gt;
+
+&lt;p&gt;Eu não encontrei esse termo na Web então, será que posso dizer que eu cunhei o termo?&lt;/p&gt;
+
+&lt;p&gt;Na verdade eu não me importo, visto que não é uma ideia 100% original. Eu me inspirei nas Funções Puras e apenas ampliei o conceito para a Programação Orientada a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Em primeiro lugar, um Objeto Puro deve ter as mesmas características que uma Função Pura.&lt;/p&gt;
+
+&lt;p&gt;Um Objeto Puro também não deve criar outro Objeto internamente.&lt;/p&gt;
+
+&lt;p&gt;Em outras palavras, para um Objeto ser considerado Puro, toda dependência deve ser injetada pelo &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt; da Classe.&lt;/p&gt;
+
+&lt;p&gt;Vamos ver alguns exemplos.&lt;/p&gt;
+
+&lt;h4 id=&quot;exemplo-1&quot;&gt;Exemplo 1 — Objeto Impuro&lt;/h4&gt;
+
+&lt;p&gt;Abaixo temos um exemplo de uma Classe &lt;code&gt;TBMWCar&lt;/code&gt; que implementa a Interface &lt;code&gt;ICar&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então instanciamos um &lt;code&gt;Car&lt;/code&gt; e depois mostramos na tela o valor do sensor de velocidade do motor — acho que tem sensores mais antigos que calculam a partir das rodas, mas isso é irrelevante.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var
+  Car: ICar;
+begin
+  Car := TBMWCar.New;
+  Print(Car.Engine.Sensors[&#39;speed&#39;].Value);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Eu diria que essa Classe &lt;code&gt;TBMWCar&lt;/code&gt; é impura.&lt;/p&gt;
+
+&lt;p&gt;O motivo é que temos um método &lt;code&gt;Engine&lt;/code&gt; (Método ou Propriedade, dá no mesmo) que retorna um Objeto interno que &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;representa&lt;/a&gt; o motor do carro.&lt;/p&gt;
+
+&lt;p&gt;Como essa instância de motor foi criada?&lt;/p&gt;
+
+&lt;p&gt;Olhando apenas o exemplo, podemos concluir que a instância foi criada no construtor da Classe ou mesmo diretamente na chamada do Método &lt;code&gt;Engine&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;E sobre os &lt;code&gt;Sensors&lt;/code&gt;? Também não sabemos como foram criados.&lt;/p&gt;
+
+&lt;p&gt;Não temos o controle do que será instanciado dentro da Classe &lt;code&gt;TBMWCar&lt;/code&gt; se quisermos utilizá-la.&lt;/p&gt;
+
+&lt;p&gt;O Objeto tem o controle e isso está &lt;em&gt;correto&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Você compra um carro e, normalmente, apenas utiliza sua interface (volante, marcha, pedais, painel, etc). Todo ele já vem montado e perfeito.&lt;/p&gt;
+
+&lt;p&gt;Talvez você não saiba o tipo de motor, tecnologia ou fornecedores que fabricaram suas peças.&lt;/p&gt;
+
+&lt;p&gt;O carro apenas existe, pronto para sua função.&lt;/p&gt;
+
+&lt;p&gt;Mas… Isso retrata a vida real ou estamos pulando algumas etapas?&lt;/p&gt;
+
+&lt;p&gt;Na verdade, antes do carro chegar até suas mãos, ele foi &lt;em&gt;montado na fábrica&lt;/em&gt; utilizando centenas ou milhares de peças.&lt;/p&gt;
+
+&lt;p&gt;Quando olhamos para o carro montado, concluído, perfeito, não pensamos nessa etapa de montagem, queremos apenas utilizá-lo. Não queremos &lt;em&gt;montar&lt;/em&gt; o carro toda vez que tivermos que utilizá-lo, certo?&lt;/p&gt;
+
+&lt;p&gt;Ele já deve vir concluído e pronto para uso.&lt;/p&gt;
+
+&lt;p&gt;O problema dessa abordagem, no entanto, é que não podemos &lt;em&gt;testar&lt;/em&gt; o carro — a Classe &lt;code&gt;TBMWCar&lt;/code&gt; — apropriadamente ou isoladamente, utilizando &lt;em&gt;Unit Tests&lt;/em&gt;, sem que o “motor original” seja “ativado”.&lt;/p&gt;
+
+&lt;p&gt;Para fazer esses testes, temos que voltar algumas etapas para ser possível desmontar ou montar o carro com “outras peças”.&lt;/p&gt;
+
+&lt;p&gt;Temos que voltar à “fábrica” para podermos escolher quais peças irão compor o carro.&lt;/p&gt;
+
+&lt;h4 id=&quot;exemplo-2&quot;&gt;Exemplo 2 — Objeto Puro&lt;/h4&gt;
+
+&lt;p&gt;Vamos refazer o exemplo anterior, &lt;em&gt;injetando&lt;/em&gt; o motor que quisermos quando formos criar a instância do nosso BMW.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Car := 
+  TBMWCar.New(
+    TV8Engine.New(
+      // more arguments
+    )
+  );
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;No código atualizado, sabemos que tipo de motor está sendo utilizado. Trata-se de um modelo V8. Legal!&lt;/p&gt;
+
+&lt;p&gt;Estamos utilizando &lt;a href=&quot;https://en.wikipedia.org/wiki/Dependency_injection&quot;&gt;Injeção de Dependência&lt;/a&gt; aqui.&lt;/p&gt;
+
+&lt;p&gt;Essa técnica, em conjunto com a Composição de Objetos, é crucial para um desenvolvimento elegante e eficaz na Programação Orientada a Objetos.&lt;/p&gt;
+
+&lt;p&gt;E por quê é “melhor” fazer dessa forma?&lt;/p&gt;
+
+&lt;p&gt;O motivo é que agora podemos testar o carro sem “ligar o motor original” se assim o desejarmos. Vejamos:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Car := 
+  TBMWCar.New(
+    TFakeEngine.New
+  );
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Podemos testar o carro, mas ele estará utilizando um “motor falso” ou pense em sensores falsos (utilize sua imaginação).&lt;/p&gt;
+
+&lt;p&gt;Esse Objeto é &lt;em&gt;puro&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Ele não cria nada internamente. Todas as suas dependências são injetadas através do construtor da Classe.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Para um Objeto ser considerado puro ele deve ter o comportamento de uma Função Pura e também não deve criar nada internamente.&lt;/p&gt;
+
+&lt;p&gt;Da mesma forma que temos as Funções Puras no Paradigma Funcional, podemos ter os Objetos Puros no Paradigma Orientado a Objetos. Para isto, precisamos que estes Objetos sejam imutáveis e que as suas dependências sejam injetadas explicitamente, passadas por meio do construtor do Objeto.&lt;/p&gt;
+
+&lt;p&gt;A vantagem de termos Objetos Puros é que estes são menos desacoplados e assim mais fáceis de serem testados.&lt;/p&gt;
+
+&lt;p&gt;Mas se tudo são Objetos, onde as instâncias serão criadas?&lt;/p&gt;
+
+&lt;p&gt;Em apenas 2 lugares: Dentro de Construtores &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;Secundários&lt;/a&gt; ou através de Métodos de Objetos Impuros.&lt;/p&gt;
+
+&lt;p&gt;Mas esse é um assunto para outro artigo.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 10 Apr 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/objetos-puros/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-puros/</guid>
+      </item>
+    
+      <item>
         <title>Pacotes e Versões no Lazarus</title>
         <description>&lt;p&gt;Se você já precisou trabalhar com versões diferentes de um mesmo Pacote de componentes no Lazarus, esse artigo pode ser útil.&lt;/p&gt;
 
@@ -1171,166 +1331,6 @@ utilizando artefatos que nós chamamos de… Objetos.&lt;/p&gt;
         <pubDate>Mon, 23 Jan 2017 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/o-que-e-um-objeto/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/o-que-e-um-objeto/</guid>
-      </item>
-    
-      <item>
-        <title>Tipos Primitivos nos Argumentos</title>
-        <description>&lt;p&gt;Se os Objetos conversam entre si utilizando mensagens, 
-ou seja, através dos seus Métodos, por que utilizaríamos
-Tipos Primitivos nos argumentos desses Métodos ao invés
-de utilizarmos Objetos?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-3_i4nvi9d1k-randall-bruder.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Os Objetos conectam-se uns aos outros através de seus 
-&lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt;
-e Métodos, enviando argumentos uns aos outros.&lt;/p&gt;
-
-&lt;p&gt;No paradigma da Orientação a Objetos, tudo são Objetos.
-Inclusive os argumentos.
-Bem, deveriam ser, pelo menos na maioria dos casos.&lt;/p&gt;
-
-&lt;p&gt;Imagine um um formulário onde o usuário precisa digitar
-seu &lt;em&gt;login&lt;/em&gt;. Esse formulário, que contém Objetos visuais
-para capturar a digitação, irá enviar o &lt;em&gt;login&lt;/em&gt; digitado
-à outro Objeto para validar a identificação.&lt;/p&gt;
-
-&lt;p&gt;Seria o &lt;em&gt;login&lt;/em&gt; um Objeto ou apenas texto?&lt;/p&gt;
-
-&lt;p&gt;Você pode pensar que o &lt;em&gt;login&lt;/em&gt; é apenas uma informação
-simples, um tipo &lt;em&gt;string&lt;/em&gt;, apenas texto puro, não havendo
-necessidade de um Objeto.&lt;/p&gt;
-
-&lt;p&gt;Mas, não seria esse &lt;em&gt;“texto puro”&lt;/em&gt; também um Objeto?&lt;/p&gt;
-
-&lt;p&gt;Tudo são Objetos na Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Confuso?&lt;/p&gt;
-
-&lt;h2 id=&quot;argumentos&quot;&gt;Argumentos&lt;/h2&gt;
-
-&lt;p&gt;Tudo são Objetos, mas nem sempre os requisitos são
-implementados como tal.
-Os motivos são diversos, mas &lt;em&gt;simplicidade&lt;/em&gt; e &lt;em&gt;performance&lt;/em&gt;
-sempre são citados como motivos plausíveis para o uso
-de tipos primitivos nos argumentos.&lt;/p&gt;
-
-&lt;p&gt;Utilizar tipos primitivos nos argumentos é um anti-padrão chamado
-&lt;a href=&quot;http://enterprisecraftsmanship.com/2015/03/07/functional-c-primitive-obsession/&quot;&gt;&lt;em&gt;“Primitive Obsession”&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então vamos ver esses motivos e tentar dismitificá-los.&lt;/p&gt;
-
-&lt;h3 id=&quot;performance&quot;&gt;Performance&lt;/h3&gt;
-
-&lt;p&gt;É claro que Objetos são “mais lentos” para trabalhar e
-consomem “mais recursos” que os tipos primitivos.
-No entanto a Orientação a Objetos é sobre a arquitetura
-do sistema, deixando a performance por conta do compilador
-e código de máquina gerado.&lt;/p&gt;
-
-&lt;p&gt;A diminuição da performance — mesmo que mínima —
-em sistemas Orientado a Objetos é um preço justo a se 
-pagar devido a melhoria na arquitetura que o paradigma
-da Orientação a Objetos nos traz.&lt;/p&gt;
-
-&lt;p&gt;Na minha experiência, utilizando Objetos pequenos e simples,
-que implementam apenas
-&lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;uma única responsabilidade&lt;/a&gt;,
-não há perda de performance significativa.&lt;/p&gt;
-
-&lt;p&gt;Mas, ainda assim, se seu maior requisito for performance,
-talvez a Orientação a Objetos não sirva para seu projeto…
-talvez.&lt;/p&gt;
-
-&lt;h3 id=&quot;simplicidade&quot;&gt;Simplicidade&lt;/h3&gt;
-
-&lt;p&gt;Seriam os tipos primitivos mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt;
-de usar do que Objetos?&lt;/p&gt;
-
-&lt;p&gt;De acordo com a minha experiência, na maioria das vezes, não.&lt;/p&gt;
-
-&lt;p&gt;Pense bem: Quantas vezes você teve que passar uma &lt;em&gt;“Data de Nascimento”&lt;/em&gt;
-como argumento de um Método e lá dentro ter que convertê-la
-em &lt;em&gt;String&lt;/em&gt;, por exemplo, para exibir ao usuário?&lt;/p&gt;
-
-&lt;p&gt;Quantas vezes passou um &lt;em&gt;“Nome Completo”&lt;/em&gt; por parâmetro como
-sendo apenas uma &lt;em&gt;String&lt;/em&gt; mas depois teve que usar uma função
-&lt;code&gt;Copy&lt;/code&gt; porque só queria exibir o &lt;em&gt;“Primeiro Nome”&lt;/em&gt; ou a primeira
-parte do nome?&lt;/p&gt;
-
-&lt;p&gt;Sem falar na &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/&quot;&gt;repetição de código&lt;/a&gt;
-que poderia ocorrer com o uso dessas funções auxiliares em 
-várias partes do código.&lt;/p&gt;
-
-&lt;p&gt;Com Objetos seria &lt;strong&gt;muito mais simples&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Veja. Um Objeto &lt;em&gt;“Data de Nascimento”&lt;/em&gt; seria responsável por
-algum cálculo de idade, além de retornar a si mesmo no formato
-&lt;em&gt;String&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Um Objeto &lt;em&gt;“Nome Completo”&lt;/em&gt; seria responsável por retornar
-o primeiro nome e sobrenome; talvez retornar tudo em maiúsculo
-seria outro Método.&lt;/p&gt;
-
-&lt;p&gt;Quer outro exemplo?&lt;/p&gt;
-
-&lt;p&gt;Trabalho bastante com &lt;em&gt;GUID’s&lt;/em&gt;. Elas são utilizadas em meus
-sistemas como chaves-primárias de registros.&lt;/p&gt;
-
-&lt;p&gt;Se não me engano, o tipo &lt;code&gt;TGuid&lt;/code&gt; no &lt;em&gt;Object Pascal&lt;/em&gt; é um &lt;em&gt;record&lt;/em&gt;.
-Não lembro, pois eu não o utilizo mais, não diretamente.&lt;/p&gt;
-
-&lt;p&gt;Eu tenho minha própria Classe &lt;code&gt;TDataGuid&lt;/code&gt; que implementa uma
-Interface &lt;code&gt;IDataGuid&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa Classe tem alguns construtores com argumentos diferentes
-para inicializar o &lt;a href=&quot;/posts/objetos-sem-estado/&quot;&gt;estado&lt;/a&gt;
-do Objeto, que internamente é um &lt;code&gt;TGuid&lt;/code&gt;.
-Posso receber uma &lt;em&gt;String&lt;/em&gt; com ou sem “{…}”, posso receber um &lt;code&gt;TGuid&lt;/code&gt;
-ou mesmo não receber nada e inicializar o estado internamente.&lt;/p&gt;
-
-&lt;p&gt;Por quê um Objeto ao invés de um “simples” &lt;em&gt;record&lt;/em&gt;?&lt;/p&gt;
-
-&lt;p&gt;Nos meus sistemas, um &lt;em&gt;GUID&lt;/em&gt; tem &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;comportamento&lt;/a&gt;.
-Ele não é apenas um &lt;a href=&quot;/posts/pensando-em-dados/&quot;&gt;dado&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo. Para exibição de um &lt;em&gt;GUID&lt;/em&gt; para o usuário basta
-utilizar o Método &lt;code&gt;AsString&lt;/code&gt;.
-Se eu quiser exibir apenas o “formato de digitação” — os 8
-primeiros caracteres — basta utilizar o Método &lt;code&gt;AsShortString&lt;/code&gt;.
-Se eu quiser o próprio &lt;code&gt;TGuid&lt;/code&gt; basta chamar &lt;code&gt;Value&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Seria mais simples ficar fazendo conversões por todo o código
-utilizando funções auxiliares ou utilizar um Objeto como esse?&lt;/p&gt;
-
-&lt;p&gt;Acho que não há dúvidas aqui.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Quando você implementa Objetos da forma correta, o código
-é &lt;em&gt;simplificado&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa ideia vai contra o pensamento da maioria dos programadores
-procedurais que acham que utilizando tipos primitivos e funções
-deixaria o código mais simples de entender e alterar.&lt;/p&gt;
-
-&lt;p&gt;Ledo engano.&lt;/p&gt;
-
-&lt;p&gt;É claro que podemos e devemos utilizar os tipos primitivos, mas
-utilíze-os apenas como argumentos de Métodos privados, 
-variáveis locais ou para Classes de infraestrutura.&lt;/p&gt;
-
-&lt;p&gt;Para a comunicação entre Objetos de Negócio, utilize Objetos.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 16 Jan 2017 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/</guid>
       </item>
     
   </channel>
