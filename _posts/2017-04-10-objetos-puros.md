@@ -3,7 +3,7 @@ layout: post
 title: Objetos Puros
 date: 2017-04-10
 description:
-  Veja como utilizar versões diferentes do mesmo Package no Lazarus.
+  Da mesma forma que temos as Funções Puras no Paradigma Funcional, podemos ter os Objetos Puros no Paradigma Orientado a Objetos.
 image: /images/photo-florian-klauer-489.jpg
 categories: 
   - OOP
@@ -98,9 +98,11 @@ Como essa instância de motor foi criada?
 
 Olhando apenas o exemplo, podemos concluir que a instância foi criada no construtor da Classe ou mesmo diretamente na chamada do Método `Engine`.
 
+E sobre os `Sensors`? Também não sabemos como foram criados.
+
 Não temos o controle do que será instanciado dentro da Classe `TBMWCar` se quisermos utilizá-la.
 
-O Objeto tem o controle e isso está correto.
+O Objeto tem o controle e isso está *correto*.
 
 Você compra um carro e, normalmente, apenas utiliza sua interface (volante, marcha, pedais, painel, etc). Todo ele já vem montado e perfeito.
 
@@ -108,7 +110,7 @@ Talvez você não saiba o tipo de motor, tecnologia ou fornecedores que fabricar
 
 O carro apenas existe, pronto para sua função.
 
-Isso retrata a vida real ou estamos pulando algumas etapas?
+Mas... Isso retrata a vida real ou estamos pulando algumas etapas?
 
 Na verdade, antes do carro chegar até suas mãos, ele foi *montado na fábrica* utilizando centenas ou milhares de peças.
 
@@ -120,6 +122,8 @@ O problema dessa abordagem, no entanto, é que não podemos *testar* o carro —
 
 Para fazer esses testes, temos que voltar algumas etapas para ser possível desmontar ou montar o carro com "outras peças".
 
+Temos que voltar à "fábrica" para podermos escolher quais peças irão compor o carro. 
+
 #### Exemplo 2 — Objeto Puro {#exemplo-2}
 
 Vamos refazer o exemplo anterior, *injetando* o motor que quisermos quando formos criar a instância do nosso BMW.
@@ -127,7 +131,7 @@ Vamos refazer o exemplo anterior, *injetando* o motor que quisermos quando formo
     Car := 
       TBMWCar.New(
         TV8Engine.New(
-          {more arguments}
+          // more arguments
         )
       );
 
@@ -148,16 +152,22 @@ O motivo é que agora podemos testar o carro sem "ligar o motor original" se ass
 
 Podemos testar o carro, mas ele estará utilizando um "motor falso" ou pense em sensores falsos (utilize sua imaginação).
 
-Esse Objeto é puro.
+Esse Objeto é *puro*.
 
 Ele não cria nada internamente. Todas as suas dependências são injetadas através do construtor da Classe.
       
 ## Conclusão {#conclusao}
 
-Para um Objeto ser considerado puro, na minha opinião, ele deve ter o comportamento de uma Função Pura e também não deve criar nada internamente.
+Para um Objeto ser considerado puro ele deve ter o comportamento de uma Função Pura e também não deve criar nada internamente.
 
-Todas as dependências devem ser injetadas no construtor da Classe.
+Da mesma forma que temos as Funções Puras no Paradigma Funcional, podemos ter os Objetos Puros no Paradigma Orientado a Objetos. Para isto, precisamos que estes Objetos sejam imutáveis e que as suas dependências sejam injetadas explicitamente, passadas por meio do construtor do Objeto.
 
-Mas se tudo são Objetos, onde eles serão criados? Ora, dentro de Objetos Impuros. Mas esse é um assunto para outro artigo.
+A vantagem de termos Objetos Puros é que estes são menos desacoplados e assim mais fáceis de serem testados.
+
+Mas se tudo são Objetos, onde as instâncias serão criadas? 
+
+Em apenas 2 lugares: Dentro de Construtores [Secundários]({% post_url 2016-03-21-construtores-da-classe-primario-secundarios %}) ou através de Métodos de Objetos Impuros.
+
+Mas esse é um assunto para outro artigo.
 
 Até logo.
