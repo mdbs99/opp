@@ -162,7 +162,7 @@ Para um Objeto ser considerado puro ele deve ter o comportamento de uma Função
 
 Da mesma forma que temos as Funções Puras no Paradigma Funcional, podemos ter os Objetos Puros no Paradigma Orientado a Objetos. Para isto, precisamos que estes Objetos sejam imutáveis e que as suas dependências sejam injetadas explicitamente, passadas por meio do construtor do Objeto.
 
-A vantagem de termos Objetos Puros é que estes são menos desacoplados e assim mais fáceis de serem testados.
+A vantagem de termos Objetos Puros é que eles tem baixo acoplamento e por isso são mais fáceis de serem testados.
 
 Mas se tudo são Objetos, onde as instâncias serão criadas? 
 
