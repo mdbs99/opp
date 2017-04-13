@@ -59,7 +59,7 @@ Se ambas as afirmações não forem verdadeiras, a função é considerada *Impu
 
 Eu acho que essas afirmações são cabíveis na Orientação a Objetos, pois é bem possível criar um Objeto que cumpre ambas as afirmações.
 
-Mas Objetos podem se mais complexos que funções. Os Objetos tem *estado* encapsulado. Podem ser mutáveis ou imutáveis.
+Mas Objetos podem ser mais complexos que funções. Os Objetos tem *estado* encapsulado. Podem ser mutáveis ou imutáveis.
 
 Então, é possível considerarmos um Objeto como puro?
 
