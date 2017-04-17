@@ -8,6 +8,89 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>James Package</title>
+        <description>&lt;p&gt;James é um pacote de Classes e Interfaces para projetos Orientados a Objetos.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/photo-wesley-caribe-63610.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Eu tenho um diretório com código-fonte que é utilizado por quase todos os meus projetos, particulares ou não.&lt;/p&gt;
+
+&lt;p&gt;Apenas 1 diretório com quase 100 arquivos.&lt;/p&gt;
+
+&lt;p&gt;São fontes para trabalhar com &lt;em&gt;stream&lt;/em&gt;, XML, arquivos, HTTP, &lt;em&gt;WebServices&lt;/em&gt;, etc.&lt;/p&gt;
+
+&lt;p&gt;Não há pacotes ou subprojetos. Apenas arquivos que são compartilhados por vários projetos.&lt;/p&gt;
+
+&lt;p&gt;Como todo desenvolvedor Pascal faz, basta ter um diretório, adicionar o &lt;em&gt;path&lt;/em&gt; no projeto e começar a usar os fontes. Simples.&lt;/p&gt;
+
+&lt;p&gt;Esse código-fonte foi sendo construído e modificando por vários anos. Alguns fontes são bem novos, outros bem antigos.&lt;/p&gt;
+
+&lt;p&gt;Mesmo que tudo esteja funcionando, essa “organização” me tira o sono.&lt;/p&gt;
+
+&lt;p&gt;Faz tempo que eu quero organizar esse código-fonte. Fazer uma limpeza. Atualizar. Criar pacotes lógicos.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Então pensei: Por quê não criar um projeto &lt;em&gt;Open Source&lt;/em&gt;&lt;/strong&gt;?&lt;/p&gt;
+
+&lt;p&gt;Bem, é o que estou fazendo agora. Esse é meu presente de Páscoa pra você.&lt;/p&gt;
+
+&lt;p&gt;Criei o primeiro projeto.&lt;/p&gt;
+
+&lt;p&gt;Chama-se &lt;strong&gt;James&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Eu tenho nomeado meus projetos utilizando nomes comuns — a maioria em Inglês — já faz quase 2 anos.&lt;/p&gt;
+
+&lt;p&gt;É divertido.&lt;/p&gt;
+
+&lt;p&gt;É como se cada projeto fizesse parte de uma família.&lt;/p&gt;
+
+&lt;p&gt;A maioria dos meus &lt;em&gt;aplicativos&lt;/em&gt; tem nomes femininos. Já os projetos que são &lt;em&gt;ferramentas&lt;/em&gt; ou &lt;em&gt;libs&lt;/em&gt;, costumam ter nomes masculinos.&lt;/p&gt;
+
+&lt;p&gt;Você pode fazer um &lt;em&gt;fork&lt;/em&gt; do James &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;aqui&lt;/a&gt; e contribuir.&lt;/p&gt;
+
+&lt;p&gt;Até agora subi poucos arquivos.&lt;/p&gt;
+
+&lt;p&gt;Ainda estou organizando.&lt;/p&gt;
+
+&lt;p&gt;Mas estou lhe avisando agora, justamente porque tem poucos arquivos para ficar fácil o entendimento do código.&lt;/p&gt;
+
+&lt;p&gt;Estou pretendendo criar vários outros projetos &lt;em&gt;Open Source&lt;/em&gt; que sejam compatíveis com o Delphi na versão mais atual.&lt;/p&gt;
+
+&lt;p&gt;Por isso preciso da sua ajuda.&lt;/p&gt;
+
+&lt;p&gt;Os fontes foram compilados no dialeto do Free Pascal. Basta utilizar &lt;code&gt;{$mode delphi}&lt;/code&gt; para compilar no dialeto do Delphi, utilizando o FPC.&lt;/p&gt;
+
+&lt;p&gt;Vou utilizar o dialeto Delphi para que os fontes sejam compatíveis, mas somente se houver interesse por parte da comunidade Delphi (utilize os comentários abaixo se você está interessado).&lt;/p&gt;
+
+&lt;p&gt;O James será a base (refatorada) de todos os meus projetos. Ele possui Classes base que é útil na maioria dos meus projetos.&lt;/p&gt;
+
+&lt;p&gt;Durante esse semana vou subir os fontes das &lt;em&gt;Unit Tests&lt;/em&gt;. Já estão prontos, mas precisam ser refatorados.&lt;/p&gt;
+
+&lt;p&gt;Outro projeto que irá utilizar o James, eu já criei no Github. Seu nome é &lt;a href=&quot;https://github.com/mdbs99/kate&quot;&gt;Kate&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Kate é uma &lt;em&gt;lib&lt;/em&gt; para trabalhar com certificação e assinatura digital. Essa &lt;em&gt;lib&lt;/em&gt; irá utilizar o &lt;a href=&quot;/posts/assinatura-digital-em-arquivos-xml/#utilizando-acbr&quot;&gt;Projeto ACBr&lt;/a&gt; nos “bastidores”.&lt;/p&gt;
+
+&lt;p&gt;Todos esses projetos serão baseados nas premissas dos artigos que venho escrevendo aqui no blog.&lt;/p&gt;
+
+&lt;p&gt;Todos serão &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientados a Objetos&lt;/a&gt; e 100% baseados em &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;O &lt;a href=&quot;https://github.com/mdbs99/aws&quot;&gt;AWS&lt;/a&gt; também será atualizado para compilar na versão mais atual do FPC e, quem sabe, irá compilar no Delphi.&lt;/p&gt;
+
+&lt;p&gt;Quando tudo estiver organizado, será o momento de iniciarmos um novo &lt;strong&gt;Framework Web&lt;/strong&gt; 100% Orientado a Objetos para FPC e Delphi.&lt;/p&gt;
+
+&lt;p&gt;Você está comigo?&lt;/p&gt;
+
+&lt;p&gt;Então vamos! &lt;strong&gt;#ObjectPascal4Ever&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 17 Apr 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/posts/james/</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/james/</guid>
+      </item>
+    
+      <item>
         <title>Objetos Puros</title>
         <description>&lt;p&gt;Mesmo que você tenha utilizado linguagens imperativas por toda a sua vida, você já deve ter ouvido falar em linguagens funcionais, assim como o termo &lt;em&gt;Funções Puras&lt;/em&gt;.&lt;/p&gt;
 
@@ -46,7 +129,7 @@
 
 &lt;p&gt;Eu acho que essas afirmações são cabíveis na Orientação a Objetos, pois é bem possível criar um Objeto que cumpre ambas as afirmações.&lt;/p&gt;
 
-&lt;p&gt;Mas Objetos podem se mais complexos que funções. Os Objetos tem &lt;em&gt;estado&lt;/em&gt; encapsulado. Podem ser mutáveis ou imutáveis.&lt;/p&gt;
+&lt;p&gt;Mas Objetos podem ser mais complexos que funções. Os Objetos tem &lt;em&gt;estado&lt;/em&gt; encapsulado. Podem ser mutáveis ou imutáveis.&lt;/p&gt;
 
 &lt;p&gt;Então, é possível considerarmos um Objeto como puro?&lt;/p&gt;
 
@@ -152,7 +235,7 @@ end;
 
 &lt;p&gt;Da mesma forma que temos as Funções Puras no Paradigma Funcional, podemos ter os Objetos Puros no Paradigma Orientado a Objetos. Para isto, precisamos que estes Objetos sejam imutáveis e que as suas dependências sejam injetadas explicitamente, passadas por meio do construtor do Objeto.&lt;/p&gt;
 
-&lt;p&gt;A vantagem de termos Objetos Puros é que estes são menos desacoplados e assim mais fáceis de serem testados.&lt;/p&gt;
+&lt;p&gt;A vantagem de termos Objetos Puros é que eles tem baixo acoplamento e por isso são mais fáceis de serem testados.&lt;/p&gt;
 
 &lt;p&gt;Mas se tudo são Objetos, onde as instâncias serão criadas?&lt;/p&gt;
 
@@ -1205,132 +1288,6 @@ Aqui está o &lt;a href=&quot;https://github.com/mdbs99/fp-scripts&quot;&gt;link
         <pubDate>Mon, 30 Jan 2017 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/metodos-privados/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/metodos-privados/</guid>
-      </item>
-    
-      <item>
-        <title>A Definição de Objeto</title>
-        <description>&lt;p&gt;Nesse artigo/vídeo eu explico a definição correta de Objeto dentro do paradigma da Orientação a Objetos.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;iframe width=&quot;600&quot; height=&quot;355&quot; src=&quot;https://www.youtube.com/embed/nia7UqcpOAc&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Então, o que é um Objeto?&lt;/p&gt;
-
-&lt;p&gt;Para responder a essa pergunta precisamos 
-saber o &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/#contextos&quot;&gt;Contexto&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;No contexto puramente técnico, um Objeto 
-nada mais é do que uma estrutura com dados
-e funções.&lt;/p&gt;
-
-&lt;p&gt;No contexto da &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;,
-no  entanto, um Objeto é a representação 
-abstraída de uma Entidade.&lt;/p&gt;
-
-&lt;p&gt;Uma &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidade&lt;/a&gt; pode ser uma pessoa, um animal, 
-uma bola, um pixel, um relatório, um arquivo,
-um diretório… qualquer coisa que deva ser 
-representado dentro do software é um forte 
-candidato a ser um Objeto.&lt;/p&gt;
-
-&lt;p&gt;Mas muitos desenvolvedores não conseguem 
-fazer essa distinção, entre o contexto técnico e o contexto da arquitetura.&lt;/p&gt;
-
-&lt;p&gt;Eles continuam enxergando um Objeto (apenas) 
-como uma estrutura de dados e funções e não 
-conseguem entender a diferença entre programação 
-Procedural e a Orientada a Objetos.&lt;/p&gt;
-
-&lt;h2 id=&quot;abstracoes-e-camadas&quot;&gt;Abstrações e Camadas&lt;/h2&gt;
-
-&lt;p&gt;Desenvolvedores precisam entender que existem 
-abstrações e camadas para o contexto Técnico 
-e também para o contexto da Arquitetura.&lt;/p&gt;
-
-&lt;p&gt;Desde a época do cartão perfurado, passando 
-pela linguagem ASSEMBLY, até as linguagens 
-mais modernas de hoje em dia, os engenheiros 
-foram adicionando mais e mais camadas e 
-abstrações às linguagens.&lt;/p&gt;
-
-&lt;p&gt;As linguagens mais modernas hoje são frutos 
-dessas adições de abstrações e camadas técnicas, 
-com o objetivo de melhorar o código e a 
-codificação em si.&lt;/p&gt;
-
-&lt;p&gt;Paradigmas como a Orientação a Objetos 
-adicionam abstrações para melhorar a arquitetura.&lt;/p&gt;
-
-&lt;p&gt;Mas cada abstração ou camada, seja técnica ou 
-arquitetural, são apenas simplificações da 
-realidade, pois para o computador, no fim, 
-tudo será representado por “zeros e uns”.&lt;/p&gt;
-
-&lt;p&gt;A maioria dos programadores entendem e utilizam 
-as abstrações técnicas no dia-a-dia sem nem 
-mesmo pensar sobre isso.&lt;/p&gt;
-
-&lt;p&gt;Estou falando do uso de estruturas de repetição
- como FOR ou WHILE e estruturas condicionais 
- como IF ou CASE.&lt;/p&gt;
-
-&lt;p&gt;Quando você utiliza uma estrutura FOR, por 
-exemplo, o compilador irá gerar uma série de 
-comandos ASSEMBLY com instruções GOTO.&lt;/p&gt;
-
-&lt;p&gt;Você não pensa sobre isso, não é? É como se 
-a estrutura FOR fosse um Objeto e você apenas 
-espera que ele exerça seu trabalho depois de 
-passar os argumentos de inicialização.&lt;/p&gt;
-
-&lt;p&gt;Você deveria ter esse mesmo pensamento quanto 
-estiver trabalhando com Objetos, dentro do 
-paradigma da Orientação a Objetos.&lt;/p&gt;
-
-&lt;h2 id=&quot;objetos&quot;&gt;Objetos&lt;/h2&gt;
-
-&lt;p&gt;Olhe para um Objeto do mesmo modo que você 
-olha para uma estrutura FOR, WHILE, IF, etc., 
-ou seja, você não pensa como essas estruturas 
-funcionam internamente (encapsulamento). 
-Você só sabe quais são seus argumentos de 
-inicialização (construtor) e espera que eles 
-trabalhem (comportamento) corretamente.&lt;/p&gt;
-
-&lt;p&gt;Orientação a Objetos é isso, apenas mais 
-uma camada, mais uma abstração de arquitetura 
-acima do código procedural.&lt;/p&gt;
-
-&lt;p&gt;Entender esse conceito sutil é o início 
-para você começar a utilizar a Orientação a 
-Objetos da forma mais correta.&lt;/p&gt;
-
-&lt;p&gt;Orientação Objetos não substitui o paradigma 
-Procedural, ela o complementa; o aprimora.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Os computadores continuam trabalhando com a 
-mesma  premissa procedural desde que eles 
-foram inventados.&lt;/p&gt;
-
-&lt;p&gt;O fato é que estamos presos a isso, de certa
-forma.&lt;/p&gt;
-
-&lt;p&gt;Mas podemos abstrair, podemos adicionar 
-camadas que facilitem o desenvolvimento da 
-arquitetura e entendimento do código. 
-A Orientação a Objetos faz isso muito bem 
-utilizando artefatos que nós chamamos de… Objetos.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 23 Jan 2017 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/o-que-e-um-objeto/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/o-que-e-um-objeto/</guid>
       </item>
     
   </channel>

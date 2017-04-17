@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tipos Primitivos nos Argumentos &#8211; Object Pascal Programming</title>
+    <title>James Package &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Code">
-    <meta name="keywords" content="argumentos, arguments, tipos primitivos, primitive obsession">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/">
+    <meta name="keywords" content="James">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, c#, csharp, java, object-oriented, oop, mdbs99, james, james-package, james-lib, open-source, github">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/james/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Tipos Primitivos nos Argumentos">
-    <meta property="og:description" content="Utilizar tipos primitivos em argumentos de Métodos é uma prática que deve ser evitada quando programamos Orientado a Objetos.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/">
+    <meta property="og:title" content="James Package">
+    <meta property="og:description" content="James é um pacote de Classes e Interfaces para projetos Orientados a Objetos.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/james/">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-3_i4nvi9d1k-randall-bruder.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-wesley-caribe-63610.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Tipos Primitivos nos Argumentos" />
+    <meta name="twitter:title" content="James Package" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/james/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,167 +191,90 @@
 
 
 <div class="post-header mb2">
-  <h1>Tipos Primitivos nos Argumentos</h1>
-  <span class="post-meta">Jan 16, 2017</span><br>
+  <h1>James Package</h1>
+  <span class="post-meta">Apr 17, 2017</span><br>
   
   <span class="post-meta small">
   
-    4 minute read
+    2 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Se os Objetos conversam entre si utilizando mensagens, 
-ou seja, através dos seus Métodos, por que utilizaríamos
-Tipos Primitivos nos argumentos desses Métodos ao invés
-de utilizarmos Objetos?</p>
+  <p>James é um pacote de Classes e Interfaces para projetos Orientados a Objetos.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-3_i4nvi9d1k-randall-bruder.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/photo-wesley-caribe-63610.jpg" alt="Unsplash image" /></p>
 
-<h2 id="introducao">Introdução</h2>
+<p>Eu tenho um diretório com código-fonte que é utilizado por quase todos os meus projetos, particulares ou não.</p>
 
-<p>Os Objetos conectam-se uns aos outros através de seus 
-<a href="/posts/construtores-da-classe-primario-secundarios/">construtores</a>
-e Métodos, enviando argumentos uns aos outros.</p>
+<p>Apenas 1 diretório com quase 100 arquivos.</p>
 
-<p>No paradigma da Orientação a Objetos, tudo são Objetos.
-Inclusive os argumentos.
-Bem, deveriam ser, pelo menos na maioria dos casos.</p>
+<p>São fontes para trabalhar com <em>stream</em>, XML, arquivos, HTTP, <em>WebServices</em>, etc.</p>
 
-<p>Imagine um um formulário onde o usuário precisa digitar
-seu <em>login</em>. Esse formulário, que contém Objetos visuais
-para capturar a digitação, irá enviar o <em>login</em> digitado
-à outro Objeto para validar a identificação.</p>
+<p>Não há pacotes ou subprojetos. Apenas arquivos que são compartilhados por vários projetos.</p>
 
-<p>Seria o <em>login</em> um Objeto ou apenas texto?</p>
+<p>Como todo desenvolvedor Pascal faz, basta ter um diretório, adicionar o <em>path</em> no projeto e começar a usar os fontes. Simples.</p>
 
-<p>Você pode pensar que o <em>login</em> é apenas uma informação
-simples, um tipo <em>string</em>, apenas texto puro, não havendo
-necessidade de um Objeto.</p>
+<p>Esse código-fonte foi sendo construído e modificando por vários anos. Alguns fontes são bem novos, outros bem antigos.</p>
 
-<p>Mas, não seria esse <em>“texto puro”</em> também um Objeto?</p>
+<p>Mesmo que tudo esteja funcionando, essa “organização” me tira o sono.</p>
 
-<p>Tudo são Objetos na Orientação a Objetos.</p>
+<p>Faz tempo que eu quero organizar esse código-fonte. Fazer uma limpeza. Atualizar. Criar pacotes lógicos.</p>
 
-<p>Confuso?</p>
+<p><strong>Então pensei: Por quê não criar um projeto <em>Open Source</em></strong>?</p>
 
-<h2 id="argumentos">Argumentos</h2>
+<p>Bem, é o que estou fazendo agora. Esse é meu presente de Páscoa pra você.</p>
 
-<p>Tudo são Objetos, mas nem sempre os requisitos são
-implementados como tal.
-Os motivos são diversos, mas <em>simplicidade</em> e <em>performance</em>
-sempre são citados como motivos plausíveis para o uso
-de tipos primitivos nos argumentos.</p>
+<p>Criei o primeiro projeto.</p>
 
-<p>Utilizar tipos primitivos nos argumentos é um anti-padrão chamado
-<a href="http://enterprisecraftsmanship.com/2015/03/07/functional-c-primitive-obsession/"><em>“Primitive Obsession”</em></a>.</p>
+<p>Chama-se <strong>James</strong>.</p>
 
-<p>Então vamos ver esses motivos e tentar dismitificá-los.</p>
+<p>Eu tenho nomeado meus projetos utilizando nomes comuns — a maioria em Inglês — já faz quase 2 anos.</p>
 
-<h3 id="performance">Performance</h3>
+<p>É divertido.</p>
 
-<p>É claro que Objetos são “mais lentos” para trabalhar e
-consomem “mais recursos” que os tipos primitivos.
-No entanto a Orientação a Objetos é sobre a arquitetura
-do sistema, deixando a performance por conta do compilador
-e código de máquina gerado.</p>
+<p>É como se cada projeto fizesse parte de uma família.</p>
 
-<p>A diminuição da performance — mesmo que mínima —
-em sistemas Orientado a Objetos é um preço justo a se 
-pagar devido a melhoria na arquitetura que o paradigma
-da Orientação a Objetos nos traz.</p>
+<p>A maioria dos meus <em>aplicativos</em> tem nomes femininos. Já os projetos que são <em>ferramentas</em> ou <em>libs</em>, costumam ter nomes masculinos.</p>
 
-<p>Na minha experiência, utilizando Objetos pequenos e simples,
-que implementam apenas
-<a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">uma única responsabilidade</a>,
-não há perda de performance significativa.</p>
+<p>Você pode fazer um <em>fork</em> do James <a href="https://github.com/mdbs99/james">aqui</a> e contribuir.</p>
 
-<p>Mas, ainda assim, se seu maior requisito for performance,
-talvez a Orientação a Objetos não sirva para seu projeto…
-talvez.</p>
+<p>Até agora subi poucos arquivos.</p>
 
-<h3 id="simplicidade">Simplicidade</h3>
+<p>Ainda estou organizando.</p>
 
-<p>Seriam os tipos primitivos mais <a href="/posts/simplicidade/">simples</a>
-de usar do que Objetos?</p>
+<p>Mas estou lhe avisando agora, justamente porque tem poucos arquivos para ficar fácil o entendimento do código.</p>
 
-<p>De acordo com a minha experiência, na maioria das vezes, não.</p>
+<p>Estou pretendendo criar vários outros projetos <em>Open Source</em> que sejam compatíveis com o Delphi na versão mais atual.</p>
 
-<p>Pense bem: Quantas vezes você teve que passar uma <em>“Data de Nascimento”</em>
-como argumento de um Método e lá dentro ter que convertê-la
-em <em>String</em>, por exemplo, para exibir ao usuário?</p>
+<p>Por isso preciso da sua ajuda.</p>
 
-<p>Quantas vezes passou um <em>“Nome Completo”</em> por parâmetro como
-sendo apenas uma <em>String</em> mas depois teve que usar uma função
-<code>Copy</code> porque só queria exibir o <em>“Primeiro Nome”</em> ou a primeira
-parte do nome?</p>
+<p>Os fontes foram compilados no dialeto do Free Pascal. Basta utilizar <code>{$mode delphi}</code> para compilar no dialeto do Delphi, utilizando o FPC.</p>
 
-<p>Sem falar na <a href="/posts/codigo-duplicado-talvez-nao/">repetição de código</a>
-que poderia ocorrer com o uso dessas funções auxiliares em 
-várias partes do código.</p>
+<p>Vou utilizar o dialeto Delphi para que os fontes sejam compatíveis, mas somente se houver interesse por parte da comunidade Delphi (utilize os comentários abaixo se você está interessado).</p>
 
-<p>Com Objetos seria <strong>muito mais simples</strong>.</p>
+<p>O James será a base (refatorada) de todos os meus projetos. Ele possui Classes base que é útil na maioria dos meus projetos.</p>
 
-<p>Veja. Um Objeto <em>“Data de Nascimento”</em> seria responsável por
-algum cálculo de idade, além de retornar a si mesmo no formato
-<em>String</em>.</p>
+<p>Durante esse semana vou subir os fontes das <em>Unit Tests</em>. Já estão prontos, mas precisam ser refatorados.</p>
 
-<p>Um Objeto <em>“Nome Completo”</em> seria responsável por retornar
-o primeiro nome e sobrenome; talvez retornar tudo em maiúsculo
-seria outro Método.</p>
+<p>Outro projeto que irá utilizar o James, eu já criei no Github. Seu nome é <a href="https://github.com/mdbs99/kate">Kate</a>.</p>
 
-<p>Quer outro exemplo?</p>
+<p>Kate é uma <em>lib</em> para trabalhar com certificação e assinatura digital. Essa <em>lib</em> irá utilizar o <a href="/posts/assinatura-digital-em-arquivos-xml/#utilizando-acbr">Projeto ACBr</a> nos “bastidores”.</p>
 
-<p>Trabalho bastante com <em>GUID’s</em>. Elas são utilizadas em meus
-sistemas como chaves-primárias de registros.</p>
+<p>Todos esses projetos serão baseados nas premissas dos artigos que venho escrevendo aqui no blog.</p>
 
-<p>Se não me engano, o tipo <code>TGuid</code> no <em>Object Pascal</em> é um <em>record</em>.
-Não lembro, pois eu não o utilizo mais, não diretamente.</p>
+<p>Todos serão <a href="/posts/o-que-e-orientacao-a-objetos/">Orientados a Objetos</a> e 100% baseados em <a href="/posts/interfaces-em-todo-lugar/">Interfaces</a>.</p>
 
-<p>Eu tenho minha própria Classe <code>TDataGuid</code> que implementa uma
-Interface <code>IDataGuid</code>.</p>
+<p>O <a href="https://github.com/mdbs99/aws">AWS</a> também será atualizado para compilar na versão mais atual do FPC e, quem sabe, irá compilar no Delphi.</p>
 
-<p>Essa Classe tem alguns construtores com argumentos diferentes
-para inicializar o <a href="/posts/objetos-sem-estado/">estado</a>
-do Objeto, que internamente é um <code>TGuid</code>.
-Posso receber uma <em>String</em> com ou sem “{…}”, posso receber um <code>TGuid</code>
-ou mesmo não receber nada e inicializar o estado internamente.</p>
+<p>Quando tudo estiver organizado, será o momento de iniciarmos um novo <strong>Framework Web</strong> 100% Orientado a Objetos para FPC e Delphi.</p>
 
-<p>Por quê um Objeto ao invés de um “simples” <em>record</em>?</p>
+<p>Você está comigo?</p>
 
-<p>Nos meus sistemas, um <em>GUID</em> tem <a href="/posts/objetos-pensam-e-tomam-decisoes/">comportamento</a>.
-Ele não é apenas um <a href="/posts/pensando-em-dados/">dado</a>.</p>
-
-<p>Por exemplo. Para exibição de um <em>GUID</em> para o usuário basta
-utilizar o Método <code>AsString</code>.
-Se eu quiser exibir apenas o “formato de digitação” — os 8
-primeiros caracteres — basta utilizar o Método <code>AsShortString</code>.
-Se eu quiser o próprio <code>TGuid</code> basta chamar <code>Value</code>.</p>
-
-<p>Seria mais simples ficar fazendo conversões por todo o código
-utilizando funções auxiliares ou utilizar um Objeto como esse?</p>
-
-<p>Acho que não há dúvidas aqui.</p>
-
-<h2 id="conclusao">Conclusão</h2>
-
-<p>Quando você implementa Objetos da forma correta, o código
-é <em>simplificado</em>.</p>
-
-<p>Essa ideia vai contra o pensamento da maioria dos programadores
-procedurais que acham que utilizando tipos primitivos e funções
-deixaria o código mais simples de entender e alterar.</p>
-
-<p>Ledo engano.</p>
-
-<p>É claro que podemos e devemos utilizar os tipos primitivos, mas
-utilíze-os apenas como argumentos de Métodos privados, 
-variáveis locais ou para Classes de infraestrutura.</p>
-
-<p>Para a comunicação entre Objetos de Negócio, utilize Objetos.</p>
+<p>Então vamos! <strong>#ObjectPascal4Ever</strong></p>
 
 <p>Até logo.</p>
 
@@ -363,33 +286,33 @@ variáveis locais ou para Classes de infraestrutura.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/james/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Tipos Primitivos nos Argumentos&via=mdbs99;url=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=James Package&via=mdbs99;url=http://objectpascalprogramming.com/posts/james/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/james/" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/&title=Tipos Primitivos nos Argumentos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/&title=Tipos Primitivos nos Argumentos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/james/&title=James Package" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/&t=Tipos Primitivos nos Argumentos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/james/&title=James Package" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/james/&t=James Package" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -429,36 +352,9 @@ variáveis locais ou para Classes de infraestrutura.</p>
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/posts/diga-me-algo-sobre-voce/" class="post-link">
+      <a href="/posts/pacotes-e-versoes-no-lazarus/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Diga-me algo Sobre você</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/funcoes-aninhadas/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Funções Aninhadas</li></h4>
-        </ul>
-        <!--<p class="post-summary">Funções Aninhadas podem e devem ser utilizadas na Orientação a Objetos</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/objetos-imutaveis/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
-        </ul>
-        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/classes-adaptadoras/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+          <h4 class="post-title"><li>Pacotes e Versões no Lazarus</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
       </a>
@@ -474,11 +370,29 @@ variáveis locais ou para Classes de infraestrutura.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/singleton-e-um-anti-padrao/" class="post-link">
+      <a href="/posts/awslib-a-historia-e-o-novo-suporte-a-ses/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Singleton é um anti-padrão?</li></h4>
+          <h4 class="post-title"><li>AWS Lib: A História e o novo suporte a SES</li></h4>
         </ul>
-        <!--<p class="post-summary">Como utilizar o padrão Singleton da maneira correta, sem acoplamento de classes.</p>-->
+        <!--<p class="post-summary">Como tudo começou e o novo Suporte a SES.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/classes-adaptadoras/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Adaptadoras</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/desenvolvimento-profissional/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Desenvolvimento Profissional</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
       </a>
     </div>
   
@@ -501,6 +415,24 @@ variáveis locais ou para Classes de infraestrutura.</p>
     </div>
   
     <div class="post ml2">
+      <a href="/posts/nomeando-unidades/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Unidades</li></h4>
+        </ul>
+        <!--<p class="post-summary">Veja porque devemos utilizar nomes hierárquicos nas Unidades do projeto.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/objetos-imutaveis/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary">O conceito de Imutabilidade nos faz ter disciplina e simplicidade para codificar.</p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/posts/nao-utilize-metodos-estaticos/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Não utilize Métodos Estáticos</li></h4>
@@ -510,20 +442,11 @@ variáveis locais ou para Classes de infraestrutura.</p>
     </div>
   
     <div class="post ml2">
-      <a href="/posts/nao-utilize-nil-ou-null/" class="post-link">
+      <a href="/posts/unidades-limitrofes/" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Não Utilize nil ou NULL</li></h4>
+          <h4 class="post-title"><li>Unidades Limítrofes</li></h4>
         </ul>
-        <!--<p class="post-summary">Não Utilize nil ou NULL em Classes de Negócio.</p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/posts/metodos-privados/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Métodos Privados</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
+        <!--<p class="post-summary">Unidades Limítrofes promovem o desacoplamento entre componentes e Libraries de terceiros.</p>-->
       </a>
     </div>
   
@@ -534,8 +457,8 @@ variáveis locais ou para Classes de infraestrutura.</p>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/tipos-primitivos-nos-argumentos';
-      var disqus_title      = 'Tipos Primitivos nos Argumentos';
+      var disqus_identifier = '/posts/james';
+      var disqus_title      = 'James Package';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
