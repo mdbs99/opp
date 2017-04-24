@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Pensando em Dados &#8211; Object Pascal Programming</title>
+    <title>James e Testes de Unidade &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Objetos">
-    <meta name="keywords" content="data, object, data-object, report, relatório, report-data">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/pensando-em-dados/">
+    <meta name="keywords" content="James">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, c#, csharp, java, object-oriented, oop, mdbs99, james, james-package, james-lib, open-source, github">
+    <link rel="canonical" href="http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Pensando em Dados">
-    <meta property="og:description" content="Não implemente Classes que são apenas recipientes de dados.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/pensando-em-dados/">
+    <meta property="og:title" content="James e Testes de Unidade">
+    <meta property="og:description" content="James é um pacote de Classes e Interfaces para projetos Orientados a Objetos.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1460925895917-afdab827c52f.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-clark-young-135435.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Pensando em Dados" />
+    <meta name="twitter:title" content="James e Testes de Unidade" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/pensando-em-dados/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,93 +191,136 @@
 
 
 <div class="post-header mb2">
-  <h1>Pensando em Dados</h1>
-  <span class="post-meta">Nov 7, 2016</span><br>
+  <h1>James e Testes de Unidade</h1>
+  <span class="post-meta">Apr 24, 2017</span><br>
   
   <span class="post-meta small">
   
-    2 minute read
+    3 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Você precisa fazer um relatório financeiro num sistema que 
-possui o código Orientado a Objetos.</p>
+  <p>James foi atualizado com Testes de Unidade.</p>
 
-<p>Quais Classes e Objetos você precisa criar para representar os dados 
-que serão exibidos no relatório?</p>
+<p>Veja nesse artigo como tudo foi configurado e como você pode adicionar seus próprios testes apenas alterando um arquivo XML.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1460925895917-afdab827c52f.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/photo-clark-young-135435.jpg" alt="Unsplash image" /></p>
 
-<p>Nenhuma!</p>
+<h2 id="introducao">Introdução</h2>
 
-<p>Nenhuma Classe que <a href="/posts/classes-de-dados/">representa dados</a>
-é necessária. Use apenas… <em>dados</em>.</p>
+<p>A utilização de testes automatizados é obrigatório em qualquer projeto.</p>
 
-<p>Muitos programadores (ainda) confundem conceitos tão distintos.
-Dados e Objetos são coisas completamente diferentes.</p>
+<p>Você pode criar os testes utilizando pequenos programas que serão compilados e executados no <em>console</em>. Dependendo do código de resultado ao terminar, você saberá se o programa teve ou não sucesso.</p>
 
-<p><strong>Enquanto Objetos são criaturas vivas.</strong> Dados são apenas registros do passado.</p>
+<p>Alguns <em>frameworks</em> facilitam esse processo. Chamados de <a href="https://en.wikipedia.org/wiki/XUnit">xUnit</a>, eles dão aos desenvolvedores todo o suporte para criar todo tipo de teste no código. Basta você herdar de alguma classe padrão e criar métodos de teste.</p>
 
-<p>Relatórios tabulares, por exemplo, consistem apenas de exibição e formatação de 
-dados no formato de tabela.
-Não precisamos de Objetos, comportamento ou
-<a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">encapsulamento</a>
-para fazer essa tarefa — a não ser para obter os dados no lugar onde estão armazenados.</p>
+<p>No entanto, não importa se esses testes utilizam algum <em>framework</em> específico, nem se foram criados de acordo com o processo de <a href="https://en.wikipedia.org/wiki/Test-driven_development"><em>Test-driven development</em> (TDD)</a>.</p>
 
-<p>Objetos, no entanto, podem representar dados na forma de uma
-<a href="/posts/objetos-representam-entidades/">Entidade</a>
-que encapsula os dados. Poderíamos ter uma Classe <code>TFinanceReport</code>, 
-por exemplo, que representa um 
-<a href="/posts/datamodule-e-apenas-um-container/#implementao-de-um-relatrio">relatório</a>,
-porém onde estariam os dados? Em atributos? Não, não especificamente.</p>
+<p>O importante é ter os testes.</p>
 
-<p>Imagine ter um atributo para cada coluna. Listas de objetos. Listas de
-listas…</p>
+<h2 id="pacote-de-testes">Pacote de Testes</h2>
 
-<p>No fim estaríamos trabalhando com <em>objetos anêmicos</em> que só possuem 
-<a href="/posts/getters-e-setters/">Métodos <em>Getters</em> e <em>Setters</em></a>.</p>
+<p>No <a href="https://github.com/mdbs99/james">James</a> eu utilizei um <em>framework</em> chamado <a href="http://wiki.freepascal.org/fpcunit">FPCUnit</a>.</p>
 
-<p>Isso não seria nada eficaz devido ao grande trabalho que iria ser codificar
-essas Classes — muitas delas — e fazer a manipulação de seus Objetos. A performance,
-também, seria drasticamente afetada.</p>
+<p>É um <em>framework</em> xUnit padrão do FPC/Lazarus muito parecido com o <a href="http://dunit.sourceforge.net/">DUnit</a> do Delphi.</p>
 
-<p>Além disso essa abordagem é totalmente contra os princípios
-da verdadeira <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>.</p>
+<p>Basta clicar em <code>File-&gt;New-&gt;FPCUnit Test Application</code>, digitar o nome da Classe de Teste, clicar em “criar unit” e pronto. Depois basta ir criando os métodos com os testes.</p>
 
-<p><strong>Mas não é assim que codificamos no <em>Object Pascal</em>, certo?</strong></p>
+<p>No James a configuração é um pouco mais sofisticada e é importante que você saiba como tudo funciona.</p>
 
-<p>Estou ciente de que utilizar Objetos e listas de Objetos para exibição de
-relatórios não é um padrão muito utilizado no mundo <em>Object Pascal</em>.
-Vemos isso mais no mundo Java ou C#. Nesses ambientes muitos programadores acham
-que por estarem utilizando Objetos, eles estariam programando Orientado a Objetos,
-o que não é, necessariamente, uma verdade.</p>
+<p>O James tem 2 pacotes (atualmente):</p>
 
-<p>Programadores <em>Object Pascal</em> — maioria — são orientados a Dados e não a Objetos.
-Utilizam a abordagem RAD. Dropam componentes nos formulários, fazem algumas
-ligações e isso é o suficiente para a exibição dos dados em uma <em>Grid</em>.</p>
+<ol>
+  <li>james.lpk</li>
+  <li>james.tests.lpk</li>
+</ol>
 
-<p>Eu sou contra a abordagem RAD para Regras de Negócio ou para qualquer módulo
-que exija alguma inteligência, onde o encapsulamento e uso de Objetos iria me
-proporcionar um maior <em>controle</em> e <em>manutenibilidade</em>.</p>
+<p>Ambos estão no diretório <code>/pkg</code>.</p>
 
-<p>Porém sou completamente a favor da abordagem RAD se estivermos falando sobre 
-exibição de dados.</p>
+<p>O pacote <code>james.lpk</code> contém as Classes principais e o <code>james.tests.lpk</code> apenas as Classes de Testes.</p>
 
-<p>Não tem nada de errado em utilizarmos <em>queries</em> para obter os dados de um 
-SGBD e exibir o resultado diretamente na tela ou relatório.</p>
+<p>Esse último tem a dependência com o primeiro.</p>
 
-<p><strong>Dados são apenas registros.</strong> Estejam eles gravados em arquivos, Banco de Dados, em <em>streams</em>
-em memória ou provenientes de uma requisição HTTP via Web, não importa. São
-dados, <em>não</em> Objetos.</p>
+<p><img src="/images/photo-pkg-james.tests-01001.jpg" alt="james.tests.lpk" /></p>
 
-<p>Portanto não trate Objetos como um
-<a href="/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados">balde de dados</a>
-e não trate os Dados como se fossem Objetos que
-<a href="/posts/objetos-pensam-e-tomam-decisoes/">pensam</a> e tomam decisões.</p>
+<p>Para o usuário do James, apenas o pacote <code>james.lpk</code> é necessário.</p>
+
+<p>Então por quê criar um outro pacote apenas de testes?</p>
+
+<p>O motivo é que eu posso ter tipos de aplicações de testes diferentes (desktop ou console) e basta atualizar os fontes do pacote para que qualquer aplicação fique atualizada.</p>
+
+<p>Essa técnica eu aprendi com meu amigo <a href="https://github.com/jcmoraisjr">João Morais</a> quando comecei a acompanhar um de seus projetos chamado <a href="https://github.com/jcmoraisjr/jcore">JCore</a>.</p>
+
+<p>Nos fontes do James, há o projeto <a href="https://github.com/mdbs99/james/blob/master/test/james.tests.gui.lpr">james.tests.gui</a> que utiliza o pacote de testes.</p>
+
+<h2 id="fpcunit">Teste com FPCUnit</h2>
+
+<p>O projeto <code>james.tests.gui</code> utiliza a interface do FPCUnit.</p>
+
+<p>Ao executar o projeto a tela abaixo será exibida. Basta então executar todos os testes (F9) e verificar se houve algum erro.</p>
+
+<p><img src="/images/photo-fpcunit-loading-552.jpg" alt="FPCUnit loading" /></p>
+
+<p>Se você baixar, compilar e executar esse projeto, ele irá exibir alguns erros dizendo que o arquivo <code>james.tests.template.xml</code> não foi encontrado.</p>
+
+<p>O que você deve fazer é copiar esse arquivo da pasta <code>/test</code> para a pasta <code>/bin</code> e modificar seu conteúdo com seus próprios arquivos e configurações.</p>
+
+<p>Veja um exemplo de configuração para alguns dos meus arquivos de teste:</p>
+
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Tests&gt;
+  &lt;TStreamDividedTest&gt;
+    &lt;files&gt;
+      &lt;file-1 filename="tests/04DF86C9.PDF" part="3" /&gt;
+    &lt;/files&gt;
+  &lt;/TStreamDividedTest&gt;
+  &lt;TStreamPartialFromTextTest&gt;
+    &lt;files&gt;
+      &lt;file-1 filename="tests/04DF86C9.PDF" text="encoding=" /&gt;
+    &lt;/files&gt;
+  &lt;/TStreamPartialFromTextTest&gt;
+&lt;/Tests&gt;
+</code></pre>
+
+<p>Veja que de acordo com o path dos arquivos no XML, meus arquivos ficam em <code>/bin/tests/</code>. Pois <code>/bin/</code> é a pasta padrão onde o executável será gerado.</p>
+
+<p>São arquivos pessoais e/ou privados de projetos reais. Esses arquivos não podem subir para o Github. Por isso meus testes utilizam um XML configurável.</p>
+
+<p>Então, se você quiser utilizar os Testes de Unidade do James, cabe a você configurar sua versão do XML.</p>
+
+<p>Se tudo der certo, você verá a tela abaixo.</p>
+
+<p><img src="/images/photo-fpcunit-green-552.jpg" alt="FPCUnit green" /></p>
+
+<h2 id="ajudando">Como ajudar</h2>
+
+<p>Se você quiser ajudar esse projeto — ou algum outro dos <a href="https://github.com/mdbs99?tab=repositories">meus projetos</a> — siga esses passos:</p>
+
+<ol>
+  <li>Faça um fork do projeto;</li>
+  <li>Utilize o branch <code>develop</code> para fazer qualquer modificação;</li>
+  <li>Faça um <em>Pull Request</em> utilizando <code>develop</code>.</li>
+</ol>
+
+<p>Eu irei fazer a revisão das mudanças e se tudo tiver de acordo, sua contribuição será mesclada no <code>develop</code>.</p>
+
+<p>O branch <code>master</code> só irá conter a versão de produção, 100% compilada, com todos os Testes de Unidade funcionando. Por isso qualquer contribuição deverá ser enviada para o <code>develop</code>.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>James é um projeto que está no começo. Estou refatorando meus códigos privados para criar o James (e outros projetos, futuramente).</p>
+
+<p>Tudo Open Source.</p>
+
+<p>Creio que todos esses projetos poderão ser compilados no Delphi, porém adaptações devem ser feitas.</p>
+
+<p>Se você tem interesse no projeto, preciso de ajuda para criar essas adaptações.</p>
+
+<p>Aguardo seus comentários.</p>
 
 <p>Até logo.</p>
 
@@ -289,33 +332,33 @@ e não trate os Dados como se fossem Objetos que
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/pensando-em-dados/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Pensando em Dados&via=mdbs99;url=http://objectpascalprogramming.com/posts/pensando-em-dados/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=James e Testes de Unidade&via=mdbs99;url=http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/pensando-em-dados/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/pensando-em-dados/&title=Pensando em Dados" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/pensando-em-dados/&title=Pensando em Dados" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/&title=James e Testes de Unidade" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/pensando-em-dados/&t=Pensando em Dados" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/&title=James e Testes de Unidade" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/&t=James e Testes de Unidade" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -353,15 +396,6 @@ e não trate os Dados como se fossem Objetos que
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/posts/james-e-testes-de-unidade/" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>James e Testes de Unidade</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/posts/james/" class="post-link">
@@ -444,6 +478,15 @@ e não trate os Dados como se fossem Objetos que
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/posts/metodos-privados/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Métodos Privados</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -451,8 +494,8 @@ e não trate os Dados como se fossem Objetos que
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/pensando-em-dados';
-      var disqus_title      = 'Pensando em Dados';
+      var disqus_identifier = '/posts/james-e-testes-de-unidade';
+      var disqus_title      = 'James e Testes de Unidade';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
