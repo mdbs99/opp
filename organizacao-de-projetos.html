@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Stored Procedures na Orientação a Objetos &#8211; Object Pascal Programming</title>
+    <title>Organização de Projetos &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Database">
-    <meta name="keywords" content="freepascal, delphi, lazarus, c#, csharp, java, object-oriented, oop, mdbs99, sp, storedprocedure, storedproc, stored-procedure, database">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/">
+    <meta name="keywords" content="Projeto">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, c#, csharp, java, object-oriented, oop, mdbs99, project, organização, organize, organization">
+    <link rel="canonical" href="http://objectpascalprogramming.com/organizacao-de-projetos">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Stored Procedures na Orientação a Objetos">
-    <meta property="og:description" content="As Stored Procedures ainda são necessárias ou a Orientação a Objetos é suficiente e podemos jogar fora essa antiga tecnologia?">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/">
+    <meta property="og:title" content="Organização de Projetos">
+    <meta property="og:description" content="Como você organiza a parte física e lógica dos seus Projetos?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/organizacao-de-projetos">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-clem-onojeghuo-143740.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-jeff-hopper-17306.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Stored Procedures na Orientação a Objetos" />
+    <meta name="twitter:title" content="Organização de Projetos" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/organizacao-de-projetos" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,111 +191,163 @@
 
 
 <div class="post-header mb2">
-  <h1>Stored Procedures na Orientação a Objetos</h1>
-  <span class="post-meta">Mar 20, 2017</span><br>
+  <h1>Organização de Projetos</h1>
+  <span class="post-meta">May 1, 2017</span><br>
   
   <span class="post-meta small">
   
-    4 minute read
+    5 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Stored Procedures são sub-rotinas armazenadas no SGBD disponíveis às aplicações que o acessam.</p>
+  <p>Todo novo Projeto é uma boa oportunidade para melhorarmos nossa habilidade de organização.</p>
 
-<p>Será que as Stored Procedures ainda são necessárias ou a Orientação a Objetos é suficiente e podemos jogar fora essa <em>antiga tecnologia</em>?</p>
+<p>Como você organiza a parte física e lógica dos seus Projetos?</p>
 
 <!--more-->
 
-<p><img src="/images/photo-clem-onojeghuo-143740.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2017/photo-jeff-hopper-17306.jpg" alt="Unsplash image" /></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>Todo SGBD disponibiliza <em>Stored Procedures</em> (SP’s) para o DBA e desenvolvedores construirem e executarem scripts SQL.</p>
+<p>A organização do Projeto é uma etapa muito importante no desenvolvimento do <em>software</em>.</p>
 
-<p>As SP’s podem retornar um cursor de dados, atualizar registros, executar rotinas de manutenção do SGBD, etc.</p>
+<p>Trabalhar num Projeto organizado é muito mais satisfatório e eficaz.</p>
 
-<p>As SP’s também podem conter estruturas de controle e repetição como <code>IF</code>, <code>WHILE</code>, <code>LOOP</code>, <code>REPEAT</code>, <code>FOR</code>, <code>CASE</code>, etc.</p>
+<p>No entanto, muitos desenvolvedores ainda acham que é perda de tempo organizar e querem logo iniciar a codificação, sem pensar na modularização e nomenclaturas de todas as partes que irão compor o Projeto.</p>
 
-<p>No entanto as SP’s nos fazem lembrar de <em>procedimentos</em>, programas imperativos e sequenciais. E é exatamente essa <a href="/posts/pensando-em-dados/">visão</a> que não queremos ter quando programamos utilizando o paradigma da Orientação a Objetos.</p>
+<p>Utilizar uma boa nomenclatura, padronizando os nomes dos pacotes e arquivos é de suma importância para que o desenvolvimento flua de forma eficaz entre a equipe.</p>
 
-<p>Então podemos declarar a <em>morte</em> das SP’s e utilizar apenas a Orientação a Objetos a partir de agora?</p>
+<p>Uma boa nomenclatura também ajuda na modularização, como veremos a seguir.</p>
 
-<p>Definitivamente, não.</p>
+<h2 id="projeto">Nome do Projeto</h2>
 
-<h2 id="ferramenta-de-dados">Ferramenta de Dados</h2>
+<p>Todo Projeto é construído para alguma empresa e por isso toda empresa deve ter sua própria árvore de Projetos. Caso seu Projeto seja feito para uma pessoa e não empresa, utilize o nome da pessoa.</p>
 
-<p>As <em>Stored Procedures</em> são ferramentas para trabalhar com <em>dados</em>. Elas conseguem ter uma melhor performance do que qualquer outra linguagem fora do SGBD no qual ela reside.</p>
+<p>Então vem o nome do Projeto, que deve ser curto, de fácil memorização e escrita.</p>
 
-<p>Só isso já seria um argumento suficiente para continuarmos a utilizar SP’s em nossos sistemas.</p>
+<p>Por quê?</p>
 
-<p>Mas nem todos pensam assim.</p>
+<p>Primeiro, o nome do Projeto irá fazer parte do nome das <em>units</em> como um prefixo, evitando a colisão de nomes com outros Projetos ou <em>Libs</em>.</p>
 
-<p>Tenho alguns amigos desenvolvedores que abandonaram completamente as SP’s, codificando seus sistemas <em>apenas</em> utilizando alguma linguagem de programação com suporte a Orientação a Objetos.</p>
+<p>Segundo, o nome do Projeto será utilizado por outras ferramentas de análise e acompanhamento das tarefas (tickets) e prazos. Todo nome deve ser de fácil memorização e como uma boa identidade.</p>
+
+<p>Não use nomes indecifráveis com <em>SisXpto10</em> ou nomes grandes e sem personalidade como <em>Sistema de Tickets ABC</em>.</p>
+
+<p>Nomes de Projetos devem ser curtos, fáceis de lembrar e… <em>sexys</em>, por que não?</p>
+
+<p>Tenho Projetos chamados Sophia, <a href="https://github.com/mdbs99/james">James</a>, Odin, <a href="https://github.com/mdbs99/greyhound">Greyhound</a>, Dog, Nicole, e muitos outros.</p>
+
+<p>Tente encontrar um nome que tenha haver com o Projeto. Pode ser por causa da definição do nome em si, o que ele representa, uma sátira, apelido, pela “sonoridade” ou porque é <em>legal</em>.</p>
+
+<h2 id="diretorios-e-arquivos">Diretórios e Arquivos</h2>
+
+<p>Nos meus Projetos, sejam eles individuais ou em equipe, eles tem basicamente essa estrutura logo abaixo.</p>
+
+<h3 id="diretorios">Diretórios</h3>
+
+<p>A começar pela nomenclatura dos diretórios, utilizo a seguinte divisão:</p>
+
+<pre><code>empresa
+  |
+  projeto
+    |
+    bin  : todos os arquivos binários e libs
+    |
+    doc  : toda a documentação
+    |
+    pkg  : todos os pacotes
+    |
+    src  : fontes de produção
+    |
+    test : fontes de testes
+</code></pre>
+
+<p>Obviamente eu não inventei essa estrutura que é bem simples e lógica. Muitos Projetos <em>Open Source</em> já a utilizam a muito tempo.</p>
+
+<p>O nome dos diretórios poderiam ser <code>/binaries</code>, <code>/documentation</code>, <code>/packages</code>, <code>/source</code> e <code>/tests</code> porém para nomes de diretórios, quanto menor, melhor. Você irá lembrar disso quando tiver que digitar no console, digitar os <em>paths</em> na IDE, etc.</p>
+
+<p>Considero uma árvore simples e limpa. Mas nem todos os projetos a utilizam.</p>
+
+<p>Por exemplo. A maioria dos projetos Java são codificados com base na URL da empresa em conjunto com algum padrão estranho.</p>
+
+<p>Exemplo: <code>empresa/projeto/src/main/java/com/acme/projeto</code>.</p>
+
+<p>Na minha opinião, esta é uma nomenclatura muito deselegante e repetitiva.</p>
+
+<p>Por quê o nome do projeto se repete nos diretórios? Não sei. Talvez a IDE faça isso e ninguém dá a mínima.</p>
+
+<p>O que o <code>/com</code> significa no contexto do Projeto? Nada. Apenas um padrão que seguem para evitar a colisão de nomes, talvez.</p>
+
+<p>E por quê <code>/java</code> deve fazer parte da árvore de diretórios?!</p>
+
+<p>Realmente não sei.</p>
+
+<h3 id="arquivos">Arquivos</h3>
+
+<p>Já o nome dos arquivos, ou seja, das <em>units</em>, devem seguir o seguinte padrão:</p>
+
+<p><code>&lt;projeto&gt;.&lt;grupo&gt;.&lt;subgrupo&gt;.&lt;nome&gt;</code></p>
+
+<p>Apenas <code>&lt;projeto&gt;</code> e <code>&lt;grupo&gt;</code> são obrigatórios.</p>
+
+<p>Por quê?</p>
+
+<p>Bem, cada <em>unit</em> no <em>Object Pascal</em> pode conter mais de uma Classe. Então não é necessário um <code>&lt;nome&gt;</code> de Classe, por exemplo, como é o caso do Java.</p>
+
+<p>Apenas para Formulários e <a href="/posts/datamodule-e-apenas-um-container/"><em>DataModules</em></a>, o nome será obrigatório.</p>
+
+<p>Vejamos alguns exemplos:</p>
+
+<ol>
+  <li><a href="https://github.com/mdbs99/james/blob/master/src/james.data.pas">james.data</a> contém <code>&lt;projeto&gt;</code> e <code>&lt;grupo&gt;</code>;</li>
+  <li><a href="https://github.com/mdbs99/james/blob/master/src/james.data.clss.pas">james.data.clss</a> contém <code>&lt;projeto&gt;</code>, <code>&lt;grupo&gt;</code> e <code>&lt;subgrupo&gt;</code>;</li>
+  <li><a href="https://github.com/mdbs99/james/blob/master/src/james.data.stream.clss.pas">james.data.stream.clss</a> contém <code>&lt;projeto&gt;</code>, <code>&lt;grupo&gt;</code> e dois <code>&lt;subgrupo&gt;</code>;</li>
+</ol>
+
+<p>Existem alguns <em>sufixos</em> de arquivos que utilizo bastante:</p>
+
+<ol>
+  <li>Clss : conterá classes que implementam interfaces;</li>
+  <li>Tests : contém as classes de testes;</li>
+  <li>Form : utilizado para todos os formulários;</li>
+  <li>Module : utilizado para todos os <em>DataModules</em>;</li>
+</ol>
+
+<p>Para o nome das Classes, veja <a href="/posts/nomeando-classes/">esse artigo</a>.</p>
+
+<h2 id="dividir">Dividir para Conquistar</h2>
+
+<p>Todo projeto de tamanho médio ou grande, deve ser dividido em módulos lógicos, ou seja, subdiretórios dentro de <code>/src</code>.</p>
+
+<p>Essa divisão irá depender exclusivamente do seu projeto e contextos.</p>
 
 <blockquote>
-  <p>
-Stored Procedures podem  reduzir o tráfego na rede, visto que os comandos são executados diretamente no servidor. Além de melhorar a performance, criar mecanismos de segurança entre a manipulação dos dados do Banco de Dados. 
-  </p>
-  <footer><cite title="Wikipedia">— Wikipedia</cite></footer>
+  <p>“Dividir para conquistar” — Napoleão</p>
 </blockquote>
 
-<p>No entanto, esses desenvolvedores esquecem que cada ferramenta é focada em resolver determinados problemas.</p>
+<p>Essa divisão em subdiretórios é importante para termos a reutilização dos fontes por outros Projetos e ao mesmo tempo a restrição de visibilidade.</p>
 
-<p>O foco das Stored Procedures são os dados. Na manipulação dos dados e assuntos relacionados ao Banco de Dados.</p>
+<p>Se os fontes de um Projeto ficasse em apenas um diretório, outros Projetos poderiam ter acesso a tudo. Dividindo em subdiretórios você pode restringir a visibilidade e acesso para esses outros Projetos.</p>
 
-<p>O foco da Orientação a Objetos são os <a href="/posts/objetos-representam-entidades/">Objetos</a>.</p>
+<p>Outra possibilidade bem interessante é dividir os módulos em <a href="/posts/james-e-testes-de-unidade/#pacote-de-testes">Pacotes</a> reutilizáveis entre Projetos distintos.
+Nesse padrão a divisão dos fontes não é apenas por subdiretórios, mas sim por árvores completamente diferentes.</p>
 
-<p>São contextos completamente diferentes.</p>
+<p>É normal criarmos Pacotes para componentes e <em>Libs</em> reutilizáveis, mas criar Pacotes entre Projetos também pode ser muito eficaz para o desenvolvimento.</p>
 
-<p>Então por que usaríamos uma ferramenta <em>pior</em> ou menos eficaz para a manipulação de dados?</p>
-
-<h2 id="regras-de-negocio">Regras de Negócio</h2>
-
-<p>Meus amigos afirmam que as <em>Regras de Negócio</em> não devem ser codificadas em (Argh!) procedimentos!</p>
-
-<p>Utilizamos uma linguagem de auto nível com suporte a <a href="/posts/objetos-pensam-e-tomam-decisoes/">Objetos inteligentes</a>, <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">encapsulamento</a>, polimorfismo… não queremos trabalhar com algo tão <a href="/posts/tipos-primitivos-nos-argumentos/">primitivo</a> — eles dizem.</p>
-
-<p>E eu concordo com eles.</p>
-
-<p>Em aplicações Orientadas a Objetos, as Regras de Negócio devem estar codificadas em Classes.</p>
-
-<p>Utilizamos as Classes e Objetos para <a href="/posts/objetos-representam-entidades/">representar</a> as entidades que irão interagir entre si.</p>
-
-<p>Os Dados, no entanto, não interagem entre si. São <em>passivos</em>.</p>
-
-<p>Os Dados precisam que algum <em>procedimento</em> ou <em>Objeto</em> que os anime.</p>
-
-<p>Os Objetos podem e devem <a href="/posts/classes-de-dados/">trabalhar com dados</a>, mas a manipulação dos <em>dados em massa</em> é trabalho para Stored Procedures; são imbatíveis.</p>
-
-<p>A combinação entre Objetos e Stored Procedures é a chave para um sistema Orientado a Objetos com ótima manutenabilidade mas, também, com ótima performance na manipulação dos dados.</p>
-
-<h2 id="scripts-dinamicos">Scripts dinâmicos</h2>
-
-<p>Outro equívoco é pensar que somos obrigados a criar Scripts SQL no código da aplicação porque somente assim conseguiremos fazer filtros otimizados, combinando as informações que os usuários desejam para construir o melhor e mais otimizado SQL.</p>
-
-<p>Em parte isso faz sentido, mas na maioria das vezes é apenas falta de conhecimento do SGBD em uso.</p>
-
-<p>Alguns SGBD’s como o Microsoft SQL Server, por exemplo, podem receber argumentos XML. Esses argumentos podem ser lidos e utilizados como filtros dinâmicos nas SP’s.</p>
-
-<p>Isso é muito melhor que ter “pedaços” de código SQL espalhados no código para concatenar de acordo com os filtros que os usuários desejam.</p>
-
-<p>Alguns desenvolvedores poderão afirmar que utilizam algum framework ORM que tem embutido uma pseudo-linguagem que simula o SQL, mas utilizando Objetos. Assim eles não teríam SQL espalhado pelo código.</p>
-
-<p>O conceito de ORM na Orientação a Objetos é errado. Mas esse assunto foge do escopo desse artigo. No entanto, se você utiliza um ORM para fazer <em>queries</em> dinâmicas eu posso lhe afirmar o seguinte: Você pode até tentar, mas nunca fará queries mais performáticas e/ou com o código mais simples do que utilizando SQL puro.</p>
-
-<p>Não estou falando sobre Objetos que retornam pequenas listas de objetos-filhos utilizando a pseudo-linguagem do ORM. Estou falando sobre <em>queries</em> de 5 páginas ou mais de script que trazem dados para relatórios pesados em aplicações reais. Tentar reproduzir um script dessa magnitude utilizando Objetos é, no mínimo, ingenuidade…</p>
+<p>No Lazarus, basta abrir um Pacote uma única vez que ele já fica registrado na IDE. Depois basta adicionar o Pacote no(s) Projeto(s) para reutilizar seus fontes. Caso queira mudar o <em>path</em> do Pacote, basta fazer num único lugar (XML de configuração da IDE) para que todos os outros Projetos sejam atualizados. Isso é muito melhor do que ter que alterar <em>paths</em> de diretório reutilizáveis em cada Projeto.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>As <em>Stored Procedures</em> continuaram a existir, enquanto houverem SGBD’s relacionais.</p>
+<p>Um Projeto de <em>software</em> não é apenas código-fonte. Devemos fazer um estudo desde o nome a ser utilizado, passando pela nomenclatura, diretórios e divisões de cada módulo.</p>
 
-<p>Continuaram a existir enquanto não inventarem algo com mais performance.</p>
+<p>Seu Projeto poderá ter uma vida mais longa se você souber onde encontrar cada peça facilmente.</p>
 
-<p>Utilizar <em>Stored Procedures</em> não torna seu software <em>menos</em> Orientado a Objetos, se você as utiliza apenas para a manipulação de dados e não para as Regras de Negócio.</p>
+<p>A divisão por módulos irá facilitar a manutenção no longo prazo e a nomenclatura correta irá deixar tudo mais fácil.</p>
 
-<p>Utilize a ferramenta certa para cada tipo de problema.</p>
+<p>E você, como organiza seus Projetos?</p>
 
 <p>Até logo.</p>
 
@@ -307,33 +359,33 @@ Stored Procedures podem  reduzir o tráfego na rede, visto que os comandos são 
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/organizacao-de-projetos" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Stored Procedures na Orientação a Objetos&via=mdbs99;url=http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Organização de Projetos&via=mdbs99;url=http://objectpascalprogramming.com/organizacao-de-projetos" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/organizacao-de-projetos" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/&title=Stored Procedures na Orientação a Objetos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/&title=Stored Procedures na Orientação a Objetos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/organizacao-de-projetos&title=Organização de Projetos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/&t=Stored Procedures na Orientação a Objetos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/organizacao-de-projetos&title=Organização de Projetos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/organizacao-de-projetos&t=Organização de Projetos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -371,15 +423,6 @@ Stored Procedures podem  reduzir o tráfego na rede, visto que os comandos são 
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/organizacao-de-projetos" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Organização de Projetos</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/posts/james-e-testes-de-unidade/" class="post-link">
@@ -421,6 +464,15 @@ Stored Procedures podem  reduzir o tráfego na rede, visto que os comandos são 
       <a href="/posts/identificador-unico-universal/" class="post-link">
         <ul>
           <h4 class="post-title"><li>Identificador Único Universal</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/posts/stored-procedures-na-orientacao-a-objetos/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Stored Procedures na Orientação a Objetos</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
       </a>
@@ -469,8 +521,8 @@ Stored Procedures podem  reduzir o tráfego na rede, visto que os comandos são 
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/stored-procedures-na-orientacao-a-objetos';
-      var disqus_title      = 'Stored Procedures na Orientação a Objetos';
+      var disqus_identifier = '/organizacao-de-projetos';
+      var disqus_title      = 'Organização de Projetos';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
