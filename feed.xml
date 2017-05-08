@@ -8,6 +8,166 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Eventos e Objetos</title>
+        <description>&lt;p&gt;Quando o semáforo de trânsito muda de vermelho para verde, isso é considerado um Evento ou uma Mensagem entre Objetos (motorista e semáforo)?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-ashim-d-silva-95242.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;O mundo é constituído de Eventos.&lt;/p&gt;
+
+&lt;p&gt;Uma sirene que toca ao longe; o semáforo que passou de amarelo para vermelho; as notificaçõess do celular; a luz que acende num painel; o atendente do Starbucks chamando seu nome quando o café está pronto.&lt;/p&gt;
+
+&lt;p&gt;Um &lt;a href=&quot;https://en.wikipedia.org/wiki/Event_(computing)&quot;&gt;Evento&lt;/a&gt; no mundo computacional é uma ação ou ocorrência gerado no software e reconhecido e tratado pelo software.&lt;/p&gt;
+
+&lt;p&gt;Entre Objetos computacionais, existem 2 formas de interação: Mensagens e Eventos.&lt;/p&gt;
+
+&lt;h2 id=&quot;mensagens&quot;&gt;Mensagens&lt;/h2&gt;
+
+&lt;p&gt;Dois Objetos comunicam-se entre si através de &lt;a href=&quot;/posts/diga-me-algo-sobre-voce/#mensagens&quot;&gt;mensagens&lt;/a&gt; ou Métodos.&lt;/p&gt;
+
+&lt;p&gt;Podemos chamar essa troca de mensagens de diálogo pois os Objetos que estão participando da “conversa” estão todos “cientes” do trabalho que estão desenvolvendo juntos (composição).&lt;/p&gt;
+
+&lt;p&gt;Cada Objeto está fazendo o trabalho para o qual foi &lt;a href=&quot;/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos&quot;&gt;contrato&lt;/a&gt; e repassando seu resultado para o próximo Objeto afim de terminar um trabalho maior.&lt;/p&gt;
+
+&lt;p&gt;Para um Objeto enviar uma Mensagem à outro, ele deve saber como passar a mensagem na forma que o receptor já conhece, para que as instruções sejam entendidas.&lt;/p&gt;
+
+&lt;p&gt;Em outras palavras, o transmissor deve conhecer a Interface do receptor.&lt;/p&gt;
+
+&lt;p&gt;Mas num diálogo entre alguns Objetos, podem haver interrupções externas que quebra o fluxo normal, podendo mudar o comportamento em execução.&lt;/p&gt;
+
+&lt;p&gt;Imaginem dois Objetos trabalhando, fazendo um &lt;em&gt;parser&lt;/em&gt; de arquivos PDF, o usuário clica no botão “cancelar” para notificar, a quem quiser saber, que a operação em andamento deve ser cancelada.&lt;/p&gt;
+
+&lt;p&gt;Isso é um Evento.&lt;/p&gt;
+
+&lt;h2 id=&quot;eventos&quot;&gt;Eventos&lt;/h2&gt;
+
+&lt;p&gt;Um Evento, diferente de um diálogo, é como um interruptor. Ele desvia o “fluxo normal” do diálogo entre Objetos para notificar outros Objetos — que ele desconhece ou ignora — que podem ou não estar inseridos no mesmo contexto ou trabalho em andamento.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo:
+Dois mecânicos estão fazendo um belo trabalho na montagem de um motor recem retificado, a sirene sinalizando a hora do almoço toca. Eles largam suas ferramentas e vão almoçar.&lt;/p&gt;
+
+&lt;p&gt;Podemos dizer que eles estavam &lt;em&gt;aguardando&lt;/em&gt; esse Evento? Sim. Deviam estar anciosos para o almoço…&lt;/p&gt;
+
+&lt;p&gt;Então todo evento é &lt;em&gt;aguardado&lt;/em&gt; pelos Objetos?&lt;/p&gt;
+
+&lt;p&gt;Creio que sim. Pelo menos no mundo computacional.&lt;/p&gt;
+
+&lt;p&gt;Os Objetos em sistemas computacionais não tem &lt;em&gt;sentidos&lt;/em&gt; como os seres humanos. Os 5 sentidos humanos são como interpretadores de todo tipo de Evento que pode ocorrer ao seu redor. Então, sim, aguardamos por qualquer tipo de Evento que possa ocorrer, pois temos a capacidade de interpretá-los e tomar uma decisão sobre o que fazer.&lt;/p&gt;
+
+&lt;p&gt;Já os Objetos dentro de um software são apenas abstrações de &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;entidades&lt;/a&gt; do mundo real. Sendo abstrações, eles são construídos de forma minimalista — ou deveriam ser — para representar apenas uma faceta da entidade na qual eles representam. Então temos que implementar apenas os Eventos essenciais que essa abstração deveria aguardar. Caso ocorram.&lt;/p&gt;
+
+&lt;p&gt;Um evento é uma notificação que um Objeto faz a quem estiver interessado. O Objeto (emissor) não sabe a quem está enviando a notificação.&lt;/p&gt;
+
+&lt;p&gt;Em outras palavras, é o receptor que deve ter conhecimento sobre como será emitido o evento no transmissor, ou seja, sua Interface.&lt;/p&gt;
+
+&lt;h2 id=&quot;implementacao&quot;&gt;Implementação&lt;/h2&gt;
+
+&lt;p&gt;A implementação de um Evento, em qualquer linguagem de programação, pode ser definida basicamente como um &lt;em&gt;ponteiro para uma função&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Essa foi a maneira que o Delphi implementou os Eventos dos &lt;em&gt;widgets&lt;/em&gt; de um Formulário.&lt;/p&gt;
+
+&lt;p&gt;Um clique num botão, por exemplo, é um ponteiro para uma função que está definida fora da instância do botão (Classe TButton e/ou derivados).&lt;/p&gt;
+
+&lt;p&gt;A implementação dessa função normalmente está localizada no Formulário onde o botão está inserido.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure TForm1.Button1Click(Sender: TObject);
+begin
+  ShowMessage(&#39;Clicked&#39;);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;No código acima &lt;code&gt;Button1Click&lt;/code&gt; é um método da Classe &lt;code&gt;TForm1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;No &lt;em&gt;design&lt;/em&gt; do Formulário (arquivo *.dfm ou *.lfm) haverá um código como abaixo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;object Button1: TButton
+  Left = 102
+  Height = 25
+  Top = 72
+  Width = 75
+  Caption = &#39;Button1&#39;
+  OnClick = Button1Click
+  TabOrder = 0
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Em &lt;em&gt;runtime&lt;/em&gt; o compilador irá configurar o evento &lt;code&gt;OnClick&lt;/code&gt; — uma propriedade do tipo &lt;code&gt;TNotifyEvent&lt;/code&gt; — da instância &lt;code&gt;Button1&lt;/code&gt; para utilizar a “função” &lt;code&gt;Button1Click&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Essa é a “maneira clássica” de utilizarmos Eventos.&lt;/p&gt;
+
+&lt;p&gt;É uma maneira &lt;em&gt;simples&lt;/em&gt; e &lt;em&gt;eficaz&lt;/em&gt;, porém primitiva — mas eu não estou dizendo isso de maneira perjorativa.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Primitivo: que é o primeiro a existir; que coincide com a origem de algo; inicial, primevo, original.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Vamos ver outra maneira de utilizarmos Eventos, apenas com Classes sem a necessidade de propriedades com &lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;&lt;em&gt;Getters/Setters&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Vou utilizar esse exemplo de Classe Log &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo&quot;&gt;aqui&lt;/a&gt; como base:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/c5da3c1d04894b7ee949aa1f7735aade.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;As mensagens desse programa serão:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;“log start”&lt;/li&gt;
+  &lt;li&gt;“log finish”&lt;/li&gt;
+  &lt;li&gt;“clicked”&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Temos algumas diferenças entre o primeiro exemplo (Button1) e este último (Log).&lt;/p&gt;
+
+&lt;p&gt;Ao invés da Classe &lt;code&gt;TLogInMemory&lt;/code&gt; possuir 2 propriedades do tipo &lt;code&gt;TLogNotifyEvent&lt;/code&gt; para implementar os eventos, ela recebe os “ponteiros” no construtor e isso simplifica muita coisa.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Primeiro&lt;/em&gt;, não precisamos definir as propriedades na Interface &lt;code&gt;ILog&lt;/code&gt;, mantendo-a limpa. Caso essas propriedades fossem definidas na Interface, obrigatoriamente teríamos que definir 3 linhas para cada propriedade:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;property OnStart: TLogNotifyEvent 
+             read GetOnStart 
+            write SetOnStart;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;A propriedade em si&lt;/li&gt;
+  &lt;li&gt;O método GetOnStart&lt;/li&gt;
+  &lt;li&gt;O método SetOnStart&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Como Interfaces não possuem atributos, os Métodos de leitura e escrita teríam que ser definidos na Interface e implementados em todas as Classes.&lt;/p&gt;
+
+&lt;p&gt;Bem &lt;em&gt;verboso&lt;/em&gt;, não?&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Segundo&lt;/em&gt;, não precisamos definir nenhuma propridade em &lt;code&gt;TLogInMemory&lt;/code&gt; mesmo que não houvessem os &lt;em&gt;Getters/Setters&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Terceiro&lt;/em&gt;, uma vez definido os eventos, não podemos modificá-los deixando a Classe &lt;a href=&quot;/posts/objetos-imutaveis/&quot;&gt;imutável&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Simples e elegante.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Os Eventos fazem parte de qualquer sistema. Podemos tirar proveito dessa técnica primária para deixar nossos Objetos com comportamento mais dinâmico.&lt;/p&gt;
+
+&lt;p&gt;O acoplamento entre os Objetos é reduzido. O transmissor do Evento não sabe quem irá recebê-los, o que é ótimo.&lt;/p&gt;
+
+&lt;p&gt;Essa é a forma mais básica e limpa para utilizarmos Eventos no &lt;em&gt;Object Pascal&lt;/em&gt;, mas não é a única.&lt;/p&gt;
+
+&lt;p&gt;E se quisermos que mais de um Objeto seja notificado?&lt;/p&gt;
+
+&lt;p&gt;Não seria melhor utilizarmos Objetos ao invés de simples ponteiros para função?&lt;/p&gt;
+
+&lt;p&gt;Bem, essas são perguntas que poderão ser respondidas em outro artigo.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 08 May 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/eventos-e-objetos</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/eventos-e-objetos</guid>
+      </item>
+    
+      <item>
         <title>Organização de Projetos</title>
         <description>&lt;p&gt;Todo novo Projeto é uma boa oportunidade para melhorarmos nossa habilidade de organização.&lt;/p&gt;
 
@@ -1244,152 +1404,6 @@ raise EFileNotFound.Create(&#39;foo.txt&#39;);
         <pubDate>Mon, 20 Feb 2017 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/classes-de-excecao/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/classes-de-excecao/</guid>
-      </item>
-    
-      <item>
-        <title>Constantes Públicas</title>
-        <description>&lt;p&gt;Quantas vezes você precisou instanciar uma Classe mas não sabia, com exatidão, o valor a passar em algum argumento do construtor? Essa dúvida quase sempre acontece com argumentos do tipo &lt;em&gt;String&lt;/em&gt; e a maioria das API’s disponibilizam constantes para serem utilizados nos argumentos.&lt;/p&gt;
-
-&lt;p&gt;Bem, Constantes Públicas não deveriam ser utilizadas em projetos Orientados a Objetos.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-ty8v7jjcgvg-pierre-bouillot.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Em linguagens puramente procedurais como &lt;code&gt;C&lt;/code&gt;, por exemplo, constantes são normalmente utilizadas. Não há nada de errado com isso.&lt;/p&gt;
-
-&lt;p&gt;No entanto, em projetos Orientados a Objetos, não há sentido em continuarmos utilizando o pensamento procedural de &lt;code&gt;C&lt;/code&gt;, ou seja, disponibilizando &lt;em&gt;Constantes Públicas&lt;/em&gt; para serem utilizadas como argumentos de Métodos e &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;Construtores&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;constantes-publicas&quot;&gt;Constantes Públicas&lt;/h2&gt;
-
-&lt;p&gt;Eu já expliquei nesse &lt;a href=&quot;/posts/tipos-primitivos-nos-argumentos/&quot;&gt;artigo&lt;/a&gt; que utilizar tipos primitivos em argumentos não é uma boa ideia na maioria dos casos. O problema é agravado quando utilizamos argumentos do tipo &lt;em&gt;String&lt;/em&gt;, pois o valor pode ser qualquer sequência de caracteres.&lt;/p&gt;
-
-&lt;p&gt;Vejamos um exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var
-  S: IString;
-begin
-  S := TStringBuilder.New(
-    TFile.New(&#39;foo.txt&#39;).Stream,
-    &#39;UTF-8&#39;
-  );
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;As Classes acima não fazem parte da RTL, são apenas exemplos.&lt;/p&gt;
-
-&lt;p&gt;Vejamos. Uma Classe &lt;code&gt;TStringBuilder&lt;/code&gt; recebe dois argumentos:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Um &lt;em&gt;Stream&lt;/em&gt; de dados;&lt;/li&gt;
-  &lt;li&gt;Uma &lt;em&gt;String&lt;/em&gt; que corresponde ao &lt;em&gt;encoding&lt;/em&gt; que será utilizado.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Quais as chances do programador passar um argumento inválido no segundo parâmetro? Ele poderia escrever assim &lt;code&gt;UTF-8&lt;/code&gt;, assim &lt;code&gt;UTF8&lt;/code&gt;, assim &lt;code&gt;utf-8&lt;/code&gt;, assim &lt;code&gt;utf8&lt;/code&gt;…&lt;/p&gt;
-
-&lt;p&gt;Para não haver erros de digitação, os programadores de API’s disponibilizam Constantes Públicas, exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var
-  S: IString;
-begin
-  S := TStringBuilder.New(
-    TFile.New(&#39;foo.txt&#39;).Stream,
-    UTF8_ENCODING
-  );
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Ah, agora tá “perfeito”. Não haverá erro de digitação, pois não é mais uma &lt;em&gt;String&lt;/em&gt;, mas sim uma Constante que o compilador pode checar.&lt;/p&gt;
-
-&lt;p&gt;O problema, no entanto, é que o &lt;a href=&quot;/posts/tipos-primitivos-nos-argumentos/#argumento&quot;&gt;argumento&lt;/a&gt; continua sendo do tipo &lt;em&gt;String&lt;/em&gt; e mesmo o &lt;em&gt;code-completion&lt;/em&gt; não pode ajudá-lo para lhe mostrar onde está a Constante (se existir!) para utilizá-la no argumento.&lt;/p&gt;
-
-&lt;p&gt;O que fazer?&lt;/p&gt;
-
-&lt;h2 id=&quot;objetos&quot;&gt;Objetos&lt;/h2&gt;
-
-&lt;p&gt;Se você quer representar um &lt;code&gt;UTF8String&lt;/code&gt; por quê não criar uma Classe que instancia um Objeto que representa exatamente o que você precisa?&lt;/p&gt;
-
-&lt;p&gt;Vamos refatorar o código:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var
-  S: IString;
-begin
-  S := TUTF8String.New(
-    TFile.New(&#39;foo.txt&#39;).Stream
-  );
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Muito mais &lt;a href=&quot;/posts/menos-e-mais/&quot;&gt;simples&lt;/a&gt; e direto, não acha?&lt;/p&gt;
-
-&lt;p&gt;Então você pensa: “Mas eu terei uma Classe para cada tipo de &lt;em&gt;encoding&lt;/em&gt; no meu código?”&lt;/p&gt;
-
-&lt;p&gt;Sim! Mas não pense que você terá duplicação de código por causa disso.&lt;/p&gt;
-
-&lt;h2 id=&quot;reutilizando&quot;&gt;Reutilizando&lt;/h2&gt;
-
-&lt;p&gt;Sabemos que já existem muitas funções para trabalhar com &lt;em&gt;encoding&lt;/em&gt; de &lt;em&gt;String&lt;/em&gt; em qualquer linguagem. Mas aqui trabalhamos com Objetos, então… criamos Objetos.&lt;/p&gt;
-
-&lt;p&gt;No entanto, não queremos “reinventar a roda”. Precisamos reutilizar as funções já existentes, sejam funções &lt;em&gt;built-in&lt;/em&gt; ou de alguma &lt;em&gt;lib&lt;/em&gt; de terceiros. Não importa.&lt;/p&gt;
-
-&lt;p&gt;No seu código Orientado a Objetos você não deve expor esses &lt;em&gt;detalhes tecnológicos&lt;/em&gt; para seu &lt;em&gt;domínio&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então, como fazer?&lt;/p&gt;
-
-&lt;p&gt;Na sua &lt;em&gt;Unit&lt;/em&gt;, você irá implementar uma Classe Privada. Essa Classe irá receber sim, um argumento do tipo &lt;em&gt;String&lt;/em&gt;. Mas não há problema, pois a Classe é privada à &lt;em&gt;Unit&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa Classe teria uma implementação assim:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TEncodedString = class(TInterfacedObject, IString)
-  private
-    FEncoding: string;
-  public
-    constructor Create(
-      Stream: IDataStream; 
-      const Encoding: string
-    );
-    class function New(
-      Stream: IDataStream; 
-      const Encoding: string
-    ): IString;
-    function Value: string;
-    // more methods...
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Cada Classe especialista, como a &lt;code&gt;TUTF8String&lt;/code&gt; por exemplo irá delegar para a &lt;code&gt;TEncodedString&lt;/code&gt; a construção da &lt;em&gt;String&lt;/em&gt; de retorno.&lt;/p&gt;
-
-&lt;p&gt;O argumento &lt;code&gt;Encoding&lt;/code&gt; poderá ser uma &lt;em&gt;String&lt;/em&gt; pura ou uma &lt;strong&gt;Constante Privada&lt;/strong&gt; — seja uma Constante privada da Classe ou da &lt;em&gt;Unit&lt;/em&gt;, não importa.&lt;/p&gt;
-
-&lt;p&gt;Então, considerando que &lt;code&gt;IString&lt;/code&gt; tem o método &lt;code&gt;function Value: string&lt;/code&gt;, a implementação desse método em &lt;code&gt;TUTF8String&lt;/code&gt; seria algo assim:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function TUTF8String.Value: string;
-begin
-  Result := 
-    TEncodedString.New(
-      FStream, &#39;UTF-8&#39;
-    ).Value
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Nesse exemplo vemos que &lt;code&gt;TUTF8String&lt;/code&gt; está delegando o trabalho para &lt;code&gt;TEncodedString&lt;/code&gt; passando sua instância de &lt;code&gt;FStream&lt;/code&gt; e o &lt;em&gt;encoding&lt;/em&gt; alvo.&lt;/p&gt;
-
-&lt;p&gt;Mas para todo o sistema, &lt;code&gt;TEncodedString&lt;/code&gt; não existe.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Constantes Públicas não devem ser utilizadas na programação Orientada a Objetos pelas razões explicadas acima. Porém, devido a questões tecnológicas e detalhes de implementação, as Constantes Privadas ainda são úteis, mas não essenciais.&lt;/p&gt;
-
-&lt;p&gt;Ao invés de tentar deixar uma Classe mais genérica possível, com inúmeras possibilidades de parametrização por constantes, divida-a em várias Classes &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;especialistas&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 13 Feb 2017 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/constantes-publicas/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/constantes-publicas/</guid>
       </item>
     
   </channel>

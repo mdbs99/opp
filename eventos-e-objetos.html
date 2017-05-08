@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Validações no Construtor &#8211; Object Pascal Programming</title>
+    <title>Eventos e Objetos &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="É possível validar um Objeto antes de criá-lo?">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="OO">
-    <meta name="keywords" content="validation, validação, construtor">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/validacoes-no-construtor/">
+    <meta name="keywords" content="Projeto">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, eventos, events">
+    <link rel="canonical" href="http://objectpascalprogramming.com/eventos-e-objetos">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Validações no Construtor">
-    <meta property="og:description" content="É possível validar um Objeto antes de criá-lo?">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/validacoes-no-construtor/">
+    <meta property="og:title" content="Eventos e Objetos">
+    <meta property="og:description" content="Como utilizar Eventos dentro do paradigma da Orientação a Objetos.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/eventos-e-objetos">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-EnF7DhHROS8OMEp2pCkx_Duferfood.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-ashim-d-silva-95242.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Validações no Construtor" />
-    <meta name="twitter:description" content="É possível validar um Objeto antes de criá-lo?" />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/validacoes-no-construtor/" />
+    <meta name="twitter:title" content="Eventos e Objetos" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/eventos-e-objetos" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,104 +191,167 @@
 
 
 <div class="post-header mb2">
-  <h1>Validações no Construtor</h1>
-  <span class="post-meta">May 9, 2016</span><br>
+  <h1>Eventos e Objetos</h1>
+  <span class="post-meta">May 8, 2017</span><br>
   
   <span class="post-meta small">
   
-    3 minute read
+    5 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Dizem que um Objeto não pode ter um <strong>estado inválido</strong> e que 
-sua validação deve ser feita no seu <strong>Construtor</strong>, ou seja, se 
-os argumentos do Construtor não são suficientes, não deveríamos
-criar o Objeto.</p>
-
-<p>Imagine um mundo onde tudo são objetos.</p>
-
-<p>Como você irá verificar se um Objeto é inválido antes de você criá-lo?</p>
+  <p>Quando o semáforo de trânsito muda de vermelho para verde, isso é considerado um Evento ou uma Mensagem entre Objetos (motorista e semáforo)?</p>
 
 <!--more-->
 
-<p><img src="/images/photo-EnF7DhHROS8OMEp2pCkx_Duferfood.jpg" alt="Imagem" /></p>
+<p><img src="/images/2017/photo-ashim-d-silva-95242.jpg" alt="Unsplash image" /></p>
 
-<p>O que significa <strong>estado inválido</strong>?</p>
+<h2 id="introducao">Introdução</h2>
 
-<p>Se os argumentos do construtor de um Objeto não forem suficientes, e não fizermos uma
-validação prévia desses argumentos, poderíamos criar um Objeto com estado inválido.
-Quero dizer que seu <strong>Estado</strong> não estaria válido para que ele pudesse fazer o trabalho
-para o qual ele foi/será designado.</p>
+<p>O mundo é constituído de Eventos.</p>
 
-<p>E porque isso seria um problema?</p>
+<p>Uma sirene que toca ao longe; o semáforo que passou de amarelo para vermelho; as notificaçõess do celular; a luz que acende num painel; o atendente do Starbucks chamando seu nome quando o café está pronto.</p>
 
-<p>Bem, eu não acho que seria um problema. A única <strong>exceção</strong> é
-a utilização de <a href="/posts/nao-utilize-nil-ou-null/">Objetos Nulos</a>. Nesse 
-caso sim, seria um <strong>erro</strong>.</p>
+<p>Um <a href="https://en.wikipedia.org/wiki/Event_(computing)">Evento</a> no mundo computacional é uma ação ou ocorrência gerado no software e reconhecido e tratado pelo software.</p>
 
-<p>Vamos a um exemplo. Vamos definir uma classe <code>TDbQuery</code> que irá encapsular um SQL.
-Essa classe só terá um método (simplificando) para executar o SQL.</p>
+<p>Entre Objetos computacionais, existem 2 formas de interação: Mensagens e Eventos.</p>
 
-<pre><code>type
-  TDbQuery = class
-  private
-    FScript: string;
-  public
-    construtor Create(const Script: string);
-    function Execute: Integer;
-  end;
+<h2 id="mensagens">Mensagens</h2>
+
+<p>Dois Objetos comunicam-se entre si através de <a href="/posts/diga-me-algo-sobre-voce/#mensagens">mensagens</a> ou Métodos.</p>
+
+<p>Podemos chamar essa troca de mensagens de diálogo pois os Objetos que estão participando da “conversa” estão todos “cientes” do trabalho que estão desenvolvendo juntos (composição).</p>
+
+<p>Cada Objeto está fazendo o trabalho para o qual foi <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contrato</a> e repassando seu resultado para o próximo Objeto afim de terminar um trabalho maior.</p>
+
+<p>Para um Objeto enviar uma Mensagem à outro, ele deve saber como passar a mensagem na forma que o receptor já conhece, para que as instruções sejam entendidas.</p>
+
+<p>Em outras palavras, o transmissor deve conhecer a Interface do receptor.</p>
+
+<p>Mas num diálogo entre alguns Objetos, podem haver interrupções externas que quebra o fluxo normal, podendo mudar o comportamento em execução.</p>
+
+<p>Imaginem dois Objetos trabalhando, fazendo um <em>parser</em> de arquivos PDF, o usuário clica no botão “cancelar” para notificar, a quem quiser saber, que a operação em andamento deve ser cancelada.</p>
+
+<p>Isso é um Evento.</p>
+
+<h2 id="eventos">Eventos</h2>
+
+<p>Um Evento, diferente de um diálogo, é como um interruptor. Ele desvia o “fluxo normal” do diálogo entre Objetos para notificar outros Objetos — que ele desconhece ou ignora — que podem ou não estar inseridos no mesmo contexto ou trabalho em andamento.</p>
+
+<p>Por exemplo:
+Dois mecânicos estão fazendo um belo trabalho na montagem de um motor recem retificado, a sirene sinalizando a hora do almoço toca. Eles largam suas ferramentas e vão almoçar.</p>
+
+<p>Podemos dizer que eles estavam <em>aguardando</em> esse Evento? Sim. Deviam estar anciosos para o almoço…</p>
+
+<p>Então todo evento é <em>aguardado</em> pelos Objetos?</p>
+
+<p>Creio que sim. Pelo menos no mundo computacional.</p>
+
+<p>Os Objetos em sistemas computacionais não tem <em>sentidos</em> como os seres humanos. Os 5 sentidos humanos são como interpretadores de todo tipo de Evento que pode ocorrer ao seu redor. Então, sim, aguardamos por qualquer tipo de Evento que possa ocorrer, pois temos a capacidade de interpretá-los e tomar uma decisão sobre o que fazer.</p>
+
+<p>Já os Objetos dentro de um software são apenas abstrações de <a href="/posts/objetos-representam-entidades/">entidades</a> do mundo real. Sendo abstrações, eles são construídos de forma minimalista — ou deveriam ser — para representar apenas uma faceta da entidade na qual eles representam. Então temos que implementar apenas os Eventos essenciais que essa abstração deveria aguardar. Caso ocorram.</p>
+
+<p>Um evento é uma notificação que um Objeto faz a quem estiver interessado. O Objeto (emissor) não sabe a quem está enviando a notificação.</p>
+
+<p>Em outras palavras, é o receptor que deve ter conhecimento sobre como será emitido o evento no transmissor, ou seja, sua Interface.</p>
+
+<h2 id="implementacao">Implementação</h2>
+
+<p>A implementação de um Evento, em qualquer linguagem de programação, pode ser definida basicamente como um <em>ponteiro para uma função</em>.</p>
+
+<p>Essa foi a maneira que o Delphi implementou os Eventos dos <em>widgets</em> de um Formulário.</p>
+
+<p>Um clique num botão, por exemplo, é um ponteiro para uma função que está definida fora da instância do botão (Classe TButton e/ou derivados).</p>
+
+<p>A implementação dessa função normalmente está localizada no Formulário onde o botão está inserido.</p>
+
+<pre><code>procedure TForm1.Button1Click(Sender: TObject);
+begin
+  ShowMessage('Clicked');
+end;
 </code></pre>
 
-<p>O construtor tem um argumento do tipo <code>string</code> e o usuário da classe poderia passar qualquer
-valor como um SQL válido, mas também letras, números ou até mesmo uma string em branco.</p>
+<p>No código acima <code>Button1Click</code> é um método da Classe <code>TForm1</code>.</p>
 
-<p>Precisamos saber se o SQL é válido antes da hora de chamar <code>Execute</code>? <strong>Não</strong>.</p>
+<p>No <em>design</em> do Formulário (arquivo *.dfm ou *.lfm) haverá um código como abaixo:</p>
 
-<p>Existem validações simples como verificar se uma <code>string</code> está em branco, mas há outras validações
-muito mais complexas.</p>
+<pre><code>object Button1: TButton
+  Left = 102
+  Height = 25
+  Top = 72
+  Width = 75
+  Caption = 'Button1'
+  OnClick = Button1Click
+  TabOrder = 0
+end
+</code></pre>
 
-<p>Para validar a classe acima seria muito complexo.</p>
+<p>Em <em>runtime</em> o compilador irá configurar o evento <code>OnClick</code> — uma propriedade do tipo <code>TNotifyEvent</code> — da instância <code>Button1</code> para utilizar a “função” <code>Button1Click</code>.</p>
 
-<p>Por que?</p>
+<p>Essa é a “maneira clássica” de utilizarmos Eventos.</p>
 
-<p>Você teria que validar a sintaxe do SQL,
-talvez utilizando <em>Regular Expression</em> (RegExpr). Se tivéssemos Objetos que implementam RegExpr, então
-teríamos muitas instâncias de Objetos para validar a <code>string</code>. São Objetos, que chamam outros, que chamam outros…</p>
-
-<p>E, mesmo depois de toda essa validação sintática, a execução do SQL ainda poderia gerar erro! A tabela não existe,
-o nome da coluna foi digitado errado, etc.</p>
-
-<p>Pior. Talvez o algoritmo em execução nem precisasse chamar esse Objeto, talvez o usuário tenha cancelado a operação
-antes… então você perdeu tempo validando e nem precisou executar o <em>Script</em>!</p>
-
-<p>Se tudo são Objetos, eles devem ser criados <strong>antes</strong> de serem validados. Essa operação deve ocorrer o <strong>mais rápido</strong>
-possível, no <strong>menor custo</strong> computacional possível, mesmo em “estado inválido”.</p>
-
-<p>Em outro momento ele será validado pois não há como validar algo que ainda não existe!</p>
-
-<p>Ainda não concorda?</p>
-
-<p>Então vamos ver um exemplo no mundo real.</p>
-
-<p>Para fazer um bom prato você precisa ter bons ingredientes. Um <em>Spaghetti a Lá Carbonara</em> precisa de uns 4 ovos — eu
-gosto de fazer esse prato — bacon, queijo parmesão…
-No <a href="https://en.wikipedia.org/wiki/Mise_en_place">Mise en place</a> você precisa bater os ovos e misturar com parmesão; 
-então você vai quebrando os ovos e descobre que um deles está podre (estado inválido). Você não vai utilizá-lo.
-Esse Objeto não serve… mas ele existe! Estava lá, junto com os outros “ovos válidos”. Ele ocupava espaço, tinha a 
-mesma aparência dos demais mas estava “inválido”. O mundo é assim.</p>
+<p>É uma maneira <em>simples</em> e <em>eficaz</em>, porém primitiva — mas eu não estou dizendo isso de maneira perjorativa.</p>
 
 <blockquote>
-  <p>Se existisse um mundo onde todos os Objetos fossem validados antes de serem criados, então seria um mundo perfeito com Objetos perfeitos.</p>
+  <p>Primitivo: que é o primeiro a existir; que coincide com a origem de algo; inicial, primevo, original.</p>
 </blockquote>
 
-<p>A <a href="https://en.wikipedia.org/wiki/The_Matrix">Matrix</a> tentou criar um mundo assim — ou foram 3, talvez 4? Não lembro — 
-mas não deu muito certo… ao que parece os seres humanos precisam de estado inválido e não lidam bem com perfeição 
-— o primeiro filme da série foi o melhor, não é? :)</p>
+<p>Vamos ver outra maneira de utilizarmos Eventos, apenas com Classes sem a necessidade de propriedades com <a href="/posts/getters-e-setters/"><em>Getters/Setters</em></a>.</p>
 
-<p>Se nosso <strong>mundo real</strong> foi “implementado” assim, contendo “Objetos com estado inválido”, porque você acha que 
-seus Objetos são — ou deveriam ser — mais <strong>perfeitos</strong> do que os objetos do mundo real, do qual eles representam?</p>
+<p>Vou utilizar esse exemplo de Classe Log <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo">aqui</a> como base:</p>
+
+<script src="https://gist.github.com/mdbs99/c5da3c1d04894b7ee949aa1f7735aade.js"></script>
+
+<p>As mensagens desse programa serão:</p>
+
+<ol>
+  <li>“log start”</li>
+  <li>“log finish”</li>
+  <li>“clicked”</li>
+</ol>
+
+<p>Temos algumas diferenças entre o primeiro exemplo (Button1) e este último (Log).</p>
+
+<p>Ao invés da Classe <code>TLogInMemory</code> possuir 2 propriedades do tipo <code>TLogNotifyEvent</code> para implementar os eventos, ela recebe os “ponteiros” no construtor e isso simplifica muita coisa.</p>
+
+<p><em>Primeiro</em>, não precisamos definir as propriedades na Interface <code>ILog</code>, mantendo-a limpa. Caso essas propriedades fossem definidas na Interface, obrigatoriamente teríamos que definir 3 linhas para cada propriedade:</p>
+
+<pre><code>property OnStart: TLogNotifyEvent 
+             read GetOnStart 
+            write SetOnStart;
+</code></pre>
+
+<ol>
+  <li>A propriedade em si</li>
+  <li>O método GetOnStart</li>
+  <li>O método SetOnStart</li>
+</ol>
+
+<p>Como Interfaces não possuem atributos, os Métodos de leitura e escrita teríam que ser definidos na Interface e implementados em todas as Classes.</p>
+
+<p>Bem <em>verboso</em>, não?</p>
+
+<p><em>Segundo</em>, não precisamos definir nenhuma propridade em <code>TLogInMemory</code> mesmo que não houvessem os <em>Getters/Setters</em>.</p>
+
+<p><em>Terceiro</em>, uma vez definido os eventos, não podemos modificá-los deixando a Classe <a href="/posts/objetos-imutaveis/">imutável</a>.</p>
+
+<p>Simples e elegante.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Os Eventos fazem parte de qualquer sistema. Podemos tirar proveito dessa técnica primária para deixar nossos Objetos com comportamento mais dinâmico.</p>
+
+<p>O acoplamento entre os Objetos é reduzido. O transmissor do Evento não sabe quem irá recebê-los, o que é ótimo.</p>
+
+<p>Essa é a forma mais básica e limpa para utilizarmos Eventos no <em>Object Pascal</em>, mas não é a única.</p>
+
+<p>E se quisermos que mais de um Objeto seja notificado?</p>
+
+<p>Não seria melhor utilizarmos Objetos ao invés de simples ponteiros para função?</p>
+
+<p>Bem, essas são perguntas que poderão ser respondidas em outro artigo.</p>
 
 <p>Até logo.</p>
 
@@ -298,33 +363,33 @@ seus Objetos são — ou deveriam ser — mais <strong>perfeitos</strong> do que
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/validacoes-no-construtor/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/eventos-e-objetos" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Validações no Construtor&via=mdbs99;url=http://objectpascalprogramming.com/posts/validacoes-no-construtor/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Eventos e Objetos&via=mdbs99;url=http://objectpascalprogramming.com/eventos-e-objetos" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/validacoes-no-construtor/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/eventos-e-objetos" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/validacoes-no-construtor/&title=Validações no Construtor" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/validacoes-no-construtor/&title=Validações no Construtor" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/eventos-e-objetos&title=Eventos e Objetos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/validacoes-no-construtor/&t=Validações no Construtor" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/eventos-e-objetos&title=Eventos e Objetos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/eventos-e-objetos&t=Eventos e Objetos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -362,15 +427,6 @@ seus Objetos são — ou deveriam ser — mais <strong>perfeitos</strong> do que
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/eventos-e-objetos" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Eventos e Objetos</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/organizacao-de-projetos" class="post-link">
@@ -453,6 +509,15 @@ seus Objetos são — ou deveriam ser — mais <strong>perfeitos</strong> do que
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/posts/constantes-publicas/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Constantes Públicas</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -460,8 +525,8 @@ seus Objetos são — ou deveriam ser — mais <strong>perfeitos</strong> do que
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/validacoes-no-construtor';
-      var disqus_title      = 'Validações no Construtor';
+      var disqus_identifier = '/eventos-e-objetos';
+      var disqus_title      = 'Eventos e Objetos';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
