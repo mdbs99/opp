@@ -8,6 +8,152 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Observando Objetos</title>
+        <description>&lt;p&gt;Um semáforo de trânsito está prestes a mudar de vermelho para verde e vários pedestres estão aguardando para atravessar a rua.&lt;/p&gt;
+
+&lt;p&gt;A mudança de estado do semáforo irá impactar a vida de apenas algumas pessoas, ou seja, só daquelas que estão realmente interessadas, aguardando e observando este Evento que irá ocorrer em breve.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-hermes-rivera-253620.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;No &lt;a href=&quot;/eventos-e-objetos&quot;&gt;artigo anterior&lt;/a&gt; escrevi sobre &lt;a href=&quot;/eventos-e-objetos#eventos&quot;&gt;Eventos&lt;/a&gt; que ocorrem entre dois Objetos e como eles podem ser implementados de forma bem simples.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo iremos implementar Eventos que possam notificar mais de um Objeto de uma só vez.&lt;/p&gt;
+
+&lt;h2 id=&quot;observer-pattern&quot;&gt;Observer Pattern&lt;/h2&gt;
+
+&lt;p&gt;Você pode utilizar um Evento para mostrar um &lt;em&gt;ProgressBar&lt;/em&gt; enquanto um processamento está ocorrendo ou notificar o usuário quando algum outro processo terminar.&lt;/p&gt;
+
+&lt;p&gt;No entanto, em todos esses casos, os Eventos ocorrem entre apenas 2 Objetos: Transmissor e Receptor.&lt;/p&gt;
+
+&lt;p&gt;Há casos, porém, onde o Transmissor deverá notificar mais de um Receptor.&lt;/p&gt;
+
+&lt;p&gt;Há um padrão de implementação conhecido chamdo de &lt;a href=&quot;https://en.wikipedia.org/wiki/Observer_pattern&quot;&gt;&lt;em&gt;Observer Pattern&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas ao invés de só implementarmos o &lt;em&gt;Observer Pattern&lt;/em&gt; na sua forma clássica, utilizando seus termos como &lt;em&gt;Subject&lt;/em&gt; e &lt;em&gt;Observers&lt;/em&gt;, vamos entender como esse padrão funciona, utilizando uma abordagem mais direta, simples e &lt;em&gt;“Pascalized”&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;implementacao&quot;&gt;Implementação&lt;/h2&gt;
+
+&lt;p&gt;A maneira mais óbvia — ou talvez a única — para implementar uma notificação que seja propagada não em apenas um ponto do código, mas sim em infinitos pontos ou infinitos Objetos, é utilizando uma simples… &lt;em&gt;lista&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;A pergunta é: Onde estará a instância dessa lista?&lt;/p&gt;
+
+&lt;p&gt;A lista é global? Com certeza não, pois não trabalhamos com variáveis globais.&lt;/p&gt;
+
+&lt;p&gt;A lista é implementada no Objeto transmissor? Também não, pois o transmissor — no exemplo é um semáforo — não dá a mínima para quem o está observando. O transmissor apenas dá a &lt;em&gt;possíbilidade&lt;/em&gt; de observação do evento, aceitando um ponteiro para o evento no &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt;, primário ou secundário.&lt;/p&gt;
+
+&lt;p&gt;Se não houvesse ninguém para observar o semáforo, ele iria parar de funcionar? Não! Portanto a &lt;em&gt;responsabilidade&lt;/em&gt; de notificação a vários Objetos não é do transmissor original.&lt;/p&gt;
+
+&lt;p&gt;Então a lista é implementada em algum outro Objeto? Com certeza!&lt;/p&gt;
+
+&lt;h3 id=&quot;exemplo-1&quot;&gt;1-Notificando um Objeto&lt;/h3&gt;
+
+&lt;p&gt;Primeiramente vamos implementar um Evento simples, como no último artigo.&lt;/p&gt;
+
+&lt;p&gt;Teremos um Objeto &lt;code&gt;Semaphore&lt;/code&gt;, que será o objeto transmissor de um Evento: Sempre que haver mudança de cor, o evento será disparado.&lt;/p&gt;
+
+&lt;p&gt;Como estamos trabalhando com Orientação a Objetos, antes precisamos definir o &lt;a href=&quot;/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos&quot;&gt;contrato&lt;/a&gt;, ou seja, a Interface que representa a entidade Semáforo.&lt;/p&gt;
+
+&lt;p&gt;Veja o código baixo.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/acfb7acf71670182b6cf509c51540949.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Vamos entender o código acima:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Há uma Interface &lt;code&gt;ISemaphore&lt;/code&gt; com apenas um Método &lt;code&gt;Color&lt;/code&gt;. Não há Eventos na Interface.&lt;/li&gt;
+  &lt;li&gt;O tipo &lt;code&gt;TChangeEvent&lt;/code&gt; é a assinatura do Evento.&lt;/li&gt;
+  &lt;li&gt;A classe &lt;code&gt;TSemaphore&lt;/code&gt; implementa a Interface &lt;code&gt;ISemaphore&lt;/code&gt;. Novamente, também não há Eventos na definição da Classe, apenas no construtor. O ato de notificação através de Eventos é um &lt;strong&gt;detalhe de implementação&lt;/strong&gt; e não faz parte da entidade na qual a Interface e a Classe &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;representam&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;A Classe &lt;code&gt;TSemaphore&lt;/code&gt; instância um &lt;code&gt;TTimer&lt;/code&gt;. É através desse &lt;em&gt;timer&lt;/em&gt; que a mudança de cores irá ocorrer (a cada 2 segundos).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Agora, num novo projeto, adicionem um &lt;code&gt;TShape&lt;/code&gt; num &lt;code&gt;TForm&lt;/code&gt;, alterem a &lt;code&gt;property Shape&lt;/code&gt; para &lt;code&gt;stCircle&lt;/code&gt; e utilize o código abaixo:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/f4221d8c6be58201bbb5a82da26fe1a3.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;O código acima é &lt;em&gt;simples&lt;/em&gt;, &lt;em&gt;elegante&lt;/em&gt;, &lt;em&gt;Orientado a Objetos&lt;/em&gt; e não possui &lt;em&gt;Setters&lt;/em&gt;, nem mesmo para o Evento.&lt;/p&gt;
+
+&lt;p&gt;Se você fez tudo certo, verá algo parecido com a imagem abaixo — e a cada 2 segundos a cor é alterada.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/screenshot-semaphore-1.jpg&quot; alt=&quot;semaphore&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Mas, mesmo que tudo esteja funcionando, temos apenas 1 Objeto (o &lt;em&gt;Form&lt;/em&gt;) que está “observando” o Evento de mudança de cor do semáforo.&lt;/p&gt;
+
+&lt;p&gt;O que queremos é poder notificar “N” Objetos de uma só vez.&lt;/p&gt;
+
+&lt;h3 id=&quot;exemplo-2&quot;&gt;2-Notificando muitos Objetos&lt;/h3&gt;
+
+&lt;p&gt;Para notificar muitos Objetos precisamos de uma lista com os Objetos previamente adicionados.&lt;/p&gt;
+
+&lt;p&gt;Vamos modificar o código existe e adicionar mais Interfaces e Classes.&lt;/p&gt;
+
+&lt;p&gt;Essas são as Interfaces:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/b5ebdc91138eb140bce07f5ef0dde976.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;São mais duas Interfaces com nomes bem genéricos. Talvez, num projeto maior, seus nomes poderiam ser &lt;code&gt;ISemaphoreObserver&lt;/code&gt; e &lt;code&gt;ISemaphoreObservers&lt;/code&gt; respectivamente, afim de diminuir as chances de haver conflito de nomes. Mas isso é irrelevante por enquanto.&lt;/p&gt;
+
+&lt;p&gt;Sendo nomes genéricos, eu posso implementar em Classes bem distintas que, inicialmente, não teriam nada haver com o contexto de Semáforo.&lt;/p&gt;
+
+&lt;p&gt;Confuso?&lt;/p&gt;
+
+&lt;p&gt;Vamos a um exemplo de implementação: &lt;em&gt;Pessoas&lt;/em&gt; que gostariam de ser notificadas a respeito das mudanças do semáforo:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/74622575318450edc1fc40b8cd265f85.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Vamos entender o código acima:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Primeiramente, o &lt;em&gt;GUID&lt;/em&gt; na Interface &lt;code&gt;IObserver&lt;/code&gt; serve apenas para ser possível fazer o &lt;em&gt;casting&lt;/em&gt; no método &lt;code&gt;Get&lt;/code&gt; de &lt;code&gt;TPeople&lt;/code&gt;. Fique a vontade para usar &lt;em&gt;Generics&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;A Interface &lt;code&gt;IObservers&lt;/code&gt; é um subtipo de &lt;code&gt;IObserver&lt;/code&gt; apenas para aproveitar a definição do método &lt;code&gt;Changed&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;O método &lt;code&gt;Changed&lt;/code&gt; faz parte da definição da Interface &lt;code&gt;IObserver&lt;/code&gt;, sim, porque a entidade que ela representa necessita: Um observador precisa saber das mudanças do Objeto observado.&lt;/li&gt;
+  &lt;li&gt;Um Objeto &lt;code&gt;TPeople&lt;/code&gt; é apenas uma lista que irá repassar o Evento para seus itens.&lt;/li&gt;
+  &lt;li&gt;Quando um Objeto &lt;code&gt;TPerson&lt;/code&gt; tem seu método &lt;code&gt;Changed&lt;/code&gt; chamado na lista, ele irá gerar um novo Evento &lt;code&gt;OnStatus&lt;/code&gt;. Esse “status” é apenas para notificar o que o Objeto está fazendo.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Ok. Só falta agora ligar tudo isso junto.&lt;/p&gt;
+
+&lt;p&gt;Vamos alterar um pouco o código inicial do &lt;em&gt;Form&lt;/em&gt;:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/31851f1e8e5d70f893ab84c0df2614f7.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Vamos entender o código acima:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Adicionei um &lt;code&gt;TMemo&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Adicionei um método privado &lt;code&gt;PersonStatus&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Renomeei &lt;code&gt;FSemaphore&lt;/code&gt; para &lt;code&gt;FSemaphore1&lt;/code&gt; e criei outro do mesmo tipo.&lt;/li&gt;
+  &lt;li&gt;Adicionei um atributo &lt;code&gt;FPeople&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Por fim foi alterado o &lt;code&gt;FormCreate&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Acho que você já entendeu o que irá ocorrer aqui, certo?&lt;/p&gt;
+
+&lt;p&gt;Se você replicou tudo certo aí, verá uma imagem parecida com essa abaixo:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/screenshot-semaphore-2.jpg&quot; alt=&quot;semaphore&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Utilizar Eventos não quer dizer, necessariamente, que você está utilizando RAD.&lt;/p&gt;
+
+&lt;p&gt;Eventos são necessários para unir duas peças que, talvez, não tenham nada em comum mas que precisam se comunicar.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo tentei mostrar uma maneira de implementar eventos de forma mais Orientada a Objetos, utilizando Interfaces e Classes e não apenas ponteiros para métodos.&lt;/p&gt;
+
+&lt;p&gt;Mostrei que a lista de notificações não deve ficar no transmissor. Assim poderíamos acrescentar mais listas de notificações. Listas que notificam listas, se necessário. E os itens dessas listas poderiam ser instâncias de Classes complemente diferentes umas das outras, assim como o que iriam fazer — seu comportamento — ao receber a notificação da lista. Isso deixa nosso código bem extensível, sem que precisemos alterar o que já foi concluído.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 22 May 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/observando-objetos</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/observando-objetos</guid>
+      </item>
+    
+      <item>
         <title>Eventos e Objetos</title>
         <description>&lt;p&gt;Quando o semáforo de trânsito muda de vermelho para verde, isso é considerado um Evento ou uma Mensagem entre Objetos (motorista e semáforo)?&lt;/p&gt;
 
@@ -1337,73 +1483,6 @@ Stored Procedures podem  reduzir o tráfego na rede, visto que os comandos são 
         <pubDate>Mon, 06 Mar 2017 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/posts/como-utilizar-heranca-apropriadamente/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/como-utilizar-heranca-apropriadamente/</guid>
-      </item>
-    
-      <item>
-        <title>Classes de Exceção</title>
-        <description>&lt;p&gt;Devemos codificar uma Classe para cada tipo de Exceção ou utilizar apenas um único tipo?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-hans-eiskonen-136904.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;O conceito de Exceção foi criado para simplificar o código, removendo condicionais e verificações, para que o programador fique focado na lógica que o programa deve fazer ao invés de se preocupar em testar cada linha do código.&lt;/p&gt;
-
-&lt;p&gt;A idéia principal é fazer com que todos os possíveis erros (exceções) sejam concentrados e verificados num ponto em comum.&lt;/p&gt;
-
-&lt;p&gt;Esse ponto em comum pode ser único para todo o sistema, mas também pode ser um ponto em comum por Módulo, por &lt;em&gt;Unit&lt;/em&gt;, por Classe. Depende. Mas isso é um assunto para outro artigo.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo o foco é outro. Vamos ter uma conversa se devemos criar ou não novos tipos de exceção para cada tipo de erro ou problema.&lt;/p&gt;
-
-&lt;h2 id=&quot;classes-de-excecao&quot;&gt;Classes de Exceção&lt;/h2&gt;
-
-&lt;p&gt;Divisão por zero. Erro na leitura de um &lt;em&gt;stream&lt;/em&gt;. Erro de banco de dados…&lt;/p&gt;
-
-&lt;p&gt;Temos Classes de Exceção definida para cada um desses erros. Em qualquer linguagem é assim.&lt;/p&gt;
-
-&lt;p&gt;Por quê?&lt;/p&gt;
-
-&lt;p&gt;Não é para tomada de decisões, com certeza. Você não deve mudar o fluxo de um programa de acordo com a exceção gerada. Todas as exceções tem um único objetivo: parar o fluxo normal do programa.&lt;/p&gt;
-
-&lt;p&gt;Para o usuário não importa o Tipo da Classe, mas sim a &lt;strong&gt;mensagem&lt;/strong&gt; que é exibida quando um erro ocorre.&lt;/p&gt;
-
-&lt;p&gt;Uma exceção define um ponto de ruptura no fluxo do código. A execução normal é interrompida e o fluxo vai para o ponto de tratamento das exceções.&lt;/p&gt;
-
-&lt;p&gt;Então não haveria necessidade de criar novos tipos de Classes.
-Basta informar ao usuário o que ocorreu. A mensagem.&lt;/p&gt;
-
-&lt;p&gt;No entanto… eu vejo um motivo para criar novos Tipos de Exceções: &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/&quot;&gt;Reaproveitamento&lt;/a&gt; de código.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo, se um arquivo não é encontrado poderíamos gerar uma exceção do tipo &lt;code&gt;Exception&lt;/code&gt; — a exceção mais genérica — ou criar uma nova Classe &lt;code&gt;EFileNotFound&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Para dar a informação ao usuário, as duas exceções abaixo são equivalentes:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;raise Exception.CreateFmt(&#39;File %s not found&#39;, [&#39;foo.txt&#39;]);
-
-raise EFileNotFound.Create(&#39;foo.txt&#39;);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A diferença é que &lt;code&gt;EFileNotFound&lt;/code&gt; já encapsula a mensagem &lt;em&gt;“File %s not found”&lt;/em&gt; e não precisamos repetir a mesma mensagem toda vez que quisermos dizer ao usuário que um arquivo não foi encontrado.&lt;/p&gt;
-
-&lt;p&gt;Assim fica fácil mudar a mensagem num único ponto no código.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Não utilize Tipos de Classes de Exceção para controlar o fluxo do programa. Isso é errado.&lt;/p&gt;
-
-&lt;p&gt;Toda Exceção &lt;em&gt;deve&lt;/em&gt; definir um ponto de ruptura. Algo de muito errado aconteceu. Para tudo. Não importa o Tipo de Classe.&lt;/p&gt;
-
-&lt;p&gt;Para o usuário apenas a mensagem importa. Basta ser bem explicativa.&lt;/p&gt;
-
-&lt;p&gt;Devemos criar novas Classe de Exceção apenas para reaproveitar e encapsular informações.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 20 Feb 2017 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/classes-de-excecao/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/classes-de-excecao/</guid>
       </item>
     
   </channel>

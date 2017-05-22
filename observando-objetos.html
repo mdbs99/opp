@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Métodos Getters e Setters &#8211; Object Pascal Programming</title>
+    <title>Observando Objetos &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Não codifique Classes anêmicas como se fosse um balde de dados.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="OO">
-    <meta name="keywords" content="getter, setter, evil">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/getters-e-setters/">
+    <meta name="keywords" content="Projeto">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, eventos, events, observador, observer">
+    <link rel="canonical" href="http://objectpascalprogramming.com/observando-objetos">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Métodos Getters e Setters">
-    <meta property="og:description" content="Não codifique Classes anêmicas como se fosse um balde de dados.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/getters-e-setters/">
+    <meta property="og:title" content="Observando Objetos">
+    <meta property="og:description" content="Nesse artigo iremos implementar Eventos que possam notificar mais de um Objeto de uma só vez.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/observando-objetos">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1466921583968-f07aa80c526e.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-hermes-rivera-253620.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Métodos Getters e Setters" />
-    <meta name="twitter:description" content="Não codifique Classes anêmicas como se fosse um balde de dados." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/getters-e-setters/" />
+    <meta name="twitter:title" content="Observando Objetos" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/observando-objetos" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,78 +191,153 @@
 
 
 <div class="post-header mb2">
-  <h1>Métodos Getters e Setters</h1>
-  <span class="post-meta">Jun 27, 2016</span><br>
+  <h1>Observando Objetos</h1>
+  <span class="post-meta">May 22, 2017</span><br>
   
   <span class="post-meta small">
   
-    3 minute read
+    5 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Seus Objetos representam alguma Entidade real ou são apenas um “balde de dados e funções”? Classes que possuem somente métodos <code>Get/Set</code> não geram Objetos reais seguindo o real conceito da Orientação a Objetos.</p>
+  <p>Um semáforo de trânsito está prestes a mudar de vermelho para verde e vários pedestres estão aguardando para atravessar a rua.</p>
+
+<p>A mudança de estado do semáforo irá impactar a vida de apenas algumas pessoas, ou seja, só daquelas que estão realmente interessadas, aguardando e observando este Evento que irá ocorrer em breve.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1466921583968-f07aa80c526e.jpg" alt="Imagem" /></p>
+<p><img src="/images/2017/photo-hermes-rivera-253620.jpg" alt="Unsplash image" /></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>Os Objetos devem ter métodos para interagir com o mundo exterior. Esses métodos podem executar ações e retornar outros Objetos. No entanto o mundo exterior não deveria ter o conhecimento se os Objetos ou valores retornados nesses métodos fazem ou não parte do Estado interno dos Objetos.</p>
+<p>No <a href="/eventos-e-objetos">artigo anterior</a> escrevi sobre <a href="/eventos-e-objetos#eventos">Eventos</a> que ocorrem entre dois Objetos e como eles podem ser implementados de forma bem simples.</p>
 
-<blockquote>
-  Ao projetar com cuidado e se concentrar no que você deve fazer ao invés de como você vai fazer, elimina a grande maioria dos métodos getters/setters em seu programa.
-  <footer><cite title="JavaWorld">— Why getter and setter methods are evil, JavaWorld</cite></footer>
-</blockquote>
+<p>Nesse artigo iremos implementar Eventos que possam notificar mais de um Objeto de uma só vez.</p>
 
-<p>Muitos programadores não entendem ou ignoram esse conceito.</p>
+<h2 id="observer-pattern">Observer Pattern</h2>
 
-<p>Um Objeto não deve representar um <a href="/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados">registro numa tabela</a>, mas sim <a href="/posts/objetos-representam-entidades/">Entidades</a> exteriores ao sistema no qual o Objeto foi criado.</p>
+<p>Você pode utilizar um Evento para mostrar um <em>ProgressBar</em> enquanto um processamento está ocorrendo ou notificar o usuário quando algum outro processo terminar.</p>
 
-<h2 id="getters">Métodos Getters</h2>
+<p>No entanto, em todos esses casos, os Eventos ocorrem entre apenas 2 Objetos: Transmissor e Receptor.</p>
 
-<p>Os métodos <code>Getters</code> são, conceituamente, mal entendidos e erroneamente utilizados. Por exemplo. Se você tem um método <code>GetName</code>, público, que retorna um atributo <code>FName: string</code> que faz parte do Estado do Objeto, conceitualmente falando, fica <strong>explícito</strong> para o mundo exterior que informações internas do Objeto estão sendo retornadas apenas porque estamos utilizando o prefixo <code>Get</code>.</p>
+<p>Há casos, porém, onde o Transmissor deverá notificar mais de um Receptor.</p>
 
-<p>Essa é uma forma de <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">Violação de Encapsulamento</a>. No entanto é uma <strong>violação teórica</strong>, baseada apenas na intenção da nomenclatura escolhida para o método.</p>
+<p>Há um padrão de implementação conhecido chamdo de <a href="https://en.wikipedia.org/wiki/Observer_pattern"><em>Observer Pattern</em></a>.</p>
 
-<p>Repito. É uma violação <strong>teórica</strong>. Isso quer dizer que não tem efeito prático em utilizar ou não o prefixo <code>Get</code>. Mas estou falando de intenção, ou seja, qual será o trabalho do método. Usar <code>Get</code> como prefixo dá a entender que <strong>algo interno será dado a quem pede</strong>. E isso não é bom.</p>
+<p>Mas ao invés de só implementarmos o <em>Observer Pattern</em> na sua forma clássica, utilizando seus termos como <em>Subject</em> e <em>Observers</em>, vamos entender como esse padrão funciona, utilizando uma abordagem mais direta, simples e <em>“Pascalized”</em>.</p>
 
-<p>Mas a linguagem <em>Object Pascal</em> tem <em>properties</em> — o mesmo conceito em C# — e não precisamos utilizar métodos <code>Get</code>, encapsulando do mundo exterior como a informação será processada antes de ser retornada. Pode vir de um método <code>Get</code> privado ou diretamente do atributo. Ponto positivo para o <em>Object Pascal</em>.</p>
+<h2 id="implementacao">Implementação</h2>
 
-<h2 id="setters">Métodos Setters</h2>
+<p>A maneira mais óbvia — ou talvez a única — para implementar uma notificação que seja propagada não em apenas um ponto do código, mas sim em infinitos pontos ou infinitos Objetos, é utilizando uma simples… <em>lista</em>.</p>
 
-<p>Bem, se deixar o mundo exterior bisbilhotar dentro de um Objeto utilizando seus métodos <code>Getters</code> públicos para obter todo o seu Estado interno é ruim, imagine então permitir alterações no Estado desse Objeto utilizando métodos <code>Setters</code>.</p>
+<p>A pergunta é: Onde estará a instância dessa lista?</p>
 
-<blockquote>
-  Um Objeto não pode ter seu estado interno alterado, pois
-  isso entraria em conflito com a realidade da Entidade na
-  qual ele representa.
-  <footer><cite title="eBook OPP">eBook — @ObjectPascalProgramming</cite></footer>
-</blockquote>
+<p>A lista é global? Com certeza não, pois não trabalhamos com variáveis globais.</p>
 
-<p>Objetos devem ser Imutáveis.</p>
+<p>A lista é implementada no Objeto transmissor? Também não, pois o transmissor — no exemplo é um semáforo — não dá a mínima para quem o está observando. O transmissor apenas dá a <em>possíbilidade</em> de observação do evento, aceitando um ponteiro para o evento no <a href="/posts/construtores-da-classe-primario-secundarios/">construtor</a>, primário ou secundário.</p>
 
-<p>Objetos Imutáveis são livres de efeitos colaterais externos. Eles são criados representando um momento específico no tempo e devem permanecer inalterados até a sua morte.</p>
+<p>Se não houvesse ninguém para observar o semáforo, ele iria parar de funcionar? Não! Portanto a <em>responsabilidade</em> de notificação a vários Objetos não é do transmissor original.</p>
 
-<p>Esse é um conceito muito menos abstrato do que a violação de encapsulamento utilizando <code>Getters</code>, mas pode ser ainda mais difícil de entender. E é por isso que terei que falar sobre imutabilidade em outro artigo.</p>
+<p>Então a lista é implementada em algum outro Objeto? Com certeza!</p>
+
+<h3 id="exemplo-1">1-Notificando um Objeto</h3>
+
+<p>Primeiramente vamos implementar um Evento simples, como no último artigo.</p>
+
+<p>Teremos um Objeto <code>Semaphore</code>, que será o objeto transmissor de um Evento: Sempre que haver mudança de cor, o evento será disparado.</p>
+
+<p>Como estamos trabalhando com Orientação a Objetos, antes precisamos definir o <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contrato</a>, ou seja, a Interface que representa a entidade Semáforo.</p>
+
+<p>Veja o código baixo.</p>
+
+<script src="https://gist.github.com/mdbs99/acfb7acf71670182b6cf509c51540949.js"></script>
+
+<p>Vamos entender o código acima:</p>
+
+<ol>
+  <li>Há uma Interface <code>ISemaphore</code> com apenas um Método <code>Color</code>. Não há Eventos na Interface.</li>
+  <li>O tipo <code>TChangeEvent</code> é a assinatura do Evento.</li>
+  <li>A classe <code>TSemaphore</code> implementa a Interface <code>ISemaphore</code>. Novamente, também não há Eventos na definição da Classe, apenas no construtor. O ato de notificação através de Eventos é um <strong>detalhe de implementação</strong> e não faz parte da entidade na qual a Interface e a Classe <a href="/posts/objetos-representam-entidades/">representam</a>.</li>
+  <li>A Classe <code>TSemaphore</code> instância um <code>TTimer</code>. É através desse <em>timer</em> que a mudança de cores irá ocorrer (a cada 2 segundos).</li>
+</ol>
+
+<p>Agora, num novo projeto, adicionem um <code>TShape</code> num <code>TForm</code>, alterem a <code>property Shape</code> para <code>stCircle</code> e utilize o código abaixo:</p>
+
+<script src="https://gist.github.com/mdbs99/f4221d8c6be58201bbb5a82da26fe1a3.js"></script>
+
+<p>O código acima é <em>simples</em>, <em>elegante</em>, <em>Orientado a Objetos</em> e não possui <em>Setters</em>, nem mesmo para o Evento.</p>
+
+<p>Se você fez tudo certo, verá algo parecido com a imagem abaixo — e a cada 2 segundos a cor é alterada.</p>
+
+<p><img src="/images/2017/screenshot-semaphore-1.jpg" alt="semaphore" /></p>
+
+<p>Mas, mesmo que tudo esteja funcionando, temos apenas 1 Objeto (o <em>Form</em>) que está “observando” o Evento de mudança de cor do semáforo.</p>
+
+<p>O que queremos é poder notificar “N” Objetos de uma só vez.</p>
+
+<h3 id="exemplo-2">2-Notificando muitos Objetos</h3>
+
+<p>Para notificar muitos Objetos precisamos de uma lista com os Objetos previamente adicionados.</p>
+
+<p>Vamos modificar o código existe e adicionar mais Interfaces e Classes.</p>
+
+<p>Essas são as Interfaces:</p>
+
+<script src="https://gist.github.com/mdbs99/b5ebdc91138eb140bce07f5ef0dde976.js"></script>
+
+<p>São mais duas Interfaces com nomes bem genéricos. Talvez, num projeto maior, seus nomes poderiam ser <code>ISemaphoreObserver</code> e <code>ISemaphoreObservers</code> respectivamente, afim de diminuir as chances de haver conflito de nomes. Mas isso é irrelevante por enquanto.</p>
+
+<p>Sendo nomes genéricos, eu posso implementar em Classes bem distintas que, inicialmente, não teriam nada haver com o contexto de Semáforo.</p>
+
+<p>Confuso?</p>
+
+<p>Vamos a um exemplo de implementação: <em>Pessoas</em> que gostariam de ser notificadas a respeito das mudanças do semáforo:</p>
+
+<script src="https://gist.github.com/mdbs99/74622575318450edc1fc40b8cd265f85.js"></script>
+
+<p>Vamos entender o código acima:</p>
+
+<ol>
+  <li>Primeiramente, o <em>GUID</em> na Interface <code>IObserver</code> serve apenas para ser possível fazer o <em>casting</em> no método <code>Get</code> de <code>TPeople</code>. Fique a vontade para usar <em>Generics</em>.</li>
+  <li>A Interface <code>IObservers</code> é um subtipo de <code>IObserver</code> apenas para aproveitar a definição do método <code>Changed</code>.</li>
+  <li>O método <code>Changed</code> faz parte da definição da Interface <code>IObserver</code>, sim, porque a entidade que ela representa necessita: Um observador precisa saber das mudanças do Objeto observado.</li>
+  <li>Um Objeto <code>TPeople</code> é apenas uma lista que irá repassar o Evento para seus itens.</li>
+  <li>Quando um Objeto <code>TPerson</code> tem seu método <code>Changed</code> chamado na lista, ele irá gerar um novo Evento <code>OnStatus</code>. Esse “status” é apenas para notificar o que o Objeto está fazendo.</li>
+</ol>
+
+<p>Ok. Só falta agora ligar tudo isso junto.</p>
+
+<p>Vamos alterar um pouco o código inicial do <em>Form</em>:</p>
+
+<script src="https://gist.github.com/mdbs99/31851f1e8e5d70f893ab84c0df2614f7.js"></script>
+
+<p>Vamos entender o código acima:</p>
+
+<ol>
+  <li>Adicionei um <code>TMemo</code>.</li>
+  <li>Adicionei um método privado <code>PersonStatus</code>.</li>
+  <li>Renomeei <code>FSemaphore</code> para <code>FSemaphore1</code> e criei outro do mesmo tipo.</li>
+  <li>Adicionei um atributo <code>FPeople</code>.</li>
+  <li>Por fim foi alterado o <code>FormCreate</code>.</li>
+</ol>
+
+<p>Acho que você já entendeu o que irá ocorrer aqui, certo?</p>
+
+<p>Se você replicou tudo certo aí, verá uma imagem parecida com essa abaixo:</p>
+
+<p><img src="/images/2017/screenshot-semaphore-2.jpg" alt="semaphore" /></p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Esse artigo serve para lembrá-lo que codificar Classes que representam registros em tabelas não é Orientação a Objetos.</p>
+<p>Utilizar Eventos não quer dizer, necessariamente, que você está utilizando RAD.</p>
 
-<p>Métodos <code>Getters</code> públicos não são necessários.</p>
+<p>Eventos são necessários para unir duas peças que, talvez, não tenham nada em comum mas que precisam se comunicar.</p>
 
-<p>Métodos <code>Setters</code> ou <em>properties</em> que podem ser alteradas devem ser evitadas a todo custo. Nem todo Objeto pode ser imutável, infelizmente. Objetos <em>widgets</em>, por exemplo, serão mutáveis por conveniência e performance. Mas tente manter seus Objetos de Negócio imutáveis.</p>
+<p>Nesse artigo tentei mostrar uma maneira de implementar eventos de forma mais Orientada a Objetos, utilizando Interfaces e Classes e não apenas ponteiros para métodos.</p>
 
-<p>Podemos remover ambos, <code>Getters/Setters</code>, de nossos sistemas Orientado a Objetos quase por completo. Classes imutáveis não tem <code>Setters</code> e para <code>Getters</code> o Objeto deve passar a informação <strong>ele mesmo</strong> e não <strong>alguém pegar a informação</strong> dele. Falarei sobre isso futuramente.</p>
-
-<p>Se você não precisasse de métodos <code>Setters</code> e utilizar <code>Getters</code> é no mínimo duvidoso, simplifique utilizando somente funções.</p>
-
-<p>Como sempre faço uso de <a href="/posts/interfaces-em-todo-lugar/">Interfaces</a>, eu nunca implemento <em>properties</em> porque seria obrigado a declarar seus métodos de leitura/escrita, ou seja, <code>Get/Set</code>. Esses métodos poderiam ser privados, é claro, mas essa verbosidade é desnecessária se você estiver utilizando Objetos imutáveis.</p>
-
-<p>Você acha que sou o único a pensar dessa maneira? Bem, então <a href="http://www.javaworld.com/article/2073723/core-java/why-getter-and-setter-methods-are-evil.html">aqui está</a> um ótimo artigo que fala sobre o assunto. Foi dele que traduzi a citação no início do artigo. E se quiser mais um, <a href="http://www.yegor256.com/2014/09/16/getters-and-setters-are-evil.html">aqui está</a>. Boa leitura.</p>
+<p>Mostrei que a lista de notificações não deve ficar no transmissor. Assim poderíamos acrescentar mais listas de notificações. Listas que notificam listas, se necessário. E os itens dessas listas poderiam ser instâncias de Classes complemente diferentes umas das outras, assim como o que iriam fazer — seu comportamento — ao receber a notificação da lista. Isso deixa nosso código bem extensível, sem que precisemos alterar o que já foi concluído.</p>
 
 <p>Até logo.</p>
 
@@ -272,33 +349,33 @@
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/getters-e-setters/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/observando-objetos" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Métodos Getters e Setters&via=mdbs99;url=http://objectpascalprogramming.com/posts/getters-e-setters/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Observando Objetos&via=mdbs99;url=http://objectpascalprogramming.com/observando-objetos" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/getters-e-setters/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/observando-objetos" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/getters-e-setters/&title=Métodos Getters e Setters" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/getters-e-setters/&title=Métodos Getters e Setters" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/observando-objetos&title=Observando Objetos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/getters-e-setters/&t=Métodos Getters e Setters" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/observando-objetos&title=Observando Objetos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/observando-objetos&t=Observando Objetos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -336,15 +413,6 @@
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/observando-objetos" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Observando Objetos</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/eventos-e-objetos" class="post-link">
@@ -427,6 +495,15 @@
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/posts/classes-de-excecao/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes de Exceção</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -434,8 +511,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/getters-e-setters';
-      var disqus_title      = 'Métodos Getters e Setters';
+      var disqus_identifier = '/observando-objetos';
+      var disqus_title      = 'Observando Objetos';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
