@@ -1,10 +1,10 @@
 ---
 layout: post
 title: Observando Objetos
-date: 2017-05-21
+date: 2017-05-22
 permalink: /:title
 description:
-
+  Nesse artigo iremos implementar Eventos que possam notificar mais de um Objeto de uma só vez.
 image: /images/2017/photo-hermes-rivera-253620.jpg
 categories: 
   - Projeto
@@ -24,7 +24,7 @@ keywords:
   - observer
 ---
 
-O semáforo de trânsito está prestes a mudar de vermelho para verde e vários pedestres estão aguardando para atravessar a rua.
+Um semáforo de trânsito está prestes a mudar de vermelho para verde e vários pedestres estão aguardando para atravessar a rua.
 
 A mudança de estado do semáforo irá impactar a vida de apenas algumas pessoas, ou seja, só daquelas que estão realmente interessadas, aguardando e observando este Evento que irá ocorrer em breve.
 
