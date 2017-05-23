@@ -63,3 +63,10 @@ Se você escreveu algo parecido e não está na lista, porfavor aponte o link pa
 
 [![Testemunho]({{ page.image_path }}carlosschults.png)](http://carlosschults.net/pt/blogs-desenvolvimento-portugues/#object-pascal-programming)
 
+[![Testemunho]({{ page.image_path }}wilhame-souza.png)](http://objectpascalprogramming.com/observando-objetos#comment-3318718279)
+
+[![Testemunho]({{ page.image_path }}raphael-gomide-2.png)](http://objectpascalprogramming.com/observando-objetos#comment-3318962646)
+
+
+
+
