@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Herança pode ser o Mal da Orientação a Objetos — Parte 1 &#8211; Object Pascal Programming</title>
+    <title>Herdar para Rotular &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Não faça da Herança a sua primeira escolha para reutilizar código.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="OO">
-    <meta name="keywords" content="herança, inheritance, evil, mal, orientação a objetos, oop, poo, encapsulamento, polimorfismo">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">
+    <meta name="keywords" content="Projeto">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, herança, inherited, label, rótulo">
+    <link rel="canonical" href="http://objectpascalprogramming.com/herdar-para-rotular">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Herança pode ser o Mal da Orientação a Objetos — Parte 1">
-    <meta property="og:description" content="Não faça da Herança a sua primeira escolha para reutilizar código.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">
+    <meta property="og:title" content="Herdar para Rotular">
+    <meta property="og:description" content="A Herança de Classe pode ter outras finalidades que você ainda não havia pensado.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/herdar-para-rotular">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1444212477490-ca407925329e.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-matt-briney-160808.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Herança pode ser o Mal da Orientação a Objetos — Parte 1" />
-    <meta name="twitter:description" content="Não faça da Herança a sua primeira escolha para reutilizar código." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" />
+    <meta name="twitter:title" content="Herdar para Rotular" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/herdar-para-rotular" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,138 +191,109 @@
 
 
 <div class="post-header mb2">
-  <h1>Herança pode ser o Mal da Orientação a Objetos — Parte 1</h1>
-  <span class="post-meta">May 23, 2016</span><br>
+  <h1>Herdar para Rotular</h1>
+  <span class="post-meta">May 29, 2017</span><br>
   
   <span class="post-meta small">
   
-    5 minute read
+    3 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Se você utiliza Herança em seu código, especificamente <strong>Herança de Classe</strong>, pode estar
-cometendo um <strong>erro</strong> terrível.</p>
-
-<p>Com o uso da Herança você <strong>viola o encapsulamento</strong> de suas Classes, deixa seu código menos
-<strong>flexível</strong> e mais <strong>complexo</strong>.</p>
-
-<p>Herança de Classe deve ser <strong>evitada</strong> a todo custo.</p>
+  <p>A Herança de Classe pode ter outras finalidades que você ainda não havia pensado.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1444212477490-ca407925329e.jpg" alt="Imagem" /></p>
+<p><img src="/images/2017/photo-matt-briney-160808.jpg" alt="Unsplash image" /></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>Se você já programa utilizando <strong>Orientação a Objetos</strong> há muito tempo, utilizando <strong>Classes e 
-Subclasses</strong> em seu código para “reutilizar” funcionalidades, eu realmente <strong>não</strong> espero que você 
-entenda e concorde comigo tão rapidamente.</p>
+<p>Já escrevi bastante sobre Herança <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">aqui</a> (série de artigos em 5 partes) e vimos o mal que seu uso pode trazer ao código Orientado a Objetos.</p>
 
-<p>Será necessário <strong>tempo</strong>.</p>
+<p>No entanto, assim como uma arma de fogo pode ser inofensiva, pois é o ser humano que faz mal uso da arma, a herança pode ser inofensiva se for utilizada de forma <a href="/posts/como-utilizar-heranca-apropriadamente/">apropriada</a>.</p>
 
-<p>Tempo para digerir as informações. Tempo para uma <strong>releitura</strong>. Tempo para <strong>pesquisas</strong> feitas por
-você mesmo. Tempo para ler sobre <strong>outras linguagens</strong>. Tempo para ler outros <strong>artigos e livros</strong>.</p>
+<p>Nesse artigo você irá ver mais uma forma de uso da Herança de Classe, mas sem sobrescrita de métodos ou uso de propriedades e métodos protegidos.</p>
 
-<p>Depois você poderá formar sua opinião própria. Mas faça isso baseado em <strong>fatos</strong> e não baseado
-em <strong>preconceitos</strong> ou ignorância de informações.</p>
+<p>Vamos utilizar a Herança para <em>rotular</em>.</p>
 
-<p>No fim eu espero veementemente que você junte tudo isso e chegue a mesma conclusão que eu cheguei: 
-<strong>Herança é o Mal</strong>.</p>
+<h2 id="contextualizando">Contextualizando</h2>
 
-<p>E, claro, é importante saber que grandes empresas e desenvolvedores ao redor do mundo já 
-chegaram a mesma conclusão faz muito tempo.</p>
+<p>De vez em quanto eu costumo utilizar Herança de Classe apenas como um rótulo.</p>
 
-<p>Mas porfavor, não pense que estou <strong>abolindo</strong> completamente a Herança. Estou lhe dizendo que ela é má,
-mas mesmo assim haverá momentos em que poderá ser mais <strong>simples</strong> ou eficiente utitilizá-la do que outra 
-abordagem. Por exemplo, um médico pode tomar a decisão de amputar a perna de um paciente para mantê-lo vivo. 
-Não é algo “bom” para se fazer se pensarmos somente na amputação, no entanto pode ser a melhor decisão se 
-você pensar no todo — a sobrevivência do paciente.</p>
+<p>Para que você entenda o benefício do uso de um rótulo, é necessário haver uma contextualização para compararmos o uso do código sem rótulo e, depois, com rótulo.</p>
 
-<p>É o mesmo com a Herança. Você tem essa possibilidade, mas só deverá utilizar em último recurso.</p>
+<p>Vamos ver um exemplo.</p>
 
-<h2 id="heranca">Herança</h2>
+<script src="https://gist.github.com/mdbs99/0676083483d1d9b75f21b8527e6e4897.js"></script>
 
-<p>A Herança é um dos pilares da Orientação a Objetos, assim como <strong>Encapsulamento</strong> e <strong>Polimorfismo</strong>.</p>
+<p>É uma Classe bem simples, apenas para exemplificar o que eu quero lhe mostrar.</p>
 
-<p>Se uma Classe B herda de A, então B <strong>é-um</strong> A. Herança é isso. As Subclasses serão substitutas mais especializadas
-de suas Super Classes.</p>
+<p>Se você não entendeu para que serve o método <em>New</em>, veja sobre ele <a href="/posts/interfaces-e-o-metodo-estatico-new/">aqui</a>.</p>
 
-<p>Quando comecei a estudar Orientação a Objetos — 20 anos atrás — foi a primeira coisa que li. Esse era o 
-mantra na época: <strong>Herança, Encapsulamento e Polimorfismo</strong>.</p>
+<p>Toda Classe deve implementar ao menos uma <a href="/posts/interfaces-em-todo-lugar/">Interface</a>, então temos a Interface <code>IMoney</code> com apenas um único método <code>Value: Currency</code>.</p>
 
-<p>Para alguém como eu que só tinha visto <strong>código procedural</strong> em C ou Pascal, declarar uma Classe e Subclasses para
-herdar o comportamento reutilizando o código era… <strong>mágico</strong>.</p>
-
-<p>Acho que Herança é o que mais <strong>impressiona</strong> quem está aprendendo — ou mesmo quem já é veterano — a
-programar Orientado a Objetos.</p>
-
-<p>Com Herança o programador consegue extender uma Classe com novos
-métodos ou mesmo alterar o comportamento da Hierarquia com pouco código. Mágica.</p>
-
-<p>E isso não é bom?!</p>
-
-<p>Quase nunca.</p>
-
-<p>Eu não entendi logo na primeira vez que li sobre “Herança ser ruim”. Eu já me considerava um desenvolvedor
-<strong>experiente</strong> em Orientação a Objetos, no entanto eu tive que mudar meus conceitos. Na verdade eu tive que
-<strong>reaprender</strong> o que era Orientação a Objetos. Não só por causa do uso da Herança, mas por causa de uma série
-de “novas” ideias que venho coletando, estududando e divulgando aqui mesmo, nesse blog.</p>
-
-<p>E é por isso que eu acho que o mesmo deve acontecer à você, ou seja, mais cedo ou mais tarde você terá que 
-mudar/atualizar seus conceitos sobre Orientação a Objetos. É inevitável.</p>
-
-<p>Mas se você for uma pessoa mais <strong>sábia</strong> do que eu fui na época quando li sobre <strong>Herança ser ruim e que deve
-ser evitada</strong>, você poderá obter o benefício de ler sobre isso agora e não ter que perder tempo em busca 
-de uma resposta para a <strong>dor</strong> que eu sei que você tem hoje, quando seu código começa a não fazer mais sentido; 
-quando sua <strong>Hierarquia de Classes</strong> se torna um peso e atrapalha mais do que ajuda; quando você tem que sobrescrever
-métodos para não “fazer nada”, desabilitando funcionalidades; ou quando você tem que <strong>duplicar código</strong> porque sua
-Classe foi codificada numa “Hierarquia errada”.</p>
-
-<h2 id="os-males">Os Males</h2>
-
-<p>Se você nunca ouviu dizer que Herança é ruim, deve estar pensando que eu sou louco. Bem, saiba que eu não inventei
-tal afirmação. Gostaria de citar um artigo que encontrei na Internet há bastante tempo e que serviu
-de inspiração para o título desse artigo que você está lendo agora.</p>
-
-<p>O <a href="http://www.javaworld.com/article/2073649/core-java/why-extends-is-evil.html">artigo</a> foi publicado na JavaWorld em
-<strong>1 de Agosto de 2003</strong>, intitulado: “<em>Why extends is evil</em>”.</p>
-
-<p>Abaixo um pequeno trecho desse artigo. (Tradução Livre)</p>
-
-<blockquote>
-  Uma vez fui a uma reunião do grupo de usuários Java, onde James Gosling (inventor do Java) foi o orador de destaque. 
-  Durante o memorável Q&amp;A sessão, alguém lhe perguntou: "Se você pudesse fazer Java novamente, o que você mudaria?" 
-  "Eu deixaria de fora as Classes", ele respondeu. Após sessarem os risos, ele explicou que o verdadeiro problema 
-  não era as Classes em si, mas sim a Herança de Implementação (extends). Herança de Interface 
-  (implements) é preferível. Você deve evitar a Herança de Implementação, sempre que possível.
-  <footer><cite title="JavaWorld">Why extends is evil — JavaWorld</cite></footer>
-</blockquote>
-
-<p>Nessa série de artigos vou tentar explicar os motivos porque eu — e milhares de desenvolvedores ao redor do mundo — 
-considero Herança algo ruim e que deve ser evitada a todo custo.</p>
-
-<p>Os principais motivos são:</p>
+<p>Imagine agora que seu <em>software</em> trata de vários tipos de Taxas e Descontos, mas vou citar apenas dois como exemplo:</p>
 
 <ol>
-  <li>Viola o Encapsulamento</li>
-  <li>Duplicação de Código</li>
-  <li>Forte Acoplamento</li>
-  <li>Hierarquias Complexas</li>
+  <li>Taxa de Inscrição (1%)</li>
+  <li>Desconto (10% se menor de 18 anos)</li>
 </ol>
 
-<h2 id="no-prximo-artigo">No próximo artigo…</h2>
+<p>Você, sendo um dos programadores numa empresa de Cursos de Mecânica de Automóveis, foi encarregado de implementar o cálculo de Inscrição e Desconto.</p>
 
-<p>No próximo artigo irei explicar em detalhes porque a Herança <strong>Viola o Encapsulamento</strong>, com exemplos de código.</p>
+<p>Se o valor da inscrição é R$ 100 vamos imaginar um botão para apenas mostrar o valor total a pagar pelo novo aluno:</p>
 
-<p><a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/">Clique aqui</a> para ler a <strong>Parte #2</strong> dessa série.</p>
+<script src="https://gist.github.com/mdbs99/95395ad64ac9d1a7b3eed55ebf436724.js"></script>
 
-<p>Caso você tenha alguma dúvida ou quiser compartilhar seus pensamentos sobre essa série, utilize a área 
-abaixo para comentários.</p>
+<p>O código acima tem uma condicional, proporcionado pela classe <code>TIf</code> (não relacionada nesse artigo), que é bem simples de entender:</p>
+
+<p>Se o (futuro) estudante tem idade menor do que 18 anos, ele irá ter um desconto de 10%, senão não haverá desconto.</p>
+
+<p>Depois há a função primitiva <code>CurrToStr</code> para converter o somatório do Valor Inscrição + a Taxa de Inscrição (1%) + o Desconto (se houver) em <code>string</code> para ser exibido num simples <code>ShowMessage</code>.</p>
+
+<p>Bem, você sabe isso porque eu estou lhe dizendo. Eu preparei o contexto antes que você visse o código. Se fosse tivesse visto apenas isso…</p>
+
+<p><code>TPercentCalculated.New(V, 1).Value</code></p>
+
+<p>…saberia que se trata de uma Taxa que calcula 1% do valor, mas não saberia dizer sobre <em>qual</em> taxa o código se refere.</p>
+
+<p>É aí que usamos um rótulo.</p>
+
+<h2 id="rotulando">Rotulando</h2>
+
+<p>Um rótulo serve para marcar alguma coisa para facilitar a visão, a leitura, a identificação.</p>
+
+<p>Uma Classe também é um rótulo.</p>
+
+<p>O código abaixo é a refatoração do código que lhe acabei de mostrar:</p>
+
+<script src="https://gist.github.com/mdbs99/02a4ab8115cbebe3fe671905d51c1dd1.js"></script>
+
+<p>O código agora ficou muito mais <a href="/posts/simplicidade/">simples</a>.</p>
+
+<p>Está claro que o <code>valor</code> é somado com uma Taxa de Inscrição e com um Desconto.</p>
+
+<p>O formulário que contém esse código, não “sabe” qual é o percentual da Taxa de Registro e nem como é feito o cálculo para o Desconto… e é assim que deve ser.</p>
+
+<p>Então a primeira refatoração seria criar 2 classes distintas, uma para cada tipo de cálculo. Mas aí teríamos um problema: <a href="/posts/codigo-duplicado-talvez-nao/">Código duplicado</a>.</p>
+
+<p>Se o cálculo é o mesmo, ou seja, apenas um percentual simples, porque eu iria duplicar o mesmo código em duas Classes? Não faz sentido.</p>
+
+<p>Mas podemos fazer isso:</p>
+
+<script src="https://gist.github.com/mdbs99/0e8ac1cd0af1f631b5204061c554dbaf.js"></script>
+
+<p>Agora ambas as Classes tem como herança <code>TPercentCalculated</code>. No entanto eu não estou sobrecarregando nenhum Método e não estou usando nada protegido… na verdade esse código não está <em>tocando em nada</em> da super Classe.</p>
+
+<p>Ambas as Classes apenas inicializam, de forma apropriada e contextualizada, a Classe <code>TPercentCalculated</code> utilizando o <a href="/posts/construtores-da-classe-primario-secundarios/">construtor</a> da super Classe.</p>
+
+<p>Apenas isso.</p>
+
+<p>Mas para o utilizador das Classes, elas parecem ser completamente independentes.</p>
 
 <p>Até logo.</p>
-
 
 </article>
 
@@ -330,33 +303,33 @@ abaixo para comentários.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/herdar-para-rotular" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Herança pode ser o Mal da Orientação a Objetos — Parte 1&via=mdbs99;url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Herdar para Rotular&via=mdbs99;url=http://objectpascalprogramming.com/herdar-para-rotular" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/herdar-para-rotular" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&title=Herança pode ser o Mal da Orientação a Objetos — Parte 1" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&title=Herança pode ser o Mal da Orientação a Objetos — Parte 1" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/herdar-para-rotular&title=Herdar para Rotular" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&t=Herança pode ser o Mal da Orientação a Objetos — Parte 1" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/herdar-para-rotular&title=Herdar para Rotular" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/herdar-para-rotular&t=Herdar para Rotular" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -394,15 +367,6 @@ abaixo para comentários.</p>
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/herdar-para-rotular" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Herdar para Rotular</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/observando-objetos" class="post-link">
@@ -485,6 +449,15 @@ abaixo para comentários.</p>
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/posts/como-utilizar-heranca-apropriadamente/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Como Utilizar Herança Apropriadamente</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -492,8 +465,8 @@ abaixo para comentários.</p>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1';
-      var disqus_title      = 'Herança pode ser o Mal da Orientação a Objetos — Parte 1';
+      var disqus_identifier = '/herdar-para-rotular';
+      var disqus_title      = 'Herdar para Rotular';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

@@ -8,6 +8,106 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Herdar para Rotular</title>
+        <description>&lt;p&gt;A Herança de Classe pode ter outras finalidades que você ainda não havia pensado.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-matt-briney-160808.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Já escrevi bastante sobre Herança &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;aqui&lt;/a&gt; (série de artigos em 5 partes) e vimos o mal que seu uso pode trazer ao código Orientado a Objetos.&lt;/p&gt;
+
+&lt;p&gt;No entanto, assim como uma arma de fogo pode ser inofensiva, pois é o ser humano que faz mal uso da arma, a herança pode ser inofensiva se for utilizada de forma &lt;a href=&quot;/posts/como-utilizar-heranca-apropriadamente/&quot;&gt;apropriada&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo você irá ver mais uma forma de uso da Herança de Classe, mas sem sobrescrita de métodos ou uso de propriedades e métodos protegidos.&lt;/p&gt;
+
+&lt;p&gt;Vamos utilizar a Herança para &lt;em&gt;rotular&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;contextualizando&quot;&gt;Contextualizando&lt;/h2&gt;
+
+&lt;p&gt;De vez em quanto eu costumo utilizar Herança de Classe apenas como um rótulo.&lt;/p&gt;
+
+&lt;p&gt;Para que você entenda o benefício do uso de um rótulo, é necessário haver uma contextualização para compararmos o uso do código sem rótulo e, depois, com rótulo.&lt;/p&gt;
+
+&lt;p&gt;Vamos ver um exemplo.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/0676083483d1d9b75f21b8527e6e4897.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;É uma Classe bem simples, apenas para exemplificar o que eu quero lhe mostrar.&lt;/p&gt;
+
+&lt;p&gt;Se você não entendeu para que serve o método &lt;em&gt;New&lt;/em&gt;, veja sobre ele &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Toda Classe deve implementar ao menos uma &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interface&lt;/a&gt;, então temos a Interface &lt;code&gt;IMoney&lt;/code&gt; com apenas um único método &lt;code&gt;Value: Currency&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Imagine agora que seu &lt;em&gt;software&lt;/em&gt; trata de vários tipos de Taxas e Descontos, mas vou citar apenas dois como exemplo:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Taxa de Inscrição (1%)&lt;/li&gt;
+  &lt;li&gt;Desconto (10% se menor de 18 anos)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Você, sendo um dos programadores numa empresa de Cursos de Mecânica de Automóveis, foi encarregado de implementar o cálculo de Inscrição e Desconto.&lt;/p&gt;
+
+&lt;p&gt;Se o valor da inscrição é R$ 100 vamos imaginar um botão para apenas mostrar o valor total a pagar pelo novo aluno:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/95395ad64ac9d1a7b3eed55ebf436724.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;O código acima tem uma condicional, proporcionado pela classe &lt;code&gt;TIf&lt;/code&gt; (não relacionada nesse artigo), que é bem simples de entender:&lt;/p&gt;
+
+&lt;p&gt;Se o (futuro) estudante tem idade menor do que 18 anos, ele irá ter um desconto de 10%, senão não haverá desconto.&lt;/p&gt;
+
+&lt;p&gt;Depois há a função primitiva &lt;code&gt;CurrToStr&lt;/code&gt; para converter o somatório do Valor Inscrição + a Taxa de Inscrição (1%) + o Desconto (se houver) em &lt;code&gt;string&lt;/code&gt; para ser exibido num simples &lt;code&gt;ShowMessage&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Bem, você sabe isso porque eu estou lhe dizendo. Eu preparei o contexto antes que você visse o código. Se fosse tivesse visto apenas isso…&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;TPercentCalculated.New(V, 1).Value&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;…saberia que se trata de uma Taxa que calcula 1% do valor, mas não saberia dizer sobre &lt;em&gt;qual&lt;/em&gt; taxa o código se refere.&lt;/p&gt;
+
+&lt;p&gt;É aí que usamos um rótulo.&lt;/p&gt;
+
+&lt;h2 id=&quot;rotulando&quot;&gt;Rotulando&lt;/h2&gt;
+
+&lt;p&gt;Um rótulo serve para marcar alguma coisa para facilitar a visão, a leitura, a identificação.&lt;/p&gt;
+
+&lt;p&gt;Uma Classe também é um rótulo.&lt;/p&gt;
+
+&lt;p&gt;O código abaixo é a refatoração do código que lhe acabei de mostrar:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/02a4ab8115cbebe3fe671905d51c1dd1.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;O código agora ficou muito mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Está claro que o &lt;code&gt;valor&lt;/code&gt; é somado com uma Taxa de Inscrição e com um Desconto.&lt;/p&gt;
+
+&lt;p&gt;O formulário que contém esse código, não “sabe” qual é o percentual da Taxa de Registro e nem como é feito o cálculo para o Desconto… e é assim que deve ser.&lt;/p&gt;
+
+&lt;p&gt;Então a primeira refatoração seria criar 2 classes distintas, uma para cada tipo de cálculo. Mas aí teríamos um problema: &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/&quot;&gt;Código duplicado&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se o cálculo é o mesmo, ou seja, apenas um percentual simples, porque eu iria duplicar o mesmo código em duas Classes? Não faz sentido.&lt;/p&gt;
+
+&lt;p&gt;Mas podemos fazer isso:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/0e8ac1cd0af1f631b5204061c554dbaf.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Agora ambas as Classes tem como herança &lt;code&gt;TPercentCalculated&lt;/code&gt;. No entanto eu não estou sobrecarregando nenhum Método e não estou usando nada protegido… na verdade esse código não está &lt;em&gt;tocando em nada&lt;/em&gt; da super Classe.&lt;/p&gt;
+
+&lt;p&gt;Ambas as Classes apenas inicializam, de forma apropriada e contextualizada, a Classe &lt;code&gt;TPercentCalculated&lt;/code&gt; utilizando o &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt; da super Classe.&lt;/p&gt;
+
+&lt;p&gt;Apenas isso.&lt;/p&gt;
+
+&lt;p&gt;Mas para o utilizador das Classes, elas parecem ser completamente independentes.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 29 May 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/herdar-para-rotular</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/herdar-para-rotular</guid>
+      </item>
+    
+      <item>
         <title>Observando Objetos</title>
         <description>&lt;p&gt;Um semáforo de trânsito está prestes a mudar de vermelho para verde e vários pedestres estão aguardando para atravessar a rua.&lt;/p&gt;
 
@@ -1335,154 +1435,6 @@ Stored Procedures podem  reduzir o tráfego na rede, visto que os comandos são 
         <pubDate>Mon, 20 Mar 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/</guid>
-      </item>
-    
-      <item>
-        <title>Como Utilizar Herança Apropriadamente</title>
-        <description>&lt;p&gt;Sempre favoreça a Composição de Objetos ao invés de Herança de Classe, mas se você ainda quiser ou precisar utilizar a Herança, sabia como utilizá-la apropriadamente.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-joanna-kosinska-37665.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Eu já escrevi uma &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;série de 5 partes&lt;/a&gt; aqui no blog sobre como a Herança pode ser o mal da Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Meu entendimento sobre esse assunto continua o mesmo: Herança de Classe deve ser &lt;em&gt;evitada&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então qual o motivo para escrever artigo?&lt;/p&gt;
-
-&lt;p&gt;A Herança de Classe é uma ferramenta e, como tal, está disponível para ser utilizada. Se você conseguir fazer isso apropriadamente, poderia obter algum benefício prático e, ao mesmo tempo, minimizar os &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/#os-males&quot;&gt;males&lt;/a&gt; que a Herança de Classe traz consigo.&lt;/p&gt;
-
-&lt;p&gt;Então compilei algumas &lt;em&gt;regras&lt;/em&gt; que, na minha opinião, são essenciais para o bom uso da Herança de Classe.&lt;/p&gt;
-
-&lt;h2 id=&quot;reaproveitamento-de-codigo&quot;&gt;1-Não utilize Herança (apenas) para Reaproveitamento de Código&lt;/h2&gt;
-
-&lt;p&gt;A maioria dos desenvolvedores utilizam Herança pensando em Reaproveitamento de Código. Esse é o início de todos os outros problemas relacionados à Herança de Classe.&lt;/p&gt;
-
-&lt;p&gt;Herança de Classe não foi projetada para Reaproveitamento de Código — isso é apenas um &lt;em&gt;efeito colateral&lt;/em&gt; — mas sim para construir hierarquias do tipo &lt;strong&gt;é-um&lt;/strong&gt;. Um gato &lt;em&gt;é um&lt;/em&gt; animal; cachorro &lt;em&gt;é um&lt;/em&gt; mamífero; tubarão &lt;em&gt;é um&lt;/em&gt; peixe; etc.&lt;/p&gt;
-
-&lt;p&gt;Assim como os ciêntistas classificam um animal apenas colocando-o numa hierarquia &lt;em&gt;não&lt;/em&gt; baseada no seu comportamento, mas sim nas suas características físicas, na Orientação a Objetos isso também pode ser feito utilizando Interfaces com um mínimo de esforço na manutenção do código. Por exemplo, se um animal fosse retirado ou movido para outro ponto na hierarquia, bastaria retirar ou reescrever apenas algumas assinaturas de métodos.&lt;/p&gt;
-
-&lt;p&gt;O problema está nas Classes. Especialmente naquelas Classes abstratas e/ou métodos abstratos que são codificadas apenas para servirem como “ponto de execução” que serão sobrescritos em Subclasses.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Quando você estiver projetando seu sistema, é o Domínio que irá sugerir quais Classes deverão ser implementadas.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Se o software que você está desenvolvendo é sobre venda de Carros e Motos, não pense em codificar uma Classe &lt;code&gt;TAbstractVehicle&lt;/code&gt; para compartilhar código entre &lt;code&gt;TCar&lt;/code&gt; e &lt;code&gt;TMotorcycle&lt;/code&gt;. Se essa abstração não existe no Domínio, você não deveria criá-la.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/5187bdb34667bddbcfd13553b45c726b.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Mas se no Domínio já existir o conceito de hierarquia como, por exemplo, &lt;em&gt;Carro Alemão&lt;/em&gt;, &lt;em&gt;Carro Francês&lt;/em&gt; e &lt;em&gt;Carro Americano&lt;/em&gt;, então talvez você possa definir uma Hierarquia de Classes onde os carros da marca BMW e Audi &lt;strong&gt;é-um&lt;/strong&gt; &lt;em&gt;Carro Alemão&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Não porque você &lt;em&gt;precisa&lt;/em&gt; compartilhar código, mas sim porque seu Domínio &lt;em&gt;exige&lt;/em&gt; que assim seja, por algum motivo.&lt;/p&gt;
-
-&lt;p&gt;Então, antes de implementar alguma hierarquia, verifique se está de acordo com o seu Domínio.&lt;/p&gt;
-
-&lt;h2 id=&quot;classes-de-suporte&quot;&gt;2-Classes de Domínio não podem Herdar de Classes de Suporte&lt;/h2&gt;
-
-&lt;p&gt;Um dos grandes erros que você desenvolvedor pode cometer é herdar suas &lt;em&gt;Classes de Domínio&lt;/em&gt; de &lt;em&gt;Classes de Suporte&lt;/em&gt;. Estou utilizando essa nomenclatura (Suporte) para todas as Classes &lt;em&gt;built-in&lt;/em&gt;, ou seja, Classes disponíveis nas &lt;em&gt;libs&lt;/em&gt; do Compilador (VCL/LCL ou RTL) ou mesmo &lt;em&gt;libs&lt;/em&gt; de terceiros.&lt;/p&gt;
-
-&lt;p&gt;Se o Domínio lhe diz que é necessário uma “Lista de Veículos”, por exemplo, o que fazem a maioria dos desenvolvedores?&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Procuram uma Classe de Suporte que implementa uma Lista para poderem utilizar herança ou ;&lt;/li&gt;
-  &lt;li&gt;Procuram uma Classe de Suporte que implementa uma Lista utilizando &lt;em&gt;Generics&lt;/em&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;A segunda opção parece ser a mais “sofisticada” hoje em dia — todos amam &lt;em&gt;generics&lt;/em&gt;, não é? — mas lhe digo que ambas as opções estão erradas.&lt;/p&gt;
-
-&lt;p&gt;Uma “Lista de Veículos” &lt;em&gt;é-um&lt;/em&gt; &lt;code&gt;TList&lt;/code&gt;, &lt;code&gt;TStringList&lt;/code&gt;, &lt;code&gt;TInterfaceList&lt;/code&gt; ou &lt;code&gt;sua-classe-de-lista-preferida-aqui&lt;/code&gt;?&lt;/p&gt;
-
-&lt;p&gt;Não necessariamente.&lt;/p&gt;
-
-&lt;p&gt;As Classes do Domínio não podem ser “contaminadas” pelas Classes de Suporte através da Herança de Classe.&lt;/p&gt;
-
-&lt;p&gt;As Classes de Suporte devem ser utilizadas na Composição de Objetos. Em outras palavras, você implementa sua &lt;code&gt;TVehicleList&lt;/code&gt; e, internamente, utiliza alguma Classe de Suporte que implementa o conceito de lista — nem é necessário o uso de &lt;em&gt;Generics&lt;/em&gt;.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/8a07a099674e2f0c7b790ed3bb921564.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Seu Domínio não pode depender de implementações de Classes de Suporte de outras &lt;em&gt;libs&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então, não utilize Herança a partir de Classes de Suporte.&lt;/p&gt;
-
-&lt;h2 id=&quot;dominios-distintos&quot;&gt;3-Não pode haver Herança de Classes entre Domínios distintos&lt;/h2&gt;
-
-&lt;p&gt;Suas Classes de Domínio e Classes de Suporte pertencem a Domínios ou &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/#contextos&quot;&gt;Contextos&lt;/a&gt; distintos. Somente isso já seria um forte motivo para não utilizar herança entre essas Classes.&lt;/p&gt;
-
-&lt;p&gt;A explicação é simples: Um objeto (A) não é, necessariamente, do mesmo &lt;em&gt;tipo&lt;/em&gt; que um objeto (B) apenas porque eles são &lt;em&gt;similares&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Um cachorro é similar a um lobo — pelo menos pra mim — no entanto podemos afirmar que ambos descendem de uma única Classe? Caso a resposta seja sim, alterar qualquer coisa nessa Classe Ancestral iria alterar o comportamento de duas criaturas que são similares na &lt;em&gt;aparência&lt;/em&gt; porém bem diferentes, em muitos aspectos, no &lt;em&gt;comportamento&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Veja um exemplo sobre duas unidades (Financeiro e Jurídico) onde há uma herança entre dois Domínios completamente distintos:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/79db85b3bd9637c2d354a8ad8008b3a3.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Domínios e Contextos distintos podem e devem evoluir independentemente.&lt;/p&gt;
-
-&lt;p&gt;Então, não utilize Herança entre Domínios distintos. Se deseja reutilização de Código é melhor utilizar Composição de Objetos ao invés de Herança de Classe.&lt;/p&gt;
-
-&lt;h2 id=&quot;metodos-protegidos&quot;&gt;4-Não utilize Atributos ou Métodos Protegidos Apenas para Uso em Subclasses&lt;/h2&gt;
-
-&lt;p&gt;Uma das “vantagens” da Herança de Classe é implementarmos Atributos e Métodos protegidos — muitas vezes eles são abstratos — para serem utilizados ou sobrescritos nas Subclasses.&lt;/p&gt;
-
-&lt;p&gt;Não faça isso.&lt;/p&gt;
-
-&lt;p&gt;É o mesmo que programar procedural, mas utilizando Classes.&lt;/p&gt;
-
-&lt;p&gt;Se você codifica uma Classe abstrata apenas para codificar atributos (variáveis globais?) e métodos abstratos (“pontos de execução”?) para Subclasses é o mesmo que criar Procedimentos que tem outros  Procedimentos (ponteiros) como argumentos. Isso não é Orientação a Objetos.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/f891e60140694c267dcb79bcdb91f3ba.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;As Classes devem ser &lt;em&gt;sólidas&lt;/em&gt;. A implementação delas não deve estar “fatiada” entre outras “Classes” (procedimentos?).&lt;/p&gt;
-
-&lt;p&gt;A Herança de Classe faz isso, ou seja, divide o comportamento em várias Classes. Porém, se a Herança for bem feita, uma Classe Ancestral terá comportamento independentemente se há ou não Subclasses para implementar ou sobrescrever quaisquer metódos.&lt;/p&gt;
-
-&lt;p&gt;Então, não implemente Classes que dependam de Subclasses para ter algum comportamento útil.&lt;/p&gt;
-
-&lt;h2 id=&quot;sempre-adicione&quot;&gt;5-Sempre Adicione, nunca Altere ou Remova Funcionalidades&lt;/h2&gt;
-
-&lt;p&gt;Se você costuma sobrescrever Métodos de Classes ancestrais para “desativá-los” (removendo a implementação) ou não chama a execução do Método Ancestral (herdado) &lt;em&gt;antes&lt;/em&gt; ou &lt;em&gt;depois&lt;/em&gt; de adicionar comportamento, é bem provável que sua hierarquia de Classes está &lt;em&gt;errada&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se sua Subclasse deveria ter um comportamento diferente da Classe Ancestral, a ponto de você querer reimplementar todo o Método ou desativá-lo, então esse comportamento não deveria estar na Classe Ancestral ou a Herança entre essas Classes não deveria existir.&lt;/p&gt;
-
-&lt;p&gt;Com a Herança de Classe você quer herdar todos os contratos (Interfaces) que a Classe implementa assim como todo o seu comportamento. Não faz sentido, então, querer eliminar ou refazer alguma coisa. É um desperdício.&lt;/p&gt;
-
-&lt;p&gt;Um pato pode ter duas pernas, porém ele não &lt;em&gt;corre&lt;/em&gt; como um ser humano. Não faz sentido ambos terem uma Classe em comum apenas para reaproveitar 2 pernas, mas mudar o comportamento quando ambos estão correndo.&lt;/p&gt;
-
-&lt;p&gt;Talvez um exemplo mais comum facilite o entendimento.&lt;/p&gt;
-
-&lt;p&gt;Imagine uma Classe de Log que salva as informações num arquivo em disco. Tudo funciona.&lt;/p&gt;
-
-&lt;p&gt;Então você precisa de um Log que irá salvar as informações no Banco de Dados. Qual o caminho mais simples? Herança… mas não faça isso.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/f0607cff28ed603367e9fc63a7053c19.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Então, pense na Hierarquia de Classes para determinar tipos em comum, não comportamento em comum.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;A Orientação a Objetos implementa o conceito de Composição de Objetos que é o suficiente para implementar Objetos simples, sólidos e que implementam apenas uma única &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;responsabilidade&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Mas ela também nos dá outra ferramenta: A Herança de Classe.&lt;/p&gt;
-
-&lt;p&gt;Você pode ter uma melhor arquitura substituindo Herança por &lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;Decoradores&lt;/a&gt;, com a única desvantagem de escrever mais.&lt;/p&gt;
-
-&lt;p&gt;Vale a pena? Depende.&lt;/p&gt;
-
-&lt;p&gt;Pode ter casos que a Herança facilita ou até mesmo é necessária? Talvez.&lt;/p&gt;
-
-&lt;p&gt;Resumindo: A melhor ferramenta vai depender do tipo de trabalho a ser feito.&lt;/p&gt;
-
-&lt;p&gt;No meu carro, os problemas do dia-a-dia eu resolvo com um par de chaves-de-fenda, um alicate, Silver-tape e WD. Mas tem problemas que só podem ser resolvidos com ferramentas espefícias. Entende?&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 06 Mar 2017 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/posts/como-utilizar-heranca-apropriadamente/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/como-utilizar-heranca-apropriadamente/</guid>
       </item>
     
   </channel>
