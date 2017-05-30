@@ -71,7 +71,7 @@ O código acima tem uma condicional, proporcionado pela classe `TIf` (não relac
 
 Se o (futuro) estudante tem idade menor do que 18 anos, ele irá ter um desconto de 10%, senão não haverá desconto.
 
-Depois há a função primitiva `CurrToStr` para converter o somatório do Valor Inscrição + a Taxa de Inscrição (1%) + o Desconto (se houver) em `string` para ser exibido num simples `ShowMessage`.
+Depois há a função primitiva `CurrToStr` para converter o somatório do Valor Inscrição + a Taxa de Inscrição (1%) - o Desconto (se houver) em `string` para ser exibido num simples `ShowMessage`.
 
 Bem, você sabe isso porque eu estou lhe dizendo. Eu preparei o contexto antes que você visse o código. Se fosse tivesse visto apenas isso...
 
