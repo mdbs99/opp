@@ -69,3 +69,4 @@ Se você escreveu algo parecido e não está na lista, porfavor aponte o link pa
 
 [![Testemunho]({{ page.image_path }}rodrigo-farias-rezino.png)](http://objectpascalprogramming.com/herdar-para-rotular#comment-3329742323)
 
+[![Testemunho]({{ page.image_path }}fabricio-cabral-2.png)](https://gitter.im/mdbs99/opp?at=59356109e531dbc905b178e6)
