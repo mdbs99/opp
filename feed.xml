@@ -8,6 +8,97 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Estado do Objeto</title>
+        <description>&lt;p&gt;Estado de um Objeto. Existem dois tipos. Entenda-os e torne-os invioláveis.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-tim-evans-88330.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Venho escrevendo sobre Orientação a Objetos e já falei  várias vezes sobre o &lt;em&gt;Estado de um Objeto&lt;/em&gt;, mas nunca havia explicado o que exatamente isso significa.&lt;/p&gt;
+
+&lt;p&gt;Saber esse conceito é primordial para o entendimento da verdadeira Orientação a Objetos.&lt;/p&gt;
+
+&lt;h2 id=&quot;estado&quot;&gt;O que é Estado&lt;/h2&gt;
+
+&lt;p&gt;Todo Objeto é composto de Estado e Comportamento.&lt;/p&gt;
+
+&lt;p&gt;Enquanto o comportamento é o que o Objeto &lt;em&gt;faz&lt;/em&gt;, Estado é o que o Objeto &lt;em&gt;sabe&lt;/em&gt; sobre a &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidade&lt;/a&gt; que ele está representando dentro do &lt;em&gt;software&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Todo Objeto tem um Estado, mesmo que você não saiba sobre ele.&lt;/p&gt;
+
+&lt;p&gt;Existem basicamente dois tipos de Estado.&lt;/p&gt;
+
+&lt;h2 id=&quot;implicito&quot;&gt;Estado Implícito&lt;/h2&gt;
+
+&lt;p&gt;Todo Objeto tem ou &lt;a href=&quot;/posts/objetos-sem-estado/&quot;&gt;deveria&lt;/a&gt; ter um Estado. No entanto existem casos especiais onde um Estado inicial não faz sentido &lt;em&gt;tecnicamente&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Um exemplo de um Objeto sem Estado inicial é uma Lista. Podemos inicializar a lista com um item, porém nem sempre esse será o caso. Na maioria das vezes queremos uma lista para depois ir adicionando itens. Então iniciamos a lista sem Estado aparente.&lt;/p&gt;
+
+&lt;p&gt;Isso é fato se tivermos uma visão estritamente técnica. Mas quando essa lista for instânciada na memória do computador, seu Estado será inicializado. Em outras palavras, a área de memória que o Sistema Operacional concedeu ao Objeto será, também, o seu Estado.&lt;/p&gt;
+
+&lt;p&gt;Pensando &lt;em&gt;filosoficamente&lt;/em&gt;, no
+&lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt; de uma Classe Lista que é inicializada vazia, “sem estado”, seria passado o endereço de memória onde a lista iria residir na memória do computador. Porém construtores já fazem isso por padrão — encontram um endereço de memória disponível — então não há necessidade de sabermos endereços de memória e muito menos passá-los no construtor.&lt;/p&gt;
+
+&lt;p&gt;Estados implícitos devem ser utilizados apenas para Objetos primários ou muito genéricos, como uma lista.&lt;/p&gt;
+
+&lt;h2 id=&quot;explicito&quot;&gt;Estado Explícito&lt;/h2&gt;
+
+&lt;p&gt;Argumentos nos &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt; de Classes mostram a intenção do desenvolvedor em instanciar um Objeto com um Estado Explícito.&lt;/p&gt;
+
+&lt;p&gt;No entanto tais argumentos podem ou não fazer parte do Estado do Objeto que queremos inicializar.&lt;/p&gt;
+
+&lt;p&gt;É o Objeto que irá decidir o que utilizar no seu Estado.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo. Numa Classe &lt;code&gt;TSalary&lt;/code&gt;, que representa um salário de alguém, é esperado um argumento no construtor do tipo &lt;code&gt;IMoney&lt;/code&gt;, que é uma &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interface&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A Classe &lt;code&gt;TSalary&lt;/code&gt; poderia ter um outro construtor secundário com um argumento do tipo &lt;code&gt;string&lt;/code&gt;. Porém sabemos que um &lt;em&gt;TSalary&lt;/em&gt; não é uma &lt;em&gt;string&lt;/em&gt; e seu Estado não pode ser inicializado com um valor que não seja um &lt;code&gt;IMoney&lt;/code&gt;. Então porque esse construtor existe?&lt;/p&gt;
+
+&lt;p&gt;Um exemplo de implementação desses construtores poderia ser assim:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// primary
+construtor TSalary.Create(Value: IMoney);
+begin
+  FValue := Value;
+end;
+
+// secondary
+construtor TSalary.Create(const Value: string);
+begin
+  Create(TStringAsMoney.New(Value));
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;No exemplo acima o construtor secundário chama o primário com o argumento correto, do tipo &lt;code&gt;IMoney&lt;/code&gt;, porém outro Objeto é utilizado. O argumento &lt;code&gt;Value&lt;/code&gt; do tipo &lt;em&gt;string&lt;/em&gt; não faz parte do estado de &lt;code&gt;TSalary&lt;/code&gt; porém faz parte do estado de &lt;code&gt;TStringAsMoney&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Como eu disse antes, o Objeto que decide.&lt;/p&gt;
+
+&lt;p&gt;Estados explícitos devem ser utilizados em todos os Objetos de alto nível e de regras de negócio.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;De todo esse papo técnico mas também filosófico, o que você nunca deve esquecer quando estiver construindo uma Classe é:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;O estado de um Objeto jamais deve ser violado.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Após o Objeto ser criado, seu Estado — implícito ou explícito — nunca poderia ser alterado, permanecendo intacto até o fim da sua vida.&lt;/p&gt;
+
+&lt;p&gt;Se esse Estado for violado significa que seu Objeto não possui &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulamento&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Um Objeto que não encapsula não pode ser considerado um Objeto. Chame-o de estrutura de dados.&lt;/p&gt;
+
+&lt;p&gt;Objetos tem Estado, estruturas tem Dados.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 05 Jun 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/estado-do-objeto</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/estado-do-objeto</guid>
+      </item>
+    
+      <item>
         <title>Herdar para Rotular</title>
         <description>&lt;p&gt;A Herança de Classe pode ter outras finalidades que você ainda não havia pensado.&lt;/p&gt;
 
@@ -58,7 +149,7 @@
 
 &lt;p&gt;Se o (futuro) estudante tem idade menor do que 18 anos, ele irá ter um desconto de 10%, senão não haverá desconto.&lt;/p&gt;
 
-&lt;p&gt;Depois há a função primitiva &lt;code&gt;CurrToStr&lt;/code&gt; para converter o somatório do Valor Inscrição + a Taxa de Inscrição (1%) + o Desconto (se houver) em &lt;code&gt;string&lt;/code&gt; para ser exibido num simples &lt;code&gt;ShowMessage&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Depois há a função primitiva &lt;code&gt;CurrToStr&lt;/code&gt; para converter o somatório do Valor Inscrição + a Taxa de Inscrição (1%) - o Desconto (se houver) em &lt;code&gt;string&lt;/code&gt; para ser exibido num simples &lt;code&gt;ShowMessage&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Bem, você sabe isso porque eu estou lhe dizendo. Eu preparei o contexto antes que você visse o código. Se fosse tivesse visto apenas isso…&lt;/p&gt;
 
@@ -1331,110 +1422,6 @@ INNER JOIN PESSOA_JURIDICA p
         <pubDate>Mon, 27 Mar 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/identificador-unico-universal/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/identificador-unico-universal/</guid>
-      </item>
-    
-      <item>
-        <title>Stored Procedures na Orientação a Objetos</title>
-        <description>&lt;p&gt;Stored Procedures são sub-rotinas armazenadas no SGBD disponíveis às aplicações que o acessam.&lt;/p&gt;
-
-&lt;p&gt;Será que as Stored Procedures ainda são necessárias ou a Orientação a Objetos é suficiente e podemos jogar fora essa &lt;em&gt;antiga tecnologia&lt;/em&gt;?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-clem-onojeghuo-143740.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Todo SGBD disponibiliza &lt;em&gt;Stored Procedures&lt;/em&gt; (SP’s) para o DBA e desenvolvedores construirem e executarem scripts SQL.&lt;/p&gt;
-
-&lt;p&gt;As SP’s podem retornar um cursor de dados, atualizar registros, executar rotinas de manutenção do SGBD, etc.&lt;/p&gt;
-
-&lt;p&gt;As SP’s também podem conter estruturas de controle e repetição como &lt;code&gt;IF&lt;/code&gt;, &lt;code&gt;WHILE&lt;/code&gt;, &lt;code&gt;LOOP&lt;/code&gt;, &lt;code&gt;REPEAT&lt;/code&gt;, &lt;code&gt;FOR&lt;/code&gt;, &lt;code&gt;CASE&lt;/code&gt;, etc.&lt;/p&gt;
-
-&lt;p&gt;No entanto as SP’s nos fazem lembrar de &lt;em&gt;procedimentos&lt;/em&gt;, programas imperativos e sequenciais. E é exatamente essa &lt;a href=&quot;/posts/pensando-em-dados/&quot;&gt;visão&lt;/a&gt; que não queremos ter quando programamos utilizando o paradigma da Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Então podemos declarar a &lt;em&gt;morte&lt;/em&gt; das SP’s e utilizar apenas a Orientação a Objetos a partir de agora?&lt;/p&gt;
-
-&lt;p&gt;Definitivamente, não.&lt;/p&gt;
-
-&lt;h2 id=&quot;ferramenta-de-dados&quot;&gt;Ferramenta de Dados&lt;/h2&gt;
-
-&lt;p&gt;As &lt;em&gt;Stored Procedures&lt;/em&gt; são ferramentas para trabalhar com &lt;em&gt;dados&lt;/em&gt;. Elas conseguem ter uma melhor performance do que qualquer outra linguagem fora do SGBD no qual ela reside.&lt;/p&gt;
-
-&lt;p&gt;Só isso já seria um argumento suficiente para continuarmos a utilizar SP’s em nossos sistemas.&lt;/p&gt;
-
-&lt;p&gt;Mas nem todos pensam assim.&lt;/p&gt;
-
-&lt;p&gt;Tenho alguns amigos desenvolvedores que abandonaram completamente as SP’s, codificando seus sistemas &lt;em&gt;apenas&lt;/em&gt; utilizando alguma linguagem de programação com suporte a Orientação a Objetos.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;
-Stored Procedures podem  reduzir o tráfego na rede, visto que os comandos são executados diretamente no servidor. Além de melhorar a performance, criar mecanismos de segurança entre a manipulação dos dados do Banco de Dados. 
-  &lt;/p&gt;
-  &lt;footer&gt;&lt;cite title=&quot;Wikipedia&quot;&gt;— Wikipedia&lt;/cite&gt;&lt;/footer&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;No entanto, esses desenvolvedores esquecem que cada ferramenta é focada em resolver determinados problemas.&lt;/p&gt;
-
-&lt;p&gt;O foco das Stored Procedures são os dados. Na manipulação dos dados e assuntos relacionados ao Banco de Dados.&lt;/p&gt;
-
-&lt;p&gt;O foco da Orientação a Objetos são os &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Objetos&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;São contextos completamente diferentes.&lt;/p&gt;
-
-&lt;p&gt;Então por que usaríamos uma ferramenta &lt;em&gt;pior&lt;/em&gt; ou menos eficaz para a manipulação de dados?&lt;/p&gt;
-
-&lt;h2 id=&quot;regras-de-negocio&quot;&gt;Regras de Negócio&lt;/h2&gt;
-
-&lt;p&gt;Meus amigos afirmam que as &lt;em&gt;Regras de Negócio&lt;/em&gt; não devem ser codificadas em (Argh!) procedimentos!&lt;/p&gt;
-
-&lt;p&gt;Utilizamos uma linguagem de auto nível com suporte a &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;Objetos inteligentes&lt;/a&gt;, &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulamento&lt;/a&gt;, polimorfismo… não queremos trabalhar com algo tão &lt;a href=&quot;/posts/tipos-primitivos-nos-argumentos/&quot;&gt;primitivo&lt;/a&gt; — eles dizem.&lt;/p&gt;
-
-&lt;p&gt;E eu concordo com eles.&lt;/p&gt;
-
-&lt;p&gt;Em aplicações Orientadas a Objetos, as Regras de Negócio devem estar codificadas em Classes.&lt;/p&gt;
-
-&lt;p&gt;Utilizamos as Classes e Objetos para &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;representar&lt;/a&gt; as entidades que irão interagir entre si.&lt;/p&gt;
-
-&lt;p&gt;Os Dados, no entanto, não interagem entre si. São &lt;em&gt;passivos&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Os Dados precisam que algum &lt;em&gt;procedimento&lt;/em&gt; ou &lt;em&gt;Objeto&lt;/em&gt; que os anime.&lt;/p&gt;
-
-&lt;p&gt;Os Objetos podem e devem &lt;a href=&quot;/posts/classes-de-dados/&quot;&gt;trabalhar com dados&lt;/a&gt;, mas a manipulação dos &lt;em&gt;dados em massa&lt;/em&gt; é trabalho para Stored Procedures; são imbatíveis.&lt;/p&gt;
-
-&lt;p&gt;A combinação entre Objetos e Stored Procedures é a chave para um sistema Orientado a Objetos com ótima manutenabilidade mas, também, com ótima performance na manipulação dos dados.&lt;/p&gt;
-
-&lt;h2 id=&quot;scripts-dinamicos&quot;&gt;Scripts dinâmicos&lt;/h2&gt;
-
-&lt;p&gt;Outro equívoco é pensar que somos obrigados a criar Scripts SQL no código da aplicação porque somente assim conseguiremos fazer filtros otimizados, combinando as informações que os usuários desejam para construir o melhor e mais otimizado SQL.&lt;/p&gt;
-
-&lt;p&gt;Em parte isso faz sentido, mas na maioria das vezes é apenas falta de conhecimento do SGBD em uso.&lt;/p&gt;
-
-&lt;p&gt;Alguns SGBD’s como o Microsoft SQL Server, por exemplo, podem receber argumentos XML. Esses argumentos podem ser lidos e utilizados como filtros dinâmicos nas SP’s.&lt;/p&gt;
-
-&lt;p&gt;Isso é muito melhor que ter “pedaços” de código SQL espalhados no código para concatenar de acordo com os filtros que os usuários desejam.&lt;/p&gt;
-
-&lt;p&gt;Alguns desenvolvedores poderão afirmar que utilizam algum framework ORM que tem embutido uma pseudo-linguagem que simula o SQL, mas utilizando Objetos. Assim eles não teríam SQL espalhado pelo código.&lt;/p&gt;
-
-&lt;p&gt;O conceito de ORM na Orientação a Objetos é errado. Mas esse assunto foge do escopo desse artigo. No entanto, se você utiliza um ORM para fazer &lt;em&gt;queries&lt;/em&gt; dinâmicas eu posso lhe afirmar o seguinte: Você pode até tentar, mas nunca fará queries mais performáticas e/ou com o código mais simples do que utilizando SQL puro.&lt;/p&gt;
-
-&lt;p&gt;Não estou falando sobre Objetos que retornam pequenas listas de objetos-filhos utilizando a pseudo-linguagem do ORM. Estou falando sobre &lt;em&gt;queries&lt;/em&gt; de 5 páginas ou mais de script que trazem dados para relatórios pesados em aplicações reais. Tentar reproduzir um script dessa magnitude utilizando Objetos é, no mínimo, ingenuidade…&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;As &lt;em&gt;Stored Procedures&lt;/em&gt; continuaram a existir, enquanto houverem SGBD’s relacionais.&lt;/p&gt;
-
-&lt;p&gt;Continuaram a existir enquanto não inventarem algo com mais performance.&lt;/p&gt;
-
-&lt;p&gt;Utilizar &lt;em&gt;Stored Procedures&lt;/em&gt; não torna seu software &lt;em&gt;menos&lt;/em&gt; Orientado a Objetos, se você as utiliza apenas para a manipulação de dados e não para as Regras de Negócio.&lt;/p&gt;
-
-&lt;p&gt;Utilize a ferramenta certa para cada tipo de problema.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 20 Mar 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/stored-procedures-na-orientacao-a-objetos/</guid>
       </item>
     
   </channel>
