@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Microservices com Delphi — Parte 2 &#8211; Object Pascal Programming</title>
+    <title>Atributos Primários e Secundários &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Como implementar uma simples API para fazer a comunicação com Microservices em Java.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Pascal">
-    <meta name="keywords" content="microservices, java, delphi">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/">
+    <meta name="keywords" content="OO">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, atributo, primário, secundário, attribute, primary, secondary">
+    <link rel="canonical" href="http://objectpascalprogramming.com/atributos-primarios-secundarios">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Microservices com Delphi — Parte 2">
-    <meta property="og:description" content="Como implementar uma simples API para fazer a comunicação com Microservices em Java.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/">
+    <meta property="og:title" content="Atributos Primários e Secundários">
+    <meta property="og:description" content="Um Objeto pode ter Atributos Primários e Secundários.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/atributos-primarios-secundarios">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1457305237443-44c3d5a30b89.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-tim-gouw-60216.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Microservices com Delphi — Parte 2" />
-    <meta name="twitter:description" content="Como implementar uma simples API para fazer a comunicação com Microservices em Java." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/" />
+    <meta name="twitter:title" content="Atributos Primários e Secundários" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/atributos-primarios-secundarios" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,254 +191,66 @@
 
 
 <div class="post-header mb2">
-  <h1>Microservices com Delphi — Parte 2</h1>
-  <span class="post-meta">Aug 15, 2016</span><br>
+  <h1>Atributos Primários e Secundários</h1>
+  <span class="post-meta">Jun 12, 2017</span><br>
   
   <span class="post-meta small">
   
-    4 minute read
+    1 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Não basta apenas utilizar um Protocolo HTTP para fazer a comunicação com os Microservices. É necessário, também, codificar um Localizador de Microservices.</p>
-
-<p>Veja como um implementar um Localizador simples, utilizando um SGBD, e também a implementação de um <em>Client</em> para fazer a comunicação com qualquer Microservice no nosso <em>framework</em>.</p>
+  <p>Um Objeto pode ter Atributos Primários e Secundários.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1457305237443-44c3d5a30b89.jpg" alt="Imagem" /></p>
+<p><img src="/images/2017/photo-tim-gouw-60216.jpg" alt="Unsplash image" /></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>No <a href="/posts/microservices-delphi-parte-1/">artigo anterior</a> eu escrevi sobre o Projeto codificado em Delphi 7 que está sendo recodificado utilizando Microservices em Java.</p>
+<p>Os <a href="/posts/menos-e-mais/#atributos">atributos</a> de um Objeto são a representação do seu conhecimento, ou seja, tudo que o Objeto <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">encapsula</a> é representado por atributos.</p>
 
-<p>Nesse artigo irei falar sobre o Módulo Microservices, que possui todo o necessário para fazer a comunicação com os serviços.</p>
+<p>Assim como uma Classe pode ter 2 tipos de <a href="/posts/construtores-da-classe-primario-secundarios/">construtores</a>, um Objeto pode ter 2 tipos de atributos: Primários e Secundários.</p>
 
-<h2 id="modulo-microservice">Módulo MicroService</h2>
+<h2 id="primarios">Primários</h2>
 
-<p>O Módulo MicroService é composto de apenas 4 simples Interfaces (até agora).</p>
+<p>Atributos Primários são aqueles que fazem parte do <a href="/estado-do-objeto">Estado do Objeto</a>.</p>
 
-<ul>
-  <li><strong>IMicroServiceParams</strong>: Representa um localizador de MicroService;</li>
-  <li><strong>IMicroServiceResponse</strong>: Representa um <code>Response</code> após uma chamada a um MicroService;</li>
-  <li><strong>IMicroServiceClient</strong>: Representa o <em>Client</em> para todos os Microservices;</li>
-  <li><strong>IMicroServiceAction</strong>: Representa uma Ação (irei falar sobre essa Interface em outro artigo).</li>
-</ul>
+<p>São os atributos inicializados pela Classe, passados ao Objeto através do construtor com a finalidade de representar uma <a href="/posts/objetos-representam-entidades/#o-que-e-uma-entidade">Entidade</a>.</p>
 
-<h3 id="unit-microservices">Unit AcmeMicroServices.pas</h3>
+<p>Vejamos um exemplo:</p>
 
-<p>Aqui está a implementação das Interfaces.</p>
+<script src="https://gist.github.com/mdbs99/5952c6f39810803d91b05a6f1c4b8766.js"></script>
 
-<p>Há algumas dependências que não estarão no escopo desses artigos, mas acredito que seja fácil abstrair as Classes ou Interfaces como, por exemplo, <code>IDataParams</code> e <code>IXMLDocument</code>.</p>
+<p>Na Classe <code>TFile</code> acima, há apenas 1 argumento no construtor. Esse argumento será parte do Estado do Objeto e, portanto, irá inicializar um Atributo Primário chamado <code>FFilePath</code>.</p>
 
-<pre><code>type
-  IMicroServiceParams = interface
-    function Find: IDataParams;
-  end;
+<h2 id="secundario">Secundários</h2>
 
-  IMicroServiceResponse = interface
-    function Code: Integer;
-    function Empty: Boolean;
-    function XML: IXMLDocument;
-  end;
+<p>Atributos Secundários são todos os atributos que não foram inicializados pelo construtor da Classe.</p>
 
-  IMicroServiceClient = interface
-    function Send(const Content: string): IMicroServiceResponse; overload;
-    function Send(XML: IXMLDocument): IMicroServiceResponse; overload;
-  end;
+<p>São atributos de <em>suporte tecnológico</em>.</p>
 
-  IMicroServiceAction = interface
-    function Act: IMicroServiceResponse;
-  end;
-</code></pre>
+<p>Vejamos um exemplo:</p>
 
-<h2 id="localizando-servicos">Localizando Serviços</h2>
+<script src="https://gist.github.com/mdbs99/48237c902271b6f2c3a314d3b6f5b8c0.js"></script>
 
-<p>Se sua aplicação utiliza apenas 3 ou 5 Microservices, não haveria necessidade de implementar um Localizador. Mas se sua aplicação lida com dezenas ou mais de Microservices, então é necessário haver um “índice” de Microservices.</p>
+<p>Nesse exemplo acima a Classe <code>TFile</code> foi atualizada. Um novo atributo <code>FStream</code> foi adicionado.</p>
 
-<p>O índice está no SGBD, em apenas 1 tabela (atualmente), e a localização de qualquer serviço é feita através do seu <em>name</em>.</p>
+<p>Esse atributo não foi passado no construtor, então ele é um Atributo Secundário.</p>
 
-<p>Sim, é só isso.</p>
+<p>O método <code>Stream</code> irá retornar o <em>stream</em> do arquivo, no entanto os dados do arquivo em disco serão lidos apenas na primeira execução, pois após inicializar o atributo <code>FStream</code> ele não é mais atualizado.</p>
 
-<p>A tabela — vamos dar o nome de Micro_Services para esse artigo — possue algumas colunas.</p>
+<p>A Classe <code>TDataStream</code> é irrelevante para o entendimento, mas veja que o <em>path</em> do arquivo é passado. Então essa Classe irá ler o arquivo em disco e retornar uma instância de <code>IDataStream</code>.</p>
 
-<p>As mais relevantes são:</p>
+<h2 id="conclusao">Conclusão</h2>
 
-<ul>
-  <li><strong>[name]</strong>: O nome do serviço. Esse nome deve ser único;</li>
-  <li><strong>[server]</strong>: O IP do servidor onde o MicroService está hospedado;</li>
-  <li><strong>[path]</strong>: O <em>path</em> do serviço, exemplo: http://10.20.0.10/execute onde “/execute” é o <em>path</em>;</li>
-  <li><strong>[port]</strong>: A porta onde o serviço está hospedado, exemplo: http://10.20.0.10:8020/execute (8020 é a porta);</li>
-  <li><strong>[encoding]</strong>: Alguns serviços trabalham com <em>encode</em> diferente de UTF-8;</li>
-  <li><strong>[verb]</strong>: Existem serviços que utilizam GET outros POST, etc. Essa coluna informa qual verbo HTTP utilizar;</li>
-</ul>
+<p>Atributos Primários são inicializados através do construtor da Classe e <em>devem</em> ser <a href="/posts/objetos-imutaveis/">imutáveis</a>.</p>
 
-<h3 id="unit-microservicesa">Unit AcmeMicroServiceA.pas</h3>
+<p>Atributos Secundários podem ou não ser inicializados através do construtor da Classe, pois eles podem ser inicializados a qualquer momento e em qualquer lugar do Objeto.</p>
 
-<p>Essa <em>unit</em> encapsula as Classes que implementam as Interfaces acima.</p>
-
-<p>A parte importante por aqui é o método <code>TMicroServiceClient.Response</code>. Esse método utiliza o resultado de <code>TMicroServiceParams.Find</code>, que é um localizador de serviços cadastrados, para montar uma requisição HTTP completa.</p>
-
-<p>Consegue ver a beleza do método <code>TMicroServiceClient.Response</code> onde (quase) tudo são Objetos conversando e <a href="/posts/objetos-pensam-e-tomam-decisoes/">tomando decisões</a> entre si?</p>
-
-<pre><code>type
-  EMicroService = class(Exception);
-
-  TMicroServiceParams = class(TInterfacedObject, IMicroServiceParams)
-  private
-    FServiceName: string;
-  public
-    constructor Create(const ServiceName: string);
-    class function New(const ServiceName: string): IMicroServiceParams;
-    function Find: IDataParams; overload;
-  end;
-
-  TMicroServiceResponse = class(TInterfacedObject, IMicroServiceResponse)
-  private
-    FCode: Integer;
-    FXML: IXMLDocument;
-  public
-    constructor Create(Code: Integer; XML: IXMLDocument);
-    class function New(Code: Integer; XML: IXMLDocument): IMicroServiceResponse;
-    function Code: Integer;
-    function Empty: Boolean;
-    function XML: IXMLDocument;
-  end;
-
-  TMicroServiceClient = class(TInterfacedObject, IMicroServiceClient)
-  private
-    FParams: IDataParams;
-    function Response(const Content: string): IHttpResponse;
-  public
-    constructor Create(ServiceParams: IDataParams);
-    class function New(ServiceParams: IDataParams): IMicroServiceClient;
-    function Send(const Content: string): IMicroServiceResponse; overload;
-    function Send(XML: IXMLDocument): IMicroServiceResponse; overload;
-  end;
-
-implementation
-
-uses
-  XMLIntf;
-
-{ TMicroServiceParams }
-
-constructor TMicroServiceParams.Create(const ServiceName: string);
-begin
-  inherited Create;
-  FServiceName := ServiceName;
-end;
-
-class function TMicroServiceParams.New(const ServiceName: string): IMicroServiceParams;
-begin
-  Result := Create(ServiceName);
-end;
-
-function TMicroServiceParams.Find: IDataParams;
-var 
-  Q: ISQLQuery;
-begin
-  // Através de uma Query (instância Q), 
-  // pesquisa pelo nome do serviço (FServiceName).
-  // Utilizando os Fields, retornamos uma instância TDataParams.
-  Result := TDataParams.New(Q.Fields);
-end;
-
-{ TMicroServiceResponse }
-
-constructor TMicroServiceResponse.Create(Code: Integer; XML: IXMLDocument);
-begin
-  inherited Create;
-  FCode := Code;
-  FXML := XML;
-end;
-
-class function TMicroServiceResponse.New(Code: Integer; XML: IXMLDocument): IMicroServiceResponse;
-begin
-  Result := Create(Code, XML);
-end;
-
-function TMicroServiceResponse.Code: Integer;
-begin
-  Result := FCode;
-end;
-
-function TMicroServiceResponse.Empty: Boolean;
-begin
-  Result := (FCode = 204) or (FXML.ChildNodes.Count = 0);
-end;
-
-function TMicroServiceResponse.XML: IXMLDocument;
-begin
-  Result := FXML;
-end;
-
-{ TMicroServiceClient }
-
-function TMicroServiceClient.Response(const Content: string): IHttpResponse;
-begin
-  try
-    Result :=
-      THttpClient.New(
-        TWebURL.New(
-          FParams.Param('server').AsString,
-          FParams.Param('path').AsString,
-          FParams.Param('port').AsInteger
-        )
-        .AsString,
-        'application/xml;charset=' +
-          FParams.Param('encoding').AsString,
-        TDataStream.New(Content)
-      )
-      .Execute(FParams.Param('verb').AsString);
-  except
-    on E: Exception do
-    begin
-      raise EMicroService.Create(
-        'Service: ' + FParams.Param('name').AsString + #13 +
-        'Error: ' + E.Message
-      );
-    end;
-  end;
-end;
-
-constructor TMicroServiceClient.Create(ServiceParams: IDataParams);
-begin
-  inherited Create;
-  FParams := ServiceParams;
-end;
-
-class function TMicroServiceClient.New(ServiceParams: IDataParams): IMicroServiceClient;
-begin
-  Result := Create(ServiceParams);
-end;
-
-function TMicroServiceClient.Send(const Content: string): IMicroServiceResponse;
-begin
-  with Response(Content) do
-  begin
-    Result := TMicroServiceResponse.New(
-      Code,
-      TXMLFactory.New('ISO-8859-1', Stream).Document
-    );
-  end;
-end;
-
-function TMicroServiceClient.Send(XML: IXMLDocument): IMicroServiceResponse;
-begin
-  Result := Send(XML.XML.Text);
-end;
-</code></pre>
-
-<h2 id="no-proximo-artigo">No próximo artigo…</h2>
-
-<p>Isso é código real, em produção!</p>
-
-<p>E onde está o Tratamento de Exceções, Classes de Negócio, etc?</p>
-
-<p>No <a href="/posts/microservices-delphi-parte-3/">próximo artigo</a> você irá ver como construir uma <strong>Classe de Negócio</strong> que faz uso de todo esse arcabouço.</p>
+<p>Tudo são atributos, mas saber essa diferença sutil entre Atributos Primários e Secundários é essencial para construírmos Classes melhores.</p>
 
 <p>Até logo.</p>
 
@@ -448,33 +262,33 @@ end;
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/atributos-primarios-secundarios" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Microservices com Delphi — Parte 2&via=mdbs99;url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Atributos Primários e Secundários&via=mdbs99;url=http://objectpascalprogramming.com/atributos-primarios-secundarios" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/atributos-primarios-secundarios" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/&title=Microservices com Delphi — Parte 2" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/&title=Microservices com Delphi — Parte 2" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/atributos-primarios-secundarios&title=Atributos Primários e Secundários" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/microservices-delphi-parte-2/&t=Microservices com Delphi — Parte 2" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/atributos-primarios-secundarios&title=Atributos Primários e Secundários" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/atributos-primarios-secundarios&t=Atributos Primários e Secundários" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -512,15 +326,6 @@ end;
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/atributos-primarios-secundarios" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Atributos Primários e Secundários</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/estado-do-objeto" class="post-link">
@@ -603,6 +408,15 @@ end;
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/posts/identificador-unico-universal/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Identificador Único Universal</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -610,8 +424,8 @@ end;
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/microservices-delphi-parte-2';
-      var disqus_title      = 'Microservices com Delphi — Parte 2';
+      var disqus_identifier = '/atributos-primarios-secundarios';
+      var disqus_title      = 'Atributos Primários e Secundários';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
