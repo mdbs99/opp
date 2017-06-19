@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Objetos pensam e tomam decisões &#8211; Object Pascal Programming</title>
+    <title>Mutabilidade Encapsulada &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Objetos pensam e tomam decisões. Eles não precisam de um controlador.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
     <meta name="keywords" content="OO">
-    <meta name="keywords" content="entidade, entidade real, entity, real entity, criatura, contexto">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, immutable, imutablidade, mutable, mutability, mutável, encapsulado, encapsulated">
+    <link rel="canonical" href="http://objectpascalprogramming.com/mutabilidade-encapsulada">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Objetos pensam e tomam decisões">
-    <meta property="og:description" content="Objetos pensam e tomam decisões. Eles não precisam de um controlador.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/">
+    <meta property="og:title" content="Mutabilidade Encapsulada">
+    <meta property="og:description" content="Um Objeto pode mudar internamente, mas permanecer imutável para o mundo exterior.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/mutabilidade-encapsulada">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1456406644174-8ddd4cd52a06.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-ben-white-197668.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Objetos pensam e tomam decisões" />
-    <meta name="twitter:description" content="Objetos pensam e tomam decisões. Eles não precisam de um controlador." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/" />
+    <meta name="twitter:title" content="Mutabilidade Encapsulada" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/mutabilidade-encapsulada" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,193 +191,95 @@
 
 
 <div class="post-header mb2">
-  <h1>Objetos pensam e tomam decisões</h1>
-  <span class="post-meta">Mar 14, 2016</span><br>
+  <h1>Mutabilidade Encapsulada</h1>
+  <span class="post-meta">Jun 19, 2017</span><br>
   
   <span class="post-meta small">
   
-    5 minute read
+    2 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Se você <a href="/posts/pensando-em-objetos/">Pensar em Objetos</a> ou invés de pensar em procedimentos e funções
-conseguirá implementar um código onde os Objetos conversam entre si ao invés de utilizar Programação Procedural que instrui o 
-compilador sobre o que fazer linha-a-linha.</p>
-
-<p>Não fazemos isso na Orientação a Objetos. Seu Objeto sabe o que fazer. 
-Ele não precisa de um “controlador” (você) para lhe dizer o que fazer. Ele sabe.
-Ele foi <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contratado</a> pra isso. Deixe-o trabalhar.</p>
+  <p>Um Objeto pode mudar internamente, mas permanecer imutável para o mundo exterior.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1456406644174-8ddd4cd52a06.jpg" alt="Pense" /></p>
+<p><img src="/images/2017/photo-ben-white-197668.jpg" alt="Unsplash image" /></p>
 
-<h2 id="pense-em-objetos">Pense em Objetos, não em procedimentos</h2>
+<h2 id="introducao">Introdução</h2>
 
-<p>Um Objeto deve ter uma identidade bem definida.
-Sua Classe deve <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">implementar apenas uma responsabilidade</a>.
-Essa responsabilidade é determinada por um <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contrato</a> que 
-representa uma possível abstração de alguma Entidade.</p>
+<p>Uma das atribuições da Orientação a Objetos é <em>gerenciar</em> a mutabilidade.</p>
 
-<p>Mas como saber se seu Objeto representa uma Entidade ou se ele é apenas um 
-<a href="/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados">balde de funções e dados</a>?</p>
+<p>Então foi criado o conceito de atributos privados, onde o acesso a esses atributos não seria permitido ou só seria permitido através de <a href="/posts/getters-e-setters/">métodos públicos</a>.</p>
 
-<p>Algumas classes são mais difíceis de perceber enquanto outras são tão claras como a água. Veja:</p>
+<p>O gerenciamento da mutabilidade nos proporcionou um código mais seguro, melhorando a munutenabilidade.</p>
 
-<pre><code>type
-  TDataModule1 = class(TDataModule)
-    { fields, components...}
-  public
-    function AddNewCustomer(Customer: TCustomer): Integer;
-    function AddNewUser(User: TUser): Integer;
-    function GetCustomer(Id: Integer): TCustomer;
-    function GetEmployeeSalary(EmployeeId: Integer): Currency;
-    { more...}
-  end;
-</code></pre>
+<p>Entretanto, Objetos Mutáveis são os opostos dos <a href="/posts/objetos-imutaveis/">Objetos Imutáveis</a>. Esses últimos são mais <em>simples</em> de usar e ainda <em>mais seguros</em>.</p>
 
-<p>O exemplo acima, apesar de ser codificado como uma Classe, ter a sintaxe de uma Classe, se comportar como uma Classe etc, na verdade,
-não representa nenhuma abstração de uma Entidade sendo, portanto, um <strong>código procedural</strong>, ou seja, um 
-<a href="/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados">balde de funções e dados</a>.</p>
+<p>Mas nem sempre conseguimos — ou queremos — codificar um Objeto <em>completamente</em> imutável. Seja por questão de performance, <em>design</em> ou restrição tecnológica.</p>
 
-<p>Quando <a href="/posts/datamodule-e-apenas-um-container/">postei sobre <em>DataModules</em></a> imaginei que muitos programadores
-poderiam não entender — num primeiro momento — meu motivo em dizer que <em>DataModules</em> são apenas recipientes e que não devem conter regras de negócio
-e muito menos serem utilizados como instâncias de <strong>Classes de Negócio</strong>. Para minha surpresa o post foi muito bem recebido pela maioria dos leitores.</p>
+<p>Esse artigo irá lhe mostrar que podemos ter um Objeto <em>imutável</em> para o mundo externo, mesmo ele sendo <em>mutável</em> internamente.</p>
 
-<p>Acho que o exemplo de código acima deixa bem claro o que eu quis dizer.</p>
+<h2 id="mutabilidade">Mutabilidade</h2>
 
-<p>Ora, um <em>DataModule</em>, na grande maioria das vezes, não representa uma Entidade
-por não ter uma identidade bem definida. Após 10 minutos e 5 componentes adicionados, 
-ele vira um <a href="/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados">balde de funções e dados</a>, ou seja,
-uma Classe utilitária.</p>
+<p>Na Orientação a Objetos, toda mutabilidade deve ser controlada.</p>
 
-<h2 id="objetos-pensam-como">Objetos pensam… como?</h2>
+<p>Nenhum atributo deve estar disponível para alteração de forma direta. Devemos, sempre, prover uma restrição com a máxima segurança aos atributos de um Objeto.</p>
 
-<p>Você deve fazer com que as decisões de negócio ou sistema devam ser tomadas pelos próprios objetos e não por um “controlador”.</p>
+<p>A maioria das linguagens com suporte a Orientação a Objetos já faz isso por padrão. Basta declararmos os atributos como <code>private</code> para que eles não sejam vistos fora do escopo do Objeto.</p>
 
-<p>Vamos inventar um exemplo.</p>
+<p>Infelizmente, o uso das <a href="https://en.wikipedia.org/wiki/Reflection_(computer_programming)">técnicas de reflexão</a> acabaram com essa segurança, nos levando de volta aos tempos da programação procedural e variáveis globais, onde tudo está acessível a todos… mas, nesse artigo, vamos fingir que isso não existe. 
+Voltemos aos atributos e a mutabilidade.</p>
 
-<p>Imagine um <em>Form</em> onde temos um <em>TButton</em> para mostrar ao usuário qual o valor da comissão, neste mês, de um determinado empregado selecionado.
-Cada funcionário tem um salário fixo e, talvez, uma comissão que é determinada pelo tipo de registro em seu cadastro. Os tipos 1 e 2 tem um cálculo completamente
-diferente e para todos os outros a comissão será de 2%.</p>
+<p>Não me refiro aos atributos que fazem parte do <a href="/estado-do-objeto">Estado</a> do Objeto, pois esses não deveriam ser violados.</p>
 
-<h3 id="versao-procedural">A Versão Procedural:</h3>
+<p>A mutabilidade estará em algo que chamo de <a href="/atributos-primarios-secundarios#secundario">atributos secundários</a>.</p>
 
-<p>Nessa versão do código tudo é feito num único lugar, no evento do botão.</p>
+<p>Esses tipo de atributo não faz parte do Estado do Objeto.
+Então <em>ninguém</em>, além do próprio Objeto, sabe de sua existência.</p>
 
-<p>É claro que você poderá me dizer como reescrever o código. Dividir em partes. Criar outros “métodos”, etc. Mas o ponto aqui é comparar um Código
-Procedural com um Orientado a Objetos de verdade.</p>
+<p>Vejamos o mesmo exemplo do <a href="/atributos-primarios-secundarios#secundario">artigo anterior</a>:</p>
 
-<pre><code>procedure TForm1.Button1Click(Sender: TObject);
-var
-  Id: Integer;
-  EmployeeType: Integer;
-  Salary: Currency;
+<script src="https://gist.github.com/mdbs99/48237c902271b6f2c3a314d3b6f5b8c0.js"></script>
+
+<p>O atributo <code>FStream</code> não faz parte do Estado do Objeto. Esse atributo foi criado pensando na performance, ou seja, toda vez que o método <code>TFile.Stream</code> for chamado, apenas na primeira vez o <em>stream</em> do arquivo será lido em disco.</p>
+
+<p>É um atributo secundário.</p>
+
+<p>Mas algo muito importante deve ficar claro:
+Poderíamos <em>remover</em> esse atributo.</p>
+
+<p>Para o Objeto exercer seu <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contrato</a>, ele não é necessário!</p>
+
+<p>A implementação do Método poderia ser apenas isso:</p>
+
+<pre><code>function TFile.Stream: IDataStream;
 begin
-  Id := SelectedEmployeeId;
-  Query.Close;
-  Query.Params.ParamByName('id').Value := Id;
-  Query.Open;
-  
-  Salary := Query.FieldByName('salary').AsCurrency;  
-  
-  EmployeeType := Query.FieldByName('etype').AsInteger;
-  case EmployeeType of
-    1: Salary := Salary + CalcCommission1(Id, {parameters});
-    2: Salary := Salary + CalcCommission2(Id, {parameters});
-  else
-    Salary := Salary + (Salary * 0.02);
-  end;
-
-  ShowMessage('Total Salary = ' + CurrToStr(Salary));
+  Result := TDataStream.New(FFileName);
 end;
 </code></pre>
 
-<p>Quem nunca fez um código parecido com esse em todos esses anos de <em>Object Pascal</em>? Eu já. Muito mais do que eu gostaria.</p>
+<p>O Objeto continuaria funcionando, no entanto teríamos o “problema” da performance.</p>
 
-<p>No clique de um único botão:</p>
+<p>Então o programador opta por implementar algo interno ao Objeto. Algo que pode ser alterado a qualquer momento, sem impacto na manutenção do código externo ao Objeto.</p>
 
-<ol>
-  <li>Utilizei uma <em>query</em> global;</li>
-  <li>Utilizei 3 variáveis locais;</li>
-  <li>Utilizei 2 funções para cálculo de comissão;</li>
-  <li>Fiz um cálculo de comissão diretamente no código do evento(!)</li>
-  <li>Apresentei o valor calculado ao usuário.</li>
-</ol>
+<h2 id="conclusao">Conclusão</h2>
 
-<p>Esse código é Procedural, <strong>muito acoplado</strong> e impossível de ser utilizado em <em>UnitTests</em>.</p>
+<p>Vimos que não há problemas em termos atributos secundários mutáveis dentro de Objetos — se o Objeto souber gerenciá-los corretamente.</p>
 
-<p>Melhor vermos uma outra opção.</p>
+<p>O que acontece dentro de um Objeto, é segredo do Objeto.</p>
 
-<h3 id="versao-orientada-a-objetos">A Versão Orientada a Objetos:</h3>
+<p>Então seria vantagem criar tais atributos? Depende.</p>
 
-<p>Para essa versão, é claro, temos que ter as Interfaces que representam cada Entidade do nosso domínio.
-Mesmo um Valor ou Salário <a href="/posts/o-que-e-orientacao-a-objetos/">também são Entidades</a>!</p>
+<p>Haverá casos que é mais simples criar algo interno ao Objeto. Mas outras vezes, não.</p>
 
-<pre><code>type
-  ICurrencyValue = interface
-    function Value: Currency;
-    function AsString: string;
-  end;
+<p>Você irá decidir com base nas Regras de Negócio, performance, simplicidade, <em>design</em> das Classes… e prazo de entrega do seu software.</p>
 
-  ISalary = interface
-    function Value: ICurencyValue;
-  end;
-  
-  IEmployee = interface
-    { ... }
-  end;
-</code></pre>
+<p>Felizmente, como são atributos privados, você pode alterar o código qualquer momento.</p>
 
-<p>Com as Interfaces definidas, não fica difícil implementar as Classes utilizando o 
-<a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator Design Pattern</a>,
-o mesmo utilizado <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo">aqui</a>. Mas o código
-das Classes são irrelevantes para o entendimento do problema. E é assim mesmo que deve ser! Não precisamos saber o código interno de uma 
-Classe para podermos utilizá-la. Apenas a sua Interface é suficiente.</p>
-
-<p>Então o código do evento no botão fica assim:</p>
-
-<pre><code>procedure TForm1.Button1Click(Sender: TObject);
-begin
-  ShowMessage(
-    'Total Salary = ' + 
-      TEmployeeSalaryWithCommission.New(
-        TEmployeeSalary.New(
-          TEmployee.New(SelectedEmployeeId)
-        )
-      )
-      .Value.AsString
-  );
-end;
-</code></pre>
-
-<p>Mesmo sem o código das Classes — apenas para não “poluir” demais o post — acredito que dá pra entender perfeitamente o que seria implementado:</p>
-
-<ol>
-  <li>A classe <em>TEmployee</em> implementa <em>IEmployee</em>;</li>
-  <li>A classe <em>TEmployeeSalary</em> e <em>TEmployeeSalaryWithCommission</em> implementam <em>ISalary</em>;</li>
-  <li>A classe <em>TEmployeeSalaryWithCommission</em> é um <em>decorator</em> para <em>TEmployeeSalary</em>;</li>
-</ol>
-
-<p>Diferentemente do primeiro exemplo, no clique de um único botão:</p>
-
-<ol>
-  <li>Instanciei <em>TEmployee</em>;</li>
-  <li>Instanciei <em>TEmployeeSalary</em>;</li>
-  <li>Decorei a instancia de <em>TEmployeeSalary</em> com <em>TEmployeeSalaryWithCommission</em>;</li>
-  <li>Chamada para <em>Value</em> — uma instancia de <em>ISalary</em> — e depois para o método <em>AsString</em>;</li>
-</ol>
-
-<p>Não há condicionais, cálculos ou Regras de Negócio “espalhadas” no código. Apenas objetos “conversando”.</p>
-
-<p>Claro que uma <em>query</em> será executada em algum lugar — talvez encapsulado dentro de <em>TEmployee</em> — assim como os cálculos de comissões terão que 
-ser implementados em <em>TEmployeeSalary</em> ou em algum outro objeto. Mas isso não é mover o problema para outro lugar… não! Isso é encapsular
-o problema em objetos e deixá-los trabalhar livremente.</p>
-
-<p>Nessa versão você não vê as regras, os cálculos. Você, como utilizador dessas Classes, não precisa
-pensar em procedimentos e na ordem de chamada entre eles. <strong>Deixe que os Objetos pensem por você.</strong></p>
+<p>Então, não pense tanto sobre isso.</p>
 
 <p>Até logo.</p>
 
@@ -387,33 +291,33 @@ pensar em procedimentos e na ordem de chamada entre eles. <strong>Deixe que os O
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/mutabilidade-encapsulada" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Objetos pensam e tomam decisões&via=mdbs99;url=http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Mutabilidade Encapsulada&via=mdbs99;url=http://objectpascalprogramming.com/mutabilidade-encapsulada" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/mutabilidade-encapsulada" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/&title=Objetos pensam e tomam decisões" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/&title=Objetos pensam e tomam decisões" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/mutabilidade-encapsulada&title=Mutabilidade Encapsulada" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/&t=Objetos pensam e tomam decisões" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/mutabilidade-encapsulada&title=Mutabilidade Encapsulada" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/mutabilidade-encapsulada&t=Mutabilidade Encapsulada" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -451,15 +355,6 @@ pensar em procedimentos e na ordem de chamada entre eles. <strong>Deixe que os O
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/mutabilidade-encapsulada" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Mutabilidade Encapsulada</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/atributos-primarios-secundarios" class="post-link">
@@ -542,6 +437,15 @@ pensar em procedimentos e na ordem de chamada entre eles. <strong>Deixe que os O
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/posts/pacotes-e-versoes-no-lazarus/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pacotes e Versões no Lazarus</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -549,8 +453,8 @@ pensar em procedimentos e na ordem de chamada entre eles. <strong>Deixe que os O
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/objetos-pensam-e-tomam-decisoes';
-      var disqus_title      = 'Objetos pensam e tomam decisões';
+      var disqus_identifier = '/mutabilidade-encapsulada';
+      var disqus_title      = 'Mutabilidade Encapsulada';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

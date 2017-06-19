@@ -8,6 +8,94 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Mutabilidade Encapsulada</title>
+        <description>&lt;p&gt;Um Objeto pode mudar internamente, mas permanecer imutável para o mundo exterior.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-ben-white-197668.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Uma das atribuições da Orientação a Objetos é &lt;em&gt;gerenciar&lt;/em&gt; a mutabilidade.&lt;/p&gt;
+
+&lt;p&gt;Então foi criado o conceito de atributos privados, onde o acesso a esses atributos não seria permitido ou só seria permitido através de &lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;métodos públicos&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;O gerenciamento da mutabilidade nos proporcionou um código mais seguro, melhorando a munutenabilidade.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, Objetos Mutáveis são os opostos dos &lt;a href=&quot;/posts/objetos-imutaveis/&quot;&gt;Objetos Imutáveis&lt;/a&gt;. Esses últimos são mais &lt;em&gt;simples&lt;/em&gt; de usar e ainda &lt;em&gt;mais seguros&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas nem sempre conseguimos — ou queremos — codificar um Objeto &lt;em&gt;completamente&lt;/em&gt; imutável. Seja por questão de performance, &lt;em&gt;design&lt;/em&gt; ou restrição tecnológica.&lt;/p&gt;
+
+&lt;p&gt;Esse artigo irá lhe mostrar que podemos ter um Objeto &lt;em&gt;imutável&lt;/em&gt; para o mundo externo, mesmo ele sendo &lt;em&gt;mutável&lt;/em&gt; internamente.&lt;/p&gt;
+
+&lt;h2 id=&quot;mutabilidade&quot;&gt;Mutabilidade&lt;/h2&gt;
+
+&lt;p&gt;Na Orientação a Objetos, toda mutabilidade deve ser controlada.&lt;/p&gt;
+
+&lt;p&gt;Nenhum atributo deve estar disponível para alteração de forma direta. Devemos, sempre, prover uma restrição com a máxima segurança aos atributos de um Objeto.&lt;/p&gt;
+
+&lt;p&gt;A maioria das linguagens com suporte a Orientação a Objetos já faz isso por padrão. Basta declararmos os atributos como &lt;code&gt;private&lt;/code&gt; para que eles não sejam vistos fora do escopo do Objeto.&lt;/p&gt;
+
+&lt;p&gt;Infelizmente, o uso das &lt;a href=&quot;https://en.wikipedia.org/wiki/Reflection_(computer_programming)&quot;&gt;técnicas de reflexão&lt;/a&gt; acabaram com essa segurança, nos levando de volta aos tempos da programação procedural e variáveis globais, onde tudo está acessível a todos… mas, nesse artigo, vamos fingir que isso não existe. 
+Voltemos aos atributos e a mutabilidade.&lt;/p&gt;
+
+&lt;p&gt;Não me refiro aos atributos que fazem parte do &lt;a href=&quot;/estado-do-objeto&quot;&gt;Estado&lt;/a&gt; do Objeto, pois esses não deveriam ser violados.&lt;/p&gt;
+
+&lt;p&gt;A mutabilidade estará em algo que chamo de &lt;a href=&quot;/atributos-primarios-secundarios#secundario&quot;&gt;atributos secundários&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Esses tipo de atributo não faz parte do Estado do Objeto.
+Então &lt;em&gt;ninguém&lt;/em&gt;, além do próprio Objeto, sabe de sua existência.&lt;/p&gt;
+
+&lt;p&gt;Vejamos o mesmo exemplo do &lt;a href=&quot;/atributos-primarios-secundarios#secundario&quot;&gt;artigo anterior&lt;/a&gt;:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/48237c902271b6f2c3a314d3b6f5b8c0.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;O atributo &lt;code&gt;FStream&lt;/code&gt; não faz parte do Estado do Objeto. Esse atributo foi criado pensando na performance, ou seja, toda vez que o método &lt;code&gt;TFile.Stream&lt;/code&gt; for chamado, apenas na primeira vez o &lt;em&gt;stream&lt;/em&gt; do arquivo será lido em disco.&lt;/p&gt;
+
+&lt;p&gt;É um atributo secundário.&lt;/p&gt;
+
+&lt;p&gt;Mas algo muito importante deve ficar claro:
+Poderíamos &lt;em&gt;remover&lt;/em&gt; esse atributo.&lt;/p&gt;
+
+&lt;p&gt;Para o Objeto exercer seu &lt;a href=&quot;/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos&quot;&gt;contrato&lt;/a&gt;, ele não é necessário!&lt;/p&gt;
+
+&lt;p&gt;A implementação do Método poderia ser apenas isso:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function TFile.Stream: IDataStream;
+begin
+  Result := TDataStream.New(FFileName);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O Objeto continuaria funcionando, no entanto teríamos o “problema” da performance.&lt;/p&gt;
+
+&lt;p&gt;Então o programador opta por implementar algo interno ao Objeto. Algo que pode ser alterado a qualquer momento, sem impacto na manutenção do código externo ao Objeto.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Vimos que não há problemas em termos atributos secundários mutáveis dentro de Objetos — se o Objeto souber gerenciá-los corretamente.&lt;/p&gt;
+
+&lt;p&gt;O que acontece dentro de um Objeto, é segredo do Objeto.&lt;/p&gt;
+
+&lt;p&gt;Então seria vantagem criar tais atributos? Depende.&lt;/p&gt;
+
+&lt;p&gt;Haverá casos que é mais simples criar algo interno ao Objeto. Mas outras vezes, não.&lt;/p&gt;
+
+&lt;p&gt;Você irá decidir com base nas Regras de Negócio, performance, simplicidade, &lt;em&gt;design&lt;/em&gt; das Classes… e prazo de entrega do seu software.&lt;/p&gt;
+
+&lt;p&gt;Felizmente, como são atributos privados, você pode alterar o código qualquer momento.&lt;/p&gt;
+
+&lt;p&gt;Então, não pense tanto sobre isso.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 19 Jun 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/mutabilidade-encapsulada</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/mutabilidade-encapsulada</guid>
+      </item>
+    
+      <item>
         <title>Atributos Primários e Secundários</title>
         <description>&lt;p&gt;Um Objeto pode ter Atributos Primários e Secundários.&lt;/p&gt;
 
@@ -1089,111 +1177,6 @@ end;
         <pubDate>Mon, 10 Apr 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/objetos-puros/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/objetos-puros/</guid>
-      </item>
-    
-      <item>
-        <title>Pacotes e Versões no Lazarus</title>
-        <description>&lt;p&gt;Se você já precisou trabalhar com versões diferentes de um mesmo Pacote de componentes no Lazarus, esse artigo pode ser útil.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-samuel-zeller-118195.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Os &lt;em&gt;frameworks&lt;/em&gt; e &lt;em&gt;libs&lt;/em&gt; sempre são disponibilizados no formato de Pacotes.&lt;/p&gt;
-
-&lt;p&gt;No Delphi são os arquivos *.dpk e no Lazarus são os arquivos *.lpk.&lt;/p&gt;
-
-&lt;p&gt;Os Pacotes são ótimos. Ajudam na separação lógica do código e reutilização, mesmo dentro de um único projeto.&lt;/p&gt;
-
-&lt;p&gt;Os Pacotes também servem para empacotar componentes que serão instalados na IDE.&lt;/p&gt;
-
-&lt;p&gt;Mas se você precisar utilizar uma versão diferente (mais atualizada) de um Pacote num projeto, mas não quer alterar o código de outros projetos mais antigos que também utilizam esse Pacote, o que fazer?&lt;/p&gt;
-
-&lt;h2 id=&quot;problemas&quot;&gt;Problemas&lt;/h2&gt;
-
-&lt;p&gt;Pode ser sorte, mas a anos eu trabalho com componentes, frameworks ou libs (vou utilizar a nomenclatura &lt;em&gt;Libs&lt;/em&gt; agora) de terceiros e quase nunca tive problemas em atualizar os fontes.&lt;/p&gt;
-
-&lt;p&gt;Talvez minha sorte tenha haver com o fato de que eu quase não atualizo as &lt;em&gt;Libs&lt;/em&gt; que estão funcionando.&lt;/p&gt;
-
-&lt;p&gt;Por outro lado não posso ficar “parado no tempo” pois quando atulizar o código muita coisa pode ter mudado e levará um tempo até fazer todas as correções.&lt;/p&gt;
-
-&lt;p&gt;Então, precisamos atualizar alguma hora.&lt;/p&gt;
-
-&lt;p&gt;As vezes tenho que fazer pequenas correções no meu código ou mesmo envio &lt;em&gt;patches&lt;/em&gt; para outros autores de componentes &lt;em&gt;Open Source&lt;/em&gt;, mas nunca tive um problema grave.&lt;/p&gt;
-
-&lt;p&gt;Por isso sempre mantive apenas 1 source para cada &lt;em&gt;Lib&lt;/em&gt;. Para projetos mais organizados que mantém &lt;em&gt;branches&lt;/em&gt; imutáveis (&lt;em&gt;labels&lt;/em&gt;) de versões, era ainda mais seguro.&lt;/p&gt;
-
-&lt;p&gt;Bem, não mais.&lt;/p&gt;
-
-&lt;p&gt;Parece que minha sorte acabou e venho tendo alguns problemas de incompatibilidade entre esses Pacotes.&lt;/p&gt;
-
-&lt;p&gt;São alguns problemas, não muitos.&lt;/p&gt;
-
-&lt;p&gt;As vezes uma atualização de algum Pacote não compila com a versão mais nova do Lazarus; outras vezes não compila com a versão mais nova do FPC; outras vezes o código foi tão alterado que fico receoso em atualizar, pois tenho projetos que não tem &lt;em&gt;Unit Tests&lt;/em&gt; apropriados.&lt;/p&gt;
-
-&lt;p&gt;Então vi que era hora de me preocupar com isso e vou lhe explicar como estou fazendo atualmente.&lt;/p&gt;
-
-&lt;h2 id=&quot;versionando&quot;&gt;Versionando&lt;/h2&gt;
-
-&lt;p&gt;Primeiramente eu entrei em contato com a &lt;a href=&quot;http://lists.lazarus.freepascal.org/pipermail/lazarus/&quot;&gt;Lista Oficial do Lazarus&lt;/a&gt; e (resumindo) &lt;a href=&quot;http://lists.lazarus.freepascal.org/pipermail/lazarus/2017-March/231269.html&quot;&gt;perguntei&lt;/a&gt; como eu poderia manter mais de uma versão de um mesmo Pacote.&lt;/p&gt;
-
-&lt;p&gt;Ao que parece o Lazarus IDE é bem &lt;em&gt;esperto&lt;/em&gt; e consegue fazer o carregamento do Pacote correspondende a versão que você sinalizou que gostaria de utilizar quando adicionou o Pacote como dependência no seu Projeto.&lt;/p&gt;
-
-&lt;p&gt;No exemplo abaixo eu estou adicinando o Pacote AWS a partir da versão 0.4:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-new-requirement-8287.jpg&quot; alt=&quot;Lazarus New Requirement&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Significa que se um Projeto estiver utilizando a versão 0.3 é esse Pacote que está disponível, mas se você abrir um novo projeto que utiliza a versão 0.4, por exemplo, a IDE irá recarregar a nova versão do Pacote.&lt;/p&gt;
-
-&lt;p&gt;Legal, mas não resolve 100%.&lt;/p&gt;
-
-&lt;h2 id=&quot;preferencial&quot;&gt;Definindo Pacotes Preferenciais&lt;/h2&gt;
-
-&lt;p&gt;Muitas vezes o autor não versiona o Pacote, ou seja, ele não define os números de &lt;em&gt;Min&lt;/em&gt; e &lt;em&gt;Max&lt;/em&gt;. Nesse caso, não há como a IDE carregar o Pacote correto, pois todos teriam o mesmo número de versão.&lt;/p&gt;
-
-&lt;p&gt;Então mais uma vez o Lazarus me surpreendeu me dando a opção de marcar um &lt;a href=&quot;http://wiki.freepascal.org/IDE_Window:_Project_Inspector#Store_file_name_as_preferred_for_this_dependency&quot;&gt;Pacote como preferencial&lt;/a&gt;, apontando diretamente para o &lt;em&gt;path&lt;/em&gt; do *.lpk.&lt;/p&gt;
-
-&lt;p&gt;Quase perfeito, mas…&lt;/p&gt;
-
-&lt;p&gt;Não há opção na IDE para configurar o &lt;em&gt;path&lt;/em&gt;. Ao utilizar a oção de &lt;em&gt;preferencial&lt;/em&gt; você vai salvar o &lt;em&gt;path&lt;/em&gt; nas configurações do seu projeto, mas ele vai salvar o &lt;em&gt;path&lt;/em&gt; do Pacote que já está carregado.&lt;/p&gt;
-
-&lt;p&gt;Eu &lt;a href=&quot;http://lists.lazarus.freepascal.org/pipermail/lazarus/2017-April/231287.html&quot;&gt;sugeri&lt;/a&gt; que deveria haver essa opção lá na lista, porém não sei se não entenderam ou talvez eu não tenha entendido como o mecanismo funciona — ou talvez os autores estão curtindo o fim de semana merecido e irão responder outra hora — enfim.&lt;/p&gt;
-
-&lt;p&gt;De qualquer forma estou pensando em fazer esse &lt;em&gt;patch&lt;/em&gt; para o Lazarus, ou seja, poder adicionar uma dependência apontando para um &lt;em&gt;path&lt;/em&gt; relativo.&lt;/p&gt;
-
-&lt;p&gt;Enquanto não há essa opção, sigo em frente.&lt;/p&gt;
-
-&lt;p&gt;Estou utilizando no mínimo 3 diretórios com a cópia dos fontes de diferentes versões para o mesmo Pacote.&lt;/p&gt;
-
-&lt;p&gt;São eles:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;master — diretório com a versão de produção;&lt;/li&gt;
-  &lt;li&gt;develop — diretório com a versão modificada, testes, patchs, etc;&lt;/li&gt;
-  &lt;li&gt;snapshot — diretório com a versão original do autor;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Felizmente esses diretórios são &lt;strong&gt;facilmente&lt;/strong&gt; alterados no XML *.lpi de configuração do Projeto. É manual, porém bem fácil (como a maioria das coisas são no &lt;em&gt;Object Pascal&lt;/em&gt;).&lt;/p&gt;
-
-&lt;p&gt;Caso eu queria mudar a versão de um Pacote, basta mudar o diretório com a versão correspondente e dar um &lt;em&gt;build&lt;/em&gt; no Projeto.&lt;/p&gt;
-
-&lt;p&gt;Simples assim.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Os Pacotes são uma ótima maneira de modularizar seus Projetos em unidades lógicas que podem ser compartilhadas entre outros Projetos.&lt;/p&gt;
-
-&lt;p&gt;No entanto, manter a organização de várias versões não é um trabalho fácil. A IDE ajuda com o carregamento das versões corretas, porém nem sempre isso irá funcionar.&lt;/p&gt;
-
-&lt;p&gt;Eu prefiro as coisas mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt;, mais minimalista. Não quero ficar “dependente” da IDE para gerenciar meu trabalho. Então eu estou versionando meus Pacotes utilizando os diretórios e toda vez que adiciono uma nova dependência, marco como &lt;em&gt;preferencial&lt;/em&gt; para que a IDE sempre abra a versão configurada.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 03 Apr 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/pacotes-e-versoes-no-lazarus/</guid>
       </item>
     
   </channel>
