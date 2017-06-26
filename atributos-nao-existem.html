@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Microservices com Delphi — Parte Final &#8211; Object Pascal Programming</title>
+    <title>Atributos Não Existem &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Como implementar uma simples API para fazer a comunicação com Microservices em Java.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Pascal">
-    <meta name="keywords" content="microservices, java, delphi">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/">
+    <meta name="keywords" content="OO">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, atributos, attributes, property, properties">
+    <link rel="canonical" href="http://objectpascalprogramming.com/atributos-nao-existem">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,23 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Microservices com Delphi — Parte Final">
-    <meta property="og:description" content="Como implementar uma simples API para fazer a comunicação com Microservices em Java.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/">
+    <meta property="og:title" content="Atributos Não Existem">
+    <meta property="og:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta property="og:url" content="http://objectpascalprogramming.com/atributos-nao-existem">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1454023989775-79520f04322c.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-guillaume-bolduc-259596.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Microservices com Delphi — Parte Final" />
-    <meta name="twitter:description" content="Como implementar uma simples API para fazer a comunicação com Microservices em Java." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/" />
+    <meta name="twitter:title" content="Atributos Não Existem" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/atributos-nao-existem" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,117 +192,48 @@
 
 
 <div class="post-header mb2">
-  <h1>Microservices com Delphi — Parte Final</h1>
-  <span class="post-meta">Aug 29, 2016</span><br>
+  <h1>Atributos Não Existem</h1>
+  <span class="post-meta">Jun 26, 2017</span><br>
   
   <span class="post-meta small">
   
-    2 minute read
+    1 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Uma arquitetura que utiliza Microservices tem seus prós e contras como qualquer outra tecnologia. Será que essa arquitetura foi uma boa escolha para o projeto?</p>
+  <p>E se eu lhe dissesse que Atributos não existem realmente?</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1454023989775-79520f04322c.jpg" alt="Imagem" /></p>
+<p><img src="/images/2017/photo-guillaume-bolduc-259596.jpg" alt="Unsplash image" /></p>
 
-<h2 id="introducao">Introdução</h2>
+<p>Tive um <em>insigth</em> um dia desses:</p>
 
-<p>No <a href="/posts/microservices-delphi-parte-3/">artigo anterior</a> eu lhe mostrei como codificar uma Classe de Negócio para fazer a comunicação com um Microservice utilizando todo o arcabouço apresentado na primeira parte dessa série.</p>
+<p><em>“Não existem Atributos, apenas Composição e Comportamento”</em></p>
 
-<p>Nesse artigo você irá ver:</p>
+<p>O que chamamos de <a href="/posts/menos-e-mais/#atributos">Atributo</a> é, na verdade, Composição de Objetos e <a href="/posts/objetos-pensam-e-tomam-decisoes/">Comportamento</a>.</p>
 
-<ol>
-  <li><strong>Tratamento de Exceções</strong>: Quando algo dá errado nos Microservices ou na comunicação com eles;</li>
-  <li><strong>Links</strong>: Separei alguns artigos interessantes sobre o assunto;</li>
-</ol>
+<p>Atributos <em>não</em> existem. São virtuais, produtos de nossa imaginação ou apenas uma abstração da realidade.</p>
 
-<h2 id="tratamento-de-excecoes">Tratamento de Exceções</h2>
+<p>Veja as Cores, por exemplo.</p>
 
-<p>Todo <em>software</em> precisa tratar erros e exceções, e é claro que estamos fazendo isso.</p>
+<p>Não existe atributos de cor Amarelo, Vermelho ou Azul. São todos Objetos!</p>
 
-<p>Na Unit <a href="/posts/microservices-delphi-parte-2/#unit-microservicesa">AcmeMicroServiceA.pas</a> o tratamento de exceções é feito no método <code>TMicroServiceClient.Send</code>, verificando o <code>Code</code> de retorno do protocolo HTTP.</p>
+<p>O Amarelo é um Objeto numa composição <em>RGB</em> e nosso olho processa essa composição interagindo com outro Objeto, a <em>Luz</em>.</p>
 
-<p>Se houver erro, definimos um protocolo privado que descreve como a mensagem para o <em>Client</em> deve ser. Nada mais é do que um XML com <em>nodes</em> específicos que descrevem o erro ou exceção.</p>
+<p>Assim “vemos” as cores.</p>
 
-<p>Abaixo o código modificado que trata erros e exceções. O código em produção é um pouco mais elaborado, no entanto acredito que com esse exemplo você irá entender como o tratamento ocorre no projeto real.</p>
+<p>Quer outros exemplos?</p>
 
-<pre><code>function TMicroServiceClient.Send(
-  const Content: string): IMicroServiceResponse;
-begin
-  with Response(Content) do
-  begin
-    Result := TMicroServiceResponse.New(
-      Code,
-      TXMLFactory.New('ISO-8859-1', Stream).Document
-    );
-    case Code of
-      // BAD REQUEST
-      400..499:
-        raise EMicroService.Create(
-          Result
-            .XML
-            .DocumentElement
-            .ChildNodes['UserMessage'].Text
-        );
-      // SERVER ERROR
-      500..510:
-        raise EMicroService.Create(
-          Result
-            .XML
-            .DocumentElement
-            .ChildNodes['DevMessage'].Text
-        );
-    end;
-  end;
-end;
-</code></pre>
+<p>A quantidade de itens numa lista é determinada pelo comportamento do Objeto ao contar os itens da lista.</p>
 
-<p>Repare que para cada tipo de erro/exceção, um <em>node</em> (ou <em>nodes</em>) específico é utilizado para obter a informação.</p>
+<p>A idade de uma pessoa é determinada pelo comportamento do Objeto ao contar o tempo.</p>
 
-<p>No <em>Client</em> Delphi, o <code>Code</code> também é acessível através da Interface <code>IMicroServiceResponse</code>, então o <em>Client</em> pode tomar decisões específicas para casos que não gerem uma exceção.</p>
+<p>Não há nada de errado em continuarmos utilizando a palavra Atributo, mas não se esqueça que eles não existem. São apenas abstrações da realidade.</p>
 
-<p>Veja <a href="http://www.restapitutorial.com/httpstatuscodes.html">aqui</a> uma lista de <em>HTTP Status Codes</em>.</p>
-
-<h2 id="links">Links</h2>
-
-<p>Separei alguns links interessantes de artigos e vídeos que serviram de inspiração para escrever essa série, assim como foram fontes de informações para o projeto.</p>
-
-<ul>
-  <li>
-    <p><a href="https://www.infoq.com/br/presentations/vantagens-e-desvantagens-de-uma-arquitetura-microservices">Vantagens e desvantagens de uma arquitetura microservices: uma abordagem rica em exemplos</a> é uma apresentação em vídeo de quase 1 hora que fala sobre os prós e contras em utilizar essa arquitetura. O autor fala sobre <a href="http://www.martinfowler.com/bliki/StranglerApplication.html">Strangler Application</a> que é o mesmo princípio que estamos utilizando no projeto.</p>
-  </li>
-  <li>
-    <p><a href="https://www.infoq.com/br/articles/seven-uservices-antipatterns">Sete antipadrões para microservices</a> alerta sobre algumas coisas que devem ser evitadas, na opinião do autor, quando utilizamos a arquitetura de Microservices.</p>
-  </li>
-  <li>
-    <p><a href="https://medium.com/@mwhitt.w/preventing-tight-data-coupling-between-microservices-df30e1e24311#.wl6r7hcfz">Preventing Tight Data Coupling Between Microservices</a> é um artigo em Inglês interessante sobre acoplamento de dados.</p>
-  </li>
-  <li>
-    <p><a href="https://medium.com/@skamille/microservices-real-architectural-patterns-68bd83bbb6cd#.hrsdvq3rj">Microservices: Real Architectural Patterns</a> é outro artigo em Inglês que fala sobre arquitetura e CRUD.</p>
-  </li>
-</ul>
-
-<h2 id="conclusao">Conclusão</h2>
-
-<p>A escolha pela arquitetura de Microservices está sendo satisfatória.</p>
-
-<p>Microservices são como <a href="/posts/objetos-pensam-e-tomam-decisoes/">instâncias de Objetos</a> pela rede.</p>
-
-<p>Assim como Objetos, cada Microservice deve implementar apenas <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">uma única responsabilidade</a>.</p>
-
-<p>Quando falamos sobre Microservices, WebServices, Multi-camadas, protocolos… tudo isso parece muito complicado. Mas se você souber como as coisas funcionam, poderá remover tudo que é <strong>desnecessário</strong> para o <strong>seu negócio</strong> e se concentrar apenas no <strong>essencial</strong>.</p>
-
-<p>Você não precisa implementar <strong>tudo</strong> o que dizem para implementar. Utilize tecnologias que fazem sentido para seu negócio e comece simples.</p>
-
-<p>A migração está longe de estar concluída. O sistema tem poucos meses, mas apenas poucos dias de trabalho <em>full time</em> na codificação e integração dos Microservices.</p>
-
-<p>Por enquanto estamos indo bem.</p>
-
-<p>Até logo.</p>
+<p>Faz sentido?</p>
 
 </article>
 
@@ -309,33 +243,33 @@ end;
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/atributos-nao-existem" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Microservices com Delphi — Parte Final&via=mdbs99;url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Atributos Não Existem&via=mdbs99;url=http://objectpascalprogramming.com/atributos-nao-existem" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/atributos-nao-existem" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/&title=Microservices com Delphi — Parte Final" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/&title=Microservices com Delphi — Parte Final" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/atributos-nao-existem&title=Atributos Não Existem" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/microservices-delphi-parte-final/&t=Microservices com Delphi — Parte Final" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/atributos-nao-existem&title=Atributos Não Existem" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/atributos-nao-existem&t=Atributos Não Existem" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -373,15 +307,6 @@ end;
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/atributos-nao-existem" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Atributos Não Existem</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/mutabilidade-encapsulada" class="post-link">
@@ -464,6 +389,15 @@ end;
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/posts/objetos-puros/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Puros</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -471,8 +405,8 @@ end;
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/microservices-delphi-parte-final';
-      var disqus_title      = 'Microservices com Delphi — Parte Final';
+      var disqus_identifier = '/atributos-nao-existem';
+      var disqus_title      = 'Atributos Não Existem';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
