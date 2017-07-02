@@ -29,7 +29,7 @@ E se eu lhe dissesse que Atributos não existem realmente?
 
 ![Unsplash image]({{ page.image }})  
 
-Tive um *insigth* um dia desses:
+Tive um *insight* um dia desses:
 
 *"Não existem Atributos, apenas Composição e Comportamento"*
 
