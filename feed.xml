@@ -8,6 +8,136 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Objetos Validadores</title>
+        <description>&lt;p&gt;Veja como fazer validações utilizando Objetos ao invés de utilizar programação procedural.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-scott-webb-59043.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Na Orientação a Objetos a codificação deve ser declarativa. Isso quer dizer que, num mundo ideal, iríamos criar os Objetos agrupando-os entre si e, com uma única &lt;a href=&quot;/posts/diga-me-algo-sobre-voce/#mensagens&quot;&gt;mensagem&lt;/a&gt;, o trabalho a ser realizado seria iniciado e cada Objeto iria realizar parte desse trabalho. Tudo em perfeita harmonia.&lt;/p&gt;
+
+&lt;p&gt;No entanto, não vivemos num mundo ideal e problemas podem ocorrer.&lt;/p&gt;
+
+&lt;p&gt;Se pudermos validar o &lt;em&gt;input&lt;/em&gt; dos dados no nosso sistema antes de iniciar um processo mais elaborado, isso tornaria o processamento menos custoso, menos demorado e menos propenso a erros.&lt;/p&gt;
+
+&lt;p&gt;No entanto, se devemos codificar de forma declarativa, ou seja, sem condicionais que validem passo-a-passo o que está sendo processado — o &lt;em&gt;modus operandis&lt;/em&gt; da programação procedural — como seria possível fazer isso utilizando Objetos para deixar o código mais seguro e fazer um tratamento mais adequado para cada problema ou decisão, antes que uma exceção possa ocorrer?&lt;/p&gt;
+
+&lt;h2 id=&quot;validacoes&quot;&gt;Validações&lt;/h2&gt;
+
+&lt;p&gt;Imagine um Formulário onde há diversos campos para o usuário preencher antes de clicar em algum botão que irá fazer algo com os dados preenchidos nos &lt;em&gt;widgets&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Sempre temos que validar o &lt;em&gt;input&lt;/em&gt; antes de processá-lo, certo?&lt;/p&gt;
+
+&lt;p&gt;Tenho trabalhado com desenvolvimento de &lt;em&gt;software&lt;/em&gt; a muitos anos. Grande parte desse tempo eu codifiquei a validação de campos utilizando o mesmo “padrão” que até hoje é utilizado, independentemente da linguagem utilizada.&lt;/p&gt;
+
+&lt;p&gt;Vejamos como é esse padrão:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/1d990d474d0a15a7543c54c5c02b370a.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;O exemplo acima é sobre um Formulário que contém alguns campos, dentre esses campos temos &lt;code&gt;Name&lt;/code&gt; e &lt;code&gt;Birthday&lt;/code&gt;. O primeiro é &lt;em&gt;string&lt;/em&gt; e não pode estar em branco. Já o segundo deveria ser uma data válida, então o código utiliza a função padrão &lt;code&gt;SysUtils.TryStrToDate&lt;/code&gt; que verifica se é uma data válida e retorna o valor na variável &lt;code&gt;MyDate&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Quem nunca fez isso?&lt;/p&gt;
+
+&lt;p&gt;Pois é.&lt;/p&gt;
+
+&lt;p&gt;Há problemas demais com essa abordagem:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Não podemos reutilizar as validações. Em cada Formulário haverá uma possível cópia do mesmo código;&lt;/li&gt;
+  &lt;li&gt;As variáveis locais podem aumentar consideravelmente caso haja mais testes que necessitem de variáveis;&lt;/li&gt;
+  &lt;li&gt;O código é totalmente procedural;&lt;/li&gt;
+  &lt;li&gt;Não posso utilizar as informações de aviso ao usuário em outra aplicação Web, por exemplo, visto que as &lt;em&gt;strings&lt;/em&gt; estão codificadas dentro de funções &lt;code&gt;ShowMessage&lt;/code&gt; (ou qualquer outra função de mensagem para Desktop);&lt;/li&gt;
+  &lt;li&gt;O Formulário ficou complexo, visto que há muito código num único evento — e não adianta apenas criar vários métodos privados para cada teste, pois o Formulário irá continuar fazendo coisas demais.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Há variantes dessa abordagem acima, porém acredito que todos nós já vimos algo assim ou mesmo estamos codificando dessa maneira ainda hoje.&lt;/p&gt;
+
+&lt;p&gt;O que podemos fazer para simplificar o código, obter a reutilização das validações e ainda codificar utilizando Orientação a Objetos?&lt;/p&gt;
+
+&lt;h2 id=&quot;constraints&quot;&gt;Constraints&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Constraints&lt;/em&gt; são Objetos que tem por função a validação de algum dado ou mesmo a validação de outro Objeto.&lt;/p&gt;
+
+&lt;p&gt;Cada &lt;em&gt;constraint&lt;/em&gt; valida apenas 1 artefato. Assim podemos reutilizar a validação em muitos outros lugares.&lt;/p&gt;
+
+&lt;p&gt;Vamos definir algumas &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/c668747123d651298e9f40d0e10af5b4.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Vamos entender cada Interface:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code&gt;[guids]&lt;/code&gt;: São necessários para &lt;em&gt;casting&lt;/em&gt; de Interfaces.&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;IDataInformation&lt;/code&gt;: Representa uma infomação.&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;IDataInformations&lt;/code&gt;: Representa uma lista de informações.&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;IDataResult&lt;/code&gt;: Representa um resultado de uma restrição.&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;IDataConstraint&lt;/code&gt;: Representa uma restrição.&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;IDataConstraints&lt;/code&gt;: Representa uma lista de restrições.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Não estou utilizando &lt;em&gt;Generics&lt;/em&gt;. Apenas Classes que podem ser reescritas em praticamente qualquer versão do Lazarus ou Delphi.&lt;/p&gt;
+
+&lt;p&gt;Bem simples.&lt;/p&gt;
+
+&lt;p&gt;Agora veremos a implementação das Interfaces — por questões de breviedade, vou apresentar somente as assinaturas das Classes:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/b254ff882ce27ce9fa4e8219c63e3e96.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Essas são Classes utilizadas em projetos reais. Em breve todo o código estará disponível no &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;Projeto James&lt;/a&gt;. Você poderá obter esse código acompanhando a &lt;a href=&quot;https://github.com/mdbs99/james/issues/17&quot;&gt;Issue #17&lt;/a&gt; do mesmo projeto.&lt;/p&gt;
+
+&lt;p&gt;Na implementação acima não tem nenhuma Classe que implemente a Interface &lt;code&gt;IDataConstraint&lt;/code&gt;. O motivo disso é que você, programador, irá criar suas próprias &lt;em&gt;constraints&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Vejamos um exemplo de como reescrever o código procedural do primeiro exemplo.&lt;/p&gt;
+
+&lt;p&gt;Precisamos criar duas Classes que implementam &lt;code&gt;IDataConstraint&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Como só há apenas 1 método nessa Interface, e para não deixar esse artigo ainda maior, vou mostrar o código de apenas uma implementação:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/62040307d41fbc45c0f15605acc541b5.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;O código acima mostra como seria a implementação para a &lt;em&gt;constraint&lt;/em&gt; &lt;code&gt;TNameConstraint&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;O código está &lt;em&gt;procedural&lt;/em&gt; e ainda pode &lt;em&gt;melhorar&lt;/em&gt; muito. As variáveis locais poderiam ser retiradas, bastando adicionar mais um &lt;em&gt;overload&lt;/em&gt; do método &lt;code&gt;New&lt;/code&gt; na Classe &lt;code&gt;TDataResult&lt;/code&gt; — você consegue ver essa possibilidade? Conseguiria implementá-la?&lt;/p&gt;
+
+&lt;p&gt;Abaixo o código de como utilizar todos esses Objetos em conjunto:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/5dc64c57916d86d01de561077d831aaf.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Se nas validações acima o nome estivesse &lt;em&gt;em branco&lt;/em&gt; mas a data de aniverário tivesse sido digitada &lt;em&gt;corretamente&lt;/em&gt; — o resultado do método &lt;code&gt;OK&lt;/code&gt; será verdadeiro se apenas todas as validações passarem no teste — o resultado do &lt;code&gt;ShowMessage&lt;/code&gt; poderia ser:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- Name: Name is empty
+- Birthday: OK
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Essa seria apenas uma versão da implementação de como mostrar as informações. Poderia haver muitos outros &lt;em&gt;decoradores&lt;/em&gt; para mostrar a informação em outros formatos como, por exemplo, HTML numa aplicação Web.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;O código não está completo, mas acredito que posso ter aberto sua mente a novas possibilidades quando se trata de validações.&lt;/p&gt;
+
+&lt;p&gt;O resultado final de &lt;code&gt;SaveButtonClick&lt;/code&gt;, mesmo utilizando a Classe &lt;code&gt;TDataConstraints&lt;/code&gt;, também não foi implementada complemente seguindo o paradigma da Orientação a Objetos — para deixar o código mais sucinto — pois tem um &lt;code&gt;IF&lt;/code&gt; lá que não deixa o código tão elegante quanto deveria, mas eu acho que dá para você visualizar as possibilidades de uso.&lt;/p&gt;
+
+&lt;p&gt;A instância de &lt;code&gt;TDataConstraints&lt;/code&gt; e seus itens poderia ser utilizada em muitos outros lugares do código.&lt;/p&gt;
+
+&lt;p&gt;A combinação de tais Objetos é virtualmente infinita e seu será o mesmo em &lt;em&gt;todo&lt;/em&gt; código.&lt;/p&gt;
+
+&lt;p&gt;O código é &lt;em&gt;reutilizável&lt;/em&gt; em qualquer tipo de aplicação.&lt;/p&gt;
+
+&lt;p&gt;Nenhuma informação ou mensagem ao usuário seria duplicada no código. Haverá apenas um &lt;em&gt;único&lt;/em&gt; lugar, uma única Classe, para fazer a manutenção de cada validação.&lt;/p&gt;
+
+&lt;p&gt;E a exibição da mensagem poderia ser em qualquer formato, bastando utilizar outros Objetos &lt;em&gt;decoradores&lt;/em&gt; para ler as &lt;em&gt;informations&lt;/em&gt;, formatando como quiser.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 03 Jul 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/objetos-validadores</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/objetos-validadores</guid>
+      </item>
+    
+      <item>
         <title>Atributos Não Existem</title>
         <description>&lt;p&gt;E se eu lhe dissesse que Atributos não existem realmente?&lt;/p&gt;
 
@@ -15,7 +145,7 @@
 
 &lt;p&gt;&lt;img src=&quot;/images/2017/photo-guillaume-bolduc-259596.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Tive um &lt;em&gt;insigth&lt;/em&gt; um dia desses:&lt;/p&gt;
+&lt;p&gt;Tive um &lt;em&gt;insight&lt;/em&gt; um dia desses:&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;“Não existem Atributos, apenas Composição e Comportamento”&lt;/em&gt;&lt;/p&gt;
 
@@ -973,89 +1103,6 @@ Nesse padrão a divisão dos fontes não é apenas por subdiretórios, mas sim p
         <pubDate>Mon, 24 Apr 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/</guid>
-      </item>
-    
-      <item>
-        <title>James Package</title>
-        <description>&lt;p&gt;James é um pacote de Classes e Interfaces para projetos Orientados a Objetos.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-wesley-caribe-63610.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Eu tenho um diretório com código-fonte que é utilizado por quase todos os meus projetos, particulares ou não.&lt;/p&gt;
-
-&lt;p&gt;Apenas 1 diretório com quase 100 arquivos.&lt;/p&gt;
-
-&lt;p&gt;São fontes para trabalhar com &lt;em&gt;stream&lt;/em&gt;, XML, arquivos, HTTP, &lt;em&gt;WebServices&lt;/em&gt;, etc.&lt;/p&gt;
-
-&lt;p&gt;Não há pacotes ou subprojetos. Apenas arquivos que são compartilhados por vários projetos.&lt;/p&gt;
-
-&lt;p&gt;Como todo desenvolvedor Pascal faz, basta ter um diretório, adicionar o &lt;em&gt;path&lt;/em&gt; no projeto e começar a usar os fontes. Simples.&lt;/p&gt;
-
-&lt;p&gt;Esse código-fonte foi sendo construído e modificando por vários anos. Alguns fontes são bem novos, outros bem antigos.&lt;/p&gt;
-
-&lt;p&gt;Mesmo que tudo esteja funcionando, essa “organização” me tira o sono.&lt;/p&gt;
-
-&lt;p&gt;Faz tempo que eu quero organizar esse código-fonte. Fazer uma limpeza. Atualizar. Criar pacotes lógicos.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Então pensei: Por quê não criar um projeto &lt;em&gt;Open Source&lt;/em&gt;&lt;/strong&gt;?&lt;/p&gt;
-
-&lt;p&gt;Bem, é o que estou fazendo agora. Esse é meu presente de Páscoa pra você.&lt;/p&gt;
-
-&lt;p&gt;Criei o primeiro projeto.&lt;/p&gt;
-
-&lt;p&gt;Chama-se &lt;strong&gt;James&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Eu tenho nomeado meus projetos utilizando nomes comuns — a maioria em Inglês — já faz quase 2 anos.&lt;/p&gt;
-
-&lt;p&gt;É divertido.&lt;/p&gt;
-
-&lt;p&gt;É como se cada projeto fizesse parte de uma família.&lt;/p&gt;
-
-&lt;p&gt;A maioria dos meus &lt;em&gt;aplicativos&lt;/em&gt; tem nomes femininos. Já os projetos que são &lt;em&gt;ferramentas&lt;/em&gt; ou &lt;em&gt;libs&lt;/em&gt;, costumam ter nomes masculinos.&lt;/p&gt;
-
-&lt;p&gt;Você pode fazer um &lt;em&gt;fork&lt;/em&gt; do James &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;aqui&lt;/a&gt; e contribuir.&lt;/p&gt;
-
-&lt;p&gt;Até agora subi poucos arquivos.&lt;/p&gt;
-
-&lt;p&gt;Ainda estou organizando.&lt;/p&gt;
-
-&lt;p&gt;Mas estou lhe avisando agora, justamente porque tem poucos arquivos para ficar fácil o entendimento do código.&lt;/p&gt;
-
-&lt;p&gt;Estou pretendendo criar vários outros projetos &lt;em&gt;Open Source&lt;/em&gt; que sejam compatíveis com o Delphi na versão mais atual.&lt;/p&gt;
-
-&lt;p&gt;Por isso preciso da sua ajuda.&lt;/p&gt;
-
-&lt;p&gt;Os fontes foram compilados no dialeto do Free Pascal. Basta utilizar &lt;code&gt;{$mode delphi}&lt;/code&gt; para compilar no dialeto do Delphi, utilizando o FPC.&lt;/p&gt;
-
-&lt;p&gt;Vou utilizar o dialeto Delphi para que os fontes sejam compatíveis, mas somente se houver interesse por parte da comunidade Delphi (utilize os comentários abaixo se você está interessado).&lt;/p&gt;
-
-&lt;p&gt;O James será a base (refatorada) de todos os meus projetos. Ele possui Classes base que é útil na maioria dos meus projetos.&lt;/p&gt;
-
-&lt;p&gt;Durante esse semana vou subir os fontes das &lt;em&gt;Unit Tests&lt;/em&gt;. Já estão prontos, mas precisam ser refatorados.&lt;/p&gt;
-
-&lt;p&gt;Outro projeto que irá utilizar o James, eu já criei no Github. Seu nome é &lt;a href=&quot;https://github.com/mdbs99/kate&quot;&gt;Kate&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Kate é uma &lt;em&gt;lib&lt;/em&gt; para trabalhar com certificação e assinatura digital. Essa &lt;em&gt;lib&lt;/em&gt; irá utilizar o &lt;a href=&quot;/posts/assinatura-digital-em-arquivos-xml/#utilizando-acbr&quot;&gt;Projeto ACBr&lt;/a&gt; nos “bastidores”.&lt;/p&gt;
-
-&lt;p&gt;Todos esses projetos serão baseados nas premissas dos artigos que venho escrevendo aqui no blog.&lt;/p&gt;
-
-&lt;p&gt;Todos serão &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientados a Objetos&lt;/a&gt; e 100% baseados em &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;O &lt;a href=&quot;https://github.com/mdbs99/aws&quot;&gt;AWS&lt;/a&gt; também será atualizado para compilar na versão mais atual do FPC e, quem sabe, irá compilar no Delphi.&lt;/p&gt;
-
-&lt;p&gt;Quando tudo estiver organizado, será o momento de iniciarmos um novo &lt;strong&gt;Framework Web&lt;/strong&gt; 100% Orientado a Objetos para FPC e Delphi.&lt;/p&gt;
-
-&lt;p&gt;Você está comigo?&lt;/p&gt;
-
-&lt;p&gt;Então vamos! &lt;strong&gt;#ObjectPascal4Ever&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 17 Apr 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/james/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/james/</guid>
       </item>
     
   </channel>

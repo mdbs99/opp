@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Linhas em Branco no Método é um Mal Cheiro no Código &#8211; Object Pascal Programming</title>
+    <title>Objetos Validadores &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="O motivo é simples: Você está fazendo coisas demais no Método.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Code">
-    <meta name="keywords" content="mal cheiro, bad smell, blank lines, linhas em branco">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/">
+    <meta name="keywords" content="OO">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object-pascal, object-oriented, oop, mdbs99, validation, validação, teste, testing, validando">
+    <link rel="canonical" href="http://objectpascalprogramming.com/objetos-validadores">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Linhas em Branco no Método é um Mal Cheiro no Código">
-    <meta property="og:description" content="O motivo é simples: Você está fazendo coisas demais no Método.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/">
+    <meta property="og:title" content="Objetos Validadores">
+    <meta property="og:description" content="Veja como fazer validações utilizando Objetos ao invés de utilizar programação procedural.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/objetos-validadores">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1417309807426-472e833fa5d0.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-scott-webb-59043.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Linhas em Branco no Método é um Mal Cheiro no Código" />
-    <meta name="twitter:description" content="O motivo é simples: Você está fazendo coisas demais no Método." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/" />
+    <meta name="twitter:title" content="Objetos Validadores" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/objetos-validadores" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,122 +191,137 @@
 
 
 <div class="post-header mb2">
-  <h1>Linhas em Branco no Método é um Mal Cheiro no Código</h1>
-  <span class="post-meta">Sep 19, 2016</span><br>
+  <h1>Objetos Validadores</h1>
+  <span class="post-meta">Jul 3, 2017</span><br>
   
   <span class="post-meta small">
   
-    2 minute read
+    5 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Pular linhas dentro de um Método é um “mal cheiro”
-no código. Significa que você está fazendo coisas 
-demais num único Método.</p>
+  <p>Veja como fazer validações utilizando Objetos ao invés de utilizar programação procedural.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1417309807426-472e833fa5d0.jpg" alt="Imagem" /></p>
+<p><img src="/images/2017/photo-scott-webb-59043.jpg" alt="Unsplash image" /></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>O que significa mal cheiro no código?</p>
+<p>Na Orientação a Objetos a codificação deve ser declarativa. Isso quer dizer que, num mundo ideal, iríamos criar os Objetos agrupando-os entre si e, com uma única <a href="/posts/diga-me-algo-sobre-voce/#mensagens">mensagem</a>, o trabalho a ser realizado seria iniciado e cada Objeto iria realizar parte desse trabalho. Tudo em perfeita harmonia.</p>
 
-<p>Um <a href="https://en.wikipedia.org/wiki/Code_smell">mal cheiro</a>,
-se refere a qualquer sintoma no código-fonte 
-de um programa que possivelmente indica um problema 
-mais profundo.</p>
+<p>No entanto, não vivemos num mundo ideal e problemas podem ocorrer.</p>
 
-<p>Eu já falei sobre isso
-<a href="/posts/pensando-em-objetos/#exemplo-1">aqui</a>
-e nesse artigo vou abordar melhor esse assunto.</p>
+<p>Se pudermos validar o <em>input</em> dos dados no nosso sistema antes de iniciar um processo mais elaborado, isso tornaria o processamento menos custoso, menos demorado e menos propenso a erros.</p>
 
-<p>Você irá entender porque não devemos utilizar 
-linhas em branco dentro de Métodos.</p>
+<p>No entanto, se devemos codificar de forma declarativa, ou seja, sem condicionais que validem passo-a-passo o que está sendo processado — o <em>modus operandis</em> da programação procedural — como seria possível fazer isso utilizando Objetos para deixar o código mais seguro e fazer um tratamento mais adequado para cada problema ou decisão, antes que uma exceção possa ocorrer?</p>
 
-<h2 id="blocos-de-cdigo">Blocos de Código</h2>
+<h2 id="validacoes">Validações</h2>
 
-<p>Por que muitos programadores ainda utilizam linhas em
-branco dentro de Métodos?</p>
+<p>Imagine um Formulário onde há diversos campos para o usuário preencher antes de clicar em algum botão que irá fazer algo com os dados preenchidos nos <em>widgets</em>.</p>
 
-<p>Simples. Eles estão separando o código de um Método
-em blocos. E isso é, errado.</p>
+<p>Sempre temos que validar o <em>input</em> antes de processá-lo, certo?</p>
 
-<p>Eu mesmo fiz isso por anos.</p>
+<p>Tenho trabalhado com desenvolvimento de <em>software</em> a muitos anos. Grande parte desse tempo eu codifiquei a validação de campos utilizando o mesmo “padrão” que até hoje é utilizado, independentemente da linguagem utilizada.</p>
 
-<p>Algumas vezes eu conseguia enxergar esse mal cheiro, então 
-refatorava — criando outros Métodos — e seguia a vida.</p>
+<p>Vejamos como é esse padrão:</p>
 
-<p>Mas na maioria das vezes eu pensava que estava “organizando o código”.
-Tornando mais legível, mas “limpo”… não era verdade.</p>
+<script src="https://gist.github.com/mdbs99/1d990d474d0a15a7543c54c5c02b370a.js"></script>
 
-<p>Quando li esse
-<a href="http://www.yegor256.com/2014/11/03/empty-line-code-smell.html">artigo</a>
-eu percebi que sempre houve algo de errado quando eu
-utiliza linhas em branco.</p>
+<p>O exemplo acima é sobre um Formulário que contém alguns campos, dentre esses campos temos <code>Name</code> e <code>Birthday</code>. O primeiro é <em>string</em> e não pode estar em branco. Já o segundo deveria ser uma data válida, então o código utiliza a função padrão <code>SysUtils.TryStrToDate</code> que verifica se é uma data válida e retorna o valor na variável <code>MyDate</code>.</p>
 
-<p>Quando existem linhas em branco dentro do Método,
-significa que <strong>o Método está fazendo coisas demais</strong>.
-Um único grande procedimento, separado por com blocos 
-de código…</p>
+<p>Quem nunca fez isso?</p>
 
-<p>Desde então eu não codifico mais dessa forma.</p>
+<p>Pois é.</p>
 
-<h2 id="nao-seja-leviano">Não basta retirar as Linhas em Branco</h2>
-
-<p>Você entendeu o problema e agora quer abrir seu editor
-e começar a remover as linhas em branco… apenas remover
-as linhas.</p>
-
-<p>Não seja leviano.</p>
-
-<p>Não basta abrir seu editor e começar a remover toda
-linha em branco que encontrar dentro dos Métodos.</p>
-
-<p>Não!</p>
-
-<p><strong>A linha em branco não é o problema em si. 
-Ela só indica que há um problema</strong>.</p>
-
-<p>Apenas retirar essas linhas não vai sanar o problema.</p>
-
-<p>O que temos que fazer é <strong>refatorar</strong> o código,
-para depois removê-las.</p>
-
-<h2 id="refatorando">Refatorando</h2>
-
-<p>Se você realmente entendeu o conceito, não irá mais utilizar
-linhas em branco dentro de Métodos de agora em diante.</p>
-
-<p>Certo?</p>
-
-<p>Mas você pode ir além. Você pode querer refatorar todo tipo
-de código antigo ou fazer uma refatoração <em>on demand</em>:
-Refatorar apenas se encontrar Métodos com linhas em branco.</p>
-
-<p>Você pode seguir esses passos:</p>
+<p>Há problemas demais com essa abordagem:</p>
 
 <ol>
-  <li>Encontre um Método;</li>
-  <li>Verifique se há linhas em branco separando blocos;</li>
-  <li>Para cada bloco, extrair o código criando um novo Método;</li>
-  <li>Faça a chamada do novo Método no mesmo lugar que extraiu
-  o código;</li>
-  <li>Repita o processo enquanto for necessário.</li>
+  <li>Não podemos reutilizar as validações. Em cada Formulário haverá uma possível cópia do mesmo código;</li>
+  <li>As variáveis locais podem aumentar consideravelmente caso haja mais testes que necessitem de variáveis;</li>
+  <li>O código é totalmente procedural;</li>
+  <li>Não posso utilizar as informações de aviso ao usuário em outra aplicação Web, por exemplo, visto que as <em>strings</em> estão codificadas dentro de funções <code>ShowMessage</code> (ou qualquer outra função de mensagem para Desktop);</li>
+  <li>O Formulário ficou complexo, visto que há muito código num único evento — e não adianta apenas criar vários métodos privados para cada teste, pois o Formulário irá continuar fazendo coisas demais.</li>
 </ol>
+
+<p>Há variantes dessa abordagem acima, porém acredito que todos nós já vimos algo assim ou mesmo estamos codificando dessa maneira ainda hoje.</p>
+
+<p>O que podemos fazer para simplificar o código, obter a reutilização das validações e ainda codificar utilizando Orientação a Objetos?</p>
+
+<h2 id="constraints">Constraints</h2>
+
+<p><em>Constraints</em> são Objetos que tem por função a validação de algum dado ou mesmo a validação de outro Objeto.</p>
+
+<p>Cada <em>constraint</em> valida apenas 1 artefato. Assim podemos reutilizar a validação em muitos outros lugares.</p>
+
+<p>Vamos definir algumas <a href="/posts/interfaces-em-todo-lugar/">Interfaces</a>:</p>
+
+<script src="https://gist.github.com/mdbs99/c668747123d651298e9f40d0e10af5b4.js"></script>
+
+<p>Vamos entender cada Interface:</p>
+
+<ol>
+  <li><code>[guids]</code>: São necessários para <em>casting</em> de Interfaces.</li>
+  <li><code>IDataInformation</code>: Representa uma infomação.</li>
+  <li><code>IDataInformations</code>: Representa uma lista de informações.</li>
+  <li><code>IDataResult</code>: Representa um resultado de uma restrição.</li>
+  <li><code>IDataConstraint</code>: Representa uma restrição.</li>
+  <li><code>IDataConstraints</code>: Representa uma lista de restrições.</li>
+</ol>
+
+<p>Não estou utilizando <em>Generics</em>. Apenas Classes que podem ser reescritas em praticamente qualquer versão do Lazarus ou Delphi.</p>
+
+<p>Bem simples.</p>
+
+<p>Agora veremos a implementação das Interfaces — por questões de breviedade, vou apresentar somente as assinaturas das Classes:</p>
+
+<script src="https://gist.github.com/mdbs99/b254ff882ce27ce9fa4e8219c63e3e96.js"></script>
+
+<p>Essas são Classes utilizadas em projetos reais. Em breve todo o código estará disponível no <a href="https://github.com/mdbs99/james">Projeto James</a>. Você poderá obter esse código acompanhando a <a href="https://github.com/mdbs99/james/issues/17">Issue #17</a> do mesmo projeto.</p>
+
+<p>Na implementação acima não tem nenhuma Classe que implemente a Interface <code>IDataConstraint</code>. O motivo disso é que você, programador, irá criar suas próprias <em>constraints</em>.</p>
+
+<p>Vejamos um exemplo de como reescrever o código procedural do primeiro exemplo.</p>
+
+<p>Precisamos criar duas Classes que implementam <code>IDataConstraint</code>.</p>
+
+<p>Como só há apenas 1 método nessa Interface, e para não deixar esse artigo ainda maior, vou mostrar o código de apenas uma implementação:</p>
+
+<script src="https://gist.github.com/mdbs99/62040307d41fbc45c0f15605acc541b5.js"></script>
+
+<p>O código acima mostra como seria a implementação para a <em>constraint</em> <code>TNameConstraint</code>.</p>
+
+<p>O código está <em>procedural</em> e ainda pode <em>melhorar</em> muito. As variáveis locais poderiam ser retiradas, bastando adicionar mais um <em>overload</em> do método <code>New</code> na Classe <code>TDataResult</code> — você consegue ver essa possibilidade? Conseguiria implementá-la?</p>
+
+<p>Abaixo o código de como utilizar todos esses Objetos em conjunto:</p>
+
+<script src="https://gist.github.com/mdbs99/5dc64c57916d86d01de561077d831aaf.js"></script>
+
+<p>Se nas validações acima o nome estivesse <em>em branco</em> mas a data de aniverário tivesse sido digitada <em>corretamente</em> — o resultado do método <code>OK</code> será verdadeiro se apenas todas as validações passarem no teste — o resultado do <code>ShowMessage</code> poderia ser:</p>
+
+<pre><code>- Name: Name is empty
+- Birthday: OK
+</code></pre>
+
+<p>Essa seria apenas uma versão da implementação de como mostrar as informações. Poderia haver muitos outros <em>decoradores</em> para mostrar a informação em outros formatos como, por exemplo, HTML numa aplicação Web.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Parece besteira, mas não é.</p>
+<p>O código não está completo, mas acredito que posso ter aberto sua mente a novas possibilidades quando se trata de validações.</p>
 
-<p>Escrever código qualquer um faz. Mas escrever um <strong>bom</strong> código, 
-no entanto, não é pra qualquer um. É necessário pensar no
-longo prazo, no acoplamento, na coesão, no <em>design</em>, deixar 
-as coisas simples… é Engenharia, mas também Arte.</p>
+<p>O resultado final de <code>SaveButtonClick</code>, mesmo utilizando a Classe <code>TDataConstraints</code>, também não foi implementada complemente seguindo o paradigma da Orientação a Objetos — para deixar o código mais sucinto — pois tem um <code>IF</code> lá que não deixa o código tão elegante quanto deveria, mas eu acho que dá para você visualizar as possibilidades de uso.</p>
 
-<p><strong>E a verdadeira Arte está nos detalhes</strong>.</p>
+<p>A instância de <code>TDataConstraints</code> e seus itens poderia ser utilizada em muitos outros lugares do código.</p>
+
+<p>A combinação de tais Objetos é virtualmente infinita e seu será o mesmo em <em>todo</em> código.</p>
+
+<p>O código é <em>reutilizável</em> em qualquer tipo de aplicação.</p>
+
+<p>Nenhuma informação ou mensagem ao usuário seria duplicada no código. Haverá apenas um <em>único</em> lugar, uma única Classe, para fazer a manutenção de cada validação.</p>
+
+<p>E a exibição da mensagem poderia ser em qualquer formato, bastando utilizar outros Objetos <em>decoradores</em> para ler as <em>informations</em>, formatando como quiser.</p>
 
 <p>Até logo.</p>
 
@@ -316,33 +333,33 @@ as coisas simples… é Engenharia, mas também Arte.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/objetos-validadores" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Linhas em Branco no Método é um Mal Cheiro no Código&via=mdbs99;url=http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Objetos Validadores&via=mdbs99;url=http://objectpascalprogramming.com/objetos-validadores" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/objetos-validadores" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/&title=Linhas em Branco no Método é um Mal Cheiro no Código" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/&title=Linhas em Branco no Método é um Mal Cheiro no Código" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/objetos-validadores&title=Objetos Validadores" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/linhas-em-branco-no-metodo-e-mal-cheiro/&t=Linhas em Branco no Método é um Mal Cheiro no Código" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/objetos-validadores&title=Objetos Validadores" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/objetos-validadores&t=Objetos Validadores" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -380,15 +397,6 @@ as coisas simples… é Engenharia, mas também Arte.</p>
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/objetos-validadores" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Objetos Validadores</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/atributos-nao-existem" class="post-link">
@@ -471,6 +479,15 @@ as coisas simples… é Engenharia, mas também Arte.</p>
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/posts/james/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>James Package</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -478,8 +495,8 @@ as coisas simples… é Engenharia, mas também Arte.</p>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/linhas-em-branco-no-metodo-e-mal-cheiro';
-      var disqus_title      = 'Linhas em Branco no Método é um Mal Cheiro no Código';
+      var disqus_identifier = '/objetos-validadores';
+      var disqus_title      = 'Objetos Validadores';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
