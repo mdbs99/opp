@@ -9,7 +9,7 @@ image: /images/2017/photo-scott-webb-59043.jpg
 categories:
   - OO
 tags:
-  - mutabilidade
+  - validação
 keywords:
   - freepascal
   - fpc
@@ -35,13 +35,13 @@ Veja como fazer validações utilizando Objetos ao invés de utilizar programaç
 
 ## Introdução {#introducao}
 
-Na Orientação a Objetos a codificação deve ser declarativa. Isso quer dizer que, num mundo ideal, iríamos criar os Objetos agrupando-os entre si e, com uma única [mensagem], o trabalho a ser realizado seria iniciado e cada Objeto iria realizar parte desse trabalho. Tudo em perfeita harmonia.
+Na Orientação a Objetos a codificação deve ser declarativa. Isso quer dizer que, num mundo ideal, iríamos criar os Objetos agrupando-os entre si e, com uma única [mensagem]({% post_url 2016-11-14-diga-me-algo-sobre-voce %}#mensagens), o trabalho a ser realizado seria iniciado e cada Objeto iria realizar parte desse trabalho. Tudo em perfeita harmonia.
 
 No entanto, não vivemos num mundo ideal e problemas podem ocorrer.
 
-Se pudermos validar o *input* antes de iniciar um processo mais elaborado, tornaria o processamento menos custoso, menos demorado e menos propenso a erros.
+Se pudermos validar o *input* dos dados no nosso sistema antes de iniciar um processo mais elaborado, isso tornaria o processamento menos custoso, menos demorado e menos propenso a erros.
 
-No entanto, se devemos codificar de forma declarativa, ou seja, sem condicionais que validem passo-a-passo o que está sendo processado — o *modus operandis* da programação procedural — como podemos deixar o código mais seguro e fazer um tratamento mais adequado para cada problema ou decisão, antes que uma exceção possa ocorrer?
+No entanto, se devemos codificar de forma declarativa, ou seja, sem condicionais que validem passo-a-passo o que está sendo processado — o *modus operandis* da programação procedural — como seria possível fazer isso utilizando Objetos para deixar o código mais seguro e fazer um tratamento mais adequado para cada problema ou decisão, antes que uma exceção possa ocorrer?
 
 ## Validações {#validacoes}
 
@@ -66,7 +66,7 @@ Há problemas demais com essa abordagem:
 1. Não podemos reutilizar as validações. Em cada Formulário haverá uma possível cópia do mesmo código;
 2. As variáveis locais podem aumentar consideravelmente caso haja mais testes que necessitem de variáveis;
 3. O código é totalmente procedural;
-4. Não posso utilizar esse código em outra aplicação Web, por exemplo, visto que o código utiliza `ShowMessage` (ou qualquer outra função de mensagem para Desktop);
+4. Não posso utilizar as informações de aviso ao usuário em outra aplicação Web, por exemplo, visto que as *strings* estão codificadas dentro de funções `ShowMessage` (ou qualquer outra função de mensagem para Desktop);
 5. O Formulário ficou complexo, visto que há muito código num único evento — e não adianta apenas criar vários métodos privados para cada teste, pois o Formulário irá continuar fazendo coisas demais.
 
 Há variantes dessa abordagem acima, porém acredito que todos nós já vimos algo assim ou mesmo estamos codificando dessa maneira ainda hoje.
@@ -96,6 +96,8 @@ Não estou utilizando *Generics*. Apenas Classes que podem ser reescritas em pra
 
 Bem simples.
 
+Agora veremos a implementação das Interfaces — por questões de breviedade, vou apresentar somente as assinaturas das Classes:
+
 <script src="https://gist.github.com/mdbs99/b254ff882ce27ce9fa4e8219c63e3e96.js"></script>
           
 Essas são Classes utilizadas em projetos reais. Em breve todo o código estará disponível no [Projeto James](https://github.com/mdbs99/james). Você poderá obter esse código acompanhando a [Issue #17](https://github.com/mdbs99/james/issues/17) do mesmo projeto.
@@ -112,13 +114,13 @@ Como só há apenas 1 método nessa Interface, e para não deixar esse artigo ai
 
 O código acima mostra como seria a implementação para a *constraint* `TNameConstraint`.
 
-O código pode *melhorar* muito. Ainda está *procedural*. As variáveis locais podem ser retiradas. Basta adicionarmos mais um *overload* do método `New` em `TDataResult` — você consegue implementá-lo?
+O código está *procedural* e ainda pode *melhorar* muito. As variáveis locais poderiam ser retiradas, bastando adicionar mais um *overload* do método `New` na Classe `TDataResult` — você consegue ver essa possibilidade? Conseguiria implementá-la?
 
 Abaixo o código de como utilizar todos esses Objetos em conjunto:
 
 <script src="https://gist.github.com/mdbs99/5dc64c57916d86d01de561077d831aaf.js"></script>
 
-Se nas validações acima o nome estivesse em branco mas a data de aniverário tivesse sido digitada corretamente — o resultado do método `OK` será verdadeiro se apenas todas as validações passarem no teste — o resultado do `ShowMessage` seria:
+Se nas validações acima o nome estivesse *em branco* mas a data de aniverário tivesse sido digitada *corretamente* — o resultado do método `OK` será verdadeiro se apenas todas as validações passarem no teste — o resultado do `ShowMessage` poderia ser:
 
     - Name: Name is empty
     - Birthday: OK
@@ -131,10 +133,14 @@ O código não está completo, mas acredito que posso ter aberto sua mente a nov
 
 O resultado final de `SaveButtonClick`, mesmo utilizando a Classe `TDataConstraints`, também não foi implementada complemente seguindo o paradigma da Orientação a Objetos — para deixar o código mais sucinto — pois tem um `IF` lá que não deixa o código tão elegante quanto deveria, mas eu acho que dá para você visualizar as possibilidades de uso.
 
-A instância de `TDataConstraints` e seus itens poderia ser utilizada em muitos outros lugares do código. 
+A instância de `TDataConstraints` e seus itens poderia ser utilizada em muitos outros lugares do código.
 
-Nenhuma informação de mensagem seria duplicada em todo o código. Haverá apenas um único lugar, uma única Classe, para fazer a manutenção de cada validação.
+A combinação de tais Objetos é virtualmente infinita e seu será o mesmo em *todo* código.
 
-E a exibição da mensagem poderia ser em qualquer formato, bastando utilizar outros Objetos *decoradores* para ler as *informations* e formatar como quiser. 
+O código é *reutilizável* em qualquer tipo de aplicação.
+
+Nenhuma informação ou mensagem ao usuário seria duplicada no código. Haverá apenas um *único* lugar, uma única Classe, para fazer a manutenção de cada validação.
+
+E a exibição da mensagem poderia ser em qualquer formato, bastando utilizar outros Objetos *decoradores* para ler as *informations*, formatando como quiser. 
 
 Até logo.
