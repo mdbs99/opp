@@ -100,7 +100,7 @@ Agora veremos a implementação das Interfaces — por questões de breviedade, 
 
 <script src="https://gist.github.com/mdbs99/b254ff882ce27ce9fa4e8219c63e3e96.js"></script>
           
-Essas são Classes utilizadas em projetos reais. Em breve todo o código estará disponível no [Projeto James](https://github.com/mdbs99/james). Você poderá obter esse código acompanhando a [Issue #17](https://github.com/mdbs99/james/issues/17) do mesmo projeto.
+Essas são Classes utilizadas em projetos reais. <del>Em breve</del> todo o código <del>estará</del> já está disponível no [Projeto James](https://github.com/mdbs99/james). Você poderá obter esse código acompanhando a [Issue #17](https://github.com/mdbs99/james/issues/17) do mesmo projeto.
 
 Na implementação acima não tem nenhuma Classe que implemente a Interface `IDataConstraint`. O motivo disso é que você, programador, irá criar suas próprias *constraints*.
 
