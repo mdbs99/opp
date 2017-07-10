@@ -8,6 +8,76 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>James 2017-07</title>
+        <description>&lt;p&gt;James é um projeto Open Source que será a base de todos os meus projetos Orientados a Objetos codificados em Object Pascal.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-hope-house-press-127593.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;james&quot;&gt;James&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;O que é?&lt;/strong&gt; &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;James&lt;/a&gt; é uma coleção de classes e interfaces para projetos verdadeiramente orientados a objetos escritos em Object Pascal. Esta API está sendo escrita em Free Pascal e Lazarus. No entanto, torná-lo compatível com Delphi pode ser possível ou mesmo pode ser um objetivo (estamos dependendo de mais contribuidores para torná-lo possível).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Por quê?&lt;/strong&gt; Nós não queremos mais escrever o código procedural, nunca mais. Queremos escrever código elegante, limpo e sustentável usando a OOP.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Princípios&lt;/strong&gt;. O código possui alguns princípios de &lt;em&gt;design&lt;/em&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Totalmente baseado em interface&lt;/li&gt;
+  &lt;li&gt;A memória é liberada automaticamente&lt;/li&gt;
+  &lt;li&gt;Todos os métodos públicos são implementações de métodos de interface&lt;/li&gt;
+  &lt;li&gt;Todos os métodos públicos retornam uma instância de interface ou tipo primitivo&lt;/li&gt;
+  &lt;li&gt;Nenhum uso de NULL em argumentos ou retornos de métodos&lt;/li&gt;
+  &lt;li&gt;Sem algoritmos nos construtores&lt;/li&gt;
+  &lt;li&gt;Não há getters e setters&lt;/li&gt;
+  &lt;li&gt;Sem &lt;em&gt;casting&lt;/em&gt; ou reflexão utilizando RTTI&lt;/li&gt;
+  &lt;li&gt;Sem procedimentos e funções, apenas Objetos&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Mais informações&lt;/strong&gt;. Leia mais sobre o James &lt;a href=&quot;/posts/james/&quot;&gt;aqui&lt;/a&gt; e &lt;a href=&quot;/posts/james-e-testes-de-unidade/&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;como-contribuir&quot;&gt;Como contribuir?&lt;/h3&gt;
+
+&lt;p&gt;Apenas faça um &lt;em&gt;fork&lt;/em&gt; do &lt;a href=&quot;https://github.com/mdbs99/james/tree/develop&quot;&gt;repositório&lt;/a&gt; e envie-nos um &lt;em&gt;Pull Request&lt;/em&gt; (PR) usando o ramo de desenvolvimento &lt;code&gt;develop&lt;/code&gt; como ponto de partida para sua contribuição.&lt;/p&gt;
+
+&lt;p&gt;Cada PR precisa trabalhar apenas sobre uma única &lt;em&gt;issue&lt;/em&gt; ou em uma &lt;a href=&quot;https://en.wikipedia.org/wiki/Single_responsibility_principle&quot;&gt;única responsabilidade&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Por favor, nomeie seu PR usando o mesmo estilo de outros PR já &lt;a href=&quot;https://github.com/mdbs99/james/pulls?q=is%3Apr+is%3Aclosed&quot;&gt;finalizados&lt;/a&gt; neste projeto.&lt;/p&gt;
+
+&lt;p&gt;Certifique-se de que o seu ramo seja construído sem quaisquer &lt;em&gt;warnings&lt;/em&gt;/problemas.&lt;/p&gt;
+
+&lt;p&gt;Se você tiver dúvidas ou sugestões gerais, não hesite em enviar uma nova &lt;a href=&quot;https://github.com/mdbs99/james/issues/new&quot;&gt;Github issue&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;atualizacoes&quot;&gt;Atualizações&lt;/h3&gt;
+
+&lt;p&gt;Ainda estamos em uma versão alfa muito precoce, a API pode e vai mudar com freqüência. Por favor, use isso por sua conta e risco, até liberarmos a versão 1.0.&lt;/p&gt;
+
+&lt;p&gt;Algumas &lt;em&gt;unidades&lt;/em&gt; foram excluídas e outras foram criadas. Classes foram movidas e renomeadas.&lt;/p&gt;
+
+&lt;p&gt;Vejamos abaixo as modificações mais recentes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/pull/18&quot;&gt;PR #18&lt;/a&gt;: Só vamos utilizar caracteres ASCII para facilitar o uso no Delphi sem haver problemas de UNICODE (&lt;a href=&quot;https://www.mail-archive.com/lazarus@lists.lazarus-ide.org/msg02754.html&quot;&gt;veja mais&lt;/a&gt;).&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/pull/19&quot;&gt;PR #19&lt;/a&gt;: A classe &lt;code&gt;TStreamBase64&lt;/code&gt; não apenas foi renomeada para &lt;code&gt;TBase64Stream&lt;/code&gt;, como também está numa nova unidade chamada &lt;code&gt;james.format.base64.clss&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/pull/20&quot;&gt;PR #20&lt;/a&gt;: A unidade &lt;code&gt;james.data.xml.clss&lt;/code&gt; foi renomeada para &lt;code&gt;james.format.xml.clss&lt;/code&gt; adicionando um novo prefixo &lt;code&gt;format&lt;/code&gt; que poderá ser utilizado por outros “formatos” como JSON, INI, etc.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/pull/21&quot;&gt;PR #21&lt;/a&gt;: As unidades &lt;code&gt;james.files.*&lt;/code&gt; foram renomeadas para &lt;code&gt;james.io.*&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/pull/23&quot;&gt;PR #23&lt;/a&gt;: Criada uma nova unidade &lt;code&gt;james.crypto.md5.clss&lt;/code&gt; que, além de adicionar um novo prefixo &lt;code&gt;crypto&lt;/code&gt; para outros tipos de criptografia, também contém classes relacionadas ao MD5.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/pull/30&quot;&gt;PR #30&lt;/a&gt;: Adicionado as classes que implementam &lt;a href=&quot;/objetos-validadores#constraints&quot;&gt;Constraints&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A maioria das modificações são apenas estéticas ou apenas para melhorar a organização. No entanto são modificações necessárias para fazer o projeto crescer com saúde.&lt;/p&gt;
+
+&lt;p&gt;Por enquanto é isso. Aguardo seus comentários aqui embaixo.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 10 Jul 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/james-2017-07</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/james-2017-07</guid>
+      </item>
+    
+      <item>
         <title>Objetos Validadores</title>
         <description>&lt;p&gt;Veja como fazer validações utilizando Objetos ao invés de utilizar programação procedural.&lt;/p&gt;
 
@@ -86,7 +156,7 @@
 
 &lt;script src=&quot;https://gist.github.com/mdbs99/b254ff882ce27ce9fa4e8219c63e3e96.js&quot;&gt;&lt;/script&gt;
 
-&lt;p&gt;Essas são Classes utilizadas em projetos reais. Em breve todo o código estará disponível no &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;Projeto James&lt;/a&gt;. Você poderá obter esse código acompanhando a &lt;a href=&quot;https://github.com/mdbs99/james/issues/17&quot;&gt;Issue #17&lt;/a&gt; do mesmo projeto.&lt;/p&gt;
+&lt;p&gt;Essas são Classes utilizadas em projetos reais. &lt;del&gt;Em breve&lt;/del&gt; todo o código &lt;del&gt;estará&lt;/del&gt; já está disponível no &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;Projeto James&lt;/a&gt;. Você poderá obter esse código acompanhando a &lt;a href=&quot;https://github.com/mdbs99/james/issues/17&quot;&gt;Issue #17&lt;/a&gt; do mesmo projeto.&lt;/p&gt;
 
 &lt;p&gt;Na implementação acima não tem nenhuma Classe que implemente a Interface &lt;code&gt;IDataConstraint&lt;/code&gt;. O motivo disso é que você, programador, irá criar suas próprias &lt;em&gt;constraints&lt;/em&gt;.&lt;/p&gt;
 
@@ -974,135 +1044,6 @@ Nesse padrão a divisão dos fontes não é apenas por subdiretórios, mas sim p
         <pubDate>Mon, 01 May 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/organizacao-de-projetos</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/organizacao-de-projetos</guid>
-      </item>
-    
-      <item>
-        <title>James e Testes de Unidade</title>
-        <description>&lt;p&gt;James foi atualizado com Testes de Unidade.&lt;/p&gt;
-
-&lt;p&gt;Veja nesse artigo como tudo foi configurado e como você pode adicionar seus próprios testes apenas alterando um arquivo XML.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-clark-young-135435.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;A utilização de testes automatizados é obrigatório em qualquer projeto.&lt;/p&gt;
-
-&lt;p&gt;Você pode criar os testes utilizando pequenos programas que serão compilados e executados no &lt;em&gt;console&lt;/em&gt;. Dependendo do código de resultado ao terminar, você saberá se o programa teve ou não sucesso.&lt;/p&gt;
-
-&lt;p&gt;Alguns &lt;em&gt;frameworks&lt;/em&gt; facilitam esse processo. Chamados de &lt;a href=&quot;https://en.wikipedia.org/wiki/XUnit&quot;&gt;xUnit&lt;/a&gt;, eles dão aos desenvolvedores todo o suporte para criar todo tipo de teste no código. Basta você herdar de alguma classe padrão e criar métodos de teste.&lt;/p&gt;
-
-&lt;p&gt;No entanto, não importa se esses testes utilizam algum &lt;em&gt;framework&lt;/em&gt; específico, nem se foram criados de acordo com o processo de &lt;a href=&quot;https://en.wikipedia.org/wiki/Test-driven_development&quot;&gt;&lt;em&gt;Test-driven development&lt;/em&gt; (TDD)&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;O importante é ter os testes.&lt;/p&gt;
-
-&lt;h2 id=&quot;pacote-de-testes&quot;&gt;Pacote de Testes&lt;/h2&gt;
-
-&lt;p&gt;No &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;James&lt;/a&gt; eu utilizei um &lt;em&gt;framework&lt;/em&gt; chamado &lt;a href=&quot;http://wiki.freepascal.org/fpcunit&quot;&gt;FPCUnit&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;É um &lt;em&gt;framework&lt;/em&gt; xUnit padrão do FPC/Lazarus muito parecido com o &lt;a href=&quot;http://dunit.sourceforge.net/&quot;&gt;DUnit&lt;/a&gt; do Delphi.&lt;/p&gt;
-
-&lt;p&gt;Basta clicar em &lt;code&gt;File-&amp;gt;New-&amp;gt;FPCUnit Test Application&lt;/code&gt;, digitar o nome da Classe de Teste, clicar em “criar unit” e pronto. Depois basta ir criando os métodos com os testes.&lt;/p&gt;
-
-&lt;p&gt;No James a configuração é um pouco mais sofisticada e é importante que você saiba como tudo funciona.&lt;/p&gt;
-
-&lt;p&gt;O James tem 2 pacotes (atualmente):&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;james.lpk&lt;/li&gt;
-  &lt;li&gt;james.tests.lpk&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Ambos estão no diretório &lt;code&gt;/pkg&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;O pacote &lt;code&gt;james.lpk&lt;/code&gt; contém as Classes principais e o &lt;code&gt;james.tests.lpk&lt;/code&gt; apenas as Classes de Testes.&lt;/p&gt;
-
-&lt;p&gt;Esse último tem a dependência com o primeiro.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-pkg-james.tests-01001.jpg&quot; alt=&quot;james.tests.lpk&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Para o usuário do James, apenas o pacote &lt;code&gt;james.lpk&lt;/code&gt; é necessário.&lt;/p&gt;
-
-&lt;p&gt;Então por quê criar um outro pacote apenas de testes?&lt;/p&gt;
-
-&lt;p&gt;O motivo é que eu posso ter tipos de aplicações de testes diferentes (desktop ou console) e basta atualizar os fontes do pacote para que qualquer aplicação fique atualizada.&lt;/p&gt;
-
-&lt;p&gt;Essa técnica eu aprendi com meu amigo &lt;a href=&quot;https://github.com/jcmoraisjr&quot;&gt;João Morais&lt;/a&gt; quando comecei a acompanhar um de seus projetos chamado &lt;a href=&quot;https://github.com/jcmoraisjr/jcore&quot;&gt;JCore&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Nos fontes do James, há o projeto &lt;a href=&quot;https://github.com/mdbs99/james/blob/master/test/james.tests.gui.lpr&quot;&gt;james.tests.gui&lt;/a&gt; que utiliza o pacote de testes.&lt;/p&gt;
-
-&lt;h2 id=&quot;fpcunit&quot;&gt;Teste com FPCUnit&lt;/h2&gt;
-
-&lt;p&gt;O projeto &lt;code&gt;james.tests.gui&lt;/code&gt; utiliza a interface do FPCUnit.&lt;/p&gt;
-
-&lt;p&gt;Ao executar o projeto a tela abaixo será exibida. Basta então executar todos os testes (F9) e verificar se houve algum erro.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-fpcunit-loading-552.jpg&quot; alt=&quot;FPCUnit loading&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Se você baixar, compilar e executar esse projeto, ele irá exibir alguns erros dizendo que o arquivo &lt;code&gt;james.tests.template.xml&lt;/code&gt; não foi encontrado.&lt;/p&gt;
-
-&lt;p&gt;O que você deve fazer é copiar esse arquivo da pasta &lt;code&gt;/test&lt;/code&gt; para a pasta &lt;code&gt;/bin&lt;/code&gt; e modificar seu conteúdo com seus próprios arquivos e configurações.&lt;/p&gt;
-
-&lt;p&gt;Veja um exemplo de configuração para alguns dos meus arquivos de teste:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&amp;gt;
-&amp;lt;Tests&amp;gt;
-  &amp;lt;TStreamDividedTest&amp;gt;
-    &amp;lt;files&amp;gt;
-      &amp;lt;file-1 filename=&quot;tests/04DF86C9.PDF&quot; part=&quot;3&quot; /&amp;gt;
-    &amp;lt;/files&amp;gt;
-  &amp;lt;/TStreamDividedTest&amp;gt;
-  &amp;lt;TStreamPartialFromTextTest&amp;gt;
-    &amp;lt;files&amp;gt;
-      &amp;lt;file-1 filename=&quot;tests/04DF86C9.PDF&quot; text=&quot;encoding=&quot; /&amp;gt;
-    &amp;lt;/files&amp;gt;
-  &amp;lt;/TStreamPartialFromTextTest&amp;gt;
-&amp;lt;/Tests&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Veja que de acordo com o path dos arquivos no XML, meus arquivos ficam em &lt;code&gt;/bin/tests/&lt;/code&gt;. Pois &lt;code&gt;/bin/&lt;/code&gt; é a pasta padrão onde o executável será gerado.&lt;/p&gt;
-
-&lt;p&gt;São arquivos pessoais e/ou privados de projetos reais. Esses arquivos não podem subir para o Github. Por isso meus testes utilizam um XML configurável.&lt;/p&gt;
-
-&lt;p&gt;Então, se você quiser utilizar os Testes de Unidade do James, cabe a você configurar sua versão do XML.&lt;/p&gt;
-
-&lt;p&gt;Se tudo der certo, você verá a tela abaixo.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/photo-fpcunit-green-552.jpg&quot; alt=&quot;FPCUnit green&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;ajudando&quot;&gt;Como ajudar&lt;/h2&gt;
-
-&lt;p&gt;Se você quiser ajudar esse projeto — ou algum outro dos &lt;a href=&quot;https://github.com/mdbs99?tab=repositories&quot;&gt;meus projetos&lt;/a&gt; — siga esses passos:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Faça um fork do projeto;&lt;/li&gt;
-  &lt;li&gt;Utilize o branch &lt;code&gt;develop&lt;/code&gt; para fazer qualquer modificação;&lt;/li&gt;
-  &lt;li&gt;Faça um &lt;em&gt;Pull Request&lt;/em&gt; utilizando &lt;code&gt;develop&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Eu irei fazer a revisão das mudanças e se tudo tiver de acordo, sua contribuição será mesclada no &lt;code&gt;develop&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;O branch &lt;code&gt;master&lt;/code&gt; só irá conter a versão de produção, 100% compilada, com todos os Testes de Unidade funcionando. Por isso qualquer contribuição deverá ser enviada para o &lt;code&gt;develop&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;James é um projeto que está no começo. Estou refatorando meus códigos privados para criar o James (e outros projetos, futuramente).&lt;/p&gt;
-
-&lt;p&gt;Tudo Open Source.&lt;/p&gt;
-
-&lt;p&gt;Creio que todos esses projetos poderão ser compilados no Delphi, porém adaptações devem ser feitas.&lt;/p&gt;
-
-&lt;p&gt;Se você tem interesse no projeto, preciso de ajuda para criar essas adaptações.&lt;/p&gt;
-
-&lt;p&gt;Aguardo seus comentários.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 24 Apr 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/posts/james-e-testes-de-unidade/</guid>
       </item>
     
   </channel>

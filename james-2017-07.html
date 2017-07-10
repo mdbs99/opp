@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Objetos Agregados &#8211; Object Pascal Programming</title>
+    <title>James 2017-07 &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Objetos">
-    <meta name="keywords" content="aggregated object, objetos agregados, taggregatedobject, implements, delegation, delegação">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/objetos-agregados/">
+    <meta name="keywords" content="OO">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object-pascal, object-oriented, oop, mdbs99, james, james-package, james-lib, open-source, github">
+    <link rel="canonical" href="http://objectpascalprogramming.com/james-2017-07">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Objetos Agregados">
-    <meta property="og:description" content="Veja como utilizar Objetos Agregados, que implementam Interfaces, sem vazamentos de memória.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/objetos-agregados/">
+    <meta property="og:title" content="James 2017-07">
+    <meta property="og:description" content="James é um projeto Open Source que será a base de todos os meus projetos Orientados a Objetos codificados em Object Pascal.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/james-2017-07">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/icfxslgjq50-james-garcia.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-hope-house-press-127593.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Objetos Agregados" />
+    <meta name="twitter:title" content="James 2017-07" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/objetos-agregados/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/james-2017-07" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,219 +191,77 @@
 
 
 <div class="post-header mb2">
-  <h1>Objetos Agregados</h1>
-  <span class="post-meta">Dec 5, 2016</span><br>
+  <h1>James 2017-07</h1>
+  <span class="post-meta">Jul 10, 2017</span><br>
   
   <span class="post-meta small">
   
-    5 minute read
+    2 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Objetos Agregados é uma <em>feature</em> da linguagem <em>Object Pascal</em>. 
-Ela nos permite delegar uma implementação
-de uma Interface para outro Objeto, utilizando uma sintaxe especial.</p>
-
-<p>No entanto existe um grande problema
-no <em>design</em> dessa <em>feature</em> que não permite o programador utilizá-la em
-sua plenitude. Estou falando dos terríveis vazamentos de memória.</p>
-
-<p>Muitos programadores desistem de utilizar Objetos Agregados devido
-a esses problemas…</p>
-
-<p>Bem, não mais.</p>
+  <p>James é um projeto Open Source que será a base de todos os meus projetos Orientados a Objetos codificados em Object Pascal.</p>
 
 <!--more-->
 
-<p><img src="/images/icfxslgjq50-james-garcia.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2017/photo-hope-house-press-127593.jpg" alt="Unsplash image" /></p>
 
-<p>Já faz algum tempo que venho pesquisando uma maneira de utilizar Objetos Agregados
-sem comprometer o <em>software</em> com vazamentos de memória.</p>
+<h2 id="james">James</h2>
 
-<p>Mas como minhas Interfaces possuem <a href="/posts/menos-e-mais/#metodos">poucos métodos</a>,
-é fácil implementar os métodos (as assinaturas) e delegar para um Objeto privado,
-ou seja, aquele que realmente irá fazer o trabalho.</p>
+<p><strong>O que é?</strong> <a href="https://github.com/mdbs99/james">James</a> é uma coleção de classes e interfaces para projetos verdadeiramente orientados a objetos escritos em Object Pascal. Esta API está sendo escrita em Free Pascal e Lazarus. No entanto, torná-lo compatível com Delphi pode ser possível ou mesmo pode ser um objetivo (estamos dependendo de mais contribuidores para torná-lo possível).</p>
 
-<p>Infelizmente essa abordagem é verbosa, ineficiente e nos leva a duplicação de código.</p>
+<p><strong>Por quê?</strong> Nós não queremos mais escrever o código procedural, nunca mais. Queremos escrever código elegante, limpo e sustentável usando a OOP.</p>
 
-<h2 id="voce-lembra">Você lembra?</h2>
-
-<p>A primeira vez que falei sobre esse assunto foi nesse
-<a href="/posts/delegacao-de-implementacao-de-interfaces/">artigo</a>, no entanto
-a implementação original possui vazamentos de memória.</p>
-
-<p>Enviei um <a href="https://www.mail-archive.com/fpc-pascal@lists.freepascal.org/msg43835.html">email</a>
-sobre esse problema <strong>crítico</strong> na lista oficial do FreePascal e ninguém deu alguma 
-solução plausível.</p>
-
-<p>Utilizando o mesmo código de exemplo que enviei a lista, fiz algumas considerações
-e publiquei um novo <a href="/posts/interfaces-delegacao-problemas-solucoes/">artigo</a>
-com uma possível solução.</p>
-
-<p>A solução para corrigir o código do exemplo foi implementar a classe <code>TDelegatedIntegerValue</code>.</p>
-
-<p>Mas eu estava <strong>errado</strong>.</p>
-
-<p>O motivo era simples, a <em>duplicação</em> de código continuava.</p>
-
-<p>A Classe <code>TDelegatedIntegerValue</code> tem sua própria implementação.
-Não há nenhuma reutilização da <code>TIntegerValue</code> original.</p>
-
-<p>Eu poderia utilizar <code>TIntegerValue</code> como um atributo privado de <code>TDelegatedIntegerValue</code> e 
-repassar as mensagens. Estaria correto. É o que todos fazem. Trivial.</p>
-
-<p>Mas mesmo assim não ficaria satisfeito.</p>
-
-<p>Para cada Classe que faz o real trabalho, eu teria
-que ter uma outra Classe, herdada de <code>TAggregatedObject</code> que seria utilizada nas agregações.
-Sempre teria um par de Classes: uma normal e outra para agregação.</p>
-
-<p>Eu não queria ter <em>pares</em> de Classes para fazer o mesmo trabalho.</p>
-
-<p>Eu não queria ter Classes que só poderiam ser utilizadas como <em>agregadas</em>.</p>
-
-<p>Eu não queria ter Classes que só poderiam ser utilizadas <em>diretamente</em>.</p>
-
-<p>O que eu queria era ter apenas uma <strong>única classe</strong> que pudesse ser utilizada <em>diretamente</em> ou
-<em>agregada</em> a outro Objeto. E, claro, sem vazamentos de memória.</p>
-
-<h2 id="codigo-perfeito">Em busca do “código perfeito”</h2>
-
-<p>Então eu comecei a implementação de um método que permitisse que qualquer Classe
-fosse utilizada <em>diretamente</em> ou na forma <em>agregada</em>.</p>
-
-<p>Comecei essa implementação no Delphi 7.</p>
-
-<p>Tenho alguns (grandes) projetos que ainda
-utilizam essa versão do Delphi. Nesses projetos você encontra de tudo:</p>
+<p><strong>Princípios</strong>. O código possui alguns princípios de <em>design</em>:</p>
 
 <ul>
-  <li>Código Procedural</li>
-  <li>Código que <em>parece</em> Orientado a Objetos</li>
-  <li>Código que <em>realmente</em> é Orientado a Objetos</li>
-  <li>Código RAD</li>
-  <li>e muito mais.</li>
+  <li>Totalmente baseado em interface</li>
+  <li>A memória é liberada automaticamente</li>
+  <li>Todos os métodos públicos são implementações de métodos de interface</li>
+  <li>Todos os métodos públicos retornam uma instância de interface ou tipo primitivo</li>
+  <li>Nenhum uso de NULL em argumentos ou retornos de métodos</li>
+  <li>Sem algoritmos nos construtores</li>
+  <li>Não há getters e setters</li>
+  <li>Sem <em>casting</em> ou reflexão utilizando RTTI</li>
+  <li>Sem procedimentos e funções, apenas Objetos</li>
 </ul>
 
-<p>Então quando tenho que fazer alguma manutenção neles, é uma boa hora
-para fazer uma refatoração.</p>
+<p><strong>Mais informações</strong>. Leia mais sobre o James <a href="/posts/james/">aqui</a> e <a href="/posts/james-e-testes-de-unidade/">aqui</a>.</p>
 
-<p>Tive uma ideia que, a princípio, pareceu brilhante:</p>
+<h3 id="como-contribuir">Como contribuir?</h3>
 
-<p>Iria unir as Classes <code>TInterfacedObject</code> e <code>TAggregatedObject</code> numa única nova Classe 
-e herdaria todas as minhas Classes a partir daí.</p>
+<p>Apenas faça um <em>fork</em> do <a href="https://github.com/mdbs99/james/tree/develop">repositório</a> e envie-nos um <em>Pull Request</em> (PR) usando o ramo de desenvolvimento <code>develop</code> como ponto de partida para sua contribuição.</p>
 
-<p>Perfeito!</p>
+<p>Cada PR precisa trabalhar apenas sobre uma única <em>issue</em> ou em uma <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">única responsabilidade</a>.</p>
 
-<p>Certo? Err…</p>
+<p>Por favor, nomeie seu PR usando o mesmo estilo de outros PR já <a href="https://github.com/mdbs99/james/pulls?q=is%3Apr+is%3Aclosed">finalizados</a> neste projeto.</p>
 
-<p>Bem, não tão rápido.</p>
+<p>Certifique-se de que o seu ramo seja construído sem quaisquer <em>warnings</em>/problemas.</p>
 
-<p>Se você abrir o código da RTL e localizar ambas as Classes, verão que elas divergem
-muito na implementação. Para unir as duas eu tive que fazer várias condições — IF’s —
-em várias chamadas de métodos.</p>
+<p>Se você tiver dúvidas ou sugestões gerais, não hesite em enviar uma nova <a href="https://github.com/mdbs99/james/issues/new">Github issue</a>.</p>
 
-<p>Exemplo. Se o argumento <code>Controller</code> que <code>TAggregatedObject</code> utiliza não é <code>nil</code>, então o
-Objeto iria agir de um jeito, do contrário agiria de outra maneira.</p>
+<h3 id="atualizacoes">Atualizações</h3>
 
-<p>Tive que copiar/colar o código de ambas as Classes;
-estava trabalhando com o <a href="/posts/nao-utilize-nil-ou-null/">anti-padrão</a> <code>nil/NULL</code>;
-a Classe estava complexa e não estava mais implementando apenas uma
-<a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">única responsabilidade</a>.</p>
+<p>Ainda estamos em uma versão alfa muito precoce, a API pode e vai mudar com freqüência. Por favor, use isso por sua conta e risco, até liberarmos a versão 1.0.</p>
 
-<p>A “solução” estava criando um monstro.</p>
+<p>Algumas <em>unidades</em> foram excluídas e outras foram criadas. Classes foram movidas e renomeadas.</p>
 
-<p>Isso estava indo contra muitas ideias que eu <em>defendo</em> como <em>corretas</em>.</p>
+<p>Vejamos abaixo as modificações mais recentes:</p>
 
-<p>Então…</p>
+<ul>
+  <li><a href="https://github.com/mdbs99/james/pull/18">PR #18</a>: Só vamos utilizar caracteres ASCII para facilitar o uso no Delphi sem haver problemas de UNICODE (<a href="https://www.mail-archive.com/lazarus@lists.lazarus-ide.org/msg02754.html">veja mais</a>).</li>
+  <li><a href="https://github.com/mdbs99/james/pull/19">PR #19</a>: A classe <code>TStreamBase64</code> não apenas foi renomeada para <code>TBase64Stream</code>, como também está numa nova unidade chamada <code>james.format.base64.clss</code>.</li>
+  <li><a href="https://github.com/mdbs99/james/pull/20">PR #20</a>: A unidade <code>james.data.xml.clss</code> foi renomeada para <code>james.format.xml.clss</code> adicionando um novo prefixo <code>format</code> que poderá ser utilizado por outros “formatos” como JSON, INI, etc.</li>
+  <li><a href="https://github.com/mdbs99/james/pull/21">PR #21</a>: As unidades <code>james.files.*</code> foram renomeadas para <code>james.io.*</code>.</li>
+  <li><a href="https://github.com/mdbs99/james/pull/23">PR #23</a>: Criada uma nova unidade <code>james.crypto.md5.clss</code> que, além de adicionar um novo prefixo <code>crypto</code> para outros tipos de criptografia, também contém classes relacionadas ao MD5.</li>
+  <li><a href="https://github.com/mdbs99/james/pull/30">PR #30</a>: Adicionado as classes que implementam <a href="/objetos-validadores#constraints">Constraints</a>.</li>
+</ul>
 
-<p>Joguei tudo fora, esqueci do assunto e continuei minha vida.</p>
+<p>A maioria das modificações são apenas estéticas ou apenas para melhorar a organização. No entanto são modificações necessárias para fazer o projeto crescer com saúde.</p>
 
-<p>Nenhuma outra linguagem tem isso — eu pensei — então por que continuar nessa busca?</p>
-
-<p>Isso não funciona. Desisto.</p>
-
-<h2 id="uma-soluo-absurdamente-simples">Uma solução absurdamente simples</h2>
-
-<p>O tempo passou.</p>
-
-<p>Então num belo dia tive uma <em>inspiração</em>.</p>
-
-<p>Todo esse tempo eu queria uma solução simples, mas estava pensando de forma errada… novamente!</p>
-
-<p>Não tenho que ter apenas uma única Classe. Tenho que utilizar a
-<a href="/posts/decorator-pattern/">decoração</a> e composição de Objetos.</p>
-
-<p>Voltei o exemplo original do
-<a href="/posts/interfaces-delegacao-problemas-solucoes/#exemplo-2">artigo anterior</a>
-e, ao invés de implementar <code>TDelegatedIntegerValue</code>, implementei a Classe <code>TAggregateValue</code>.</p>
-
-<p>Pouquíssimas linhas de código. Sem copiar/colar. Sem complexidade. Simples.</p>
-
-<p>E isso fez <strong>toda</strong> diferença.</p>
-
-<p>Veja o código completo do programa anterior, reescrito:</p>
-
-<script src="https://gist.github.com/mdbs99/a37d69af39bf859c0c9da77ce48f6a3b.js"></script>
-
-<p>A Classe <code>TAggregateValue</code> implementa <code>IValue</code>, porém ela não tem uma própria implementação. 
-Essa Classe apenas repassa as mensagens a instância <code>FOrigin</code> — argumento passado no construtor —
-que também implementa <code>IValue</code>.</p>
-
-<p>Em outras palavras, para cada Interface no seu código você terá uma, e apenas uma, implementação agregada 
-que poderá ser utilizada com qualquer outra “classe normal” que implemente a mesma Interface.</p>
-
-<p>A Classe <code>TMyApp</code> continua implementando <code>IValue</code>, mas seu atributo privado que realmente
-implementa <code>IValue</code> através da delegação, é 
-<a href="https://gist.github.com/mdbs99/a37d69af39bf859c0c9da77ce48f6a3b#file-project-lpr-L75-L83">inicializado</a>
-através de uma composição/decoração entre <code>TAggregateValue</code> e <code>TIntegerValue</code>.</p>
-
-<p>Apesar de continuarmos com 2 Classes como no exemplo anterior, veja que é possível codificar 
-infinitas Classes que implementem <code>IValue</code>, mas utilizar apenas 1 Classe agregadora em todos 
-os casos.</p>
-
-<p>E tão bom quanto isso tudo é não ter vazamentos de memória:</p>
-
-<pre><code>IntegerValue:
-TIntegerValue.Create
-Number is 5
-TIntegerValue.Destroy
-
-MyApp:
-TIntegerValue.Create
-TMyApp.Create
-Number is 10
-TMyApp.Destroy
-TIntegerValue.Destroy
-
-MyAppAsInterface:
-TIntegerValue.Create
-TMyApp.Create
-Number is 20
-TMyApp.Destroy
-TIntegerValue.Destroy
-
-Heap dump by heaptrc unit
-85 memory blocks allocated : 2049/2232
-85 memory blocks freed     : 2049/2232
-0 unfreed memory blocks : 0
-True heap size : 196608 (128 used in System startup)
-True free heap : 196480
-</code></pre>
-
-<h2 id="conclusao">Conclusão</h2>
-
-<p>Todas as minhas soluções anteriores iriam, de alguma forma, mudar a implementação
-original das Classes que já estavam funcionando por todo o sistema. Esse é um dos
-indícios que <strong>A)</strong> suas classes foram mal implementadas ou <strong>B)</strong> sua abordagem atual está 
-errada porque você não deveria alterar Classes que já funcionam para adaptá-las a
-novas exigências.</p>
-
-<p>Eu estava insistindo na opção B, enquanto a resposta sempre esteve comigo.</p>
-
-<p><strong>Decoração e Composição de Objetos</strong>.</p>
+<p>Por enquanto é isso. Aguardo seus comentários aqui embaixo.</p>
 
 <p>Até logo.</p>
 
@@ -415,33 +273,33 @@ novas exigências.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/objetos-agregados/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/james-2017-07" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Objetos Agregados&via=mdbs99;url=http://objectpascalprogramming.com/posts/objetos-agregados/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=James 2017-07&via=mdbs99;url=http://objectpascalprogramming.com/james-2017-07" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/objetos-agregados/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/james-2017-07" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/objetos-agregados/&title=Objetos Agregados" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/objetos-agregados/&title=Objetos Agregados" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/james-2017-07&title=James 2017-07" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/objetos-agregados/&t=Objetos Agregados" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/james-2017-07&title=James 2017-07" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/james-2017-07&t=James 2017-07" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -479,15 +337,6 @@ novas exigências.</p>
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/james-2017-07" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>James 2017-07</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/objetos-validadores" class="post-link">
@@ -570,6 +419,15 @@ novas exigências.</p>
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/posts/james-e-testes-de-unidade/" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>James e Testes de Unidade</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -577,8 +435,8 @@ novas exigências.</p>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/objetos-agregados';
-      var disqus_title      = 'Objetos Agregados';
+      var disqus_identifier = '/james-2017-07';
+      var disqus_title      = 'James 2017-07';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
