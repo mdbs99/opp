@@ -39,7 +39,7 @@
 
 &lt;h3 id=&quot;como-contribuir&quot;&gt;Como contribuir?&lt;/h3&gt;
 
-&lt;p&gt;Apenas faça um &lt;em&gt;fork&lt;/em&gt; do &lt;a href=&quot;https://github.com/mdbs99/james/tree/develop&quot;&gt;repositório&lt;/a&gt; e envie-nos um &lt;em&gt;Pull Request&lt;/em&gt; (PR) usando o ramo de desenvolvimento &lt;code&gt;develop&lt;/code&gt; como ponto de partida para sua contribuição.&lt;/p&gt;
+&lt;p&gt;Apenas faça um &lt;em&gt;fork&lt;/em&gt; do &lt;a href=&quot;https://github.com/mdbs99/james#fork-destination-box&quot;&gt;repositório&lt;/a&gt; e envie-nos um &lt;em&gt;Pull Request&lt;/em&gt; (PR).&lt;/p&gt;
 
 &lt;p&gt;Cada PR precisa trabalhar apenas sobre uma única &lt;em&gt;issue&lt;/em&gt; ou em uma &lt;a href=&quot;https://en.wikipedia.org/wiki/Single_responsibility_principle&quot;&gt;única responsabilidade&lt;/a&gt;.&lt;/p&gt;
 
