@@ -8,6 +8,116 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Declarando Unidades</title>
+        <description>&lt;p&gt;Determinar uma ordem para declarar as Unidades no código poderá facilitar a manutenção do código no futuro.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-annie-spratt-303942.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Quando você organiza suas coisas, tem a tendência de manter mais perto, mais fácil de utilizar ou pegar, todos os objetos que são mais utilizados no dia-a-dia, certo?&lt;/p&gt;
+
+&lt;p&gt;Assim também deveria ser com as &lt;a href=&quot;http://castle-engine.io/modern_pascal_introduction.html#_units&quot;&gt;Unidades&lt;/a&gt; de um Projeto.&lt;/p&gt;
+
+&lt;p&gt;A ordem em que aparecem as Unidades no código pode facilitar ou dificultar a manutenção.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo irei lhe mostrar qual a ordem que utilizo ao declarar as Unidades no meus projetos.&lt;/p&gt;
+
+&lt;h2 id=&quot;compilador&quot;&gt;Compilador&lt;/h2&gt;
+
+&lt;p&gt;As Unidades, também conhecidas como módulos, compõe os projetos.&lt;/p&gt;
+
+&lt;p&gt;Todo projeto deve ser dividido em Unidades lógicas e fazer essa divisão nem sempre é fácil, pois envolve um nível de pensamento abstrato e lógico.&lt;/p&gt;
+
+&lt;p&gt;Após dividir as Unidades do projeto, também temos que nos preocupar com as Unidades de terceiros.&lt;/p&gt;
+
+&lt;p&gt;Hoje em dia é quase mandatório utilizarmos &lt;em&gt;libs&lt;/em&gt; e &lt;em&gt;frameworks&lt;/em&gt; de terceiros. Na maioria das vezes são projetos &lt;em&gt;OpenSource&lt;/em&gt; como, por exemplo, o &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;James&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Tais Unidades facilitam o nosso trabalho, pois já possuem artefatos prontos que agilizam muito a conclusão do projeto.&lt;/p&gt;
+
+&lt;p&gt;Além dessas Unidades de terceiros, também temos as Unidades padrão da linguagem localizadas na &lt;em&gt;Run-time Library&lt;/em&gt; (RTL) ou VCL/LCL, possuindo muitas interfaces, classes, funções e artefatos prontos para uso.&lt;/p&gt;
+
+&lt;p&gt;Então, qual ordem devemos declarar essas Unidades quando utilizamos em uma das nossas próprias Unidades?&lt;/p&gt;
+
+&lt;p&gt;Aqui está a ordem que eu proponho:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit MyUnit;
+uses
+  // 1. fpc/lazarus/delphi units,
+  // 2. 3rd units,
+  // 3. my open source units,
+  // 4. project units
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Quando o compilador começa a fazer o &lt;em&gt;parser&lt;/em&gt; do código do seu projeto e ele chega na &lt;code&gt;MyUnit&lt;/code&gt;, ele irá ler as Unidades na sequência na qual elas foram declaradas — pode haver alguma otimização, como leitura paralela, porém o que importa é o resultado final, no qual depende da ordem acima — e os identificadores (classes, interfaces, funções/procedimentos, variáveis e constantes) serão “armazenados em ordem” na qual eles foram declarados.&lt;/p&gt;
+
+&lt;p&gt;Por isso eu proponho declarar, inicialmente, todas as Unidades que são padrão ao ambiente. Depois, todas as Unidades de terceiros como &lt;em&gt;libs&lt;/em&gt; e &lt;em&gt;frameworks&lt;/em&gt;. Então, todas as Unidades referentes a seus projetos públicos, sejam eles &lt;em&gt;OpenSource&lt;/em&gt; ou compartilhados dentro de setores de uma empresa. Finalmente, declaramos as Unidades do projeto em si, ou seja, no projeto no qual estamos trabalhando no momento.&lt;/p&gt;
+
+&lt;p&gt;E por quê isso é importante?&lt;/p&gt;
+
+&lt;p&gt;O motivo é porque o compilador precisa saber em qual Unidade um determinado artefato (classe, função, etc) está localizado.&lt;/p&gt;
+
+&lt;p&gt;A regra é a seguinte:&lt;/p&gt;
+
+&lt;p&gt;Se você tem 3 Unidades (&lt;code&gt;Unit1&lt;/code&gt;, &lt;code&gt;Unit2&lt;/code&gt; e &lt;code&gt;Unit3&lt;/code&gt;) e, em cada uma delas, tem uma classe com o nome &lt;code&gt;TFoo&lt;/code&gt;, o compilador irá “informar” ao seu código que &lt;code&gt;TFoo&lt;/code&gt; está localizada na última Unidade declarada.&lt;/p&gt;
+
+&lt;p&gt;Exemplo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;uses
+  Unit1, Unit3, Unit2;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Reparem que eu inverti a ordem numérica. Primeiro é a 1, depois 3 e por último a 2.&lt;/p&gt;
+
+&lt;p&gt;Onde está localizada a classe &lt;code&gt;TFoo&lt;/code&gt; quando você utilizá-la na sua Unidade, a &lt;code&gt;MyUnit&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;A resposta é: Na &lt;code&gt;Unit2&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Motivo: Ela foi declarada por &lt;em&gt;último&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Imagine que o compilador vai montando, em memória, uma tabela de referência para todos os identificadores que ele encontra. Primeiro ele encontra &lt;code&gt;TFoo&lt;/code&gt; quando lê a &lt;code&gt;Unit1&lt;/code&gt;, depois encontra novamente quando lê a &lt;code&gt;Unit3&lt;/code&gt;. Nesse momento ele &lt;em&gt;substitui&lt;/em&gt; a referência que dizia que &lt;code&gt;TFoo&lt;/code&gt; está na &lt;code&gt;Unit1&lt;/code&gt;, pois agora está na &lt;code&gt;Unit3&lt;/code&gt;. Por fim, quando ele lê a &lt;code&gt;Unit2&lt;/code&gt; o identificador é reposicionado novamente.&lt;/p&gt;
+
+&lt;p&gt;Se nessa mesma &lt;code&gt;MyUnit&lt;/code&gt; eu precisar utilizar &lt;code&gt;TFoo&lt;/code&gt; da &lt;code&gt;Unit1&lt;/code&gt;, eu sou obrigado a qualificar a classe com o nome da Unidade ao invés de apenas utilizar o identificador:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Foo := Unit1.TFoo.Create...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Vocês podem ver outro exemplo &lt;a href=&quot;http://castle-engine.io/modern_pascal_introduction.html#_qualifying_identifiers_with_unit_name&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;secoes&quot;&gt;Seções&lt;/h2&gt;
+
+&lt;p&gt;Na linguagem &lt;em&gt;Object Pascal&lt;/em&gt; temos dois lugares (seções) onde podemos declarar as Unidades que serão utilizadas.&lt;/p&gt;
+
+&lt;p&gt;Podemos declarar na seção de interface ou na seção de implementação.&lt;/p&gt;
+
+&lt;p&gt;Vale a pena declarar Unidades na seção de implementação?&lt;/p&gt;
+
+&lt;p&gt;Na minha opinião sincera, não.&lt;/p&gt;
+
+&lt;p&gt;Ao fazer isso, você terá 2 lugares para organizar a precedência da Unidades, ou seja, terá mais trabalho.&lt;/p&gt;
+
+&lt;p&gt;Como a linguagem &lt;em&gt;Object Pascal&lt;/em&gt; não aceita &lt;a href=&quot;/posts/interfaces-e-a-referencia-circular-entre-objetos/&quot;&gt;referência circular&lt;/a&gt; entre Unidades, o motivo de haver opção para declarar Unidades na implementação é para permitir essa referência bi-direcional entre elas. No entanto, isso também indica um mal &lt;em&gt;design&lt;/em&gt; na divisão das Unidades do projeto.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Definir a ordem de declaração das Unidades em cada Unidade de seu projeto pode ser de extrema importância para facilitar a manutenção e organização.&lt;/p&gt;
+
+&lt;p&gt;Conforme você for adicionando novos identificadores, você terá a certeza que o compilador dará “prioridade” para uso dos identificadores do seu projeto, sem precisar prefixar com o nome da Unidade.&lt;/p&gt;
+
+&lt;p&gt;Caso você adicione algum identificador e este entre em conflito com outra Unidade que possui o mesmo nome, basta prefixar esse identificador com o nome da Unidade, seja ela de terceiros ou do próprio ambiente. Entretando esse conflito não existirá nos identificadores das Unidades do seu projeto.&lt;/p&gt;
+
+&lt;p&gt;Portanto deixe mais “próximo” do código as Unidades que pertencem ao projeto, ou seja, as Unidades que são mais utilizadas e mais “distantes” as Unidades auxiliares.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 17 Jul 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/declarando-unidades</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/declarando-unidades</guid>
+      </item>
+    
+      <item>
         <title>James 2017-07</title>
         <description>&lt;p&gt;James é um projeto Open Source que será a base de todos os meus projetos Orientados a Objetos codificados em Object Pascal.&lt;/p&gt;
 
@@ -888,162 +998,6 @@ end
         <pubDate>Mon, 08 May 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/eventos-e-objetos</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/eventos-e-objetos</guid>
-      </item>
-    
-      <item>
-        <title>Organização de Projetos</title>
-        <description>&lt;p&gt;Todo novo Projeto é uma boa oportunidade para melhorarmos nossa habilidade de organização.&lt;/p&gt;
-
-&lt;p&gt;Como você organiza a parte física e lógica dos seus Projetos?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-jeff-hopper-17306.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;A organização do Projeto é uma etapa muito importante no desenvolvimento do &lt;em&gt;software&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Trabalhar num Projeto organizado é muito mais satisfatório e eficaz.&lt;/p&gt;
-
-&lt;p&gt;No entanto, muitos desenvolvedores ainda acham que é perda de tempo organizar e querem logo iniciar a codificação, sem pensar na modularização e nomenclaturas de todas as partes que irão compor o Projeto.&lt;/p&gt;
-
-&lt;p&gt;Utilizar uma boa nomenclatura, padronizando os nomes dos pacotes e arquivos é de suma importância para que o desenvolvimento flua de forma eficaz entre a equipe.&lt;/p&gt;
-
-&lt;p&gt;Uma boa nomenclatura também ajuda na modularização, como veremos a seguir.&lt;/p&gt;
-
-&lt;h2 id=&quot;projeto&quot;&gt;Nome do Projeto&lt;/h2&gt;
-
-&lt;p&gt;Todo Projeto é construído para alguma empresa e por isso toda empresa deve ter sua própria árvore de Projetos. Caso seu Projeto seja feito para uma pessoa e não empresa, utilize o nome da pessoa.&lt;/p&gt;
-
-&lt;p&gt;Então vem o nome do Projeto, que deve ser curto, de fácil memorização e escrita.&lt;/p&gt;
-
-&lt;p&gt;Por quê?&lt;/p&gt;
-
-&lt;p&gt;Primeiro, o nome do Projeto irá fazer parte do nome das &lt;em&gt;units&lt;/em&gt; como um prefixo, evitando a colisão de nomes com outros Projetos ou &lt;em&gt;Libs&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Segundo, o nome do Projeto será utilizado por outras ferramentas de análise e acompanhamento das tarefas (tickets) e prazos. Todo nome deve ser de fácil memorização e como uma boa identidade.&lt;/p&gt;
-
-&lt;p&gt;Não use nomes indecifráveis com &lt;em&gt;SisXpto10&lt;/em&gt; ou nomes grandes e sem personalidade como &lt;em&gt;Sistema de Tickets ABC&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Nomes de Projetos devem ser curtos, fáceis de lembrar e… &lt;em&gt;sexys&lt;/em&gt;, por que não?&lt;/p&gt;
-
-&lt;p&gt;Tenho Projetos chamados Sophia, &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;James&lt;/a&gt;, Odin, &lt;a href=&quot;https://github.com/mdbs99/greyhound&quot;&gt;Greyhound&lt;/a&gt;, Dog, Nicole, e muitos outros.&lt;/p&gt;
-
-&lt;p&gt;Tente encontrar um nome que tenha haver com o Projeto. Pode ser por causa da definição do nome em si, o que ele representa, uma sátira, apelido, pela “sonoridade” ou porque é &lt;em&gt;legal&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;diretorios-e-arquivos&quot;&gt;Diretórios e Arquivos&lt;/h2&gt;
-
-&lt;p&gt;Nos meus Projetos, sejam eles individuais ou em equipe, eles tem basicamente essa estrutura logo abaixo.&lt;/p&gt;
-
-&lt;h3 id=&quot;diretorios&quot;&gt;Diretórios&lt;/h3&gt;
-
-&lt;p&gt;A começar pela nomenclatura dos diretórios, utilizo a seguinte divisão:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;empresa
-  |
-  projeto
-    |
-    bin  : todos os arquivos binários e libs
-    |
-    doc  : toda a documentação
-    |
-    pkg  : todos os pacotes
-    |
-    src  : fontes de produção
-    |
-    test : fontes de testes
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Obviamente eu não inventei essa estrutura que é bem simples e lógica. Muitos Projetos &lt;em&gt;Open Source&lt;/em&gt; já a utilizam a muito tempo.&lt;/p&gt;
-
-&lt;p&gt;O nome dos diretórios poderiam ser &lt;code&gt;/binaries&lt;/code&gt;, &lt;code&gt;/documentation&lt;/code&gt;, &lt;code&gt;/packages&lt;/code&gt;, &lt;code&gt;/source&lt;/code&gt; e &lt;code&gt;/tests&lt;/code&gt; porém para nomes de diretórios, quanto menor, melhor. Você irá lembrar disso quando tiver que digitar no console, digitar os &lt;em&gt;paths&lt;/em&gt; na IDE, etc.&lt;/p&gt;
-
-&lt;p&gt;Considero uma árvore simples e limpa. Mas nem todos os projetos a utilizam.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo. A maioria dos projetos Java são codificados com base na URL da empresa em conjunto com algum padrão estranho.&lt;/p&gt;
-
-&lt;p&gt;Exemplo: &lt;code&gt;empresa/projeto/src/main/java/com/acme/projeto&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Na minha opinião, esta é uma nomenclatura muito deselegante e repetitiva.&lt;/p&gt;
-
-&lt;p&gt;Por quê o nome do projeto se repete nos diretórios? Não sei. Talvez a IDE faça isso e ninguém dá a mínima.&lt;/p&gt;
-
-&lt;p&gt;O que o &lt;code&gt;/com&lt;/code&gt; significa no contexto do Projeto? Nada. Apenas um padrão que seguem para evitar a colisão de nomes, talvez.&lt;/p&gt;
-
-&lt;p&gt;E por quê &lt;code&gt;/java&lt;/code&gt; deve fazer parte da árvore de diretórios?!&lt;/p&gt;
-
-&lt;p&gt;Realmente não sei.&lt;/p&gt;
-
-&lt;h3 id=&quot;arquivos&quot;&gt;Arquivos&lt;/h3&gt;
-
-&lt;p&gt;Já o nome dos arquivos, ou seja, das &lt;em&gt;units&lt;/em&gt;, devem seguir o seguinte padrão:&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;&amp;lt;projeto&amp;gt;.&amp;lt;grupo&amp;gt;.&amp;lt;subgrupo&amp;gt;.&amp;lt;nome&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Apenas &lt;code&gt;&amp;lt;projeto&amp;gt;&lt;/code&gt; e &lt;code&gt;&amp;lt;grupo&amp;gt;&lt;/code&gt; são obrigatórios.&lt;/p&gt;
-
-&lt;p&gt;Por quê?&lt;/p&gt;
-
-&lt;p&gt;Bem, cada &lt;em&gt;unit&lt;/em&gt; no &lt;em&gt;Object Pascal&lt;/em&gt; pode conter mais de uma Classe. Então não é necessário um &lt;code&gt;&amp;lt;nome&amp;gt;&lt;/code&gt; de Classe, por exemplo, como é o caso do Java.&lt;/p&gt;
-
-&lt;p&gt;Apenas para Formulários e &lt;a href=&quot;/posts/datamodule-e-apenas-um-container/&quot;&gt;&lt;em&gt;DataModules&lt;/em&gt;&lt;/a&gt;, o nome será obrigatório.&lt;/p&gt;
-
-&lt;p&gt;Vejamos alguns exemplos:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/blob/master/src/james.data.pas&quot;&gt;james.data&lt;/a&gt; contém &lt;code&gt;&amp;lt;projeto&amp;gt;&lt;/code&gt; e &lt;code&gt;&amp;lt;grupo&amp;gt;&lt;/code&gt;;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/blob/master/src/james.data.clss.pas&quot;&gt;james.data.clss&lt;/a&gt; contém &lt;code&gt;&amp;lt;projeto&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;grupo&amp;gt;&lt;/code&gt; e &lt;code&gt;&amp;lt;subgrupo&amp;gt;&lt;/code&gt;;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/blob/master/src/james.data.stream.clss.pas&quot;&gt;james.data.stream.clss&lt;/a&gt; contém &lt;code&gt;&amp;lt;projeto&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;grupo&amp;gt;&lt;/code&gt; e dois &lt;code&gt;&amp;lt;subgrupo&amp;gt;&lt;/code&gt;;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Existem alguns &lt;em&gt;sufixos&lt;/em&gt; de arquivos que utilizo bastante:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Clss : conterá classes que implementam interfaces;&lt;/li&gt;
-  &lt;li&gt;Tests : contém as classes de testes;&lt;/li&gt;
-  &lt;li&gt;Form : utilizado para todos os formulários;&lt;/li&gt;
-  &lt;li&gt;Module : utilizado para todos os &lt;em&gt;DataModules&lt;/em&gt;;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Para o nome das Classes, veja &lt;a href=&quot;/posts/nomeando-classes/&quot;&gt;esse artigo&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;dividir&quot;&gt;Dividir para Conquistar&lt;/h2&gt;
-
-&lt;p&gt;Todo projeto de tamanho médio ou grande, deve ser dividido em módulos lógicos, ou seja, subdiretórios dentro de &lt;code&gt;/src&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa divisão irá depender exclusivamente do seu projeto e contextos.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“Dividir para conquistar” — Napoleão&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Essa divisão em subdiretórios é importante para termos a reutilização dos fontes por outros Projetos e ao mesmo tempo a restrição de visibilidade.&lt;/p&gt;
-
-&lt;p&gt;Se os fontes de um Projeto ficasse em apenas um diretório, outros Projetos poderiam ter acesso a tudo. Dividindo em subdiretórios você pode restringir a visibilidade e acesso para esses outros Projetos.&lt;/p&gt;
-
-&lt;p&gt;Outra possibilidade bem interessante é dividir os módulos em &lt;a href=&quot;/posts/james-e-testes-de-unidade/#pacote-de-testes&quot;&gt;Pacotes&lt;/a&gt; reutilizáveis entre Projetos distintos.
-Nesse padrão a divisão dos fontes não é apenas por subdiretórios, mas sim por árvores completamente diferentes.&lt;/p&gt;
-
-&lt;p&gt;É normal criarmos Pacotes para componentes e &lt;em&gt;Libs&lt;/em&gt; reutilizáveis, mas criar Pacotes entre Projetos também pode ser muito eficaz para o desenvolvimento.&lt;/p&gt;
-
-&lt;p&gt;No Lazarus, basta abrir um Pacote uma única vez que ele já fica registrado na IDE. Depois basta adicionar o Pacote no(s) Projeto(s) para reutilizar seus fontes. Caso queira mudar o &lt;em&gt;path&lt;/em&gt; do Pacote, basta fazer num único lugar (XML de configuração da IDE) para que todos os outros Projetos sejam atualizados. Isso é muito melhor do que ter que alterar &lt;em&gt;paths&lt;/em&gt; de diretório reutilizáveis em cada Projeto.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Um Projeto de &lt;em&gt;software&lt;/em&gt; não é apenas código-fonte. Devemos fazer um estudo desde o nome a ser utilizado, passando pela nomenclatura, diretórios e divisões de cada módulo.&lt;/p&gt;
-
-&lt;p&gt;Seu Projeto poderá ter uma vida mais longa se você souber onde encontrar cada peça facilmente.&lt;/p&gt;
-
-&lt;p&gt;A divisão por módulos irá facilitar a manutenção no longo prazo e a nomenclatura correta irá deixar tudo mais fácil.&lt;/p&gt;
-
-&lt;p&gt;E você, como organiza seus Projetos?&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 01 May 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/organizacao-de-projetos</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/organizacao-de-projetos</guid>
       </item>
     
   </channel>

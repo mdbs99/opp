@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Pensando em Dados &#8211; Object Pascal Programming</title>
+    <title>Declarando Unidades &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Objetos">
-    <meta name="keywords" content="data, object, data-object, report, relatório, report-data">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/pensando-em-dados/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object-pascal, object-oriented, oop, mdbs99, unit, using">
+    <link rel="canonical" href="http://objectpascalprogramming.com/declarando-unidades">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Pensando em Dados">
-    <meta property="og:description" content="Não implemente Classes que são apenas recipientes de dados.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/pensando-em-dados/">
+    <meta property="og:title" content="Declarando Unidades">
+    <meta property="og:description" content="Determinar uma ordem para declarar as Unidades no código poderá facilitar a manutenção do código no futuro.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/declarando-unidades">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1460925895917-afdab827c52f.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-annie-spratt-303942.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Pensando em Dados" />
+    <meta name="twitter:title" content="Declarando Unidades" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/pensando-em-dados/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/declarando-unidades" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,93 +191,117 @@
 
 
 <div class="post-header mb2">
-  <h1>Pensando em Dados</h1>
-  <span class="post-meta">Nov 7, 2016</span><br>
+  <h1>Declarando Unidades</h1>
+  <span class="post-meta">Jul 17, 2017</span><br>
   
   <span class="post-meta small">
   
-    2 minute read
+    4 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Você precisa fazer um relatório financeiro num sistema que 
-possui o código Orientado a Objetos.</p>
-
-<p>Quais Classes e Objetos você precisa criar para representar os dados 
-que serão exibidos no relatório?</p>
+  <p>Determinar uma ordem para declarar as Unidades no código poderá facilitar a manutenção do código no futuro.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1460925895917-afdab827c52f.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2017/photo-annie-spratt-303942.jpg" alt="Unsplash image" /></p>
 
-<p>Nenhuma!</p>
+<h2 id="introducao">Introdução</h2>
 
-<p>Nenhuma Classe que <a href="/posts/classes-de-dados/">representa dados</a>
-é necessária. Use apenas… <em>dados</em>.</p>
+<p>Quando você organiza suas coisas, tem a tendência de manter mais perto, mais fácil de utilizar ou pegar, todos os objetos que são mais utilizados no dia-a-dia, certo?</p>
 
-<p>Muitos programadores (ainda) confundem conceitos tão distintos.
-Dados e Objetos são coisas completamente diferentes.</p>
+<p>Assim também deveria ser com as <a href="http://castle-engine.io/modern_pascal_introduction.html#_units">Unidades</a> de um Projeto.</p>
 
-<p><strong>Enquanto Objetos são criaturas vivas.</strong> Dados são apenas registros do passado.</p>
+<p>A ordem em que aparecem as Unidades no código pode facilitar ou dificultar a manutenção.</p>
 
-<p>Relatórios tabulares, por exemplo, consistem apenas de exibição e formatação de 
-dados no formato de tabela.
-Não precisamos de Objetos, comportamento ou
-<a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">encapsulamento</a>
-para fazer essa tarefa — a não ser para obter os dados no lugar onde estão armazenados.</p>
+<p>Nesse artigo irei lhe mostrar qual a ordem que utilizo ao declarar as Unidades no meus projetos.</p>
 
-<p>Objetos, no entanto, podem representar dados na forma de uma
-<a href="/posts/objetos-representam-entidades/">Entidade</a>
-que encapsula os dados. Poderíamos ter uma Classe <code>TFinanceReport</code>, 
-por exemplo, que representa um 
-<a href="/posts/datamodule-e-apenas-um-container/#implementao-de-um-relatrio">relatório</a>,
-porém onde estariam os dados? Em atributos? Não, não especificamente.</p>
+<h2 id="compilador">Compilador</h2>
 
-<p>Imagine ter um atributo para cada coluna. Listas de objetos. Listas de
-listas…</p>
+<p>As Unidades, também conhecidas como módulos, compõe os projetos.</p>
 
-<p>No fim estaríamos trabalhando com <em>objetos anêmicos</em> que só possuem 
-<a href="/posts/getters-e-setters/">Métodos <em>Getters</em> e <em>Setters</em></a>.</p>
+<p>Todo projeto deve ser dividido em Unidades lógicas e fazer essa divisão nem sempre é fácil, pois envolve um nível de pensamento abstrato e lógico.</p>
 
-<p>Isso não seria nada eficaz devido ao grande trabalho que iria ser codificar
-essas Classes — muitas delas — e fazer a manipulação de seus Objetos. A performance,
-também, seria drasticamente afetada.</p>
+<p>Após dividir as Unidades do projeto, também temos que nos preocupar com as Unidades de terceiros.</p>
 
-<p>Além disso essa abordagem é totalmente contra os princípios
-da verdadeira <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>.</p>
+<p>Hoje em dia é quase mandatório utilizarmos <em>libs</em> e <em>frameworks</em> de terceiros. Na maioria das vezes são projetos <em>OpenSource</em> como, por exemplo, o <a href="https://github.com/mdbs99/james">James</a>.</p>
 
-<p><strong>Mas não é assim que codificamos no <em>Object Pascal</em>, certo?</strong></p>
+<p>Tais Unidades facilitam o nosso trabalho, pois já possuem artefatos prontos que agilizam muito a conclusão do projeto.</p>
 
-<p>Estou ciente de que utilizar Objetos e listas de Objetos para exibição de
-relatórios não é um padrão muito utilizado no mundo <em>Object Pascal</em>.
-Vemos isso mais no mundo Java ou C#. Nesses ambientes muitos programadores acham
-que por estarem utilizando Objetos, eles estariam programando Orientado a Objetos,
-o que não é, necessariamente, uma verdade.</p>
+<p>Além dessas Unidades de terceiros, também temos as Unidades padrão da linguagem localizadas na <em>Run-time Library</em> (RTL) ou VCL/LCL, possuindo muitas interfaces, classes, funções e artefatos prontos para uso.</p>
 
-<p>Programadores <em>Object Pascal</em> — maioria — são orientados a Dados e não a Objetos.
-Utilizam a abordagem RAD. Dropam componentes nos formulários, fazem algumas
-ligações e isso é o suficiente para a exibição dos dados em uma <em>Grid</em>.</p>
+<p>Então, qual ordem devemos declarar essas Unidades quando utilizamos em uma das nossas próprias Unidades?</p>
 
-<p>Eu sou contra a abordagem RAD para Regras de Negócio ou para qualquer módulo
-que exija alguma inteligência, onde o encapsulamento e uso de Objetos iria me
-proporcionar um maior <em>controle</em> e <em>manutenibilidade</em>.</p>
+<p>Aqui está a ordem que eu proponho:</p>
 
-<p>Porém sou completamente a favor da abordagem RAD se estivermos falando sobre 
-exibição de dados.</p>
+<pre><code>unit MyUnit;
+uses
+  // 1. fpc/lazarus/delphi units,
+  // 2. 3rd units,
+  // 3. my open source units,
+  // 4. project units
+</code></pre>
 
-<p>Não tem nada de errado em utilizarmos <em>queries</em> para obter os dados de um 
-SGBD e exibir o resultado diretamente na tela ou relatório.</p>
+<p>Quando o compilador começa a fazer o <em>parser</em> do código do seu projeto e ele chega na <code>MyUnit</code>, ele irá ler as Unidades na sequência na qual elas foram declaradas — pode haver alguma otimização, como leitura paralela, porém o que importa é o resultado final, no qual depende da ordem acima — e os identificadores (classes, interfaces, funções/procedimentos, variáveis e constantes) serão “armazenados em ordem” na qual eles foram declarados.</p>
 
-<p><strong>Dados são apenas registros.</strong> Estejam eles gravados em arquivos, Banco de Dados, em <em>streams</em>
-em memória ou provenientes de uma requisição HTTP via Web, não importa. São
-dados, <em>não</em> Objetos.</p>
+<p>Por isso eu proponho declarar, inicialmente, todas as Unidades que são padrão ao ambiente. Depois, todas as Unidades de terceiros como <em>libs</em> e <em>frameworks</em>. Então, todas as Unidades referentes a seus projetos públicos, sejam eles <em>OpenSource</em> ou compartilhados dentro de setores de uma empresa. Finalmente, declaramos as Unidades do projeto em si, ou seja, no projeto no qual estamos trabalhando no momento.</p>
 
-<p>Portanto não trate Objetos como um
-<a href="/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados">balde de dados</a>
-e não trate os Dados como se fossem Objetos que
-<a href="/posts/objetos-pensam-e-tomam-decisoes/">pensam</a> e tomam decisões.</p>
+<p>E por quê isso é importante?</p>
+
+<p>O motivo é porque o compilador precisa saber em qual Unidade um determinado artefato (classe, função, etc) está localizado.</p>
+
+<p>A regra é a seguinte:</p>
+
+<p>Se você tem 3 Unidades (<code>Unit1</code>, <code>Unit2</code> e <code>Unit3</code>) e, em cada uma delas, tem uma classe com o nome <code>TFoo</code>, o compilador irá “informar” ao seu código que <code>TFoo</code> está localizada na última Unidade declarada.</p>
+
+<p>Exemplo:</p>
+
+<pre><code>uses
+  Unit1, Unit3, Unit2;
+</code></pre>
+
+<p>Reparem que eu inverti a ordem numérica. Primeiro é a 1, depois 3 e por último a 2.</p>
+
+<p>Onde está localizada a classe <code>TFoo</code> quando você utilizá-la na sua Unidade, a <code>MyUnit</code>?</p>
+
+<p>A resposta é: Na <code>Unit2</code>.</p>
+
+<p>Motivo: Ela foi declarada por <em>último</em>.</p>
+
+<p>Imagine que o compilador vai montando, em memória, uma tabela de referência para todos os identificadores que ele encontra. Primeiro ele encontra <code>TFoo</code> quando lê a <code>Unit1</code>, depois encontra novamente quando lê a <code>Unit3</code>. Nesse momento ele <em>substitui</em> a referência que dizia que <code>TFoo</code> está na <code>Unit1</code>, pois agora está na <code>Unit3</code>. Por fim, quando ele lê a <code>Unit2</code> o identificador é reposicionado novamente.</p>
+
+<p>Se nessa mesma <code>MyUnit</code> eu precisar utilizar <code>TFoo</code> da <code>Unit1</code>, eu sou obrigado a qualificar a classe com o nome da Unidade ao invés de apenas utilizar o identificador:</p>
+
+<pre><code>Foo := Unit1.TFoo.Create...
+</code></pre>
+
+<p>Vocês podem ver outro exemplo <a href="http://castle-engine.io/modern_pascal_introduction.html#_qualifying_identifiers_with_unit_name">aqui</a>.</p>
+
+<h2 id="secoes">Seções</h2>
+
+<p>Na linguagem <em>Object Pascal</em> temos dois lugares (seções) onde podemos declarar as Unidades que serão utilizadas.</p>
+
+<p>Podemos declarar na seção de interface ou na seção de implementação.</p>
+
+<p>Vale a pena declarar Unidades na seção de implementação?</p>
+
+<p>Na minha opinião sincera, não.</p>
+
+<p>Ao fazer isso, você terá 2 lugares para organizar a precedência da Unidades, ou seja, terá mais trabalho.</p>
+
+<p>Como a linguagem <em>Object Pascal</em> não aceita <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/">referência circular</a> entre Unidades, o motivo de haver opção para declarar Unidades na implementação é para permitir essa referência bi-direcional entre elas. No entanto, isso também indica um mal <em>design</em> na divisão das Unidades do projeto.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Definir a ordem de declaração das Unidades em cada Unidade de seu projeto pode ser de extrema importância para facilitar a manutenção e organização.</p>
+
+<p>Conforme você for adicionando novos identificadores, você terá a certeza que o compilador dará “prioridade” para uso dos identificadores do seu projeto, sem precisar prefixar com o nome da Unidade.</p>
+
+<p>Caso você adicione algum identificador e este entre em conflito com outra Unidade que possui o mesmo nome, basta prefixar esse identificador com o nome da Unidade, seja ela de terceiros ou do próprio ambiente. Entretando esse conflito não existirá nos identificadores das Unidades do seu projeto.</p>
+
+<p>Portanto deixe mais “próximo” do código as Unidades que pertencem ao projeto, ou seja, as Unidades que são mais utilizadas e mais “distantes” as Unidades auxiliares.</p>
 
 <p>Até logo.</p>
 
@@ -289,33 +313,33 @@ e não trate os Dados como se fossem Objetos que
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/pensando-em-dados/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/declarando-unidades" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Pensando em Dados&via=mdbs99;url=http://objectpascalprogramming.com/posts/pensando-em-dados/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Declarando Unidades&via=mdbs99;url=http://objectpascalprogramming.com/declarando-unidades" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/pensando-em-dados/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/declarando-unidades" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/pensando-em-dados/&title=Pensando em Dados" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/pensando-em-dados/&title=Pensando em Dados" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/declarando-unidades&title=Declarando Unidades" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/pensando-em-dados/&t=Pensando em Dados" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/declarando-unidades&title=Declarando Unidades" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/declarando-unidades&t=Declarando Unidades" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -353,15 +377,6 @@ e não trate os Dados como se fossem Objetos que
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/declarando-unidades" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Declarando Unidades</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/james-2017-07" class="post-link">
@@ -444,6 +459,15 @@ e não trate os Dados como se fossem Objetos que
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/organizacao-de-projetos" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Organização de Projetos</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -451,8 +475,8 @@ e não trate os Dados como se fossem Objetos que
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/pensando-em-dados';
-      var disqus_title      = 'Pensando em Dados';
+      var disqus_identifier = '/declarando-unidades';
+      var disqus_title      = 'Declarando Unidades';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
