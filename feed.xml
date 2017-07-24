@@ -8,6 +8,124 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Diretivas de Compilação</title>
+        <description>&lt;p&gt;Diretivas de Compilação podem lhe ajudar a tornar seu código &lt;em&gt;multi-plataform&lt;/em&gt; ou até mesmo &lt;em&gt;cross-compiled&lt;/em&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-mathyas-kurmann-102977.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Mathyas Kurmann on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.freepascal.org/docs-html/prog/progch1.html&quot;&gt;Diretivas de Compilação&lt;/a&gt; são comandos poderosos que o desenvolvedor pode utilizar para customizar a compilação.&lt;/p&gt;
+
+&lt;p&gt;Essas Diretivas passam parâmetros para o compilador, informando os &lt;em&gt;argumentos&lt;/em&gt; da compilação, &lt;em&gt;como&lt;/em&gt; deve ser compilado e &lt;em&gt;o que&lt;/em&gt; deve ser compilado.&lt;/p&gt;
+
+&lt;p&gt;Existem basicamente &lt;a href=&quot;http://docwiki.embarcadero.com/RADStudio/Tokyo/en/Delphi_compiler_directives&quot;&gt;3 tipos&lt;/a&gt; de Diretivas de Compilação:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;Switch directive&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Parameter directive&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Conditional compilation directive&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Os dois primeiros tipos alteram os parâmetros de compilação, enquanto o último altera o que o compilador irá executar.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo iremos tratar do último tipo: &lt;em&gt;Condicionais&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;condicionais&quot;&gt;Condicionais&lt;/h2&gt;
+
+&lt;p&gt;Apesar de serem comandos poderosos, &lt;em&gt;não&lt;/em&gt; devem ser utilizados levianamente.&lt;/p&gt;
+
+&lt;p&gt;Com apenas alguns comandos condicionais, seu código &lt;a href=&quot;https://freepascal.org/&quot;&gt;Free Pascal&lt;/a&gt; ou &lt;a href=&quot;https://www.embarcadero.com/products/delphi&quot;&gt;Delphi&lt;/a&gt; pode ser compilável em várias plataformas.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, a medida que vamos adicionando mais e mais diretivas, o código irá ficar mais complexo.&lt;/p&gt;
+
+&lt;p&gt;Vejamos o exemplo abaixo:
+&lt;script src=&quot;https://gist.github.com/mdbs99/dffca8326e924f4e036485a5674ea147.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;No código acima apenas a 1º e 3º chamada da função &lt;em&gt;Writeln&lt;/em&gt; serão executadas.&lt;/p&gt;
+
+&lt;p&gt;Todas as diretivas e também a 2º chamada de &lt;em&gt;Writeln&lt;/em&gt; não irão fazer parte do executável final.&lt;/p&gt;
+
+&lt;p&gt;Bem legal.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, veja que o código ficou bem “poluído” e também temos um &lt;a href=&quot;/posts/objetos-imutaveis/#acoplamento-temporal&quot;&gt;acoplamento temporal&lt;/a&gt;, pois as  constantes precisam ser definidas numa ordem específica.&lt;/p&gt;
+
+&lt;p&gt;Diretivas e Definições de constantes que serão utilizadas em apenas numa única &lt;a href=&quot;/declarando-unidades&quot;&gt;Unidade&lt;/a&gt; pode até ser gerenciável, mas e se tivermos trabalhando com dezenas ou até centenas de Unidades que irão utilizar as mesmas diretivas e definições, ainda acha que essa abordagem é a melhor escolha para a arquitetura do seu projeto com a finalidade de construí-lo como &lt;em&gt;multi-plataform&lt;/em&gt; ou &lt;em&gt;cross-compiled&lt;/em&gt;?&lt;/p&gt;
+
+&lt;p&gt;Eu acho que &lt;em&gt;não&lt;/em&gt; e é por isso que no &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;Projeto James&lt;/a&gt; estamos utilizando uma abordagem diferente.&lt;/p&gt;
+
+&lt;h2 id=&quot;encapsulando&quot;&gt;Encapsulando Diretivas&lt;/h2&gt;
+
+&lt;p&gt;No James estamos codificando num estilo que chamo de &lt;em&gt;Encapsulamento de Diretivas&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Um dos objetivos desse projeto é ser &lt;em&gt;cross-compiled&lt;/em&gt;, ou seja, ele irá compilar em Free Pascal e Delphi. No entanto não queremos que nem os usuários (desenvolvedores) ou os autores desse projeto se preocupem com diretivas de compilação.&lt;/p&gt;
+
+&lt;p&gt;Atualmente não há diretivas condicionais no código de implementação dos métodos — com exceção da classe &lt;code&gt;TXMLComponent&lt;/code&gt; que deverá ser &lt;a href=&quot;https://github.com/mdbs99/james/issues/65&quot;&gt;refatorada&lt;/a&gt; em breve.&lt;/p&gt;
+
+&lt;p&gt;O motivo dessa abordagem é que não queremos nos preocupar em  quebrar um código que é utilizado por 2 compiladores diferentes.&lt;/p&gt;
+
+&lt;p&gt;Não utilizamos arquivos &lt;em&gt;“include”&lt;/em&gt; com pedaços de código.&lt;/p&gt;
+
+&lt;p&gt;Não utilizamos definições globais de condicionais.&lt;/p&gt;
+
+&lt;p&gt;Diretiva condicional é uma técnica &lt;em&gt;procedural&lt;/em&gt;. Não gostamos.&lt;/p&gt;
+
+&lt;p&gt;Ao invés disso, utilizamos apenas &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;Objetos&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;implementacao&quot;&gt;Implementação&lt;/h2&gt;
+
+&lt;p&gt;Imagine uma Unidade que contenha classes para &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;representar&lt;/a&gt; a criptografia &lt;a href=&quot;https://en.wikipedia.org/wiki/MD5&quot;&gt;MD5&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;No Free Pascal já temos uma Unidade &lt;code&gt;md5&lt;/code&gt; que tem funções que fazem esse trabalho — e é claro que temos que fazer Objetos para encapsular essas funções.&lt;/p&gt;
+
+&lt;p&gt;No Delphi a Unidade que faz o mesmo trabalho é denominada &lt;code&gt;hash&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não queremos “reinventar a roda”. Queremos utilizar o que já está pronto em ambas as plataformas.&lt;/p&gt;
+
+&lt;p&gt;Então, como fazer essa implementação sem utilizar diretivas condicionais no código de implementação ou arquivos de inclusão?&lt;/p&gt;
+
+&lt;p&gt;Bem, no James temos a Unidade &lt;a href=&quot;https://github.com/mdbs99/james/blob/master/src/james.crypto.md5.clss.pas&quot;&gt;James.Crypto.MD5.Clss&lt;/a&gt; com algumas classes que representam MD5.&lt;/p&gt;
+
+&lt;p&gt;Essa é a única Unidade (até a data desse artigo) que os usuários devem utilizar para trabalhar com MD5.&lt;/p&gt;
+
+&lt;p&gt;Nós, autores do projeto, poderíamos separar alguns desenvolvedores para trabalhar na implementação Free Pascal e outros para trabalhar na implementação Delphi, se assim o desejarmos, pois as implementações estão separadas em Unidades distintas.&lt;/p&gt;
+
+&lt;p&gt;Primeiro criamos mais duas Unidades que serão utilizadas pela &lt;code&gt;James.Crypto.MD5.Clss&lt;/code&gt;:
+Uma para Free Pascal e outra para o Delphi.&lt;/p&gt;
+
+&lt;p&gt;São elas &lt;a href=&quot;https://github.com/mdbs99/james/blob/master/src/james.crypto.md5.fpc.pas&quot;&gt;James.Crypto.MD5.FPC&lt;/a&gt; e &lt;a href=&quot;https://github.com/mdbs99/james/blob/master/src/james.crypto.md5.delphi.pas&quot;&gt;James.Crypto.MD5.Delphi&lt;/a&gt;, respectivamente.&lt;/p&gt;
+
+&lt;p&gt;Veja abaixo como implementamos isso:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/1bc867bb6303223496c44d221eae9044.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Ambas as Unidades possuem a definição da Classe &lt;code&gt;TMD5Hash&lt;/code&gt; (sim, mesmo nome em ambas). Então bastou criar um &lt;em&gt;alias&lt;/em&gt; (novamente, com o mesmo nome) direcionando &lt;code&gt;TMD5Hash&lt;/code&gt; para a classe correta (dependente da plataforma) e, &lt;em&gt;voilá!&lt;/em&gt;, temos uma Unidade “limpa” e sem condicionais na implementação dos métodos.&lt;/p&gt;
+
+&lt;p&gt;Agora temos duas Classes distintas, em Unidades diferentes, que podem evoluir independentemente sem receio de quebrar o código entre plataformas.&lt;/p&gt;
+
+&lt;p&gt;A clase &lt;code&gt;TMD5Stream&lt;/code&gt; não tem nenhuma diferença entre os compiladores, então é implementada diretamente na Unidade &lt;code&gt;James.Crypto.MD5.Clss&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Diretiva de Compilação é uma boa ferramenta para customização do código, porém deve ser utilizada com parcimônia.&lt;/p&gt;
+
+&lt;p&gt;No código &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;Orientado a Objetos&lt;/a&gt;, dê preferência aos Objetos para resolver seus problemas.&lt;/p&gt;
+
+&lt;p&gt;Para cada diretiva condicional que você queira adicionar no código de implementação, sugiro implementar um novo Objeto que encapsule a diretiva.&lt;/p&gt;
+
+&lt;p&gt;Seu código ficará mais limpo e sustentável.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 24 Jul 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/diretivas-de-compilacao</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/diretivas-de-compilacao</guid>
+      </item>
+    
+      <item>
         <title>Declarando Unidades</title>
         <description>&lt;p&gt;Determinar uma ordem para declarar as Unidades no código poderá facilitar a manutenção do código no futuro.&lt;/p&gt;
 
@@ -838,166 +956,6 @@ end;
         <pubDate>Mon, 22 May 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/observando-objetos</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/observando-objetos</guid>
-      </item>
-    
-      <item>
-        <title>Eventos e Objetos</title>
-        <description>&lt;p&gt;Quando o semáforo de trânsito muda de vermelho para verde, isso é considerado um Evento ou uma Mensagem entre Objetos (motorista e semáforo)?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-ashim-d-silva-95242.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;O mundo é constituído de Eventos.&lt;/p&gt;
-
-&lt;p&gt;Uma sirene que toca ao longe; o semáforo que passou de amarelo para vermelho; as notificaçõess do celular; a luz que acende num painel; o atendente do Starbucks chamando seu nome quando o café está pronto.&lt;/p&gt;
-
-&lt;p&gt;Um &lt;a href=&quot;https://en.wikipedia.org/wiki/Event_(computing)&quot;&gt;Evento&lt;/a&gt; no mundo computacional é uma ação ou ocorrência gerado no software e reconhecido e tratado pelo software.&lt;/p&gt;
-
-&lt;p&gt;Entre Objetos computacionais, existem 2 formas de interação: Mensagens e Eventos.&lt;/p&gt;
-
-&lt;h2 id=&quot;mensagens&quot;&gt;Mensagens&lt;/h2&gt;
-
-&lt;p&gt;Dois Objetos comunicam-se entre si através de &lt;a href=&quot;/posts/diga-me-algo-sobre-voce/#mensagens&quot;&gt;mensagens&lt;/a&gt; ou Métodos.&lt;/p&gt;
-
-&lt;p&gt;Podemos chamar essa troca de mensagens de diálogo pois os Objetos que estão participando da “conversa” estão todos “cientes” do trabalho que estão desenvolvendo juntos (composição).&lt;/p&gt;
-
-&lt;p&gt;Cada Objeto está fazendo o trabalho para o qual foi &lt;a href=&quot;/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos&quot;&gt;contrato&lt;/a&gt; e repassando seu resultado para o próximo Objeto afim de terminar um trabalho maior.&lt;/p&gt;
-
-&lt;p&gt;Para um Objeto enviar uma Mensagem à outro, ele deve saber como passar a mensagem na forma que o receptor já conhece, para que as instruções sejam entendidas.&lt;/p&gt;
-
-&lt;p&gt;Em outras palavras, o transmissor deve conhecer a Interface do receptor.&lt;/p&gt;
-
-&lt;p&gt;Mas num diálogo entre alguns Objetos, podem haver interrupções externas que quebra o fluxo normal, podendo mudar o comportamento em execução.&lt;/p&gt;
-
-&lt;p&gt;Imaginem dois Objetos trabalhando, fazendo um &lt;em&gt;parser&lt;/em&gt; de arquivos PDF, o usuário clica no botão “cancelar” para notificar, a quem quiser saber, que a operação em andamento deve ser cancelada.&lt;/p&gt;
-
-&lt;p&gt;Isso é um Evento.&lt;/p&gt;
-
-&lt;h2 id=&quot;eventos&quot;&gt;Eventos&lt;/h2&gt;
-
-&lt;p&gt;Um Evento, diferente de um diálogo, é como um interruptor. Ele desvia o “fluxo normal” do diálogo entre Objetos para notificar outros Objetos — que ele desconhece ou ignora — que podem ou não estar inseridos no mesmo contexto ou trabalho em andamento.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo:
-Dois mecânicos estão fazendo um belo trabalho na montagem de um motor recem retificado, a sirene sinalizando a hora do almoço toca. Eles largam suas ferramentas e vão almoçar.&lt;/p&gt;
-
-&lt;p&gt;Podemos dizer que eles estavam &lt;em&gt;aguardando&lt;/em&gt; esse Evento? Sim. Deviam estar anciosos para o almoço…&lt;/p&gt;
-
-&lt;p&gt;Então todo evento é &lt;em&gt;aguardado&lt;/em&gt; pelos Objetos?&lt;/p&gt;
-
-&lt;p&gt;Creio que sim. Pelo menos no mundo computacional.&lt;/p&gt;
-
-&lt;p&gt;Os Objetos em sistemas computacionais não tem &lt;em&gt;sentidos&lt;/em&gt; como os seres humanos. Os 5 sentidos humanos são como interpretadores de todo tipo de Evento que pode ocorrer ao seu redor. Então, sim, aguardamos por qualquer tipo de Evento que possa ocorrer, pois temos a capacidade de interpretá-los e tomar uma decisão sobre o que fazer.&lt;/p&gt;
-
-&lt;p&gt;Já os Objetos dentro de um software são apenas abstrações de &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;entidades&lt;/a&gt; do mundo real. Sendo abstrações, eles são construídos de forma minimalista — ou deveriam ser — para representar apenas uma faceta da entidade na qual eles representam. Então temos que implementar apenas os Eventos essenciais que essa abstração deveria aguardar. Caso ocorram.&lt;/p&gt;
-
-&lt;p&gt;Um evento é uma notificação que um Objeto faz a quem estiver interessado. O Objeto (emissor) não sabe a quem está enviando a notificação.&lt;/p&gt;
-
-&lt;p&gt;Em outras palavras, é o receptor que deve ter conhecimento sobre como será emitido o evento no transmissor, ou seja, sua Interface.&lt;/p&gt;
-
-&lt;h2 id=&quot;implementacao&quot;&gt;Implementação&lt;/h2&gt;
-
-&lt;p&gt;A implementação de um Evento, em qualquer linguagem de programação, pode ser definida basicamente como um &lt;em&gt;ponteiro para uma função&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa foi a maneira que o Delphi implementou os Eventos dos &lt;em&gt;widgets&lt;/em&gt; de um Formulário.&lt;/p&gt;
-
-&lt;p&gt;Um clique num botão, por exemplo, é um ponteiro para uma função que está definida fora da instância do botão (Classe TButton e/ou derivados).&lt;/p&gt;
-
-&lt;p&gt;A implementação dessa função normalmente está localizada no Formulário onde o botão está inserido.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure TForm1.Button1Click(Sender: TObject);
-begin
-  ShowMessage(&#39;Clicked&#39;);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;No código acima &lt;code&gt;Button1Click&lt;/code&gt; é um método da Classe &lt;code&gt;TForm1&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;No &lt;em&gt;design&lt;/em&gt; do Formulário (arquivo *.dfm ou *.lfm) haverá um código como abaixo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;object Button1: TButton
-  Left = 102
-  Height = 25
-  Top = 72
-  Width = 75
-  Caption = &#39;Button1&#39;
-  OnClick = Button1Click
-  TabOrder = 0
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Em &lt;em&gt;runtime&lt;/em&gt; o compilador irá configurar o evento &lt;code&gt;OnClick&lt;/code&gt; — uma propriedade do tipo &lt;code&gt;TNotifyEvent&lt;/code&gt; — da instância &lt;code&gt;Button1&lt;/code&gt; para utilizar a “função” &lt;code&gt;Button1Click&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa é a “maneira clássica” de utilizarmos Eventos.&lt;/p&gt;
-
-&lt;p&gt;É uma maneira &lt;em&gt;simples&lt;/em&gt; e &lt;em&gt;eficaz&lt;/em&gt;, porém primitiva — mas eu não estou dizendo isso de maneira perjorativa.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Primitivo: que é o primeiro a existir; que coincide com a origem de algo; inicial, primevo, original.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Vamos ver outra maneira de utilizarmos Eventos, apenas com Classes sem a necessidade de propriedades com &lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;&lt;em&gt;Getters/Setters&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Vou utilizar esse exemplo de Classe Log &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo&quot;&gt;aqui&lt;/a&gt; como base:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/c5da3c1d04894b7ee949aa1f7735aade.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;As mensagens desse programa serão:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;“log start”&lt;/li&gt;
-  &lt;li&gt;“log finish”&lt;/li&gt;
-  &lt;li&gt;“clicked”&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Temos algumas diferenças entre o primeiro exemplo (Button1) e este último (Log).&lt;/p&gt;
-
-&lt;p&gt;Ao invés da Classe &lt;code&gt;TLogInMemory&lt;/code&gt; possuir 2 propriedades do tipo &lt;code&gt;TLogNotifyEvent&lt;/code&gt; para implementar os eventos, ela recebe os “ponteiros” no construtor e isso simplifica muita coisa.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Primeiro&lt;/em&gt;, não precisamos definir as propriedades na Interface &lt;code&gt;ILog&lt;/code&gt;, mantendo-a limpa. Caso essas propriedades fossem definidas na Interface, obrigatoriamente teríamos que definir 3 linhas para cada propriedade:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;property OnStart: TLogNotifyEvent 
-             read GetOnStart 
-            write SetOnStart;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;A propriedade em si&lt;/li&gt;
-  &lt;li&gt;O método GetOnStart&lt;/li&gt;
-  &lt;li&gt;O método SetOnStart&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Como Interfaces não possuem atributos, os Métodos de leitura e escrita teríam que ser definidos na Interface e implementados em todas as Classes.&lt;/p&gt;
-
-&lt;p&gt;Bem &lt;em&gt;verboso&lt;/em&gt;, não?&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Segundo&lt;/em&gt;, não precisamos definir nenhuma propridade em &lt;code&gt;TLogInMemory&lt;/code&gt; mesmo que não houvessem os &lt;em&gt;Getters/Setters&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Terceiro&lt;/em&gt;, uma vez definido os eventos, não podemos modificá-los deixando a Classe &lt;a href=&quot;/posts/objetos-imutaveis/&quot;&gt;imutável&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Simples e elegante.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Os Eventos fazem parte de qualquer sistema. Podemos tirar proveito dessa técnica primária para deixar nossos Objetos com comportamento mais dinâmico.&lt;/p&gt;
-
-&lt;p&gt;O acoplamento entre os Objetos é reduzido. O transmissor do Evento não sabe quem irá recebê-los, o que é ótimo.&lt;/p&gt;
-
-&lt;p&gt;Essa é a forma mais básica e limpa para utilizarmos Eventos no &lt;em&gt;Object Pascal&lt;/em&gt;, mas não é a única.&lt;/p&gt;
-
-&lt;p&gt;E se quisermos que mais de um Objeto seja notificado?&lt;/p&gt;
-
-&lt;p&gt;Não seria melhor utilizarmos Objetos ao invés de simples ponteiros para função?&lt;/p&gt;
-
-&lt;p&gt;Bem, essas são perguntas que poderão ser respondidas em outro artigo.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 08 May 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/eventos-e-objetos</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/eventos-e-objetos</guid>
       </item>
     
   </channel>

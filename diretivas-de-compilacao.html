@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Interfaces em Todo Lugar &#8211; Object Pascal Programming</title>
+    <title>Diretivas de Compilação &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="OO">
-    <meta name="keywords" content="oop, object pascal, orientação a objetos, object-oriented">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object-pascal, object-oriented, oop, mdbs99, diretiva, diretiva de compilação, compiler directive">
+    <link rel="canonical" href="http://objectpascalprogramming.com/diretivas-de-compilacao">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Interfaces em Todo Lugar">
-    <meta property="og:description" content="Todas as variáveis devem ser do tipo Interface">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/">
+    <meta property="og:title" content="Diretivas de Compilação">
+    <meta property="og:description" content="Diretivas de Compilação podem lhe ajudar a tornar seu código multi-plataform ou até mesmo cross-compiled.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/diretivas-de-compilacao">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1452776145041-517a74be1f14.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-mathyas-kurmann-102977.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Interfaces em Todo Lugar" />
-    <meta name="twitter:description" content="Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/" />
+    <meta name="twitter:title" content="Diretivas de Compilação" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/diretivas-de-compilacao" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,94 +191,127 @@
 
 
 <div class="post-header mb2">
-  <h1>Interfaces em Todo Lugar</h1>
-  <span class="post-meta">Jan 18, 2016</span><br>
+  <h1>Diretivas de Compilação</h1>
+  <span class="post-meta">Jul 24, 2017</span><br>
   
   <span class="post-meta small">
   
-    3 minute read
+    4 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Variáveis não devem ser do tipo Classe.</p>
-
-<p>Utilize Interfaces para definir o tipo de todas as Variáveis, Atributos e Argumentos de Métodos.</p>
-
-<p>Por que?</p>
+  <p>Diretivas de Compilação podem lhe ajudar a tornar seu código <em>multi-plataform</em> ou até mesmo <em>cross-compiled</em>.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1452776145041-517a74be1f14.jpg" alt="Pensando" /></p>
+<p><img src="/images/2017/photo-mathyas-kurmann-102977.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Mathyas Kurmann on Unsplash</span></p>
 
-<h2 id="interfaces-sao-contratos">Interfaces são Contratos</h2>
+<h2 id="introducao">Introdução</h2>
 
-<p>Vou contar uma história.</p>
+<p><a href="https://www.freepascal.org/docs-html/prog/progch1.html">Diretivas de Compilação</a> são comandos poderosos que o desenvolvedor pode utilizar para customizar a compilação.</p>
 
-<p>Carlos é um empreendedor. Ele tem um Café chamado “Instância do Café” :)</p>
+<p>Essas Diretivas passam parâmetros para o compilador, informando os <em>argumentos</em> da compilação, <em>como</em> deve ser compilado e <em>o que</em> deve ser compilado.</p>
 
-<p>Seus negócios estão indo muito bem mas seus clientes estão ficando cada vez mais exigentes… ele
-precisa contratar um barista mais experiente.</p>
+<p>Existem basicamente <a href="http://docwiki.embarcadero.com/RADStudio/Tokyo/en/Delphi_compiler_directives">3 tipos</a> de Diretivas de Compilação:</p>
 
-<p>Ele paga por um anúncio para achar o melhor barista que ele puder pagar. Ele não sabe quem será o novo
-contratado, ele só espera que o pretendente tenha as qualificações necessárias para fazer o trabalho que
-lhe for designado.</p>
+<ul>
+  <li><em>Switch directive</em></li>
+  <li><em>Parameter directive</em></li>
+  <li><em>Conditional compilation directive</em></li>
+</ul>
 
-<p>Carlos não está procurando especificamente um João, Amanda ou um Xavier… suas exigências são apenas
-sobre as qualificações de barista. Ele não quer saber se o novo pretendente será homem ou mulher. Não importa
-a cor do cabelo e muito menos sobre seu gosto musical. Ele precisa de um profissional, e só.</p>
+<p>Os dois primeiros tipos alteram os parâmetros de compilação, enquanto o último altera o que o compilador irá executar.</p>
 
-<p>O pretendente com as melhores qualificações terá um <strong>contrato</strong> com Carlos, seja ele/ela quem for.</p>
+<p>Nesse artigo iremos tratar do último tipo: <em>Condicionais</em>.</p>
 
-<p>Na Orientação a Objetos, a <strong>Interface</strong> é o contrato firmado entre dois ou mais Objetos.</p>
+<h2 id="condicionais">Condicionais</h2>
 
-<h2 id="interfaces-definem-o-trabalho-no-as-implementaes">Interfaces definem o trabalho, não as Implementações</h2>
+<p>Apesar de serem comandos poderosos, <em>não</em> devem ser utilizados levianamente.</p>
 
-<p>Assim como Carlos, você não deve ser “preconceituoso” ao definir trabalho para Classes específicas.</p>
+<p>Com apenas alguns comandos condicionais, seu código <a href="https://freepascal.org/">Free Pascal</a> ou <a href="https://www.embarcadero.com/products/delphi">Delphi</a> pode ser compilável em várias plataformas.</p>
 
-<p>Defina o contrato do trabalho ou função utilizando Interfaces.</p>
+<p>Entretanto, a medida que vamos adicionando mais e mais diretivas, o código irá ficar mais complexo.</p>
 
-<p>Toda classe que implementar esse contrato será uma pretendente em potencial.</p>
+<p>Vejamos o exemplo abaixo:
+<script src="https://gist.github.com/mdbs99/dffca8326e924f4e036485a5674ea147.js"></script></p>
 
-<p>Por isso que toda Variável deve ser do tipo Interface — essa é a resposta ao “Porque” no início do post.</p>
+<p>No código acima apenas a 1º e 3º chamada da função <em>Writeln</em> serão executadas.</p>
 
-<p>Se você utilizar tipos de Classes em vez de tipos de Interfaces,
-você estará restringindo quem fará o trabalho. Isso é preconceito. Seu sistema ficará dependende dessas Classes e 
-não poderá deixá-las nunca mais. Não faça isso!</p>
+<p>Todas as diretivas e também a 2º chamada de <em>Writeln</em> não irão fazer parte do executável final.</p>
 
-<p>Exemplo. Eu utilizo <a href="http://synapse.ararat.cz/doku.php/download">Synapse</a> para protocolos de rede como <code>HTTP</code>, <code>FTP</code>, etc. 
-Mas meus sistemas não conhecem a implementação do Synapse, com exeção de um único módulo onde as classes específicas de Synapse são instânciadas.
-Todos os outros módulos/classes só conhecem os contratos, ou seja, as Interfaces para os protocolos de rede, 
-mas não se importam em saber quem irá executar o trabalho.
-Isso é Polimorfismo. Se eu quiser mudar de Synapse para <a href="https://lnet.wordpress.com/">lNet</a> ou <a href="http://www.indyproject.org/index.en.aspx">Indy</a>, 
-poderia fazê-lo em apenas um lugar e tudo continuaria funcionando perfeitamente.</p>
+<p>Bem legal.</p>
 
-<p>Eu tenho um projeto OpenSource codificado em FreePascal chamado <a href="https://github.com/mdbs99/AWS">AWS Lib</a>.
-Ele é um <em>client</em> para o  serviço <a href="http://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html">Amazon S3</a> que também utiliza Synapse
-para as chamadas <code>HTTP</code>.
-Este projeto mostra de forma bem simples o que eu quero dizer. Sugiro “passear” pelos fontes e descobrir você mesmo
-onde é instanciado o(s) Objeto(s) do Synapse.</p>
+<p>Entretanto, veja que o código ficou bem “poluído” e também temos um <a href="/posts/objetos-imutaveis/#acoplamento-temporal">acoplamento temporal</a>, pois as  constantes precisam ser definidas numa ordem específica.</p>
 
-<p>A <a href="https://github.com/mdbs99/AWS">AWS Lib</a> também mostra conceitos sobre <strong>imutabilidade</strong> que irei
-explicar em futuros posts.</p>
+<p>Diretivas e Definições de constantes que serão utilizadas em apenas numa única <a href="/declarando-unidades">Unidade</a> pode até ser gerenciável, mas e se tivermos trabalhando com dezenas ou até centenas de Unidades que irão utilizar as mesmas diretivas e definições, ainda acha que essa abordagem é a melhor escolha para a arquitetura do seu projeto com a finalidade de construí-lo como <em>multi-plataform</em> ou <em>cross-compiled</em>?</p>
 
-<p>Argumentos e atributos também são variáveis. Então vamos nos referir aos três apenas como <strong>instância</strong> de agora em diante,
-utilizando a nomenclatura correta para o paradigma Orientado a Objetos.</p>
+<p>Eu acho que <em>não</em> e é por isso que no <a href="https://github.com/mdbs99/james">Projeto James</a> estamos utilizando uma abordagem diferente.</p>
 
-<p>Utilizando Interfaces em todas as suas instâncias você ganha o benefício do <strong>Polimorfismo</strong> pois qualquer classe — mesmo
-aquelas fora do seu sistema — poderão executar o trabalho de acordo com o contrato. Favorece baixo acoplamento
-porque as classes não estarão conectadas entre si, mas sim por Interfaces. Outra vantagem é facilitar a codificação de testes
-automatizados, pois podemos criar implementações <em>fake</em> para qualquer Interface… assunto para outro post.</p>
+<h2 id="encapsulando">Encapsulando Diretivas</h2>
 
-<hr />
-<p><strong>Dica:</strong> A utilização de tipos primitivos como Integer, TDateTime ou <code>string</code> em variáveis sempre será em
-função da performance em detrimento ao melhor design. Priorize as Interfaces. Só utilize tipos 
-primitivos em métodos locais — você poderá alterar quando quiser sem complicações — ou em casos bem específicos onde o 
-ganho de performance é muito maior do que o benefício do Polimorfismo ao utilizar Interfaces.</p>
+<p>No James estamos codificando num estilo que chamo de <em>Encapsulamento de Diretivas</em>.</p>
 
-<hr />
+<p>Um dos objetivos desse projeto é ser <em>cross-compiled</em>, ou seja, ele irá compilar em Free Pascal e Delphi. No entanto não queremos que nem os usuários (desenvolvedores) ou os autores desse projeto se preocupem com diretivas de compilação.</p>
 
+<p>Atualmente não há diretivas condicionais no código de implementação dos métodos — com exceção da classe <code>TXMLComponent</code> que deverá ser <a href="https://github.com/mdbs99/james/issues/65">refatorada</a> em breve.</p>
+
+<p>O motivo dessa abordagem é que não queremos nos preocupar em  quebrar um código que é utilizado por 2 compiladores diferentes.</p>
+
+<p>Não utilizamos arquivos <em>“include”</em> com pedaços de código.</p>
+
+<p>Não utilizamos definições globais de condicionais.</p>
+
+<p>Diretiva condicional é uma técnica <em>procedural</em>. Não gostamos.</p>
+
+<p>Ao invés disso, utilizamos apenas <a href="/posts/objetos-pensam-e-tomam-decisoes/">Objetos</a>.</p>
+
+<h2 id="implementacao">Implementação</h2>
+
+<p>Imagine uma Unidade que contenha classes para <a href="/posts/objetos-representam-entidades/">representar</a> a criptografia <a href="https://en.wikipedia.org/wiki/MD5">MD5</a>.</p>
+
+<p>No Free Pascal já temos uma Unidade <code>md5</code> que tem funções que fazem esse trabalho — e é claro que temos que fazer Objetos para encapsular essas funções.</p>
+
+<p>No Delphi a Unidade que faz o mesmo trabalho é denominada <code>hash</code>.</p>
+
+<p>Não queremos “reinventar a roda”. Queremos utilizar o que já está pronto em ambas as plataformas.</p>
+
+<p>Então, como fazer essa implementação sem utilizar diretivas condicionais no código de implementação ou arquivos de inclusão?</p>
+
+<p>Bem, no James temos a Unidade <a href="https://github.com/mdbs99/james/blob/master/src/james.crypto.md5.clss.pas">James.Crypto.MD5.Clss</a> com algumas classes que representam MD5.</p>
+
+<p>Essa é a única Unidade (até a data desse artigo) que os usuários devem utilizar para trabalhar com MD5.</p>
+
+<p>Nós, autores do projeto, poderíamos separar alguns desenvolvedores para trabalhar na implementação Free Pascal e outros para trabalhar na implementação Delphi, se assim o desejarmos, pois as implementações estão separadas em Unidades distintas.</p>
+
+<p>Primeiro criamos mais duas Unidades que serão utilizadas pela <code>James.Crypto.MD5.Clss</code>:
+Uma para Free Pascal e outra para o Delphi.</p>
+
+<p>São elas <a href="https://github.com/mdbs99/james/blob/master/src/james.crypto.md5.fpc.pas">James.Crypto.MD5.FPC</a> e <a href="https://github.com/mdbs99/james/blob/master/src/james.crypto.md5.delphi.pas">James.Crypto.MD5.Delphi</a>, respectivamente.</p>
+
+<p>Veja abaixo como implementamos isso:</p>
+
+<script src="https://gist.github.com/mdbs99/1bc867bb6303223496c44d221eae9044.js"></script>
+
+<p>Ambas as Unidades possuem a definição da Classe <code>TMD5Hash</code> (sim, mesmo nome em ambas). Então bastou criar um <em>alias</em> (novamente, com o mesmo nome) direcionando <code>TMD5Hash</code> para a classe correta (dependente da plataforma) e, <em>voilá!</em>, temos uma Unidade “limpa” e sem condicionais na implementação dos métodos.</p>
+
+<p>Agora temos duas Classes distintas, em Unidades diferentes, que podem evoluir independentemente sem receio de quebrar o código entre plataformas.</p>
+
+<p>A clase <code>TMD5Stream</code> não tem nenhuma diferença entre os compiladores, então é implementada diretamente na Unidade <code>James.Crypto.MD5.Clss</code>.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Diretiva de Compilação é uma boa ferramenta para customização do código, porém deve ser utilizada com parcimônia.</p>
+
+<p>No código <a href="/posts/objetos-pensam-e-tomam-decisoes/">Orientado a Objetos</a>, dê preferência aos Objetos para resolver seus problemas.</p>
+
+<p>Para cada diretiva condicional que você queira adicionar no código de implementação, sugiro implementar um novo Objeto que encapsule a diretiva.</p>
+
+<p>Seu código ficará mais limpo e sustentável.</p>
+
+<p>Até logo.</p>
 
 </article>
 
@@ -286,33 +321,33 @@ ganho de performance é muito maior do que o benefício do Polimorfismo ao utili
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/diretivas-de-compilacao" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Interfaces em Todo Lugar&via=mdbs99;url=http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Diretivas de Compilação&via=mdbs99;url=http://objectpascalprogramming.com/diretivas-de-compilacao" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/diretivas-de-compilacao" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/&title=Interfaces em Todo Lugar" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/&title=Interfaces em Todo Lugar" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/diretivas-de-compilacao&title=Diretivas de Compilação" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/&t=Interfaces em Todo Lugar" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/diretivas-de-compilacao&title=Diretivas de Compilação" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/diretivas-de-compilacao&t=Diretivas de Compilação" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -350,15 +385,6 @@ ganho de performance é muito maior do que o benefício do Polimorfismo ao utili
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/diretivas-de-compilacao" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Diretivas de Compilação</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/declarando-unidades" class="post-link">
@@ -441,6 +467,15 @@ ganho de performance é muito maior do que o benefício do Polimorfismo ao utili
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/eventos-e-objetos" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Eventos e Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -448,8 +483,8 @@ ganho de performance é muito maior do que o benefício do Polimorfismo ao utili
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/interfaces-em-todo-lugar';
-      var disqus_title      = 'Interfaces em Todo Lugar';
+      var disqus_identifier = '/diretivas-de-compilacao';
+      var disqus_title      = 'Diretivas de Compilação';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
