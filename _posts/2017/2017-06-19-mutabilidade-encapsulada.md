@@ -80,10 +80,7 @@ Para o Objeto exercer seu [contrato]({% post_url 2016-01-18-interfaces-em-todo-l
 
 A implementação do Método poderia ser apenas isso:
 
-    function TFile.Stream: IDataStream;
-    begin
-      Result := TDataStream.New(FFileName);
-    end;
+<script src="https://gist.github.com/mdbs99/0aea75fefaf8612d0bc84d5fc9ce85a0.js"></script>
     
 O Objeto continuaria funcionando, no entanto teríamos o "problema" da performance.
 
