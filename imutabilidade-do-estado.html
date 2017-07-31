@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tipos Primitivos nos Argumentos &#8211; Object Pascal Programming</title>
+    <title>Imutabilidade do Estado &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Code">
-    <meta name="keywords" content="argumentos, arguments, tipos primitivos, primitive obsession">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object-pascal, object-oriented, oop, mdbs99, imutabilidade, immutability, imutable">
+    <link rel="canonical" href="http://objectpascalprogramming.com/imutabilidade-do-estado">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Tipos Primitivos nos Argumentos">
-    <meta property="og:description" content="Utilizar tipos primitivos em argumentos de Métodos é uma prática que deve ser evitada quando programamos Orientado a Objetos.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/">
+    <meta property="og:title" content="Imutabilidade do Estado">
+    <meta property="og:description" content="Na Orientação a Objetos, um Objeto pode ser considerável Imutável mesmo que ele... mude.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/imutabilidade-do-estado">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-3_i4nvi9d1k-randall-bruder.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-morgan-harper-nichols-157838.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Tipos Primitivos nos Argumentos" />
+    <meta name="twitter:title" content="Imutabilidade do Estado" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/imutabilidade-do-estado" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,8 +191,8 @@
 
 
 <div class="post-header mb2">
-  <h1>Tipos Primitivos nos Argumentos</h1>
-  <span class="post-meta">Jan 16, 2017</span><br>
+  <h1>Imutabilidade do Estado</h1>
+  <span class="post-meta">Jul 31, 2017</span><br>
   
   <span class="post-meta small">
   
@@ -202,156 +202,110 @@
 </div>
 
 <article class="post-content">
-  <p>Se os Objetos conversam entre si utilizando mensagens, 
-ou seja, através dos seus Métodos, por que utilizaríamos
-Tipos Primitivos nos argumentos desses Métodos ao invés
-de utilizarmos Objetos?</p>
+  <p>Na Orientação a Objetos, um Objeto pode ser considerável Imutável mesmo que ele… mude.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-3_i4nvi9d1k-randall-bruder.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2017/photo-morgan-harper-nichols-157838.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Morgan Harper Nichols on Unsplash</span></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>Os Objetos conectam-se uns aos outros através de seus 
-<a href="/posts/construtores-da-classe-primario-secundarios/">construtores</a>
-e Métodos, enviando argumentos uns aos outros.</p>
+<p>O aprendizado de um conceito complexo, tende a ser melhor absorvido se dividirmos o conceito em pequenas partes.</p>
 
-<p>No paradigma da Orientação a Objetos, tudo são Objetos.
-Inclusive os argumentos.
-Bem, deveriam ser, pelo menos na maioria dos casos.</p>
+<p>Por exemplo, quando começamos a aprender Inglês, nos é ensinado que, para nos referirmos a algo que ocorreu no passado, devemos utilizar os verbos no passado para fazer afirmações ou utilizamos o verbo modal <em>did</em> ou <em>did not</em> para fazermos perguntas ou negações. Esse é o tempo verbal <em>Simple Past</em>.</p>
 
-<p>Imagine um um formulário onde o usuário precisa digitar
-seu <em>login</em>. Esse formulário, que contém Objetos visuais
-para capturar a digitação, irá enviar o <em>login</em> digitado
-à outro Objeto para validar a identificação.</p>
+<p>Exemplo: <em>I saw this movie</em> (tradução: eu vi esse filme).</p>
 
-<p>Seria o <em>login</em> um Objeto ou apenas texto?</p>
+<p>Então, quando você começa a estudar mais a língua, descobre que existe muitas outras maneiras de expressar algo que ocorreu no passado. Por exemplo, o uso do tempo verbal <em>Present Perfect</em>.</p>
 
-<p>Você pode pensar que o <em>login</em> é apenas uma informação
-simples, um tipo <em>string</em>, apenas texto puro, não havendo
-necessidade de um Objeto.</p>
+<p>Exemplo: <em>I have seen this movie</em> (tradução: eu vi esse filme).</p>
 
-<p>Mas, não seria esse <em>“texto puro”</em> também um Objeto?</p>
+<p>Aqui vemos o uso do verbo modal <em>have</em> e o uso do <em>Past Participle</em> do verbo <em>to see</em>.</p>
 
-<p>Tudo são Objetos na Orientação a Objetos.</p>
+<p>Ambas as frases dizem o mesmo quando traduzimos para o Português, porém a segunda frase pode ser considerada mais <em>correta</em> do que a primeira — você só descobre isso depois que aprende o <em>Present Perfect</em>.
+Mas isso não é um blog de Inglês, vamos voltar para a Orientação a Objetos.</p>
 
-<p>Confuso?</p>
+<p>Essa introdução é para lhe mostrar que primeiro devemos aprender um conceito na sua forma mais simples; depois aprimoramos.</p>
 
-<h2 id="argumentos">Argumentos</h2>
+<h2 id="conceitos">Conceitos da Imutabilidade</h2>
 
-<p>Tudo são Objetos, mas nem sempre os requisitos são
-implementados como tal.
-Os motivos são diversos, mas <em>simplicidade</em> e <em>performance</em>
-sempre são citados como motivos plausíveis para o uso
-de tipos primitivos nos argumentos.</p>
+<p>Quando você aprendeu sobre <a href="/posts/objetos-imutaveis/">Imutabilidade</a> pode ter pensado que um Objeto é imutável se, depois de criado, nada é alterado dentro dele ou que o Objeto retorna sempre a mesma informação quando um método é chamado.</p>
 
-<p>Utilizar tipos primitivos nos argumentos é um anti-padrão chamado
-<a href="http://enterprisecraftsmanship.com/2015/03/07/functional-c-primitive-obsession/"><em>“Primitive Obsession”</em></a>.</p>
+<p>Bem, não é tão simples assim.</p>
 
-<p>Então vamos ver esses motivos e tentar dismitificá-los.</p>
+<p>Diferentemente das linguagens funcionais, onde tudo é imutável por padrão, na Orientação a Objetos esse conceito pode ser mais amplo.</p>
 
-<h3 id="performance">Performance</h3>
+<p>Vamos ver alguns conceitos.</p>
 
-<p>É claro que Objetos são “mais lentos” para trabalhar e
-consomem “mais recursos” que os tipos primitivos.
-No entanto a Orientação a Objetos é sobre a arquitetura
-do sistema, deixando a performance por conta do compilador
-e código de máquina gerado.</p>
+<h3 id="ex1">Conteúdo Externo</h3>
 
-<p>A diminuição da performance — mesmo que mínima —
-em sistemas Orientado a Objetos é um preço justo a se 
-pagar devido a melhoria na arquitetura que o paradigma
-da Orientação a Objetos nos traz.</p>
+<p>Uma classe que representa um arquivo pode ser imútável de duas maneiras:</p>
 
-<p>Na minha experiência, utilizando Objetos pequenos e simples,
-que implementam apenas
-<a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">uma única responsabilidade</a>,
-não há perda de performance significativa.</p>
+<script src="https://gist.github.com/mdbs99/48237c902271b6f2c3a314d3b6f5b8c0.js"></script>
 
-<p>Mas, ainda assim, se seu maior requisito for performance,
-talvez a Orientação a Objetos não sirva para seu projeto…
-talvez.</p>
+<p>No código acima, o método <code>TFile.Stream: IDataStream</code> sempre irá retornar o mesmo valor lido na primeira execução.</p>
 
-<h3 id="simplicidade">Simplicidade</h3>
+<p>O Objeto é imutável e <em>constante</em>.</p>
 
-<p>Seriam os tipos primitivos mais <a href="/posts/simplicidade/">simples</a>
-de usar do que Objetos?</p>
+<p>Mas, e se alterarmos o método confome abaixo, a classe continuaria sendo imutável?</p>
 
-<p>De acordo com a minha experiência, na maioria das vezes, não.</p>
+<script src="https://gist.github.com/mdbs99/0aea75fefaf8612d0bc84d5fc9ce85a0.js"></script>
 
-<p>Pense bem: Quantas vezes você teve que passar uma <em>“Data de Nascimento”</em>
-como argumento de um Método e lá dentro ter que convertê-la
-em <em>String</em>, por exemplo, para exibir ao usuário?</p>
+<p>Sim, com certeza.</p>
 
-<p>Quantas vezes passou um <em>“Nome Completo”</em> por parâmetro como
-sendo apenas uma <em>String</em> mas depois teve que usar uma função
-<code>Copy</code> porque só queria exibir o <em>“Primeiro Nome”</em> ou a primeira
-parte do nome?</p>
+<p>Apesar do retorno do método poder ser diferente em cada chamada — o conteúdo do arquivo pode ser alterado por outro processo — o Objeto continuaria sendo imutável pois seu <a href="/estado-do-objeto">Estado</a> (<code>FFilePath</code>) não foi alterado.</p>
 
-<p>Sem falar na <a href="/posts/codigo-duplicado-talvez-nao/">repetição de código</a>
-que poderia ocorrer com o uso dessas funções auxiliares em 
-várias partes do código.</p>
+<p>Ele é imutável, porém <em>não</em> é constante.</p>
 
-<p>Com Objetos seria <strong>muito mais simples</strong>.</p>
+<p>O mesmo conceito se aplica para um conteúdo vindo de um Banco de Dados, site na Web, etc.</p>
 
-<p>Veja. Um Objeto <em>“Data de Nascimento”</em> seria responsável por
-algum cálculo de idade, além de retornar a si mesmo no formato
-<em>String</em>.</p>
+<h3 id="ex2">Conteúdo em Memória</h3>
 
-<p>Um Objeto <em>“Nome Completo”</em> seria responsável por retornar
-o primeiro nome e sobrenome; talvez retornar tudo em maiúsculo
-seria outro Método.</p>
+<p>Uma lista de Objetos é considerada mutável se adicionarmos itens após ela ter sido criada?</p>
 
-<p>Quer outro exemplo?</p>
+<p>Vejamos no código:</p>
 
-<p>Trabalho bastante com <em>GUID’s</em>. Elas são utilizadas em meus
-sistemas como chaves-primárias de registros.</p>
+<script src="https://gist.github.com/mdbs99/af8769161d1b111128349b05b74bccb9.js"></script>
 
-<p>Se não me engano, o tipo <code>TGuid</code> no <em>Object Pascal</em> é um <em>record</em>.
-Não lembro, pois eu não o utilizo mais, não diretamente.</p>
+<p><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Copyright (c) <a href="https://github.com/mdbs99/james">James Project</a></span></p>
 
-<p>Eu tenho minha própria Classe <code>TDataGuid</code> que implementa uma
-Interface <code>IDataGuid</code>.</p>
+<p>A Classe <code>TDataParams</code> encapsula uma lista do tipo <code>TInterfaceList</code>.</p>
 
-<p>Essa Classe tem alguns construtores com argumentos diferentes
-para inicializar o <a href="/posts/objetos-sem-estado/">estado</a>
-do Objeto, que internamente é um <code>TGuid</code>.
-Posso receber uma <em>String</em> com ou sem “{…}”, posso receber um <code>TGuid</code>
-ou mesmo não receber nada e inicializar o estado internamente.</p>
+<p>A cada inclusão de um novo item, é delegada à essa lista interna, a persistência em memória dos Objetos.</p>
 
-<p>Por quê um Objeto ao invés de um “simples” <em>record</em>?</p>
+<p>Você acha que, assim, estamos alterando o Estado (<code>FList</code>) do Objeto?</p>
 
-<p>Nos meus sistemas, um <em>GUID</em> tem <a href="/posts/objetos-pensam-e-tomam-decisoes/">comportamento</a>.
-Ele não é apenas um <a href="/posts/pensando-em-dados/">dado</a>.</p>
+<p>Não estamos.</p>
 
-<p>Por exemplo. Para exibição de um <em>GUID</em> para o usuário basta
-utilizar o Método <code>AsString</code>.
-Se eu quiser exibir apenas o “formato de digitação” — os 8
-primeiros caracteres — basta utilizar o Método <code>AsShortString</code>.
-Se eu quiser o próprio <code>TGuid</code> basta chamar <code>Value</code>.</p>
+<p>O motivo é que não estamos redefinindo <code>FList</code>. Não estamos recriando uma nova lista.</p>
 
-<p>Seria mais simples ficar fazendo conversões por todo o código
-utilizando funções auxiliares ou utilizar um Objeto como esse?</p>
+<p>Uma lista de itens está sendo criada em memória — blocos de memória — mas o endereço inicial de <code>FList</code> continua intacto.</p>
 
-<p>Acho que não há dúvidas aqui.</p>
+<p>Além disso, <code>FList</code> é um <a href="/atributos-primarios-secundarios#secundarios">Atributo Secundário</a>, então nós até poderíamos redefinir esse atributo sem estar em desacordo com o princípio. Mas, se a instância da lista fosse passada no construtor, então não poderíamos redefinir o Objeto, pois esse seria considerado como um <a href="/atributos-primarios-secundarios#primarios">Atributo Primário</a>.</p>
+
+<h2 id="estado">Imutabilidade do Estado</h2>
+
+<p>Se mesmo após algumas mudanças internas ou externas ao Objeto, ele continua sendo considerado imutável, como saber se não estamos violando o princípio da Imutabilidade?</p>
+
+<p><strong>Simples</strong>: Se o <a href="/estado-do-objeto">Estado do Objeto</a>, ou seja, seus <a href="/atributos-primarios-secundarios#primarios">Atributos Primários</a>, não for alterado/redefinindo, então ele é imutável.</p>
+
+<p>Uma vez que um atributo é instânciado, ele não poderá ter seu <em>endereço de memória</em> alterado. Esses atributos serão inicializados no <a href="/posts/construtores-da-classe-primario-secundarios/">construtor</a> da classe e jamais poderão ser reinicializados.</p>
+
+<p>Seu Objeto deve ser <em>fiél</em> aos argumentos passados no construtor da Classe, no entanto ele é <em>livre</em> para trabalhar e responder o que quiser em seus métodos.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Quando você implementa Objetos da forma correta, o código
-é <em>simplificado</em>.</p>
+<p>Imutabilidade, na Orientação a Objetos, não é só sobre as não-mudanças internas ou externas ao Objeto, mas sim sobre não alterar o Estado Primário do Objeto.</p>
 
-<p>Essa ideia vai contra o pensamento da maioria dos programadores
-procedurais que acham que utilizando tipos primitivos e funções
-deixaria o código mais simples de entender e alterar.</p>
+<p>Não confunda <a href="/posts/classes-de-dados/">dados</a> com o Estado do Objeto.</p>
 
-<p>Ledo engano.</p>
+<p>Infelizmente nenhum compilador <em>Object Pascal</em> que eu conheça possui uma sintaxe para que essas regras não sejam quebradas. Java, por exemplo, tem atributos <em>final</em> onde, uma vez inicializados, não podem ter seu endereço de memória substituído.</p>
 
-<p>É claro que podemos e devemos utilizar os tipos primitivos, mas
-utilíze-os apenas como argumentos de Métodos privados, 
-variáveis locais ou para Classes de infraestrutura.</p>
+<p>Sven Barth, um integrante do FPC team, <a href="http://lists.freepascal.org/pipermail/fpc-pascal/2017-July/051941.html">me falou</a> sobre um <code>{$modeswitch
+finalfields}</code> que foi implementado para a interoperabilidade do FPC para a JVM plataforma, porém ainda não disponível.</p>
 
-<p>Para a comunicação entre Objetos de Negócio, utilize Objetos.</p>
+<p>Então temos que trabalhar apenas com o conceito ou utilizar ferramentas de verificação de código para que essa regra não seja quebrada.</p>
 
 <p>Até logo.</p>
 
@@ -363,33 +317,33 @@ variáveis locais ou para Classes de infraestrutura.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/imutabilidade-do-estado" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Tipos Primitivos nos Argumentos&via=mdbs99;url=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Imutabilidade do Estado&via=mdbs99;url=http://objectpascalprogramming.com/imutabilidade-do-estado" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/imutabilidade-do-estado" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/&title=Tipos Primitivos nos Argumentos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/&title=Tipos Primitivos nos Argumentos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/imutabilidade-do-estado&title=Imutabilidade do Estado" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/&t=Tipos Primitivos nos Argumentos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/imutabilidade-do-estado&title=Imutabilidade do Estado" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/imutabilidade-do-estado&t=Imutabilidade do Estado" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -427,15 +381,6 @@ variáveis locais ou para Classes de infraestrutura.</p>
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/imutabilidade-do-estado" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Imutabilidade do Estado</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/diretivas-de-compilacao" class="post-link">
@@ -518,6 +463,15 @@ variáveis locais ou para Classes de infraestrutura.</p>
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/observando-objetos" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Observando Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -525,8 +479,8 @@ variáveis locais ou para Classes de infraestrutura.</p>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/tipos-primitivos-nos-argumentos';
-      var disqus_title      = 'Tipos Primitivos nos Argumentos';
+      var disqus_identifier = '/imutabilidade-do-estado';
+      var disqus_title      = 'Imutabilidade do Estado';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

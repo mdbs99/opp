@@ -8,6 +8,120 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Imutabilidade do Estado</title>
+        <description>&lt;p&gt;Na Orientação a Objetos, um Objeto pode ser considerável Imutável mesmo que ele… mude.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-morgan-harper-nichols-157838.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Morgan Harper Nichols on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;O aprendizado de um conceito complexo, tende a ser melhor absorvido se dividirmos o conceito em pequenas partes.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo, quando começamos a aprender Inglês, nos é ensinado que, para nos referirmos a algo que ocorreu no passado, devemos utilizar os verbos no passado para fazer afirmações ou utilizamos o verbo modal &lt;em&gt;did&lt;/em&gt; ou &lt;em&gt;did not&lt;/em&gt; para fazermos perguntas ou negações. Esse é o tempo verbal &lt;em&gt;Simple Past&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Exemplo: &lt;em&gt;I saw this movie&lt;/em&gt; (tradução: eu vi esse filme).&lt;/p&gt;
+
+&lt;p&gt;Então, quando você começa a estudar mais a língua, descobre que existe muitas outras maneiras de expressar algo que ocorreu no passado. Por exemplo, o uso do tempo verbal &lt;em&gt;Present Perfect&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Exemplo: &lt;em&gt;I have seen this movie&lt;/em&gt; (tradução: eu vi esse filme).&lt;/p&gt;
+
+&lt;p&gt;Aqui vemos o uso do verbo modal &lt;em&gt;have&lt;/em&gt; e o uso do &lt;em&gt;Past Participle&lt;/em&gt; do verbo &lt;em&gt;to see&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Ambas as frases dizem o mesmo quando traduzimos para o Português, porém a segunda frase pode ser considerada mais &lt;em&gt;correta&lt;/em&gt; do que a primeira — você só descobre isso depois que aprende o &lt;em&gt;Present Perfect&lt;/em&gt;.
+Mas isso não é um blog de Inglês, vamos voltar para a Orientação a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Essa introdução é para lhe mostrar que primeiro devemos aprender um conceito na sua forma mais simples; depois aprimoramos.&lt;/p&gt;
+
+&lt;h2 id=&quot;conceitos&quot;&gt;Conceitos da Imutabilidade&lt;/h2&gt;
+
+&lt;p&gt;Quando você aprendeu sobre &lt;a href=&quot;/posts/objetos-imutaveis/&quot;&gt;Imutabilidade&lt;/a&gt; pode ter pensado que um Objeto é imutável se, depois de criado, nada é alterado dentro dele ou que o Objeto retorna sempre a mesma informação quando um método é chamado.&lt;/p&gt;
+
+&lt;p&gt;Bem, não é tão simples assim.&lt;/p&gt;
+
+&lt;p&gt;Diferentemente das linguagens funcionais, onde tudo é imutável por padrão, na Orientação a Objetos esse conceito pode ser mais amplo.&lt;/p&gt;
+
+&lt;p&gt;Vamos ver alguns conceitos.&lt;/p&gt;
+
+&lt;h3 id=&quot;ex1&quot;&gt;Conteúdo Externo&lt;/h3&gt;
+
+&lt;p&gt;Uma classe que representa um arquivo pode ser imútável de duas maneiras:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/48237c902271b6f2c3a314d3b6f5b8c0.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;No código acima, o método &lt;code&gt;TFile.Stream: IDataStream&lt;/code&gt; sempre irá retornar o mesmo valor lido na primeira execução.&lt;/p&gt;
+
+&lt;p&gt;O Objeto é imutável e &lt;em&gt;constante&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas, e se alterarmos o método confome abaixo, a classe continuaria sendo imutável?&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/0aea75fefaf8612d0bc84d5fc9ce85a0.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Sim, com certeza.&lt;/p&gt;
+
+&lt;p&gt;Apesar do retorno do método poder ser diferente em cada chamada — o conteúdo do arquivo pode ser alterado por outro processo — o Objeto continuaria sendo imutável pois seu &lt;a href=&quot;/estado-do-objeto&quot;&gt;Estado&lt;/a&gt; (&lt;code&gt;FFilePath&lt;/code&gt;) não foi alterado.&lt;/p&gt;
+
+&lt;p&gt;Ele é imutável, porém &lt;em&gt;não&lt;/em&gt; é constante.&lt;/p&gt;
+
+&lt;p&gt;O mesmo conceito se aplica para um conteúdo vindo de um Banco de Dados, site na Web, etc.&lt;/p&gt;
+
+&lt;h3 id=&quot;ex2&quot;&gt;Conteúdo em Memória&lt;/h3&gt;
+
+&lt;p&gt;Uma lista de Objetos é considerada mutável se adicionarmos itens após ela ter sido criada?&lt;/p&gt;
+
+&lt;p&gt;Vejamos no código:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/af8769161d1b111128349b05b74bccb9.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Copyright (c) &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;James Project&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;A Classe &lt;code&gt;TDataParams&lt;/code&gt; encapsula uma lista do tipo &lt;code&gt;TInterfaceList&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;A cada inclusão de um novo item, é delegada à essa lista interna, a persistência em memória dos Objetos.&lt;/p&gt;
+
+&lt;p&gt;Você acha que, assim, estamos alterando o Estado (&lt;code&gt;FList&lt;/code&gt;) do Objeto?&lt;/p&gt;
+
+&lt;p&gt;Não estamos.&lt;/p&gt;
+
+&lt;p&gt;O motivo é que não estamos redefinindo &lt;code&gt;FList&lt;/code&gt;. Não estamos recriando uma nova lista.&lt;/p&gt;
+
+&lt;p&gt;Uma lista de itens está sendo criada em memória — blocos de memória — mas o endereço inicial de &lt;code&gt;FList&lt;/code&gt; continua intacto.&lt;/p&gt;
+
+&lt;p&gt;Além disso, &lt;code&gt;FList&lt;/code&gt; é um &lt;a href=&quot;/atributos-primarios-secundarios#secundarios&quot;&gt;Atributo Secundário&lt;/a&gt;, então nós até poderíamos redefinir esse atributo sem estar em desacordo com o princípio. Mas, se a instância da lista fosse passada no construtor, então não poderíamos redefinir o Objeto, pois esse seria considerado como um &lt;a href=&quot;/atributos-primarios-secundarios#primarios&quot;&gt;Atributo Primário&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;estado&quot;&gt;Imutabilidade do Estado&lt;/h2&gt;
+
+&lt;p&gt;Se mesmo após algumas mudanças internas ou externas ao Objeto, ele continua sendo considerado imutável, como saber se não estamos violando o princípio da Imutabilidade?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Simples&lt;/strong&gt;: Se o &lt;a href=&quot;/estado-do-objeto&quot;&gt;Estado do Objeto&lt;/a&gt;, ou seja, seus &lt;a href=&quot;/atributos-primarios-secundarios#primarios&quot;&gt;Atributos Primários&lt;/a&gt;, não for alterado/redefinindo, então ele é imutável.&lt;/p&gt;
+
+&lt;p&gt;Uma vez que um atributo é instânciado, ele não poderá ter seu &lt;em&gt;endereço de memória&lt;/em&gt; alterado. Esses atributos serão inicializados no &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt; da classe e jamais poderão ser reinicializados.&lt;/p&gt;
+
+&lt;p&gt;Seu Objeto deve ser &lt;em&gt;fiél&lt;/em&gt; aos argumentos passados no construtor da Classe, no entanto ele é &lt;em&gt;livre&lt;/em&gt; para trabalhar e responder o que quiser em seus métodos.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Imutabilidade, na Orientação a Objetos, não é só sobre as não-mudanças internas ou externas ao Objeto, mas sim sobre não alterar o Estado Primário do Objeto.&lt;/p&gt;
+
+&lt;p&gt;Não confunda &lt;a href=&quot;/posts/classes-de-dados/&quot;&gt;dados&lt;/a&gt; com o Estado do Objeto.&lt;/p&gt;
+
+&lt;p&gt;Infelizmente nenhum compilador &lt;em&gt;Object Pascal&lt;/em&gt; que eu conheça possui uma sintaxe para que essas regras não sejam quebradas. Java, por exemplo, tem atributos &lt;em&gt;final&lt;/em&gt; onde, uma vez inicializados, não podem ter seu endereço de memória substituído.&lt;/p&gt;
+
+&lt;p&gt;Sven Barth, um integrante do FPC team, &lt;a href=&quot;http://lists.freepascal.org/pipermail/fpc-pascal/2017-July/051941.html&quot;&gt;me falou&lt;/a&gt; sobre um &lt;code&gt;{$modeswitch
+finalfields}&lt;/code&gt; que foi implementado para a interoperabilidade do FPC para a JVM plataforma, porém ainda não disponível.&lt;/p&gt;
+
+&lt;p&gt;Então temos que trabalhar apenas com o conceito ou utilizar ferramentas de verificação de código para que essa regra não seja quebrada.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 31 Jul 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/imutabilidade-do-estado</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/imutabilidade-do-estado</guid>
+      </item>
+    
+      <item>
         <title>Diretivas de Compilação</title>
         <description>&lt;p&gt;Diretivas de Compilação podem lhe ajudar a tornar seu código &lt;em&gt;multi-plataform&lt;/em&gt; ou até mesmo &lt;em&gt;cross-compiled&lt;/em&gt;.&lt;/p&gt;
 
@@ -529,11 +643,7 @@ Poderíamos &lt;em&gt;remover&lt;/em&gt; esse atributo.&lt;/p&gt;
 
 &lt;p&gt;A implementação do Método poderia ser apenas isso:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;function TFile.Stream: IDataStream;
-begin
-  Result := TDataStream.New(FFileName);
-end;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;script src=&quot;https://gist.github.com/mdbs99/0aea75fefaf8612d0bc84d5fc9ce85a0.js&quot;&gt;&lt;/script&gt;
 
 &lt;p&gt;O Objeto continuaria funcionando, no entanto teríamos o “problema” da performance.&lt;/p&gt;
 
@@ -810,152 +920,6 @@ end;
         <pubDate>Mon, 29 May 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/herdar-para-rotular</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/herdar-para-rotular</guid>
-      </item>
-    
-      <item>
-        <title>Observando Objetos</title>
-        <description>&lt;p&gt;Um semáforo de trânsito está prestes a mudar de vermelho para verde e vários pedestres estão aguardando para atravessar a rua.&lt;/p&gt;
-
-&lt;p&gt;A mudança de estado do semáforo irá impactar a vida de apenas algumas pessoas, ou seja, só daquelas que estão realmente interessadas, aguardando e observando este Evento que irá ocorrer em breve.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-hermes-rivera-253620.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;No &lt;a href=&quot;/eventos-e-objetos&quot;&gt;artigo anterior&lt;/a&gt; escrevi sobre &lt;a href=&quot;/eventos-e-objetos#eventos&quot;&gt;Eventos&lt;/a&gt; que ocorrem entre dois Objetos e como eles podem ser implementados de forma bem simples.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo iremos implementar Eventos que possam notificar mais de um Objeto de uma só vez.&lt;/p&gt;
-
-&lt;h2 id=&quot;observer-pattern&quot;&gt;Observer Pattern&lt;/h2&gt;
-
-&lt;p&gt;Você pode utilizar um Evento para mostrar um &lt;em&gt;ProgressBar&lt;/em&gt; enquanto um processamento está ocorrendo ou notificar o usuário quando algum outro processo terminar.&lt;/p&gt;
-
-&lt;p&gt;No entanto, em todos esses casos, os Eventos ocorrem entre apenas 2 Objetos: Transmissor e Receptor.&lt;/p&gt;
-
-&lt;p&gt;Há casos, porém, onde o Transmissor deverá notificar mais de um Receptor.&lt;/p&gt;
-
-&lt;p&gt;Há um padrão de implementação conhecido chamdo de &lt;a href=&quot;https://en.wikipedia.org/wiki/Observer_pattern&quot;&gt;&lt;em&gt;Observer Pattern&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Mas ao invés de só implementarmos o &lt;em&gt;Observer Pattern&lt;/em&gt; na sua forma clássica, utilizando seus termos como &lt;em&gt;Subject&lt;/em&gt; e &lt;em&gt;Observers&lt;/em&gt;, vamos entender como esse padrão funciona, utilizando uma abordagem mais direta, simples e &lt;em&gt;“Pascalized”&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;implementacao&quot;&gt;Implementação&lt;/h2&gt;
-
-&lt;p&gt;A maneira mais óbvia — ou talvez a única — para implementar uma notificação que seja propagada não em apenas um ponto do código, mas sim em infinitos pontos ou infinitos Objetos, é utilizando uma simples… &lt;em&gt;lista&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;A pergunta é: Onde estará a instância dessa lista?&lt;/p&gt;
-
-&lt;p&gt;A lista é global? Com certeza não, pois não trabalhamos com variáveis globais.&lt;/p&gt;
-
-&lt;p&gt;A lista é implementada no Objeto transmissor? Também não, pois o transmissor — no exemplo é um semáforo — não dá a mínima para quem o está observando. O transmissor apenas dá a &lt;em&gt;possíbilidade&lt;/em&gt; de observação do evento, aceitando um ponteiro para o evento no &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt;, primário ou secundário.&lt;/p&gt;
-
-&lt;p&gt;Se não houvesse ninguém para observar o semáforo, ele iria parar de funcionar? Não! Portanto a &lt;em&gt;responsabilidade&lt;/em&gt; de notificação a vários Objetos não é do transmissor original.&lt;/p&gt;
-
-&lt;p&gt;Então a lista é implementada em algum outro Objeto? Com certeza!&lt;/p&gt;
-
-&lt;h3 id=&quot;exemplo-1&quot;&gt;1-Notificando um Objeto&lt;/h3&gt;
-
-&lt;p&gt;Primeiramente vamos implementar um Evento simples, como no último artigo.&lt;/p&gt;
-
-&lt;p&gt;Teremos um Objeto &lt;code&gt;Semaphore&lt;/code&gt;, que será o objeto transmissor de um Evento: Sempre que haver mudança de cor, o evento será disparado.&lt;/p&gt;
-
-&lt;p&gt;Como estamos trabalhando com Orientação a Objetos, antes precisamos definir o &lt;a href=&quot;/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos&quot;&gt;contrato&lt;/a&gt;, ou seja, a Interface que representa a entidade Semáforo.&lt;/p&gt;
-
-&lt;p&gt;Veja o código baixo.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/acfb7acf71670182b6cf509c51540949.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Vamos entender o código acima:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Há uma Interface &lt;code&gt;ISemaphore&lt;/code&gt; com apenas um Método &lt;code&gt;Color&lt;/code&gt;. Não há Eventos na Interface.&lt;/li&gt;
-  &lt;li&gt;O tipo &lt;code&gt;TChangeEvent&lt;/code&gt; é a assinatura do Evento.&lt;/li&gt;
-  &lt;li&gt;A classe &lt;code&gt;TSemaphore&lt;/code&gt; implementa a Interface &lt;code&gt;ISemaphore&lt;/code&gt;. Novamente, também não há Eventos na definição da Classe, apenas no construtor. O ato de notificação através de Eventos é um &lt;strong&gt;detalhe de implementação&lt;/strong&gt; e não faz parte da entidade na qual a Interface e a Classe &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;representam&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;A Classe &lt;code&gt;TSemaphore&lt;/code&gt; instância um &lt;code&gt;TTimer&lt;/code&gt;. É através desse &lt;em&gt;timer&lt;/em&gt; que a mudança de cores irá ocorrer (a cada 2 segundos).&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Agora, num novo projeto, adicionem um &lt;code&gt;TShape&lt;/code&gt; num &lt;code&gt;TForm&lt;/code&gt;, alterem a &lt;code&gt;property Shape&lt;/code&gt; para &lt;code&gt;stCircle&lt;/code&gt; e utilize o código abaixo:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/f4221d8c6be58201bbb5a82da26fe1a3.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;O código acima é &lt;em&gt;simples&lt;/em&gt;, &lt;em&gt;elegante&lt;/em&gt;, &lt;em&gt;Orientado a Objetos&lt;/em&gt; e não possui &lt;em&gt;Setters&lt;/em&gt;, nem mesmo para o Evento.&lt;/p&gt;
-
-&lt;p&gt;Se você fez tudo certo, verá algo parecido com a imagem abaixo — e a cada 2 segundos a cor é alterada.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/screenshot-semaphore-1.jpg&quot; alt=&quot;semaphore&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Mas, mesmo que tudo esteja funcionando, temos apenas 1 Objeto (o &lt;em&gt;Form&lt;/em&gt;) que está “observando” o Evento de mudança de cor do semáforo.&lt;/p&gt;
-
-&lt;p&gt;O que queremos é poder notificar “N” Objetos de uma só vez.&lt;/p&gt;
-
-&lt;h3 id=&quot;exemplo-2&quot;&gt;2-Notificando muitos Objetos&lt;/h3&gt;
-
-&lt;p&gt;Para notificar muitos Objetos precisamos de uma lista com os Objetos previamente adicionados.&lt;/p&gt;
-
-&lt;p&gt;Vamos modificar o código existe e adicionar mais Interfaces e Classes.&lt;/p&gt;
-
-&lt;p&gt;Essas são as Interfaces:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/b5ebdc91138eb140bce07f5ef0dde976.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;São mais duas Interfaces com nomes bem genéricos. Talvez, num projeto maior, seus nomes poderiam ser &lt;code&gt;ISemaphoreObserver&lt;/code&gt; e &lt;code&gt;ISemaphoreObservers&lt;/code&gt; respectivamente, afim de diminuir as chances de haver conflito de nomes. Mas isso é irrelevante por enquanto.&lt;/p&gt;
-
-&lt;p&gt;Sendo nomes genéricos, eu posso implementar em Classes bem distintas que, inicialmente, não teriam nada haver com o contexto de Semáforo.&lt;/p&gt;
-
-&lt;p&gt;Confuso?&lt;/p&gt;
-
-&lt;p&gt;Vamos a um exemplo de implementação: &lt;em&gt;Pessoas&lt;/em&gt; que gostariam de ser notificadas a respeito das mudanças do semáforo:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/74622575318450edc1fc40b8cd265f85.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Vamos entender o código acima:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Primeiramente, o &lt;em&gt;GUID&lt;/em&gt; na Interface &lt;code&gt;IObserver&lt;/code&gt; serve apenas para ser possível fazer o &lt;em&gt;casting&lt;/em&gt; no método &lt;code&gt;Get&lt;/code&gt; de &lt;code&gt;TPeople&lt;/code&gt;. Fique a vontade para usar &lt;em&gt;Generics&lt;/em&gt;.&lt;/li&gt;
-  &lt;li&gt;A Interface &lt;code&gt;IObservers&lt;/code&gt; é um subtipo de &lt;code&gt;IObserver&lt;/code&gt; apenas para aproveitar a definição do método &lt;code&gt;Changed&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;O método &lt;code&gt;Changed&lt;/code&gt; faz parte da definição da Interface &lt;code&gt;IObserver&lt;/code&gt;, sim, porque a entidade que ela representa necessita: Um observador precisa saber das mudanças do Objeto observado.&lt;/li&gt;
-  &lt;li&gt;Um Objeto &lt;code&gt;TPeople&lt;/code&gt; é apenas uma lista que irá repassar o Evento para seus itens.&lt;/li&gt;
-  &lt;li&gt;Quando um Objeto &lt;code&gt;TPerson&lt;/code&gt; tem seu método &lt;code&gt;Changed&lt;/code&gt; chamado na lista, ele irá gerar um novo Evento &lt;code&gt;OnStatus&lt;/code&gt;. Esse “status” é apenas para notificar o que o Objeto está fazendo.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Ok. Só falta agora ligar tudo isso junto.&lt;/p&gt;
-
-&lt;p&gt;Vamos alterar um pouco o código inicial do &lt;em&gt;Form&lt;/em&gt;:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/31851f1e8e5d70f893ab84c0df2614f7.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Vamos entender o código acima:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Adicionei um &lt;code&gt;TMemo&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Adicionei um método privado &lt;code&gt;PersonStatus&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Renomeei &lt;code&gt;FSemaphore&lt;/code&gt; para &lt;code&gt;FSemaphore1&lt;/code&gt; e criei outro do mesmo tipo.&lt;/li&gt;
-  &lt;li&gt;Adicionei um atributo &lt;code&gt;FPeople&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Por fim foi alterado o &lt;code&gt;FormCreate&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Acho que você já entendeu o que irá ocorrer aqui, certo?&lt;/p&gt;
-
-&lt;p&gt;Se você replicou tudo certo aí, verá uma imagem parecida com essa abaixo:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/screenshot-semaphore-2.jpg&quot; alt=&quot;semaphore&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Utilizar Eventos não quer dizer, necessariamente, que você está utilizando RAD.&lt;/p&gt;
-
-&lt;p&gt;Eventos são necessários para unir duas peças que, talvez, não tenham nada em comum mas que precisam se comunicar.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo tentei mostrar uma maneira de implementar eventos de forma mais Orientada a Objetos, utilizando Interfaces e Classes e não apenas ponteiros para métodos.&lt;/p&gt;
-
-&lt;p&gt;Mostrei que a lista de notificações não deve ficar no transmissor. Assim poderíamos acrescentar mais listas de notificações. Listas que notificam listas, se necessário. E os itens dessas listas poderiam ser instâncias de Classes complemente diferentes umas das outras, assim como o que iriam fazer — seu comportamento — ao receber a notificação da lista. Isso deixa nosso código bem extensível, sem que precisemos alterar o que já foi concluído.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 22 May 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/observando-objetos</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/observando-objetos</guid>
       </item>
     
   </channel>
