@@ -59,7 +59,11 @@
 
 &lt;p&gt;A ideia de construir o &lt;a href=&quot;https://github.com/mdbs99/git-work&quot;&gt;&lt;strong&gt;git-work&lt;/strong&gt;&lt;/a&gt; me ocorreu após uma tarde de intenso trabalho e uso do Git em um projeto particular.&lt;/p&gt;
 
-&lt;p&gt;Trabalhei em algumas &lt;em&gt;issues&lt;/em&gt; »»»»»&lt;/p&gt;
+&lt;p&gt;Trabalhei em algumas &lt;em&gt;issues&lt;/em&gt; e foi bastante ineficaz ter que ficar indo e vindo entre os &lt;em&gt;branches&lt;/em&gt; para fazer a mesclagem além de ter que ficar digitando comandos que poderiam ser automatizados.&lt;/p&gt;
+
+&lt;p&gt;Além disso, não ter um fluxo de trabalho pré-determinado me fazia perder tempo para identificar o próximo passo.&lt;/p&gt;
+
+&lt;p&gt;Então nasceu o &lt;a href=&quot;https://github.com/mdbs99/git-work&quot;&gt;&lt;strong&gt;git-work&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;features&quot;&gt;Características&lt;/h2&gt;
 
