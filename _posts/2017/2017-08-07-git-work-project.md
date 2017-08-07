@@ -75,7 +75,11 @@ Então como eu poderia utilizar a linha-de-comando, mas automatizar os comandos 
 
 A ideia de construir o [**git-work**](https://github.com/mdbs99/git-work) me ocorreu após uma tarde de intenso trabalho e uso do Git em um projeto particular.
 
-Trabalhei em algumas *issues* >>>>>>>>>>
+Trabalhei em algumas *issues* e foi bastante ineficaz ter que ficar indo e vindo entre os *branches* para fazer a mesclagem além de ter que ficar digitando comandos que poderiam ser automatizados.
+
+Além disso, não ter um fluxo de trabalho pré-determinado me fazia perder tempo para identificar o próximo passo.
+
+Então nasceu o [**git-work**](https://github.com/mdbs99/git-work).
 
 ## Características {#features}
 
