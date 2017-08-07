@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Git-work Project
-date: 2017-08-05
+date: 2017-08-07
 permalink: /:title
 description:
   Git-work são extensões minimalistas para Git, fornecendo operações de repositório de alto nível.
@@ -39,13 +39,13 @@ Git-work são extensões minimalistas para Git, fornecendo operações de reposi
 
 Ele é o padrão atual para o controle de versão de softwares. Não há nenhum outro concorrente que seja tão simples e eficaz.
 
-Apesar de ser um magnífico sistema, por muito tempo não havia um padrão definido em como utilizá-lo num trabalho em equipe — ou mesmo sozinho — ou seja, como enviar uma alteração feita por você; como ser eficaz ao trabalhar com *branches*; se devemos trabalhar diretamente no `master` ou em *branches* secundários; como iniciar uma alteração quando o projeto recebe uma *issue*, etc.
+Apesar de ser um magnífico sistema, por muito tempo não havia um padrão definido em como trabalhar em equipe ou mesmo sozinho, ou seja, como enviar de forma eficiente uma alteração feita por você; como ser eficaz ao trabalhar com *branches*; se devemos trabalhar diretamente no `master` ou em *branches* secundários; como iniciar uma alteração quando o projeto recebe uma *issue*, etc.
 
-Então, agora, temos um padrão chamado `git flow`. Ele vem instalado nas últimas versões do Git e você pode configurá-lo digitando `git flow`.
+Hoje em dia temos um padrão chamado `git flow`. Ele vem instalado nas últimas versões do Git e você pode configurá-lo digitando `git flow` na linha-de-comando.
 
 No entanto, ainda que o `git flow` não seja um padrão complicado de se utilizar, ele não nos deixa customizá-lo de forma simples num único lugar (são alguns arquivos *bash* que devem ser editados), é verboso e não define um padrão para as mensagens dos *commits*.
 
-Nesse artigo eu irei lhe apresentar o meu mais novo "*pet project*" chamado **git-work**, que é uma alternativa minimalista ao `git flow`.
+Nesse artigo eu irei lhe apresentar o meu mais novo "*pet project*" chamado [**git-work**](https://github.com/mdbs99/git-work), que é uma alternativa minimalista ao `git flow`.
 
 ## O que é Git-work {#git-work}
 
@@ -75,7 +75,7 @@ Então como eu poderia utilizar a linha-de-comando, mas automatizar os comandos 
 
 A ideia de construir o [**git-work**](https://github.com/mdbs99/git-work) me ocorreu após uma tarde de intenso trabalho e uso do Git em um projeto particular.
 
-Trabalhei em algumas *issues* >>>>>>>>
+Trabalhei em algumas *issues* >>>>>>>>>>
 
 ## Características {#features}
 
@@ -83,7 +83,7 @@ Inicialmente eu pensei em codificar o [**git-work**](https://github.com/mdbs99/g
 
 O Git é bem integrado com *Bash* então... Por quê não?
 
-Então criei o projeto no Github, codifiquei as primeiras características e subi os fontes.
+Criei o projeto no Github, codifiquei as primeiras características e subi os fontes.
 
 Então meu amigo [Fabrício Cabral](https://github.com/fabriciofx/) se interessou pelo projeto e começou a trabalhar e melhorar o código.
 
@@ -95,38 +95,34 @@ Após "instalar", digite `git work` para ver os comandos:
 
 Esses comandos ainda serão aperfeiçoados, pois estão em constante desenvolvimento.
 
-Por exemplo, para terminar um trabalho num determinado *branch* chamado "123" precisamos digitar: `git work done 123`. Mas em versões futuras não será necessário digitar o *branch* atual, facilitando ainda mais a digitação. O mesmo para o commando `release`.
-
 ### Fluxo de Trabalho {#flow}
 
 Após um usuário registrar a *issue* #41 no seu sistema de *tickets*, você inicia um fluxo:
 
-1. Digite `git work issue 41`: git-work irá criar uma nova *branch* com o nome "41" a partir da `master` e fazer o *checkout*;
+1. Digite `git work issue 41` para criar uma nova *branch* com o nome `41` a partir da `master`, já com *checkout* automático para o `41`;
 2. Enquanto você vai alterando os fontes, poderá digitar `git work commit "mensagem"` para ir comitando seu trabalho;
-3. Quando você tiver terminado o trabalho, digite `git work done 41`: git-work irá para o `master` e irá fazer o *merge* com a *branch* 41.
-4. Então você pode enviar suas alterações para o servidor digitando: `git work push master`.
-5. Quando tiver uma versão de *release* o comando `git work release 1.0` poderá ser utilizado. O git-work irá criar uma nova *tag* e enviar ao servidor.
+3. Quando você tiver terminado o trabalho, digite `git work done` para ir para o `master` enquanto o sistema faz o *merge* com a atual *branch* `41`.
+4. Então você pode enviar suas alterações para o servidor digitando `git work push` para enviar a *branch* atual, que é a `master`.
+5. Quando tiver uma versão de *release*, o comando `git work release 1.0` poderá ser utilizado. O git-work irá criar uma nova *tag* a partir da `master` e enviar ao servidor.
 
 Pode não parecer muito agora. Os comandos são muito similares aos comandos do próprio Git, porém tudo ainda está em desenvolvimento.
 
-Almejamos deixar os comandos mais simples, com [menos parâmetros](https://github.com/mdbs99/git-work/issues/3). Então, num futuro breve, os comandos acima serão resumidos em apenas isso:
-
-<script src="https://gist.github.com/mdbs99/0148935b556fd4892f260057945ac329.js"></script>
-
-E, claro, os scripts irão verificar, na medida do possível, se você está utilizando os comandos certos, nos *branches* corretos.
+Os scripts irão verificar, na medida do possível, se você está utilizando os comandos certos, nos *branches* corretos.
 
 O *branch* padrão poderá ser [configurado](https://github.com/mdbs99/git-work/issues/9) (padrão `master`) para que os comandos `done`, `push` e `release` saibam onde pegar os fontes atuais.
 
 As mensagens do `commit` poderão ser [padronizadas](https://github.com/mdbs99/git-work/issues/8) com o número da *issue* no início. Exemplo: *"#41 this fix...".*
 
-E se todos os (futuros) parâmetros customizáveis ainda não sejam suficientes, basta você alterar apenas o [único arquivo](https://github.com/mdbs99/git-work/blob/master/git-work.sh) desse projeto. 
+E se todos os (futuros) parâmetros customizáveis ainda não sejam suficientes para suas customizações, bastará você alterar apenas o [único arquivo](https://github.com/mdbs99/git-work/blob/master/git-work.sh) nesse projeto.
+
+Ainda há um grande caminho a percorrer.
 
 ## Conclusão {#conclusao}
 
 Essa é apenas a versão `0.1` desse projeto que só tem poucos dias de vida.
 
-Padronização, eficiência e simplicidade. É a proposta desse projeto.
+Padronização, eficiência e simplicidade. Essa é a proposta desse projeto.
 
-Aqui está o link do projeto: [https://github.com/mdbs99/git-work](https://github.com/mdbs99/git-work).
+[https://github.com/mdbs99/git-work](https://github.com/mdbs99/git-work).
 
 Até logo.
