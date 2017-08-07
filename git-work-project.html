@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Métodos Privados &#8211; Object Pascal Programming</title>
+    <title>Git-work Project &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="OOP">
-    <meta name="keywords" content="métodos privados, private methods, orientacao a objetos, object-oriented">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/metodos-privados/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, git, git-work, git-api, git-flow, github, git-hub">
+    <link rel="canonical" href="http://objectpascalprogramming.com/git-work-project">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Métodos Privados">
-    <meta property="og:description" content="Existe um pensamento que diz que todo Método Privado deveria ser, na verdade, a implementação de outro Objeto.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/metodos-privados/">
+    <meta property="og:title" content="Git-work Project">
+    <meta property="og:description" content="Git-work são extensões minimalistas para Git, fornecendo operações de repositório de alto nível.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/git-work-project">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-q6vbepqsojc-rita-morais.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-zachary-nelson-192289.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Métodos Privados" />
+    <meta name="twitter:title" content="Git-work Project" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/metodos-privados/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/git-work-project" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,106 +191,118 @@
 
 
 <div class="post-header mb2">
-  <h1>Métodos Privados</h1>
-  <span class="post-meta">Jan 30, 2017</span><br>
+  <h1>Git-work Project</h1>
+  <span class="post-meta">Aug 7, 2017</span><br>
   
   <span class="post-meta small">
   
-    4 minute read
+    5 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Existe um pensamento que diz que todo Método Privado deveria ser, na verdade, a implementação de outro Objeto.</p>
+  <p>Git-work são extensões minimalistas para Git, fornecendo operações de repositório de alto nível.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-q6vbepqsojc-rita-morais.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2017/photo-zachary-nelson-192289.jpg" alt="Unsplash image" /> 
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Zachary Nelson on Unsplash</span></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>Dizemos que todo Objeto deve implementar apenas uma única <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">responsabilidade</a>.</p>
+<p><strong><em>Git</em></strong>, segundo a <a href="https://pt.wikipedia.org/wiki/Git">Wikipedia</a>,
+é um sistema de controle de versão distribuído e um sistema de gerenciamento de código fonte, com ênfase em velocidade. O Git foi inicialmente projetado e desenvolvido por Linus Torvalds para o desenvolvimento do kernel Linux, mas foi adotado por muitos outros projetos.</p>
 
-<p>Então a ideia que todo Método Privado deveria ser outro Objeto faz sentido, pelo menos na teoria.</p>
+<p>Ele é o padrão atual para o controle de versão de softwares. Não há nenhum outro concorrente que seja tão simples e eficaz.</p>
 
-<p>Se o Objeto deveria ter apenas uma única responsabilidade, por que eu teria mais Métodos (privados) além dos Métodos Públicos?</p>
+<p>Apesar de ser um magnífico sistema, por muito tempo não havia um padrão definido em como trabalhar em equipe ou mesmo sozinho, ou seja, como enviar de forma eficiente uma alteração feita por você; como ser eficaz ao trabalhar com <em>branches</em>; se devemos trabalhar diretamente no <code>master</code> ou em <em>branches</em> secundários; como iniciar uma alteração quando o projeto recebe uma <em>issue</em>, etc.</p>
 
-<p>Não seriam os Métodos Públicos suficientes para implementar apenas uma única responsabilidade?</p>
+<p>Hoje em dia temos um padrão chamado <code>git flow</code>. Ele vem instalado nas últimas versões do Git e você pode configurá-lo digitando <code>git flow</code> na linha-de-comando.</p>
 
-<p>É o que vamos tentar entender nesse artigo.</p>
+<p>No entanto, ainda que o <code>git flow</code> não seja um padrão complicado de se utilizar, ele não nos deixa customizá-lo de forma simples num único lugar (são alguns arquivos <em>bash</em> que devem ser editados), é verboso e não define um padrão para as mensagens dos <em>commits</em>.</p>
 
-<h2 id="implementando-um-objeto">Implementando um Objeto</h2>
+<p>Nesse artigo eu irei lhe apresentar o meu mais novo “<em>pet project</em>” chamado <a href="https://github.com/mdbs99/git-work"><strong>git-work</strong></a>, que é uma alternativa minimalista ao <code>git flow</code>.</p>
 
-<p>Um Objeto deve ser a <a href="/posts/objetos-representam-entidades/">representação</a> de uma Entidade. Mas não a representação total da Entidade. Isso seria quase impossível ou muito complexo.</p>
+<h2 id="git-work">O que é Git-work</h2>
 
-<p>Temos que abstrair ao máximo, ou seja, implementar apenas o comportamento relevante para o software.</p>
+<p>Assim como o <code>git flow</code>, o <a href="https://github.com/mdbs99/git-work"><strong>git-work</strong></a> é uma coleção de extensões para a linha-de-comando do Git.</p>
 
-<p>Por isso é possível termos Objetos pequenos, coesos e que implementam apenas uma única responsabilidade.</p>
+<p>O nome escolhido é devido a semântica ao digitar os comandos como, por exemplo, <code>git work done</code> para concluir uma <code>issue</code>. Legal, não?</p>
 
-<p>Vejamos alguns exemplos para determinarmos se há sentido termos Métodos Privados, mesmo em Objetos simples.</p>
+<p>É um projeto extremamente novo (apenas alguns dias) porém com um grande potencial, na minha humilde opinião.</p>
 
-<h4 id="exemplo-1">Exemplo 1</h4>
+<p>São extensões minimalistas para Git, fornecendo operações de repositório de alto nível além de padronizar, um <em>fluxo de trabalho</em> com os <em>branches</em>, que poderá ser totalmente customizável.</p>
 
-<p>No código abaixo temos uma Classe que é inicilizada com uma <code>string</code> que representa o nome do empregado.</p>
+<h2 id="motivacao">Motivação</h2>
 
-<p>Há uma Método Privado para “limpar” o nome. Essa limpeza consiste em retirar os espaços em branco do início e do fim do nome. Depois há uma verificação se a <code>string</code> não ficou em branco no final. Bem simples.</p>
+<p>Eu tentei (tento) utilizar alguns <em>clients</em> para Git como <a href="https://desktop.github.com/">Github Desktop</a>, <a href="http://www.syntevo.com/smartgit/">SmartGit</a> ou <a href="https://www.gitkraken.com/">GitKraken</a>. Apesar desses e dezenas de outras IDE’s serem ótimos produtos, podem ter restrições de uso, além da curva de aprendizado para utilizá-los.</p>
 
-<script src="https://gist.github.com/mdbs99/bbdc509810890ea5724a94a021f16791.js"></script>
+<p>Além disso, no meu caso, eu utilizo Git em alguns computadores e não posso me dar ao luxo de ter que ficar atualizando e reconfigurando IDE’s em todos esses computadores caso eu queria mudar meu modo de trabalho.</p>
 
-<p>Apesar dessa simplicidade aparente, esse código possui vários erros ou violações de princípios.</p>
+<p>Eu sou um cara <em>“old-school”</em>.</p>
 
-<p>O primeiro problema é conceitual: Você não deve fazer <a href="/posts/validacoes-no-construtor/">validações no construtor</a>, pois segundo Alan Kay — inventor do nome/conceito Orientação a Objetos — <a href="http://userpage.fu-berlin.de/~ram/pub/pub_jf47ht81Ht/doc_kay_oop_en">aqui</a> nesse email, ele diz: <em>“Programação Orientada a Objetos (para mim) significa apenas mensagens, encapsular e esconder estado, e <strong>extrema ligação tardia de todas as coisas</strong>“</em>.</p>
+<p>Gosto das coisas mais <a href="/posts/simplicidade/">simples</a> e manuais. Gosto de saber o que está acontecendo nos “bastidores” quando clico num botão. Gosto de aprender a utilizar algo reduzindo-o à sua interface mais básica.</p>
 
-<p>Primeiro você cria os Objetos, depois eles interagem. Se você for validando e/ou executando rotinas a medida que vai criando seus Objetos, você não está programando Orientado a Objetos, isso é Programação Procedural.</p>
+<p>Então voltei para a linha-de-commando, onde posso fazer literalmente tudo com o Git. <a href="/posts/menos-e-mais/">Menos é mais</a>, certo?</p>
 
-<p>Você nem deve chamar nenhum Método no construtor, pois esses Métodos podem gerar algum problema e o Objeto pode não ser criado.</p>
+<p>Mas a linha-de-comando pode ser assutadora quando você não conhece os comandos. E, mesmo depois de aprendê-los, pode ser ineficaz se você tiver que fazer <em>tudo</em> de forma manual.</p>
 
-<p>O segundo problema é que um Empregado não deveria “limpar o nome recebido”. Não faz sentido.</p>
+<p>Então como eu poderia utilizar a linha-de-comando, mas automatizar os comandos mais utilizados e, ao mesmo tempo, definir um fluxo de trabalho padronizado?</p>
 
-<p>O Nome deveria ser um <a href="https://www.youtube.com/watch?v=nia7UqcpOAc">Objeto</a> e ele iria validar a si mesmo; retornar uma string válida, sem espaços, formatada, talvez até com o nome do meio abreviado.</p>
+<p>A ideia de construir o <a href="https://github.com/mdbs99/git-work"><strong>git-work</strong></a> me ocorreu após uma tarde de intenso trabalho e uso do Git em um projeto particular.</p>
 
-<p>Em outras palavras, o Método <code>CleanName</code> não deveria existir, mesmo sendo privado.</p>
+<p>Trabalhei em algumas <em>issues</em> »»»»»</p>
 
-<h4 id="exemplo-2">Exemplo 2</h4>
+<h2 id="features">Características</h2>
 
-<p>Então para corrigir o exemplo acima, vamos implementar a Classe <code>TEmployeeName</code>.</p>
+<p>Inicialmente eu pensei em codificar o <a href="https://github.com/mdbs99/git-work"><strong>git-work</strong></a> em <em>Object Pascal</em>. Sério. Porém vi que o mais simples a fazer seria utilizar <em>Bash scripts</em>.</p>
 
-<p>Agora sabemos que essa Classe deve ser responsável por tudo que envolve <code>Nome</code>, então vamos incrementar e por alguns Métodos como <code>FirstName</code> e <code>LastName</code>. Assim esses Métodos poderão ser reutilizados por toda a aplicação e você não precisará ficar fazendo esses algoritmos em partes do código que não tem nada haver com manipulação de <code>Nome</code>.</p>
+<p>O Git é bem integrado com <em>Bash</em> então… Por quê não?</p>
 
-<p>Mas veja que eu introduzi um Método Privado.</p>
+<p>Criei o projeto no Github, codifiquei as primeiras características e subi os fontes.</p>
 
-<p>Esse Método tem três responsabilidades — portanto não está 100% correto, mas serve de exemplo — que é 1) implementar o algoritmo para obter o <code>FirstName</code>, 2) implementar outro algoritmo para obter o <code>LastName</code> e 3) também está fazendo <em>cache</em> dos dados.</p>
+<p>Então meu amigo <a href="https://github.com/fabriciofx/">Fabrício Cabral</a> se interessou pelo projeto e começou a trabalhar e melhorar o código.</p>
 
-<script src="https://gist.github.com/mdbs99/a303d0bf83930fcf580aee818ee23a52.js"></script>
+<p>No momento da escrita desse artigo já temos algumas funcionalidades.</p>
 
-<p>Essa Classe é tão simples que não haveria necessidade de existir esse Método Privado, porém imagine que um Objeto dessa Classe seja muito utilizado e precisa de muita performance.</p>
+<p>Após “instalar”, digite <code>git work</code> para ver os comandos:</p>
 
-<p>Nesse caso o Método Privado está fazendo um <em>cache</em> dos dados, assim não será necessário “calcular” as partes dos nomes sempre que executarmos esses Métodos.</p>
+<p><img src="/images/2017/git-work-1.jpg" alt="git-work" /></p>
 
-<p>Essa é das ocasições que um Método Privado ajuda e é bem vindo. O Objeto é criado sem interferências, rápido, sem cálculos. Depois, se um de seus Métodos for realmente executado, o Objeto faz as devidas validações e execuções. Para o mundo externo é indiferente, já que ninguém sabe o que acontece dentro de um Objeto.</p>
+<p>Esses comandos ainda serão aperfeiçoados, pois estão em constante desenvolvimento.</p>
 
-<p>Se você está curioso para saber como seria a “implementação pura” Orientada a Objetos, teríamos que implementar outra Classe para <a href="/posts/decorator-pattern/">decorar</a> a <code>TEmployeeName</code> somente para fazermos o <em>cache</em> dos dados. Então cada Método de <code>TEmployeeName</code> teria a implementação dos cálculos de partes do nome nos próprios Métodos Público — a Classe ficaria com menos código e mais simples.</p>
+<h3 id="flow">Fluxo de Trabalho</h3>
 
-<p>A Classe decoradora ficaria mais ou menos assim:</p>
+<p>Após um usuário registrar a <em>issue</em> #41 no seu sistema de <em>tickets</em>, você inicia um fluxo:</p>
 
-<script src="https://gist.github.com/mdbs99/f9f7aa261bd2e317df503f974429560f.js"></script>
+<ol>
+  <li>Digite <code>git work issue 41</code> para criar uma nova <em>branch</em> com o nome <code>41</code> a partir da <code>master</code>, já com <em>checkout</em> automático para o <code>41</code>;</li>
+  <li>Enquanto você vai alterando os fontes, poderá digitar <code>git work commit "mensagem"</code> para ir comitando seu trabalho;</li>
+  <li>Quando você tiver terminado o trabalho, digite <code>git work done</code> para ir para o <code>master</code> enquanto o sistema faz o <em>merge</em> com a atual <em>branch</em> <code>41</code>.</li>
+  <li>Então você pode enviar suas alterações para o servidor digitando <code>git work push</code> para enviar a <em>branch</em> atual, que é a <code>master</code>.</li>
+  <li>Quando tiver uma versão de <em>release</em>, o comando <code>git work release 1.0</code> poderá ser utilizado. O git-work irá criar uma nova <em>tag</em> a partir da <code>master</code> e enviar ao servidor.</li>
+</ol>
 
-<p>Mas você sempre teria que instanciar esses dois Objetos, um decorando o outro.</p>
+<p>Pode não parecer muito agora. Os comandos são muito similares aos comandos do próprio Git, porém tudo ainda está em desenvolvimento.</p>
 
-<p>Se vale ou não a pena criar essa Classe, é você quem decide ou as Regras de Négócio decidem por você.</p>
+<p>Os scripts irão verificar, na medida do possível, se você está utilizando os comandos certos, nos <em>branches</em> corretos.</p>
 
-<p>Bom é saber que temos opções. Talvez começar a implementação com Métodos Privados e depois, se for o caso, refatorá-los.</p>
+<p>O <em>branch</em> padrão poderá ser <a href="https://github.com/mdbs99/git-work/issues/9">configurado</a> (padrão <code>master</code>) para que os comandos <code>done</code>, <code>push</code> e <code>release</code> saibam onde pegar os fontes atuais.</p>
 
-<p>Veja que é possível fazer um design melhor, sem Métodos Privados, mas sempre temos que ver os prós e contras.</p>
+<p>As mensagens do <code>commit</code> poderão ser <a href="https://github.com/mdbs99/git-work/issues/8">padronizadas</a> com o número da <em>issue</em> no início. Exemplo: <em>“#41 this fix…”.</em></p>
+
+<p>E se todos os (futuros) parâmetros customizáveis ainda não sejam suficientes para suas customizações, bastará você alterar apenas o <a href="https://github.com/mdbs99/git-work/blob/master/git-work.sh">único arquivo</a> nesse projeto.</p>
+
+<p>Ainda há um grande caminho a percorrer.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Em teoria um Objeto não deveria ter Métodos Privados, porém vimos que existem casos de natureza tecnológica no qual os Métodos Privados auxiliam a codificação.</p>
+<p>Essa é apenas a versão <code>0.1</code> desse projeto que só tem poucos dias de vida.</p>
 
-<p>Como eu já disse em outro <a href="/posts/singleton-e-um-anti-padrao/">artigo</a>: <em>“Não devemos ser puristas em Orientação a Objetos se não há nenhum benefício”</em> ou se o benefício for apenas estético, talvez.</p>
+<p>Padronização, eficiência e simplicidade. Essa é a proposta desse projeto.</p>
 
-<p>Então fique atento sobre os Métodos Privados que você está criando. Veja se eles deveriam estar em outro Objeto. Mas não perca tempo buscando a perfeição, pois um Método Privado sempre poderá ser refatorado no futuro sem nenhum problema.</p>
+<p><a href="https://github.com/mdbs99/git-work">https://github.com/mdbs99/git-work</a>.</p>
 
 <p>Até logo.</p>
 
@@ -302,33 +314,33 @@
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/metodos-privados/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/git-work-project" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Métodos Privados&via=mdbs99;url=http://objectpascalprogramming.com/posts/metodos-privados/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Git-work Project&via=mdbs99;url=http://objectpascalprogramming.com/git-work-project" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/metodos-privados/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/git-work-project" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/metodos-privados/&title=Métodos Privados" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/metodos-privados/&title=Métodos Privados" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/git-work-project&title=Git-work Project" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/metodos-privados/&t=Métodos Privados" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/git-work-project&title=Git-work Project" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/git-work-project&t=Git-work Project" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -366,15 +378,6 @@
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/git-work-project" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Git-work Project</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/imutabilidade-do-estado" class="post-link">
@@ -457,6 +460,15 @@
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/herdar-para-rotular" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herdar para Rotular</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -464,8 +476,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/metodos-privados';
-      var disqus_title      = 'Métodos Privados';
+      var disqus_identifier = '/git-work-project';
+      var disqus_title      = 'Git-work Project';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

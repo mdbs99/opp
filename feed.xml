@@ -8,6 +8,117 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Git-work Project</title>
+        <description>&lt;p&gt;Git-work são extensões minimalistas para Git, fornecendo operações de repositório de alto nível.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-zachary-nelson-192289.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Zachary Nelson on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Git&lt;/em&gt;&lt;/strong&gt;, segundo a &lt;a href=&quot;https://pt.wikipedia.org/wiki/Git&quot;&gt;Wikipedia&lt;/a&gt;,
+é um sistema de controle de versão distribuído e um sistema de gerenciamento de código fonte, com ênfase em velocidade. O Git foi inicialmente projetado e desenvolvido por Linus Torvalds para o desenvolvimento do kernel Linux, mas foi adotado por muitos outros projetos.&lt;/p&gt;
+
+&lt;p&gt;Ele é o padrão atual para o controle de versão de softwares. Não há nenhum outro concorrente que seja tão simples e eficaz.&lt;/p&gt;
+
+&lt;p&gt;Apesar de ser um magnífico sistema, por muito tempo não havia um padrão definido em como trabalhar em equipe ou mesmo sozinho, ou seja, como enviar de forma eficiente uma alteração feita por você; como ser eficaz ao trabalhar com &lt;em&gt;branches&lt;/em&gt;; se devemos trabalhar diretamente no &lt;code&gt;master&lt;/code&gt; ou em &lt;em&gt;branches&lt;/em&gt; secundários; como iniciar uma alteração quando o projeto recebe uma &lt;em&gt;issue&lt;/em&gt;, etc.&lt;/p&gt;
+
+&lt;p&gt;Hoje em dia temos um padrão chamado &lt;code&gt;git flow&lt;/code&gt;. Ele vem instalado nas últimas versões do Git e você pode configurá-lo digitando &lt;code&gt;git flow&lt;/code&gt; na linha-de-comando.&lt;/p&gt;
+
+&lt;p&gt;No entanto, ainda que o &lt;code&gt;git flow&lt;/code&gt; não seja um padrão complicado de se utilizar, ele não nos deixa customizá-lo de forma simples num único lugar (são alguns arquivos &lt;em&gt;bash&lt;/em&gt; que devem ser editados), é verboso e não define um padrão para as mensagens dos &lt;em&gt;commits&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo eu irei lhe apresentar o meu mais novo “&lt;em&gt;pet project&lt;/em&gt;” chamado &lt;a href=&quot;https://github.com/mdbs99/git-work&quot;&gt;&lt;strong&gt;git-work&lt;/strong&gt;&lt;/a&gt;, que é uma alternativa minimalista ao &lt;code&gt;git flow&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;git-work&quot;&gt;O que é Git-work&lt;/h2&gt;
+
+&lt;p&gt;Assim como o &lt;code&gt;git flow&lt;/code&gt;, o &lt;a href=&quot;https://github.com/mdbs99/git-work&quot;&gt;&lt;strong&gt;git-work&lt;/strong&gt;&lt;/a&gt; é uma coleção de extensões para a linha-de-comando do Git.&lt;/p&gt;
+
+&lt;p&gt;O nome escolhido é devido a semântica ao digitar os comandos como, por exemplo, &lt;code&gt;git work done&lt;/code&gt; para concluir uma &lt;code&gt;issue&lt;/code&gt;. Legal, não?&lt;/p&gt;
+
+&lt;p&gt;É um projeto extremamente novo (apenas alguns dias) porém com um grande potencial, na minha humilde opinião.&lt;/p&gt;
+
+&lt;p&gt;São extensões minimalistas para Git, fornecendo operações de repositório de alto nível além de padronizar, um &lt;em&gt;fluxo de trabalho&lt;/em&gt; com os &lt;em&gt;branches&lt;/em&gt;, que poderá ser totalmente customizável.&lt;/p&gt;
+
+&lt;h2 id=&quot;motivacao&quot;&gt;Motivação&lt;/h2&gt;
+
+&lt;p&gt;Eu tentei (tento) utilizar alguns &lt;em&gt;clients&lt;/em&gt; para Git como &lt;a href=&quot;https://desktop.github.com/&quot;&gt;Github Desktop&lt;/a&gt;, &lt;a href=&quot;http://www.syntevo.com/smartgit/&quot;&gt;SmartGit&lt;/a&gt; ou &lt;a href=&quot;https://www.gitkraken.com/&quot;&gt;GitKraken&lt;/a&gt;. Apesar desses e dezenas de outras IDE’s serem ótimos produtos, podem ter restrições de uso, além da curva de aprendizado para utilizá-los.&lt;/p&gt;
+
+&lt;p&gt;Além disso, no meu caso, eu utilizo Git em alguns computadores e não posso me dar ao luxo de ter que ficar atualizando e reconfigurando IDE’s em todos esses computadores caso eu queria mudar meu modo de trabalho.&lt;/p&gt;
+
+&lt;p&gt;Eu sou um cara &lt;em&gt;“old-school”&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Gosto das coisas mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; e manuais. Gosto de saber o que está acontecendo nos “bastidores” quando clico num botão. Gosto de aprender a utilizar algo reduzindo-o à sua interface mais básica.&lt;/p&gt;
+
+&lt;p&gt;Então voltei para a linha-de-commando, onde posso fazer literalmente tudo com o Git. &lt;a href=&quot;/posts/menos-e-mais/&quot;&gt;Menos é mais&lt;/a&gt;, certo?&lt;/p&gt;
+
+&lt;p&gt;Mas a linha-de-comando pode ser assutadora quando você não conhece os comandos. E, mesmo depois de aprendê-los, pode ser ineficaz se você tiver que fazer &lt;em&gt;tudo&lt;/em&gt; de forma manual.&lt;/p&gt;
+
+&lt;p&gt;Então como eu poderia utilizar a linha-de-comando, mas automatizar os comandos mais utilizados e, ao mesmo tempo, definir um fluxo de trabalho padronizado?&lt;/p&gt;
+
+&lt;p&gt;A ideia de construir o &lt;a href=&quot;https://github.com/mdbs99/git-work&quot;&gt;&lt;strong&gt;git-work&lt;/strong&gt;&lt;/a&gt; me ocorreu após uma tarde de intenso trabalho e uso do Git em um projeto particular.&lt;/p&gt;
+
+&lt;p&gt;Trabalhei em algumas &lt;em&gt;issues&lt;/em&gt; »»»»»&lt;/p&gt;
+
+&lt;h2 id=&quot;features&quot;&gt;Características&lt;/h2&gt;
+
+&lt;p&gt;Inicialmente eu pensei em codificar o &lt;a href=&quot;https://github.com/mdbs99/git-work&quot;&gt;&lt;strong&gt;git-work&lt;/strong&gt;&lt;/a&gt; em &lt;em&gt;Object Pascal&lt;/em&gt;. Sério. Porém vi que o mais simples a fazer seria utilizar &lt;em&gt;Bash scripts&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;O Git é bem integrado com &lt;em&gt;Bash&lt;/em&gt; então… Por quê não?&lt;/p&gt;
+
+&lt;p&gt;Criei o projeto no Github, codifiquei as primeiras características e subi os fontes.&lt;/p&gt;
+
+&lt;p&gt;Então meu amigo &lt;a href=&quot;https://github.com/fabriciofx/&quot;&gt;Fabrício Cabral&lt;/a&gt; se interessou pelo projeto e começou a trabalhar e melhorar o código.&lt;/p&gt;
+
+&lt;p&gt;No momento da escrita desse artigo já temos algumas funcionalidades.&lt;/p&gt;
+
+&lt;p&gt;Após “instalar”, digite &lt;code&gt;git work&lt;/code&gt; para ver os comandos:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/git-work-1.jpg&quot; alt=&quot;git-work&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Esses comandos ainda serão aperfeiçoados, pois estão em constante desenvolvimento.&lt;/p&gt;
+
+&lt;h3 id=&quot;flow&quot;&gt;Fluxo de Trabalho&lt;/h3&gt;
+
+&lt;p&gt;Após um usuário registrar a &lt;em&gt;issue&lt;/em&gt; #41 no seu sistema de &lt;em&gt;tickets&lt;/em&gt;, você inicia um fluxo:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Digite &lt;code&gt;git work issue 41&lt;/code&gt; para criar uma nova &lt;em&gt;branch&lt;/em&gt; com o nome &lt;code&gt;41&lt;/code&gt; a partir da &lt;code&gt;master&lt;/code&gt;, já com &lt;em&gt;checkout&lt;/em&gt; automático para o &lt;code&gt;41&lt;/code&gt;;&lt;/li&gt;
+  &lt;li&gt;Enquanto você vai alterando os fontes, poderá digitar &lt;code&gt;git work commit &quot;mensagem&quot;&lt;/code&gt; para ir comitando seu trabalho;&lt;/li&gt;
+  &lt;li&gt;Quando você tiver terminado o trabalho, digite &lt;code&gt;git work done&lt;/code&gt; para ir para o &lt;code&gt;master&lt;/code&gt; enquanto o sistema faz o &lt;em&gt;merge&lt;/em&gt; com a atual &lt;em&gt;branch&lt;/em&gt; &lt;code&gt;41&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Então você pode enviar suas alterações para o servidor digitando &lt;code&gt;git work push&lt;/code&gt; para enviar a &lt;em&gt;branch&lt;/em&gt; atual, que é a &lt;code&gt;master&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Quando tiver uma versão de &lt;em&gt;release&lt;/em&gt;, o comando &lt;code&gt;git work release 1.0&lt;/code&gt; poderá ser utilizado. O git-work irá criar uma nova &lt;em&gt;tag&lt;/em&gt; a partir da &lt;code&gt;master&lt;/code&gt; e enviar ao servidor.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Pode não parecer muito agora. Os comandos são muito similares aos comandos do próprio Git, porém tudo ainda está em desenvolvimento.&lt;/p&gt;
+
+&lt;p&gt;Os scripts irão verificar, na medida do possível, se você está utilizando os comandos certos, nos &lt;em&gt;branches&lt;/em&gt; corretos.&lt;/p&gt;
+
+&lt;p&gt;O &lt;em&gt;branch&lt;/em&gt; padrão poderá ser &lt;a href=&quot;https://github.com/mdbs99/git-work/issues/9&quot;&gt;configurado&lt;/a&gt; (padrão &lt;code&gt;master&lt;/code&gt;) para que os comandos &lt;code&gt;done&lt;/code&gt;, &lt;code&gt;push&lt;/code&gt; e &lt;code&gt;release&lt;/code&gt; saibam onde pegar os fontes atuais.&lt;/p&gt;
+
+&lt;p&gt;As mensagens do &lt;code&gt;commit&lt;/code&gt; poderão ser &lt;a href=&quot;https://github.com/mdbs99/git-work/issues/8&quot;&gt;padronizadas&lt;/a&gt; com o número da &lt;em&gt;issue&lt;/em&gt; no início. Exemplo: &lt;em&gt;“#41 this fix…”.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;E se todos os (futuros) parâmetros customizáveis ainda não sejam suficientes para suas customizações, bastará você alterar apenas o &lt;a href=&quot;https://github.com/mdbs99/git-work/blob/master/git-work.sh&quot;&gt;único arquivo&lt;/a&gt; nesse projeto.&lt;/p&gt;
+
+&lt;p&gt;Ainda há um grande caminho a percorrer.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Essa é apenas a versão &lt;code&gt;0.1&lt;/code&gt; desse projeto que só tem poucos dias de vida.&lt;/p&gt;
+
+&lt;p&gt;Padronização, eficiência e simplicidade. Essa é a proposta desse projeto.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/mdbs99/git-work&quot;&gt;https://github.com/mdbs99/git-work&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 07 Aug 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/git-work-project</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/git-work-project</guid>
+      </item>
+    
+      <item>
         <title>Imutabilidade do Estado</title>
         <description>&lt;p&gt;Na Orientação a Objetos, um Objeto pode ser considerável Imutável mesmo que ele… mude.&lt;/p&gt;
 
@@ -820,106 +931,6 @@ end;
         <pubDate>Mon, 05 Jun 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/estado-do-objeto</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/estado-do-objeto</guid>
-      </item>
-    
-      <item>
-        <title>Herdar para Rotular</title>
-        <description>&lt;p&gt;A Herança de Classe pode ter outras finalidades que você ainda não havia pensado.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-matt-briney-160808.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Já escrevi bastante sobre Herança &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;aqui&lt;/a&gt; (série de artigos em 5 partes) e vimos o mal que seu uso pode trazer ao código Orientado a Objetos.&lt;/p&gt;
-
-&lt;p&gt;No entanto, assim como uma arma de fogo pode ser inofensiva, pois é o ser humano que faz mal uso da arma, a herança pode ser inofensiva se for utilizada de forma &lt;a href=&quot;/posts/como-utilizar-heranca-apropriadamente/&quot;&gt;apropriada&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo você irá ver mais uma forma de uso da Herança de Classe, mas sem sobrescrita de métodos ou uso de propriedades e métodos protegidos.&lt;/p&gt;
-
-&lt;p&gt;Vamos utilizar a Herança para &lt;em&gt;rotular&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;contextualizando&quot;&gt;Contextualizando&lt;/h2&gt;
-
-&lt;p&gt;De vez em quanto eu costumo utilizar Herança de Classe apenas como um rótulo.&lt;/p&gt;
-
-&lt;p&gt;Para que você entenda o benefício do uso de um rótulo, é necessário haver uma contextualização para compararmos o uso do código sem rótulo e, depois, com rótulo.&lt;/p&gt;
-
-&lt;p&gt;Vamos ver um exemplo.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/0676083483d1d9b75f21b8527e6e4897.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;É uma Classe bem simples, apenas para exemplificar o que eu quero lhe mostrar.&lt;/p&gt;
-
-&lt;p&gt;Se você não entendeu para que serve o método &lt;em&gt;New&lt;/em&gt;, veja sobre ele &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Toda Classe deve implementar ao menos uma &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interface&lt;/a&gt;, então temos a Interface &lt;code&gt;IMoney&lt;/code&gt; com apenas um único método &lt;code&gt;Value: Currency&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Imagine agora que seu &lt;em&gt;software&lt;/em&gt; trata de vários tipos de Taxas e Descontos, mas vou citar apenas dois como exemplo:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Taxa de Inscrição (1%)&lt;/li&gt;
-  &lt;li&gt;Desconto (10% se menor de 18 anos)&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Você, sendo um dos programadores numa empresa de Cursos de Mecânica de Automóveis, foi encarregado de implementar o cálculo de Inscrição e Desconto.&lt;/p&gt;
-
-&lt;p&gt;Se o valor da inscrição é R$ 100 vamos imaginar um botão para apenas mostrar o valor total a pagar pelo novo aluno:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/95395ad64ac9d1a7b3eed55ebf436724.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;O código acima tem uma condicional, proporcionado pela classe &lt;code&gt;TIf&lt;/code&gt; (não relacionada nesse artigo), que é bem simples de entender:&lt;/p&gt;
-
-&lt;p&gt;Se o (futuro) estudante tem idade menor do que 18 anos, ele irá ter um desconto de 10%, senão não haverá desconto.&lt;/p&gt;
-
-&lt;p&gt;Depois há a função primitiva &lt;code&gt;CurrToStr&lt;/code&gt; para converter o somatório do Valor Inscrição + a Taxa de Inscrição (1%) - o Desconto (se houver) em &lt;code&gt;string&lt;/code&gt; para ser exibido num simples &lt;code&gt;ShowMessage&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Bem, você sabe isso porque eu estou lhe dizendo. Eu preparei o contexto antes que você visse o código. Se fosse tivesse visto apenas isso…&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;TPercentCalculated.New(V, 1).Value&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;…saberia que se trata de uma Taxa que calcula 1% do valor, mas não saberia dizer sobre &lt;em&gt;qual&lt;/em&gt; taxa o código se refere.&lt;/p&gt;
-
-&lt;p&gt;É aí que usamos um rótulo.&lt;/p&gt;
-
-&lt;h2 id=&quot;rotulando&quot;&gt;Rotulando&lt;/h2&gt;
-
-&lt;p&gt;Um rótulo serve para marcar alguma coisa para facilitar a visão, a leitura, a identificação.&lt;/p&gt;
-
-&lt;p&gt;Uma Classe também é um rótulo.&lt;/p&gt;
-
-&lt;p&gt;O código abaixo é a refatoração do código que lhe acabei de mostrar:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/02a4ab8115cbebe3fe671905d51c1dd1.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;O código agora ficou muito mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Está claro que o &lt;code&gt;valor&lt;/code&gt; é somado com uma Taxa de Inscrição e com um Desconto.&lt;/p&gt;
-
-&lt;p&gt;O formulário que contém esse código, não “sabe” qual é o percentual da Taxa de Registro e nem como é feito o cálculo para o Desconto… e é assim que deve ser.&lt;/p&gt;
-
-&lt;p&gt;Então a primeira refatoração seria criar 2 classes distintas, uma para cada tipo de cálculo. Mas aí teríamos um problema: &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/&quot;&gt;Código duplicado&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se o cálculo é o mesmo, ou seja, apenas um percentual simples, porque eu iria duplicar o mesmo código em duas Classes? Não faz sentido.&lt;/p&gt;
-
-&lt;p&gt;Mas podemos fazer isso:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/0e8ac1cd0af1f631b5204061c554dbaf.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Agora ambas as Classes tem como herança &lt;code&gt;TPercentCalculated&lt;/code&gt;. No entanto eu não estou sobrecarregando nenhum Método e não estou usando nada protegido… na verdade esse código não está &lt;em&gt;tocando em nada&lt;/em&gt; da super Classe.&lt;/p&gt;
-
-&lt;p&gt;Ambas as Classes apenas inicializam, de forma apropriada e contextualizada, a Classe &lt;code&gt;TPercentCalculated&lt;/code&gt; utilizando o &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt; da super Classe.&lt;/p&gt;
-
-&lt;p&gt;Apenas isso.&lt;/p&gt;
-
-&lt;p&gt;Mas para o utilizador das Classes, elas parecem ser completamente independentes.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 29 May 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/herdar-para-rotular</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/herdar-para-rotular</guid>
       </item>
     
   </channel>
