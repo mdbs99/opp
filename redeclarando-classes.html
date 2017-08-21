@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Redefinindo Classes &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, pascal, object pascal, redeclarando, redefinindo, redefining, alias">
+    <link rel="canonical" href="http://objectpascalprogramming.com/redeclarando-classes">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201708210323" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Redefinindo Classes">
+    <meta property="og:description" content="A redeclaração de Classes é um método prático para minimizar a colisão de nomes entre Classes, mesmo utilizando identificadores curtos.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/redeclarando-classes">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-mpumelelo-macu-283883.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Redefinindo Classes" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/redeclarando-classes" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>E-Book</a>
+<a href="/archive/">Arquivo</a>
+<a href="/testimonials/">Testemunhos</a>
+<a href="/webinars/">Webinários</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Redefinindo Classes</h1>
+  <span class="post-meta">Aug 21, 2017</span><br>
+  
+  <span class="post-meta small">
+  
+    9 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>A redeclaração de Classes é um método prático para minimizar a colisão de nomes entre Classes, mesmo utilizando identificadores curtos.</p>
+
+<!--more-->
+
+<p><img src="/images/2017/photo-mpumelelo-macu-283883.jpg" alt="Unsplash image" /> 
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Mpumelelo Macu on Unsplash</span></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>A linguagem <em>Object Pascal</em> tem uma <em>feature</em> muito útil que, acredito, não é muito utilizada pelos desenvolvedores.</p>
+
+<p>Não sei se há um nome específico pra isso, mas eu a chamo de <em>Redefinição de Classes</em>.</p>
+
+<p>Na verdade essa <em>feature</em> pode ser utilizada para redeclarar Classes, Constantes e até mesmo Funções.</p>
+
+<p>Porém, na Orientação a Objetos, basicamente só utilizamos Classes. Então esqueça o resto e vamos nos concentrar nelas.</p>
+
+<p>Vamos ver algumas técnicas que podem ser aplicadas utilizando tal conceito.</p>
+
+<h2 id="renomeando">Renomeando</h2>
+
+<p>Imagine que você quer utilizar uma classe de alguma <em>Lib</em>, mas essa Classe tem o mesmo nome — exemplo <code>TSmartMemory</code>— de uma de suas Classes que você já utiliza por todo o seu código. O que fazer?</p>
+
+<p>A primeira opção é nunca utilizar ambas as Classes numa mesma Unidade. Mas talvez você não tenha essa sorte.</p>
+
+<p>A segunda opção é prefixar uma das Classes com o nome da Unidade — muito comum ver isso em projetos Java — por exemplo:</p>
+
+<pre><code>uses
+  LibMemory,
+  MyMemory;
+
+begin
+  M := TSmartMemory.New;  // your class
+  L := LibMemory.TSmartMemory.Create;
+end
+</code></pre>
+
+<p>A terceira opção, que eu utilizo na maioria das vezes, é <em>“renomear”</em> a Classe da <em>Lib</em> para uma nomenclatura que não colide com a nomenclatura já utilizada no meu projeto. Vejamos um exemplo:</p>
+
+<pre><code>unit MyMemory;
+
+uses
+  LibMemory;
+
+type
+  // TSmartMemory from LibMemory
+  TLibStartMemory = TSmartMemory; 
+
+  // my new class
+  TSmartMemory = class
+    // ...
+  end;
+</code></pre>
+
+<p>Nesse exemplo ambas as Classes estão declaradas na mesma Unidade existente no projeto — a <code>MyMemory</code> — e o projeto poderá utilizar ambas as Classes sem colisão de nomenclatura.</p>
+
+<pre><code>begin
+  M := TSmartMemory.New;
+  L := TLibSmartMemory.Create;
+end;
+</code></pre>
+
+<p>Utilizando essa técnica evitamos o conflito de nomes, o que é muito útil.</p>
+
+<p>Ao invés de utilizarmos o nome real da Classe, podemos lhe dar um <em>apelido</em>. O código fica mais limpo, simples e com identificadores curtos, pois não temos a necessidade de utilizar a Unidade como prefixo.</p>
+
+<p>A linguagem C# <a href="https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/using-directive">tem algo muito parecido</a> o que me faz pensar de onde será que o principal arquiteto da linguagem C# tirou essa ideia.</p>
+
+<h2 id="visibilidade">Visibilidade</h2>
+
+<p>Muitas vezes precisamos utilizar uma composição de diferentes Classes para resolver um problema.</p>
+
+<p>Mas se cada uma dessas Classes tiver sido declarada numa Unidade diferente, precisaremos declarar todas essas Unidades, para ter acesso a cada uma dessas Classes.</p>
+
+<p>Por exemplo. Precisamos da <code>TClass1</code>, <code>TClass2</code> e <code>TClass3</code>. Cada uma delas em Unidades diferentes, <code>Unit1</code>, <code>Unit2</code> e <code>Unit3</code>, respectivamente.</p>
+
+<pre><code>unit MyUnit;
+
+uses
+  Unit1, Unit2, Unit3;  
+  
+begin
+  TClass3.New(
+    TClass2.New(
+      TClass1.New
+    )
+  )
+end;
+</code></pre>
+
+<p>Se precisarmos utilizar essa composição em muitos lugares do código, teremos sempre que lembrar em quais Unidades essas Classes estão.</p>
+
+<p>Outra opção é dar visibilidade às Classes, redeclarando todas elas numa única Unidade, por exemplo <code>Unit123</code>, para que possamos utilizá-las de forma mais simples, porém ainda mantendo cada implementação em Unidades diferentes.</p>
+
+<pre><code>unit Unit123;
+
+uses
+  Unit1, Unit2, Unit3;
+
+type
+  TClass1 = Unit1.TClass1;
+  TClass2 = Unit2.TClass2;
+  TClass3 = Unit3.TClass3;
+</code></pre>
+
+<p>Agora, basta utilizarmos a <code>Unit123</code> no código para ter acesso a todas as 3 Classes que anteriormente só poderiam ser acessadas em Unidades distintas.</p>
+
+<pre><code>unit UnitTest;
+
+uses
+  Unit123;  
+  
+begin
+  TClass3.New(
+    TClass2.New(
+      TClass1.New
+    )
+  )
+end;
+</code></pre>
+
+<p>Esta técnica é bastante útil para simplificar uma API, fornecendo aos desenvolvedores somente algumas poucas Classes para uso em contextos bem específicos.</p>
+
+<h2 id="heranca">Herança</h2>
+
+<p>Há momentos que queremos utilizar <a href="/posts/como-utilizar-heranca-apropriadamente/">Herança de Classes</a> — mesmo sendo a Composição de Objetos a melhor escolha — porém gostaríamos de utilizar o mesmo nome da Classe ancestral.</p>
+
+<p>Vamos imaginar que estamos desenvolvendo um software e que em uma de suas Unidades tem uma Classe que <a href="/posts/objetos-representam-entidades/">representa</a> um arquivo PDF. Nomeamos essa Classe como <code>TPDFFile</code>.</p>
+
+<p>No entanto sabemos que poderá haver dezenas ou centenas de <em>Libs</em> que já trabalham com PDF. Então vamos chamar uma dessas <em>Libs</em> de <em>“PDFLib”</em>, apenas como exemplo.</p>
+
+<p>Na <em>PDFLib</em> temos uma Classe chamada <code>TPDFFile</code> que é exatamente o mesmo nome que já decidimos que será utilizada no nosso software, mas o arquiteto do projeto diz que nossa Classe deve herdar de <code>PDFLib.TPDFFile</code>.</p>
+
+<p>Acho que você já sabe a resposta:</p>
+
+<pre><code>unit MyPDFUnit;
+
+uses
+  PDFLib;
+
+type
+  TPDFFile = class(PDFLib.TPDFFile)
+    // more methods
+  end;
+</code></pre>
+
+<p>Prefixando a Classe da <em>Lib</em> podemos identificá-la de forma diferente da nossa Classe declarada na mesma Unidade.</p>
+
+<p>A Classe <code>TPDFFile</code> é agora uma extensão de <code>PDFLib.TPDFFile</code> que pertence a uma <em>Lib</em> externa. Mas para todo o restante do código no projeto, só existirá a Classe <code>MyPDFUnit.TPDFFile</code> que representa um PDF.</p>
+
+<h2 id="estendendo">Estendendo</h2>
+
+<p>A técnica que vou mostrar agora já era utilizada antes mesmo de haver a sintaxe para <em>Classes Helpers</em>.</p>
+
+<p>Por exemplo, imagine que você queira incluir novas propriedades ou métodos na Classe <code>TEdit</code>. O primeiro pensamento é utilizar herança para criar um novo componente. No entanto você não quer substituir cada <code>TEdit</code> em todos os <code>TForm</code> já existentes no projeto. Então, o que fazer?</p>
+
+<p>A resposta continua sendo utilizar Herança. Mas há um truque ou <em>hack</em> que irei mostrar na técnica a seguir. Mas gostaria de lembrar que isso deve ser utilizado com muita parcimônia. Eu só utilizei essa técnica pouquíssimas vezes e somente para Classes que representam <em>widgets</em>, ou seja, Classes de componentes que são utilizadas em Formulários.</p>
+
+<p>Para extender um <code>TEdit</code> sem criar uma nova Classe e sem ter que alterar os Formulários, basta utilizar a mesma técnica acima:</p>
+
+<pre><code>unit MyStdCtrls;
+
+type
+  TEdit = class(StdCtrls.TEdit) // or Vcl.StdCtrls.TEdit
+    // more methods and properties
+  end;
+</code></pre>
+
+<p>Você não precisa alterar os <em>widgets</em> nos Formulários. A renderização do <em>design</em> do Formulário irá funcionar utilizando os recursos (*.lfm | *.dfm) corretamente.</p>
+
+<p>Porém há um truque que você não pode esquecer: Em cada um desses Formulários você precisará <a href="/declarando-unidades">declarar</a> sua Unidade <strong>depois</strong> da Unidade <code>StdCtrls</code> real.</p>
+
+<pre><code>unit MyForm1;
+
+uses
+  StdCtrls, MyStdCtrls;
+</code></pre>
+
+<p>Esse <em>hack</em> é necessário para que o compilador ache a declaração da sua Unidade antes de encontrá-la na <code>StdCtrls</code> padrão.</p>
+
+<p>Por isso é tão importante ter uma <a href="/declarando-unidades">ordem</a> na declaração das Unidades.</p>
+
+<h2 id="opcional">Nomenclatura Opcional</h2>
+
+<p>Essa técnica pode ser considerada o oposto da primeira mostrada nesse artigo, ou seja, ao invés de você “renomear” uma Classe pertencente a outra <em>Lib</em>, você irá dar ao desenvolvedor opções de nomenclatura para o uso das suas Classes.</p>
+
+<p>Imagine que você codificou um <em>package</em> com algumas Classes. Nesse <em>package</em> você gosta de utilizar nomes simples como <code>TStream</code>, <code>TMemoryStream</code>, <code>TString</code>, <code>TInteger</code>, etc.</p>
+
+<p>Veja que já temos alguns possíveis “problemas” aqui. Vejamos:</p>
+
+<ol>
+  <li>As Classes <code>TStream</code> e <code>TMemoryStream</code> já existem no FPC|Delphi e por isso poderá haver colisão de nomes quando os desenvolvedores forem utilizar seu <em>package</em>, pois é bem provável que eles já estejam utilizando tais Classes padrão em seus projetos;</li>
+  <li>As Classes <code>TString</code> e <code>TInteger</code> são Classes com nomes muito simples ou genéricos e, novamente, é provável que alguma outra <em>Lib</em> ou mesmo os próprios projetos desses desenvolvedores já utilizem tais nomes.</li>
+</ol>
+
+<p>O problema aqui é o nome <em>limpo</em> e <em>curto</em>. Ao mesmo tempo que esses nomes são <em>perfeitos</em>, eles tem o grande potencial de gerar o problema da colisão de nomenclatura.</p>
+
+<p>Mas quando você está criando seu <em>package</em>, você tem que abstrair o mundo externo. O <a href="/posts/delegacao-de-implementacao-de-interfaces/#contextos">contexto</a> do <em>package</em> que deve influenciar a nomenclatura das Classes e não o mundo externo que, talvez, irá utilizá-lo!</p>
+
+<p>Eu “lutei” contra esse problema por muito anos. Antes de “descobrir” essa técnica, eu prefixava minhas Classes com 1, 2 ou 3 letras — esse parece ser o padrão utilizado por todos os desenvolvedores de componentes do mercado — porém você pode descobrir com o tempo que “seu prefixo” escolhido para suas Classes já foi utilizado em outra <em>Lib</em> de terceiros.</p>
+
+<p>Imagine você ter que utilizar nomes verbosos como <code>TXyzMemoryStream</code> por todo o seu código para, então, descobrir que <code>Xyz</code> já é o prefixo utilizado por uma grande “fazedora de componentes” do mercado.</p>
+
+<p>Então eu descobri que a linguagem <em>Object Pascal</em> já tinha uma resposta e eu poderia ter o melhor dos dois mundos. Eu poderia utilizar nomes simples, compactos e limpos dentro do meu contexto (<em>package</em>, projeto, <em>lib</em>) mas dar aos potenciais usuários|desenvolvedores um nome mais verboso, porém com menor possibilidade de haver colisão de nomes, se assim eu desejasse.</p>
+
+<p>Vejamos um exemplo. Uma das Classes do <a href="https://github.com/mdbs99/james/blob/master/src/james.data.clss.pas">James</a> tem o nome <code>TDataStream</code>. Esse nome já evita a colisão com <code>TStream</code> que é basicamente o que essa Classe representa, porém o “prefixo” <code>Data</code> não foi utilizado para minimizar a colisão de nomenclatura, mas sim devido a sua semântica.</p>
+
+<p>Mas digamos que agora o Lazarus e/ou Delphi implementaram uma Classe de uso geral chamada… <code>TDataStream</code>.</p>
+
+<p>Eu deveria mudar o nome dessa Classe no <a href="https://github.com/mdbs99/james">Projeto James</a> e em todos os meus projetos que já utilizam essa nomenclatura? É claro que não!</p>
+
+<p>Eu só iria dar a opção para os (novos) desenvolvedores utizarem outra nomenclatura para a mesma Classe, desse jeito:</p>
+
+<pre><code>type
+  TDataStream = class sealed(TInterfacedObject, IDataStream)
+  // some methods
+  end;
+  
+  TJamesDataStream = TDataStream;
+</code></pre>
+
+<p>O código agora tem 2 possibilidades de uso de nomenclatura para a mesma Classe!</p>
+
+<p>Você pode continuar utilizando <code>TDataStream</code> por todo o seu código, desde que mantenha a <a href="/declarando-unidades">ordem de declaração</a> das Unidades, ou pode utilizar a nova opção <code>TJamesDataStream</code>.</p>
+
+<p>E se mesmo assim ainda houver colisão de nomenclatura, aí caberá ao desenvolvedor utilizar a primeira técnica desse artigo.</p>
+
+<p>Dessa forma ambos os lados (desenvolvedores de <em>packages</em> e usuários de <em>packages</em>) estão <em>livres</em> para utilizarem os nomes que quiserem em suas Classes.</p>
+
+<p>A única exceção, até onde eu sei, são os componentes que são instalados na IDE. Ambas as IDE’s (Lazarus e Delphi) não deixam instalar componentes com o mesmo nome, mesmo estando em <em>packages</em> distintos. No entanto, na minha opinião, isso é um erro de <em>design</em> das IDE’s. Ambas deveriam permitir a instalação e, ao utilizarmos tais componentes, bastaria a IDE declarar os <em>fields</em> no Formulário utilizando a nomenclatura totalmente qualificada, como <code>Edit1: StdCtrls.TEdit;</code> e tudo iria funcionar.</p>
+
+<p>Eu fiz essa <a href="http://lists.lazarus-ide.org/pipermail/lazarus/2011-January/123929.html">proposta</a> na lista oficial do Lazarus em Janeiro/2011, porém ainda sem previsão, prioridade ou interesse.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>A redeclaração ou renomeação de Classes (e constantes, funções, etc) é uma técnica que existe quase desde os primórdios da linguagem, mas que a grande maioria dos desenvolvedores não utiliza, seja por desconhecimento, inabilidade ou mesmo falta de interesse.</p>
+
+<p>É um conceito <em>antigo</em>, mas que nos proporciona várias técnicas e possibilidades para codificar melhor <em>hoje</em>, conforme demonstrado nesse artigo.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/redeclarando-classes" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Redefinindo Classes&via=mdbs99;url=http://objectpascalprogramming.com/redeclarando-classes" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/redeclarando-classes" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/redeclarando-classes&title=Redefinindo Classes" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/redeclarando-classes&title=Redefinindo Classes" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/redeclarando-classes&t=Redefinindo Classes" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/git-work-project" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Git-work Project</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/imutabilidade-do-estado" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Imutabilidade do Estado</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/diretivas-de-compilacao" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Diretivas de Compilação</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/declarando-unidades" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Declarando Unidades</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/james-2017-07" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>James 2017-07</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/objetos-validadores" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Validadores</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/atributos-nao-existem" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Atributos Não Existem</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/mutabilidade-encapsulada" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Mutabilidade Encapsulada</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/atributos-primarios-secundarios" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Atributos Primários e Secundários</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/estado-do-objeto" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Estado do Objeto</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/redeclarando-classes';
+      var disqus_title      = 'Redefinindo Classes';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

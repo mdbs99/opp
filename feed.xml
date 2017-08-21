@@ -8,6 +8,254 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Redefinindo Classes</title>
+        <description>&lt;p&gt;A redeclaração de Classes é um método prático para minimizar a colisão de nomes entre Classes, mesmo utilizando identificadores curtos.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-mpumelelo-macu-283883.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Mpumelelo Macu on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;A linguagem &lt;em&gt;Object Pascal&lt;/em&gt; tem uma &lt;em&gt;feature&lt;/em&gt; muito útil que, acredito, não é muito utilizada pelos desenvolvedores.&lt;/p&gt;
+
+&lt;p&gt;Não sei se há um nome específico pra isso, mas eu a chamo de &lt;em&gt;Redefinição de Classes&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Na verdade essa &lt;em&gt;feature&lt;/em&gt; pode ser utilizada para redeclarar Classes, Constantes e até mesmo Funções.&lt;/p&gt;
+
+&lt;p&gt;Porém, na Orientação a Objetos, basicamente só utilizamos Classes. Então esqueça o resto e vamos nos concentrar nelas.&lt;/p&gt;
+
+&lt;p&gt;Vamos ver algumas técnicas que podem ser aplicadas utilizando tal conceito.&lt;/p&gt;
+
+&lt;h2 id=&quot;renomeando&quot;&gt;Renomeando&lt;/h2&gt;
+
+&lt;p&gt;Imagine que você quer utilizar uma classe de alguma &lt;em&gt;Lib&lt;/em&gt;, mas essa Classe tem o mesmo nome — exemplo &lt;code&gt;TSmartMemory&lt;/code&gt;— de uma de suas Classes que você já utiliza por todo o seu código. O que fazer?&lt;/p&gt;
+
+&lt;p&gt;A primeira opção é nunca utilizar ambas as Classes numa mesma Unidade. Mas talvez você não tenha essa sorte.&lt;/p&gt;
+
+&lt;p&gt;A segunda opção é prefixar uma das Classes com o nome da Unidade — muito comum ver isso em projetos Java — por exemplo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;uses
+  LibMemory,
+  MyMemory;
+
+begin
+  M := TSmartMemory.New;  // your class
+  L := LibMemory.TSmartMemory.Create;
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A terceira opção, que eu utilizo na maioria das vezes, é &lt;em&gt;“renomear”&lt;/em&gt; a Classe da &lt;em&gt;Lib&lt;/em&gt; para uma nomenclatura que não colide com a nomenclatura já utilizada no meu projeto. Vejamos um exemplo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit MyMemory;
+
+uses
+  LibMemory;
+
+type
+  // TSmartMemory from LibMemory
+  TLibStartMemory = TSmartMemory; 
+
+  // my new class
+  TSmartMemory = class
+    // ...
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nesse exemplo ambas as Classes estão declaradas na mesma Unidade existente no projeto — a &lt;code&gt;MyMemory&lt;/code&gt; — e o projeto poderá utilizar ambas as Classes sem colisão de nomenclatura.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;begin
+  M := TSmartMemory.New;
+  L := TLibSmartMemory.Create;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Utilizando essa técnica evitamos o conflito de nomes, o que é muito útil.&lt;/p&gt;
+
+&lt;p&gt;Ao invés de utilizarmos o nome real da Classe, podemos lhe dar um &lt;em&gt;apelido&lt;/em&gt;. O código fica mais limpo, simples e com identificadores curtos, pois não temos a necessidade de utilizar a Unidade como prefixo.&lt;/p&gt;
+
+&lt;p&gt;A linguagem C# &lt;a href=&quot;https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/using-directive&quot;&gt;tem algo muito parecido&lt;/a&gt; o que me faz pensar de onde será que o principal arquiteto da linguagem C# tirou essa ideia.&lt;/p&gt;
+
+&lt;h2 id=&quot;visibilidade&quot;&gt;Visibilidade&lt;/h2&gt;
+
+&lt;p&gt;Muitas vezes precisamos utilizar uma composição de diferentes Classes para resolver um problema.&lt;/p&gt;
+
+&lt;p&gt;Mas se cada uma dessas Classes tiver sido declarada numa Unidade diferente, precisaremos declarar todas essas Unidades, para ter acesso a cada uma dessas Classes.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo. Precisamos da &lt;code&gt;TClass1&lt;/code&gt;, &lt;code&gt;TClass2&lt;/code&gt; e &lt;code&gt;TClass3&lt;/code&gt;. Cada uma delas em Unidades diferentes, &lt;code&gt;Unit1&lt;/code&gt;, &lt;code&gt;Unit2&lt;/code&gt; e &lt;code&gt;Unit3&lt;/code&gt;, respectivamente.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit MyUnit;
+
+uses
+  Unit1, Unit2, Unit3;  
+  
+begin
+  TClass3.New(
+    TClass2.New(
+      TClass1.New
+    )
+  )
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Se precisarmos utilizar essa composição em muitos lugares do código, teremos sempre que lembrar em quais Unidades essas Classes estão.&lt;/p&gt;
+
+&lt;p&gt;Outra opção é dar visibilidade às Classes, redeclarando todas elas numa única Unidade, por exemplo &lt;code&gt;Unit123&lt;/code&gt;, para que possamos utilizá-las de forma mais simples, porém ainda mantendo cada implementação em Unidades diferentes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit Unit123;
+
+uses
+  Unit1, Unit2, Unit3;
+
+type
+  TClass1 = Unit1.TClass1;
+  TClass2 = Unit2.TClass2;
+  TClass3 = Unit3.TClass3;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Agora, basta utilizarmos a &lt;code&gt;Unit123&lt;/code&gt; no código para ter acesso a todas as 3 Classes que anteriormente só poderiam ser acessadas em Unidades distintas.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit UnitTest;
+
+uses
+  Unit123;  
+  
+begin
+  TClass3.New(
+    TClass2.New(
+      TClass1.New
+    )
+  )
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Esta técnica é bastante útil para simplificar uma API, fornecendo aos desenvolvedores somente algumas poucas Classes para uso em contextos bem específicos.&lt;/p&gt;
+
+&lt;h2 id=&quot;heranca&quot;&gt;Herança&lt;/h2&gt;
+
+&lt;p&gt;Há momentos que queremos utilizar &lt;a href=&quot;/posts/como-utilizar-heranca-apropriadamente/&quot;&gt;Herança de Classes&lt;/a&gt; — mesmo sendo a Composição de Objetos a melhor escolha — porém gostaríamos de utilizar o mesmo nome da Classe ancestral.&lt;/p&gt;
+
+&lt;p&gt;Vamos imaginar que estamos desenvolvendo um software e que em uma de suas Unidades tem uma Classe que &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;representa&lt;/a&gt; um arquivo PDF. Nomeamos essa Classe como &lt;code&gt;TPDFFile&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;No entanto sabemos que poderá haver dezenas ou centenas de &lt;em&gt;Libs&lt;/em&gt; que já trabalham com PDF. Então vamos chamar uma dessas &lt;em&gt;Libs&lt;/em&gt; de &lt;em&gt;“PDFLib”&lt;/em&gt;, apenas como exemplo.&lt;/p&gt;
+
+&lt;p&gt;Na &lt;em&gt;PDFLib&lt;/em&gt; temos uma Classe chamada &lt;code&gt;TPDFFile&lt;/code&gt; que é exatamente o mesmo nome que já decidimos que será utilizada no nosso software, mas o arquiteto do projeto diz que nossa Classe deve herdar de &lt;code&gt;PDFLib.TPDFFile&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Acho que você já sabe a resposta:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit MyPDFUnit;
+
+uses
+  PDFLib;
+
+type
+  TPDFFile = class(PDFLib.TPDFFile)
+    // more methods
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Prefixando a Classe da &lt;em&gt;Lib&lt;/em&gt; podemos identificá-la de forma diferente da nossa Classe declarada na mesma Unidade.&lt;/p&gt;
+
+&lt;p&gt;A Classe &lt;code&gt;TPDFFile&lt;/code&gt; é agora uma extensão de &lt;code&gt;PDFLib.TPDFFile&lt;/code&gt; que pertence a uma &lt;em&gt;Lib&lt;/em&gt; externa. Mas para todo o restante do código no projeto, só existirá a Classe &lt;code&gt;MyPDFUnit.TPDFFile&lt;/code&gt; que representa um PDF.&lt;/p&gt;
+
+&lt;h2 id=&quot;estendendo&quot;&gt;Estendendo&lt;/h2&gt;
+
+&lt;p&gt;A técnica que vou mostrar agora já era utilizada antes mesmo de haver a sintaxe para &lt;em&gt;Classes Helpers&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo, imagine que você queira incluir novas propriedades ou métodos na Classe &lt;code&gt;TEdit&lt;/code&gt;. O primeiro pensamento é utilizar herança para criar um novo componente. No entanto você não quer substituir cada &lt;code&gt;TEdit&lt;/code&gt; em todos os &lt;code&gt;TForm&lt;/code&gt; já existentes no projeto. Então, o que fazer?&lt;/p&gt;
+
+&lt;p&gt;A resposta continua sendo utilizar Herança. Mas há um truque ou &lt;em&gt;hack&lt;/em&gt; que irei mostrar na técnica a seguir. Mas gostaria de lembrar que isso deve ser utilizado com muita parcimônia. Eu só utilizei essa técnica pouquíssimas vezes e somente para Classes que representam &lt;em&gt;widgets&lt;/em&gt;, ou seja, Classes de componentes que são utilizadas em Formulários.&lt;/p&gt;
+
+&lt;p&gt;Para extender um &lt;code&gt;TEdit&lt;/code&gt; sem criar uma nova Classe e sem ter que alterar os Formulários, basta utilizar a mesma técnica acima:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit MyStdCtrls;
+
+type
+  TEdit = class(StdCtrls.TEdit) // or Vcl.StdCtrls.TEdit
+    // more methods and properties
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Você não precisa alterar os &lt;em&gt;widgets&lt;/em&gt; nos Formulários. A renderização do &lt;em&gt;design&lt;/em&gt; do Formulário irá funcionar utilizando os recursos (*.lfm | *.dfm) corretamente.&lt;/p&gt;
+
+&lt;p&gt;Porém há um truque que você não pode esquecer: Em cada um desses Formulários você precisará &lt;a href=&quot;/declarando-unidades&quot;&gt;declarar&lt;/a&gt; sua Unidade &lt;strong&gt;depois&lt;/strong&gt; da Unidade &lt;code&gt;StdCtrls&lt;/code&gt; real.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit MyForm1;
+
+uses
+  StdCtrls, MyStdCtrls;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Esse &lt;em&gt;hack&lt;/em&gt; é necessário para que o compilador ache a declaração da sua Unidade antes de encontrá-la na &lt;code&gt;StdCtrls&lt;/code&gt; padrão.&lt;/p&gt;
+
+&lt;p&gt;Por isso é tão importante ter uma &lt;a href=&quot;/declarando-unidades&quot;&gt;ordem&lt;/a&gt; na declaração das Unidades.&lt;/p&gt;
+
+&lt;h2 id=&quot;opcional&quot;&gt;Nomenclatura Opcional&lt;/h2&gt;
+
+&lt;p&gt;Essa técnica pode ser considerada o oposto da primeira mostrada nesse artigo, ou seja, ao invés de você “renomear” uma Classe pertencente a outra &lt;em&gt;Lib&lt;/em&gt;, você irá dar ao desenvolvedor opções de nomenclatura para o uso das suas Classes.&lt;/p&gt;
+
+&lt;p&gt;Imagine que você codificou um &lt;em&gt;package&lt;/em&gt; com algumas Classes. Nesse &lt;em&gt;package&lt;/em&gt; você gosta de utilizar nomes simples como &lt;code&gt;TStream&lt;/code&gt;, &lt;code&gt;TMemoryStream&lt;/code&gt;, &lt;code&gt;TString&lt;/code&gt;, &lt;code&gt;TInteger&lt;/code&gt;, etc.&lt;/p&gt;
+
+&lt;p&gt;Veja que já temos alguns possíveis “problemas” aqui. Vejamos:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;As Classes &lt;code&gt;TStream&lt;/code&gt; e &lt;code&gt;TMemoryStream&lt;/code&gt; já existem no FPC|Delphi e por isso poderá haver colisão de nomes quando os desenvolvedores forem utilizar seu &lt;em&gt;package&lt;/em&gt;, pois é bem provável que eles já estejam utilizando tais Classes padrão em seus projetos;&lt;/li&gt;
+  &lt;li&gt;As Classes &lt;code&gt;TString&lt;/code&gt; e &lt;code&gt;TInteger&lt;/code&gt; são Classes com nomes muito simples ou genéricos e, novamente, é provável que alguma outra &lt;em&gt;Lib&lt;/em&gt; ou mesmo os próprios projetos desses desenvolvedores já utilizem tais nomes.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;O problema aqui é o nome &lt;em&gt;limpo&lt;/em&gt; e &lt;em&gt;curto&lt;/em&gt;. Ao mesmo tempo que esses nomes são &lt;em&gt;perfeitos&lt;/em&gt;, eles tem o grande potencial de gerar o problema da colisão de nomenclatura.&lt;/p&gt;
+
+&lt;p&gt;Mas quando você está criando seu &lt;em&gt;package&lt;/em&gt;, você tem que abstrair o mundo externo. O &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/#contextos&quot;&gt;contexto&lt;/a&gt; do &lt;em&gt;package&lt;/em&gt; que deve influenciar a nomenclatura das Classes e não o mundo externo que, talvez, irá utilizá-lo!&lt;/p&gt;
+
+&lt;p&gt;Eu “lutei” contra esse problema por muito anos. Antes de “descobrir” essa técnica, eu prefixava minhas Classes com 1, 2 ou 3 letras — esse parece ser o padrão utilizado por todos os desenvolvedores de componentes do mercado — porém você pode descobrir com o tempo que “seu prefixo” escolhido para suas Classes já foi utilizado em outra &lt;em&gt;Lib&lt;/em&gt; de terceiros.&lt;/p&gt;
+
+&lt;p&gt;Imagine você ter que utilizar nomes verbosos como &lt;code&gt;TXyzMemoryStream&lt;/code&gt; por todo o seu código para, então, descobrir que &lt;code&gt;Xyz&lt;/code&gt; já é o prefixo utilizado por uma grande “fazedora de componentes” do mercado.&lt;/p&gt;
+
+&lt;p&gt;Então eu descobri que a linguagem &lt;em&gt;Object Pascal&lt;/em&gt; já tinha uma resposta e eu poderia ter o melhor dos dois mundos. Eu poderia utilizar nomes simples, compactos e limpos dentro do meu contexto (&lt;em&gt;package&lt;/em&gt;, projeto, &lt;em&gt;lib&lt;/em&gt;) mas dar aos potenciais usuários|desenvolvedores um nome mais verboso, porém com menor possibilidade de haver colisão de nomes, se assim eu desejasse.&lt;/p&gt;
+
+&lt;p&gt;Vejamos um exemplo. Uma das Classes do &lt;a href=&quot;https://github.com/mdbs99/james/blob/master/src/james.data.clss.pas&quot;&gt;James&lt;/a&gt; tem o nome &lt;code&gt;TDataStream&lt;/code&gt;. Esse nome já evita a colisão com &lt;code&gt;TStream&lt;/code&gt; que é basicamente o que essa Classe representa, porém o “prefixo” &lt;code&gt;Data&lt;/code&gt; não foi utilizado para minimizar a colisão de nomenclatura, mas sim devido a sua semântica.&lt;/p&gt;
+
+&lt;p&gt;Mas digamos que agora o Lazarus e/ou Delphi implementaram uma Classe de uso geral chamada… &lt;code&gt;TDataStream&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Eu deveria mudar o nome dessa Classe no &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;Projeto James&lt;/a&gt; e em todos os meus projetos que já utilizam essa nomenclatura? É claro que não!&lt;/p&gt;
+
+&lt;p&gt;Eu só iria dar a opção para os (novos) desenvolvedores utizarem outra nomenclatura para a mesma Classe, desse jeito:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TDataStream = class sealed(TInterfacedObject, IDataStream)
+  // some methods
+  end;
+  
+  TJamesDataStream = TDataStream;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O código agora tem 2 possibilidades de uso de nomenclatura para a mesma Classe!&lt;/p&gt;
+
+&lt;p&gt;Você pode continuar utilizando &lt;code&gt;TDataStream&lt;/code&gt; por todo o seu código, desde que mantenha a &lt;a href=&quot;/declarando-unidades&quot;&gt;ordem de declaração&lt;/a&gt; das Unidades, ou pode utilizar a nova opção &lt;code&gt;TJamesDataStream&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;E se mesmo assim ainda houver colisão de nomenclatura, aí caberá ao desenvolvedor utilizar a primeira técnica desse artigo.&lt;/p&gt;
+
+&lt;p&gt;Dessa forma ambos os lados (desenvolvedores de &lt;em&gt;packages&lt;/em&gt; e usuários de &lt;em&gt;packages&lt;/em&gt;) estão &lt;em&gt;livres&lt;/em&gt; para utilizarem os nomes que quiserem em suas Classes.&lt;/p&gt;
+
+&lt;p&gt;A única exceção, até onde eu sei, são os componentes que são instalados na IDE. Ambas as IDE’s (Lazarus e Delphi) não deixam instalar componentes com o mesmo nome, mesmo estando em &lt;em&gt;packages&lt;/em&gt; distintos. No entanto, na minha opinião, isso é um erro de &lt;em&gt;design&lt;/em&gt; das IDE’s. Ambas deveriam permitir a instalação e, ao utilizarmos tais componentes, bastaria a IDE declarar os &lt;em&gt;fields&lt;/em&gt; no Formulário utilizando a nomenclatura totalmente qualificada, como &lt;code&gt;Edit1: StdCtrls.TEdit;&lt;/code&gt; e tudo iria funcionar.&lt;/p&gt;
+
+&lt;p&gt;Eu fiz essa &lt;a href=&quot;http://lists.lazarus-ide.org/pipermail/lazarus/2011-January/123929.html&quot;&gt;proposta&lt;/a&gt; na lista oficial do Lazarus em Janeiro/2011, porém ainda sem previsão, prioridade ou interesse.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;A redeclaração ou renomeação de Classes (e constantes, funções, etc) é uma técnica que existe quase desde os primórdios da linguagem, mas que a grande maioria dos desenvolvedores não utiliza, seja por desconhecimento, inabilidade ou mesmo falta de interesse.&lt;/p&gt;
+
+&lt;p&gt;É um conceito &lt;em&gt;antigo&lt;/em&gt;, mas que nos proporciona várias técnicas e possibilidades para codificar melhor &lt;em&gt;hoje&lt;/em&gt;, conforme demonstrado nesse artigo.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 21 Aug 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/redeclarando-classes</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/redeclarando-classes</guid>
+      </item>
+    
+      <item>
         <title>Git-work Project</title>
         <description>&lt;p&gt;Git-work são extensões minimalistas para Git, fornecendo operações de repositório de alto nível.&lt;/p&gt;
 
@@ -844,97 +1092,6 @@ Poderíamos &lt;em&gt;remover&lt;/em&gt; esse atributo.&lt;/p&gt;
         <pubDate>Mon, 12 Jun 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/atributos-primarios-secundarios</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/atributos-primarios-secundarios</guid>
-      </item>
-    
-      <item>
-        <title>Estado do Objeto</title>
-        <description>&lt;p&gt;Estado de um Objeto. Existem dois tipos. Entenda-os e torne-os invioláveis.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-tim-evans-88330.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Venho escrevendo sobre Orientação a Objetos e já falei  várias vezes sobre o &lt;em&gt;Estado de um Objeto&lt;/em&gt;, mas nunca havia explicado o que exatamente isso significa.&lt;/p&gt;
-
-&lt;p&gt;Saber esse conceito é primordial para o entendimento da verdadeira Orientação a Objetos.&lt;/p&gt;
-
-&lt;h2 id=&quot;estado&quot;&gt;O que é Estado&lt;/h2&gt;
-
-&lt;p&gt;Todo Objeto é composto de Estado e Comportamento.&lt;/p&gt;
-
-&lt;p&gt;Enquanto o comportamento é o que o Objeto &lt;em&gt;faz&lt;/em&gt;, Estado é o que o Objeto &lt;em&gt;sabe&lt;/em&gt; sobre a &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidade&lt;/a&gt; que ele está representando dentro do &lt;em&gt;software&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Todo Objeto tem um Estado, mesmo que você não saiba sobre ele.&lt;/p&gt;
-
-&lt;p&gt;Existem basicamente dois tipos de Estado.&lt;/p&gt;
-
-&lt;h2 id=&quot;implicito&quot;&gt;Estado Implícito&lt;/h2&gt;
-
-&lt;p&gt;Todo Objeto tem ou &lt;a href=&quot;/posts/objetos-sem-estado/&quot;&gt;deveria&lt;/a&gt; ter um Estado. No entanto existem casos especiais onde um Estado inicial não faz sentido &lt;em&gt;tecnicamente&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Um exemplo de um Objeto sem Estado inicial é uma Lista. Podemos inicializar a lista com um item, porém nem sempre esse será o caso. Na maioria das vezes queremos uma lista para depois ir adicionando itens. Então iniciamos a lista sem Estado aparente.&lt;/p&gt;
-
-&lt;p&gt;Isso é fato se tivermos uma visão estritamente técnica. Mas quando essa lista for instânciada na memória do computador, seu Estado será inicializado. Em outras palavras, a área de memória que o Sistema Operacional concedeu ao Objeto será, também, o seu Estado.&lt;/p&gt;
-
-&lt;p&gt;Pensando &lt;em&gt;filosoficamente&lt;/em&gt;, no
-&lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt; de uma Classe Lista que é inicializada vazia, “sem estado”, seria passado o endereço de memória onde a lista iria residir na memória do computador. Porém construtores já fazem isso por padrão — encontram um endereço de memória disponível — então não há necessidade de sabermos endereços de memória e muito menos passá-los no construtor.&lt;/p&gt;
-
-&lt;p&gt;Estados implícitos devem ser utilizados apenas para Objetos primários ou muito genéricos, como uma lista.&lt;/p&gt;
-
-&lt;h2 id=&quot;explicito&quot;&gt;Estado Explícito&lt;/h2&gt;
-
-&lt;p&gt;Argumentos nos &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt; de Classes mostram a intenção do desenvolvedor em instanciar um Objeto com um Estado Explícito.&lt;/p&gt;
-
-&lt;p&gt;No entanto tais argumentos podem ou não fazer parte do Estado do Objeto que queremos inicializar.&lt;/p&gt;
-
-&lt;p&gt;É o Objeto que irá decidir o que utilizar no seu Estado.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo. Numa Classe &lt;code&gt;TSalary&lt;/code&gt;, que representa um salário de alguém, é esperado um argumento no construtor do tipo &lt;code&gt;IMoney&lt;/code&gt;, que é uma &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interface&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TSalary&lt;/code&gt; poderia ter um outro construtor secundário com um argumento do tipo &lt;code&gt;string&lt;/code&gt;. Porém sabemos que um &lt;em&gt;TSalary&lt;/em&gt; não é uma &lt;em&gt;string&lt;/em&gt; e seu Estado não pode ser inicializado com um valor que não seja um &lt;code&gt;IMoney&lt;/code&gt;. Então porque esse construtor existe?&lt;/p&gt;
-
-&lt;p&gt;Um exemplo de implementação desses construtores poderia ser assim:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;// primary
-construtor TSalary.Create(Value: IMoney);
-begin
-  FValue := Value;
-end;
-
-// secondary
-construtor TSalary.Create(const Value: string);
-begin
-  Create(TStringAsMoney.New(Value));
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;No exemplo acima o construtor secundário chama o primário com o argumento correto, do tipo &lt;code&gt;IMoney&lt;/code&gt;, porém outro Objeto é utilizado. O argumento &lt;code&gt;Value&lt;/code&gt; do tipo &lt;em&gt;string&lt;/em&gt; não faz parte do estado de &lt;code&gt;TSalary&lt;/code&gt; porém faz parte do estado de &lt;code&gt;TStringAsMoney&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Como eu disse antes, o Objeto que decide.&lt;/p&gt;
-
-&lt;p&gt;Estados explícitos devem ser utilizados em todos os Objetos de alto nível e de regras de negócio.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;De todo esse papo técnico mas também filosófico, o que você nunca deve esquecer quando estiver construindo uma Classe é:&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;O estado de um Objeto jamais deve ser violado.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Após o Objeto ser criado, seu Estado — implícito ou explícito — nunca poderia ser alterado, permanecendo intacto até o fim da sua vida.&lt;/p&gt;
-
-&lt;p&gt;Se esse Estado for violado significa que seu Objeto não possui &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulamento&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Um Objeto que não encapsula não pode ser considerado um Objeto. Chame-o de estrutura de dados.&lt;/p&gt;
-
-&lt;p&gt;Objetos tem Estado, estruturas tem Dados.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 05 Jun 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/estado-do-objeto</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/estado-do-objeto</guid>
       </item>
     
   </channel>
