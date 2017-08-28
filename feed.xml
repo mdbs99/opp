@@ -8,6 +8,134 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Porquê eu escolhi Delphi e então, Object Pascal</title>
+        <description>&lt;p&gt;Essa é minha contribuição aos artigos na Internet com a &lt;em&gt;hastag&lt;/em&gt; &lt;a href=&quot;https://www.google.com.br/search?q=%23WhyIChooseDelphi&quot;&gt;#WhyIChooseDelphi&lt;/a&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-kace-rodriguez-75513.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Kace Rodriguez on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;inicio&quot;&gt;Quando tudo começou&lt;/h2&gt;
+
+&lt;p&gt;Minha história com &lt;em&gt;Object Pascal&lt;/em&gt; começa em 1999 quando comecei a estudar programação de computadores.&lt;/p&gt;
+
+&lt;p&gt;Havia um curso chamado Programação de Computadores com “Novas” Tecnologias ministrado na PUC-RJ.&lt;/p&gt;
+
+&lt;p&gt;Lá eu aprendi bastante sobre algoritmos, SGBD’s e linguagens de programação como COBOL, C/C++, Pascal, Java, Visual Basic e &lt;a href=&quot;https://www.embarcadero.com/products/delphi&quot;&gt;Delphi&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Através dos convênios da PUC com outras empresas, consegui meu primeiro emprego como estagiário numa &lt;em&gt;software house&lt;/em&gt; chamada &lt;em&gt;Fuzion Engenharia de Software&lt;/em&gt; em meados do ano 2000.&lt;/p&gt;
+
+&lt;h2 id=&quot;delphi&quot;&gt;Um caminho diferente&lt;/h2&gt;
+
+&lt;p&gt;Na &lt;em&gt;Fuzion&lt;/em&gt; utilizáva-mos Delphi, Visual Basic e pouca coisa em Java. No entanto, a maioria dos projetos eram desenvolvidos em Delphi.&lt;/p&gt;
+
+&lt;p&gt;Na PUC éramos referência no desenvolvimento &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientado a Objetos&lt;/a&gt;. Veja, em Delphi, não em Java.&lt;/p&gt;
+
+&lt;p&gt;Quando eu entrei na empresa a versão era Delphi 4. Alguns bugs, alguns problemas… mas então veio a tão aclamada versão 5 e a produtividade era sem igual.&lt;/p&gt;
+
+&lt;p&gt;Tínhamos desenvolvido nossa própria metodologia e ferramentas que geravam código automaticamente e eu já tinha um cargo de Desenvolvedor Pleno.&lt;/p&gt;
+
+&lt;p&gt;Nunca utilizamos &lt;em&gt;DB-aware components&lt;/em&gt;, pois tudo era feito através de camadas e Objetos. Esse era um dos motivos para ser tão difícil contratar mais desenvolvedores, pois aqueles que vinham fazer uma prova depois da entrevista, não sabiam como mostrar informações num &lt;em&gt;Form&lt;/em&gt; com “Mestre/Detalhe” e outros &lt;em&gt;widgets&lt;/em&gt;, sem utizar componentes &lt;em&gt;DB-aware&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Essa sempre foi a beleza do Delphi: Você pode utilizar o paradigma que quiser e conseguir um excelente resultado no final.&lt;/p&gt;
+
+&lt;p&gt;Na Fuzion trilhávamos um caminho diferente. Delphi era um dos nossos segredos de performance e eficácia. E tivemos sucesso… enquanto durou.&lt;/p&gt;
+
+&lt;h2 id=&quot;mudando&quot;&gt;A mudança de ambiente&lt;/h2&gt;
+
+&lt;p&gt;Eu abri minha própria empresa em 2003 para trabalhar como consultor alocado em outras empresas.&lt;/p&gt;
+
+&lt;p&gt;Eu já havia mudado de empresa umas duas vezes até estar na atual, onde já trabalho por quase 13 anos.&lt;/p&gt;
+
+&lt;p&gt;Lá também utilizamos Delphi, a versão 7. Na época que entrei nesta empresa, o Delphi ainda dominada o mercado quando se tratava de aplicações Desktop.&lt;/p&gt;
+
+&lt;p&gt;Por volta de 2006 (se não me engano) a Borland estava vendendo o Delphi. Eu acompanhei, com tristeza, o Delphi ser vendido entre as empresas.&lt;/p&gt;
+
+&lt;p&gt;Eu adorava a Borland, a ponto de querer trabalhar pra ela, e Delphi sempre foi a minha escolha, mas eu achava que tinha que seguir em frente, já que agora o caminho parecida incerto.&lt;/p&gt;
+
+&lt;p&gt;Apesar de na época estar num emprego relativamente estável, eu tinha meus próprios clientes. Eu utilizei Delphi para fazer todos os seus &lt;em&gt;softwares&lt;/em&gt; e, como não tinha certeza se o Delphi iria sobreviver, comecei a pensar em migrar para outra linguagem, outro ambiente.&lt;/p&gt;
+
+&lt;p&gt;Apenas em 2010 eu comecei a pensar em outras possibilidades, quando soube um um projeto que “voltou das cinzas”, hoje conhecido como Lazarus.&lt;/p&gt;
+
+&lt;h2 id=&quot;lazarus&quot;&gt;Migrando para Lazarus&lt;/h2&gt;
+
+&lt;p&gt;Eu comecei a utilizar &lt;a href=&quot;http://www.lazarus-ide.org/&quot;&gt;Lazarus&lt;/a&gt; e quase desisti. Comparado com o Delphi, na época, Lazarus era muito inferior.&lt;/p&gt;
+
+&lt;p&gt;Muitos bugs, pouca produtividade e muita diferença entre ambientes. Apesar de ambos utilizarem a mesma linguagem.&lt;/p&gt;
+
+&lt;p&gt;Felizmente eu consegui superar os problemas. Hoje o ambiente Lazarus é bem estável e completo e me sinto “em casa” como eu me sentia na época do Delphi 5~7.&lt;/p&gt;
+
+&lt;p&gt;Então consegui migrar muitos projetos de Delphi para Lazarus e outros parmaneceram nas versões antigas de Delphi — e vão muito bem, obrigado.&lt;/p&gt;
+
+&lt;p&gt;Apesar de ainda haver problemas, hoje em dia a história parece ser outra. Cada vez mais vejo pessoas reclamando de &lt;em&gt;bugs&lt;/em&gt; no Delphi e, em comparação, vejo cada vez mais elogios ao Lazarus e ao compilador &lt;a href=&quot;https://freepascal.org/&quot;&gt;Free Pascal&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Hoje em dia tenho aplicações Desktop e Web, construídas em Free Pascal e Lazarus, rodando em servidores Windows IIS utilizando &lt;a href=&quot;https://www.iis.net/downloads/microsoft/fastcgi-for-iis&quot;&gt;FastCGI&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Nada mal, considerando que tais &lt;em&gt;softwares&lt;/em&gt; foram desenvolvidos utilizando ferramentas gratuitas e livres, não é?&lt;/p&gt;
+
+&lt;p&gt;Free Pascal e Lazarus são ferramentas desenvolvidas apenas nas horas vagas por alguns programadores motivados e apaixonados por &lt;em&gt;Object Pascal&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;motivos&quot;&gt;Simplicidade, Performance e Lucro&lt;/h2&gt;
+
+&lt;p&gt;Hoje em dia existem tantas linguagens e ambientes que alguns programadores continuam querendo saber meus motivos em continuar utilizando &lt;em&gt;Object Pascal&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Bem, eu publiquei um vídeo que explica meus principais motivos.&lt;/p&gt;
+
+&lt;div style=&quot;position:relative;height:0;padding-bottom:56.25%&quot;&gt;&lt;iframe src=&quot;https://www.youtube.com/embed/iayMGRIRwjY?ecver=2&quot; width=&quot;640&quot; height=&quot;360&quot; frameborder=&quot;0&quot; style=&quot;position:absolute;width:100%;height:100%;left:0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/div&gt;
+
+&lt;p&gt;E enquanto esses motivos forem válidos, irei continuar utilizando a linguagem &lt;em&gt;Object Pascal&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;hoje&quot;&gt;Object Pascal hoje em dia&lt;/h2&gt;
+
+&lt;p&gt;A linguagem &lt;em&gt;Object Pascal&lt;/em&gt; é relevante hoje em dia? Bem, depende de como você o mundo.&lt;/p&gt;
+
+&lt;p&gt;A linguagem &lt;em&gt;Object Pascal&lt;/em&gt;, pra mim, é como um carro esportivo antigo, como essa imagem do &lt;em&gt;Porsche&lt;/em&gt; aí em cima.&lt;/p&gt;
+
+&lt;p&gt;Esse &lt;em&gt;Porsche&lt;/em&gt; — ou quase qualquer outro esportivo antigo —  é simples, manual e puro. Você precisa saber o que está fazendo a todo momento. Não há computadores e sensores para lhe ajudar. Não há muita segurança como &lt;em&gt;airbags&lt;/em&gt;. Você tem que fazer mais força para “domá-lo”. Quase tudo é manual e “barulhento”. Você precisa entender de subesterço e sobre-esterço, se quiser dirigir de forma mais agressiva ao entrar numa curva. Enfim, você precisa saber muita coisa se quiser ter a verdadeira experiência de dirigir.&lt;/p&gt;
+
+&lt;p&gt;Mas no fim do dia, após passar algumas horas atrás do volante, você se sente realizado. Você sabe exatamente o que fez. Você entende como as coisas funcionam nos seus mínimos detalhes. Você estava integrado ao ambiente. Você era apenas um com seu &lt;em&gt;Porsche&lt;/em&gt;. Homem e máquina.&lt;/p&gt;
+
+&lt;p&gt;A linguagem &lt;em&gt;Object Pascal&lt;/em&gt; é como um clássico esportivo que nunca sai de moda.&lt;/p&gt;
+
+&lt;p&gt;Hoje temos cada vez mais IDE’s e linguagens “inteligentes” que podem mudar a cada nova versão. Esquecem do passado e “inventam” novas maneiras de fazer a mesma coisa que já fazíamos antes. Essas IDE’s nos dão &lt;em&gt;“airbags”&lt;/em&gt;, “segurança” e todo tipo de “artefato” para ajudar no desenvolvimento, mas no fim o desenvolvedor não sabe exatamente o que está fazendo. Ele apenas memorizou quais “botões apertar no painel” e se algo não sai conforme o esperado, sempre haverá a Internet para responder suas dúvidas, certo?&lt;/p&gt;
+
+&lt;p&gt;Vejo desenvolvedores correndo atrás do último lançamento da IDE, &lt;em&gt;Lib&lt;/em&gt; ou compilador, apenas para constatarem que deverão modificar seu código que antes funcionava.&lt;/p&gt;
+
+&lt;p&gt;A última versão do compilador adiciou tais e tais &lt;em&gt;features&lt;/em&gt; e todos querem utilizar, no entanto a maioria não sabe separar um &lt;em&gt;software&lt;/em&gt; em módulos reutilizáveis!&lt;/p&gt;
+
+&lt;p&gt;Então, pra mim, &lt;em&gt;Object Pascal&lt;/em&gt; continua muito relevante. Gosto de “ter trabalho” ao construir meus &lt;em&gt;softwares&lt;/em&gt;, pois gosto do sentimento de ter construído algo por minhas próprias mãos sem ser obrigado a seguir as “regras de desenvolvimento” que algumas empresas consideram ideal.&lt;/p&gt;
+
+&lt;p&gt;Não quero depender de outras empresas e de seus produtos privados, que podem mudar a qualquer momento, para que eu possa entregar valor aos meus clientes. A confiança que eu tinha na antiga Borland se foi… até que me provem o contrário. Hoje eu quero ser livre.&lt;/p&gt;
+
+&lt;p&gt;Liberdade, é disso que se trata.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Eu gosto de imaginar um mundo onde o Delphi fosse disponibilizado de graça, doado ao time do Free Pascal e Lazarus.&lt;/p&gt;
+
+&lt;p&gt;Gosto de pensar numa união de forças entre o &lt;em&gt;Open Source&lt;/em&gt; e a magnífica IDE, Delphi, que sempre ajudou o desenvolvedor (experiente ou não) da melhor forma possível.&lt;/p&gt;
+
+&lt;p&gt;Gosto de pensar num mundo onde iríamos dar um passo pra trás e ver a beleza e a simplicidade da linguagem &lt;em&gt;Object Pascal&lt;/em&gt;, linguagem essa que foi e ainda é inspiração para várias outras.&lt;/p&gt;
+
+&lt;p&gt;Eu &lt;em&gt;escolhi&lt;/em&gt; Delphi no passado e construí minha carreira com a ajuda dele.&lt;/p&gt;
+
+&lt;p&gt;Delphi continua sendo uma ótima escolha para aqueles que sabem aproveitá-lo.&lt;/p&gt;
+
+&lt;p&gt;Eu não o abandonei. Tiraram ele de mim devido a burocracia e altos custos. Mas ele continua no meu coração.&lt;/p&gt;
+
+&lt;p&gt;Minha &lt;em&gt;hastag&lt;/em&gt; hoje — infelizmente ou não — não é mais &lt;strong&gt;#WhyIChooseDelphi&lt;/strong&gt;, mas sim &lt;strong&gt;#WhyIChoseDelphi&lt;/strong&gt; (uma letra faz diferença).&lt;/p&gt;
+
+&lt;p&gt;Felizmente tem algo que nunca mudou: A linguagem &lt;em&gt;Object Pascal&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 28 Aug 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal</guid>
+      </item>
+    
+      <item>
         <title>Redefinindo Classes</title>
         <description>&lt;p&gt;A redeclaração de Classes é um método prático para minimizar a colisão de nomes entre Classes, mesmo utilizando identificadores curtos.&lt;/p&gt;
 
@@ -1033,65 +1161,6 @@ Poderíamos &lt;em&gt;remover&lt;/em&gt; esse atributo.&lt;/p&gt;
         <pubDate>Mon, 19 Jun 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/mutabilidade-encapsulada</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/mutabilidade-encapsulada</guid>
-      </item>
-    
-      <item>
-        <title>Atributos Primários e Secundários</title>
-        <description>&lt;p&gt;Um Objeto pode ter Atributos Primários e Secundários.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-tim-gouw-60216.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Os &lt;a href=&quot;/posts/menos-e-mais/#atributos&quot;&gt;atributos&lt;/a&gt; de um Objeto são a representação do seu conhecimento, ou seja, tudo que o Objeto &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsula&lt;/a&gt; é representado por atributos.&lt;/p&gt;
-
-&lt;p&gt;Assim como uma Classe pode ter 2 tipos de &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt;, um Objeto pode ter 2 tipos de atributos: Primários e Secundários.&lt;/p&gt;
-
-&lt;h2 id=&quot;primarios&quot;&gt;Primários&lt;/h2&gt;
-
-&lt;p&gt;Atributos Primários são aqueles que fazem parte do &lt;a href=&quot;/estado-do-objeto&quot;&gt;Estado do Objeto&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;São os atributos inicializados pela Classe, passados ao Objeto através do construtor com a finalidade de representar uma &lt;a href=&quot;/posts/objetos-representam-entidades/#o-que-e-uma-entidade&quot;&gt;Entidade&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Vejamos um exemplo:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/5952c6f39810803d91b05a6f1c4b8766.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Na Classe &lt;code&gt;TFile&lt;/code&gt; acima, há apenas 1 argumento no construtor. Esse argumento será parte do Estado do Objeto e, portanto, irá inicializar um Atributo Primário chamado &lt;code&gt;FFilePath&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;secundario&quot;&gt;Secundários&lt;/h2&gt;
-
-&lt;p&gt;Atributos Secundários são todos os atributos que não foram inicializados pelo construtor da Classe.&lt;/p&gt;
-
-&lt;p&gt;São atributos de &lt;em&gt;suporte tecnológico&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Vejamos um exemplo:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/48237c902271b6f2c3a314d3b6f5b8c0.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Nesse exemplo acima a Classe &lt;code&gt;TFile&lt;/code&gt; foi atualizada. Um novo atributo &lt;code&gt;FStream&lt;/code&gt; foi adicionado.&lt;/p&gt;
-
-&lt;p&gt;Esse atributo não foi passado no construtor, então ele é um Atributo Secundário.&lt;/p&gt;
-
-&lt;p&gt;O método &lt;code&gt;Stream&lt;/code&gt; irá retornar o &lt;em&gt;stream&lt;/em&gt; do arquivo, no entanto os dados do arquivo em disco serão lidos apenas na primeira execução, pois após inicializar o atributo &lt;code&gt;FStream&lt;/code&gt; ele não é mais atualizado.&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TDataStream&lt;/code&gt; é irrelevante para o entendimento, mas veja que o &lt;em&gt;path&lt;/em&gt; do arquivo é passado. Então essa Classe irá ler o arquivo em disco e retornar uma instância de &lt;code&gt;IDataStream&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Atributos Primários são inicializados através do construtor da Classe e &lt;em&gt;devem&lt;/em&gt; ser &lt;a href=&quot;/posts/objetos-imutaveis/&quot;&gt;imutáveis&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Atributos Secundários podem ou não ser inicializados através do construtor da Classe, pois eles podem ser inicializados a qualquer momento e em qualquer lugar do Objeto.&lt;/p&gt;
-
-&lt;p&gt;Tudo são atributos, mas saber essa diferença sutil entre Atributos Primários e Secundários é essencial para construírmos Classes melhores.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 12 Jun 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/atributos-primarios-secundarios</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/atributos-primarios-secundarios</guid>
       </item>
     
   </channel>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Porquê eu escolhi Delphi e então, Object Pascal &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, pascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, WhyIChooseDelphi, WhyIChooseObjectPascal">
+    <link rel="canonical" href="http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201708280322" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Porquê eu escolhi Delphi e então, Object Pascal">
+    <meta property="og:description" content="Essa é minha contribuição aos artigos na Internet com a hastag">
+    <meta property="og:url" content="http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-kace-rodriguez-75513.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Porquê eu escolhi Delphi e então, Object Pascal" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>E-Book</a>
+<a href="/archive/">Arquivo</a>
+<a href="/testimonials/">Testemunhos</a>
+<a href="/webinars/">Webinários</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Porquê eu escolhi Delphi e então, Object Pascal</h1>
+  <span class="post-meta">Aug 28, 2017</span><br>
+  
+  <span class="post-meta small">
+  
+    7 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Essa é minha contribuição aos artigos na Internet com a <em>hastag</em> <a href="https://www.google.com.br/search?q=%23WhyIChooseDelphi">#WhyIChooseDelphi</a>.</p>
+
+<!--more-->
+
+<p><img src="/images/2017/photo-kace-rodriguez-75513.jpg" alt="Unsplash image" /> 
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Kace Rodriguez on Unsplash</span></p>
+
+<h2 id="inicio">Quando tudo começou</h2>
+
+<p>Minha história com <em>Object Pascal</em> começa em 1999 quando comecei a estudar programação de computadores.</p>
+
+<p>Havia um curso chamado Programação de Computadores com “Novas” Tecnologias ministrado na PUC-RJ.</p>
+
+<p>Lá eu aprendi bastante sobre algoritmos, SGBD’s e linguagens de programação como COBOL, C/C++, Pascal, Java, Visual Basic e <a href="https://www.embarcadero.com/products/delphi">Delphi</a>.</p>
+
+<p>Através dos convênios da PUC com outras empresas, consegui meu primeiro emprego como estagiário numa <em>software house</em> chamada <em>Fuzion Engenharia de Software</em> em meados do ano 2000.</p>
+
+<h2 id="delphi">Um caminho diferente</h2>
+
+<p>Na <em>Fuzion</em> utilizáva-mos Delphi, Visual Basic e pouca coisa em Java. No entanto, a maioria dos projetos eram desenvolvidos em Delphi.</p>
+
+<p>Na PUC éramos referência no desenvolvimento <a href="/posts/o-que-e-orientacao-a-objetos/">Orientado a Objetos</a>. Veja, em Delphi, não em Java.</p>
+
+<p>Quando eu entrei na empresa a versão era Delphi 4. Alguns bugs, alguns problemas… mas então veio a tão aclamada versão 5 e a produtividade era sem igual.</p>
+
+<p>Tínhamos desenvolvido nossa própria metodologia e ferramentas que geravam código automaticamente e eu já tinha um cargo de Desenvolvedor Pleno.</p>
+
+<p>Nunca utilizamos <em>DB-aware components</em>, pois tudo era feito através de camadas e Objetos. Esse era um dos motivos para ser tão difícil contratar mais desenvolvedores, pois aqueles que vinham fazer uma prova depois da entrevista, não sabiam como mostrar informações num <em>Form</em> com “Mestre/Detalhe” e outros <em>widgets</em>, sem utizar componentes <em>DB-aware</em>.</p>
+
+<p>Essa sempre foi a beleza do Delphi: Você pode utilizar o paradigma que quiser e conseguir um excelente resultado no final.</p>
+
+<p>Na Fuzion trilhávamos um caminho diferente. Delphi era um dos nossos segredos de performance e eficácia. E tivemos sucesso… enquanto durou.</p>
+
+<h2 id="mudando">A mudança de ambiente</h2>
+
+<p>Eu abri minha própria empresa em 2003 para trabalhar como consultor alocado em outras empresas.</p>
+
+<p>Eu já havia mudado de empresa umas duas vezes até estar na atual, onde já trabalho por quase 13 anos.</p>
+
+<p>Lá também utilizamos Delphi, a versão 7. Na época que entrei nesta empresa, o Delphi ainda dominada o mercado quando se tratava de aplicações Desktop.</p>
+
+<p>Por volta de 2006 (se não me engano) a Borland estava vendendo o Delphi. Eu acompanhei, com tristeza, o Delphi ser vendido entre as empresas.</p>
+
+<p>Eu adorava a Borland, a ponto de querer trabalhar pra ela, e Delphi sempre foi a minha escolha, mas eu achava que tinha que seguir em frente, já que agora o caminho parecida incerto.</p>
+
+<p>Apesar de na época estar num emprego relativamente estável, eu tinha meus próprios clientes. Eu utilizei Delphi para fazer todos os seus <em>softwares</em> e, como não tinha certeza se o Delphi iria sobreviver, comecei a pensar em migrar para outra linguagem, outro ambiente.</p>
+
+<p>Apenas em 2010 eu comecei a pensar em outras possibilidades, quando soube um um projeto que “voltou das cinzas”, hoje conhecido como Lazarus.</p>
+
+<h2 id="lazarus">Migrando para Lazarus</h2>
+
+<p>Eu comecei a utilizar <a href="http://www.lazarus-ide.org/">Lazarus</a> e quase desisti. Comparado com o Delphi, na época, Lazarus era muito inferior.</p>
+
+<p>Muitos bugs, pouca produtividade e muita diferença entre ambientes. Apesar de ambos utilizarem a mesma linguagem.</p>
+
+<p>Felizmente eu consegui superar os problemas. Hoje o ambiente Lazarus é bem estável e completo e me sinto “em casa” como eu me sentia na época do Delphi 5~7.</p>
+
+<p>Então consegui migrar muitos projetos de Delphi para Lazarus e outros parmaneceram nas versões antigas de Delphi — e vão muito bem, obrigado.</p>
+
+<p>Apesar de ainda haver problemas, hoje em dia a história parece ser outra. Cada vez mais vejo pessoas reclamando de <em>bugs</em> no Delphi e, em comparação, vejo cada vez mais elogios ao Lazarus e ao compilador <a href="https://freepascal.org/">Free Pascal</a>.</p>
+
+<p>Hoje em dia tenho aplicações Desktop e Web, construídas em Free Pascal e Lazarus, rodando em servidores Windows IIS utilizando <a href="https://www.iis.net/downloads/microsoft/fastcgi-for-iis">FastCGI</a>.</p>
+
+<p>Nada mal, considerando que tais <em>softwares</em> foram desenvolvidos utilizando ferramentas gratuitas e livres, não é?</p>
+
+<p>Free Pascal e Lazarus são ferramentas desenvolvidas apenas nas horas vagas por alguns programadores motivados e apaixonados por <em>Object Pascal</em>.</p>
+
+<h2 id="motivos">Simplicidade, Performance e Lucro</h2>
+
+<p>Hoje em dia existem tantas linguagens e ambientes que alguns programadores continuam querendo saber meus motivos em continuar utilizando <em>Object Pascal</em>.</p>
+
+<p>Bem, eu publiquei um vídeo que explica meus principais motivos.</p>
+
+<div style="position:relative;height:0;padding-bottom:56.25%"><iframe src="https://www.youtube.com/embed/iayMGRIRwjY?ecver=2" width="640" height="360" frameborder="0" style="position:absolute;width:100%;height:100%;left:0" allowfullscreen=""></iframe></div>
+
+<p>E enquanto esses motivos forem válidos, irei continuar utilizando a linguagem <em>Object Pascal</em>.</p>
+
+<h2 id="hoje">Object Pascal hoje em dia</h2>
+
+<p>A linguagem <em>Object Pascal</em> é relevante hoje em dia? Bem, depende de como você o mundo.</p>
+
+<p>A linguagem <em>Object Pascal</em>, pra mim, é como um carro esportivo antigo, como essa imagem do <em>Porsche</em> aí em cima.</p>
+
+<p>Esse <em>Porsche</em> — ou quase qualquer outro esportivo antigo —  é simples, manual e puro. Você precisa saber o que está fazendo a todo momento. Não há computadores e sensores para lhe ajudar. Não há muita segurança como <em>airbags</em>. Você tem que fazer mais força para “domá-lo”. Quase tudo é manual e “barulhento”. Você precisa entender de subesterço e sobre-esterço, se quiser dirigir de forma mais agressiva ao entrar numa curva. Enfim, você precisa saber muita coisa se quiser ter a verdadeira experiência de dirigir.</p>
+
+<p>Mas no fim do dia, após passar algumas horas atrás do volante, você se sente realizado. Você sabe exatamente o que fez. Você entende como as coisas funcionam nos seus mínimos detalhes. Você estava integrado ao ambiente. Você era apenas um com seu <em>Porsche</em>. Homem e máquina.</p>
+
+<p>A linguagem <em>Object Pascal</em> é como um clássico esportivo que nunca sai de moda.</p>
+
+<p>Hoje temos cada vez mais IDE’s e linguagens “inteligentes” que podem mudar a cada nova versão. Esquecem do passado e “inventam” novas maneiras de fazer a mesma coisa que já fazíamos antes. Essas IDE’s nos dão <em>“airbags”</em>, “segurança” e todo tipo de “artefato” para ajudar no desenvolvimento, mas no fim o desenvolvedor não sabe exatamente o que está fazendo. Ele apenas memorizou quais “botões apertar no painel” e se algo não sai conforme o esperado, sempre haverá a Internet para responder suas dúvidas, certo?</p>
+
+<p>Vejo desenvolvedores correndo atrás do último lançamento da IDE, <em>Lib</em> ou compilador, apenas para constatarem que deverão modificar seu código que antes funcionava.</p>
+
+<p>A última versão do compilador adiciou tais e tais <em>features</em> e todos querem utilizar, no entanto a maioria não sabe separar um <em>software</em> em módulos reutilizáveis!</p>
+
+<p>Então, pra mim, <em>Object Pascal</em> continua muito relevante. Gosto de “ter trabalho” ao construir meus <em>softwares</em>, pois gosto do sentimento de ter construído algo por minhas próprias mãos sem ser obrigado a seguir as “regras de desenvolvimento” que algumas empresas consideram ideal.</p>
+
+<p>Não quero depender de outras empresas e de seus produtos privados, que podem mudar a qualquer momento, para que eu possa entregar valor aos meus clientes. A confiança que eu tinha na antiga Borland se foi… até que me provem o contrário. Hoje eu quero ser livre.</p>
+
+<p>Liberdade, é disso que se trata.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Eu gosto de imaginar um mundo onde o Delphi fosse disponibilizado de graça, doado ao time do Free Pascal e Lazarus.</p>
+
+<p>Gosto de pensar numa união de forças entre o <em>Open Source</em> e a magnífica IDE, Delphi, que sempre ajudou o desenvolvedor (experiente ou não) da melhor forma possível.</p>
+
+<p>Gosto de pensar num mundo onde iríamos dar um passo pra trás e ver a beleza e a simplicidade da linguagem <em>Object Pascal</em>, linguagem essa que foi e ainda é inspiração para várias outras.</p>
+
+<p>Eu <em>escolhi</em> Delphi no passado e construí minha carreira com a ajuda dele.</p>
+
+<p>Delphi continua sendo uma ótima escolha para aqueles que sabem aproveitá-lo.</p>
+
+<p>Eu não o abandonei. Tiraram ele de mim devido a burocracia e altos custos. Mas ele continua no meu coração.</p>
+
+<p>Minha <em>hastag</em> hoje — infelizmente ou não — não é mais <strong>#WhyIChooseDelphi</strong>, mas sim <strong>#WhyIChoseDelphi</strong> (uma letra faz diferença).</p>
+
+<p>Felizmente tem algo que nunca mudou: A linguagem <em>Object Pascal</em>.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Porquê eu escolhi Delphi e então, Object Pascal&via=mdbs99;url=http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal&title=Porquê eu escolhi Delphi e então, Object Pascal" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal&title=Porquê eu escolhi Delphi e então, Object Pascal" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal&t=Porquê eu escolhi Delphi e então, Object Pascal" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/redeclarando-classes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Redefinindo Classes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/git-work-project" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Git-work Project</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/imutabilidade-do-estado" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Imutabilidade do Estado</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/diretivas-de-compilacao" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Diretivas de Compilação</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/declarando-unidades" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Declarando Unidades</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/james-2017-07" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>James 2017-07</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/objetos-validadores" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Validadores</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/atributos-nao-existem" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Atributos Não Existem</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/mutabilidade-encapsulada" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Mutabilidade Encapsulada</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/atributos-primarios-secundarios" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Atributos Primários e Secundários</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/porque-eu-escolhi-delphi-e-object-pascal';
+      var disqus_title      = 'Porquê eu escolhi Delphi e então, Object Pascal';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
