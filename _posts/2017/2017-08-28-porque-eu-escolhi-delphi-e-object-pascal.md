@@ -4,7 +4,7 @@ title: Porquê eu escolhi Delphi e então, Object Pascal
 date: 2017-08-28
 permalink: /:title
 description:
-  Essa é minha contribuição aos artigos na Internet com a hastag #WhyIChooseDelphi.
+  Essa é minha contribuição aos artigos na Internet com a hastag WhyIChooseDelphi.
 image: /images/2017/photo-kace-rodriguez-75513.jpg
 tags:
   - object pascal
