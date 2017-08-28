@@ -60,11 +60,11 @@ Eu abri minha própria empresa em 2003 para trabalhar como consultor alocado em 
 
 Eu já havia mudado de empresa umas duas vezes até estar na atual, onde já trabalho por quase 13 anos.
 
-Lá também utilizamos Delphi, a versão 7. Na época que entrei nesta empresa, o Delphi ainda dominada o mercado quando se tratava de aplicações Desktop.
+Lá também utilizamos Delphi, a versão 7. Na época que entrei nesta empresa, o Delphi ainda dominava o mercado quando se tratava de aplicações Desktop.
 
 Por volta de 2006 (se não me engano) a Borland estava vendendo o Delphi. Eu acompanhei, com tristeza, o Delphi ser vendido entre as empresas.
 
-Eu adorava a Borland, a ponto de querer trabalhar pra ela, e Delphi sempre foi a minha escolha, mas eu achava que tinha que seguir em frente, já que agora o caminho parecida incerto.
+Eu adorava a Borland, a ponto de querer trabalhar pra ela, e Delphi sempre foi a minha escolha, mas eu achava que tinha que seguir em frente, já que agora o caminho parecia incerto.
 
 Apesar de na época estar num emprego relativamente estável, eu tinha meus próprios clientes. Eu utilizei Delphi para fazer todos os seus *softwares* e, como não tinha certeza se o Delphi iria sobreviver, comecei a pensar em migrar para outra linguagem, outro ambiente.
 
@@ -100,7 +100,7 @@ E enquanto esses motivos forem válidos, irei continuar utilizando a linguagem *
 
 ## Object Pascal hoje em dia {#hoje}
 
-A linguagem *Object Pascal* é relevante hoje em dia? Bem, depende de como você o mundo.
+A linguagem *Object Pascal* é relevante hoje em dia? Bem, depende de como você vê o mundo.
 
 A linguagem *Object Pascal*, pra mim, é como um carro esportivo antigo, como essa imagem do *Porsche* aí em cima.
 
