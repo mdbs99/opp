@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>James Package &#8211; Object Pascal Programming</title>
+    <title>Inter-process Communication &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="James">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, c#, csharp, java, object-oriented, oop, mdbs99, james, james-package, james-lib, open-source, github">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/james/">
+    <meta name="keywords" content="FPC">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, ipc, simple ipc, inter-process communication, interprocess communication">
+    <link rel="canonical" href="http://objectpascalprogramming.com/ipc">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="James Package">
-    <meta property="og:description" content="James é um pacote de Classes e Interfaces para projetos Orientados a Objetos.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/james/">
+    <meta property="og:title" content="Inter-process Communication">
+    <meta property="og:description" content="Gostaria de modularizar seus sistemas Object Pascal em pequenos executáveis mas não sabe como? Talvez esse artigo possa ajudá-lo.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/ipc">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-wesley-caribe-63610.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-climate-kic-350836.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="James Package" />
+    <meta name="twitter:title" content="Inter-process Communication" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/james/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/ipc" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,92 +191,97 @@
 
 
 <div class="post-header mb2">
-  <h1>James Package</h1>
-  <span class="post-meta">Apr 17, 2017</span><br>
+  <h1>Inter-process Communication</h1>
+  <span class="post-meta">Sep 11, 2017</span><br>
   
   <span class="post-meta small">
   
-    2 minute read
+    3 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>James é um pacote de Classes e Interfaces para projetos Orientados a Objetos.</p>
+  <p>Gostaria de modularizar seus sistemas <em>Object Pascal</em> em pequenos executáveis mas não sabe como?</p>
 
 <!--more-->
 
-<p><img src="/images/photo-wesley-caribe-63610.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2017/photo-climate-kic-350836.jpg" alt="Unsplash image" /> 
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Climate KIC on Unsplash</span></p>
 
-<p>Eu tenho um diretório com código-fonte que é utilizado por quase todos os meus projetos, particulares ou não.</p>
+<h2 id="introducao">Introdução</h2>
 
-<p>Apenas 1 diretório com quase 100 arquivos.</p>
+<p>Muitos sistemas começam simples. Uma dúzia de tabelas, alguns cadastros, um formulário de <em>login</em> e poucas <a href="/posts/codigo-duplicado-talvez-nao/#regras-de-negocio">Regras de Negócio</a>.</p>
 
-<p>São fontes para trabalhar com <em>stream</em>, XML, arquivos, HTTP, <em>WebServices</em>, etc.</p>
+<p>Com o tempo é necessário ter alguns relatórios, mais cadastros, mais tabelas e muito mais Regras de Negócio.</p>
 
-<p>Não há pacotes ou subprojetos. Apenas arquivos que são compartilhados por vários projetos.</p>
+<p>A complexidade vai aumentando cada vez mais. O que antes era simples, agora é um “monstro” monolítico.</p>
 
-<p>Como todo desenvolvedor Pascal faz, basta ter um diretório, adicionar o <em>path</em> no projeto e começar a usar os fontes. Simples.</p>
+<p>Essa história parece familiar?</p>
 
-<p>Esse código-fonte foi sendo construído e modificando por vários anos. Alguns fontes são bem novos, outros bem antigos.</p>
+<p>Isso já aconteceu comigo — mais de uma vez — e talvez esteja acontecendo com você agora mesmo.</p>
 
-<p>Mesmo que tudo esteja funcionando, essa “organização” me tira o sono.</p>
+<p>Hoje vou lhe apresentar uma técnica (antiga) para modularizar seus sistemas, facilitando a manutenção e, possivelmente, diminuir a complexidade do código.</p>
 
-<p>Faz tempo que eu quero organizar esse código-fonte. Fazer uma limpeza. Atualizar. Criar pacotes lógicos.</p>
+<p>Esse artigo irá focar numa dessas técnicas chamada <a href="https://en.wikipedia.org/wiki/Inter-process_communication">Inter-process Communication</a> ou IPC.</p>
 
-<p><strong>Então pensei: Por quê não criar um projeto <em>Open Source</em></strong>?</p>
+<h2 id="ipc">IPC</h2>
 
-<p>Bem, é o que estou fazendo agora. Esse é meu presente de Páscoa pra você.</p>
+<p>Um sistema pode ser modularizado de várias maneiras. Podemos utilizar algumas técnicas como DLL’s, <a href="/posts/pacotes-e-versoes-no-lazarus/"><em>Packages</em></a>, WebServices, <a href="/posts/microservices-delphi-parte-1/">Microservices</a> e algumas outras.</p>
 
-<p>Criei o primeiro projeto.</p>
+<p>O IPC permite que dois processos (executáveis) distintos se comuniquem entre si através de mensagens que são gerenciadas pelo sistema operacional.</p>
 
-<p>Chama-se <strong>James</strong>.</p>
+<p>Essa técnica é muito utilizada por sistemas operacionais de microkernel como, por exemplo, o sistema operacional <a href="http://www.minix3.org/">MINIX3</a>.</p>
 
-<p>Eu tenho nomeado meus projetos utilizando nomes comuns — a maioria em Inglês — já faz quase 2 anos.</p>
+<p>O objetivo principal é diminuir o número de funcionalidades de um executável monolítico, utilizando um <em>design</em> mas modular, onde haverá uma comunicação entre processos colaborativos ao invés de haver um único processo que faz tudo.</p>
 
-<p>É divertido.</p>
+<p>A comunicação por IPC é do tipo cliente/servidor, sendo que cada processo pode ser tanto um como outro ao mesmo tempo.</p>
 
-<p>É como se cada projeto fizesse parte de uma família.</p>
+<p>Então, imagine projetar um sistema onde seus módulos seriam divididos em vários executáveis. Um módulo com as Regras de Negócio, outro de Relatórios para disponibilizá-los tanto na Web quanto no Desktop, outro para <em>login</em>, etc.</p>
 
-<p>A maioria dos meus <em>aplicativos</em> tem nomes femininos. Já os projetos que são <em>ferramentas</em> ou <em>libs</em>, costumam ter nomes masculinos.</p>
+<p>Alguns destes módulos seriam executados na mesma máquina e, portanto, seria mais vantajoso se esses executáveis se comunicassem através de mensagens gerenciadas pelo Sistema Operacional ao invés de utilizar uma nova camada de protocolos (REST, SOAP, etc). Para esses casos, podemos utilizar o IPC.</p>
 
-<p>Você pode fazer um <em>fork</em> do James <a href="https://github.com/mdbs99/james">aqui</a> e contribuir.</p>
+<p>Mas como implementá-lo?</p>
 
-<p>Até agora subi poucos arquivos.</p>
+<h2 id="simpleipc">SimpleIPC</h2>
 
-<p>Ainda estou organizando.</p>
+<p>No compilador <a href="https://freepascal.org/"><em>Free Pascal</em></a> existe um <em>package</em> chamado <a href="https://svn.freepascal.org/svn/fpc/branches/fixes_3_0/packages/fcl-process/">fcl-process</a> que implementa o IPC.</p>
 
-<p>Mas estou lhe avisando agora, justamente porque tem poucos arquivos para ficar fácil o entendimento do código.</p>
+<p>Essa implementação foi codificada numa única Unidade chamada <code>simpleipc.pp</code> e é <em>cross-platform</em>, ou seja, um único código que funciona em sistemas <em>Unix-like</em> e <em>Windows</em>.</p>
 
-<p>Estou pretendendo criar vários outros projetos <em>Open Source</em> que sejam compatíveis com o Delphi na versão mais atual.</p>
+<p>O próprio <a href="http://www.lazarus-ide.org/"><em>Lazarus</em></a> utiliza o <em>SimpleIPC</em> para fazer a <a href="http://wiki.freepascal.org/Help_protocol">comunicação</a> entre a IDE e o <em>Help Viewer</em>.</p>
 
-<p>Por isso preciso da sua ajuda.</p>
+<p>Basicamente são duas classes principais a saber:</p>
 
-<p>Os fontes foram compilados no dialeto do Free Pascal. Basta utilizar <code>{$mode delphi}</code> para compilar no dialeto do Delphi, utilizando o FPC.</p>
+<ol>
+  <li>A classe <a href="http://lazarus-ccr.sourceforge.net/docs/fcl/simpleipc/tsimpleipcclient.html"><code>TSimpleIPCClient</code></a> implementa o envio das mensagens</li>
+  <li>A classe <a href="http://lazarus-ccr.sourceforge.net/docs/fcl/simpleipc/tsimpleipcserver.html"><code>TSimpleIPCServer</code></a> implementa o recebimento das mensagens</li>
+</ol>
 
-<p>Vou utilizar o dialeto Delphi para que os fontes sejam compatíveis, mas somente se houver interesse por parte da comunidade Delphi (utilize os comentários abaixo se você está interessado).</p>
+<p>Exemplos de uso de ambas as Classes podem ser visto nos <em>demos</em> disponibilizados no próprio <em>package</em>, <a href="https://svn.freepascal.org/svn/fpc/branches/fixes_3_0/packages/fcl-process/examples/">aqui</a>.</p>
 
-<p>O James será a base (refatorada) de todos os meus projetos. Ele possui Classes base que é útil na maioria dos meus projetos.</p>
+<h2 id="alternativas">Alternativas</h2>
 
-<p>Durante esse semana vou subir os fontes das <em>Unit Tests</em>. Já estão prontos, mas precisam ser refatorados.</p>
+<p>Para aqueles que não utilizam <em>Free Pascal</em>, existe a opção de utilizar a implementação do <em>SimpleIPC</em> no formato de DLL.</p>
 
-<p>Outro projeto que irá utilizar o James, eu já criei no Github. Seu nome é <a href="https://github.com/mdbs99/kate">Kate</a>.</p>
+<p>O projeto <a href="http://wiki.lazarus.freepascal.org/SimpleIPC_Library"><em>SimpleIPC Library</em></a> encapsula a implementação do <em>Free Pascal</em> numa DLL que pode ser utilizada por praticamente qualquer linguagem.</p>
 
-<p>Kate é uma <em>lib</em> para trabalhar com certificação e assinatura digital. Essa <em>lib</em> irá utilizar o <a href="/posts/assinatura-digital-em-arquivos-xml/#utilizando-acbr">Projeto ACBr</a> nos “bastidores”.</p>
+<p>O código é bastante procedural — padrão em DLL’s — porém pode ser uma alternativa rápida para começar a utilizar essa técnica ao invés de implentá-la do zero.</p>
 
-<p>Todos esses projetos serão baseados nas premissas dos artigos que venho escrevendo aqui no blog.</p>
+<p>Considere que mesmo que sua linguagem já implemente tal padrão, talvez ele não seja compatível com outras linguagens. Nesses casos o uso de uma DLL padrão pode fazer sentido.</p>
 
-<p>Todos serão <a href="/posts/o-que-e-orientacao-a-objetos/">Orientados a Objetos</a> e 100% baseados em <a href="/posts/interfaces-em-todo-lugar/">Interfaces</a>.</p>
+<p>No Windows o IPC pode ser “traduzido” como uma <em>Windows Message</em> do tipo <code>WM_COPYDATA</code>. Sabemos que é relativamente fácil trabalhar com mensagens do Windows no <em>Object Pascal</em>  então, se o desenvolvimento for apenas para a plataforma Windows, talvez seja mais simples utilizar mensagens do tipo <code>WM_COPYDATA</code>. Esses links <a href="https://www.thoughtco.com/send-information-between-applications-1058476">aqui</a>, <a href="https://stackoverflow.com/questions/7257719/wm-copydata-string-not-appearing-in-target-application">aqui</a> e <a href="https://stackoverflow.com/questions/7540706/wm-copydata-with-and-without-quotes-yields-different-results">aqui</a>, podem ajudar.</p>
 
-<p>O <a href="https://github.com/mdbs99/aws">AWS</a> também será atualizado para compilar na versão mais atual do FPC e, quem sabe, irá compilar no Delphi.</p>
+<h2 id="conclusao">Conclusão</h2>
 
-<p>Quando tudo estiver organizado, será o momento de iniciarmos um novo <strong>Framework Web</strong> 100% Orientado a Objetos para FPC e Delphi.</p>
+<p>Nos anos 60 já existiam tais técnicas de modularização. No entanto, ainda hoje, continuamos a desenvolver softwares monolíticos, pesados e de difícil manutenção.</p>
 
-<p>Você está comigo?</p>
+<p>Como visto nesse artigo, utilizar o IPC pode facilitar a manutenção do código, pois cada subprojeto (executável) iria lidar apenas com poucos <a href="/posts/delegacao-de-implementacao-de-interfaces/#contextos">contextos</a>, possivelmente diminuindo a complexidade.</p>
 
-<p>Então vamos! <strong>#ObjectPascal4Ever</strong></p>
+<p>Cada subprojeto poderia evoluir e ser utilizado independentemente.</p>
 
 <p>Até logo.</p>
+
 
 </article>
 
@@ -286,33 +291,33 @@
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/james/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/ipc" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=James Package&via=mdbs99;url=http://objectpascalprogramming.com/posts/james/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Inter-process Communication&via=mdbs99;url=http://objectpascalprogramming.com/ipc" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/james/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/ipc" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/james/&title=James Package" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/james/&title=James Package" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/ipc&title=Inter-process Communication" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/james/&t=James Package" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/ipc&title=Inter-process Communication" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/ipc&t=Inter-process Communication" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -350,15 +355,6 @@
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/ipc" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Inter-process Communication</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/porque-eu-escolhi-delphi-e-object-pascal-Copy" class="post-link">
@@ -441,6 +437,15 @@
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/mutabilidade-encapsulada" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Mutabilidade Encapsulada</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -448,8 +453,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/james';
-      var disqus_title      = 'James Package';
+      var disqus_identifier = '/ipc';
+      var disqus_title      = 'Inter-process Communication';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
