@@ -28,7 +28,7 @@ Uma tradução para *Casting*, em Português, seria **moldagem**. Você recebe a
 
 Fazemos isso muitas vezes. Temos um *Integer* e o moldamos em uma *String* e vice-versa.
 
-Mas será que o uso de *Casting* é necessário para codificarmos nossas **Regras de Negócio** utilizando
+Mas será que o uso de *Casting* é necessário para codificarmos nossas [Regras de Negócio]({% post_url 2017-01-09-codigo-duplicado-talvez-nao %}#regras-de-negocio) utilizando
 Objetos?
 
 <center><p><strong>. . .</strong></p></center>

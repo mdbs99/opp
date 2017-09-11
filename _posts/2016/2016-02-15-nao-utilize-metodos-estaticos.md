@@ -67,9 +67,9 @@ Exemplo:
 
 A) Se você precisa apenas gravar um arquivo de Log, pode utilizar alguma rotina que trabalhe com arquivos e tudo bem.
 
-B) Mas se fizer parte das **Regras de Negócio** do sistema, por exemplo, ter que gerar um XML e compactar antes de enviar a um serviço REST,
+B) Mas se fizer parte das [Regras de Negócio]({% post_url 2017-01-09-codigo-duplicado-talvez-nao %}#regras-de-negocio) do sistema, por exemplo, ter que gerar um XML e compactar antes de enviar a um serviço REST,
 você **NÃO** deve utilizar rotinas que manipulam esses problemas diretamente. É necessário que você crie classes [adaptadoras ou invólucros](https://en.wikipedia.org/wiki/Adapter_pattern)
-para encapsular as regras de negócio que irão utilizar essas rotinas.
+para encapsular as [Regras de Negócio]({% post_url 2017-01-09-codigo-duplicado-talvez-nao %}#regras-de-negocio) que irão utilizar essas rotinas.
 
 Faz sentido? 
 

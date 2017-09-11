@@ -177,7 +177,7 @@ Diferentemente do primeiro exemplo, no clique de um único botão:
   3. Decorei a instancia de *TEmployeeSalary* com *TEmployeeSalaryWithCommission*;
   4. Chamada para *Value* — uma instancia de *ISalary* — e depois para o método *AsString*;
   
-Não há condicionais, cálculos ou Regras de Negócio "espalhadas" no código. Apenas objetos "conversando".
+Não há condicionais, cálculos ou [Regras de Negócio]({% post_url 2017-01-09-codigo-duplicado-talvez-nao %}#regras-de-negocio) "espalhadas" no código. Apenas objetos "conversando".
 
 Claro que uma *query* será executada em algum lugar — talvez encapsulado dentro de *TEmployee* — assim como os cálculos de comissões terão que 
 ser implementados em *TEmployeeSalary* ou em algum outro objeto. Mas isso não é mover o problema para outro lugar... não! Isso é encapsular

@@ -69,7 +69,7 @@ Uma Função ou Método encapsula variáveis.
 Classes encasulam Estado e Comportamento.
 
 Unidades (módulos) encapsulam um conjunto de Classes que 
-implementam as Regras de Negócio do nosso sistema.
+implementam as [Regras de Negócio]({% post_url 2017-01-09-codigo-duplicado-talvez-nao %}#regras-de-negocio) do nosso sistema.
 
 Unidades também podem encapsular todo um conjunto de peças de 
 terceiros, para facilitar ou *adaptar* o uso das mesmas dentro 

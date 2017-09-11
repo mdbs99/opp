@@ -19,7 +19,7 @@ Não utilize um *DataModule* como uma Classe de Negócio, implementando métodos
 *Singleton*. Isso é errado. Você deixará seu sistema acoplado a esta única implementação e não será possível
 testá-lo da maneira correta.
 
-Um *DataModule* não deve conter Regras de Negócio.
+Um *DataModule* não deve conter [Regras de Negócio]({% post_url 2017-01-09-codigo-duplicado-talvez-nao %}#regras-de-negocio).
 
 <!--more-->
 

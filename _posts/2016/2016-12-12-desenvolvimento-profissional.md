@@ -95,7 +95,7 @@ estrutura pelos usuários do sistema. Os usuários são os arquitetos, desenvolv
 e *stakeholders* (partes interessadas).
 
 Esses sites fazem parte da documentação do projeto. 
-Todas as Regras de Negócio, configurações, manuais e informações gerais deverão estar
+Todas as [Regras de Negócio]({% post_url 2017-01-09-codigo-duplicado-talvez-nao %}#regras-de-negocio), configurações, manuais e informações gerais deverão estar
 preservados nas páginas desses sites.
 No entanto algumas poucas informações não deverão estar nesse formato, como 
 configurações de usuário/senha, orçamentos e contratos.

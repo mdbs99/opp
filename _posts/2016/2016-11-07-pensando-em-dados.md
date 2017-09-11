@@ -76,7 +76,7 @@ Programadores *Object Pascal* — maioria — são orientados a Dados e não a O
 Utilizam a abordagem RAD. Dropam componentes nos formulários, fazem algumas
 ligações e isso é o suficiente para a exibição dos dados em uma *Grid*.
 
-Eu sou contra a abordagem RAD para Regras de Negócio ou para qualquer módulo
+Eu sou contra a abordagem RAD para [Regras de Negócio]({% post_url 2017-01-09-codigo-duplicado-talvez-nao %}#regras-de-negocio) ou para qualquer módulo
 que exija alguma inteligência, onde o encapsulamento e uso de Objetos iria me
 proporcionar um maior *controle* e *manutenibilidade*.
 

@@ -15,7 +15,7 @@ keywords:
   - delphi
 --- 
 
-Imagine um grande Sistema ERP codificado em Delphi 7, com Regras de Negócio rigidamente codificadas para serem utilizadas somente numa aplicação Desktop.
+Imagine um grande Sistema ERP codificado em Delphi 7, com [Regras de Negócio]({% post_url 2017-01-09-codigo-duplicado-talvez-nao %}#regras-de-negocio) rigidamente codificadas para serem utilizadas somente numa aplicação Desktop.
 
 Se você tivesse que evoluir esse sistema para proporcionar uma interoperabilidade com outros Sistemas, versões Web ou mesmo simplificar sua manutenção, o que você faria?
 
