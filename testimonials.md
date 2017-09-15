@@ -19,6 +19,10 @@ Se você escreveu algo parecido e não está na lista, porfavor aponte o link pa
 
 [![Testemunho]({{ page.image_path }}amauri-s-alves.png)](http://objectpascalprogramming.com/posts/interfaces-em-todo-lugar/#comment-3003869430)
 
+[![Testemunho]({{ page.image_path }}whilhame-souza.png)](http://objectpascalprogramming.com/observando-objetos#comment-3318718279)
+
+[![Testemunho]({{ page.image_path }}rubens-nascimento-2.png)](http://objectpascalprogramming.com/observando-objetos#comment-3320932118)
+
 ![Testemunho]({{ page.image_path }}arimateia-junior.png)
 
 [![Testemunho]({{ page.image_path }}raphael-gomide.png)](http://objectpascalprogramming.com/posts/objetos-pensam-e-tomam-decisoes/#comment-2656856418)
