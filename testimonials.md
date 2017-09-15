@@ -31,8 +31,6 @@ Se você escreveu algo parecido e não está na lista, porfavor aponte o link pa
 
 [![Testemunho]({{ page.image_path }}marlon-nardi.png)](http://objectpascalprogramming.com/posts/construtores-da-classe-primario-secundarios/#comment-2591573163)
 
-![Testemunho]({{ page.image_path }}victor.png)
-
 [![Testemunho]({{ page.image_path }}carlos-eduardo.png)](http://objectpascalprogramming.com/posts/nao-utilize-nil-ou-null/#comment-2617771905)
 
 [![Testemunho]({{ page.image_path }}rubens-nascimento.png)](http://objectpascalprogramming.com/posts/nao-utilize-casting/#comment-2629865788)
