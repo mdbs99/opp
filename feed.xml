@@ -8,27 +8,6 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Projeto Xavier</title>
-        <description>&lt;p&gt;Xavier é uma biblioteca orientada a objetos para trabalhar com XML.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-climate-kic-350836.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Climate KIC on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 11 Sep 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/projeto-xavier</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/projeto-xavier</guid>
-      </item>
-    
-      <item>
         <title>Inter-process Communication</title>
         <description>&lt;p&gt;Gostaria de modularizar seus sistemas &lt;em&gt;Object Pascal&lt;/em&gt; em pequenos executáveis mas não sabe como?&lt;/p&gt;
 
@@ -1147,6 +1126,45 @@ uses
         <pubDate>Mon, 03 Jul 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/objetos-validadores</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/objetos-validadores</guid>
+      </item>
+    
+      <item>
+        <title>Atributos Não Existem</title>
+        <description>&lt;p&gt;E se eu lhe dissesse que Atributos não existem realmente?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-guillaume-bolduc-259596.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Tive um &lt;em&gt;insight&lt;/em&gt; um dia desses:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;“Não existem Atributos, apenas Composição e Comportamento”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;O que chamamos de &lt;a href=&quot;/posts/menos-e-mais/#atributos&quot;&gt;Atributo&lt;/a&gt; é, na verdade, Composição de Objetos e &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;Comportamento&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Atributos &lt;em&gt;não&lt;/em&gt; existem. São virtuais, produtos de nossa imaginação ou apenas uma abstração da realidade.&lt;/p&gt;
+
+&lt;p&gt;Veja as Cores, por exemplo.&lt;/p&gt;
+
+&lt;p&gt;Não existe atributos de cor Amarelo, Vermelho ou Azul. São todos Objetos!&lt;/p&gt;
+
+&lt;p&gt;O Amarelo é um Objeto numa composição &lt;em&gt;RGB&lt;/em&gt; e nosso olho processa essa composição interagindo com outro Objeto, a &lt;em&gt;Luz&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Assim “vemos” as cores.&lt;/p&gt;
+
+&lt;p&gt;Quer outros exemplos?&lt;/p&gt;
+
+&lt;p&gt;A quantidade de itens numa lista é determinada pelo comportamento do Objeto ao contar os itens da lista.&lt;/p&gt;
+
+&lt;p&gt;A idade de uma pessoa é determinada pelo comportamento do Objeto ao contar o tempo.&lt;/p&gt;
+
+&lt;p&gt;Não há nada de errado em continuarmos utilizando a palavra Atributo, mas não se esqueça que eles não existem. São apenas abstrações da realidade.&lt;/p&gt;
+
+&lt;p&gt;Faz sentido?&lt;/p&gt;
+</description>
+        <pubDate>Mon, 26 Jun 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/atributos-nao-existem</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/atributos-nao-existem</guid>
       </item>
     
   </channel>
