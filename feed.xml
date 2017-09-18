@@ -8,6 +8,72 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Xavier Package</title>
+        <description>&lt;p&gt;Xavier é uma biblioteca leve, Orientada a Objetos, para trabalhar com XML.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-xavier.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Hoje em dia, todas as bibliotecas XML são muito complexas. Cada classe pode ter tantos métodos que pode ser muito difícil utilizá-las e compreendê-las. Essas implementações são muito procedurais também.&lt;/p&gt;
+
+&lt;p&gt;Que tal se tivéssemos uma &lt;em&gt;Library&lt;/em&gt; leve, &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientada a Objetos&lt;/a&gt;, que trabalha com XML e que compila em &lt;a href=&quot;https://freepascal.org/&quot;&gt;&lt;em&gt;Free Pascal&lt;/em&gt;&lt;/a&gt; e &lt;a href=&quot;https://www.embarcadero.com/products/delphi&quot;&gt;&lt;em&gt;Delphi&lt;/em&gt;&lt;/a&gt;?&lt;/p&gt;
+
+&lt;p&gt;Hoje quero apresentar a você o meu mais novo projeto.&lt;/p&gt;
+
+&lt;h2 id=&quot;xavier&quot;&gt;Xavier&lt;/h2&gt;
+
+&lt;p&gt;Eu não trabalhava no &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;Projeto James&lt;/a&gt; já fazia mais ou menos um mês. Além da falta de tempo — os projetos dos clientes são prioridade, certo? — &lt;del&gt;temos&lt;/del&gt; tínhamos uma &lt;a href=&quot;https://github.com/mdbs99/james/issues/65&quot;&gt;&lt;em&gt;issue&lt;/em&gt;&lt;/a&gt; que não nos deixava prosseguir.&lt;/p&gt;
+
+&lt;p&gt;Estávamos tentando compatibilizar o código com o &lt;em&gt;Delphi&lt;/em&gt;, porém a parte que trata de XML é um tanto complicado.&lt;/p&gt;
+
+&lt;p&gt;O maior problema é que o &lt;em&gt;Free Pascal&lt;/em&gt; não tem a mesma implementação do &lt;em&gt;Delphi&lt;/em&gt; para leitura e escrita de &lt;em&gt;streams&lt;/em&gt; e arquivos XML.&lt;/p&gt;
+
+&lt;p&gt;No &lt;em&gt;Free Pascal&lt;/em&gt; a implementação é baseada apenas em Classes, enquanto no &lt;em&gt;Delphi&lt;/em&gt; a implementação é baseada em Interfaces — ponto para o &lt;em&gt;Delphi&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Os desenvolvedores do &lt;em&gt;Free Pascal&lt;/em&gt; sempre tentam compatibilizar suas implementações com o &lt;em&gt;Delphi&lt;/em&gt; porém, ao que parece, a implementação de XML no &lt;em&gt;Free Pascal&lt;/em&gt; foi feita &lt;em&gt;antes&lt;/em&gt; da implementação do &lt;em&gt;Delphi&lt;/em&gt; e eles escolheram fazer tudo apenas com Classes.&lt;/p&gt;
+
+&lt;p&gt;A maioria das &lt;em&gt;libs&lt;/em&gt; que são compativeis entre ambos os compiladores utilizam-se de &lt;a href=&quot;/diretivas-de-compilacao&quot;&gt;diretivas de compilação&lt;/a&gt; para que seus códigos funcionem. Essa técnica, apesar de muito útil, pode transformar seu código em “espaguete” rapidamente.&lt;/p&gt;
+
+&lt;p&gt;Veja esse exemplo de como salvar um &lt;code&gt;TXMLDocument&lt;/code&gt; em &lt;em&gt;stream&lt;/em&gt;, no compilador &lt;em&gt;Free Pascal&lt;/em&gt; e &lt;em&gt;Delphi&lt;/em&gt;, utilizando diretivas:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/c630eb809a9d030917af1efcd7e453d6.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;E que tal isso?&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/96e6f11f9a2184e4e9e932202751b9d0.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Meio bizarro, improdutivo e confuso, não?&lt;/p&gt;
+
+&lt;p&gt;Quero escrever código mais elegante, limpo e sustentável usando a Orientação a Objetos e, infelizmente, as opções &lt;em&gt;Open Source&lt;/em&gt; atuais não foram suficientes, considerando meus critérios pessoais.&lt;/p&gt;
+
+&lt;p&gt;Então, criei o &lt;a href=&quot;https://github.com/mdbs99/xavier&quot;&gt;Xavier&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;O principal objetivo do Xavier é substituir o código procedural comum em nossos projetos, que podem ter tantas condicionais e variáveis, num código mais declarativo e Orientado a Objetos, para trabalhar mais facilmente com o XML, sem diretivas de compilação no código final.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;A implementação do Xavier ainda está no início mas todo o código disponível hoje está funcionando, com cobertura de testes automatizados.&lt;/p&gt;
+
+&lt;p&gt;Eu escrevi o código em apenas algumas horas. Ainda há muito o que fazer.&lt;/p&gt;
+
+&lt;p&gt;Estou fazendo minha parte…&lt;/p&gt;
+
+&lt;p&gt;E você, que tal fazer um &lt;a href=&quot;https://github.com/mdbs99/xavier#fork-destination-box&quot;&gt;&lt;em&gt;fork&lt;/em&gt;&lt;/a&gt; do projeto e colaborar?&lt;/p&gt;
+
+&lt;p&gt;Link do projeto &lt;a href=&quot;https://github.com/mdbs99/xavier&quot;&gt;https://github.com/mdbs99/xavier&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 18 Sep 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/xavier-package</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/xavier-package</guid>
+      </item>
+    
+      <item>
         <title>Inter-process Communication</title>
         <description>&lt;p&gt;Gostaria de modularizar seus sistemas &lt;em&gt;Object Pascal&lt;/em&gt; em pequenos executáveis mas não sabe como?&lt;/p&gt;
 
@@ -1126,45 +1192,6 @@ uses
         <pubDate>Mon, 03 Jul 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/objetos-validadores</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/objetos-validadores</guid>
-      </item>
-    
-      <item>
-        <title>Atributos Não Existem</title>
-        <description>&lt;p&gt;E se eu lhe dissesse que Atributos não existem realmente?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-guillaume-bolduc-259596.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Tive um &lt;em&gt;insight&lt;/em&gt; um dia desses:&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;“Não existem Atributos, apenas Composição e Comportamento”&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;O que chamamos de &lt;a href=&quot;/posts/menos-e-mais/#atributos&quot;&gt;Atributo&lt;/a&gt; é, na verdade, Composição de Objetos e &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;Comportamento&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Atributos &lt;em&gt;não&lt;/em&gt; existem. São virtuais, produtos de nossa imaginação ou apenas uma abstração da realidade.&lt;/p&gt;
-
-&lt;p&gt;Veja as Cores, por exemplo.&lt;/p&gt;
-
-&lt;p&gt;Não existe atributos de cor Amarelo, Vermelho ou Azul. São todos Objetos!&lt;/p&gt;
-
-&lt;p&gt;O Amarelo é um Objeto numa composição &lt;em&gt;RGB&lt;/em&gt; e nosso olho processa essa composição interagindo com outro Objeto, a &lt;em&gt;Luz&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Assim “vemos” as cores.&lt;/p&gt;
-
-&lt;p&gt;Quer outros exemplos?&lt;/p&gt;
-
-&lt;p&gt;A quantidade de itens numa lista é determinada pelo comportamento do Objeto ao contar os itens da lista.&lt;/p&gt;
-
-&lt;p&gt;A idade de uma pessoa é determinada pelo comportamento do Objeto ao contar o tempo.&lt;/p&gt;
-
-&lt;p&gt;Não há nada de errado em continuarmos utilizando a palavra Atributo, mas não se esqueça que eles não existem. São apenas abstrações da realidade.&lt;/p&gt;
-
-&lt;p&gt;Faz sentido?&lt;/p&gt;
-</description>
-        <pubDate>Mon, 26 Jun 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/atributos-nao-existem</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/atributos-nao-existem</guid>
       </item>
     
   </channel>

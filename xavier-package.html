@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tipos Primitivos nos Argumentos &#8211; Object Pascal Programming</title>
+    <title>Xavier Package &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Code">
-    <meta name="keywords" content="argumentos, arguments, tipos primitivos, primitive obsession">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/">
+    <meta name="keywords" content="Xavier">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, xavier, xavier-package, xavier-lib, open-source, package, github, xml, xml lib, xpath, node, attribute">
+    <link rel="canonical" href="http://objectpascalprogramming.com/xavier-package">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Tipos Primitivos nos Argumentos">
-    <meta property="og:description" content="Utilizar tipos primitivos em argumentos de Métodos é uma prática que deve ser evitada quando programamos Orientado a Objetos.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/">
+    <meta property="og:title" content="Xavier Package">
+    <meta property="og:description" content="Xavier é uma biblioteca leve, Orientada a Objetos, para trabalhar com XML.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/xavier-package">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-3_i4nvi9d1k-randall-bruder.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-xavier.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Tipos Primitivos nos Argumentos" />
+    <meta name="twitter:title" content="Xavier Package" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/xavier-package" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,169 +191,75 @@
 
 
 <div class="post-header mb2">
-  <h1>Tipos Primitivos nos Argumentos</h1>
-  <span class="post-meta">Jan 16, 2017</span><br>
+  <h1>Xavier Package</h1>
+  <span class="post-meta">Sep 18, 2017</span><br>
   
   <span class="post-meta small">
   
-    4 minute read
+    2 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Se os Objetos conversam entre si utilizando mensagens, 
-ou seja, através dos seus Métodos, por que utilizaríamos
-Tipos Primitivos nos argumentos desses Métodos ao invés
-de utilizarmos Objetos?</p>
+  <p>Xavier é uma biblioteca leve, Orientada a Objetos, para trabalhar com XML.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-3_i4nvi9d1k-randall-bruder.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2017/photo-xavier.jpg" alt="Unsplash image" /></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>Os Objetos conectam-se uns aos outros através de seus 
-<a href="/posts/construtores-da-classe-primario-secundarios/">construtores</a>
-e Métodos, enviando argumentos uns aos outros.</p>
+<p>Hoje em dia, todas as bibliotecas XML são muito complexas. Cada classe pode ter tantos métodos que pode ser muito difícil utilizá-las e compreendê-las. Essas implementações são muito procedurais também.</p>
 
-<p>No paradigma da Orientação a Objetos, tudo são Objetos.
-Inclusive os argumentos.
-Bem, deveriam ser, pelo menos na maioria dos casos.</p>
+<p>Que tal se tivéssemos uma <em>Library</em> leve, <a href="/posts/o-que-e-orientacao-a-objetos/">Orientada a Objetos</a>, que trabalha com XML e que compila em <a href="https://freepascal.org/"><em>Free Pascal</em></a> e <a href="https://www.embarcadero.com/products/delphi"><em>Delphi</em></a>?</p>
 
-<p>Imagine um um formulário onde o usuário precisa digitar
-seu <em>login</em>. Esse formulário, que contém Objetos visuais
-para capturar a digitação, irá enviar o <em>login</em> digitado
-à outro Objeto para validar a identificação.</p>
+<p>Hoje quero apresentar a você o meu mais novo projeto.</p>
 
-<p>Seria o <em>login</em> um Objeto ou apenas texto?</p>
+<h2 id="xavier">Xavier</h2>
 
-<p>Você pode pensar que o <em>login</em> é apenas uma informação
-simples, um tipo <em>string</em>, apenas texto puro, não havendo
-necessidade de um Objeto.</p>
+<p>Eu não trabalhava no <a href="https://github.com/mdbs99/james">Projeto James</a> já fazia mais ou menos um mês. Além da falta de tempo — os projetos dos clientes são prioridade, certo? — <del>temos</del> tínhamos uma <a href="https://github.com/mdbs99/james/issues/65"><em>issue</em></a> que não nos deixava prosseguir.</p>
 
-<p>Mas, não seria esse <em>“texto puro”</em> também um Objeto?</p>
+<p>Estávamos tentando compatibilizar o código com o <em>Delphi</em>, porém a parte que trata de XML é um tanto complicado.</p>
 
-<p>Tudo são Objetos na Orientação a Objetos.</p>
+<p>O maior problema é que o <em>Free Pascal</em> não tem a mesma implementação do <em>Delphi</em> para leitura e escrita de <em>streams</em> e arquivos XML.</p>
 
-<p>Confuso?</p>
+<p>No <em>Free Pascal</em> a implementação é baseada apenas em Classes, enquanto no <em>Delphi</em> a implementação é baseada em Interfaces — ponto para o <em>Delphi</em>.</p>
 
-<h2 id="argumentos">Argumentos</h2>
+<p>Os desenvolvedores do <em>Free Pascal</em> sempre tentam compatibilizar suas implementações com o <em>Delphi</em> porém, ao que parece, a implementação de XML no <em>Free Pascal</em> foi feita <em>antes</em> da implementação do <em>Delphi</em> e eles escolheram fazer tudo apenas com Classes.</p>
 
-<p>Tudo são Objetos, mas nem sempre os requisitos são
-implementados como tal.
-Os motivos são diversos, mas <em>simplicidade</em> e <em>performance</em>
-sempre são citados como motivos plausíveis para o uso
-de tipos primitivos nos argumentos.</p>
+<p>A maioria das <em>libs</em> que são compativeis entre ambos os compiladores utilizam-se de <a href="/diretivas-de-compilacao">diretivas de compilação</a> para que seus códigos funcionem. Essa técnica, apesar de muito útil, pode transformar seu código em “espaguete” rapidamente.</p>
 
-<p>Utilizar tipos primitivos nos argumentos é um anti-padrão chamado
-<a href="http://enterprisecraftsmanship.com/2015/03/07/functional-c-primitive-obsession/"><em>“Primitive Obsession”</em></a>.</p>
+<p>Veja esse exemplo de como salvar um <code>TXMLDocument</code> em <em>stream</em>, no compilador <em>Free Pascal</em> e <em>Delphi</em>, utilizando diretivas:</p>
 
-<p>Então vamos ver esses motivos e tentar dismitificá-los.</p>
+<script src="https://gist.github.com/mdbs99/c630eb809a9d030917af1efcd7e453d6.js"></script>
 
-<h3 id="performance">Performance</h3>
+<p>E que tal isso?</p>
 
-<p>É claro que Objetos são “mais lentos” para trabalhar e
-consomem “mais recursos” que os tipos primitivos.
-No entanto a Orientação a Objetos é sobre a arquitetura
-do sistema, deixando a performance por conta do compilador
-e código de máquina gerado.</p>
+<script src="https://gist.github.com/mdbs99/96e6f11f9a2184e4e9e932202751b9d0.js"></script>
 
-<p>A diminuição da performance — mesmo que mínima —
-em sistemas Orientado a Objetos é um preço justo a se 
-pagar devido a melhoria na arquitetura que o paradigma
-da Orientação a Objetos nos traz.</p>
+<p>Meio bizarro, improdutivo e confuso, não?</p>
 
-<p>Na minha experiência, utilizando Objetos pequenos e simples,
-que implementam apenas
-<a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">uma única responsabilidade</a>,
-não há perda de performance significativa.</p>
+<p>Quero escrever código mais elegante, limpo e sustentável usando a Orientação a Objetos e, infelizmente, as opções <em>Open Source</em> atuais não foram suficientes, considerando meus critérios pessoais.</p>
 
-<p>Mas, ainda assim, se seu maior requisito for performance,
-talvez a Orientação a Objetos não sirva para seu projeto…
-talvez.</p>
+<p>Então, criei o <a href="https://github.com/mdbs99/xavier">Xavier</a>.</p>
 
-<h3 id="simplicidade">Simplicidade</h3>
-
-<p>Seriam os tipos primitivos mais <a href="/posts/simplicidade/">simples</a>
-de usar do que Objetos?</p>
-
-<p>De acordo com a minha experiência, na maioria das vezes, não.</p>
-
-<p>Pense bem: Quantas vezes você teve que passar uma <em>“Data de Nascimento”</em>
-como argumento de um Método e lá dentro ter que convertê-la
-em <em>String</em>, por exemplo, para exibir ao usuário?</p>
-
-<p>Quantas vezes passou um <em>“Nome Completo”</em> por parâmetro como
-sendo apenas uma <em>String</em> mas depois teve que usar uma função
-<code>Copy</code> porque só queria exibir o <em>“Primeiro Nome”</em> ou a primeira
-parte do nome?</p>
-
-<p>Sem falar na <a href="/posts/codigo-duplicado-talvez-nao/">repetição de código</a>
-que poderia ocorrer com o uso dessas funções auxiliares em 
-várias partes do código.</p>
-
-<p>Com Objetos seria <strong>muito mais simples</strong>.</p>
-
-<p>Veja. Um Objeto <em>“Data de Nascimento”</em> seria responsável por
-algum cálculo de idade, além de retornar a si mesmo no formato
-<em>String</em>.</p>
-
-<p>Um Objeto <em>“Nome Completo”</em> seria responsável por retornar
-o primeiro nome e sobrenome; talvez retornar tudo em maiúsculo
-seria outro Método.</p>
-
-<p>Quer outro exemplo?</p>
-
-<p>Trabalho bastante com <em>GUID’s</em>. Elas são utilizadas em meus
-sistemas como chaves-primárias de registros.</p>
-
-<p>Se não me engano, o tipo <code>TGuid</code> no <em>Object Pascal</em> é um <em>record</em>.
-Não lembro, pois eu não o utilizo mais, não diretamente.</p>
-
-<p>Eu tenho minha própria Classe <code>TDataGuid</code> que implementa uma
-Interface <code>IDataGuid</code>.</p>
-
-<p>Essa Classe tem alguns construtores com argumentos diferentes
-para inicializar o <a href="/posts/objetos-sem-estado/">estado</a>
-do Objeto, que internamente é um <code>TGuid</code>.
-Posso receber uma <em>String</em> com ou sem “{…}”, posso receber um <code>TGuid</code>
-ou mesmo não receber nada e inicializar o estado internamente.</p>
-
-<p>Por quê um Objeto ao invés de um “simples” <em>record</em>?</p>
-
-<p>Nos meus sistemas, um <em>GUID</em> tem <a href="/posts/objetos-pensam-e-tomam-decisoes/">comportamento</a>.
-Ele não é apenas um <a href="/posts/pensando-em-dados/">dado</a>.</p>
-
-<p>Por exemplo. Para exibição de um <em>GUID</em> para o usuário basta
-utilizar o Método <code>AsString</code>.
-Se eu quiser exibir apenas o “formato de digitação” — os 8
-primeiros caracteres — basta utilizar o Método <code>AsShortString</code>.
-Se eu quiser o próprio <code>TGuid</code> basta chamar <code>Value</code>.</p>
-
-<p>Seria mais simples ficar fazendo conversões por todo o código
-utilizando funções auxiliares ou utilizar um Objeto como esse?</p>
-
-<p>Acho que não há dúvidas aqui.</p>
+<p>O principal objetivo do Xavier é substituir o código procedural comum em nossos projetos, que podem ter tantas condicionais e variáveis, num código mais declarativo e Orientado a Objetos, para trabalhar mais facilmente com o XML, sem diretivas de compilação no código final.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Quando você implementa Objetos da forma correta, o código
-é <em>simplificado</em>.</p>
+<p>A implementação do Xavier ainda está no início mas todo o código disponível hoje está funcionando, com cobertura de testes automatizados.</p>
 
-<p>Essa ideia vai contra o pensamento da maioria dos programadores
-procedurais que acham que utilizando tipos primitivos e funções
-deixaria o código mais simples de entender e alterar.</p>
+<p>Eu escrevi o código em apenas algumas horas. Ainda há muito o que fazer.</p>
 
-<p>Ledo engano.</p>
+<p>Estou fazendo minha parte…</p>
 
-<p>É claro que podemos e devemos utilizar os tipos primitivos, mas
-utilíze-os apenas como argumentos de Métodos privados, 
-variáveis locais ou para Classes de infraestrutura.</p>
+<p>E você, que tal fazer um <a href="https://github.com/mdbs99/xavier#fork-destination-box"><em>fork</em></a> do projeto e colaborar?</p>
 
-<p>Para a comunicação entre Objetos de Negócio, utilize Objetos.</p>
+<p>Link do projeto <a href="https://github.com/mdbs99/xavier">https://github.com/mdbs99/xavier</a>.</p>
 
 <p>Até logo.</p>
+
 
 </article>
 
@@ -363,33 +269,33 @@ variáveis locais ou para Classes de infraestrutura.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/xavier-package" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Tipos Primitivos nos Argumentos&via=mdbs99;url=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Xavier Package&via=mdbs99;url=http://objectpascalprogramming.com/xavier-package" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/xavier-package" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/&title=Tipos Primitivos nos Argumentos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/&title=Tipos Primitivos nos Argumentos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/xavier-package&title=Xavier Package" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/tipos-primitivos-nos-argumentos/&t=Tipos Primitivos nos Argumentos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/xavier-package&title=Xavier Package" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/xavier-package&t=Xavier Package" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -427,15 +333,6 @@ variáveis locais ou para Classes de infraestrutura.</p>
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/xavier-package" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Xavier Package</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/ipc" class="post-link">
@@ -518,6 +415,15 @@ variáveis locais ou para Classes de infraestrutura.</p>
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/atributos-nao-existem" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Atributos Não Existem</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -525,8 +431,8 @@ variáveis locais ou para Classes de infraestrutura.</p>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/tipos-primitivos-nos-argumentos';
-      var disqus_title      = 'Tipos Primitivos nos Argumentos';
+      var disqus_identifier = '/xavier-package';
+      var disqus_title      = 'Xavier Package';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
