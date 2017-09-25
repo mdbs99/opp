@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Versionando e Organizando seus Pacotes &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Xavier">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, package, packages, version, versioning">
+    <link rel="canonical" href="http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201709250343" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Versionando e Organizando seus Pacotes">
+    <meta property="og:description" content="Veja nesse artigo como trabalhar com múltiplas versões de um mesmo Pacote.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-neonbrand-345038.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Versionando e Organizando seus Pacotes" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>E-Book</a>
+<a href="/archive/">Arquivo</a>
+<a href="/testimonials/">Testemunhos</a>
+<a href="/webinars/">Webinários</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Versionando e Organizando seus Pacotes</h1>
+  <span class="post-meta">Sep 25, 2017</span><br>
+  
+  <span class="post-meta small">
+  
+    8 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>O desenvolvimento de Pacotes reutilizáveis pode se tornar complicado quando cada projeto está utilizando diferentes versões do mesmo pacote.</p>
+
+<!--more-->
+
+<p><img src="/images/2017/photo-neonbrand-345038.jpg" alt="Unsplash image" /></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>A modularização de sistemas é um conceito muito abrangente. Podemos modularizar um projeto desde o nível de arquivos (unidades) até o uso de WebServices e Microservices executando em servidores completamente distintos.</p>
+
+<p>Nesse meio, temos a modularização por Pacotes.</p>
+
+<p>Acredito que o uso de Pacotes seja o meio mais eficaz e simples para modularizar sistemas pequenos a médios.</p>
+
+<p>Até mesmo grandes sistemas podem (e devem) se beneficiar do uso de Pacotes, porém como a interoperabilidade com outras aplicações é quase mandatória em sistemas maiores, outras técnicas de modularização devem ser utilizadas em complemento.</p>
+
+<p>Mas essa eficácia tem um (baixo) custo que é <del>gastar</del> investir parte do tempo do desenvolvimento na organização e versionamento desses Pacotes.</p>
+
+<p>Eu já escrevi sobre esse assunto <a href="/posts/pacotes-e-versoes-no-lazarus/">aqui</a>, porém esse artigo é um aprimoramento sobre como versionar e consequentemente organizar seus Pacotes no <a href="http://www.lazarus-ide.org/">Lazarus</a>.</p>
+
+<p>Talvez as ideias a seguir possam funcionar também no Delphi, mas eu não sei. Eu não encontrei nenhum artigo sobre como ter mais de uma versão de um mesmo (<em>runtime</em>) Pacote no Delphi. Na verdade encontrei <em>workarounds</em> estranhas como <a href="https://stackoverflow.com/a/998096">essa resposta</a> no <em>StackOverflow</em> sobre como instalar múltiplas versões.</p>
+
+<h2 id="pacotes-registrados">Pacotes Registrados</h2>
+
+<p>No Lazarus, todo Pacote <em>runtime</em> é registrado automaticamente na IDE quando você o compila. Simples assim. Abra o Pacote. Compile. Pronto.</p>
+
+<p>Após o “registro” do Pacote, ele estará disponível para ser adicionado em qualquer projeto através da janela do <em>“Project Inspector -&gt; Required Packages”</em>.</p>
+
+<p>Essa funcionalidade é muito, muito útil para a modularização de qualquer projeto.</p>
+
+<p>Imagine você poder criar um Pacote a qualquer momento, adicionar algumas Unidades e tê-lo disponível para uso sem preocupações com <em>paths</em>.</p>
+
+<p>Ao abrirmos a janela <em>Required Packages</em>, todos os pacotes registrados aparecem numa <em>combo box</em> com auto-completar ao digitar.</p>
+
+<p>Quase perfeito.</p>
+
+<p>No entanto, é comum um Pacote ser utilizado por mais de um projeto. Então, se modificarmos algo nesse Pacote compartilhado, talvez todos os projetos que o utilizam deverão sofrer alterações… o que pode ser um problema caso você tenha dezenas de projetos ou mais.</p>
+
+<p>Mas, e se tivermos múltiplas versões de um mesmo Pacote, sendo que cada projeto poderá escolher qual versão utilizar?</p>
+
+<p>Isso resolveria o problema.</p>
+
+<h2 id="versionamento">Versionamento</h2>
+
+<p>Quando desenvolvemos um Pacote, na maioria das vezes, temos 2 objetivos primários: Modularização e  Compartilhamento.</p>
+
+<p>Modularizar o sistema em pequenas partes mais gerenciáveis, encapsulando contextos menores e bem definidos, facilita o desenvolvimento e a manutenção de todo o sistema. A modularização por Pacotes já nos dá um grande benefício.</p>
+
+<p>No entanto, acredito que a principal razão para a maioria dos desenvolvedores criarem pacotes é devido ao compartilhamento de Unidades entre projetos. Esse é um pensamento lógico e razoável. Mas se algo é compartilhado entre mais de um projeto, como ter o controle de qualidade ao fazer uma mudança no código do Pacote que é utilizado em muitos lugares?</p>
+
+<p>Por exemplo, se você alterar a interface de uma Classe, acrescentar mais um método numa Interface, remover algo que não é mais necessário, etc, como saber quais projetos serão afetados?</p>
+
+<p>Não há como saber.</p>
+
+<p>Então você segue em frente e faz as alterações necessárias no seu Pacote e também no seu projeto atual, sem pensar nos projetos mais antigos.</p>
+
+<p>Poderia haver outros projetos que utilizam o mesmo Pacote e que, ao tentar compilá-los futuramente, eles não irão compilar e você teria que lembrar o que fez anteriormente e ir alterando cada parte do projeto para torná-lo compatível com a nova versão do Pacote, novamente.</p>
+
+<p>É claro, você terá que fazer isso em algum momento. O problema é que abrimos projetos antigos, na maioria das vezes, apenas para acrescentar ou consertar algo. E o que em teoria seria uma tarefa simples, poderia demorar horas ou dias apenas por que você, primeiro, terá que compatibilizar o código do projeto com o código do seu Pacote recém alterado.</p>
+
+<p>A <em>solução</em> é o versionamento dos Pacotes.</p>
+
+<p>Todo Pacote (compartilhado entre projetos) deve ser versionado. Isso quer dizer que você terá que ter N diretórios do mesmo Pacote, ou seja, cada diretório irá tratar de uma específica versão do Pacote. A versão é definida pelos números Mínimo e Máximo para cada versão do Pacote.</p>
+
+<p>Tendo essas versões definidas, basta <a href="http://wiki.freepascal.org/Lazarus_Packages#Using_minimum.2C_maximum_version">escolhermos</a> uma versão mínima para cada projeto quando o Pacote for incluído como uma dependência.</p>
+
+<p>As versões de dependência do(s) Pacote(s), que ficam gravadas nos arquivos do projeto, é tudo que o Lazarus precisa saber para carregar a versão correta quando um projeto for aberto na IDE.</p>
+
+<p>E, <em>voilá</em>! Você não precisa mas alterar todos os projetos que utilizam determinado Pacote. Você pode evoluir a versão mais atual, mas mantendo as versões antigas totalmente funcionais. Então, ao abrir projetos antigos, você só iria fazer modificações para utilizar a versão do Pacote mais atual se, e somente se, fosse estritamente necessário. Do contrário, continue trabalhando com a versão antiga que o projeto já utilizava anteriormente, pois ela não deixou de funcionar.</p>
+
+<p>Perfeito agora?</p>
+
+<h2 id="solucao">Fluxo, Organização e Desenvolvimento</h2>
+
+<p>Se quisermos ter um sistema simples, eficaz e organizado, precisamos dedicar algum tempo à sua manutenção ao invés de somente codificar as <a href="/posts/codigo-duplicado-talvez-nao/#regras-de-negocio">Regras de Negócio</a> do projeto.</p>
+
+<p>Ao criamos esses Pacotes, precisamos definir um fluxo de trabalho para que tudo dê certo não só agora, mas principalmente no longo prazo.</p>
+
+<p>Hoje em dia, com o acesso quase irrestrito a informação, qualquer programador iniciante consegue criar um pequeno ou médio sistema totalmente funcional. Mas o que separa programadores iniciantes dos verdadeiros profissionais, é a arquitetura bem estruturada dos projetos, Pacotes, e todo o resto… no longo prazo.</p>
+
+<h3 id="passo-a-passo">Passo a Passo</h3>
+
+<p>Essa é a maneira que utilizo para organizar meus Pacotes ou Libs:</p>
+
+<p>A primeira coisa a fazer, é criar o diretório do Pacote e depois um subdiretório para o primeiro <em>release</em> — normalmente a versão 1.0.</p>
+
+<p>Diferentemente do que eu disse <a href="/posts/pacotes-e-versoes-no-lazarus/#preferencial">aqui</a> sobre a nomenclatura, considere nomear os diretórios de Pacotes com o número da versão correspondente — para projetos, no entanto, a nomenclatura sugerida continua válida — mas isso não faz diferença para o compilador, sendo apenas uma questão de organização visual.</p>
+
+<p>Exemplo:</p>
+
+<pre><code>yourpack
+  |
+  1.0
+    |
+    bin  : todos os arquivos binários e libs
+    |
+    pkg  : pacotes e configurações
+    |
+    src  : fontes de produção
+    |
+    test : fontes de testes
+</code></pre>
+
+<p>Segundo, você irá trabalhar nos fontes do seu Pacote. Irá criar Unidades, implementar testes, projeto com os testes, etc. Não esqueça de definir a versão atual real, por exemplo, 0.8 (lembre-se que ainda não chegamos na versão 1.0.</p>
+
+<p>Então, digamos que ele já pode ser utilizado em algum dos seus projetos, mesmo que a versão atual não seja a 1.0.</p>
+
+<p>Terceiro, você vai adicionar ao seu projeto uma nova dependência para o seu pacote, mas ao adicioná-lo no projeto, irá definir a versão <em>mínima</em> de uso que, atualmente, é a 0.8.</p>
+
+<p>A versão <em>máxima</em> de uso é opcional (nesse caso) pois mesmo que você atualize a versão do Pacote para, digamos 0.9.2, seu projeto continuará funcionando pois apenas a versão mínima foi definida.</p>
+
+<p>O Lazarus procura os Pacotes pelo seu nome, versão e <em>path</em>, no arquivo <code>packagesfiles.xml</code>, que é gerenciado pela IDE.</p>
+
+<p>Então, ambos os projetos (seu projeto e o Pacote) vão sendo atualizados, até que você resolve publicar a versão 1.0 do Pacote — determinado pelo mesmo nome do diretório.</p>
+
+<p>Nesse momento, você irá fazer um cópia do diretório <code>/1.0</code> para gerar um novo diretório, por exemplo o <code>/2.0</code>.</p>
+
+<pre><code>yourpack
+  |
+  2.0
+    |
+    bin  : todos os arquivos binários e libs
+    |
+    doc  : toda a documentação
+    |
+    pkg  : pacotes e configurações
+    |
+    src  : fontes de produção
+    |
+    test : fontes de testes
+</code></pre>
+
+<p>Veja que, hipoteticamente, somente na versão 2.0 foi criado um diretório <code>/doc</code> com a documentação do projeto. Está evoluindo…</p>
+
+<p>A partir do diretório 2.0 você irá continuar seu trabalho com as próximas versões: 1.1, 1.2… até chegar na 2.0 quando o ciclo recomeça.</p>
+
+<p>No meio desse ciclo, imagine que seu cliente, dono do primeiro projeto de exemplo, abre um <em>ticket</em>  relatando um problema. Você então abre o antigo projeto e “magicamente” a IDE faz o <em>load</em> da versão correta do Pacote, ou seja, a versão 1.0 que esse projeto ainda utiliza. Você não precisa compatibilizar esse projeto com a versão 2.0 do seu Pacote agora. Você pode (deve) fazer isso mais tarde, pois a prioridade agora é resolver o <em>ticket</em> do seu cliente.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Na conclusão do <a href="/posts/pacotes-e-versoes-no-lazarus/">artigo</a> anterior sobre esse assunto, eu disse que <a href="http://wiki.freepascal.org/Lazarus_Packages#Different_versions_of_a_package">marcava</a> as dependências como <em>preferencial</em> — opção que utiliza o <em>path</em> do pacote, não a versão. Porém, percebi que utilizando o fluxo descrito acima eu teria <em>liberdade</em> na configuração das dependências do meu projeto. O <em>path</em> seria gerenciado pela IDE e para utilizar novas versões dos Pacotes bastaria mudar os números mínimo e máximo.</p>
+
+<p>Para a maioria dos desenvolvedores, Pacotes são sinônimos de Componentes instalados na IDE. Mas eles são muito mais que isso.</p>
+
+<p>A modularização de sistemas utilizando Pacotes sempre foi muito negligenciada e espero que esse artigo tenha aberto seus olhos.</p>
+
+<p>Até logo.</p>
+
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Versionando e Organizando seus Pacotes&via=mdbs99;url=http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes&title=Versionando e Organizando seus Pacotes" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes&title=Versionando e Organizando seus Pacotes" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes&t=Versionando e Organizando seus Pacotes" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/xavier-package" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Xavier Package</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/ipc" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Inter-process Communication</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/porque-eu-escolhi-delphi-e-object-pascal" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Porquê eu escolhi Delphi e então, Object Pascal</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/redeclarando-classes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Redefinindo Classes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/git-work-project" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Git-work Project</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/imutabilidade-do-estado" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Imutabilidade do Estado</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/diretivas-de-compilacao" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Diretivas de Compilação</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/declarando-unidades" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Declarando Unidades</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/james-2017-07" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>James 2017-07</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/objetos-validadores" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Validadores</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/versionando-e-organizando-seus-pacotes';
+      var disqus_title      = 'Versionando e Organizando seus Pacotes';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

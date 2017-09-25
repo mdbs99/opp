@@ -8,6 +8,162 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Versionando e Organizando seus Pacotes</title>
+        <description>&lt;p&gt;O desenvolvimento de Pacotes reutilizáveis pode se tornar complicado quando cada projeto está utilizando diferentes versões do mesmo pacote.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-neonbrand-345038.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;A modularização de sistemas é um conceito muito abrangente. Podemos modularizar um projeto desde o nível de arquivos (unidades) até o uso de WebServices e Microservices executando em servidores completamente distintos.&lt;/p&gt;
+
+&lt;p&gt;Nesse meio, temos a modularização por Pacotes.&lt;/p&gt;
+
+&lt;p&gt;Acredito que o uso de Pacotes seja o meio mais eficaz e simples para modularizar sistemas pequenos a médios.&lt;/p&gt;
+
+&lt;p&gt;Até mesmo grandes sistemas podem (e devem) se beneficiar do uso de Pacotes, porém como a interoperabilidade com outras aplicações é quase mandatória em sistemas maiores, outras técnicas de modularização devem ser utilizadas em complemento.&lt;/p&gt;
+
+&lt;p&gt;Mas essa eficácia tem um (baixo) custo que é &lt;del&gt;gastar&lt;/del&gt; investir parte do tempo do desenvolvimento na organização e versionamento desses Pacotes.&lt;/p&gt;
+
+&lt;p&gt;Eu já escrevi sobre esse assunto &lt;a href=&quot;/posts/pacotes-e-versoes-no-lazarus/&quot;&gt;aqui&lt;/a&gt;, porém esse artigo é um aprimoramento sobre como versionar e consequentemente organizar seus Pacotes no &lt;a href=&quot;http://www.lazarus-ide.org/&quot;&gt;Lazarus&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Talvez as ideias a seguir possam funcionar também no Delphi, mas eu não sei. Eu não encontrei nenhum artigo sobre como ter mais de uma versão de um mesmo (&lt;em&gt;runtime&lt;/em&gt;) Pacote no Delphi. Na verdade encontrei &lt;em&gt;workarounds&lt;/em&gt; estranhas como &lt;a href=&quot;https://stackoverflow.com/a/998096&quot;&gt;essa resposta&lt;/a&gt; no &lt;em&gt;StackOverflow&lt;/em&gt; sobre como instalar múltiplas versões.&lt;/p&gt;
+
+&lt;h2 id=&quot;pacotes-registrados&quot;&gt;Pacotes Registrados&lt;/h2&gt;
+
+&lt;p&gt;No Lazarus, todo Pacote &lt;em&gt;runtime&lt;/em&gt; é registrado automaticamente na IDE quando você o compila. Simples assim. Abra o Pacote. Compile. Pronto.&lt;/p&gt;
+
+&lt;p&gt;Após o “registro” do Pacote, ele estará disponível para ser adicionado em qualquer projeto através da janela do &lt;em&gt;“Project Inspector -&amp;gt; Required Packages”&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Essa funcionalidade é muito, muito útil para a modularização de qualquer projeto.&lt;/p&gt;
+
+&lt;p&gt;Imagine você poder criar um Pacote a qualquer momento, adicionar algumas Unidades e tê-lo disponível para uso sem preocupações com &lt;em&gt;paths&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Ao abrirmos a janela &lt;em&gt;Required Packages&lt;/em&gt;, todos os pacotes registrados aparecem numa &lt;em&gt;combo box&lt;/em&gt; com auto-completar ao digitar.&lt;/p&gt;
+
+&lt;p&gt;Quase perfeito.&lt;/p&gt;
+
+&lt;p&gt;No entanto, é comum um Pacote ser utilizado por mais de um projeto. Então, se modificarmos algo nesse Pacote compartilhado, talvez todos os projetos que o utilizam deverão sofrer alterações… o que pode ser um problema caso você tenha dezenas de projetos ou mais.&lt;/p&gt;
+
+&lt;p&gt;Mas, e se tivermos múltiplas versões de um mesmo Pacote, sendo que cada projeto poderá escolher qual versão utilizar?&lt;/p&gt;
+
+&lt;p&gt;Isso resolveria o problema.&lt;/p&gt;
+
+&lt;h2 id=&quot;versionamento&quot;&gt;Versionamento&lt;/h2&gt;
+
+&lt;p&gt;Quando desenvolvemos um Pacote, na maioria das vezes, temos 2 objetivos primários: Modularização e  Compartilhamento.&lt;/p&gt;
+
+&lt;p&gt;Modularizar o sistema em pequenas partes mais gerenciáveis, encapsulando contextos menores e bem definidos, facilita o desenvolvimento e a manutenção de todo o sistema. A modularização por Pacotes já nos dá um grande benefício.&lt;/p&gt;
+
+&lt;p&gt;No entanto, acredito que a principal razão para a maioria dos desenvolvedores criarem pacotes é devido ao compartilhamento de Unidades entre projetos. Esse é um pensamento lógico e razoável. Mas se algo é compartilhado entre mais de um projeto, como ter o controle de qualidade ao fazer uma mudança no código do Pacote que é utilizado em muitos lugares?&lt;/p&gt;
+
+&lt;p&gt;Por exemplo, se você alterar a interface de uma Classe, acrescentar mais um método numa Interface, remover algo que não é mais necessário, etc, como saber quais projetos serão afetados?&lt;/p&gt;
+
+&lt;p&gt;Não há como saber.&lt;/p&gt;
+
+&lt;p&gt;Então você segue em frente e faz as alterações necessárias no seu Pacote e também no seu projeto atual, sem pensar nos projetos mais antigos.&lt;/p&gt;
+
+&lt;p&gt;Poderia haver outros projetos que utilizam o mesmo Pacote e que, ao tentar compilá-los futuramente, eles não irão compilar e você teria que lembrar o que fez anteriormente e ir alterando cada parte do projeto para torná-lo compatível com a nova versão do Pacote, novamente.&lt;/p&gt;
+
+&lt;p&gt;É claro, você terá que fazer isso em algum momento. O problema é que abrimos projetos antigos, na maioria das vezes, apenas para acrescentar ou consertar algo. E o que em teoria seria uma tarefa simples, poderia demorar horas ou dias apenas por que você, primeiro, terá que compatibilizar o código do projeto com o código do seu Pacote recém alterado.&lt;/p&gt;
+
+&lt;p&gt;A &lt;em&gt;solução&lt;/em&gt; é o versionamento dos Pacotes.&lt;/p&gt;
+
+&lt;p&gt;Todo Pacote (compartilhado entre projetos) deve ser versionado. Isso quer dizer que você terá que ter N diretórios do mesmo Pacote, ou seja, cada diretório irá tratar de uma específica versão do Pacote. A versão é definida pelos números Mínimo e Máximo para cada versão do Pacote.&lt;/p&gt;
+
+&lt;p&gt;Tendo essas versões definidas, basta &lt;a href=&quot;http://wiki.freepascal.org/Lazarus_Packages#Using_minimum.2C_maximum_version&quot;&gt;escolhermos&lt;/a&gt; uma versão mínima para cada projeto quando o Pacote for incluído como uma dependência.&lt;/p&gt;
+
+&lt;p&gt;As versões de dependência do(s) Pacote(s), que ficam gravadas nos arquivos do projeto, é tudo que o Lazarus precisa saber para carregar a versão correta quando um projeto for aberto na IDE.&lt;/p&gt;
+
+&lt;p&gt;E, &lt;em&gt;voilá&lt;/em&gt;! Você não precisa mas alterar todos os projetos que utilizam determinado Pacote. Você pode evoluir a versão mais atual, mas mantendo as versões antigas totalmente funcionais. Então, ao abrir projetos antigos, você só iria fazer modificações para utilizar a versão do Pacote mais atual se, e somente se, fosse estritamente necessário. Do contrário, continue trabalhando com a versão antiga que o projeto já utilizava anteriormente, pois ela não deixou de funcionar.&lt;/p&gt;
+
+&lt;p&gt;Perfeito agora?&lt;/p&gt;
+
+&lt;h2 id=&quot;solucao&quot;&gt;Fluxo, Organização e Desenvolvimento&lt;/h2&gt;
+
+&lt;p&gt;Se quisermos ter um sistema simples, eficaz e organizado, precisamos dedicar algum tempo à sua manutenção ao invés de somente codificar as &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/#regras-de-negocio&quot;&gt;Regras de Negócio&lt;/a&gt; do projeto.&lt;/p&gt;
+
+&lt;p&gt;Ao criamos esses Pacotes, precisamos definir um fluxo de trabalho para que tudo dê certo não só agora, mas principalmente no longo prazo.&lt;/p&gt;
+
+&lt;p&gt;Hoje em dia, com o acesso quase irrestrito a informação, qualquer programador iniciante consegue criar um pequeno ou médio sistema totalmente funcional. Mas o que separa programadores iniciantes dos verdadeiros profissionais, é a arquitetura bem estruturada dos projetos, Pacotes, e todo o resto… no longo prazo.&lt;/p&gt;
+
+&lt;h3 id=&quot;passo-a-passo&quot;&gt;Passo a Passo&lt;/h3&gt;
+
+&lt;p&gt;Essa é a maneira que utilizo para organizar meus Pacotes ou Libs:&lt;/p&gt;
+
+&lt;p&gt;A primeira coisa a fazer, é criar o diretório do Pacote e depois um subdiretório para o primeiro &lt;em&gt;release&lt;/em&gt; — normalmente a versão 1.0.&lt;/p&gt;
+
+&lt;p&gt;Diferentemente do que eu disse &lt;a href=&quot;/posts/pacotes-e-versoes-no-lazarus/#preferencial&quot;&gt;aqui&lt;/a&gt; sobre a nomenclatura, considere nomear os diretórios de Pacotes com o número da versão correspondente — para projetos, no entanto, a nomenclatura sugerida continua válida — mas isso não faz diferença para o compilador, sendo apenas uma questão de organização visual.&lt;/p&gt;
+
+&lt;p&gt;Exemplo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;yourpack
+  |
+  1.0
+    |
+    bin  : todos os arquivos binários e libs
+    |
+    pkg  : pacotes e configurações
+    |
+    src  : fontes de produção
+    |
+    test : fontes de testes
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Segundo, você irá trabalhar nos fontes do seu Pacote. Irá criar Unidades, implementar testes, projeto com os testes, etc. Não esqueça de definir a versão atual real, por exemplo, 0.8 (lembre-se que ainda não chegamos na versão 1.0.&lt;/p&gt;
+
+&lt;p&gt;Então, digamos que ele já pode ser utilizado em algum dos seus projetos, mesmo que a versão atual não seja a 1.0.&lt;/p&gt;
+
+&lt;p&gt;Terceiro, você vai adicionar ao seu projeto uma nova dependência para o seu pacote, mas ao adicioná-lo no projeto, irá definir a versão &lt;em&gt;mínima&lt;/em&gt; de uso que, atualmente, é a 0.8.&lt;/p&gt;
+
+&lt;p&gt;A versão &lt;em&gt;máxima&lt;/em&gt; de uso é opcional (nesse caso) pois mesmo que você atualize a versão do Pacote para, digamos 0.9.2, seu projeto continuará funcionando pois apenas a versão mínima foi definida.&lt;/p&gt;
+
+&lt;p&gt;O Lazarus procura os Pacotes pelo seu nome, versão e &lt;em&gt;path&lt;/em&gt;, no arquivo &lt;code&gt;packagesfiles.xml&lt;/code&gt;, que é gerenciado pela IDE.&lt;/p&gt;
+
+&lt;p&gt;Então, ambos os projetos (seu projeto e o Pacote) vão sendo atualizados, até que você resolve publicar a versão 1.0 do Pacote — determinado pelo mesmo nome do diretório.&lt;/p&gt;
+
+&lt;p&gt;Nesse momento, você irá fazer um cópia do diretório &lt;code&gt;/1.0&lt;/code&gt; para gerar um novo diretório, por exemplo o &lt;code&gt;/2.0&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;yourpack
+  |
+  2.0
+    |
+    bin  : todos os arquivos binários e libs
+    |
+    doc  : toda a documentação
+    |
+    pkg  : pacotes e configurações
+    |
+    src  : fontes de produção
+    |
+    test : fontes de testes
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Veja que, hipoteticamente, somente na versão 2.0 foi criado um diretório &lt;code&gt;/doc&lt;/code&gt; com a documentação do projeto. Está evoluindo…&lt;/p&gt;
+
+&lt;p&gt;A partir do diretório 2.0 você irá continuar seu trabalho com as próximas versões: 1.1, 1.2… até chegar na 2.0 quando o ciclo recomeça.&lt;/p&gt;
+
+&lt;p&gt;No meio desse ciclo, imagine que seu cliente, dono do primeiro projeto de exemplo, abre um &lt;em&gt;ticket&lt;/em&gt;  relatando um problema. Você então abre o antigo projeto e “magicamente” a IDE faz o &lt;em&gt;load&lt;/em&gt; da versão correta do Pacote, ou seja, a versão 1.0 que esse projeto ainda utiliza. Você não precisa compatibilizar esse projeto com a versão 2.0 do seu Pacote agora. Você pode (deve) fazer isso mais tarde, pois a prioridade agora é resolver o &lt;em&gt;ticket&lt;/em&gt; do seu cliente.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Na conclusão do &lt;a href=&quot;/posts/pacotes-e-versoes-no-lazarus/&quot;&gt;artigo&lt;/a&gt; anterior sobre esse assunto, eu disse que &lt;a href=&quot;http://wiki.freepascal.org/Lazarus_Packages#Different_versions_of_a_package&quot;&gt;marcava&lt;/a&gt; as dependências como &lt;em&gt;preferencial&lt;/em&gt; — opção que utiliza o &lt;em&gt;path&lt;/em&gt; do pacote, não a versão. Porém, percebi que utilizando o fluxo descrito acima eu teria &lt;em&gt;liberdade&lt;/em&gt; na configuração das dependências do meu projeto. O &lt;em&gt;path&lt;/em&gt; seria gerenciado pela IDE e para utilizar novas versões dos Pacotes bastaria mudar os números mínimo e máximo.&lt;/p&gt;
+
+&lt;p&gt;Para a maioria dos desenvolvedores, Pacotes são sinônimos de Componentes instalados na IDE. Mas eles são muito mais que isso.&lt;/p&gt;
+
+&lt;p&gt;A modularização de sistemas utilizando Pacotes sempre foi muito negligenciada e espero que esse artigo tenha aberto seus olhos.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 25 Sep 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes</guid>
+      </item>
+    
+      <item>
         <title>Xavier Package</title>
         <description>&lt;p&gt;Xavier é uma biblioteca leve, Orientada a Objetos, para trabalhar com XML.&lt;/p&gt;
 
@@ -1062,136 +1218,6 @@ uses
         <pubDate>Mon, 10 Jul 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/james-2017-07</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/james-2017-07</guid>
-      </item>
-    
-      <item>
-        <title>Objetos Validadores</title>
-        <description>&lt;p&gt;Veja como fazer validações utilizando Objetos ao invés de utilizar programação procedural.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-scott-webb-59043.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Na Orientação a Objetos a codificação deve ser declarativa. Isso quer dizer que, num mundo ideal, iríamos criar os Objetos agrupando-os entre si e, com uma única &lt;a href=&quot;/posts/diga-me-algo-sobre-voce/#mensagens&quot;&gt;mensagem&lt;/a&gt;, o trabalho a ser realizado seria iniciado e cada Objeto iria realizar parte desse trabalho. Tudo em perfeita harmonia.&lt;/p&gt;
-
-&lt;p&gt;No entanto, não vivemos num mundo ideal e problemas podem ocorrer.&lt;/p&gt;
-
-&lt;p&gt;Se pudermos validar o &lt;em&gt;input&lt;/em&gt; dos dados no nosso sistema antes de iniciar um processo mais elaborado, isso tornaria o processamento menos custoso, menos demorado e menos propenso a erros.&lt;/p&gt;
-
-&lt;p&gt;No entanto, se devemos codificar de forma declarativa, ou seja, sem condicionais que validem passo-a-passo o que está sendo processado — o &lt;em&gt;modus operandis&lt;/em&gt; da programação procedural — como seria possível fazer isso utilizando Objetos para deixar o código mais seguro e fazer um tratamento mais adequado para cada problema ou decisão, antes que uma exceção possa ocorrer?&lt;/p&gt;
-
-&lt;h2 id=&quot;validacoes&quot;&gt;Validações&lt;/h2&gt;
-
-&lt;p&gt;Imagine um Formulário onde há diversos campos para o usuário preencher antes de clicar em algum botão que irá fazer algo com os dados preenchidos nos &lt;em&gt;widgets&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Sempre temos que validar o &lt;em&gt;input&lt;/em&gt; antes de processá-lo, certo?&lt;/p&gt;
-
-&lt;p&gt;Tenho trabalhado com desenvolvimento de &lt;em&gt;software&lt;/em&gt; a muitos anos. Grande parte desse tempo eu codifiquei a validação de campos utilizando o mesmo “padrão” que até hoje é utilizado, independentemente da linguagem utilizada.&lt;/p&gt;
-
-&lt;p&gt;Vejamos como é esse padrão:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/1d990d474d0a15a7543c54c5c02b370a.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;O exemplo acima é sobre um Formulário que contém alguns campos, dentre esses campos temos &lt;code&gt;Name&lt;/code&gt; e &lt;code&gt;Birthday&lt;/code&gt;. O primeiro é &lt;em&gt;string&lt;/em&gt; e não pode estar em branco. Já o segundo deveria ser uma data válida, então o código utiliza a função padrão &lt;code&gt;SysUtils.TryStrToDate&lt;/code&gt; que verifica se é uma data válida e retorna o valor na variável &lt;code&gt;MyDate&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Quem nunca fez isso?&lt;/p&gt;
-
-&lt;p&gt;Pois é.&lt;/p&gt;
-
-&lt;p&gt;Há problemas demais com essa abordagem:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Não podemos reutilizar as validações. Em cada Formulário haverá uma possível cópia do mesmo código;&lt;/li&gt;
-  &lt;li&gt;As variáveis locais podem aumentar consideravelmente caso haja mais testes que necessitem de variáveis;&lt;/li&gt;
-  &lt;li&gt;O código é totalmente procedural;&lt;/li&gt;
-  &lt;li&gt;Não posso utilizar as informações de aviso ao usuário em outra aplicação Web, por exemplo, visto que as &lt;em&gt;strings&lt;/em&gt; estão codificadas dentro de funções &lt;code&gt;ShowMessage&lt;/code&gt; (ou qualquer outra função de mensagem para Desktop);&lt;/li&gt;
-  &lt;li&gt;O Formulário ficou complexo, visto que há muito código num único evento — e não adianta apenas criar vários métodos privados para cada teste, pois o Formulário irá continuar fazendo coisas demais.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Há variantes dessa abordagem acima, porém acredito que todos nós já vimos algo assim ou mesmo estamos codificando dessa maneira ainda hoje.&lt;/p&gt;
-
-&lt;p&gt;O que podemos fazer para simplificar o código, obter a reutilização das validações e ainda codificar utilizando Orientação a Objetos?&lt;/p&gt;
-
-&lt;h2 id=&quot;constraints&quot;&gt;Constraints&lt;/h2&gt;
-
-&lt;p&gt;&lt;em&gt;Constraints&lt;/em&gt; são Objetos que tem por função a validação de algum dado ou mesmo a validação de outro Objeto.&lt;/p&gt;
-
-&lt;p&gt;Cada &lt;em&gt;constraint&lt;/em&gt; valida apenas 1 artefato. Assim podemos reutilizar a validação em muitos outros lugares.&lt;/p&gt;
-
-&lt;p&gt;Vamos definir algumas &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/c668747123d651298e9f40d0e10af5b4.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Vamos entender cada Interface:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code&gt;[guids]&lt;/code&gt;: São necessários para &lt;em&gt;casting&lt;/em&gt; de Interfaces.&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;IDataInformation&lt;/code&gt;: Representa uma infomação.&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;IDataInformations&lt;/code&gt;: Representa uma lista de informações.&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;IDataResult&lt;/code&gt;: Representa um resultado de uma restrição.&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;IDataConstraint&lt;/code&gt;: Representa uma restrição.&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;IDataConstraints&lt;/code&gt;: Representa uma lista de restrições.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Não estou utilizando &lt;em&gt;Generics&lt;/em&gt;. Apenas Classes que podem ser reescritas em praticamente qualquer versão do Lazarus ou Delphi.&lt;/p&gt;
-
-&lt;p&gt;Bem simples.&lt;/p&gt;
-
-&lt;p&gt;Agora veremos a implementação das Interfaces — por questões de breviedade, vou apresentar somente as assinaturas das Classes:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/b254ff882ce27ce9fa4e8219c63e3e96.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Essas são Classes utilizadas em projetos reais. &lt;del&gt;Em breve&lt;/del&gt; todo o código &lt;del&gt;estará&lt;/del&gt; já está disponível no &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;Projeto James&lt;/a&gt;. Você poderá obter esse código acompanhando a &lt;a href=&quot;https://github.com/mdbs99/james/issues/17&quot;&gt;Issue #17&lt;/a&gt; do mesmo projeto.&lt;/p&gt;
-
-&lt;p&gt;Na implementação acima não tem nenhuma Classe que implemente a Interface &lt;code&gt;IDataConstraint&lt;/code&gt;. O motivo disso é que você, programador, irá criar suas próprias &lt;em&gt;constraints&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Vejamos um exemplo de como reescrever o código procedural do primeiro exemplo.&lt;/p&gt;
-
-&lt;p&gt;Precisamos criar duas Classes que implementam &lt;code&gt;IDataConstraint&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Como só há apenas 1 método nessa Interface, e para não deixar esse artigo ainda maior, vou mostrar o código de apenas uma implementação:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/62040307d41fbc45c0f15605acc541b5.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;O código acima mostra como seria a implementação para a &lt;em&gt;constraint&lt;/em&gt; &lt;code&gt;TNameConstraint&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;O código está &lt;em&gt;procedural&lt;/em&gt; e ainda pode &lt;em&gt;melhorar&lt;/em&gt; muito. As variáveis locais poderiam ser retiradas, bastando adicionar mais um &lt;em&gt;overload&lt;/em&gt; do método &lt;code&gt;New&lt;/code&gt; na Classe &lt;code&gt;TDataResult&lt;/code&gt; — você consegue ver essa possibilidade? Conseguiria implementá-la?&lt;/p&gt;
-
-&lt;p&gt;Abaixo o código de como utilizar todos esses Objetos em conjunto:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/5dc64c57916d86d01de561077d831aaf.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Se nas validações acima o nome estivesse &lt;em&gt;em branco&lt;/em&gt; mas a data de aniverário tivesse sido digitada &lt;em&gt;corretamente&lt;/em&gt; — o resultado do método &lt;code&gt;OK&lt;/code&gt; será verdadeiro se apenas todas as validações passarem no teste — o resultado do &lt;code&gt;ShowMessage&lt;/code&gt; poderia ser:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;- Name: Name is empty
-- Birthday: OK
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Essa seria apenas uma versão da implementação de como mostrar as informações. Poderia haver muitos outros &lt;em&gt;decoradores&lt;/em&gt; para mostrar a informação em outros formatos como, por exemplo, HTML numa aplicação Web.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;O código não está completo, mas acredito que posso ter aberto sua mente a novas possibilidades quando se trata de validações.&lt;/p&gt;
-
-&lt;p&gt;O resultado final de &lt;code&gt;SaveButtonClick&lt;/code&gt;, mesmo utilizando a Classe &lt;code&gt;TDataConstraints&lt;/code&gt;, também não foi implementada complemente seguindo o paradigma da Orientação a Objetos — para deixar o código mais sucinto — pois tem um &lt;code&gt;IF&lt;/code&gt; lá que não deixa o código tão elegante quanto deveria, mas eu acho que dá para você visualizar as possibilidades de uso.&lt;/p&gt;
-
-&lt;p&gt;A instância de &lt;code&gt;TDataConstraints&lt;/code&gt; e seus itens poderia ser utilizada em muitos outros lugares do código.&lt;/p&gt;
-
-&lt;p&gt;A combinação de tais Objetos é virtualmente infinita e seu será o mesmo em &lt;em&gt;todo&lt;/em&gt; código.&lt;/p&gt;
-
-&lt;p&gt;O código é &lt;em&gt;reutilizável&lt;/em&gt; em qualquer tipo de aplicação.&lt;/p&gt;
-
-&lt;p&gt;Nenhuma informação ou mensagem ao usuário seria duplicada no código. Haverá apenas um &lt;em&gt;único&lt;/em&gt; lugar, uma única Classe, para fazer a manutenção de cada validação.&lt;/p&gt;
-
-&lt;p&gt;E a exibição da mensagem poderia ser em qualquer formato, bastando utilizar outros Objetos &lt;em&gt;decoradores&lt;/em&gt; para ler as &lt;em&gt;informations&lt;/em&gt;, formatando como quiser.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 03 Jul 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/objetos-validadores</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/objetos-validadores</guid>
       </item>
     
   </channel>
