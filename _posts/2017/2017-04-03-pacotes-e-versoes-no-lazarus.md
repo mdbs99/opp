@@ -51,9 +51,9 @@ Pode ser sorte, mas a anos eu trabalho com componentes, frameworks ou libs (vou 
 
 Talvez minha sorte tenha haver com o fato de que eu quase não atualizo as *Libs* que estão funcionando.
 
-Por outro lado não posso ficar "parado no tempo" pois quando atulizar o código muita coisa pode ter mudado e levará um tempo até fazer todas as correções.
+Por outro lado não posso ficar "parado no tempo" pois quando eu atualizar o código, muita coisa pode ter mudado e levará um tempo até fazer todas as correções.
 
-Então, precisamos atualizar alguma hora.
+Então, precisamos atualizar os pacotes de tempos em tempos.
 
 As vezes tenho que fazer pequenas correções no meu código ou mesmo envio *patches* para outros autores de componentes *Open Source*, mas nunca tive um problema grave.
 
@@ -63,7 +63,7 @@ Bem, não mais.
 
 Parece que minha sorte acabou e venho tendo alguns problemas de incompatibilidade entre esses Pacotes.
 
-São alguns problemas, não muitos.
+São apenas alguns problemas, não muitos.
 
 As vezes uma atualização de algum Pacote não compila com a versão mais nova do Lazarus; outras vezes não compila com a versão mais nova do FPC; outras vezes o código foi tão alterado que fico receoso em atualizar, pois tenho projetos que não tem *Unit Tests* apropriados.
 
