@@ -26,7 +26,7 @@ keywords:
   - nomeando
 ---
 
-Veja nesse artigo alguns ideias que você deveria considerar ao nomear suas Classes em projetos do tipo Library.
+Veja nesse artigo algumas ideias que você deveria considerar ao nomear suas Classes em projetos do tipo Library.
 
 <!--more-->
 
