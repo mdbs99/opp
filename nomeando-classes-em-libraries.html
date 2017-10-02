@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Nomeando Classes em Libraries &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="Pascal">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, lib, libs, libraries, open-source, naming, nomeando">
+    <link rel="canonical" href="http://objectpascalprogramming.com/nomeando-classes-em-libraries">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201710020402" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Nomeando Classes em Libraries">
+    <meta property="og:description" content="Veja nesse artigo alguns ideias que você deveria considerar ao nomear suas Classes em projetos do tipo Library.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/nomeando-classes-em-libraries">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-marcel-strauss-334864.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Nomeando Classes em Libraries" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/nomeando-classes-em-libraries" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>E-Book</a>
+<a href="/archive/">Arquivo</a>
+<a href="/testimonials/">Testemunhos</a>
+<a href="/webinars/">Webinários</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Nomeando Classes em Libraries</h1>
+  <span class="post-meta">Oct 2, 2017</span><br>
+  
+  <span class="post-meta small">
+  
+    7 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Veja nesse artigo alguns ideias que você deveria considerar ao nomear suas Classes em projetos do tipo Library.</p>
+
+<!--more-->
+
+<p><img src="/images/2017/photo-marcel-strauss-334864.jpg" alt="Unsplash image" /> 
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Marcel Strauß on Unsplash</span></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Uma Library ou Lib, para encurtar, é definida na <a href="https://en.wikipedia.org/wiki/Library_(computing)">Wikipedia</a> como “uma coleção de subprogramas utilizados no desenvolvimento de software”.</p>
+
+<p>Eu gosto mais da próxima definição: “Uma Lib é também uma coleção de implementações de <a href="/posts/objetos-pensam-e-tomam-decisoes/">comportamento</a>”.</p>
+
+<p>Não pense numa Lib somente em termos de arquivos dll/so. Vamos aumentar esse conceito. Pense em Libs como dll/so, pacotes de software ou até mesmo um programa. Pense em termos de definição de comportamento especializado.</p>
+
+<p>Uma Lib é — ou deveria ser — um especialista em um assunto, dentro de um contexto bem definido.</p>
+
+<p>Eu diria que é (quase) a mesma definição do Objeto.</p>
+
+<p>No entanto, enquanto há Objetos tão simples com apenas um método, uma Lib parece mais como uma composição de muitos Objetos, trabalhando colaborativamente entre si, fazendo emergir um comportamento especializado.</p>
+
+<p>Os Objetos são como peças intercambiáveis. Podem ser simples ou complexos através do uso da composição.</p>
+
+<p>Uma Lib, eu acredito, é uma personificação de alguma entidade especializada.</p>
+
+<p>E toda entidade precisa ter um nome.</p>
+
+<h2 id="lib">Nomeando uma Lib</h2>
+
+<p>Há muitos anos eu já publicava alguns pequenos projetos no <a href="https://sourceforge.net/">SourceForge</a>.</p>
+
+<p>A maioria desses projetos eram pequenos pacotes de componentes para Delphi mas, apesar de ter tido alguns pouquíssimos colaboradores, tais projetos nunca foram relevantes para a comunidade.</p>
+
+<p>Bem, eu sabia quase nada sobre OpenSource e também não tinha muita experiência em desenvolvimento, então utilizei isso apenas como um aprendizado.</p>
+
+<p>Na época eu nomeava meus pacotes de componentes com nomes abstratos. Eles não representavam uma entidade especializada. Eram apenas arquivos agrupados num pacote. Um bom nome não era relevante naquela época — eu pensava.</p>
+
+<p>Anos se passaram.</p>
+
+<p>Então, eu aprendi mais sobre <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a> e <a href="https://en.wikipedia.org/wiki/Semantics">semântica</a> e como é importante utilizar bons nomes nos identificadores no código.</p>
+
+<p>Dizem que <em>nomear coisas e invalidar cache</em> são as duas coisas mais difíceis de fazer na computação. E é verdade.</p>
+
+<p>Nomear coisas é difícil. Nunca fica perfeito. Escolhemos um nome pensando ser a melhor opção e daqui a duas horas estamos refatorando e renomeando…</p>
+
+<p>É quase uma <em>arte</em>.</p>
+
+<p>Muitas vezes demora mais tempo para descobrirmos que um nome não foi bem escolhido.</p>
+
+<p>Há pouco mais de 5 anos atrás eu publiquei um projeto OpenSource chamado <a href="https://github.com/mdbs99/greyhound">Greyhound</a>, mas muitos não sabem qual o motivo da escolha desse nome.</p>
+
+<p>Aqui está a explicação: Enquanto a <em>Cheetah</em> (símbolo do Free Pascal) é o animal terrestre mais rápido, <em>Greyhound</em> é a raça mais rápida entre cães.</p>
+
+<p>E o que esse nome tem haver com um projeto que abstrai entidades de um Banco de Dados? — você pode estar pensando.</p>
+
+<p>É, concordo com você que esse nome não foi uma boa escolha.</p>
+
+<p>Mas ainda acho que é um nome bem interessante. Talvez para uma Lib que trabalhe com <em>stream</em> de dados ou um novo sistema operacional. Talvez algo relacionado a velocidade? Não sei.</p>
+
+<p>Pode não ter sido a melhor escolha para o meu projeto, mas por causa dele eu passei a utilizar nomes cada vez mais comuns.</p>
+
+<p>Hoje em dia todos os meus projetos (privados) ganham nomes próprios comuns. Alguns desses nomes provocam sorrisos em reuniões sempre que são pronunciados. Não devido ao nome em si, mas devido a relação do nome com o sistema que ele representa.</p>
+
+<p>Eu também levei essa nomenclatura para o mundo OpenSource através das minhas Libs mais recentes: <a href="https://github.com/mdbs99/james">James</a> e <a href="https://github.com/mdbs99/xavier">Xavier</a>.</p>
+
+<p>Se esses são bons nomes ou não, você decide.</p>
+
+<p>O aprendizado aqui é que bons nomes podem fazer a diferença pois o nome não será utilizado apenas na URL do seu projeto, mas sim em (quase) todas as Classes.</p>
+
+<h2 id="classes">Nomeando Classes</h2>
+
+<p>Na época do SourceForge minhas Classes tinham minhas iniciais “MD” como prefixo ou qualquer outras “duas letras” abstratas.</p>
+
+<p>Prefixos. Vemos essa prática ainda hoje em dia para diminuir a colisão de nomes entre classes similares. Exemplo: <code>TAbStream</code> vs <code>TCdStream</code>.</p>
+
+<p>Essa prática é visto até mesmo em grandes <em>frameworks</em> e outros ecosistemas como Java e C#.</p>
+
+<p>Por quê?</p>
+
+<p>Bem, precisamos diferenciar a classe padrão <code>TStream</code> da sua <code>TMyStream</code>, por exemplo.</p>
+
+<p>Poderíamos utilizar a Unidade como prefixo, mas ninguém gosta de escrever o nome totalmente qualificado como <code>acme.streams.TStream</code> sempre que tiver que usar a Classe <code>TStream</code>.</p>
+
+<p>Então o prefixo <code>My</code>, nesse caso, faz diferença.</p>
+
+<p>No entanto, um grande problema é que não controlamos os prefixos que são utilizados em projetos ao redor do mundo. Eu quero dizer, por exemplo, que se você escolhe <code>Ab</code> como prefixo de suas Classes, é bem possível que exista alguma outra Lib que já utiliza esse prefixo — e tem, chama-se <a href="https://github.com/TurboPack/Abbrevia">Abbrevia</a> e eu a utilizo.</p>
+
+<p>O prefixo <code>Ab</code> deixa os identificadores pequenos — o que é bom — porém a ambiguidade continua existindo, visto que, por serem apenas 2 letras, a probabilidade é que outro desenvolvedor já tenha escolhido esse mesmo prefixo.</p>
+
+<p>E esse não é o maior problema.</p>
+
+<p>É comum utilizarmos prefixos em grandes sistemas, compostos de muitos módulos, representando implementações diferentes para um mesmo conceito. Então se um desses prefixos for <code>Ab</code> e já estiver sendo utilizado dentro de um grande sistema — imagine que esse prefixo faz todo o sentido para o sistema da empresa, podendo representar uma área, setor ou algo bem importante — a ambiguidade é ainda pior, visto que poderia confundir o desenvolvedor: “Essa é uma Classe da empresa ou da Lib?”.</p>
+
+<p>É claro que basta posicionarmos o mouse em cima do identificador para vermos um <em>hint</em> com a informação de qual unidade ele pertence. Mas, e se você já utiliza o mesmo nome como <code>TAbStream</code> (exemplo dado acima) dentro um grande sistema? Você muda o identificador que faz mais sentido para empresa para não conflitar com o identificador da Lib ou <a href="/redeclarando-classes">redefine</a> todas as Classes da Lib?</p>
+
+<blockquote>
+  <p>“Nomear coisas e invalidar cache são as duas tarefas mais difíceis na computação.”</p>
+</blockquote>
+
+<p>Acredito que muitos desenvolvedores nem sequer pensam nesses conflitos.</p>
+
+<p>“Ei! O código está funcionando, é o que importa”, eles dizem.</p>
+
+<p>Bem, existem bons profissionais, outros nem tanto.</p>
+
+<p>E como resolver esse impasse?</p>
+
+<p>Como ter identificadores curtos, porém com uma boa semântica?</p>
+
+<p>Como diminuir ou (quase) acabar com conflitos de nomenclatura?</p>
+
+<p>Minha única resposta é: Não use prefixos abstratos em Classes, use um <em>nome</em> de verdade.</p>
+
+<p>O primeiro passo é escolher um bom nome: Simples, memorável e que represente um <a href="/posts/delegacao-de-implementacao-de-interfaces/#contextos">contexto</a>.</p>
+
+<h2 id="contextualizando">Contextualizando</h2>
+
+<p>Um contexto encapsula uma possível implementação para um determinado problema.</p>
+
+<p>Ao invés de utilizar <code>TAbStream</code>, você utilizaria <code>TAbbreviaStream</code>, por exemplo — eu não sei se tal Classe realmente existe nessa Lib.</p>
+
+<p>Não parece muito, mas essa pequena alteração pode fazer uma grande diferença em médios a grandes sistemas.</p>
+
+<p>Ao invés de termos apenas 2 letras abstratas, temos um nome que identifica um contexto.</p>
+
+<p>Esse contexto é o mesmo que dizer: “Essa é a implementação de Abbrevia para representar um <em>Stream</em>” — essa seria a “tradução” ao vermos a Classe <code>TAbbreviaStream</code> declarada no código.</p>
+
+<p>É muito menos provável que outra Lib, com a mesma especialidade, utilize o mesmo nome. A probabilidade diminui ao utilizarmos mais letras, concorda?</p>
+
+<p>Além disso, é muito menos provável que você utilize nomes assim para representar contextos (área, setor ou algo bem importante) dentro de um sistema da empresa.</p>
+
+<p>Esse foi o tipo de refatoração que fiz a poucos dias no projeto <a href="https://github.com/mdbs99/xavier">Xavier</a>.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Uma Lib é um especialista em determinado assunto. Dar um nome memorável, apropriado e curto a sua Lib irá facilitar tanto a identificação das Classes quando o uso da mesma.</p>
+
+<p>Evite o uso de prefixos abstratos. Eles não eliminam a ambiguidade e podem tornar as coisas ainda mais confusas, caso você tenha outros pacotes que, por ventura, utilize o mesmo prefixo.</p>
+
+<p>Escolha nomes simples, de fácil memorização, curtos o suficiente, que tenham alguma relação ou que personifique a entidade especializada.</p>
+
+<p>Até logo.</p>
+
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/nomeando-classes-em-libraries" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Nomeando Classes em Libraries&via=mdbs99;url=http://objectpascalprogramming.com/nomeando-classes-em-libraries" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/nomeando-classes-em-libraries" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/nomeando-classes-em-libraries&title=Nomeando Classes em Libraries" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/nomeando-classes-em-libraries&title=Nomeando Classes em Libraries" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/nomeando-classes-em-libraries&t=Nomeando Classes em Libraries" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/versionando-e-organizando-seus-pacotes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Versionando e Organizando seus Pacotes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/xavier-package" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Xavier Package</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/ipc" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Inter-process Communication</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/porque-eu-escolhi-delphi-e-object-pascal" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Porquê eu escolhi Delphi e então, Object Pascal</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/redeclarando-classes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Redefinindo Classes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/git-work-project" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Git-work Project</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/imutabilidade-do-estado" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Imutabilidade do Estado</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/diretivas-de-compilacao" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Diretivas de Compilação</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/declarando-unidades" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Declarando Unidades</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/james-2017-07" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>James 2017-07</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/nomeando-classes-em-libraries';
+      var disqus_title      = 'Nomeando Classes em Libraries';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

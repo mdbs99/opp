@@ -8,12 +8,164 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Nomeando Classes em Libraries</title>
+        <description>&lt;p&gt;Veja nesse artigo alguns ideias que você deveria considerar ao nomear suas Classes em projetos do tipo Library.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-marcel-strauss-334864.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Marcel Strauß on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Uma Library ou Lib, para encurtar, é definida na &lt;a href=&quot;https://en.wikipedia.org/wiki/Library_(computing)&quot;&gt;Wikipedia&lt;/a&gt; como “uma coleção de subprogramas utilizados no desenvolvimento de software”.&lt;/p&gt;
+
+&lt;p&gt;Eu gosto mais da próxima definição: “Uma Lib é também uma coleção de implementações de &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;comportamento&lt;/a&gt;”.&lt;/p&gt;
+
+&lt;p&gt;Não pense numa Lib somente em termos de arquivos dll/so. Vamos aumentar esse conceito. Pense em Libs como dll/so, pacotes de software ou até mesmo um programa. Pense em termos de definição de comportamento especializado.&lt;/p&gt;
+
+&lt;p&gt;Uma Lib é — ou deveria ser — um especialista em um assunto, dentro de um contexto bem definido.&lt;/p&gt;
+
+&lt;p&gt;Eu diria que é (quase) a mesma definição do Objeto.&lt;/p&gt;
+
+&lt;p&gt;No entanto, enquanto há Objetos tão simples com apenas um método, uma Lib parece mais como uma composição de muitos Objetos, trabalhando colaborativamente entre si, fazendo emergir um comportamento especializado.&lt;/p&gt;
+
+&lt;p&gt;Os Objetos são como peças intercambiáveis. Podem ser simples ou complexos através do uso da composição.&lt;/p&gt;
+
+&lt;p&gt;Uma Lib, eu acredito, é uma personificação de alguma entidade especializada.&lt;/p&gt;
+
+&lt;p&gt;E toda entidade precisa ter um nome.&lt;/p&gt;
+
+&lt;h2 id=&quot;lib&quot;&gt;Nomeando uma Lib&lt;/h2&gt;
+
+&lt;p&gt;Há muitos anos eu já publicava alguns pequenos projetos no &lt;a href=&quot;https://sourceforge.net/&quot;&gt;SourceForge&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A maioria desses projetos eram pequenos pacotes de componentes para Delphi mas, apesar de ter tido alguns pouquíssimos colaboradores, tais projetos nunca foram relevantes para a comunidade.&lt;/p&gt;
+
+&lt;p&gt;Bem, eu sabia quase nada sobre OpenSource e também não tinha muita experiência em desenvolvimento, então utilizei isso apenas como um aprendizado.&lt;/p&gt;
+
+&lt;p&gt;Na época eu nomeava meus pacotes de componentes com nomes abstratos. Eles não representavam uma entidade especializada. Eram apenas arquivos agrupados num pacote. Um bom nome não era relevante naquela época — eu pensava.&lt;/p&gt;
+
+&lt;p&gt;Anos se passaram.&lt;/p&gt;
+
+&lt;p&gt;Então, eu aprendi mais sobre &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt; e &lt;a href=&quot;https://en.wikipedia.org/wiki/Semantics&quot;&gt;semântica&lt;/a&gt; e como é importante utilizar bons nomes nos identificadores no código.&lt;/p&gt;
+
+&lt;p&gt;Dizem que &lt;em&gt;nomear coisas e invalidar cache&lt;/em&gt; são as duas coisas mais difíceis de fazer na computação. E é verdade.&lt;/p&gt;
+
+&lt;p&gt;Nomear coisas é difícil. Nunca fica perfeito. Escolhemos um nome pensando ser a melhor opção e daqui a duas horas estamos refatorando e renomeando…&lt;/p&gt;
+
+&lt;p&gt;É quase uma &lt;em&gt;arte&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Muitas vezes demora mais tempo para descobrirmos que um nome não foi bem escolhido.&lt;/p&gt;
+
+&lt;p&gt;Há pouco mais de 5 anos atrás eu publiquei um projeto OpenSource chamado &lt;a href=&quot;https://github.com/mdbs99/greyhound&quot;&gt;Greyhound&lt;/a&gt;, mas muitos não sabem qual o motivo da escolha desse nome.&lt;/p&gt;
+
+&lt;p&gt;Aqui está a explicação: Enquanto a &lt;em&gt;Cheetah&lt;/em&gt; (símbolo do Free Pascal) é o animal terrestre mais rápido, &lt;em&gt;Greyhound&lt;/em&gt; é a raça mais rápida entre cães.&lt;/p&gt;
+
+&lt;p&gt;E o que esse nome tem haver com um projeto que abstrai entidades de um Banco de Dados? — você pode estar pensando.&lt;/p&gt;
+
+&lt;p&gt;É, concordo com você que esse nome não foi uma boa escolha.&lt;/p&gt;
+
+&lt;p&gt;Mas ainda acho que é um nome bem interessante. Talvez para uma Lib que trabalhe com &lt;em&gt;stream&lt;/em&gt; de dados ou um novo sistema operacional. Talvez algo relacionado a velocidade? Não sei.&lt;/p&gt;
+
+&lt;p&gt;Pode não ter sido a melhor escolha para o meu projeto, mas por causa dele eu passei a utilizar nomes cada vez mais comuns.&lt;/p&gt;
+
+&lt;p&gt;Hoje em dia todos os meus projetos (privados) ganham nomes próprios comuns. Alguns desses nomes provocam sorrisos em reuniões sempre que são pronunciados. Não devido ao nome em si, mas devido a relação do nome com o sistema que ele representa.&lt;/p&gt;
+
+&lt;p&gt;Eu também levei essa nomenclatura para o mundo OpenSource através das minhas Libs mais recentes: &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;James&lt;/a&gt; e &lt;a href=&quot;https://github.com/mdbs99/xavier&quot;&gt;Xavier&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se esses são bons nomes ou não, você decide.&lt;/p&gt;
+
+&lt;p&gt;O aprendizado aqui é que bons nomes podem fazer a diferença pois o nome não será utilizado apenas na URL do seu projeto, mas sim em (quase) todas as Classes.&lt;/p&gt;
+
+&lt;h2 id=&quot;classes&quot;&gt;Nomeando Classes&lt;/h2&gt;
+
+&lt;p&gt;Na época do SourceForge minhas Classes tinham minhas iniciais “MD” como prefixo ou qualquer outras “duas letras” abstratas.&lt;/p&gt;
+
+&lt;p&gt;Prefixos. Vemos essa prática ainda hoje em dia para diminuir a colisão de nomes entre classes similares. Exemplo: &lt;code&gt;TAbStream&lt;/code&gt; vs &lt;code&gt;TCdStream&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Essa prática é visto até mesmo em grandes &lt;em&gt;frameworks&lt;/em&gt; e outros ecosistemas como Java e C#.&lt;/p&gt;
+
+&lt;p&gt;Por quê?&lt;/p&gt;
+
+&lt;p&gt;Bem, precisamos diferenciar a classe padrão &lt;code&gt;TStream&lt;/code&gt; da sua &lt;code&gt;TMyStream&lt;/code&gt;, por exemplo.&lt;/p&gt;
+
+&lt;p&gt;Poderíamos utilizar a Unidade como prefixo, mas ninguém gosta de escrever o nome totalmente qualificado como &lt;code&gt;acme.streams.TStream&lt;/code&gt; sempre que tiver que usar a Classe &lt;code&gt;TStream&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então o prefixo &lt;code&gt;My&lt;/code&gt;, nesse caso, faz diferença.&lt;/p&gt;
+
+&lt;p&gt;No entanto, um grande problema é que não controlamos os prefixos que são utilizados em projetos ao redor do mundo. Eu quero dizer, por exemplo, que se você escolhe &lt;code&gt;Ab&lt;/code&gt; como prefixo de suas Classes, é bem possível que exista alguma outra Lib que já utiliza esse prefixo — e tem, chama-se &lt;a href=&quot;https://github.com/TurboPack/Abbrevia&quot;&gt;Abbrevia&lt;/a&gt; e eu a utilizo.&lt;/p&gt;
+
+&lt;p&gt;O prefixo &lt;code&gt;Ab&lt;/code&gt; deixa os identificadores pequenos — o que é bom — porém a ambiguidade continua existindo, visto que, por serem apenas 2 letras, a probabilidade é que outro desenvolvedor já tenha escolhido esse mesmo prefixo.&lt;/p&gt;
+
+&lt;p&gt;E esse não é o maior problema.&lt;/p&gt;
+
+&lt;p&gt;É comum utilizarmos prefixos em grandes sistemas, compostos de muitos módulos, representando implementações diferentes para um mesmo conceito. Então se um desses prefixos for &lt;code&gt;Ab&lt;/code&gt; e já estiver sendo utilizado dentro de um grande sistema — imagine que esse prefixo faz todo o sentido para o sistema da empresa, podendo representar uma área, setor ou algo bem importante — a ambiguidade é ainda pior, visto que poderia confundir o desenvolvedor: “Essa é uma Classe da empresa ou da Lib?”.&lt;/p&gt;
+
+&lt;p&gt;É claro que basta posicionarmos o mouse em cima do identificador para vermos um &lt;em&gt;hint&lt;/em&gt; com a informação de qual unidade ele pertence. Mas, e se você já utiliza o mesmo nome como &lt;code&gt;TAbStream&lt;/code&gt; (exemplo dado acima) dentro um grande sistema? Você muda o identificador que faz mais sentido para empresa para não conflitar com o identificador da Lib ou &lt;a href=&quot;/redeclarando-classes&quot;&gt;redefine&lt;/a&gt; todas as Classes da Lib?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Nomear coisas e invalidar cache são as duas tarefas mais difíceis na computação.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Acredito que muitos desenvolvedores nem sequer pensam nesses conflitos.&lt;/p&gt;
+
+&lt;p&gt;“Ei! O código está funcionando, é o que importa”, eles dizem.&lt;/p&gt;
+
+&lt;p&gt;Bem, existem bons profissionais, outros nem tanto.&lt;/p&gt;
+
+&lt;p&gt;E como resolver esse impasse?&lt;/p&gt;
+
+&lt;p&gt;Como ter identificadores curtos, porém com uma boa semântica?&lt;/p&gt;
+
+&lt;p&gt;Como diminuir ou (quase) acabar com conflitos de nomenclatura?&lt;/p&gt;
+
+&lt;p&gt;Minha única resposta é: Não use prefixos abstratos em Classes, use um &lt;em&gt;nome&lt;/em&gt; de verdade.&lt;/p&gt;
+
+&lt;p&gt;O primeiro passo é escolher um bom nome: Simples, memorável e que represente um &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/#contextos&quot;&gt;contexto&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;contextualizando&quot;&gt;Contextualizando&lt;/h2&gt;
+
+&lt;p&gt;Um contexto encapsula uma possível implementação para um determinado problema.&lt;/p&gt;
+
+&lt;p&gt;Ao invés de utilizar &lt;code&gt;TAbStream&lt;/code&gt;, você utilizaria &lt;code&gt;TAbbreviaStream&lt;/code&gt;, por exemplo — eu não sei se tal Classe realmente existe nessa Lib.&lt;/p&gt;
+
+&lt;p&gt;Não parece muito, mas essa pequena alteração pode fazer uma grande diferença em médios a grandes sistemas.&lt;/p&gt;
+
+&lt;p&gt;Ao invés de termos apenas 2 letras abstratas, temos um nome que identifica um contexto.&lt;/p&gt;
+
+&lt;p&gt;Esse contexto é o mesmo que dizer: “Essa é a implementação de Abbrevia para representar um &lt;em&gt;Stream&lt;/em&gt;” — essa seria a “tradução” ao vermos a Classe &lt;code&gt;TAbbreviaStream&lt;/code&gt; declarada no código.&lt;/p&gt;
+
+&lt;p&gt;É muito menos provável que outra Lib, com a mesma especialidade, utilize o mesmo nome. A probabilidade diminui ao utilizarmos mais letras, concorda?&lt;/p&gt;
+
+&lt;p&gt;Além disso, é muito menos provável que você utilize nomes assim para representar contextos (área, setor ou algo bem importante) dentro de um sistema da empresa.&lt;/p&gt;
+
+&lt;p&gt;Esse foi o tipo de refatoração que fiz a poucos dias no projeto &lt;a href=&quot;https://github.com/mdbs99/xavier&quot;&gt;Xavier&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Uma Lib é um especialista em determinado assunto. Dar um nome memorável, apropriado e curto a sua Lib irá facilitar tanto a identificação das Classes quando o uso da mesma.&lt;/p&gt;
+
+&lt;p&gt;Evite o uso de prefixos abstratos. Eles não eliminam a ambiguidade e podem tornar as coisas ainda mais confusas, caso você tenha outros pacotes que, por ventura, utilize o mesmo prefixo.&lt;/p&gt;
+
+&lt;p&gt;Escolha nomes simples, de fácil memorização, curtos o suficiente, que tenham alguma relação ou que personifique a entidade especializada.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 02 Oct 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/nomeando-classes-em-libraries</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/nomeando-classes-em-libraries</guid>
+      </item>
+    
+      <item>
         <title>Versionando e Organizando seus Pacotes</title>
         <description>&lt;p&gt;O desenvolvimento de Pacotes reutilizáveis pode se tornar complicado quando cada projeto está utilizando diferentes versões do mesmo pacote.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-neonbrand-345038.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-neonbrand-345038.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by NeONBRAND on Unsplash&lt;/span&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
 
@@ -1148,76 +1300,6 @@ uses
         <pubDate>Mon, 17 Jul 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/declarando-unidades</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/declarando-unidades</guid>
-      </item>
-    
-      <item>
-        <title>James 2017-07</title>
-        <description>&lt;p&gt;James é um projeto Open Source que será a base de todos os meus projetos Orientados a Objetos codificados em Object Pascal.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-hope-house-press-127593.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;james&quot;&gt;James&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;O que é?&lt;/strong&gt; &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;James&lt;/a&gt; é uma coleção de classes e interfaces para projetos verdadeiramente orientados a objetos escritos em Object Pascal. Esta API está sendo escrita em Free Pascal e Lazarus. No entanto, torná-lo compatível com Delphi pode ser possível ou mesmo pode ser um objetivo (estamos dependendo de mais contribuidores para torná-lo possível).&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Por quê?&lt;/strong&gt; Nós não queremos mais escrever o código procedural, nunca mais. Queremos escrever código elegante, limpo e sustentável usando a OOP.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Princípios&lt;/strong&gt;. O código possui alguns princípios de &lt;em&gt;design&lt;/em&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Totalmente baseado em interface&lt;/li&gt;
-  &lt;li&gt;A memória é liberada automaticamente&lt;/li&gt;
-  &lt;li&gt;Todos os métodos públicos são implementações de métodos de interface&lt;/li&gt;
-  &lt;li&gt;Todos os métodos públicos retornam uma instância de interface ou tipo primitivo&lt;/li&gt;
-  &lt;li&gt;Nenhum uso de NULL em argumentos ou retornos de métodos&lt;/li&gt;
-  &lt;li&gt;Sem algoritmos nos construtores&lt;/li&gt;
-  &lt;li&gt;Não há getters e setters&lt;/li&gt;
-  &lt;li&gt;Sem &lt;em&gt;casting&lt;/em&gt; ou reflexão utilizando RTTI&lt;/li&gt;
-  &lt;li&gt;Sem procedimentos e funções, apenas Objetos&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Mais informações&lt;/strong&gt;. Leia mais sobre o James &lt;a href=&quot;/posts/james/&quot;&gt;aqui&lt;/a&gt; e &lt;a href=&quot;/posts/james-e-testes-de-unidade/&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;como-contribuir&quot;&gt;Como contribuir?&lt;/h3&gt;
-
-&lt;p&gt;Apenas faça um &lt;em&gt;fork&lt;/em&gt; do &lt;a href=&quot;https://github.com/mdbs99/james#fork-destination-box&quot;&gt;repositório&lt;/a&gt; e envie-nos um &lt;em&gt;Pull Request&lt;/em&gt; (PR).&lt;/p&gt;
-
-&lt;p&gt;Cada PR precisa trabalhar apenas sobre uma única &lt;em&gt;issue&lt;/em&gt; ou em uma &lt;a href=&quot;https://en.wikipedia.org/wiki/Single_responsibility_principle&quot;&gt;única responsabilidade&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Por favor, nomeie seu PR usando o mesmo estilo de outros PR já &lt;a href=&quot;https://github.com/mdbs99/james/pulls?q=is%3Apr+is%3Aclosed&quot;&gt;finalizados&lt;/a&gt; neste projeto.&lt;/p&gt;
-
-&lt;p&gt;Certifique-se de que o seu ramo seja construído sem quaisquer &lt;em&gt;warnings&lt;/em&gt;/problemas.&lt;/p&gt;
-
-&lt;p&gt;Se você tiver dúvidas ou sugestões gerais, não hesite em enviar uma nova &lt;a href=&quot;https://github.com/mdbs99/james/issues/new&quot;&gt;Github issue&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;atualizacoes&quot;&gt;Atualizações&lt;/h3&gt;
-
-&lt;p&gt;Ainda estamos em uma versão alfa muito precoce, a API pode e vai mudar com freqüência. Por favor, use isso por sua conta e risco, até liberarmos a versão 1.0.&lt;/p&gt;
-
-&lt;p&gt;Algumas &lt;em&gt;unidades&lt;/em&gt; foram excluídas e outras foram criadas. Classes foram movidas e renomeadas.&lt;/p&gt;
-
-&lt;p&gt;Vejamos abaixo as modificações mais recentes:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/pull/18&quot;&gt;PR #18&lt;/a&gt;: Só vamos utilizar caracteres ASCII para facilitar o uso no Delphi sem haver problemas de UNICODE (&lt;a href=&quot;https://www.mail-archive.com/lazarus@lists.lazarus-ide.org/msg02754.html&quot;&gt;veja mais&lt;/a&gt;).&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/pull/19&quot;&gt;PR #19&lt;/a&gt;: A classe &lt;code&gt;TStreamBase64&lt;/code&gt; não apenas foi renomeada para &lt;code&gt;TBase64Stream&lt;/code&gt;, como também está numa nova unidade chamada &lt;code&gt;james.format.base64.clss&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/pull/20&quot;&gt;PR #20&lt;/a&gt;: A unidade &lt;code&gt;james.data.xml.clss&lt;/code&gt; foi renomeada para &lt;code&gt;james.format.xml.clss&lt;/code&gt; adicionando um novo prefixo &lt;code&gt;format&lt;/code&gt; que poderá ser utilizado por outros “formatos” como JSON, INI, etc.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/pull/21&quot;&gt;PR #21&lt;/a&gt;: As unidades &lt;code&gt;james.files.*&lt;/code&gt; foram renomeadas para &lt;code&gt;james.io.*&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/pull/23&quot;&gt;PR #23&lt;/a&gt;: Criada uma nova unidade &lt;code&gt;james.crypto.md5.clss&lt;/code&gt; que, além de adicionar um novo prefixo &lt;code&gt;crypto&lt;/code&gt; para outros tipos de criptografia, também contém classes relacionadas ao MD5.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/mdbs99/james/pull/30&quot;&gt;PR #30&lt;/a&gt;: Adicionado as classes que implementam &lt;a href=&quot;/objetos-validadores#constraints&quot;&gt;Constraints&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;A maioria das modificações são apenas estéticas ou apenas para melhorar a organização. No entanto são modificações necessárias para fazer o projeto crescer com saúde.&lt;/p&gt;
-
-&lt;p&gt;Por enquanto é isso. Aguardo seus comentários aqui embaixo.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 10 Jul 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/james-2017-07</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/james-2017-07</guid>
       </item>
     
   </channel>
