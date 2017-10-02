@@ -31,6 +31,7 @@ O desenvolvimento de Pacotes reutilizáveis pode se tornar complicado quando cad
 <!--more-->
 
 ![Unsplash image]({{ page.image }}) 
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by NeONBRAND on Unsplash</span>
 
 ## Introdução {#introducao}
 
