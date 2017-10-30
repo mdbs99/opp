@@ -8,6 +8,191 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>API Unit: Tudo num só lugar</title>
+        <description>&lt;p&gt;Uma única técnica que resolve muitos problemas.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-nordwood-themes-166423.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by NordWood Themes on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Quando você utiliza uma Classe muitas vezes, já deve ter memorizado em qual Unit a Classe foi implementada.&lt;/p&gt;
+
+&lt;p&gt;Mas e se &lt;em&gt;Library&lt;/em&gt; (Lib) que você está utilizando é nova ou foi completamente remodelada?&lt;/p&gt;
+
+&lt;p&gt;E se você está tentando fazer um trabalho que nunca fez antes?&lt;/p&gt;
+
+&lt;p&gt;Como saber as Classes existentes na Lib?&lt;/p&gt;
+
+&lt;p&gt;Há basicamente 3 opções:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Abrir todas as Units da Lib e ler o código;&lt;/li&gt;
+  &lt;li&gt;Ler a documentação, se houver;&lt;/li&gt;
+  &lt;li&gt;Abrir apenas uma Unit que contenha todas as Interfaces e Classes;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Esse artigo é sobre a última opção, que eu chamo de “API Unit”.&lt;/p&gt;
+
+&lt;h2 id=&quot;api-unit&quot;&gt;API Unit&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;API Unit&lt;/em&gt; é um conceito em fase de experimentação.&lt;/p&gt;
+
+&lt;p&gt;A ideia é simples: Disponibilizar ao desenvolvedor, todas as Interfaces e Classes de &lt;em&gt;uso público&lt;/em&gt; em apenas 1 Unit.&lt;/p&gt;
+
+&lt;p&gt;Não estou dizendo que deveríamos codificar &lt;em&gt;tudo&lt;/em&gt; num único arquivo. Isso seria insano. Mas se houvesse uma maneira de continuarmos codificando em módulos mas, ao mesmo tempo, termos tudo disponível para uso em apenas 1 única Unit, não acha que seria interessante?&lt;/p&gt;
+
+&lt;p&gt;Já vi projetos onde os autores utilizavam arquivos &lt;code&gt;*.inc&lt;/code&gt; para ir montando a “verdadeira” Unit — o FPC e Lazarus utilizam essa técnica — mas eu acho confuso de administrar, além de dificultar a leitura do código.&lt;/p&gt;
+
+&lt;p&gt;Não fui por esse caminho e continuei pensando…&lt;/p&gt;
+
+&lt;p&gt;Então, tive uma ideia que chamei de &lt;em&gt;API Unit&lt;/em&gt;, meio que “por acaso”, após a publicação desse &lt;a href=&quot;/nomeando-classes-em-libraries&quot;&gt;artigo&lt;/a&gt;. Eu estava pensando em outras possibilidades para nomear Interfaces e Classes, algo que já havia explicado em outro artigo.&lt;/p&gt;
+
+&lt;p&gt;Por quê?&lt;/p&gt;
+
+&lt;p&gt;Bem, a técnica de nomenclatura que expliquei anteriormente continua válida, porém pode haver Libs mais complexas com &lt;a href=&quot;/posts/nomeando-classes/&quot;&gt;nomes de Classes&lt;/a&gt; bem especializadas. Esses nomes tem a tendência de serem maiores e adicionar o nome da Lib como prefixo — conforme explicado no &lt;a href=&quot;/nomeando-classes-em-libraries&quot;&gt;artigo&lt;/a&gt; — deixando o nome da Classe ainda mais verboso.&lt;/p&gt;
+
+&lt;p&gt;A linguagem Object Pascal não tem uma sintaxe para “renomear” uma Unit dentro do código. Algo &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; de se fazer em linguagens como Python, C# e Lua, por exemplo. Nessas linguagens, após o &lt;em&gt;“import”&lt;/em&gt; do arquivo, o desenvolvedor pode escolher um &lt;em&gt;alias&lt;/em&gt; para a “unidade”, ou seja, ele pode renomear dinamicamente o arquivo que irá conter as Interfaces, Classes e todo o resto.&lt;/p&gt;
+
+&lt;p&gt;Eu mesmo já &lt;a href=&quot;http://wiki.freepascal.org/Namespaces#The_.22uses.22_clause&quot;&gt;solicitei&lt;/a&gt; essa &lt;em&gt;feature&lt;/em&gt; para os desenvolvedores do &lt;a href=&quot;https://freepascal.org/&quot;&gt;Free Pascal&lt;/a&gt;, porém o pedido foi ignorado devido haver outras prioridades.&lt;/p&gt;
+
+&lt;p&gt;Como isso não é possível (hoje), voltei para os meus pensamentos.&lt;/p&gt;
+
+&lt;p&gt;Seria possível utilizar a nomenclatura mais simples (nomes curtos para Units, Interfaces e Classes) sem haver colisão de nomes?&lt;/p&gt;
+
+&lt;p&gt;Meus requisitos foram:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Classes com nomes curtos e simples;&lt;/li&gt;
+  &lt;li&gt;Havendo colisão de nomes entre Classes, a Unit seria utilizada como prefixo;&lt;/li&gt;
+  &lt;li&gt;Units devem ter o nome mais curto possível, porém legível e sem ambiguidades;&lt;/li&gt;
+  &lt;li&gt;O usuário da Lib deveria ter o controle da nomenclatura utilizada em seus sistemas;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Vamos analisar cada item:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Classes com nomes curtos e simples&lt;/strong&gt; deveria ser a norma utilizada em &lt;em&gt;todos&lt;/em&gt; os sistemas. Mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; de ler, mas fácil de entender.&lt;/p&gt;
+
+&lt;p&gt;Ao invés de escrevermos &lt;code&gt;TAcCar&lt;/code&gt; ou &lt;code&gt;TAcmeCar&lt;/code&gt;, iríamos utilizar apenas &lt;code&gt;TCar&lt;/code&gt;. Mas, conforme explicado no artigo sobre nomenclatura, há grandes possibilidades de haver uma colisão de nomes caso duas ou mais unidades tenham utilizado o mesmo identificador &lt;code&gt;TCar&lt;/code&gt; e isso nos leva ao segundo requisito.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Havendo colisão de nomes entre Classes, a Unit seria utilizada como prefixo&lt;/strong&gt; e o problema estaria resolvido. No entanto, é muito verboso declarar um método assim:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function TDriver.Drive(
+  ACar: Acme.Interfaces.Cars.ICar): IDriver;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O argumento &lt;code&gt;ACar&lt;/code&gt; é um tipo de Interface declarado em alguma Lib externa chamada &lt;code&gt;Acme&lt;/code&gt;. E foi preciso prefixar a Interface &lt;code&gt;ICar&lt;/code&gt; por que o seu projeto, hipoteticamente, também tem uma interface com o mesmo nome em outra Unit.&lt;/p&gt;
+
+&lt;p&gt;Imagine agora esse mesmo método com mais 4 argumentos, sendo cada um deles prefixado com a Unit. O método ficaria muito mais verboso e, talvez, difícil de entender.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Units devem ter o nome mais curto possível, porém legível e sem ambiguidades&lt;/strong&gt; mas a linguagem não nos dá essa opção. Se fosse possível criar um &lt;em&gt;alias&lt;/em&gt; no Object Pascal poderíamos fazer isso:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;uses
+  Acme.Interfaces.Cars.ICar as Acme;
+
+function TDriver.Drive(ACar: Acme.ICar): IDriver;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nesse ponto você pode estar pensando que voltamos a utilizar a mesma &lt;a href=&quot;/nomeando-classes-em-libraries&quot;&gt;técnica&lt;/a&gt; anterior, ou seja, o nome da Lib é o prefixo.&lt;/p&gt;
+
+&lt;p&gt;Ora, afinal o identificador &lt;code&gt;Acme.ICar&lt;/code&gt; não é tão diferente de &lt;code&gt;IAcmeCar&lt;/code&gt;, não é?&lt;/p&gt;
+
+&lt;p&gt;Sim, é verdade, porém com o uso (hipotético) de &lt;em&gt;alias&lt;/em&gt; é o usuário que tem o controle de qual nome utilizar como prefixo em todo o projeto. Algo que lhe dá liberdade, fazendo muita diferença.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O usuário da Lib deveria ter o controle da nomenclatura utilizada em seus sistemas&lt;/strong&gt; e não deixar que a Lib “imponha” um nome que, muitas vezes, é ambíguo, mal escolhido, confuso, verboso ou completamente sem sentido.&lt;/p&gt;
+
+&lt;p&gt;É claro que identificadores fixos como &lt;code&gt;IAcmeCar&lt;/code&gt; podem ser &lt;a href=&quot;/redeclarando-classes&quot;&gt;redeclarados&lt;/a&gt;, porém se houver muitas Classes e Interfaces, poderia ser uma tarefa bem dispendiosa.&lt;/p&gt;
+
+&lt;p&gt;Então, o uso de &lt;em&gt;alias&lt;/em&gt; na linguagem Object Pascal seria uma solução inovadora, porém não a temos.&lt;/p&gt;
+
+&lt;p&gt;E é aí que entra a ideia da &lt;em&gt;API Unit&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se todos os identificadores estivessem declarados em apenas uma única Unit, representando toda a Lib, poderíamos simular um &lt;em&gt;alias&lt;/em&gt; utilizando um arquivo físico.&lt;/p&gt;
+
+&lt;p&gt;Veja &lt;a href=&quot;https://github.com/mdbs99/james/blob/d63a1b93e246012ffc49fa6ea86ad644ceef12f5/src/james.api.pas#L24&quot;&gt;aqui&lt;/a&gt; um bom exemplo do que é uma &lt;em&gt;API Unit&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;No &lt;em&gt;link&lt;/em&gt; acima podemos ver que todas as Interfaces e Classes da Lib estão declaradas (apenas um &lt;em&gt;alias&lt;/em&gt; para os identificadores em outras Unit ) em apenas uma única Unit e isso nos dá &lt;em&gt;grandes&lt;/em&gt; possibilidades que irei explicar mais adiante.&lt;/p&gt;
+
+&lt;p&gt;No entanto, sempre haverá vantagens de desvantagens.&lt;/p&gt;
+
+&lt;h2 id=&quot;desvantagens&quot;&gt;Desvantagens&lt;/h2&gt;
+
+&lt;p&gt;Vou começar pelas desvantagens, pois as vantagens são bem maiores.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Você irá deixar o código do desenvolvedor da Lib um pouquinho mais verboso&lt;/strong&gt; por que, para cada Interface ou Classe existente, você terá que declarar um &lt;em&gt;alias&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo, veja nesse &lt;a href=&quot;https://github.com/mdbs99/james/blob/d63a1b93e246012ffc49fa6ea86ad644ceef12f5/src/james.data.clss.pas#L34-L52&quot;&gt;link&lt;/a&gt; que a Classe &lt;code&gt;TDataStream&lt;/code&gt; tem um &lt;em&gt;alias&lt;/em&gt; declarado como &lt;code&gt;TDataStreamAlias = TDataStream;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;A princípio, o identificador &lt;code&gt;TDataStreamAlias&lt;/code&gt; não faz sentido para a Unit na qual ele foi declarado, mas será importante para montarmos a &lt;em&gt;API Unit&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Todas as Interfaces e Classes para os usuários devem estar numa única Unit&lt;/strong&gt; e isso é meio chato e talvez um pouco trabalhoso de se fazer.&lt;/p&gt;
+
+&lt;p&gt;O desenvolvedor terá um pequeno retrabalho adicionando as Interfaces e Classes de outras Unit  na Unit de API. O desenvolvedor poderia até esquecer de fazer isso. No entanto se a Lib possuir testes automatizados, não haverá esquecimento, pois os próprios testes irão utilizar apenas a &lt;em&gt;API Unit&lt;/em&gt; e para testar uma Classe ela deve estar declarada lá.&lt;/p&gt;
+
+&lt;h2 id=&quot;vantagens&quot;&gt;Vantagens&lt;/h2&gt;
+
+&lt;p&gt;Agora vamos falar um pouco sobre as vantagens em utilizarmos essa simples técnica.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Se toda a Lib pode ser utilizada através de apenas 1 Unit&lt;/strong&gt; você pode criar um &lt;em&gt;alias&lt;/em&gt; apenas renomeando o arquivo original.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo. Se a Lib Acme do exemplo acima tivesse uma &lt;em&gt;API Unit&lt;/em&gt; ela poderia se chamar &lt;code&gt;Acme.API.pas&lt;/code&gt;. Mas se você não gostou do nome, se ele ainda é verboso ou se você já tem uma Unit com esse nome no seu projeto, bastaria renomear a Unit para, digamos, &lt;code&gt;LibAcme.pas&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então, qualquer colisão de nome entre Interfaces e Classes poderia ser resolvida apenas adicionando o “novo” nome da Lib como, por exemplo, &lt;code&gt;LibAcme.ICar&lt;/code&gt;. Simples, curto, fácil de entender e totalmente sob o controle do usuário da Lib.&lt;/p&gt;
+
+&lt;p&gt;Se o desenvolvedor da Lib quiser ser ainda mais “legal” com o usuário, ele poderia criar um &lt;code&gt;.inc&lt;/code&gt; com todos os identificadores e declarar a &lt;code&gt;Acme.API &lt;/code&gt;assim:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit Acme.API;
+
+{$include api.inc}
+
+end.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Então o usuário nem mesmo precisaria renomear o arquivo original. Bastaria criar um novo arquivo, por exemplo &lt;code&gt;LibAcme.pas&lt;/code&gt;, no mesmo diretório e incluir a &lt;code&gt;api.inc&lt;/code&gt; no corpo da nova Unit.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Como é fácil renomear a Unit que contém a API&lt;/strong&gt; o desenvolvedor não precisaria mais se preocupar em adicionar prefixos de 2~3 letras em Interfaces e Classes afim de diminuir a colisão de nomes nos projetos que utilizam a Lib. Qualquer nome simples pode ser utilizado, pois qualquer conflito será &lt;em&gt;fácil&lt;/em&gt; de resolver adicionando a Unit quando for necessário.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O usuário não precisa memorizar as Units da Lib&lt;/strong&gt; pois tudo está num único só lugar. Simples e conveniente.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O desenvolvedor da Lib poderia incluir mais Interfaces e Classes&lt;/strong&gt; porém apenas para o uso “privado” da Lib sem que o usuário precise saber da existência desses novos artefatos. O usuário já estaria acostumado a utilizar apenas uma única Unit, então ele não iria ter “acesso” a outros identificadores que não estão listados lá. É claro que ele ainda poderia utilizar as Units reais da Lib, porém isso poderia ser informado na documentação que isso seria considerado um &lt;em&gt;“hack”&lt;/em&gt; ou quebra de &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulamento&lt;/a&gt; e o usuário estaria por conta própria.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Ao definir um &lt;em&gt;alias&lt;/em&gt; para cada Interface ou Classe&lt;/strong&gt; — exemplo &lt;code&gt;TDataStreamAlias&lt;/code&gt;— não seria necessário &lt;a href=&quot;/redeclarando-classes&quot;&gt;redeclarar&lt;/a&gt; os identificadores na API utilizando as Units reais como prefixo.&lt;/p&gt;
+
+&lt;p&gt;Compare as duas opções abaixo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit James.API;
+
+type
+  {1} TDataStream = TDataStreamAlias;
+  {2} TDataStream = James.Data.Clss.TDataStream;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Com certeza a primeira linha e menos verbosa.&lt;/p&gt;
+
+&lt;p&gt;Esse é o motivo de haver esses identificadores que são apenas &lt;em&gt;alias&lt;/em&gt;. Além de ser menos verboso, o desenvolvedor poderia mover a &lt;code&gt;TDataStream&lt;/code&gt; para outra Unit e não precisaria alterar a API.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Quando a API começar a ficar grande demais&lt;/strong&gt; será um sinal — ou um “cheiro” — de que a Lib pode estar fazendo coisas demais. Então a &lt;em&gt;API Unit&lt;/em&gt; é, também, uma restrição. Mas isso é bom. &lt;a href=&quot;/posts/menos-e-mais/&quot;&gt;Menos é mais&lt;/a&gt;, lembre-se disso.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Esse artigo tentou demostrar que utilizando apenas uma única técnica simples e um pouco mais trabalho, é possível melhorar muito a qualidade do código, resolvendo problemas de escopo, nomenclatura e legibilidade.&lt;/p&gt;
+
+&lt;p&gt;Estou utilizando &lt;em&gt;API Unit&lt;/em&gt; em alguns projetos privados e &lt;em&gt;Open Sources&lt;/em&gt; (&lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;aqui&lt;/a&gt; e &lt;a href=&quot;https://github.com/mdbs99/xavier&quot;&gt;aqui&lt;/a&gt;) e a legibilidade tem melhorado.&lt;/p&gt;
+
+&lt;p&gt;Penso em utilizar o mesmo conceito para delimitar API’s (módulos) em grandes sistemas, mas a &lt;a href=&quot;/posts/interfaces-e-a-referencia-circular-entre-objetos/&quot;&gt;referência circular&lt;/a&gt; entre Units pode ser um problema. Então o design do projeto tem que levar isso em conta desde o início.&lt;/p&gt;
+
+&lt;p&gt;Se vai valer a pena… o tempo dirá.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 30 Oct 2017 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/api-unit</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/api-unit</guid>
+      </item>
+    
+      <item>
         <title>Injeção de Dependência sem XML, Atributos/Anotações ou Frameworks</title>
         <description>&lt;p&gt;É possível utilizar a Injeção de Dependência na Orientação Objetos sem depender de características específicas da linguagem, Arquivos XML, Atributos/Anotações ou &lt;em&gt;Frameworks&lt;/em&gt;?&lt;/p&gt;
 
@@ -1311,124 +1496,6 @@ finalfields}&lt;/code&gt; que foi implementado para a interoperabilidade do FPC 
         <pubDate>Mon, 31 Jul 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/imutabilidade-do-estado</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/imutabilidade-do-estado</guid>
-      </item>
-    
-      <item>
-        <title>Diretivas de Compilação</title>
-        <description>&lt;p&gt;Diretivas de Compilação podem lhe ajudar a tornar seu código &lt;em&gt;multi-plataform&lt;/em&gt; ou até mesmo &lt;em&gt;cross-compiled&lt;/em&gt;.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-mathyas-kurmann-102977.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Mathyas Kurmann on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.freepascal.org/docs-html/prog/progch1.html&quot;&gt;Diretivas de Compilação&lt;/a&gt; são comandos poderosos que o desenvolvedor pode utilizar para customizar a compilação.&lt;/p&gt;
-
-&lt;p&gt;Essas Diretivas passam parâmetros para o compilador, informando os &lt;em&gt;argumentos&lt;/em&gt; da compilação, &lt;em&gt;como&lt;/em&gt; deve ser compilado e &lt;em&gt;o que&lt;/em&gt; deve ser compilado.&lt;/p&gt;
-
-&lt;p&gt;Existem basicamente &lt;a href=&quot;http://docwiki.embarcadero.com/RADStudio/Tokyo/en/Delphi_compiler_directives&quot;&gt;3 tipos&lt;/a&gt; de Diretivas de Compilação:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;em&gt;Switch directive&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Parameter directive&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Conditional compilation directive&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Os dois primeiros tipos alteram os parâmetros de compilação, enquanto o último altera o que o compilador irá executar.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo iremos tratar do último tipo: &lt;em&gt;Condicionais&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;condicionais&quot;&gt;Condicionais&lt;/h2&gt;
-
-&lt;p&gt;Apesar de serem comandos poderosos, &lt;em&gt;não&lt;/em&gt; devem ser utilizados levianamente.&lt;/p&gt;
-
-&lt;p&gt;Com apenas alguns comandos condicionais, seu código &lt;a href=&quot;https://freepascal.org/&quot;&gt;Free Pascal&lt;/a&gt; ou &lt;a href=&quot;https://www.embarcadero.com/products/delphi&quot;&gt;Delphi&lt;/a&gt; pode ser compilável em várias plataformas.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, a medida que vamos adicionando mais e mais diretivas, o código irá ficar mais complexo.&lt;/p&gt;
-
-&lt;p&gt;Vejamos o exemplo abaixo:
-&lt;script src=&quot;https://gist.github.com/mdbs99/dffca8326e924f4e036485a5674ea147.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;No código acima apenas a 1º e 3º chamada da função &lt;em&gt;Writeln&lt;/em&gt; serão executadas.&lt;/p&gt;
-
-&lt;p&gt;Todas as diretivas e também a 2º chamada de &lt;em&gt;Writeln&lt;/em&gt; não irão fazer parte do executável final.&lt;/p&gt;
-
-&lt;p&gt;Bem legal.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, veja que o código ficou bem “poluído” e também temos um &lt;a href=&quot;/posts/objetos-imutaveis/#acoplamento-temporal&quot;&gt;acoplamento temporal&lt;/a&gt;, pois as  constantes precisam ser definidas numa ordem específica.&lt;/p&gt;
-
-&lt;p&gt;Diretivas e Definições de constantes que serão utilizadas em apenas numa única &lt;a href=&quot;/declarando-unidades&quot;&gt;Unidade&lt;/a&gt; pode até ser gerenciável, mas e se tivermos trabalhando com dezenas ou até centenas de Unidades que irão utilizar as mesmas diretivas e definições, ainda acha que essa abordagem é a melhor escolha para a arquitetura do seu projeto com a finalidade de construí-lo como &lt;em&gt;multi-plataform&lt;/em&gt; ou &lt;em&gt;cross-compiled&lt;/em&gt;?&lt;/p&gt;
-
-&lt;p&gt;Eu acho que &lt;em&gt;não&lt;/em&gt; e é por isso que no &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;Projeto James&lt;/a&gt; estamos utilizando uma abordagem diferente.&lt;/p&gt;
-
-&lt;h2 id=&quot;encapsulando&quot;&gt;Encapsulando Diretivas&lt;/h2&gt;
-
-&lt;p&gt;No James estamos codificando num estilo que chamo de &lt;em&gt;Encapsulamento de Diretivas&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Um dos objetivos desse projeto é ser &lt;em&gt;cross-compiled&lt;/em&gt;, ou seja, ele irá compilar em Free Pascal e Delphi. No entanto não queremos que nem os usuários (desenvolvedores) ou os autores desse projeto se preocupem com diretivas de compilação.&lt;/p&gt;
-
-&lt;p&gt;Atualmente não há diretivas condicionais no código de implementação dos métodos — com exceção da classe &lt;code&gt;TXMLComponent&lt;/code&gt; que deverá ser &lt;a href=&quot;https://github.com/mdbs99/james/issues/65&quot;&gt;refatorada&lt;/a&gt; em breve.&lt;/p&gt;
-
-&lt;p&gt;O motivo dessa abordagem é que não queremos nos preocupar em  quebrar um código que é utilizado por 2 compiladores diferentes.&lt;/p&gt;
-
-&lt;p&gt;Não utilizamos arquivos &lt;em&gt;“include”&lt;/em&gt; com pedaços de código.&lt;/p&gt;
-
-&lt;p&gt;Não utilizamos definições globais de condicionais.&lt;/p&gt;
-
-&lt;p&gt;Diretiva condicional é uma técnica &lt;em&gt;procedural&lt;/em&gt;. Não gostamos.&lt;/p&gt;
-
-&lt;p&gt;Ao invés disso, utilizamos apenas &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;Objetos&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;implementacao&quot;&gt;Implementação&lt;/h2&gt;
-
-&lt;p&gt;Imagine uma Unidade que contenha classes para &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;representar&lt;/a&gt; a criptografia &lt;a href=&quot;https://en.wikipedia.org/wiki/MD5&quot;&gt;MD5&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;No Free Pascal já temos uma Unidade &lt;code&gt;md5&lt;/code&gt; que tem funções que fazem esse trabalho — e é claro que temos que fazer Objetos para encapsular essas funções.&lt;/p&gt;
-
-&lt;p&gt;No Delphi a Unidade que faz o mesmo trabalho é denominada &lt;code&gt;hash&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Não queremos “reinventar a roda”. Queremos utilizar o que já está pronto em ambas as plataformas.&lt;/p&gt;
-
-&lt;p&gt;Então, como fazer essa implementação sem utilizar diretivas condicionais no código de implementação ou arquivos de inclusão?&lt;/p&gt;
-
-&lt;p&gt;Bem, no James temos a Unidade &lt;a href=&quot;https://github.com/mdbs99/james/blob/master/src/james.crypto.md5.clss.pas&quot;&gt;James.Crypto.MD5.Clss&lt;/a&gt; com algumas classes que representam MD5.&lt;/p&gt;
-
-&lt;p&gt;Essa é a única Unidade (até a data desse artigo) que os usuários devem utilizar para trabalhar com MD5.&lt;/p&gt;
-
-&lt;p&gt;Nós, autores do projeto, poderíamos separar alguns desenvolvedores para trabalhar na implementação Free Pascal e outros para trabalhar na implementação Delphi, se assim o desejarmos, pois as implementações estão separadas em Unidades distintas.&lt;/p&gt;
-
-&lt;p&gt;Primeiro criamos mais duas Unidades que serão utilizadas pela &lt;code&gt;James.Crypto.MD5.Clss&lt;/code&gt;:
-Uma para Free Pascal e outra para o Delphi.&lt;/p&gt;
-
-&lt;p&gt;São elas &lt;a href=&quot;https://github.com/mdbs99/james/blob/master/src/james.crypto.md5.fpc.pas&quot;&gt;James.Crypto.MD5.FPC&lt;/a&gt; e &lt;a href=&quot;https://github.com/mdbs99/james/blob/master/src/james.crypto.md5.delphi.pas&quot;&gt;James.Crypto.MD5.Delphi&lt;/a&gt;, respectivamente.&lt;/p&gt;
-
-&lt;p&gt;Veja abaixo como implementamos isso:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/1bc867bb6303223496c44d221eae9044.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Ambas as Unidades possuem a definição da Classe &lt;code&gt;TMD5Hash&lt;/code&gt; (sim, mesmo nome em ambas). Então bastou criar um &lt;em&gt;alias&lt;/em&gt; (novamente, com o mesmo nome) direcionando &lt;code&gt;TMD5Hash&lt;/code&gt; para a classe correta (dependente da plataforma) e, &lt;em&gt;voilá!&lt;/em&gt;, temos uma Unidade “limpa” e sem condicionais na implementação dos métodos.&lt;/p&gt;
-
-&lt;p&gt;Agora temos duas Classes distintas, em Unidades diferentes, que podem evoluir independentemente sem receio de quebrar o código entre plataformas.&lt;/p&gt;
-
-&lt;p&gt;A clase &lt;code&gt;TMD5Stream&lt;/code&gt; não tem nenhuma diferença entre os compiladores, então é implementada diretamente na Unidade &lt;code&gt;James.Crypto.MD5.Clss&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Diretiva de Compilação é uma boa ferramenta para customização do código, porém deve ser utilizada com parcimônia.&lt;/p&gt;
-
-&lt;p&gt;No código &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;Orientado a Objetos&lt;/a&gt;, dê preferência aos Objetos para resolver seus problemas.&lt;/p&gt;
-
-&lt;p&gt;Para cada diretiva condicional que você queira adicionar no código de implementação, sugiro implementar um novo Objeto que encapsule a diretiva.&lt;/p&gt;
-
-&lt;p&gt;Seu código ficará mais limpo e sustentável.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 24 Jul 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/diretivas-de-compilacao</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/diretivas-de-compilacao</guid>
       </item>
     
   </channel>

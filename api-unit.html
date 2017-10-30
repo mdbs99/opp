@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>API Unit: Tudo num só lugar &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, api, unit, api-unit, unidade">
+    <link rel="canonical" href="http://objectpascalprogramming.com/api-unit">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201710300054" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="API Unit: Tudo num só lugar">
+    <meta property="og:description" content="Uma única técnica que resolve muitos problemas.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/api-unit">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-nordwood-themes-166423.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="API Unit: Tudo num só lugar" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/api-unit" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>E-Book</a>
+<a href="/archive/">Arquivo</a>
+<a href="/testimonials/">Testemunhos</a>
+<a href="/webinars/">Webinários</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>API Unit: Tudo num só lugar</h1>
+  <span class="post-meta">Oct 30, 2017</span><br>
+  
+  <span class="post-meta small">
+  
+    9 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Uma única técnica que resolve muitos problemas.</p>
+
+<!--more-->
+
+<p><img src="/images/2017/photo-nordwood-themes-166423.jpg" alt="Unsplash image" /> 
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by NordWood Themes on Unsplash</span></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Quando você utiliza uma Classe muitas vezes, já deve ter memorizado em qual Unit a Classe foi implementada.</p>
+
+<p>Mas e se <em>Library</em> (Lib) que você está utilizando é nova ou foi completamente remodelada?</p>
+
+<p>E se você está tentando fazer um trabalho que nunca fez antes?</p>
+
+<p>Como saber as Classes existentes na Lib?</p>
+
+<p>Há basicamente 3 opções:</p>
+
+<ol>
+  <li>Abrir todas as Units da Lib e ler o código;</li>
+  <li>Ler a documentação, se houver;</li>
+  <li>Abrir apenas uma Unit que contenha todas as Interfaces e Classes;</li>
+</ol>
+
+<p>Esse artigo é sobre a última opção, que eu chamo de “API Unit”.</p>
+
+<h2 id="api-unit">API Unit</h2>
+
+<p><em>API Unit</em> é um conceito em fase de experimentação.</p>
+
+<p>A ideia é simples: Disponibilizar ao desenvolvedor, todas as Interfaces e Classes de <em>uso público</em> em apenas 1 Unit.</p>
+
+<p>Não estou dizendo que deveríamos codificar <em>tudo</em> num único arquivo. Isso seria insano. Mas se houvesse uma maneira de continuarmos codificando em módulos mas, ao mesmo tempo, termos tudo disponível para uso em apenas 1 única Unit, não acha que seria interessante?</p>
+
+<p>Já vi projetos onde os autores utilizavam arquivos <code>*.inc</code> para ir montando a “verdadeira” Unit — o FPC e Lazarus utilizam essa técnica — mas eu acho confuso de administrar, além de dificultar a leitura do código.</p>
+
+<p>Não fui por esse caminho e continuei pensando…</p>
+
+<p>Então, tive uma ideia que chamei de <em>API Unit</em>, meio que “por acaso”, após a publicação desse <a href="/nomeando-classes-em-libraries">artigo</a>. Eu estava pensando em outras possibilidades para nomear Interfaces e Classes, algo que já havia explicado em outro artigo.</p>
+
+<p>Por quê?</p>
+
+<p>Bem, a técnica de nomenclatura que expliquei anteriormente continua válida, porém pode haver Libs mais complexas com <a href="/posts/nomeando-classes/">nomes de Classes</a> bem especializadas. Esses nomes tem a tendência de serem maiores e adicionar o nome da Lib como prefixo — conforme explicado no <a href="/nomeando-classes-em-libraries">artigo</a> — deixando o nome da Classe ainda mais verboso.</p>
+
+<p>A linguagem Object Pascal não tem uma sintaxe para “renomear” uma Unit dentro do código. Algo <a href="/posts/simplicidade/">simples</a> de se fazer em linguagens como Python, C# e Lua, por exemplo. Nessas linguagens, após o <em>“import”</em> do arquivo, o desenvolvedor pode escolher um <em>alias</em> para a “unidade”, ou seja, ele pode renomear dinamicamente o arquivo que irá conter as Interfaces, Classes e todo o resto.</p>
+
+<p>Eu mesmo já <a href="http://wiki.freepascal.org/Namespaces#The_.22uses.22_clause">solicitei</a> essa <em>feature</em> para os desenvolvedores do <a href="https://freepascal.org/">Free Pascal</a>, porém o pedido foi ignorado devido haver outras prioridades.</p>
+
+<p>Como isso não é possível (hoje), voltei para os meus pensamentos.</p>
+
+<p>Seria possível utilizar a nomenclatura mais simples (nomes curtos para Units, Interfaces e Classes) sem haver colisão de nomes?</p>
+
+<p>Meus requisitos foram:</p>
+
+<ol>
+  <li>Classes com nomes curtos e simples;</li>
+  <li>Havendo colisão de nomes entre Classes, a Unit seria utilizada como prefixo;</li>
+  <li>Units devem ter o nome mais curto possível, porém legível e sem ambiguidades;</li>
+  <li>O usuário da Lib deveria ter o controle da nomenclatura utilizada em seus sistemas;</li>
+</ol>
+
+<p>Vamos analisar cada item:</p>
+
+<p><strong>Classes com nomes curtos e simples</strong> deveria ser a norma utilizada em <em>todos</em> os sistemas. Mais <a href="/posts/simplicidade/">simples</a> de ler, mas fácil de entender.</p>
+
+<p>Ao invés de escrevermos <code>TAcCar</code> ou <code>TAcmeCar</code>, iríamos utilizar apenas <code>TCar</code>. Mas, conforme explicado no artigo sobre nomenclatura, há grandes possibilidades de haver uma colisão de nomes caso duas ou mais unidades tenham utilizado o mesmo identificador <code>TCar</code> e isso nos leva ao segundo requisito.</p>
+
+<p><strong>Havendo colisão de nomes entre Classes, a Unit seria utilizada como prefixo</strong> e o problema estaria resolvido. No entanto, é muito verboso declarar um método assim:</p>
+
+<pre><code>function TDriver.Drive(
+  ACar: Acme.Interfaces.Cars.ICar): IDriver;
+</code></pre>
+
+<p>O argumento <code>ACar</code> é um tipo de Interface declarado em alguma Lib externa chamada <code>Acme</code>. E foi preciso prefixar a Interface <code>ICar</code> por que o seu projeto, hipoteticamente, também tem uma interface com o mesmo nome em outra Unit.</p>
+
+<p>Imagine agora esse mesmo método com mais 4 argumentos, sendo cada um deles prefixado com a Unit. O método ficaria muito mais verboso e, talvez, difícil de entender.</p>
+
+<p><strong>Units devem ter o nome mais curto possível, porém legível e sem ambiguidades</strong> mas a linguagem não nos dá essa opção. Se fosse possível criar um <em>alias</em> no Object Pascal poderíamos fazer isso:</p>
+
+<pre><code>uses
+  Acme.Interfaces.Cars.ICar as Acme;
+
+function TDriver.Drive(ACar: Acme.ICar): IDriver;
+</code></pre>
+
+<p>Nesse ponto você pode estar pensando que voltamos a utilizar a mesma <a href="/nomeando-classes-em-libraries">técnica</a> anterior, ou seja, o nome da Lib é o prefixo.</p>
+
+<p>Ora, afinal o identificador <code>Acme.ICar</code> não é tão diferente de <code>IAcmeCar</code>, não é?</p>
+
+<p>Sim, é verdade, porém com o uso (hipotético) de <em>alias</em> é o usuário que tem o controle de qual nome utilizar como prefixo em todo o projeto. Algo que lhe dá liberdade, fazendo muita diferença.</p>
+
+<p><strong>O usuário da Lib deveria ter o controle da nomenclatura utilizada em seus sistemas</strong> e não deixar que a Lib “imponha” um nome que, muitas vezes, é ambíguo, mal escolhido, confuso, verboso ou completamente sem sentido.</p>
+
+<p>É claro que identificadores fixos como <code>IAcmeCar</code> podem ser <a href="/redeclarando-classes">redeclarados</a>, porém se houver muitas Classes e Interfaces, poderia ser uma tarefa bem dispendiosa.</p>
+
+<p>Então, o uso de <em>alias</em> na linguagem Object Pascal seria uma solução inovadora, porém não a temos.</p>
+
+<p>E é aí que entra a ideia da <em>API Unit</em>.</p>
+
+<p>Se todos os identificadores estivessem declarados em apenas uma única Unit, representando toda a Lib, poderíamos simular um <em>alias</em> utilizando um arquivo físico.</p>
+
+<p>Veja <a href="https://github.com/mdbs99/james/blob/d63a1b93e246012ffc49fa6ea86ad644ceef12f5/src/james.api.pas#L24">aqui</a> um bom exemplo do que é uma <em>API Unit</em>.</p>
+
+<p>No <em>link</em> acima podemos ver que todas as Interfaces e Classes da Lib estão declaradas (apenas um <em>alias</em> para os identificadores em outras Unit ) em apenas uma única Unit e isso nos dá <em>grandes</em> possibilidades que irei explicar mais adiante.</p>
+
+<p>No entanto, sempre haverá vantagens de desvantagens.</p>
+
+<h2 id="desvantagens">Desvantagens</h2>
+
+<p>Vou começar pelas desvantagens, pois as vantagens são bem maiores.</p>
+
+<p><strong>Você irá deixar o código do desenvolvedor da Lib um pouquinho mais verboso</strong> por que, para cada Interface ou Classe existente, você terá que declarar um <em>alias</em>.</p>
+
+<p>Por exemplo, veja nesse <a href="https://github.com/mdbs99/james/blob/d63a1b93e246012ffc49fa6ea86ad644ceef12f5/src/james.data.clss.pas#L34-L52">link</a> que a Classe <code>TDataStream</code> tem um <em>alias</em> declarado como <code>TDataStreamAlias = TDataStream;</code>.</p>
+
+<p>A princípio, o identificador <code>TDataStreamAlias</code> não faz sentido para a Unit na qual ele foi declarado, mas será importante para montarmos a <em>API Unit</em>.</p>
+
+<p><strong>Todas as Interfaces e Classes para os usuários devem estar numa única Unit</strong> e isso é meio chato e talvez um pouco trabalhoso de se fazer.</p>
+
+<p>O desenvolvedor terá um pequeno retrabalho adicionando as Interfaces e Classes de outras Unit  na Unit de API. O desenvolvedor poderia até esquecer de fazer isso. No entanto se a Lib possuir testes automatizados, não haverá esquecimento, pois os próprios testes irão utilizar apenas a <em>API Unit</em> e para testar uma Classe ela deve estar declarada lá.</p>
+
+<h2 id="vantagens">Vantagens</h2>
+
+<p>Agora vamos falar um pouco sobre as vantagens em utilizarmos essa simples técnica.</p>
+
+<p><strong>Se toda a Lib pode ser utilizada através de apenas 1 Unit</strong> você pode criar um <em>alias</em> apenas renomeando o arquivo original.</p>
+
+<p>Por exemplo. Se a Lib Acme do exemplo acima tivesse uma <em>API Unit</em> ela poderia se chamar <code>Acme.API.pas</code>. Mas se você não gostou do nome, se ele ainda é verboso ou se você já tem uma Unit com esse nome no seu projeto, bastaria renomear a Unit para, digamos, <code>LibAcme.pas</code>.</p>
+
+<p>Então, qualquer colisão de nome entre Interfaces e Classes poderia ser resolvida apenas adicionando o “novo” nome da Lib como, por exemplo, <code>LibAcme.ICar</code>. Simples, curto, fácil de entender e totalmente sob o controle do usuário da Lib.</p>
+
+<p>Se o desenvolvedor da Lib quiser ser ainda mais “legal” com o usuário, ele poderia criar um <code>.inc</code> com todos os identificadores e declarar a <code>Acme.API </code>assim:</p>
+
+<pre><code>unit Acme.API;
+
+{$include api.inc}
+
+end.
+</code></pre>
+
+<p>Então o usuário nem mesmo precisaria renomear o arquivo original. Bastaria criar um novo arquivo, por exemplo <code>LibAcme.pas</code>, no mesmo diretório e incluir a <code>api.inc</code> no corpo da nova Unit.</p>
+
+<p><strong>Como é fácil renomear a Unit que contém a API</strong> o desenvolvedor não precisaria mais se preocupar em adicionar prefixos de 2~3 letras em Interfaces e Classes afim de diminuir a colisão de nomes nos projetos que utilizam a Lib. Qualquer nome simples pode ser utilizado, pois qualquer conflito será <em>fácil</em> de resolver adicionando a Unit quando for necessário.</p>
+
+<p><strong>O usuário não precisa memorizar as Units da Lib</strong> pois tudo está num único só lugar. Simples e conveniente.</p>
+
+<p><strong>O desenvolvedor da Lib poderia incluir mais Interfaces e Classes</strong> porém apenas para o uso “privado” da Lib sem que o usuário precise saber da existência desses novos artefatos. O usuário já estaria acostumado a utilizar apenas uma única Unit, então ele não iria ter “acesso” a outros identificadores que não estão listados lá. É claro que ele ainda poderia utilizar as Units reais da Lib, porém isso poderia ser informado na documentação que isso seria considerado um <em>“hack”</em> ou quebra de <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">encapsulamento</a> e o usuário estaria por conta própria.</p>
+
+<p><strong>Ao definir um <em>alias</em> para cada Interface ou Classe</strong> — exemplo <code>TDataStreamAlias</code>— não seria necessário <a href="/redeclarando-classes">redeclarar</a> os identificadores na API utilizando as Units reais como prefixo.</p>
+
+<p>Compare as duas opções abaixo:</p>
+
+<pre><code>unit James.API;
+
+type
+  {1} TDataStream = TDataStreamAlias;
+  {2} TDataStream = James.Data.Clss.TDataStream;
+</code></pre>
+
+<p>Com certeza a primeira linha e menos verbosa.</p>
+
+<p>Esse é o motivo de haver esses identificadores que são apenas <em>alias</em>. Além de ser menos verboso, o desenvolvedor poderia mover a <code>TDataStream</code> para outra Unit e não precisaria alterar a API.</p>
+
+<p><strong>Quando a API começar a ficar grande demais</strong> será um sinal — ou um “cheiro” — de que a Lib pode estar fazendo coisas demais. Então a <em>API Unit</em> é, também, uma restrição. Mas isso é bom. <a href="/posts/menos-e-mais/">Menos é mais</a>, lembre-se disso.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Esse artigo tentou demostrar que utilizando apenas uma única técnica simples e um pouco mais trabalho, é possível melhorar muito a qualidade do código, resolvendo problemas de escopo, nomenclatura e legibilidade.</p>
+
+<p>Estou utilizando <em>API Unit</em> em alguns projetos privados e <em>Open Sources</em> (<a href="https://github.com/mdbs99/james">aqui</a> e <a href="https://github.com/mdbs99/xavier">aqui</a>) e a legibilidade tem melhorado.</p>
+
+<p>Penso em utilizar o mesmo conceito para delimitar API’s (módulos) em grandes sistemas, mas a <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/">referência circular</a> entre Units pode ser um problema. Então o design do projeto tem que levar isso em conta desde o início.</p>
+
+<p>Se vai valer a pena… o tempo dirá.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/api-unit" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=API Unit: Tudo num só lugar&via=mdbs99;url=http://objectpascalprogramming.com/api-unit" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/api-unit" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/api-unit&title=API Unit: Tudo num só lugar" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/api-unit&title=API Unit: Tudo num só lugar" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/api-unit&t=API Unit: Tudo num só lugar" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/injecao-de-dependencia" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Injeção de Dependência sem XML, Atributos/Anotações ou Frameworks</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/nomeando-classes-em-libraries" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Classes em Libraries</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/versionando-e-organizando-seus-pacotes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Versionando e Organizando seus Pacotes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/xavier-package" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Xavier Package</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/ipc" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Inter-process Communication</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/porque-eu-escolhi-delphi-e-object-pascal" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Porquê eu escolhi Delphi e então, Object Pascal</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/redeclarando-classes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Redefinindo Classes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/git-work-project" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Git-work Project</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/imutabilidade-do-estado" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Imutabilidade do Estado</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/diretivas-de-compilacao" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Diretivas de Compilação</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/api-unit';
+      var disqus_title      = 'API Unit: Tudo num só lugar';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
