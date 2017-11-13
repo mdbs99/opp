@@ -8,6 +8,149 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Classes Aninhadas</title>
+        <description>&lt;p&gt;As Classes Aninhadas reduzem o número de Classes públicas, melhoram o encapsulamento, o polimorfismo local e a legibilidade do código.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-iorni-321845.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by iorni on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;A maneira mais fácil (preguiçosa e errada) de reaproveitar código é utilizando &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;herança&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Esse é o início do aprendizado sobre &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Como muito mais tempo, aprendemos que a &lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;Decoração&lt;/a&gt; e Composição de Objetos é o &lt;em&gt;melhor&lt;/em&gt; caminho para &lt;em&gt;adicionar&lt;/em&gt; e &lt;em&gt;reaproveitar&lt;/em&gt; comportamento, respectivamente.&lt;/p&gt;
+
+&lt;p&gt;Classes Aninhadas tem tudo haver com Decoração e Composição.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo você irá aprender como utilizar Classes Aninhadas para melhorar o encapsulamento e polimorfismo, acrescentando comportamento específico e localizado, sem o uso de &lt;em&gt;“Class Helpers”&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;classes-aninhadas&quot;&gt;Classes Aninhadas&lt;/h2&gt;
+
+&lt;p&gt;A linguagem Object Pascal, apesar de ser bem antiga, está em constante desenvolvimento.&lt;/p&gt;
+
+&lt;p&gt;Mas, eu sou avesso a grandes mudanças na linguagem. Em qualquer linguagem.&lt;/p&gt;
+
+&lt;p&gt;Também não sou a favor de acrescentar novas &lt;em&gt;features&lt;/em&gt; apenas por quê existem em &lt;em&gt;outras&lt;/em&gt; linguagens.&lt;/p&gt;
+
+&lt;p&gt;Quanto mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; for uma linguagem, mais fácil será o entendimento do código.&lt;/p&gt;
+
+&lt;p&gt;Na minha opinião, ao invés de acrescentar novas &lt;em&gt;features&lt;/em&gt; numa linguagem, os desenvolvedores deviam trabalhar em novas &lt;em&gt;Libraries&lt;/em&gt; que resolvem problemas específicos.&lt;/p&gt;
+
+&lt;p&gt;No entanto, algumas &lt;em&gt;features&lt;/em&gt; realmente podem fazer a diferença, ou seja, tornar o código melhor e mais simples.&lt;/p&gt;
+
+&lt;p&gt;O conceito de Classes Aninhadas é simples: Permitir a declaração de Classes dentro de Classes. Sejam elas privadas ou públicas.&lt;/p&gt;
+
+&lt;p&gt;Veja um exemplo da sintaxe:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/96820c816ffa3e1eb5296a330e3a1cef.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;No código acima, para declarar uma Classe &lt;code&gt;TBar&lt;/code&gt;, foi necessário fazer a referência a Classe &lt;code&gt;TFoo&lt;/code&gt;, primeiramente.&lt;/p&gt;
+
+&lt;p&gt;Então, &lt;code&gt;TBar&lt;/code&gt; é uma Classe Aninhada em &lt;code&gt;TFoo&lt;/code&gt; ou, em outras palavras, &lt;code&gt;TBar&lt;/code&gt; está encapsulada em &lt;code&gt;TFoo&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Acredito que para o compilador, uma Classe Aninhada é apenas outra qualquer. Não há penalidades no código. A primeira Classe da hierarquia &lt;em&gt;não&lt;/em&gt; irá criar Objetos maiores devido as Classes Aninhadas.&lt;/p&gt;
+
+&lt;p&gt;Para nós, desenvolvedores, é apenas um &lt;a href=&quot;https://en.wikipedia.org/wiki/Syntactic_sugar&quot;&gt;&lt;em&gt;Syntactic sugar&lt;/em&gt;&lt;/a&gt; que parece não valer muito a pena prestar atenção.&lt;/p&gt;
+
+&lt;p&gt;No entanto, para um &lt;em&gt;design&lt;/em&gt; realmente &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientado a Objetos&lt;/a&gt;, esta é uma &lt;em&gt;feature&lt;/em&gt; que proporciona uma &lt;em&gt;grande&lt;/em&gt; melhoria no código.&lt;/p&gt;
+
+&lt;h2 id=&quot;redescobrindo&quot;&gt;Redescobrindo&lt;/h2&gt;
+
+&lt;p&gt;O fato é que não faz tanto tampo que eu descobri que a linguagem Object Pascal tem suporte a Classes Aninhadas. Bem, talvez eu já tenha lido sobre isso já faz alguns anos, mas a verdade é que eu nunca tinha utilizado tal recurso em sistemas reais.&lt;/p&gt;
+
+&lt;p&gt;Há 3 semanas atrás, esse conceito retornou a minha mente após receber um e-mail relacionado a uma nova &lt;em&gt;issue&lt;/em&gt; num sistema privado.&lt;/p&gt;
+
+&lt;p&gt;Eu tinha que fazer uma manutenção no código e um dos requisitos dizia que uma parte do sistema deveria se comportar de maneira ligeiramente diferente da condição atual, mas por um curto período de tempo.&lt;/p&gt;
+
+&lt;p&gt;O motivo era que um segundo sistema estava sendo alterado e, enquanto essa tarefa não estivesse concluída, o primeiro sistema deveria se comportar de acordo com o requisito citado.&lt;/p&gt;
+
+&lt;p&gt;Como o sistema é privado, o requisito real é irrelevante.&lt;/p&gt;
+
+&lt;p&gt;Mas, para que você entenda como as Classes Aninhadas me ajudaram a implementar o requisito de forma simples, clássica e seguindo os &lt;a href=&quot;lista-vip/&quot;&gt;princípios&lt;/a&gt; da Orientação a Objetos, vou apresentar uma forma bem simplificada do que deveria ser alterado no código para a solução da tarefa.&lt;/p&gt;
+
+&lt;h2 id=&quot;problema&quot;&gt;O Problema&lt;/h2&gt;
+
+&lt;p&gt;Imagine que você tenha uma Unit com algumas Classes.&lt;/p&gt;
+
+&lt;p&gt;Essas Classes utilizam outras Classes de outras Units.&lt;/p&gt;
+
+&lt;p&gt;Para implementar o requisito, uma dessas Classes deveria ser alterada. No entanto, a alteração era relacionada com a Composição de outra Classe — na verdade eram outras Classes, no plural, mas vamos manter simples.&lt;/p&gt;
+
+&lt;p&gt;Então temos o seguinte:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;A Classe &lt;code&gt;TFoo&lt;/code&gt; é a que temos que alterar. No entanto ela trabalha com uma instância de &lt;code&gt;TBar&lt;/code&gt; internamente — novamente, por motivos de simplificação, vamos esquecer que a instância de &lt;code&gt;TBar&lt;/code&gt; deveria ser &lt;a href=&quot;/injecao-de-dependencia&quot;&gt;injetada&lt;/a&gt; no &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt; da Classe &lt;code&gt;TFoo&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;A interação entre as Classes &lt;code&gt;TFoo&lt;/code&gt; e &lt;code&gt;TBar&lt;/code&gt; era o que deveria ser alterado para a conclusão do requisito. No entanto, todas as outras Classes pertencentes a mesma Unit de &lt;code&gt;TFoo&lt;/code&gt; deveriam continuar com o mesmo comportamento atual. Em outras palavras, a Classe &lt;code&gt;TBar&lt;/code&gt; deveria ser alterada &lt;em&gt;apenas&lt;/em&gt; na implementação (local) de &lt;code&gt;TFoo&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Temos várias maneiras de implementar isso, é claro.&lt;/p&gt;
+
+&lt;p&gt;Antes, vamos &lt;a href=&quot;/posts/nomeando-unidades/&quot;&gt;nomear&lt;/a&gt; algumas coisas para facilitar o entendimento:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;Acme.Foos.Clss&lt;/code&gt; -&amp;gt; é a Unit onde a Classe &lt;code&gt;TFoo&lt;/code&gt; está declarada;&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Acme.Bars.Clss&lt;/code&gt; -&amp;gt; é a Unit onde a Classe &lt;code&gt;TBar&lt;/code&gt; está declarada;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Então, para implementar o requisito, nós poderíamos:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Implementar uma nova Classe na Sessão de Interface da &lt;code&gt;Acme.Bars.Clss&lt;/code&gt; chamada &lt;code&gt;TBarEx&lt;/code&gt; ou;&lt;/li&gt;
+  &lt;li&gt;Implementar uma nova Classe na Sessão de Interface da &lt;code&gt;Acme.Foos.Clss&lt;/code&gt; chamada &lt;code&gt;TBarEx&lt;/code&gt; ou;&lt;/li&gt;
+  &lt;li&gt;Criar uma nova Unit &lt;code&gt;Acme.Bars.Ex.Clss&lt;/code&gt; e implementar uma nova Classe chamada &lt;code&gt;TBarEx&lt;/code&gt; ou;&lt;/li&gt;
+  &lt;li&gt;Implementar uma nova Classe chamada &lt;code&gt;TBarEx&lt;/code&gt; na Sessão de Implementação da unit &lt;code&gt;Acme.Foos.Clss&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;O caminho a ser escolhido é quase infinito, porém essas seriam as opções mais comuns, considerando que não queremos fazer uma refatoração muito grande no código. Será uma alteração temporária, lembra?&lt;/p&gt;
+
+&lt;p&gt;Infelizmente, existem problemas de &lt;em&gt;design&lt;/em&gt; com todas as opções acima.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Implementar a nova Classe &lt;code&gt;TBarEx&lt;/code&gt; na Sessão de Interface de &lt;code&gt;Acme.Bars.Clss&lt;/code&gt; ou &lt;code&gt;Acme.Foos.Clss&lt;/code&gt; irá disponibilizar a nova Classe para todo o sistema. Como é uma Classe temporária, ela não deveria estar disponível… não dessa forma.&lt;/li&gt;
+  &lt;li&gt;Criar uma nova Unit &lt;code&gt;Acme.Bars.Ex.Clss&lt;/code&gt; é ainda pior, pois depois de algum tempo a Unit deverá ser removida, havendo mais alterações no código.&lt;/li&gt;
+  &lt;li&gt;Por fim, implementar uma nova Classe chamada &lt;code&gt;TBarEx&lt;/code&gt; na Sessão de Implementação da unit &lt;code&gt;Acme.Foos.Clss&lt;/code&gt; seria a opção mais viável. No entanto não teria sido um código elegante, pois essa nova Classe seria criada para apenas para um caso específico mas elas estaria disponível para a Unit inteira. Também tem o fato de que a Classe &lt;em&gt;deve&lt;/em&gt; ter um nome diferente (&lt;code&gt;TBar&lt;/code&gt; vs &lt;code&gt;TBarEx&lt;/code&gt;) — esse é um dos motivos de adicionarmos prefixos ou sufixos estranhos — para não haver conflito com todas as instâncias de &lt;code&gt;TBar&lt;/code&gt; que continuam sendo utilizadas por toda a Unit &lt;code&gt;Acme.Foos.Clss&lt;/code&gt;. O ideal seria continuar utilizando a nomenclatura &lt;code&gt;TBar&lt;/code&gt;, de acordo com o domínio. Mas, infelizmente, a técnica de &lt;a href=&quot;/redeclarando-classes&quot;&gt;redeclaração de Classes&lt;/a&gt; não seria possível, pois só queremos uma &lt;code&gt;TBar&lt;/code&gt; diferente em apenas um lugar na Unit.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Eu não escolhi nenhuma das possíveis soluções acima.&lt;/p&gt;
+
+&lt;h2 id=&quot;solucionando&quot;&gt;A Solução&lt;/h2&gt;
+
+&lt;p&gt;Após pensar por alguns minutos sobre como resolver o requisito, o conceito de Classes Aninhadas retornou a minha mente como a melhor escolha.&lt;/p&gt;
+
+&lt;p&gt;A solução é tão simples que você já a conhece. Está no início desse artigo!&lt;/p&gt;
+
+&lt;p&gt;Vou apenas adicionar mais código para deixar a implementação mais contextualizada:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/b292e33439d9867b2c8c92d8caba4a96.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Agora, em todos os métodos de &lt;code&gt;TFoo&lt;/code&gt; que for preciso decorar instâncias de &lt;code&gt;IBar&lt;/code&gt;, uma Classe de &lt;a href=&quot;/posts/nomeando-classes/&quot;&gt;nomenclatura&lt;/a&gt; simples e &lt;em&gt;local&lt;/em&gt; poderá ser utilizada sem haver conflito de nomes na Unit.&lt;/p&gt;
+
+&lt;p&gt;A Classe &lt;code&gt;TFoo&lt;/code&gt; tem sua própria implementação privada de &lt;code&gt;TBar&lt;/code&gt;. Nenhum outro código no sistema poderá utilizar essa implementação.&lt;/p&gt;
+
+&lt;p&gt;É uma solução &lt;em&gt;local&lt;/em&gt;, sem &lt;em&gt;workarounds&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Espero que os exemplos não tenham sido muito abstratos. A ideia foi mostrar o potencial dessa simples &lt;em&gt;feature&lt;/em&gt; sem deixar o artigo muito longo.&lt;/p&gt;
+
+&lt;p&gt;É uma solução simples e bastante elegante. Totalmente de acordo com os princípios da Orientação a Objetos, encapsulamento e polimorfismo.&lt;/p&gt;
+
+&lt;p&gt;A nomenclatura das Classes é simples, mantendo a legibilidade do código.&lt;/p&gt;
+
+&lt;p&gt;A linguagem Object Pascal continua a me surpreender, mesmo após mais de 16 anos que a utilizo.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/classes-aninhadas</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/classes-aninhadas</guid>
+      </item>
+    
+      <item>
         <title>API Unit: Tudo num só lugar</title>
         <description>&lt;p&gt;Uma única técnica que resolve muitos problemas.&lt;/p&gt;
 
@@ -1382,120 +1525,6 @@ uses
         <pubDate>Mon, 07 Aug 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/git-work-project</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/git-work-project</guid>
-      </item>
-    
-      <item>
-        <title>Imutabilidade do Estado</title>
-        <description>&lt;p&gt;Na Orientação a Objetos, um Objeto pode ser considerável Imutável mesmo que ele… mude.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-morgan-harper-nichols-157838.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Morgan Harper Nichols on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;O aprendizado de um conceito complexo, tende a ser melhor absorvido se dividirmos o conceito em pequenas partes.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo, quando começamos a aprender Inglês, nos é ensinado que, para nos referirmos a algo que ocorreu no passado, devemos utilizar os verbos no passado para fazer afirmações ou utilizamos o verbo modal &lt;em&gt;did&lt;/em&gt; ou &lt;em&gt;did not&lt;/em&gt; para fazermos perguntas ou negações. Esse é o tempo verbal &lt;em&gt;Simple Past&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Exemplo: &lt;em&gt;I saw this movie&lt;/em&gt; (tradução: eu vi esse filme).&lt;/p&gt;
-
-&lt;p&gt;Então, quando você começa a estudar mais a língua, descobre que existe muitas outras maneiras de expressar algo que ocorreu no passado. Por exemplo, o uso do tempo verbal &lt;em&gt;Present Perfect&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Exemplo: &lt;em&gt;I have seen this movie&lt;/em&gt; (tradução: eu vi esse filme).&lt;/p&gt;
-
-&lt;p&gt;Aqui vemos o uso do verbo modal &lt;em&gt;have&lt;/em&gt; e o uso do &lt;em&gt;Past Participle&lt;/em&gt; do verbo &lt;em&gt;to see&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Ambas as frases dizem o mesmo quando traduzimos para o Português, porém a segunda frase pode ser considerada mais &lt;em&gt;correta&lt;/em&gt; do que a primeira — você só descobre isso depois que aprende o &lt;em&gt;Present Perfect&lt;/em&gt;.
-Mas isso não é um blog de Inglês, vamos voltar para a Orientação a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Essa introdução é para lhe mostrar que primeiro devemos aprender um conceito na sua forma mais simples; depois aprimoramos.&lt;/p&gt;
-
-&lt;h2 id=&quot;conceitos&quot;&gt;Conceitos da Imutabilidade&lt;/h2&gt;
-
-&lt;p&gt;Quando você aprendeu sobre &lt;a href=&quot;/posts/objetos-imutaveis/&quot;&gt;Imutabilidade&lt;/a&gt; pode ter pensado que um Objeto é imutável se, depois de criado, nada é alterado dentro dele ou que o Objeto retorna sempre a mesma informação quando um método é chamado.&lt;/p&gt;
-
-&lt;p&gt;Bem, não é tão simples assim.&lt;/p&gt;
-
-&lt;p&gt;Diferentemente das linguagens funcionais, onde tudo é imutável por padrão, na Orientação a Objetos esse conceito pode ser mais amplo.&lt;/p&gt;
-
-&lt;p&gt;Vamos ver alguns conceitos.&lt;/p&gt;
-
-&lt;h3 id=&quot;ex1&quot;&gt;Conteúdo Externo&lt;/h3&gt;
-
-&lt;p&gt;Uma classe que representa um arquivo pode ser imútável de duas maneiras:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/48237c902271b6f2c3a314d3b6f5b8c0.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;No código acima, o método &lt;code&gt;TFile.Stream: IDataStream&lt;/code&gt; sempre irá retornar o mesmo valor lido na primeira execução.&lt;/p&gt;
-
-&lt;p&gt;O Objeto é imutável e &lt;em&gt;constante&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Mas, e se alterarmos o método confome abaixo, a classe continuaria sendo imutável?&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/0aea75fefaf8612d0bc84d5fc9ce85a0.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Sim, com certeza.&lt;/p&gt;
-
-&lt;p&gt;Apesar do retorno do método poder ser diferente em cada chamada — o conteúdo do arquivo pode ser alterado por outro processo — o Objeto continuaria sendo imutável pois seu &lt;a href=&quot;/estado-do-objeto&quot;&gt;Estado&lt;/a&gt; (&lt;code&gt;FFilePath&lt;/code&gt;) não foi alterado.&lt;/p&gt;
-
-&lt;p&gt;Ele é imutável, porém &lt;em&gt;não&lt;/em&gt; é constante.&lt;/p&gt;
-
-&lt;p&gt;O mesmo conceito se aplica para um conteúdo vindo de um Banco de Dados, site na Web, etc.&lt;/p&gt;
-
-&lt;h3 id=&quot;ex2&quot;&gt;Conteúdo em Memória&lt;/h3&gt;
-
-&lt;p&gt;Uma lista de Objetos é considerada mutável se adicionarmos itens após ela ter sido criada?&lt;/p&gt;
-
-&lt;p&gt;Vejamos no código:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/af8769161d1b111128349b05b74bccb9.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Copyright (c) &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;James Project&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TDataParams&lt;/code&gt; encapsula uma lista do tipo &lt;code&gt;TInterfaceList&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;A cada inclusão de um novo item, é delegada à essa lista interna, a persistência em memória dos Objetos.&lt;/p&gt;
-
-&lt;p&gt;Você acha que, assim, estamos alterando o Estado (&lt;code&gt;FList&lt;/code&gt;) do Objeto?&lt;/p&gt;
-
-&lt;p&gt;Não estamos.&lt;/p&gt;
-
-&lt;p&gt;O motivo é que não estamos redefinindo &lt;code&gt;FList&lt;/code&gt;. Não estamos recriando uma nova lista.&lt;/p&gt;
-
-&lt;p&gt;Uma lista de itens está sendo criada em memória — blocos de memória — mas o endereço inicial de &lt;code&gt;FList&lt;/code&gt; continua intacto.&lt;/p&gt;
-
-&lt;p&gt;Além disso, &lt;code&gt;FList&lt;/code&gt; é um &lt;a href=&quot;/atributos-primarios-secundarios#secundarios&quot;&gt;Atributo Secundário&lt;/a&gt;, então nós até poderíamos redefinir esse atributo sem estar em desacordo com o princípio. Mas, se a instância da lista fosse passada no construtor, então não poderíamos redefinir o Objeto, pois esse seria considerado como um &lt;a href=&quot;/atributos-primarios-secundarios#primarios&quot;&gt;Atributo Primário&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;estado&quot;&gt;Imutabilidade do Estado&lt;/h2&gt;
-
-&lt;p&gt;Se mesmo após algumas mudanças internas ou externas ao Objeto, ele continua sendo considerado imutável, como saber se não estamos violando o princípio da Imutabilidade?&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Simples&lt;/strong&gt;: Se o &lt;a href=&quot;/estado-do-objeto&quot;&gt;Estado do Objeto&lt;/a&gt;, ou seja, seus &lt;a href=&quot;/atributos-primarios-secundarios#primarios&quot;&gt;Atributos Primários&lt;/a&gt;, não for alterado/redefinindo, então ele é imutável.&lt;/p&gt;
-
-&lt;p&gt;Uma vez que um atributo é instânciado, ele não poderá ter seu &lt;em&gt;endereço de memória&lt;/em&gt; alterado. Esses atributos serão inicializados no &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt; da classe e jamais poderão ser reinicializados.&lt;/p&gt;
-
-&lt;p&gt;Seu Objeto deve ser &lt;em&gt;fiél&lt;/em&gt; aos argumentos passados no construtor da Classe, no entanto ele é &lt;em&gt;livre&lt;/em&gt; para trabalhar e responder o que quiser em seus métodos.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Imutabilidade, na Orientação a Objetos, não é só sobre as não-mudanças internas ou externas ao Objeto, mas sim sobre não alterar o Estado Primário do Objeto.&lt;/p&gt;
-
-&lt;p&gt;Não confunda &lt;a href=&quot;/posts/classes-de-dados/&quot;&gt;dados&lt;/a&gt; com o Estado do Objeto.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente nenhum compilador &lt;em&gt;Object Pascal&lt;/em&gt; que eu conheça possui uma sintaxe para que essas regras não sejam quebradas. Java, por exemplo, tem atributos &lt;em&gt;final&lt;/em&gt; onde, uma vez inicializados, não podem ter seu endereço de memória substituído.&lt;/p&gt;
-
-&lt;p&gt;Sven Barth, um integrante do FPC team, &lt;a href=&quot;http://lists.freepascal.org/pipermail/fpc-pascal/2017-July/051941.html&quot;&gt;me falou&lt;/a&gt; sobre um &lt;code&gt;{$modeswitch
-finalfields}&lt;/code&gt; que foi implementado para a interoperabilidade do FPC para a JVM plataforma, porém ainda não disponível.&lt;/p&gt;
-
-&lt;p&gt;Então temos que trabalhar apenas com o conceito ou utilizar ferramentas de verificação de código para que essa regra não seja quebrada.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 31 Jul 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/imutabilidade-do-estado</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/imutabilidade-do-estado</guid>
       </item>
     
   </channel>
