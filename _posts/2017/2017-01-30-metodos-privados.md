@@ -83,7 +83,7 @@ Essa Classe é tão simples que não haveria necessidade de existir esse Método
 
 Nesse caso o Método Privado está fazendo um *cache* dos dados, assim não será necessário "calcular" as partes dos nomes sempre que executarmos esses Métodos.
 
-Essa é das ocasições que um Método Privado ajuda e é bem vindo. O Objeto é criado sem interferências, rápido, sem cálculos. Depois, se um de seus Métodos for realmente executado, o Objeto faz as devidas validações e execuções. Para o mundo externo é indiferente, já que ninguém sabe o que acontece dentro de um Objeto.
+Essa é uma das ocasições em que um Método Privado ajuda e é bem vindo. O Objeto é criado sem interferências, rápido, sem cálculos. Depois, se um de seus Métodos for realmente executado, o Objeto faz as devidas validações e execuções. Para o mundo externo é indiferente, já que ninguém sabe o que acontece dentro de um Objeto.
 
 Se você está curioso para saber como seria a "implementação pura" Orientada a Objetos, teríamos que implementar outra Classe para [decorar]({% post_url 2016-05-02-decorator-pattern %}) a `TEmployeeName` somente para fazermos o *cache* dos dados. Então cada Método de `TEmployeeName` teria a implementação dos cálculos de partes do nome nos próprios Métodos Público — a Classe ficaria com menos código e mais simples.
 
