@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Eliminando Métodos Privados &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, método privado, private, private method">
+    <link rel="canonical" href="http://objectpascalprogramming.com/eliminando-metodos-privados">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201711200326" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Eliminando Métodos Privados">
+    <meta property="og:description" content="A utilização de Métodos Privados é um erro comum no design do código.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/eliminando-metodos-privados">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-james-sutton-187816.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Eliminando Métodos Privados" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/eliminando-metodos-privados" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>E-Book</a>
+<a href="/archive/">Arquivo</a>
+<a href="/testimonials/">Testemunhos</a>
+<a href="/webinars/">Webinários</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Eliminando Métodos Privados</h1>
+  <span class="post-meta">Nov 20, 2017</span><br>
+  
+  <span class="post-meta small">
+  
+    7 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>A utilização de Métodos Privados é um erro comum no <em>design</em> do código.</p>
+
+<!--more-->
+
+<p><img src="/images/2017/photo-james-sutton-187816.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by James Sutton on Unsplash</span></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<blockquote>
+  <p><em>“Existe um pensamento que diz que todo Método Privado deveria ser, na verdade, a implementação de outro Objeto”</em>.</p>
+</blockquote>
+
+<p>Eu escrevi esse texto acima em outro <a href="/posts/metodos-privados/">artigo</a> aqui no blog… e eu acho que faz muito sentido.</p>
+
+<p>No entanto, o artigo tentou demonstrar que os Métodos Privados não representam um mal no código e que podemos conviver com eles pacificamente.</p>
+
+<p>É verdade que eles não representam um <em>grande</em> mal ao projeto. Existem tantos outros males <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">piores</a> para nos preocuparmos no dia-a-dia que não damos muita importância aos Métodos Privados.</p>
+
+<p>Eu mesmo venho utilizando-os em meus projetos à muitos anos — tanto que já escrevi um artigo defendendo-os.</p>
+
+<p>Mas, toda vez que eu codifico um Método Privado eu tenho a sensação de que alguma coisa está <em>errada</em>, mesmo quando eles <em>facilitam</em> a minha vida.</p>
+
+<h2 id="metodos-privados">Métodos Privados</h2>
+
+<p>Você provavelmente sabe que Métodos Privados são utilizados somente pela Classe na qual eles foram implementados e nenhum Objeto externo tem acesso à eles.</p>
+
+<p>Praticamente, toda linguagem que suporta o paradigma da <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a> tem uma sintaxe para a codificação de Métodos Privados.</p>
+
+<p>É de uso comum.</p>
+
+<p>Todos nós utilizamos, diariamente.</p>
+
+<p>Mas, em teoria, a interface de um Objeto — seus Métodos Públicos — deveria ser suficiente para ele exercer o trabalho que lhe foi designado.</p>
+
+<p>Se o trabalho é complexo e o Objeto necessitar de “ajuda”, ele deveria delegar à outros Objetos e <em>não</em> tentar fazer tudo “sozinho” utilizando Métodos Privados.</p>
+
+<p>No entanto, as linguagens dão suporte para escrevê-los.</p>
+
+<p>As linguagens diferenciam Métodos privados, protegidos e públicos.</p>
+
+<p>Então, entendemos que era correto utilizá-los e estamos fazendo isso desde então.</p>
+
+<p>Entretanto, se por um lado os Métodos Privados não representam um grande mal, por outro eles também não são o <em>ideal</em>.</p>
+
+<h2 id="facilitadores">Facilitadores</h2>
+
+<p>Métodos Privados são apenas <em>facilitadores</em>.</p>
+
+<p>Eles são utilizados do mesmo jeito que a maioria das pessoas utilizam, por exemplo, a fita <a href="https://pt.wikipedia.org/wiki/Silver_Tape">Silver Tape®</a>, ou seja, como uma <em>solução alternativa</em>.</p>
+
+<p>Se algo quebrou no seu carro durante uma viagem (uma mangueira arrebentou, algo rachou, vazamentos, etc) e você não tem tempo para fazer um reparo perfeito ou as ferramentas apropriadas, você improvisa.</p>
+
+<p>Você pode utilizar uma fita para manter as coisas no lugar na esperança de que, no futuro, você possa fazer o reparo do jeito correto.</p>
+
+<p>Infelizmente podemos nos esquecer desses reparos temporários e seguir adiante, já que a “solução alternativa” continua mantendo tudo funcionando “perfeitamente” — como a mangueira de esguicho de água do para-brisa do meu carro que rachou e está com uma fita a mais de 2 anos.</p>
+
+<p>Um Método Privado é algo localizado e sem muita importância por que está encapsulado numa Classe e pode ser alterado a qualquer momento (em teoria) sem efeitos colaterais.</p>
+
+<p>Eu utilizo pouco o esguicho de água do para-brisa e mesmo assim ele continua funcionando mas, mesmo se parar de funcionar, não vai por minha vida em risco… teoricamente. Não haverá efeitos colaterais se eu fizer o conserto agora ou mais tarde.</p>
+
+<p>Nota: Não me entenda mal. Eu faço a manutenção do meu carro quase que religiosamente, mas a prioridade sempre será o motor, fluídos e suspensão.</p>
+
+<p>Projetos de Software também tem prioridades nos dizendo para não “perder tempo” codificando outras Classes, quando é mais <em>rápido</em> codificar Métodos Privados e resolver o problema da maneira mais “fácil”.</p>
+
+<p>Entretanto, sabemos que “mais fácil” não combina com <em>sustentabilidade</em> no longo prazo.</p>
+
+<h2 id="motivos">Motivos</h2>
+
+<p>Há 9 meses atrás houve uma <a href="http://objectpascalprogramming.com/posts/metodos-privados/#comment-3127567762">discussão</a> na área de comentários do blog sobre utilizar ou não Métodos Privados.</p>
+
+<p>Num dos comentários eu escrevi:</p>
+
+<p><em>“Minha opinião é que, como são Privados, não há nenhum impacto direto no código. Sempre posso modificá-los a qualquer momento.”</em></p>
+
+<p>E isso é, de fato, verdade.</p>
+
+<p>Se algo é privado a Classe, você pode modificá-lo sem haver impactos externos, na teoria. Faz parte do conceito de <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">encapsulamento</a> de toda linguagem OO. Se é privado, somente a Classe tem acesso — sem levar em conta algo chamado <em>Reflexion</em> ou RTTI.</p>
+
+<p>Então, quais seriam os motivos para deixar de utilizar Métodos Privados?</p>
+
+<p><strong>Ao introduzir Métodos Privados, você pode estar codificando de forma procedural ao invés de Orientada a Objetos.</strong></p>
+
+<p>Você pode estar introduzindo <em>funções procedurais</em> ao invés de Métodos que implementam o comportamento da <a href="/posts/objetos-representam-entidades/">Entidade</a> representada.</p>
+
+<script src="https://gist.github.com/mdbs99/bbdc509810890ea5724a94a021f16791.js"></script>
+
+<p>Na Classe acima, o método <code>CleanName</code> é apenas uma <em>função utilitária</em>. A função não pertence ao contexto representado por um <code>Employee</code> e por isso eu não a considero como um Método do Objeto.</p>
+
+<p>Um <code>Employee</code> não “limpa” o próprio nome.</p>
+
+<p>Essa é a tendência ao utilizarmos Métodos Privados: Adicionar funções utilitárias, por quê é fácil, conveniente e “ninguém está vendo”.</p>
+
+<p>Os nomes dessas funções também tem a tendência de serem <a href="/posts/nomeando-variaveis-e-metodos/#metodos">nomes compostos</a> que é mais um <em>indício</em> mostrando que a função pode pertencer a <em>outro</em> contexto.</p>
+
+<p><strong>Métodos Privados também podem gerar <a href="/posts/codigo-duplicado-talvez-nao/">duplicação de código</a>, escondendo <a href="/posts/objetos-pensam-e-tomam-decisoes/">comportamentos</a> que poderiam ser compartilhados entre os Objetos mas, como são privados, não podem reutilizados</strong>.</p>
+
+<p>Veja mais um exemplo:</p>
+
+<script src="https://gist.github.com/mdbs99/a303d0bf83930fcf580aee818ee23a52.js"></script>
+
+<p>O Método <code>SplitName</code> — também um função utilitária — acima poderia ser reutilizado por outra Classe que também encapsula uma instância de <code>IName</code>. Mas aqui a Classe <code>TEmployeeName</code> tem sua própria implementação privada, não havendo outra maneira de reutilizar o mesmo algoritmo fora da Classe.</p>
+
+<p>Em outras palavras, caso você precisasse utilizar o mesmo algoritmo implementado em <code>SplitName</code>, você teria que fazer uma cópia.</p>
+
+<p>Acredito que estes podem ser bons motivos para eliminarmos os Métodos Privados dos nossos projetos desde o início ou quando for possível fazer a refatoração.</p>
+
+<h2 id="eliminando">Eliminando</h2>
+
+<p>Acredito que podemos remover quaisquer Métodos Privados utilizando apenas Classes.</p>
+
+<p>As Classes podem ser <em>públicas</em> (disponível a todo o sistema) e/ou <a href="/classes-aninhadas">Aninhadas</a> a outras Classes.</p>
+
+<p>Talvez os exemplos acima podem não ter convencido você.</p>
+
+<p>Você poderia dizer que haverá casos em que os Métodos Privados fazem, sim, parte do mesmo contexto e por isso deveriam <em>existir</em>.</p>
+
+<p>Por exemplo.</p>
+
+<script src="https://gist.github.com/mdbs99/8afe1f70a803556a59513fb2dff36e21.js"></script>
+
+<p>A Classe <code>THttpClient</code> não está completa, mas a parte que falta é irrelevante.</p>
+
+<p>Veja que há o Método <code>Send</code> que é utilizado em 2 outros Métodos: <code>Get</code> e <code>Post</code>.</p>
+
+<p>Então, é possível substituir o Método <code>Send</code> por uma Classe?</p>
+
+<p>Com certeza.</p>
+
+<script src="https://gist.github.com/mdbs99/3cda576e9e13ac25ee5b4005a3b47a1a.js"></script>
+
+<p>E a vantagem de fazer isso é que deixamos a Classe mais simples e compacta, removendo o comportamento privado para uma nova Classe; agora podemos reutilizar o código externamente; se quisermos decorar <code>THttpProtocol</code> com outras Classes como Log, por exemplo, também podemos.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Após muito ponderar, cheguei a conclusão que prover uma sintaxe para codificar Métodos Privados é um <em>erro</em> no <em>design</em> da linguagem. Não só em Object Pascal, mas também em Java, C# e tantas outras.</p>
+
+<p>Considere, então, que o uso de Métodos Privados foi o primeiro nível de aprendizado para sabermos dividir código dentro de uma Classe, entendê-los e saber como utilizá-los de forma consciente, <em>facilitando</em> a transição da Programação Procedural para a Orientada a Objetos.</p>
+
+<p>Sabemos que particularidades da linguagem nos fazem criar Métodos Privados intencionalmente como, por exemplo, Métodos que executam <a href="/eventos-e-objetos">eventos</a> — o Método Privado irá verificar se um evento foi ou não <a href="/posts/getters-e-setters/#setters">setado</a> — e tudo bem se o método é apenas uma implementação de <a href="/posts/codigo-duplicado-talvez-nao/#infraestrutura">infraestrutura</a>.</p>
+
+<p>Lembre-se também que, ao criar mais Classes públicas, ao invés de Métodos Privados, haverá mais código para documentar. No entanto, você poderá manter essas Classes “escondidas” do usuário final utilizando o conceito de <a href="/api-unit">API Unit</a>, declarando na API apenas as Classes que você “permite” utilizar.</p>
+
+<p>Um código final com um mínimo de Métodos Privados pode representar um bom sinal de <em>design</em> do código, com Classes <a href="/posts/simplicidade/">simples</a> e elegantes.</p>
+
+<p>Então, não codifique Métodos Privados, a não ser que haja uma real necessidade para fazê-lo. Evite-os.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/eliminando-metodos-privados" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Eliminando Métodos Privados&via=mdbs99;url=http://objectpascalprogramming.com/eliminando-metodos-privados" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/eliminando-metodos-privados" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/eliminando-metodos-privados&title=Eliminando Métodos Privados" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/eliminando-metodos-privados&title=Eliminando Métodos Privados" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/eliminando-metodos-privados&t=Eliminando Métodos Privados" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/classes-aninhadas" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/api-unit" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>API Unit: Tudo num só lugar</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/injecao-de-dependencia" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Injeção de Dependência sem XML, Atributos/Anotações ou Frameworks</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/nomeando-classes-em-libraries" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Classes em Libraries</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/versionando-e-organizando-seus-pacotes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Versionando e Organizando seus Pacotes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/xavier-package" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Xavier Package</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/ipc" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Inter-process Communication</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/porque-eu-escolhi-delphi-e-object-pascal" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Porquê eu escolhi Delphi e então, Object Pascal</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/redeclarando-classes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Redefinindo Classes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/git-work-project" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Git-work Project</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/eliminando-metodos-privados';
+      var disqus_title      = 'Eliminando Métodos Privados';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
