@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Observando Objetos &#8211; Object Pascal Programming</title>
+    <title>Herança de Formulário é para Iniciantes &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Projeto">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, eventos, events, observador, observer">
-    <link rel="canonical" href="http://objectpascalprogramming.com/observando-objetos">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, herança, inheritance, form, formulário">
+    <link rel="canonical" href="http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Observando Objetos">
-    <meta property="og:description" content="Nesse artigo iremos implementar Eventos que possam notificar mais de um Objeto de uma só vez.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/observando-objetos">
+    <meta property="og:title" content="Herança de Formulário é para Iniciantes">
+    <meta property="og:description" content="Depois que você aprendeu como funciona a Herança de Formulários, pode esquecê-la.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-hermes-rivera-253620.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-ken-treloar-346065.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Observando Objetos" />
+    <meta name="twitter:title" content="Herança de Formulário é para Iniciantes" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/observando-objetos" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,8 +191,8 @@
 
 
 <div class="post-header mb2">
-  <h1>Observando Objetos</h1>
-  <span class="post-meta">May 22, 2017</span><br>
+  <h1>Herança de Formulário é para Iniciantes</h1>
+  <span class="post-meta">Nov 27, 2017</span><br>
   
   <span class="post-meta small">
   
@@ -202,144 +202,114 @@
 </div>
 
 <article class="post-content">
-  <p>Um semáforo de trânsito está prestes a mudar de vermelho para verde e vários pedestres estão aguardando para atravessar a rua.</p>
-
-<p>A mudança de estado do semáforo irá impactar a vida de apenas algumas pessoas, ou seja, só daquelas que estão realmente interessadas, aguardando e observando este Evento que irá ocorrer em breve.</p>
+  <p>Depois que você aprendeu como funciona a Herança de Formulários, pode esquecê-la.</p>
 
 <!--more-->
 
-<p><img src="/images/2017/photo-hermes-rivera-253620.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2017/photo-ken-treloar-346065.jpg" alt="Unsplash image" /></p>
+
+<p><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Ken Treloar on Unsplash</span></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>No <a href="/eventos-e-objetos">artigo anterior</a> escrevi sobre <a href="/eventos-e-objetos#eventos">Eventos</a> que ocorrem entre dois Objetos e como eles podem ser implementados de forma bem simples.</p>
+<p>No início da minha carreira, a muitos anos atrás, alguém me mostrou a Herança de Formulário no Delphi.</p>
 
-<p>Nesse artigo iremos implementar Eventos que possam notificar mais de um Objeto de uma só vez.</p>
+<p>Mesmo em <em>design time</em>, dois Formulários herdados estavam “sincronizados”.</p>
 
-<h2 id="observer-pattern">Observer Pattern</h2>
+<p>Ao alterar um componente de lugar (<em>Top</em> / <em>Left</em>) no Formulário 1, automaticamente também era alterado no outro Formulário 2 devido a Herança entre eles.</p>
 
-<p>Você pode utilizar um Evento para mostrar um <em>ProgressBar</em> enquanto um processamento está ocorrendo ou notificar o usuário quando algum outro processo terminar.</p>
+<p>E na época eu pensei: UAU!</p>
 
-<p>No entanto, em todos esses casos, os Eventos ocorrem entre apenas 2 Objetos: Transmissor e Receptor.</p>
+<p>Como era rápido fazer um Formulário (simplório) de CRUD. Basta herdar e setar algumas propriedades e sobrescrever alguns Métodos.</p>
 
-<p>Há casos, porém, onde o Transmissor deverá notificar mais de um Receptor.</p>
+<p>Acredito que essa é uma das <em>features</em> mais utilizadas hoje em dia.</p>
 
-<p>Há um padrão de implementação conhecido chamdo de <a href="https://en.wikipedia.org/wiki/Observer_pattern"><em>Observer Pattern</em></a>.</p>
+<p>Mas, o que tem de errado com isso?</p>
 
-<p>Mas ao invés de só implementarmos o <em>Observer Pattern</em> na sua forma clássica, utilizando seus termos como <em>Subject</em> e <em>Observers</em>, vamos entender como esse padrão funciona, utilizando uma abordagem mais direta, simples e <em>“Pascalized”</em>.</p>
+<h2 id="problemas">Problemas</h2>
 
-<h2 id="implementacao">Implementação</h2>
+<p>Utilizar Herança de Formulário é bom apenas para os <em>iniciantes</em> na programação Orientada a Objetos e para o uso <em>superficial</em> do Delphi ou Lazarus.</p>
 
-<p>A maneira mais óbvia — ou talvez a única — para implementar uma notificação que seja propagada não em apenas um ponto do código, mas sim em infinitos pontos ou infinitos Objetos, é utilizando uma simples… <em>lista</em>.</p>
+<p>Pode ser considerado “Ok” para criar aplicações de exemplo, ensinar sobre <del>como não utilizar</del> a Herança simplificada e… talvez, apenas isso.</p>
 
-<p>A pergunta é: Onde estará a instância dessa lista?</p>
+<p>Para aplicações realmente importantes, sugiro esquecer a Herança de Formulário por completo.</p>
 
-<p>A lista é global? Com certeza não, pois não trabalhamos com variáveis globais.</p>
+<p>Enquanto a <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">Herança de Classes é um mal</a> que pode ser gerenciado ou mesmo utilizado de forma mais <a href="/posts/como-utilizar-heranca-apropriadamente/">apropriada</a>, a Herança de Formulário acaba com todos os conceitos da verdadeira <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>.</p>
 
-<p>A lista é implementada no Objeto transmissor? Também não, pois o transmissor — no exemplo é um semáforo — não dá a mínima para quem o está observando. O transmissor apenas dá a <em>possíbilidade</em> de observação do evento, aceitando um ponteiro para o evento no <a href="/posts/construtores-da-classe-primario-secundarios/">construtor</a>, primário ou secundário.</p>
+<p><strong>O <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">encapsulamento</a> é perdido</strong> quando utilizamos Herança de Formulários, pois o desenvolvedor precisa ter conhecimento do comportamento interno do formulário-pai afim de conseguir fazer algo de útil no formulário-filho.</p>
 
-<p>Se não houvesse ninguém para observar o semáforo, ele iria parar de funcionar? Não! Portanto a <em>responsabilidade</em> de notificação a vários Objetos não é do transmissor original.</p>
+<p>Muitas vezes encontramos formulários contendo apenas Métodos protegidos ou <a href="/posts/metodos-privados/">privados</a> sem nenhum comportamento público; eles vem do formulário-pai. E isso é muito estranho. Por quê teríamos uma Classe (Form) que, a primeira vista, não tem nenhum comportamento para o mundo externo?</p>
 
-<p>Então a lista é implementada em algum outro Objeto? Com certeza!</p>
+<p><strong>A ordem de execução dos Métodos protegidos</strong> que devem ser sobrescritos, devem ser de conhecimento do desenvolvedor, mais uma vez quebrando o encapsulamento.</p>
 
-<h3 id="exemplo-1">1-Notificando um Objeto</h3>
+<p>É necessário visualizar o código do formulário-pai afim de saber onde e em que momento tais métodos abstratos e protegidos são utilizados.</p>
 
-<p>Primeiramente vamos implementar um Evento simples, como no último artigo.</p>
+<p>É comum ver métodos sobrescritos que não chamam o Método herdado, “matando” o comportamento padrão da Classe ancestral quando o Método não é abstrato.</p>
 
-<p>Teremos um Objeto <code>Semaphore</code>, que será o objeto transmissor de um Evento: Sempre que haver mudança de cor, o evento será disparado.</p>
+<p>Pedaços de código serão duplicados pois estão em métodos não acessíveis nos formulários-filhos.</p>
 
-<p>Como estamos trabalhando com Orientação a Objetos, antes precisamos definir o <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contrato</a>, ou seja, a Interface que representa a entidade Semáforo.</p>
+<p>Uma bagunça.</p>
 
-<p>Veja o código baixo.</p>
+<p><strong>Componentes herdados não podem ser excluídos</strong>, o que resulta em mais bagunça e “código espaguete”.</p>
 
-<script src="https://gist.github.com/mdbs99/acfb7acf71670182b6cf509c51540949.js"></script>
+<p>Como não é possível excluir componentes em formulários-filho, o desenvolvedor tem que habilitar/desabilitar ou torná-los visível/não-visível. No entanto tais componentes continuarão a serem criados no formulário…</p>
 
-<p>Vamos entender o código acima:</p>
+<p>Criar formulários com componentes que não serão utilizados é realmente um desperdício de memória RAM.</p>
 
-<ol>
-  <li>Há uma Interface <code>ISemaphore</code> com apenas um Método <code>Color</code>. Não há Eventos na Interface.</li>
-  <li>O tipo <code>TChangeEvent</code> é a assinatura do Evento.</li>
-  <li>A classe <code>TSemaphore</code> implementa a Interface <code>ISemaphore</code>. Novamente, também não há Eventos na definição da Classe, apenas no construtor. O ato de notificação através de Eventos é um <strong>detalhe de implementação</strong> e não faz parte da entidade na qual a Interface e a Classe <a href="/posts/objetos-representam-entidades/">representam</a>.</li>
-  <li>A Classe <code>TSemaphore</code> instância um <code>TTimer</code>. É através desse <em>timer</em> que a mudança de cores irá ocorrer (a cada 2 segundos).</li>
-</ol>
+<p><strong>Qualquer alteração no formulário-pai irá refletir nos formulários-filhos</strong>, e isso quer dizer que você pode quebrar o sistema inteiro com pequenas modificações.</p>
 
-<p>Agora, num novo projeto, adicionem um <code>TShape</code> num <code>TForm</code>, alterem a <code>property Shape</code> para <code>stCircle</code> e utilize o código abaixo:</p>
+<p>Você poderia argumentar que mesmo se não utilizasse Herança, mas sim Composição de Objetos, um Objeto que fosse reaproveitado por todo o sistema também poderia quebrá-lo caso algo fosse indevidamente alterado no seu código.</p>
 
-<script src="https://gist.github.com/mdbs99/f4221d8c6be58201bbb5a82da26fe1a3.js"></script>
+<p>Correto. Mas a grande diferença é que é muito mais fácil alterar um código de apenas uma Classe <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">pequena</a> e sem dependências externas ou heranças de Classes-filhas, do que um código de Formulário onde toda lógica está contido nele além de ter a preocupação se alguma alteração irá impactar negativamente nos nos formulários-filhos.</p>
 
-<p>O código acima é <em>simples</em>, <em>elegante</em>, <em>Orientado a Objetos</em> e não possui <em>Setters</em>, nem mesmo para o Evento.</p>
+<h2 id="solucoes">Soluções</h2>
 
-<p>Se você fez tudo certo, verá algo parecido com a imagem abaixo — e a cada 2 segundos a cor é alterada.</p>
+<p>Vejamos então algumas opções para a completa substituição da Herança de Formulário, utilizando outras técnicas mais Orientadas a Objetos, <a href="/posts/simplicidade/">simples</a> e limpas.</p>
 
-<p><img src="/images/2017/screenshot-semaphore-1.jpg" alt="semaphore" /></p>
+<p><strong>A Composição e <a href="/posts/decorator-pattern/">Decoração</a> de Objetos</strong> são as opções mais simples e corretas para substituir praticamente qualquer tipo de Herança.</p>
 
-<p>Mas, mesmo que tudo esteja funcionando, temos apenas 1 Objeto (o <em>Form</em>) que está “observando” o Evento de mudança de cor do semáforo.</p>
+<p>Você pode criar Classes intermediárias ou <a href="/posts/classes-adaptadoras/">adaptadoras</a> que se comunicam entre si para instanciar Formulários complexos.</p>
 
-<p>O que queremos é poder notificar “N” Objetos de uma só vez.</p>
+<p>Com o uso de pequenas Classes utilizadas como “interface de acesso” aos Formulários, você consegue instanciá-los, desacoplá-los entre si, instanciar <em>Frames</em>, ler e escrever dados em componentes. Tudo em <em>runtime</em>.</p>
 
-<h3 id="exemplo-2">2-Notificando muitos Objetos</h3>
+<p><strong>O uso de <em>Frames</em> é uma ótima opção</strong> para o uso de composição visual, visto que são mini-formulários embutidos em outros Formulários.</p>
 
-<p>Para notificar muitos Objetos precisamos de uma lista com os Objetos previamente adicionados.</p>
+<p>Pense em como são construídas as páginas de um website. Não há herança, apenas <em>includes</em> de “pedaços de código”: <em>Header</em>, <em>Footer</em>, <em>JavaScript</em>, etc.</p>
 
-<p>Vamos modificar o código existe e adicionar mais Interfaces e Classes.</p>
+<p>Você pode utilizar o mesmo pensamento para o uso de <em>Frames</em>. Pode criar um <em>Frame</em> apenas com os botões de CRUD; outro com <em>Grids</em>; outro para o <em>footer</em> de todo formulário.</p>
 
-<p>Essas são as Interfaces:</p>
+<p>Eu utilizo <em>Frames</em> até mesmo sem pensar na reutilização…</p>
 
-<script src="https://gist.github.com/mdbs99/b5ebdc91138eb140bce07f5ef0dde976.js"></script>
+<p>Explico. Imagine um Formulário com algumas abas utilizando um <a href="http://wiki.lazarus.freepascal.org/TPageControl">TPageControl</a>.</p>
 
-<p>São mais duas Interfaces com nomes bem genéricos. Talvez, num projeto maior, seus nomes poderiam ser <code>ISemaphoreObserver</code> e <code>ISemaphoreObservers</code> respectivamente, afim de diminuir as chances de haver conflito de nomes. Mas isso é irrelevante por enquanto.</p>
+<p>Bem, não podemos ter nomes de componentes iguais num único Formulário, ou seja, se você definiu que um <code>TEdit</code> se chama <code>NameEdit</code> na aba 1, você não pode nomear outro <code>TEdit</code> com o mesmo nome na aba 2, pois ambos pertencem ao mesmo Formulário.</p>
 
-<p>Sendo nomes genéricos, eu posso implementar em Classes bem distintas que, inicialmente, não teriam nada haver com o contexto de Semáforo.</p>
+<p>Você precisa acrescentar mais prefixos/sufixos na <a href="/posts/nomeando-variaveis-e-metodos/">nomenclatura</a> e isso torna o código mais verboso e confuso, além do fato de que seu Formulário terá que lidar com todos os componentes de uma só vez.</p>
 
-<p>Confuso?</p>
+<p>Em meus projetos, uma aba pode conter a instância de um <em>Frame</em>, caso haja ações diferentes em cada aba.</p>
 
-<p>Vamos a um exemplo de implementação: <em>Pessoas</em> que gostariam de ser notificadas a respeito das mudanças do semáforo:</p>
+<p>Por exemplo, se eu precisar adicionar uma barra de botões (ações) na aba 2, então essa aba será um <em>Frame</em> com sua própria implementação, componentes de nomenclatura simples e ações específicas.</p>
 
-<script src="https://gist.github.com/mdbs99/74622575318450edc1fc40b8cd265f85.js"></script>
+<p>Dentro de um <em>Frame</em> eu não preciso me preocupar em lidar com um único código inchado que lida com todos os <em>widgets</em> dentro de um Formulário.</p>
 
-<p>Vamos entender o código acima:</p>
+<p>E se um <em>Frame</em> precisar notificar o Formulário principal, isso pode ser feito através de <a href="/eventos-e-objetos">Eventos</a>.</p>
 
-<ol>
-  <li>Primeiramente, o <em>GUID</em> na Interface <code>IObserver</code> serve apenas para ser possível fazer o <em>casting</em> no método <code>Get</code> de <code>TPeople</code>. Fique a vontade para usar <em>Generics</em>.</li>
-  <li>A Interface <code>IObservers</code> é um subtipo de <code>IObserver</code> apenas para aproveitar a definição do método <code>Changed</code>.</li>
-  <li>O método <code>Changed</code> faz parte da definição da Interface <code>IObserver</code>, sim, porque a entidade que ela representa necessita: Um observador precisa saber das mudanças do Objeto observado.</li>
-  <li>Um Objeto <code>TPeople</code> é apenas uma lista que irá repassar o Evento para seus itens.</li>
-  <li>Quando um Objeto <code>TPerson</code> tem seu método <code>Changed</code> chamado na lista, ele irá gerar um novo Evento <code>OnStatus</code>. Esse “status” é apenas para notificar o que o Objeto está fazendo.</li>
-</ol>
+<p><strong>Criar Componentes no Delphi/Lazarus é tão fácil</strong> que se você precisar utilizar muito um comportamento, pode ser uma boa ideia criar um novo componente e disponibilizá-lo na IDE.</p>
 
-<p>Ok. Só falta agora ligar tudo isso junto.</p>
+<p>Já vi muito isso em empresas, onde existem componentes genéricos que podem ser utilizados por qualquer sistema, mas também componentes específicos por projeto.</p>
 
-<p>Vamos alterar um pouco o código inicial do <em>Form</em>:</p>
-
-<script src="https://gist.github.com/mdbs99/31851f1e8e5d70f893ab84c0df2614f7.js"></script>
-
-<p>Vamos entender o código acima:</p>
-
-<ol>
-  <li>Adicionei um <code>TMemo</code>.</li>
-  <li>Adicionei um método privado <code>PersonStatus</code>.</li>
-  <li>Renomeei <code>FSemaphore</code> para <code>FSemaphore1</code> e criei outro do mesmo tipo.</li>
-  <li>Adicionei um atributo <code>FPeople</code>.</li>
-  <li>Por fim foi alterado o <code>FormCreate</code>.</li>
-</ol>
-
-<p>Acho que você já entendeu o que irá ocorrer aqui, certo?</p>
-
-<p>Se você replicou tudo certo aí, verá uma imagem parecida com essa abaixo:</p>
-
-<p><img src="/images/2017/screenshot-semaphore-2.jpg" alt="semaphore" /></p>
+<p>Entretanto, apesar de manter um padrão de uso de componentes por toda a equipe, pode ser difícil manter todas as IDE’s do Delphi atualizadas após um novo <em>release</em> desses componentes — no Lazarus essa tarefa seria mais fácil devido sua “não-instalação” e componentes “registrados” em apenas 1 arquivo XML, no entanto.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Utilizar Eventos não quer dizer, necessariamente, que você está utilizando RAD.</p>
+<p>O objetivo do artigo não é depreciar desenvolvedores que ainda utilizam Herança de Formulários, mas sim apresentar técnicas muito mais eficazes de construção, visando a manutenibilidade do código no longo prazo.</p>
 
-<p>Eventos são necessários para unir duas peças que, talvez, não tenham nada em comum mas que precisam se comunicar.</p>
+<p>Eu mesmo ainda trabalho em alguns projetos totalmente baseado em Herança de Formulários. Nesses projetos eu sou <em>obrigado</em> a utilizar herança pois todo o <em>framework</em> funciona a partir de alguns formulários base. No entanto, esses projetos estão longe de ter um código ideal.</p>
 
-<p>Nesse artigo tentei mostrar uma maneira de implementar eventos de forma mais Orientada a Objetos, utilizando Interfaces e Classes e não apenas ponteiros para métodos.</p>
-
-<p>Mostrei que a lista de notificações não deve ficar no transmissor. Assim poderíamos acrescentar mais listas de notificações. Listas que notificam listas, se necessário. E os itens dessas listas poderiam ser instâncias de Classes complemente diferentes umas das outras, assim como o que iriam fazer — seu comportamento — ao receber a notificação da lista. Isso deixa nosso código bem extensível, sem que precisemos alterar o que já foi concluído.</p>
+<p>Mantenha seus projetos atuais, mas repense o uso de Herança de Formulários em projetos futuros.</p>
 
 <p>Até logo.</p>
+
 
 </article>
 
@@ -349,33 +319,33 @@
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/observando-objetos" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Observando Objetos&via=mdbs99;url=http://objectpascalprogramming.com/observando-objetos" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Herança de Formulário é para Iniciantes&via=mdbs99;url=http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/observando-objetos" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/observando-objetos&title=Observando Objetos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/observando-objetos&title=Observando Objetos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes&title=Herança de Formulário é para Iniciantes" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/observando-objetos&t=Observando Objetos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes&title=Herança de Formulário é para Iniciantes" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes&t=Herança de Formulário é para Iniciantes" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -413,15 +383,6 @@
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/heranca-de-formulario-e-para-iniciantes" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Herança de Formulário é para Iniciantes</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/eliminando-metodos-privados" class="post-link">
@@ -504,6 +465,15 @@
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/redeclarando-classes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Redefinindo Classes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -511,8 +481,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/observando-objetos';
-      var disqus_title      = 'Observando Objetos';
+      var disqus_identifier = '/heranca-de-formulario-e-para-iniciantes';
+      var disqus_title      = 'Herança de Formulário é para Iniciantes';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

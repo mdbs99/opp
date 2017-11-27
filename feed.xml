@@ -8,6 +8,122 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Herança de Formulário é para Iniciantes</title>
+        <description>&lt;p&gt;Depois que você aprendeu como funciona a Herança de Formulários, pode esquecê-la.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-ken-treloar-346065.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Ken Treloar on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;No início da minha carreira, a muitos anos atrás, alguém me mostrou a Herança de Formulário no Delphi.&lt;/p&gt;
+
+&lt;p&gt;Mesmo em &lt;em&gt;design time&lt;/em&gt;, dois Formulários herdados estavam “sincronizados”.&lt;/p&gt;
+
+&lt;p&gt;Ao alterar um componente de lugar (&lt;em&gt;Top&lt;/em&gt; / &lt;em&gt;Left&lt;/em&gt;) no Formulário 1, automaticamente também era alterado no outro Formulário 2 devido a Herança entre eles.&lt;/p&gt;
+
+&lt;p&gt;E na época eu pensei: UAU!&lt;/p&gt;
+
+&lt;p&gt;Como era rápido fazer um Formulário (simplório) de CRUD. Basta herdar e setar algumas propriedades e sobrescrever alguns Métodos.&lt;/p&gt;
+
+&lt;p&gt;Acredito que essa é uma das &lt;em&gt;features&lt;/em&gt; mais utilizadas hoje em dia.&lt;/p&gt;
+
+&lt;p&gt;Mas, o que tem de errado com isso?&lt;/p&gt;
+
+&lt;h2 id=&quot;problemas&quot;&gt;Problemas&lt;/h2&gt;
+
+&lt;p&gt;Utilizar Herança de Formulário é bom apenas para os &lt;em&gt;iniciantes&lt;/em&gt; na programação Orientada a Objetos e para o uso &lt;em&gt;superficial&lt;/em&gt; do Delphi ou Lazarus.&lt;/p&gt;
+
+&lt;p&gt;Pode ser considerado “Ok” para criar aplicações de exemplo, ensinar sobre &lt;del&gt;como não utilizar&lt;/del&gt; a Herança simplificada e… talvez, apenas isso.&lt;/p&gt;
+
+&lt;p&gt;Para aplicações realmente importantes, sugiro esquecer a Herança de Formulário por completo.&lt;/p&gt;
+
+&lt;p&gt;Enquanto a &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;Herança de Classes é um mal&lt;/a&gt; que pode ser gerenciado ou mesmo utilizado de forma mais &lt;a href=&quot;/posts/como-utilizar-heranca-apropriadamente/&quot;&gt;apropriada&lt;/a&gt;, a Herança de Formulário acaba com todos os conceitos da verdadeira &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulamento&lt;/a&gt; é perdido&lt;/strong&gt; quando utilizamos Herança de Formulários, pois o desenvolvedor precisa ter conhecimento do comportamento interno do formulário-pai afim de conseguir fazer algo de útil no formulário-filho.&lt;/p&gt;
+
+&lt;p&gt;Muitas vezes encontramos formulários contendo apenas Métodos protegidos ou &lt;a href=&quot;/posts/metodos-privados/&quot;&gt;privados&lt;/a&gt; sem nenhum comportamento público; eles vem do formulário-pai. E isso é muito estranho. Por quê teríamos uma Classe (Form) que, a primeira vista, não tem nenhum comportamento para o mundo externo?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;A ordem de execução dos Métodos protegidos&lt;/strong&gt; que devem ser sobrescritos, devem ser de conhecimento do desenvolvedor, mais uma vez quebrando o encapsulamento.&lt;/p&gt;
+
+&lt;p&gt;É necessário visualizar o código do formulário-pai afim de saber onde e em que momento tais métodos abstratos e protegidos são utilizados.&lt;/p&gt;
+
+&lt;p&gt;É comum ver métodos sobrescritos que não chamam o Método herdado, “matando” o comportamento padrão da Classe ancestral quando o Método não é abstrato.&lt;/p&gt;
+
+&lt;p&gt;Pedaços de código serão duplicados pois estão em métodos não acessíveis nos formulários-filhos.&lt;/p&gt;
+
+&lt;p&gt;Uma bagunça.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Componentes herdados não podem ser excluídos&lt;/strong&gt;, o que resulta em mais bagunça e “código espaguete”.&lt;/p&gt;
+
+&lt;p&gt;Como não é possível excluir componentes em formulários-filho, o desenvolvedor tem que habilitar/desabilitar ou torná-los visível/não-visível. No entanto tais componentes continuarão a serem criados no formulário…&lt;/p&gt;
+
+&lt;p&gt;Criar formulários com componentes que não serão utilizados é realmente um desperdício de memória RAM.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Qualquer alteração no formulário-pai irá refletir nos formulários-filhos&lt;/strong&gt;, e isso quer dizer que você pode quebrar o sistema inteiro com pequenas modificações.&lt;/p&gt;
+
+&lt;p&gt;Você poderia argumentar que mesmo se não utilizasse Herança, mas sim Composição de Objetos, um Objeto que fosse reaproveitado por todo o sistema também poderia quebrá-lo caso algo fosse indevidamente alterado no seu código.&lt;/p&gt;
+
+&lt;p&gt;Correto. Mas a grande diferença é que é muito mais fácil alterar um código de apenas uma Classe &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;pequena&lt;/a&gt; e sem dependências externas ou heranças de Classes-filhas, do que um código de Formulário onde toda lógica está contido nele além de ter a preocupação se alguma alteração irá impactar negativamente nos nos formulários-filhos.&lt;/p&gt;
+
+&lt;h2 id=&quot;solucoes&quot;&gt;Soluções&lt;/h2&gt;
+
+&lt;p&gt;Vejamos então algumas opções para a completa substituição da Herança de Formulário, utilizando outras técnicas mais Orientadas a Objetos, &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; e limpas.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;A Composição e &lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;Decoração&lt;/a&gt; de Objetos&lt;/strong&gt; são as opções mais simples e corretas para substituir praticamente qualquer tipo de Herança.&lt;/p&gt;
+
+&lt;p&gt;Você pode criar Classes intermediárias ou &lt;a href=&quot;/posts/classes-adaptadoras/&quot;&gt;adaptadoras&lt;/a&gt; que se comunicam entre si para instanciar Formulários complexos.&lt;/p&gt;
+
+&lt;p&gt;Com o uso de pequenas Classes utilizadas como “interface de acesso” aos Formulários, você consegue instanciá-los, desacoplá-los entre si, instanciar &lt;em&gt;Frames&lt;/em&gt;, ler e escrever dados em componentes. Tudo em &lt;em&gt;runtime&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O uso de &lt;em&gt;Frames&lt;/em&gt; é uma ótima opção&lt;/strong&gt; para o uso de composição visual, visto que são mini-formulários embutidos em outros Formulários.&lt;/p&gt;
+
+&lt;p&gt;Pense em como são construídas as páginas de um website. Não há herança, apenas &lt;em&gt;includes&lt;/em&gt; de “pedaços de código”: &lt;em&gt;Header&lt;/em&gt;, &lt;em&gt;Footer&lt;/em&gt;, &lt;em&gt;JavaScript&lt;/em&gt;, etc.&lt;/p&gt;
+
+&lt;p&gt;Você pode utilizar o mesmo pensamento para o uso de &lt;em&gt;Frames&lt;/em&gt;. Pode criar um &lt;em&gt;Frame&lt;/em&gt; apenas com os botões de CRUD; outro com &lt;em&gt;Grids&lt;/em&gt;; outro para o &lt;em&gt;footer&lt;/em&gt; de todo formulário.&lt;/p&gt;
+
+&lt;p&gt;Eu utilizo &lt;em&gt;Frames&lt;/em&gt; até mesmo sem pensar na reutilização…&lt;/p&gt;
+
+&lt;p&gt;Explico. Imagine um Formulário com algumas abas utilizando um &lt;a href=&quot;http://wiki.lazarus.freepascal.org/TPageControl&quot;&gt;TPageControl&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Bem, não podemos ter nomes de componentes iguais num único Formulário, ou seja, se você definiu que um &lt;code&gt;TEdit&lt;/code&gt; se chama &lt;code&gt;NameEdit&lt;/code&gt; na aba 1, você não pode nomear outro &lt;code&gt;TEdit&lt;/code&gt; com o mesmo nome na aba 2, pois ambos pertencem ao mesmo Formulário.&lt;/p&gt;
+
+&lt;p&gt;Você precisa acrescentar mais prefixos/sufixos na &lt;a href=&quot;/posts/nomeando-variaveis-e-metodos/&quot;&gt;nomenclatura&lt;/a&gt; e isso torna o código mais verboso e confuso, além do fato de que seu Formulário terá que lidar com todos os componentes de uma só vez.&lt;/p&gt;
+
+&lt;p&gt;Em meus projetos, uma aba pode conter a instância de um &lt;em&gt;Frame&lt;/em&gt;, caso haja ações diferentes em cada aba.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo, se eu precisar adicionar uma barra de botões (ações) na aba 2, então essa aba será um &lt;em&gt;Frame&lt;/em&gt; com sua própria implementação, componentes de nomenclatura simples e ações específicas.&lt;/p&gt;
+
+&lt;p&gt;Dentro de um &lt;em&gt;Frame&lt;/em&gt; eu não preciso me preocupar em lidar com um único código inchado que lida com todos os &lt;em&gt;widgets&lt;/em&gt; dentro de um Formulário.&lt;/p&gt;
+
+&lt;p&gt;E se um &lt;em&gt;Frame&lt;/em&gt; precisar notificar o Formulário principal, isso pode ser feito através de &lt;a href=&quot;/eventos-e-objetos&quot;&gt;Eventos&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Criar Componentes no Delphi/Lazarus é tão fácil&lt;/strong&gt; que se você precisar utilizar muito um comportamento, pode ser uma boa ideia criar um novo componente e disponibilizá-lo na IDE.&lt;/p&gt;
+
+&lt;p&gt;Já vi muito isso em empresas, onde existem componentes genéricos que podem ser utilizados por qualquer sistema, mas também componentes específicos por projeto.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, apesar de manter um padrão de uso de componentes por toda a equipe, pode ser difícil manter todas as IDE’s do Delphi atualizadas após um novo &lt;em&gt;release&lt;/em&gt; desses componentes — no Lazarus essa tarefa seria mais fácil devido sua “não-instalação” e componentes “registrados” em apenas 1 arquivo XML, no entanto.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;O objetivo do artigo não é depreciar desenvolvedores que ainda utilizam Herança de Formulários, mas sim apresentar técnicas muito mais eficazes de construção, visando a manutenibilidade do código no longo prazo.&lt;/p&gt;
+
+&lt;p&gt;Eu mesmo ainda trabalho em alguns projetos totalmente baseado em Herança de Formulários. Nesses projetos eu sou &lt;em&gt;obrigado&lt;/em&gt; a utilizar herança pois todo o &lt;em&gt;framework&lt;/em&gt; funciona a partir de alguns formulários base. No entanto, esses projetos estão longe de ter um código ideal.&lt;/p&gt;
+
+&lt;p&gt;Mantenha seus projetos atuais, mas repense o uso de Herança de Formulários em projetos futuros.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 27 Nov 2017 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes</guid>
+      </item>
+    
+      <item>
         <title>Eliminando Métodos Privados</title>
         <description>&lt;p&gt;A utilização de Métodos Privados é um erro comum no &lt;em&gt;design&lt;/em&gt; do código.&lt;/p&gt;
 
@@ -1318,254 +1434,6 @@ end;
         <pubDate>Mon, 28 Aug 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal</guid>
-      </item>
-    
-      <item>
-        <title>Redefinindo Classes</title>
-        <description>&lt;p&gt;A redeclaração de Classes é um método prático para minimizar a colisão de nomes entre Classes, mesmo utilizando identificadores curtos.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-mpumelelo-macu-283883.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Mpumelelo Macu on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;A linguagem &lt;em&gt;Object Pascal&lt;/em&gt; tem uma &lt;em&gt;feature&lt;/em&gt; muito útil que, acredito, não é muito utilizada pelos desenvolvedores.&lt;/p&gt;
-
-&lt;p&gt;Não sei se há um nome específico pra isso, mas eu a chamo de &lt;em&gt;Redefinição de Classes&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Na verdade essa &lt;em&gt;feature&lt;/em&gt; pode ser utilizada para redeclarar Classes, Constantes e até mesmo Funções.&lt;/p&gt;
-
-&lt;p&gt;Porém, na Orientação a Objetos, basicamente só utilizamos Classes. Então esqueça o resto e vamos nos concentrar nelas.&lt;/p&gt;
-
-&lt;p&gt;Vamos ver algumas técnicas que podem ser aplicadas utilizando tal conceito.&lt;/p&gt;
-
-&lt;h2 id=&quot;renomeando&quot;&gt;Renomeando&lt;/h2&gt;
-
-&lt;p&gt;Imagine que você quer utilizar uma classe de alguma &lt;em&gt;Lib&lt;/em&gt;, mas essa Classe tem o mesmo nome — exemplo &lt;code&gt;TSmartMemory&lt;/code&gt;— de uma de suas Classes que você já utiliza por todo o seu código. O que fazer?&lt;/p&gt;
-
-&lt;p&gt;A primeira opção é nunca utilizar ambas as Classes numa mesma Unidade. Mas talvez você não tenha essa sorte.&lt;/p&gt;
-
-&lt;p&gt;A segunda opção é prefixar uma das Classes com o nome da Unidade — muito comum ver isso em projetos Java — por exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;uses
-  LibMemory,
-  MyMemory;
-
-begin
-  M := TSmartMemory.New;  // your class
-  L := LibMemory.TSmartMemory.Create;
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A terceira opção, que eu utilizo na maioria das vezes, é &lt;em&gt;“renomear”&lt;/em&gt; a Classe da &lt;em&gt;Lib&lt;/em&gt; para uma nomenclatura que não colide com a nomenclatura já utilizada no meu projeto. Vejamos um exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;unit MyMemory;
-
-uses
-  LibMemory;
-
-type
-  // TSmartMemory from LibMemory
-  TLibStartMemory = TSmartMemory; 
-
-  // my new class
-  TSmartMemory = class
-    // ...
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Nesse exemplo ambas as Classes estão declaradas na mesma Unidade existente no projeto — a &lt;code&gt;MyMemory&lt;/code&gt; — e o projeto poderá utilizar ambas as Classes sem colisão de nomenclatura.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;begin
-  M := TSmartMemory.New;
-  L := TLibSmartMemory.Create;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Utilizando essa técnica evitamos o conflito de nomes, o que é muito útil.&lt;/p&gt;
-
-&lt;p&gt;Ao invés de utilizarmos o nome real da Classe, podemos lhe dar um &lt;em&gt;apelido&lt;/em&gt;. O código fica mais limpo, simples e com identificadores curtos, pois não temos a necessidade de utilizar a Unidade como prefixo.&lt;/p&gt;
-
-&lt;p&gt;A linguagem C# &lt;a href=&quot;https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/using-directive&quot;&gt;tem algo muito parecido&lt;/a&gt; o que me faz pensar de onde será que o principal arquiteto da linguagem C# tirou essa ideia.&lt;/p&gt;
-
-&lt;h2 id=&quot;visibilidade&quot;&gt;Visibilidade&lt;/h2&gt;
-
-&lt;p&gt;Muitas vezes precisamos utilizar uma composição de diferentes Classes para resolver um problema.&lt;/p&gt;
-
-&lt;p&gt;Mas se cada uma dessas Classes tiver sido declarada numa Unidade diferente, precisaremos declarar todas essas Unidades, para ter acesso a cada uma dessas Classes.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo. Precisamos da &lt;code&gt;TClass1&lt;/code&gt;, &lt;code&gt;TClass2&lt;/code&gt; e &lt;code&gt;TClass3&lt;/code&gt;. Cada uma delas em Unidades diferentes, &lt;code&gt;Unit1&lt;/code&gt;, &lt;code&gt;Unit2&lt;/code&gt; e &lt;code&gt;Unit3&lt;/code&gt;, respectivamente.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;unit MyUnit;
-
-uses
-  Unit1, Unit2, Unit3;  
-  
-begin
-  TClass3.New(
-    TClass2.New(
-      TClass1.New
-    )
-  )
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Se precisarmos utilizar essa composição em muitos lugares do código, teremos sempre que lembrar em quais Unidades essas Classes estão.&lt;/p&gt;
-
-&lt;p&gt;Outra opção é dar visibilidade às Classes, redeclarando todas elas numa única Unidade, por exemplo &lt;code&gt;Unit123&lt;/code&gt;, para que possamos utilizá-las de forma mais simples, porém ainda mantendo cada implementação em Unidades diferentes.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;unit Unit123;
-
-uses
-  Unit1, Unit2, Unit3;
-
-type
-  TClass1 = Unit1.TClass1;
-  TClass2 = Unit2.TClass2;
-  TClass3 = Unit3.TClass3;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Agora, basta utilizarmos a &lt;code&gt;Unit123&lt;/code&gt; no código para ter acesso a todas as 3 Classes que anteriormente só poderiam ser acessadas em Unidades distintas.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;unit UnitTest;
-
-uses
-  Unit123;  
-  
-begin
-  TClass3.New(
-    TClass2.New(
-      TClass1.New
-    )
-  )
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Esta técnica é bastante útil para simplificar uma API, fornecendo aos desenvolvedores somente algumas poucas Classes para uso em contextos bem específicos.&lt;/p&gt;
-
-&lt;h2 id=&quot;heranca&quot;&gt;Herança&lt;/h2&gt;
-
-&lt;p&gt;Há momentos que queremos utilizar &lt;a href=&quot;/posts/como-utilizar-heranca-apropriadamente/&quot;&gt;Herança de Classes&lt;/a&gt; — mesmo sendo a Composição de Objetos a melhor escolha — porém gostaríamos de utilizar o mesmo nome da Classe ancestral.&lt;/p&gt;
-
-&lt;p&gt;Vamos imaginar que estamos desenvolvendo um software e que em uma de suas Unidades tem uma Classe que &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;representa&lt;/a&gt; um arquivo PDF. Nomeamos essa Classe como &lt;code&gt;TPDFFile&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;No entanto sabemos que poderá haver dezenas ou centenas de &lt;em&gt;Libs&lt;/em&gt; que já trabalham com PDF. Então vamos chamar uma dessas &lt;em&gt;Libs&lt;/em&gt; de &lt;em&gt;“PDFLib”&lt;/em&gt;, apenas como exemplo.&lt;/p&gt;
-
-&lt;p&gt;Na &lt;em&gt;PDFLib&lt;/em&gt; temos uma Classe chamada &lt;code&gt;TPDFFile&lt;/code&gt; que é exatamente o mesmo nome que já decidimos que será utilizada no nosso software, mas o arquiteto do projeto diz que nossa Classe deve herdar de &lt;code&gt;PDFLib.TPDFFile&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Acho que você já sabe a resposta:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;unit MyPDFUnit;
-
-uses
-  PDFLib;
-
-type
-  TPDFFile = class(PDFLib.TPDFFile)
-    // more methods
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Prefixando a Classe da &lt;em&gt;Lib&lt;/em&gt; podemos identificá-la de forma diferente da nossa Classe declarada na mesma Unidade.&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TPDFFile&lt;/code&gt; é agora uma extensão de &lt;code&gt;PDFLib.TPDFFile&lt;/code&gt; que pertence a uma &lt;em&gt;Lib&lt;/em&gt; externa. Mas para todo o restante do código no projeto, só existirá a Classe &lt;code&gt;MyPDFUnit.TPDFFile&lt;/code&gt; que representa um PDF.&lt;/p&gt;
-
-&lt;h2 id=&quot;estendendo&quot;&gt;Estendendo&lt;/h2&gt;
-
-&lt;p&gt;A técnica que vou mostrar agora já era utilizada antes mesmo de haver a sintaxe para &lt;em&gt;Classes Helpers&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo, imagine que você queira incluir novas propriedades ou métodos na Classe &lt;code&gt;TEdit&lt;/code&gt;. O primeiro pensamento é utilizar herança para criar um novo componente. No entanto você não quer substituir cada &lt;code&gt;TEdit&lt;/code&gt; em todos os &lt;code&gt;TForm&lt;/code&gt; já existentes no projeto. Então, o que fazer?&lt;/p&gt;
-
-&lt;p&gt;A resposta continua sendo utilizar Herança. Mas há um truque ou &lt;em&gt;hack&lt;/em&gt; que irei mostrar na técnica a seguir. Mas gostaria de lembrar que isso deve ser utilizado com muita parcimônia. Eu só utilizei essa técnica pouquíssimas vezes e somente para Classes que representam &lt;em&gt;widgets&lt;/em&gt;, ou seja, Classes de componentes que são utilizadas em Formulários.&lt;/p&gt;
-
-&lt;p&gt;Para extender um &lt;code&gt;TEdit&lt;/code&gt; sem criar uma nova Classe e sem ter que alterar os Formulários, basta utilizar a mesma técnica acima:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;unit MyStdCtrls;
-
-type
-  TEdit = class(StdCtrls.TEdit) // or Vcl.StdCtrls.TEdit
-    // more methods and properties
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Você não precisa alterar os &lt;em&gt;widgets&lt;/em&gt; nos Formulários. A renderização do &lt;em&gt;design&lt;/em&gt; do Formulário irá funcionar utilizando os recursos (*.lfm | *.dfm) corretamente.&lt;/p&gt;
-
-&lt;p&gt;Porém há um truque que você não pode esquecer: Em cada um desses Formulários você precisará &lt;a href=&quot;/declarando-unidades&quot;&gt;declarar&lt;/a&gt; sua Unidade &lt;strong&gt;depois&lt;/strong&gt; da Unidade &lt;code&gt;StdCtrls&lt;/code&gt; real.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;unit MyForm1;
-
-uses
-  StdCtrls, MyStdCtrls;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Esse &lt;em&gt;hack&lt;/em&gt; é necessário para que o compilador ache a declaração da sua Unidade antes de encontrá-la na &lt;code&gt;StdCtrls&lt;/code&gt; padrão.&lt;/p&gt;
-
-&lt;p&gt;Por isso é tão importante ter uma &lt;a href=&quot;/declarando-unidades&quot;&gt;ordem&lt;/a&gt; na declaração das Unidades.&lt;/p&gt;
-
-&lt;h2 id=&quot;opcional&quot;&gt;Nomenclatura Opcional&lt;/h2&gt;
-
-&lt;p&gt;Essa técnica pode ser considerada o oposto da primeira mostrada nesse artigo, ou seja, ao invés de você “renomear” uma Classe pertencente a outra &lt;em&gt;Lib&lt;/em&gt;, você irá dar ao desenvolvedor opções de nomenclatura para o uso das suas Classes.&lt;/p&gt;
-
-&lt;p&gt;Imagine que você codificou um &lt;em&gt;package&lt;/em&gt; com algumas Classes. Nesse &lt;em&gt;package&lt;/em&gt; você gosta de utilizar nomes simples como &lt;code&gt;TStream&lt;/code&gt;, &lt;code&gt;TMemoryStream&lt;/code&gt;, &lt;code&gt;TString&lt;/code&gt;, &lt;code&gt;TInteger&lt;/code&gt;, etc.&lt;/p&gt;
-
-&lt;p&gt;Veja que já temos alguns possíveis “problemas” aqui. Vejamos:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;As Classes &lt;code&gt;TStream&lt;/code&gt; e &lt;code&gt;TMemoryStream&lt;/code&gt; já existem no FPC|Delphi e por isso poderá haver colisão de nomes quando os desenvolvedores forem utilizar seu &lt;em&gt;package&lt;/em&gt;, pois é bem provável que eles já estejam utilizando tais Classes padrão em seus projetos;&lt;/li&gt;
-  &lt;li&gt;As Classes &lt;code&gt;TString&lt;/code&gt; e &lt;code&gt;TInteger&lt;/code&gt; são Classes com nomes muito simples ou genéricos e, novamente, é provável que alguma outra &lt;em&gt;Lib&lt;/em&gt; ou mesmo os próprios projetos desses desenvolvedores já utilizem tais nomes.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;O problema aqui é o nome &lt;em&gt;limpo&lt;/em&gt; e &lt;em&gt;curto&lt;/em&gt;. Ao mesmo tempo que esses nomes são &lt;em&gt;perfeitos&lt;/em&gt;, eles tem o grande potencial de gerar o problema da colisão de nomenclatura.&lt;/p&gt;
-
-&lt;p&gt;Mas quando você está criando seu &lt;em&gt;package&lt;/em&gt;, você tem que abstrair o mundo externo. O &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/#contextos&quot;&gt;contexto&lt;/a&gt; do &lt;em&gt;package&lt;/em&gt; que deve influenciar a nomenclatura das Classes e não o mundo externo que, talvez, irá utilizá-lo!&lt;/p&gt;
-
-&lt;p&gt;Eu “lutei” contra esse problema por muito anos. Antes de “descobrir” essa técnica, eu prefixava minhas Classes com 1, 2 ou 3 letras — esse parece ser o padrão utilizado por todos os desenvolvedores de componentes do mercado — porém você pode descobrir com o tempo que “seu prefixo” escolhido para suas Classes já foi utilizado em outra &lt;em&gt;Lib&lt;/em&gt; de terceiros.&lt;/p&gt;
-
-&lt;p&gt;Imagine você ter que utilizar nomes verbosos como &lt;code&gt;TXyzMemoryStream&lt;/code&gt; por todo o seu código para, então, descobrir que &lt;code&gt;Xyz&lt;/code&gt; já é o prefixo utilizado por uma grande “fazedora de componentes” do mercado.&lt;/p&gt;
-
-&lt;p&gt;Então eu descobri que a linguagem &lt;em&gt;Object Pascal&lt;/em&gt; já tinha uma resposta e eu poderia ter o melhor dos dois mundos. Eu poderia utilizar nomes simples, compactos e limpos dentro do meu contexto (&lt;em&gt;package&lt;/em&gt;, projeto, &lt;em&gt;lib&lt;/em&gt;) mas dar aos potenciais usuários|desenvolvedores um nome mais verboso, porém com menor possibilidade de haver colisão de nomes, se assim eu desejasse.&lt;/p&gt;
-
-&lt;p&gt;Vejamos um exemplo. Uma das Classes do &lt;a href=&quot;https://github.com/mdbs99/james/blob/master/src/james.data.clss.pas&quot;&gt;James&lt;/a&gt; tem o nome &lt;code&gt;TDataStream&lt;/code&gt;. Esse nome já evita a colisão com &lt;code&gt;TStream&lt;/code&gt; que é basicamente o que essa Classe representa, porém o “prefixo” &lt;code&gt;Data&lt;/code&gt; não foi utilizado para minimizar a colisão de nomenclatura, mas sim devido a sua semântica.&lt;/p&gt;
-
-&lt;p&gt;Mas digamos que agora o Lazarus e/ou Delphi implementaram uma Classe de uso geral chamada… &lt;code&gt;TDataStream&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Eu deveria mudar o nome dessa Classe no &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;Projeto James&lt;/a&gt; e em todos os meus projetos que já utilizam essa nomenclatura? É claro que não!&lt;/p&gt;
-
-&lt;p&gt;Eu só iria dar a opção para os (novos) desenvolvedores utizarem outra nomenclatura para a mesma Classe, desse jeito:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TDataStream = class sealed(TInterfacedObject, IDataStream)
-  // some methods
-  end;
-  
-  TJamesDataStream = TDataStream;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O código agora tem 2 possibilidades de uso de nomenclatura para a mesma Classe!&lt;/p&gt;
-
-&lt;p&gt;Você pode continuar utilizando &lt;code&gt;TDataStream&lt;/code&gt; por todo o seu código, desde que mantenha a &lt;a href=&quot;/declarando-unidades&quot;&gt;ordem de declaração&lt;/a&gt; das Unidades, ou pode utilizar a nova opção &lt;code&gt;TJamesDataStream&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;E se mesmo assim ainda houver colisão de nomenclatura, aí caberá ao desenvolvedor utilizar a primeira técnica desse artigo.&lt;/p&gt;
-
-&lt;p&gt;Dessa forma ambos os lados (desenvolvedores de &lt;em&gt;packages&lt;/em&gt; e usuários de &lt;em&gt;packages&lt;/em&gt;) estão &lt;em&gt;livres&lt;/em&gt; para utilizarem os nomes que quiserem em suas Classes.&lt;/p&gt;
-
-&lt;p&gt;A única exceção, até onde eu sei, são os componentes que são instalados na IDE. Ambas as IDE’s (Lazarus e Delphi) não deixam instalar componentes com o mesmo nome, mesmo estando em &lt;em&gt;packages&lt;/em&gt; distintos. No entanto, na minha opinião, isso é um erro de &lt;em&gt;design&lt;/em&gt; das IDE’s. Ambas deveriam permitir a instalação e, ao utilizarmos tais componentes, bastaria a IDE declarar os &lt;em&gt;fields&lt;/em&gt; no Formulário utilizando a nomenclatura totalmente qualificada, como &lt;code&gt;Edit1: StdCtrls.TEdit;&lt;/code&gt; e tudo iria funcionar.&lt;/p&gt;
-
-&lt;p&gt;Eu fiz essa &lt;a href=&quot;http://lists.lazarus-ide.org/pipermail/lazarus/2011-January/123929.html&quot;&gt;proposta&lt;/a&gt; na lista oficial do Lazarus em Janeiro/2011, porém ainda sem previsão, prioridade ou interesse.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;A redeclaração ou renomeação de Classes (e constantes, funções, etc) é uma técnica que existe quase desde os primórdios da linguagem, mas que a grande maioria dos desenvolvedores não utiliza, seja por desconhecimento, inabilidade ou mesmo falta de interesse.&lt;/p&gt;
-
-&lt;p&gt;É um conceito &lt;em&gt;antigo&lt;/em&gt;, mas que nos proporciona várias técnicas e possibilidades para codificar melhor &lt;em&gt;hoje&lt;/em&gt;, conforme demonstrado nesse artigo.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 21 Aug 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/redeclarando-classes</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/redeclarando-classes</guid>
       </item>
     
   </channel>
