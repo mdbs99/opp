@@ -92,4 +92,6 @@ Link do projeto [https://github.com/mdbs99/xavier](https://github.com/mdbs99/xav
 
 Até logo.
 
+**EDIT 2017-12-11** 
 
+  * Xavier foi incorporado ao [James](https://github.com/mdbs99/james) como um sub-módulo.
