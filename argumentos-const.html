@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mais Performance usando Argumentos "const" para Interfaces &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, argumento const, delphi const parameter performance">
+    <link rel="canonical" href="http://objectpascalprogramming.com/argumentos-const">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201712110209" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Mais Performance usando Argumentos &quot;const&quot; para Interfaces">
+    <meta property="og:description" content="Se você utiliza instâncias de Interfaces em todos os lugares e quer aumentar um pouco a performance do seu código, leia esse artigo.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/argumentos-const">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-alex-holyoake-334209.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Mais Performance usando Argumentos "const" para Interfaces" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/argumentos-const" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>E-Book</a>
+<a href="/archive/">Arquivo</a>
+<a href="/testimonials/">Testemunhos</a>
+<a href="/webinars/">Webinários</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Mais Performance usando Argumentos "const" para Interfaces</h1>
+  <span class="post-meta">Dec 11, 2017</span><br>
+  
+  <span class="post-meta small">
+  
+    8 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Se você utiliza instâncias de Interfaces em todos os lugares e quer aumentar um pouco a performance do seu código, leia esse artigo.</p>
+
+<!--more-->
+
+<p><img src="/images/2017/photo-alex-holyoake-334209.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Alex Holyoake on Unsplash</span></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Em um código verdadeiramente Orientado a Objetos, as instâncias dos Objetos devem ser do tipo Interface em <a href="/posts/interfaces-em-todo-lugar/">todos os lugares</a> do código.</p>
+
+<p>Além de prover um contrato entre os Objetos, as instâncias de Interfaces são auto-gerenciadas, ou seja, a memória é liberada automaticamente pelo compilador.</p>
+
+<p>No Free Pascal, no entanto, podemos ter instâncias de Interfaces que não são auto-gerenciadas. Essas interfaces utilizam o modelo <a href="https://www.freepascal.org/docs-html/prog/progsu37.html">CORBA</a> com a directiva <code>{$interfaces corba}</code>.</p>
+
+<p>Porém, o <em>default</em> de uso de Interfaces é o modelo COM, com auto-gerenciamento de memória através de um contador interno de referências à instância.</p>
+
+<p>Esse auto-gerenciamento tem um custo computacional de execução, mas pode ser extremamente minimizado com apenas uma pequena alteração no código.</p>
+
+<p>Entretanto, para você entender como essa pequena alteração irá afetar a performance do seu código, antes você precisa saber como o compilador faz o auto-gerenciamento de memória de instâncias de Interfaces.</p>
+
+<h2 id="metodos-especiais">Métodos Especiais</h2>
+
+<p>Todo Objeto que implementa uma Interface COM — <code>IUnknown</code> — deve implementar 3 Métodos especiais que não fazem parte da Interface.</p>
+
+<p>Funciona assim:</p>
+
+<p>Quando criamos uma instância do tipo Interface, o compilador irá chamar um método especial do Objeto chamado <a href="https://www.freepascal.org/docs-html/rtl/system/iunknown._addref.html">_AddRef</a>.</p>
+
+<p>Esse método irá aumentar uma contagem de referência, toda vez que uma nova variável receber a mesma instância do Objeto.</p>
+
+<p>Da mesma forma, toda vez que uma variável sair do escopo de execução, o compilador irá chamar o método <a href="https://www.freepascal.org/docs-html/rtl/system/iunknown._release.html">_Release</a> para decrementar a contagem.</p>
+
+<p>Quando a contagem de referência — o atributo <code>FRefCount: LongInt</code> — chegar a zero, o destrutor do Objeto será executado e a memória será liberada.</p>
+
+<p>Esse mecanismo é muito, muito mais simples do que ter um <em>garbage collector</em> sendo executado em paralelo, como é feito em outras linguagens.</p>
+
+<p>Existe mais um terceiro e último método chamado <a href="https://www.freepascal.org/docs-html/rtl/system/iunknown.queryinterface.html">QueryInterface</a>.</p>
+
+<p>Esse método é utilizado quando fazemos <a href="/posts/nao-utilize-casting/"><em>casting</em></a> do Objeto para Interface utilizando a estrutura <code>Intf := Obj as IMyInterface;</code> ou quando utilizamos a função <a href="https://www.freepascal.org/docs-html/rtl/sysutils/supports.html">Supports</a> para determinar se uma instância implementa ou não uma determinada Interface.</p>
+
+<p>Todas as Classes que implementam uma ou mais Interfaces, devem ter esses 3 métodos implementados.</p>
+
+<p>Esse é o motivo de herdarmos quase todas as nossas Classes de <code>TInterfacedObject</code>, pois ela já contém a implementação destes métodos para lidar com a contagem de referência.</p>
+
+<p>Implementamos esses métodos apenas para o compilador e é possível sabermos o momento no qual o compilador irá chamá-los, sobrecarregando o código com execuções além da implementação padrão dos Métodos do Objeto.</p>
+
+<p>Então, se conseguirmos evitar tais chamadas, nosso código terá mais performance pois ciclos de CPU serão poupados.</p>
+
+<h2 id="sobrecarga">Sobrecarga</h2>
+
+<p>Devido as chamadas automáticas de <code>_AddRef</code> e <code>_Release</code> em toda atribuição e saída de escopo das variáveis, muitos desenvolvedores acham que essa é uma <em>grande</em> sobrecarga para o código.</p>
+
+<p>Na Engenharia nada é grátis, havendo sempre prós e contras.</p>
+
+<p>Se por um lado temos o auto-gerenciamento de memória para instâncias de Interfaces, por outro temos essa sobrecarga do incremento e decremento da contagem de referência.</p>
+
+<p>Além disso, toda vez que <code>_Release</code> for chamado, haverá uma checagem para saber se a contagem chegou a zero para que o destrutor do Objeto também seja chamado.</p>
+
+<p>Eu acredito que essa é uma sobrecarga <em>mínima</em>, considerando todas as <em>vantagens</em> que temos ao utilizar instâncias de Interfaces.</p>
+
+<p>Mas nem todos os desenvolvedores pensam da mesma forma.</p>
+
+<p>De fato, existem algoritmos que não podem se dar o luxo de perder ciclos de CPU fazendo operações de infraestrutura da linguagem — incremento/decremento da contagem de referência.</p>
+
+<p>Entretanto, a linguagem Object Pascal nos dá uma “saída” bastante elegante para a diminuição de toda essa sobrecarga.</p>
+
+<h2 id="argumentos-const">Argumentos “const”</h2>
+
+<p>Sempre que uma instância for passada por parâmetro a outro Objeto através de um argumento, haverá o incremento da contagem de referência.</p>
+
+<p>A menos que você utilize Argumentos “const”.</p>
+
+<p>Vamos chamá-los de “<em>ConstArgs</em>”, para encurtar.</p>
+
+<p>Aqui está a definição, em tradução livre, de <a href="https://www.freepascal.org/docs-html/ref/refsu67.html">const</a> na documentação do Free Pascal:</p>
+
+<p><em>“Especificar um parâmetro como Constante está dando ao compilador uma dica de que o conteúdo do parâmetro não será alterado pela rotina chamada. Isso permite que o compilador execute otimizações que não poderia fazer de outra forma, e também para executar determinadas verificações no código dentro da rotina: ou seja, pode proibir atribuições ao parâmetro. Além disso, um parâmetro const não pode ser transmitido para outra função que requer um parâmetro variável: o compilador pode verificar isso também. O principal uso para isso é reduzir o tamanho da pilha, portanto, melhorar o desempenho e ainda manter a semântica de passagem por valor…”</em></p>
+
+<p>Eles não falam nada sobre utilizar “const” para argumentos do tipo Interface, no entanto eu posso lhe afirmar que utilizá-los irá aumentar a performance do seu código.</p>
+
+<p>O motivo é simples: <em>ConstArgs</em> não executam <code>_AddRef</code> e <code>_Release</code>.</p>
+
+<p>Isso quer dizer que o incremento/decremento do atributo de contagem de referência não irão ocorrer.</p>
+
+<p>A checagem se o contador interno chegou a zero também não irá existir no ASSEMBLY final gerado pelo compilador.</p>
+
+<p>Vou demostrar isso, começando com a unidade base de todos os exemplos:</p>
+
+<script src="https://gist.github.com/mdbs99/d7583833ddaf07df796321c95ee8faa8.js"></script>
+
+<p>A <code>Unit1</code> contém uma Interface e uma Classe que a implementa.</p>
+
+<p>Os Métodos <code>_AddRef</code> e <code>_Release</code> foram sobrescritos para termos o controle do que ocorre dentro deles quando o compilador chamá-los.</p>
+
+<p>Então vamos criar o primeiro programa de teste que utiliza a <code>Unit1</code>:</p>
+
+<script src="https://gist.github.com/mdbs99/ac9932e2b0e5a3525fdf05223051d5c9.js"></script>
+
+<p>Esse é um programa <em>CLI</em> (<em>command-line</em>) bem simples.</p>
+
+<p>É necessário setar a utilização do <a href="http://wiki.freepascal.org/heaptrc"><em>heaptrc</em></a> no Lazarus para mostrar os vazamentos de memória (se houver) no final da execução do programa.</p>
+
+<p>Então, após a execução, no meu laptop a saída foi essa:</p>
+
+<pre><code>c:\temp&gt;project1.exe
+_AddRef called
+RefCount is 1
+_AddRef called
+RefCount is 2
+Acting...
+_Release called
+_Release called
+RefCount is 0
+Destroing...
+Heap dump by heaptrc unit
+64 memory blocks allocated : 1593/1720
+64 memory blocks freed     : 1593/1720
+0 unfreed memory blocks : 0
+True heap size : 196608 (80 used in System startup)
+True free heap : 196528
+</code></pre>
+
+<p>A execução foi bem sucedida, e não contém vazamentos de memória.</p>
+
+<p>Porém, veja que <code>_AddRef</code> e <code>_Release</code> foram, ambos, chamados 2 vezes cada. Isso ocorre por quê, ao criar a instância em <code>A</code>, há o incremento e ao passar essa instância para <code>Execute</code>, há um novo incremento da contagem.</p>
+
+<p>Agora apenas altere a assinatura do procedimento, adicionando <code>const</code>:</p>
+
+<pre><code>procedure Execute(const A: IAction);
+</code></pre>
+
+<p>Execute novamente.</p>
+
+<p>Esse é o resultado por aqui:</p>
+
+<pre><code>c:\temp&gt;project1.exe
+_AddRef called
+RefCount is 1
+Acting...
+_Release called
+RefCount is 0
+Destroing...
+Heap dump by heaptrc unit
+64 memory blocks allocated : 1593/1720
+64 memory blocks freed     : 1593/1720
+0 unfreed memory blocks : 0
+True heap size : 196608 (80 used in System startup)
+True free heap : 196528
+</code></pre>
+
+<p>A mesma memória foi consumida, mas <code>_AddRef</code> e <code>_Release</code> foram chamados apenas 1 vez cada.</p>
+
+<p>Isso se traduz em <em>mais</em> performance ou <em>menos</em> sobrecarga, dependendo do seu ponto de vista.</p>
+
+<p>Imagine se esse mesmo procedimento fosse chamado 100 vezes. Sem o “const” haveria mais de 100 chamadas aos Métodos especiais.</p>
+
+<p>Mas, se é tão simples eliminar essa sobrecarga apenas especificando o tipo do argumento, por quê nem todos os desenvolvedores utilizam essa técnica?</p>
+
+<p>Talvez seja apenas falta de conhecimento ou talvez eles tenham lido sobre problemas obscuros de vazamento de memória com o uso de <em>ConstArgs</em> e Interfaces.</p>
+
+<h2 id="problemas">Argumentos e Interfaces</h2>
+
+<p>Há alguns artigos na Internet dizendo que temos que ter <a href="https://pascal.today/2016/12/16/take-care-of-const-and-interface-parameters/">cuidado</a> ao utilizarmos <em>ConstArgs</em> em conjunto com instâncias de Interfaces.</p>
+
+<p>Sim, <em>devemos</em> ter cuidado.</p>
+
+<p><strong>O código realmente pode ficar intrincado e vazamentos de memória podem ocorrer</strong> em lugares onde tudo parece estar correto.</p>
+
+<p>Para demonstrar vamos a outro exemplo:</p>
+
+<script src="https://gist.github.com/mdbs99/979c82ffe9288ec129b5792cfef0d9b0.js"></script>
+
+<p>É o mesmo programa anterior, porém agora a instância de <code>TAction</code> é criada “inline”.</p>
+
+<p>Após executar, esse é o resultado por aqui:</p>
+
+<pre><code>c:\temp&gt;project1.exe
+Acting...
+Heap dump by heaptrc unit
+64 memory blocks allocated : 1593/1720
+63 memory blocks freed     : 1577/1704
+1 unfreed memory blocks : 16
+True heap size : 229376 (80 used in System startup)
+True free heap : 229200
+Should be : 229216
+Call trace for block $01872E88 size 16
+  $004015C7  main,  line 14 of C:/temp/project1.lpr
+</code></pre>
+
+<p>Veja que os Métodos especiais não foram executados e há um vazamento de memória, o que não é nada bom.</p>
+
+<p>Mas se você retirar o “const” do procedimento, o vazamento é corrigido.</p>
+
+<p>Se o argumento não for um <em>ConstArgs</em> ele poderá incrementar a contagem e não haverá vazamentos de memória.</p>
+
+<p>Por isso há o mito de que “não devemos utilizar <em>ConstArgs</em> com Interfaces” ou que devemos evitar seu uso.</p>
+
+<p><strong>Felizmente a solução para toda essa complexidade é muito simples</strong>, bastando utilizar uma técnica que eu publiquei a quase dois anos atrás, na qual eu chamo de <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a>.</p>
+
+<p>Altere <code>TAction</code> adicionando o Método <code>New</code>:</p>
+
+<pre><code>TAction = class(TInterfacedObject, IAction)
+public
+  class function New: IAction;
+  // ...
+end;
+
+implementation
+
+class function TAction.New: IAction;
+begin
+  Result := Create;
+end;
+</code></pre>
+
+<p>Altere também o programa, dessa forma:</p>
+
+<pre><code>begin
+  Execute(TAction.New);
+end.
+</code></pre>
+
+<p>Execute e veja o resultado você mesmo.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Se você criar suas instâncias utilizando <code>New</code> — um método da Classe — ao invés de chamar diretamente os <a href="/posts/construtores-da-classe-primario-secundarios/">construtores</a>, eu lhe asseguro que você não terá problemas de vazamento de memória, se a utilizar corretamente.</p>
+
+<p>Vimos nesse artigo que uma simples mudança no código pode gerar um ganho considerável de performance.</p>
+
+<p>Utilizando <em>ConstArgs</em> em conjunto com a técnica chamada <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a>, você poderá deixar seu código mais rápido e sem vazamentos de memória.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/argumentos-const" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Mais Performance usando Argumentos "const" para Interfaces&via=mdbs99;url=http://objectpascalprogramming.com/argumentos-const" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/argumentos-const" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/argumentos-const&title=Mais Performance usando Argumentos "const" para Interfaces" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/argumentos-const&title=Mais Performance usando Argumentos "const" para Interfaces" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/argumentos-const&t=Mais Performance usando Argumentos "const" para Interfaces" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/heranca-de-formulario-e-para-iniciantes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança de Formulário é para Iniciantes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/eliminando-metodos-privados" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Eliminando Métodos Privados</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/classes-aninhadas" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/api-unit" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>API Unit: Tudo num só lugar</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/injecao-de-dependencia" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Injeção de Dependência sem XML, Atributos/Anotações ou Frameworks</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/nomeando-classes-em-libraries" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Nomeando Classes em Libraries</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/versionando-e-organizando-seus-pacotes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Versionando e Organizando seus Pacotes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/xavier-package" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Xavier Package</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/ipc" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Inter-process Communication</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/porque-eu-escolhi-delphi-e-object-pascal" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Porquê eu escolhi Delphi e então, Object Pascal</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/argumentos-const';
+      var disqus_title      = 'Mais Performance usando Argumentos "const" para Interfaces';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

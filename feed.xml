@@ -8,6 +8,248 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Mais Performance usando Argumentos &quot;const&quot; para Interfaces</title>
+        <description>&lt;p&gt;Se você utiliza instâncias de Interfaces em todos os lugares e quer aumentar um pouco a performance do seu código, leia esse artigo.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017/photo-alex-holyoake-334209.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Alex Holyoake on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Em um código verdadeiramente Orientado a Objetos, as instâncias dos Objetos devem ser do tipo Interface em &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;todos os lugares&lt;/a&gt; do código.&lt;/p&gt;
+
+&lt;p&gt;Além de prover um contrato entre os Objetos, as instâncias de Interfaces são auto-gerenciadas, ou seja, a memória é liberada automaticamente pelo compilador.&lt;/p&gt;
+
+&lt;p&gt;No Free Pascal, no entanto, podemos ter instâncias de Interfaces que não são auto-gerenciadas. Essas interfaces utilizam o modelo &lt;a href=&quot;https://www.freepascal.org/docs-html/prog/progsu37.html&quot;&gt;CORBA&lt;/a&gt; com a directiva &lt;code&gt;{$interfaces corba}&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Porém, o &lt;em&gt;default&lt;/em&gt; de uso de Interfaces é o modelo COM, com auto-gerenciamento de memória através de um contador interno de referências à instância.&lt;/p&gt;
+
+&lt;p&gt;Esse auto-gerenciamento tem um custo computacional de execução, mas pode ser extremamente minimizado com apenas uma pequena alteração no código.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, para você entender como essa pequena alteração irá afetar a performance do seu código, antes você precisa saber como o compilador faz o auto-gerenciamento de memória de instâncias de Interfaces.&lt;/p&gt;
+
+&lt;h2 id=&quot;metodos-especiais&quot;&gt;Métodos Especiais&lt;/h2&gt;
+
+&lt;p&gt;Todo Objeto que implementa uma Interface COM — &lt;code&gt;IUnknown&lt;/code&gt; — deve implementar 3 Métodos especiais que não fazem parte da Interface.&lt;/p&gt;
+
+&lt;p&gt;Funciona assim:&lt;/p&gt;
+
+&lt;p&gt;Quando criamos uma instância do tipo Interface, o compilador irá chamar um método especial do Objeto chamado &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/system/iunknown._addref.html&quot;&gt;_AddRef&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Esse método irá aumentar uma contagem de referência, toda vez que uma nova variável receber a mesma instância do Objeto.&lt;/p&gt;
+
+&lt;p&gt;Da mesma forma, toda vez que uma variável sair do escopo de execução, o compilador irá chamar o método &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/system/iunknown._release.html&quot;&gt;_Release&lt;/a&gt; para decrementar a contagem.&lt;/p&gt;
+
+&lt;p&gt;Quando a contagem de referência — o atributo &lt;code&gt;FRefCount: LongInt&lt;/code&gt; — chegar a zero, o destrutor do Objeto será executado e a memória será liberada.&lt;/p&gt;
+
+&lt;p&gt;Esse mecanismo é muito, muito mais simples do que ter um &lt;em&gt;garbage collector&lt;/em&gt; sendo executado em paralelo, como é feito em outras linguagens.&lt;/p&gt;
+
+&lt;p&gt;Existe mais um terceiro e último método chamado &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/system/iunknown.queryinterface.html&quot;&gt;QueryInterface&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Esse método é utilizado quando fazemos &lt;a href=&quot;/posts/nao-utilize-casting/&quot;&gt;&lt;em&gt;casting&lt;/em&gt;&lt;/a&gt; do Objeto para Interface utilizando a estrutura &lt;code&gt;Intf := Obj as IMyInterface;&lt;/code&gt; ou quando utilizamos a função &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/sysutils/supports.html&quot;&gt;Supports&lt;/a&gt; para determinar se uma instância implementa ou não uma determinada Interface.&lt;/p&gt;
+
+&lt;p&gt;Todas as Classes que implementam uma ou mais Interfaces, devem ter esses 3 métodos implementados.&lt;/p&gt;
+
+&lt;p&gt;Esse é o motivo de herdarmos quase todas as nossas Classes de &lt;code&gt;TInterfacedObject&lt;/code&gt;, pois ela já contém a implementação destes métodos para lidar com a contagem de referência.&lt;/p&gt;
+
+&lt;p&gt;Implementamos esses métodos apenas para o compilador e é possível sabermos o momento no qual o compilador irá chamá-los, sobrecarregando o código com execuções além da implementação padrão dos Métodos do Objeto.&lt;/p&gt;
+
+&lt;p&gt;Então, se conseguirmos evitar tais chamadas, nosso código terá mais performance pois ciclos de CPU serão poupados.&lt;/p&gt;
+
+&lt;h2 id=&quot;sobrecarga&quot;&gt;Sobrecarga&lt;/h2&gt;
+
+&lt;p&gt;Devido as chamadas automáticas de &lt;code&gt;_AddRef&lt;/code&gt; e &lt;code&gt;_Release&lt;/code&gt; em toda atribuição e saída de escopo das variáveis, muitos desenvolvedores acham que essa é uma &lt;em&gt;grande&lt;/em&gt; sobrecarga para o código.&lt;/p&gt;
+
+&lt;p&gt;Na Engenharia nada é grátis, havendo sempre prós e contras.&lt;/p&gt;
+
+&lt;p&gt;Se por um lado temos o auto-gerenciamento de memória para instâncias de Interfaces, por outro temos essa sobrecarga do incremento e decremento da contagem de referência.&lt;/p&gt;
+
+&lt;p&gt;Além disso, toda vez que &lt;code&gt;_Release&lt;/code&gt; for chamado, haverá uma checagem para saber se a contagem chegou a zero para que o destrutor do Objeto também seja chamado.&lt;/p&gt;
+
+&lt;p&gt;Eu acredito que essa é uma sobrecarga &lt;em&gt;mínima&lt;/em&gt;, considerando todas as &lt;em&gt;vantagens&lt;/em&gt; que temos ao utilizar instâncias de Interfaces.&lt;/p&gt;
+
+&lt;p&gt;Mas nem todos os desenvolvedores pensam da mesma forma.&lt;/p&gt;
+
+&lt;p&gt;De fato, existem algoritmos que não podem se dar o luxo de perder ciclos de CPU fazendo operações de infraestrutura da linguagem — incremento/decremento da contagem de referência.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, a linguagem Object Pascal nos dá uma “saída” bastante elegante para a diminuição de toda essa sobrecarga.&lt;/p&gt;
+
+&lt;h2 id=&quot;argumentos-const&quot;&gt;Argumentos “const”&lt;/h2&gt;
+
+&lt;p&gt;Sempre que uma instância for passada por parâmetro a outro Objeto através de um argumento, haverá o incremento da contagem de referência.&lt;/p&gt;
+
+&lt;p&gt;A menos que você utilize Argumentos “const”.&lt;/p&gt;
+
+&lt;p&gt;Vamos chamá-los de “&lt;em&gt;ConstArgs&lt;/em&gt;”, para encurtar.&lt;/p&gt;
+
+&lt;p&gt;Aqui está a definição, em tradução livre, de &lt;a href=&quot;https://www.freepascal.org/docs-html/ref/refsu67.html&quot;&gt;const&lt;/a&gt; na documentação do Free Pascal:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;“Especificar um parâmetro como Constante está dando ao compilador uma dica de que o conteúdo do parâmetro não será alterado pela rotina chamada. Isso permite que o compilador execute otimizações que não poderia fazer de outra forma, e também para executar determinadas verificações no código dentro da rotina: ou seja, pode proibir atribuições ao parâmetro. Além disso, um parâmetro const não pode ser transmitido para outra função que requer um parâmetro variável: o compilador pode verificar isso também. O principal uso para isso é reduzir o tamanho da pilha, portanto, melhorar o desempenho e ainda manter a semântica de passagem por valor…”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Eles não falam nada sobre utilizar “const” para argumentos do tipo Interface, no entanto eu posso lhe afirmar que utilizá-los irá aumentar a performance do seu código.&lt;/p&gt;
+
+&lt;p&gt;O motivo é simples: &lt;em&gt;ConstArgs&lt;/em&gt; não executam &lt;code&gt;_AddRef&lt;/code&gt; e &lt;code&gt;_Release&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Isso quer dizer que o incremento/decremento do atributo de contagem de referência não irão ocorrer.&lt;/p&gt;
+
+&lt;p&gt;A checagem se o contador interno chegou a zero também não irá existir no ASSEMBLY final gerado pelo compilador.&lt;/p&gt;
+
+&lt;p&gt;Vou demostrar isso, começando com a unidade base de todos os exemplos:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/d7583833ddaf07df796321c95ee8faa8.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;A &lt;code&gt;Unit1&lt;/code&gt; contém uma Interface e uma Classe que a implementa.&lt;/p&gt;
+
+&lt;p&gt;Os Métodos &lt;code&gt;_AddRef&lt;/code&gt; e &lt;code&gt;_Release&lt;/code&gt; foram sobrescritos para termos o controle do que ocorre dentro deles quando o compilador chamá-los.&lt;/p&gt;
+
+&lt;p&gt;Então vamos criar o primeiro programa de teste que utiliza a &lt;code&gt;Unit1&lt;/code&gt;:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/ac9932e2b0e5a3525fdf05223051d5c9.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Esse é um programa &lt;em&gt;CLI&lt;/em&gt; (&lt;em&gt;command-line&lt;/em&gt;) bem simples.&lt;/p&gt;
+
+&lt;p&gt;É necessário setar a utilização do &lt;a href=&quot;http://wiki.freepascal.org/heaptrc&quot;&gt;&lt;em&gt;heaptrc&lt;/em&gt;&lt;/a&gt; no Lazarus para mostrar os vazamentos de memória (se houver) no final da execução do programa.&lt;/p&gt;
+
+&lt;p&gt;Então, após a execução, no meu laptop a saída foi essa:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;c:\temp&amp;gt;project1.exe
+_AddRef called
+RefCount is 1
+_AddRef called
+RefCount is 2
+Acting...
+_Release called
+_Release called
+RefCount is 0
+Destroing...
+Heap dump by heaptrc unit
+64 memory blocks allocated : 1593/1720
+64 memory blocks freed     : 1593/1720
+0 unfreed memory blocks : 0
+True heap size : 196608 (80 used in System startup)
+True free heap : 196528
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A execução foi bem sucedida, e não contém vazamentos de memória.&lt;/p&gt;
+
+&lt;p&gt;Porém, veja que &lt;code&gt;_AddRef&lt;/code&gt; e &lt;code&gt;_Release&lt;/code&gt; foram, ambos, chamados 2 vezes cada. Isso ocorre por quê, ao criar a instância em &lt;code&gt;A&lt;/code&gt;, há o incremento e ao passar essa instância para &lt;code&gt;Execute&lt;/code&gt;, há um novo incremento da contagem.&lt;/p&gt;
+
+&lt;p&gt;Agora apenas altere a assinatura do procedimento, adicionando &lt;code&gt;const&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure Execute(const A: IAction);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Execute novamente.&lt;/p&gt;
+
+&lt;p&gt;Esse é o resultado por aqui:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;c:\temp&amp;gt;project1.exe
+_AddRef called
+RefCount is 1
+Acting...
+_Release called
+RefCount is 0
+Destroing...
+Heap dump by heaptrc unit
+64 memory blocks allocated : 1593/1720
+64 memory blocks freed     : 1593/1720
+0 unfreed memory blocks : 0
+True heap size : 196608 (80 used in System startup)
+True free heap : 196528
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A mesma memória foi consumida, mas &lt;code&gt;_AddRef&lt;/code&gt; e &lt;code&gt;_Release&lt;/code&gt; foram chamados apenas 1 vez cada.&lt;/p&gt;
+
+&lt;p&gt;Isso se traduz em &lt;em&gt;mais&lt;/em&gt; performance ou &lt;em&gt;menos&lt;/em&gt; sobrecarga, dependendo do seu ponto de vista.&lt;/p&gt;
+
+&lt;p&gt;Imagine se esse mesmo procedimento fosse chamado 100 vezes. Sem o “const” haveria mais de 100 chamadas aos Métodos especiais.&lt;/p&gt;
+
+&lt;p&gt;Mas, se é tão simples eliminar essa sobrecarga apenas especificando o tipo do argumento, por quê nem todos os desenvolvedores utilizam essa técnica?&lt;/p&gt;
+
+&lt;p&gt;Talvez seja apenas falta de conhecimento ou talvez eles tenham lido sobre problemas obscuros de vazamento de memória com o uso de &lt;em&gt;ConstArgs&lt;/em&gt; e Interfaces.&lt;/p&gt;
+
+&lt;h2 id=&quot;problemas&quot;&gt;Argumentos e Interfaces&lt;/h2&gt;
+
+&lt;p&gt;Há alguns artigos na Internet dizendo que temos que ter &lt;a href=&quot;https://pascal.today/2016/12/16/take-care-of-const-and-interface-parameters/&quot;&gt;cuidado&lt;/a&gt; ao utilizarmos &lt;em&gt;ConstArgs&lt;/em&gt; em conjunto com instâncias de Interfaces.&lt;/p&gt;
+
+&lt;p&gt;Sim, &lt;em&gt;devemos&lt;/em&gt; ter cuidado.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O código realmente pode ficar intrincado e vazamentos de memória podem ocorrer&lt;/strong&gt; em lugares onde tudo parece estar correto.&lt;/p&gt;
+
+&lt;p&gt;Para demonstrar vamos a outro exemplo:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/979c82ffe9288ec129b5792cfef0d9b0.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;É o mesmo programa anterior, porém agora a instância de &lt;code&gt;TAction&lt;/code&gt; é criada “inline”.&lt;/p&gt;
+
+&lt;p&gt;Após executar, esse é o resultado por aqui:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;c:\temp&amp;gt;project1.exe
+Acting...
+Heap dump by heaptrc unit
+64 memory blocks allocated : 1593/1720
+63 memory blocks freed     : 1577/1704
+1 unfreed memory blocks : 16
+True heap size : 229376 (80 used in System startup)
+True free heap : 229200
+Should be : 229216
+Call trace for block $01872E88 size 16
+  $004015C7  main,  line 14 of C:/temp/project1.lpr
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Veja que os Métodos especiais não foram executados e há um vazamento de memória, o que não é nada bom.&lt;/p&gt;
+
+&lt;p&gt;Mas se você retirar o “const” do procedimento, o vazamento é corrigido.&lt;/p&gt;
+
+&lt;p&gt;Se o argumento não for um &lt;em&gt;ConstArgs&lt;/em&gt; ele poderá incrementar a contagem e não haverá vazamentos de memória.&lt;/p&gt;
+
+&lt;p&gt;Por isso há o mito de que “não devemos utilizar &lt;em&gt;ConstArgs&lt;/em&gt; com Interfaces” ou que devemos evitar seu uso.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Felizmente a solução para toda essa complexidade é muito simples&lt;/strong&gt;, bastando utilizar uma técnica que eu publiquei a quase dois anos atrás, na qual eu chamo de &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Altere &lt;code&gt;TAction&lt;/code&gt; adicionando o Método &lt;code&gt;New&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TAction = class(TInterfacedObject, IAction)
+public
+  class function New: IAction;
+  // ...
+end;
+
+implementation
+
+class function TAction.New: IAction;
+begin
+  Result := Create;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Altere também o programa, dessa forma:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;begin
+  Execute(TAction.New);
+end.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Execute e veja o resultado você mesmo.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Se você criar suas instâncias utilizando &lt;code&gt;New&lt;/code&gt; — um método da Classe — ao invés de chamar diretamente os &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt;, eu lhe asseguro que você não terá problemas de vazamento de memória, se a utilizar corretamente.&lt;/p&gt;
+
+&lt;p&gt;Vimos nesse artigo que uma simples mudança no código pode gerar um ganho considerável de performance.&lt;/p&gt;
+
+&lt;p&gt;Utilizando &lt;em&gt;ConstArgs&lt;/em&gt; em conjunto com a técnica chamada &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New&lt;/a&gt;, você poderá deixar seu código mais rápido e sem vazamentos de memória.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 11 Dec 2017 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/argumentos-const</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/argumentos-const</guid>
+      </item>
+    
+      <item>
         <title>Herança de Formulário é para Iniciantes</title>
         <description>&lt;p&gt;Depois que você aprendeu como funciona a Herança de Formulários, pode esquecê-la.&lt;/p&gt;
 
@@ -1214,6 +1456,11 @@ end;
 
 &lt;p&gt;Até logo.&lt;/p&gt;
 
+&lt;p&gt;&lt;strong&gt;EDIT 2017-12-11&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Xavier foi incorporado ao &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;James&lt;/a&gt; como um sub-módulo.&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Mon, 18 Sep 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/xavier-package</link>
@@ -1306,134 +1553,6 @@ end;
         <pubDate>Mon, 11 Sep 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/ipc</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/ipc</guid>
-      </item>
-    
-      <item>
-        <title>Porquê eu escolhi Delphi e então, Object Pascal</title>
-        <description>&lt;p&gt;Essa é minha contribuição aos artigos na Internet com a &lt;em&gt;hastag&lt;/em&gt; &lt;a href=&quot;https://www.google.com.br/search?q=%23WhyIChooseDelphi&quot;&gt;#WhyIChooseDelphi&lt;/a&gt;.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-kace-rodriguez-75513.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Kace Rodriguez on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;inicio&quot;&gt;Quando tudo começou&lt;/h2&gt;
-
-&lt;p&gt;Minha história com &lt;em&gt;Object Pascal&lt;/em&gt; começa em 1999 quando comecei a estudar programação de computadores.&lt;/p&gt;
-
-&lt;p&gt;Havia um curso chamado Programação de Computadores com “Novas” Tecnologias ministrado na PUC-RJ.&lt;/p&gt;
-
-&lt;p&gt;Lá eu aprendi bastante sobre algoritmos, SGBD’s e linguagens de programação como COBOL, C/C++, Pascal, Java, Visual Basic e &lt;a href=&quot;https://www.embarcadero.com/products/delphi&quot;&gt;Delphi&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Através dos convênios da PUC com outras empresas, consegui meu primeiro emprego como estagiário numa &lt;em&gt;software house&lt;/em&gt; chamada &lt;em&gt;Fuzion Engenharia de Software&lt;/em&gt; em meados do ano 2000.&lt;/p&gt;
-
-&lt;h2 id=&quot;delphi&quot;&gt;Um caminho diferente&lt;/h2&gt;
-
-&lt;p&gt;Na &lt;em&gt;Fuzion&lt;/em&gt; utilizáva-mos Delphi, Visual Basic e pouca coisa em Java. No entanto, a maioria dos projetos eram desenvolvidos em Delphi.&lt;/p&gt;
-
-&lt;p&gt;Na PUC éramos referência no desenvolvimento &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientado a Objetos&lt;/a&gt;. Veja, em Delphi, não em Java.&lt;/p&gt;
-
-&lt;p&gt;Quando eu entrei na empresa a versão era Delphi 4. Alguns bugs, alguns problemas… mas então veio a tão aclamada versão 5 e a produtividade era sem igual.&lt;/p&gt;
-
-&lt;p&gt;Tínhamos desenvolvido nossa própria metodologia e ferramentas que geravam código automaticamente e eu já tinha um cargo de Desenvolvedor Pleno.&lt;/p&gt;
-
-&lt;p&gt;Nunca utilizamos &lt;em&gt;DB-aware components&lt;/em&gt;, pois tudo era feito através de camadas e Objetos. Esse era um dos motivos para ser tão difícil contratar mais desenvolvedores, pois aqueles que vinham fazer uma prova depois da entrevista, não sabiam como mostrar informações num &lt;em&gt;Form&lt;/em&gt; com “Mestre/Detalhe” e outros &lt;em&gt;widgets&lt;/em&gt;, sem utizar componentes &lt;em&gt;DB-aware&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa sempre foi a beleza do Delphi: Você pode utilizar o paradigma que quiser e conseguir um excelente resultado no final.&lt;/p&gt;
-
-&lt;p&gt;Na Fuzion trilhávamos um caminho diferente. Delphi era um dos nossos segredos de performance e eficácia. E tivemos sucesso… enquanto durou.&lt;/p&gt;
-
-&lt;h2 id=&quot;mudando&quot;&gt;A mudança de ambiente&lt;/h2&gt;
-
-&lt;p&gt;Eu abri minha própria empresa em 2003 para trabalhar como consultor alocado em outras empresas.&lt;/p&gt;
-
-&lt;p&gt;Eu já havia mudado de empresa umas duas vezes até estar na atual, onde já trabalho por quase 13 anos.&lt;/p&gt;
-
-&lt;p&gt;Lá também utilizamos Delphi, a versão 7. Na época que entrei nesta empresa, o Delphi ainda dominava o mercado quando se tratava de aplicações Desktop.&lt;/p&gt;
-
-&lt;p&gt;Por volta de 2006 (se não me engano) a Borland estava vendendo o Delphi. Eu acompanhei, com tristeza, o Delphi ser vendido entre as empresas.&lt;/p&gt;
-
-&lt;p&gt;Eu adorava a Borland, a ponto de querer trabalhar pra ela, e Delphi sempre foi a minha escolha, mas eu achava que tinha que seguir em frente, já que agora o caminho parecia incerto.&lt;/p&gt;
-
-&lt;p&gt;Apesar de na época estar num emprego relativamente estável, eu tinha meus próprios clientes. Eu utilizei Delphi para fazer todos os seus &lt;em&gt;softwares&lt;/em&gt; e, como não tinha certeza se o Delphi iria sobreviver, comecei a pensar em migrar para outra linguagem, outro ambiente.&lt;/p&gt;
-
-&lt;p&gt;Apenas em 2010 eu comecei a pensar em outras possibilidades, quando soube um um projeto que “voltou das cinzas”, hoje conhecido como Lazarus.&lt;/p&gt;
-
-&lt;h2 id=&quot;lazarus&quot;&gt;Migrando para Lazarus&lt;/h2&gt;
-
-&lt;p&gt;Eu comecei a utilizar &lt;a href=&quot;http://www.lazarus-ide.org/&quot;&gt;Lazarus&lt;/a&gt; e quase desisti. Comparado com o Delphi, na época, Lazarus era muito inferior.&lt;/p&gt;
-
-&lt;p&gt;Muitos bugs, pouca produtividade e muita diferença entre ambientes. Apesar de ambos utilizarem a mesma linguagem.&lt;/p&gt;
-
-&lt;p&gt;Felizmente eu consegui superar os problemas. Hoje o ambiente Lazarus é bem estável e completo e me sinto “em casa” como eu me sentia na época do Delphi 5~7.&lt;/p&gt;
-
-&lt;p&gt;Então consegui migrar muitos projetos de Delphi para Lazarus e outros parmaneceram nas versões antigas de Delphi — e vão muito bem, obrigado.&lt;/p&gt;
-
-&lt;p&gt;Apesar de ainda haver problemas, hoje em dia a história parece ser outra. Cada vez mais vejo pessoas reclamando de &lt;em&gt;bugs&lt;/em&gt; no Delphi e, em comparação, vejo cada vez mais elogios ao Lazarus e ao compilador &lt;a href=&quot;https://freepascal.org/&quot;&gt;Free Pascal&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Hoje em dia tenho aplicações Desktop e Web, construídas em Free Pascal e Lazarus, rodando em servidores Windows IIS utilizando &lt;a href=&quot;https://www.iis.net/downloads/microsoft/fastcgi-for-iis&quot;&gt;FastCGI&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Nada mal, considerando que tais &lt;em&gt;softwares&lt;/em&gt; foram desenvolvidos utilizando ferramentas gratuitas e livres, não é?&lt;/p&gt;
-
-&lt;p&gt;Free Pascal e Lazarus são ferramentas desenvolvidas apenas nas horas vagas por alguns programadores motivados e apaixonados por &lt;em&gt;Object Pascal&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;motivos&quot;&gt;Simplicidade, Performance e Lucro&lt;/h2&gt;
-
-&lt;p&gt;Hoje em dia existem tantas linguagens e ambientes que alguns programadores continuam querendo saber meus motivos em continuar utilizando &lt;em&gt;Object Pascal&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Bem, eu publiquei um vídeo que explica meus principais motivos.&lt;/p&gt;
-
-&lt;div style=&quot;position:relative;height:0;padding-bottom:56.25%&quot;&gt;&lt;iframe src=&quot;https://www.youtube.com/embed/iayMGRIRwjY?ecver=2&quot; width=&quot;640&quot; height=&quot;360&quot; frameborder=&quot;0&quot; style=&quot;position:absolute;width:100%;height:100%;left:0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/div&gt;
-
-&lt;p&gt;E enquanto esses motivos forem válidos, irei continuar utilizando a linguagem &lt;em&gt;Object Pascal&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;hoje&quot;&gt;Object Pascal hoje em dia&lt;/h2&gt;
-
-&lt;p&gt;A linguagem &lt;em&gt;Object Pascal&lt;/em&gt; é relevante hoje em dia? Bem, depende de como você vê o mundo.&lt;/p&gt;
-
-&lt;p&gt;A linguagem &lt;em&gt;Object Pascal&lt;/em&gt;, pra mim, é como um carro esportivo antigo, como essa imagem do &lt;em&gt;Porsche&lt;/em&gt; aí em cima.&lt;/p&gt;
-
-&lt;p&gt;Esse &lt;em&gt;Porsche&lt;/em&gt; — ou quase qualquer outro esportivo antigo —  é simples, manual e puro. Você precisa saber o que está fazendo a todo momento. Não há computadores e sensores para lhe ajudar. Não há muita segurança como &lt;em&gt;airbags&lt;/em&gt;. Você tem que fazer mais força para “domá-lo”. Quase tudo é manual e “barulhento”. Você precisa entender de subesterço e sobre-esterço, se quiser dirigir de forma mais agressiva ao entrar numa curva. Enfim, você precisa saber muita coisa se quiser ter a verdadeira experiência de dirigir.&lt;/p&gt;
-
-&lt;p&gt;Mas no fim do dia, após passar algumas horas atrás do volante, você se sente realizado. Você sabe exatamente o que fez. Você entende como as coisas funcionam nos seus mínimos detalhes. Você estava integrado ao ambiente. Você era apenas um com seu &lt;em&gt;Porsche&lt;/em&gt;. Homem e máquina.&lt;/p&gt;
-
-&lt;p&gt;A linguagem &lt;em&gt;Object Pascal&lt;/em&gt; é como um clássico esportivo que nunca sai de moda.&lt;/p&gt;
-
-&lt;p&gt;Hoje temos cada vez mais IDE’s e linguagens “inteligentes” que podem mudar a cada nova versão. Esquecem do passado e “inventam” novas maneiras de fazer a mesma coisa que já fazíamos antes. Essas IDE’s nos dão &lt;em&gt;“airbags”&lt;/em&gt;, “segurança” e todo tipo de “artefato” para ajudar no desenvolvimento, mas no fim o desenvolvedor não sabe exatamente o que está fazendo. Ele apenas memorizou quais “botões apertar no painel” e se algo não sai conforme o esperado, sempre haverá a Internet para responder suas dúvidas, certo?&lt;/p&gt;
-
-&lt;p&gt;Vejo desenvolvedores correndo atrás do último lançamento da IDE, &lt;em&gt;Lib&lt;/em&gt; ou compilador, apenas para constatarem que deverão modificar seu código que antes funcionava.&lt;/p&gt;
-
-&lt;p&gt;A última versão do compilador adiciou tais e tais &lt;em&gt;features&lt;/em&gt; e todos querem utilizar, no entanto a maioria não sabe separar um &lt;em&gt;software&lt;/em&gt; em módulos reutilizáveis!&lt;/p&gt;
-
-&lt;p&gt;Então, pra mim, &lt;em&gt;Object Pascal&lt;/em&gt; continua muito relevante. Gosto de “ter trabalho” ao construir meus &lt;em&gt;softwares&lt;/em&gt;, pois gosto do sentimento de ter construído algo por minhas próprias mãos sem ser obrigado a seguir as “regras de desenvolvimento” que algumas empresas consideram ideal.&lt;/p&gt;
-
-&lt;p&gt;Não quero depender de outras empresas e de seus produtos privados, que podem mudar a qualquer momento, para que eu possa entregar valor aos meus clientes. A confiança que eu tinha na antiga Borland se foi… até que me provem o contrário. Hoje eu quero ser livre.&lt;/p&gt;
-
-&lt;p&gt;Liberdade, é disso que se trata.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Eu gosto de imaginar um mundo onde o Delphi fosse disponibilizado de graça, doado ao time do Free Pascal e Lazarus.&lt;/p&gt;
-
-&lt;p&gt;Gosto de pensar numa união de forças entre o &lt;em&gt;Open Source&lt;/em&gt; e a magnífica IDE, Delphi, que sempre ajudou o desenvolvedor (experiente ou não) da melhor forma possível.&lt;/p&gt;
-
-&lt;p&gt;Gosto de pensar num mundo onde iríamos dar um passo pra trás e ver a beleza e a simplicidade da linguagem &lt;em&gt;Object Pascal&lt;/em&gt;, linguagem essa que foi e ainda é inspiração para várias outras.&lt;/p&gt;
-
-&lt;p&gt;Eu &lt;em&gt;escolhi&lt;/em&gt; Delphi no passado e construí minha carreira com a ajuda dele.&lt;/p&gt;
-
-&lt;p&gt;Delphi continua sendo uma ótima escolha para aqueles que sabem aproveitá-lo.&lt;/p&gt;
-
-&lt;p&gt;Eu não o abandonei. Tiraram ele de mim devido a burocracia e altos custos. Mas ele continua no meu coração.&lt;/p&gt;
-
-&lt;p&gt;Minha &lt;em&gt;hastag&lt;/em&gt; hoje — infelizmente ou não — não é mais &lt;strong&gt;#WhyIChooseDelphi&lt;/strong&gt;, mas sim &lt;strong&gt;#WhyIChoseDelphi&lt;/strong&gt; (uma letra faz diferença).&lt;/p&gt;
-
-&lt;p&gt;Felizmente tem algo que nunca mudou: A linguagem &lt;em&gt;Object Pascal&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 28 Aug 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/porque-eu-escolhi-delphi-e-object-pascal</guid>
       </item>
     
   </channel>
