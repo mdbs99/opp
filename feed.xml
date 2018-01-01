@@ -8,6 +8,106 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Pas2JS: Codificando em Pascal, Executando em JavaScript</title>
+        <description>&lt;p&gt;A equipe do Free Pascal e Lazarus nos deram um grande presente de Final de Ano: Um Transpiler de Pascal para JavaScript.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-greg-rakozy-129733.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Greg Rakozy on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;O uso do JavaScript é necessário para qualquer aplicação Web. Somos obrigados a utilizá-lo por quê (por enquanto) é a única linguagem que os &lt;em&gt;browsers&lt;/em&gt; entendem.&lt;/p&gt;
+
+&lt;p&gt;Mas JavaScript não é fortemente tipado como Pascal e isso pode ser um grande problema quando codificamos aplicações maiores utilizando somente JavaScript.&lt;/p&gt;
+
+&lt;p&gt;JavaScript pode ser &lt;em&gt;confuso&lt;/em&gt; e &lt;em&gt;ambíguo&lt;/em&gt;. Por isso muitos desenvolvedores &lt;em&gt;devem&lt;/em&gt; utilizar &lt;em&gt;frameworks&lt;/em&gt; que facilitam o desenvolvimento e padronizam a codificação.&lt;/p&gt;
+
+&lt;p&gt;Codificar utilizando JavaScript &lt;em&gt;puro&lt;/em&gt; não é uma tarefa fácil.&lt;/p&gt;
+
+&lt;p&gt;Então surgiram os &lt;a href=&quot;https://en.wikipedia.org/wiki/Source-to-source_compiler&quot;&gt;Transpilers&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Um Transpiler é um compilador que, a partir de um código-fonte escrito em uma linguagem de programação como sua entrada, produz um código-fonte equivalente em outra linguagem de programação.&lt;/p&gt;
+
+&lt;p&gt;Existem &lt;a href=&quot;https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS&quot;&gt;vários&lt;/a&gt; Transpilers para JavaScript a partir de várias linguagens de programação. O mais famoso deles, eu acredito, é a linguagem TypeScript da Microsoft.&lt;/p&gt;
+
+&lt;p&gt;A linguagem Pascal está incluída nesse pacote de Transpilers, no entanto, além de existir poucos, eles são comerciais.&lt;/p&gt;
+
+&lt;p&gt;Felizmente, agora temos uma opção gratuita e Open Source chamada &lt;strong&gt;Pas2JS&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;pas2js&quot;&gt;Pas2JS&lt;/h2&gt;
+
+&lt;p&gt;Michael Van Canneyt (Free Pascal Team), Mattias Gaertner (Lazarus Team), e colaboradores, &lt;a href=&quot;http://lists.lazarus-ide.org/pipermail/lazarus/2017-December/233592.html&quot;&gt;lançaram oficialmente&lt;/a&gt; o compilador utilitário chamado &lt;a href=&quot;http://wiki.freepascal.org/pas2js&quot;&gt;Pas2JS&lt;/a&gt;, em 16 de Dezembro de 2017, na lista oficial do Free Pascal.&lt;/p&gt;
+
+&lt;p&gt;O JavaScript gerado a partir de um código-fonte Pascal é utilizável no &lt;em&gt;browser&lt;/em&gt; ou até mesmo no Node.js.&lt;/p&gt;
+
+&lt;p&gt;Ao invés de gerar um executável com seu código Pascal, um arquivo .js será gerado, compatível com seu &lt;em&gt;browser&lt;/em&gt;, sem a necessidade de haver um servidor de aplicação (CGI, FastCGI, ISAPI, etc) se o aplicativo não necessitar de dados externos.&lt;/p&gt;
+
+&lt;p&gt;Como disse Michael no seu email de lançamento (tradução livre):&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Isso torna o Free Pascal um ambiente de desenvolvimento completo para o desenvolvimento Web”.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Na verdade, o desenvolvimento ainda não está (totalmente) completo. Funciona muito bem, porém ainda há melhorias a serem feitas, como pode ser visto &lt;a href=&quot;http://wiki.freepascal.org/pas2js#Other_not_implemented_features&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;A sintaxe básica é a mesma do Delphi 7&lt;/strong&gt;, porém ainda não temos o suporte a Interfaces. Acredito que teremos isso em breve, no entanto.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;A RTL teve que ser reescrita&lt;/strong&gt;, gerando novas versões das Unidades padrão para que pudessem ser utilizadas perfeitamente na conversão de Pascal para JavaScript. A lista das unidades você pode ver &lt;a href=&quot;http://wiki.freepascal.org/pas2js#RTL&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O debugging pode ser feito diretamente no código Object Pascal&lt;/strong&gt;, dentro do &lt;em&gt;browser&lt;/em&gt;. Isso é possível por quê o Pas2JS emite um &lt;em&gt;“source map”&lt;/em&gt; para que o &lt;em&gt;browser&lt;/em&gt; exiba o código original em vez do código JavaScript, o que é muito útil para encontrar bugs no código original Pascal.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lazarus já tem suporte para a sintaxe do Pas2JS&lt;/strong&gt;, então o &lt;em&gt;code completion&lt;/em&gt; irá funcionar (versão trunk).&lt;/p&gt;
+
+&lt;p&gt;A integração completa do Pas2JS está sendo codificada no Lazarus e, futuramente, eles já falam em desenvolver pacotes de componentes para execução no &lt;em&gt;browser&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TMS Web componentes vai chegar no início de 2018&lt;/strong&gt;. São componentes visuais no bom estilo RAD para desenvolver aplicações Web utilizando &lt;code&gt;TForm&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Cito a TMS aqui por quê, no email do Michael, ele diz (tradução livre):&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Em um futuro muito próximo, um importante fornecedor de componentes da Delphi anunciará um pacote completo para desenvolvimento web RAD no Delphi IDE.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Eu &lt;em&gt;acredito&lt;/em&gt; que ele estava falando da &lt;a href=&quot;https://www.tmssoftware.com/site/&quot;&gt;TMS&lt;/a&gt;, empresa conceituada que se dedica à fabricação de componentes e frameworks para Delphi e Lazarus.&lt;/p&gt;
+
+&lt;p&gt;A alguns dias atrás os desenvolvedores do Brasil tiveram a chance de ver algumas palestras sobre Delphi e uma delas foi o anúncio da nova tecnologia da TMS para desenvolvimento Web, por Wagner Landgraf.&lt;/p&gt;
+
+&lt;p&gt;Para quem acompanha os pré-anúncios do Pas2JS já algum tempo — pois ele está sendo desenvolvido ao longo de 10 anos — basta “ligar os pontos” para ter quase certeza que os componentes TMS Web utiliza a tecnologia Pas2JS ou, no mínimo, se inspirou nela.&lt;/p&gt;
+
+&lt;p&gt;No entanto, na palestra do Wagner não há nenhuma menção ao Pas2JS.&lt;/p&gt;
+
+&lt;p&gt;Se eu estou certo, ou seja, se a TMS Web realmente utiliza o Pas2JS no seu novo produto, eu considero uma &lt;em&gt;falha&lt;/em&gt; não mencionar quem criou o Transpiler.&lt;/p&gt;
+
+&lt;p&gt;Não há nenhum problema em criar componentes para comercialização, no entanto é necessário dar o crédito a quem é devido.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, isso é apenas uma suposição pessoal. Se a TMS não utiliza/utilizou o Pas2JS, acredito que saberemos disso em breve.&lt;/p&gt;
+
+&lt;p&gt;Mas, independentemente da TMS utilizar ou não o Pas2JS, fico ansioso para ver o lançamento oficial do novo &lt;em&gt;framework&lt;/em&gt;, visto que tais componentes irão funcionar também no Lazarus.&lt;/p&gt;
+
+&lt;p&gt;Sendo a TMS &lt;em&gt;referência&lt;/em&gt; em componentes desde a primeira versão do Delphi, é de se esperar que esse será mais um grande sucesso.&lt;/p&gt;
+
+&lt;p&gt;O &lt;em&gt;preview&lt;/em&gt; da tecnologia exposto na palestra foi excelente e motivador.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Para uma linguagem que muitos consideram “morta”, ter um Transpiler de Object Pascal para JavaScript é um grande impulso para por a linguagem (novamente) nos “trilhos do mercado”.&lt;/p&gt;
+
+&lt;p&gt;Sabemos que hoje em dia muitas empresas optam por desenvolver soluções 100% online, via &lt;em&gt;browser&lt;/em&gt;, ao invés de aplicações Desktop.&lt;/p&gt;
+
+&lt;p&gt;Com o Pas2JS será possível termos uma &lt;em&gt;única&lt;/em&gt; base de código Object Pascal — uma linguagem fortemente tipada, limpa e de fácil aprendizagem — onde poderemos utilizar todo o nosso conhecimento da linguagem, da RTL e componentes, para provermos aplicações 100% Web. Confiáveis, rápidas e de fácil manutenção.&lt;/p&gt;
+
+&lt;p&gt;É esperar, pra ver.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/pas2js</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/pas2js</guid>
+      </item>
+    
+      <item>
         <title>Mais Performance usando Argumentos &quot;const&quot; para Interfaces</title>
         <description>&lt;p&gt;Se você utiliza instâncias de Interfaces em todos os lugares e quer aumentar um pouco a performance do seu código, leia esse artigo.&lt;/p&gt;
 
@@ -1465,94 +1565,6 @@ end;
         <pubDate>Mon, 18 Sep 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/xavier-package</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/xavier-package</guid>
-      </item>
-    
-      <item>
-        <title>Inter-process Communication</title>
-        <description>&lt;p&gt;Gostaria de modularizar seus sistemas &lt;em&gt;Object Pascal&lt;/em&gt; em pequenos executáveis mas não sabe como?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-climate-kic-350836.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Climate KIC on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Muitos sistemas começam simples. Uma dúzia de tabelas, alguns cadastros, um formulário de &lt;em&gt;login&lt;/em&gt; e poucas &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/#regras-de-negocio&quot;&gt;Regras de Negócio&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Com o tempo é necessário ter alguns relatórios, mais cadastros, mais tabelas e muito mais Regras de Negócio.&lt;/p&gt;
-
-&lt;p&gt;A complexidade vai aumentando cada vez mais. O que antes era simples, agora é um “monstro” monolítico.&lt;/p&gt;
-
-&lt;p&gt;Essa história parece familiar?&lt;/p&gt;
-
-&lt;p&gt;Isso já aconteceu comigo — mais de uma vez — e talvez esteja acontecendo com você agora mesmo.&lt;/p&gt;
-
-&lt;p&gt;Hoje vou lhe apresentar uma técnica (antiga) para modularizar seus sistemas, facilitando a manutenção e, possivelmente, diminuir a complexidade do código.&lt;/p&gt;
-
-&lt;p&gt;Esse artigo irá focar numa dessas técnicas chamada &lt;a href=&quot;https://en.wikipedia.org/wiki/Inter-process_communication&quot;&gt;Inter-process Communication&lt;/a&gt; ou IPC.&lt;/p&gt;
-
-&lt;h2 id=&quot;ipc&quot;&gt;IPC&lt;/h2&gt;
-
-&lt;p&gt;Um sistema pode ser modularizado de várias maneiras. Podemos utilizar algumas técnicas como DLL’s, &lt;a href=&quot;/posts/pacotes-e-versoes-no-lazarus/&quot;&gt;&lt;em&gt;Packages&lt;/em&gt;&lt;/a&gt;, WebServices, &lt;a href=&quot;/posts/microservices-delphi-parte-1/&quot;&gt;Microservices&lt;/a&gt; e algumas outras.&lt;/p&gt;
-
-&lt;p&gt;O IPC permite que dois processos (executáveis) distintos se comuniquem entre si através de mensagens que são gerenciadas pelo sistema operacional.&lt;/p&gt;
-
-&lt;p&gt;Essa técnica é muito utilizada por sistemas operacionais de microkernel como, por exemplo, o sistema operacional &lt;a href=&quot;http://www.minix3.org/&quot;&gt;MINIX3&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;O objetivo principal é diminuir o número de funcionalidades de um executável monolítico, utilizando um &lt;em&gt;design&lt;/em&gt; mas modular, onde haverá uma comunicação entre processos colaborativos ao invés de haver um único processo que faz tudo.&lt;/p&gt;
-
-&lt;p&gt;A comunicação por IPC é do tipo cliente/servidor, sendo que cada processo pode ser tanto um como outro ao mesmo tempo.&lt;/p&gt;
-
-&lt;p&gt;Então, imagine projetar um sistema onde seus módulos seriam divididos em vários executáveis. Um módulo com as Regras de Negócio, outro de Relatórios para disponibilizá-los tanto na Web quanto no Desktop, outro para &lt;em&gt;login&lt;/em&gt;, etc.&lt;/p&gt;
-
-&lt;p&gt;Alguns destes módulos seriam executados na mesma máquina e, portanto, seria mais vantajoso se esses executáveis se comunicassem através de mensagens gerenciadas pelo Sistema Operacional ao invés de utilizar uma nova camada de protocolos (REST, SOAP, etc). Para esses casos, podemos utilizar o IPC.&lt;/p&gt;
-
-&lt;p&gt;Mas como implementá-lo?&lt;/p&gt;
-
-&lt;h2 id=&quot;simpleipc&quot;&gt;SimpleIPC&lt;/h2&gt;
-
-&lt;p&gt;No compilador &lt;a href=&quot;https://freepascal.org/&quot;&gt;&lt;em&gt;Free Pascal&lt;/em&gt;&lt;/a&gt; existe um &lt;em&gt;package&lt;/em&gt; chamado &lt;a href=&quot;https://svn.freepascal.org/svn/fpc/branches/fixes_3_0/packages/fcl-process/&quot;&gt;fcl-process&lt;/a&gt; que implementa o IPC.&lt;/p&gt;
-
-&lt;p&gt;Essa implementação foi codificada numa única Unidade chamada &lt;code&gt;simpleipc.pp&lt;/code&gt; e é &lt;em&gt;cross-platform&lt;/em&gt;, ou seja, um único código que funciona em sistemas &lt;em&gt;Unix-like&lt;/em&gt; e &lt;em&gt;Windows&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;O próprio &lt;a href=&quot;http://www.lazarus-ide.org/&quot;&gt;&lt;em&gt;Lazarus&lt;/em&gt;&lt;/a&gt; utiliza o &lt;em&gt;SimpleIPC&lt;/em&gt; para fazer a &lt;a href=&quot;http://wiki.freepascal.org/Help_protocol&quot;&gt;comunicação&lt;/a&gt; entre a IDE e o &lt;em&gt;Help Viewer&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Basicamente são duas classes principais a saber:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;A classe &lt;a href=&quot;http://lazarus-ccr.sourceforge.net/docs/fcl/simpleipc/tsimpleipcclient.html&quot;&gt;&lt;code&gt;TSimpleIPCClient&lt;/code&gt;&lt;/a&gt; implementa o envio das mensagens&lt;/li&gt;
-  &lt;li&gt;A classe &lt;a href=&quot;http://lazarus-ccr.sourceforge.net/docs/fcl/simpleipc/tsimpleipcserver.html&quot;&gt;&lt;code&gt;TSimpleIPCServer&lt;/code&gt;&lt;/a&gt; implementa o recebimento das mensagens&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Exemplos de uso de ambas as Classes podem ser visto nos &lt;em&gt;demos&lt;/em&gt; disponibilizados no próprio &lt;em&gt;package&lt;/em&gt;, &lt;a href=&quot;https://svn.freepascal.org/svn/fpc/branches/fixes_3_0/packages/fcl-process/examples/&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;alternativas&quot;&gt;Alternativas&lt;/h2&gt;
-
-&lt;p&gt;Para aqueles que não utilizam &lt;em&gt;Free Pascal&lt;/em&gt;, existe a opção de utilizar a implementação do &lt;em&gt;SimpleIPC&lt;/em&gt; no formato de DLL.&lt;/p&gt;
-
-&lt;p&gt;O projeto &lt;a href=&quot;http://wiki.lazarus.freepascal.org/SimpleIPC_Library&quot;&gt;&lt;em&gt;SimpleIPC Library&lt;/em&gt;&lt;/a&gt; encapsula a implementação do &lt;em&gt;Free Pascal&lt;/em&gt; numa DLL que pode ser utilizada por praticamente qualquer linguagem.&lt;/p&gt;
-
-&lt;p&gt;O código é bastante procedural — padrão em DLL’s — porém pode ser uma alternativa rápida para começar a utilizar essa técnica ao invés de implentá-la do zero.&lt;/p&gt;
-
-&lt;p&gt;Considere que mesmo que sua linguagem já implemente tal padrão, talvez ele não seja compatível com outras linguagens. Nesses casos o uso de uma DLL padrão pode fazer sentido.&lt;/p&gt;
-
-&lt;p&gt;No Windows o IPC pode ser “traduzido” como uma &lt;em&gt;Windows Message&lt;/em&gt; do tipo &lt;code&gt;WM_COPYDATA&lt;/code&gt;. Sabemos que é relativamente fácil trabalhar com mensagens do Windows no &lt;em&gt;Object Pascal&lt;/em&gt;  então, se o desenvolvimento for apenas para a plataforma Windows, talvez seja mais simples utilizar mensagens do tipo &lt;code&gt;WM_COPYDATA&lt;/code&gt;. Esses links &lt;a href=&quot;https://www.thoughtco.com/send-information-between-applications-1058476&quot;&gt;aqui&lt;/a&gt;, &lt;a href=&quot;https://stackoverflow.com/questions/7257719/wm-copydata-string-not-appearing-in-target-application&quot;&gt;aqui&lt;/a&gt; e &lt;a href=&quot;https://stackoverflow.com/questions/7540706/wm-copydata-with-and-without-quotes-yields-different-results&quot;&gt;aqui&lt;/a&gt;, podem ajudar.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Nos anos 60 já existiam tais técnicas de modularização. No entanto, ainda hoje, continuamos a desenvolver softwares monolíticos, pesados e de difícil manutenção.&lt;/p&gt;
-
-&lt;p&gt;Como visto nesse artigo, utilizar o IPC pode facilitar a manutenção do código, pois cada subprojeto (executável) iria lidar apenas com poucos &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/#contextos&quot;&gt;contextos&lt;/a&gt;, possivelmente diminuindo a complexidade.&lt;/p&gt;
-
-&lt;p&gt;Cada subprojeto poderia evoluir e ser utilizado independentemente.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 11 Sep 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/ipc</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/ipc</guid>
       </item>
     
   </channel>

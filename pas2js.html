@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Inter-process Communication &#8211; Object Pascal Programming</title>
+    <title>Pas2JS: Codificando em Pascal, Executando em JavaScript &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="FPC">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, ipc, simple ipc, inter-process communication, interprocess communication">
-    <link rel="canonical" href="http://objectpascalprogramming.com/ipc">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, pas2js, web, javascript">
+    <link rel="canonical" href="http://objectpascalprogramming.com/pas2js">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Inter-process Communication">
-    <meta property="og:description" content="Gostaria de modularizar seus sistemas Object Pascal em pequenos executáveis mas não sabe como? Talvez esse artigo possa ajudá-lo.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/ipc">
+    <meta property="og:title" content="Pas2JS: Codificando em Pascal, Executando em JavaScript">
+    <meta property="og:description" content="{&quot;A equipe do Free Pascal e Lazarus nos deram um grande presente de Final de Ano&quot;=&gt;&quot;Um Transpiler de Pascal para JavaScript.&quot;}">
+    <meta property="og:url" content="http://objectpascalprogramming.com/pas2js">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-climate-kic-350836.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-greg-rakozy-129733.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Inter-process Communication" />
+    <meta name="twitter:title" content="Pas2JS: Codificando em Pascal, Executando em JavaScript" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/ipc" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/pas2js" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,97 +191,109 @@
 
 
 <div class="post-header mb2">
-  <h1>Inter-process Communication</h1>
-  <span class="post-meta">Sep 11, 2017</span><br>
+  <h1>Pas2JS: Codificando em Pascal, Executando em JavaScript</h1>
+  <span class="post-meta">Jan 1, 2018</span><br>
   
   <span class="post-meta small">
   
-    3 minute read
+    4 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Gostaria de modularizar seus sistemas <em>Object Pascal</em> em pequenos executáveis mas não sabe como?</p>
+  <p>A equipe do Free Pascal e Lazarus nos deram um grande presente de Final de Ano: Um Transpiler de Pascal para JavaScript.</p>
 
 <!--more-->
 
-<p><img src="/images/2017/photo-climate-kic-350836.jpg" alt="Unsplash image" /> 
-<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Climate KIC on Unsplash</span></p>
+<p><img src="/images/2018/photo-greg-rakozy-129733.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Greg Rakozy on Unsplash</span></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>Muitos sistemas começam simples. Uma dúzia de tabelas, alguns cadastros, um formulário de <em>login</em> e poucas <a href="/posts/codigo-duplicado-talvez-nao/#regras-de-negocio">Regras de Negócio</a>.</p>
+<p>O uso do JavaScript é necessário para qualquer aplicação Web. Somos obrigados a utilizá-lo por quê (por enquanto) é a única linguagem que os <em>browsers</em> entendem.</p>
 
-<p>Com o tempo é necessário ter alguns relatórios, mais cadastros, mais tabelas e muito mais Regras de Negócio.</p>
+<p>Mas JavaScript não é fortemente tipado como Pascal e isso pode ser um grande problema quando codificamos aplicações maiores utilizando somente JavaScript.</p>
 
-<p>A complexidade vai aumentando cada vez mais. O que antes era simples, agora é um “monstro” monolítico.</p>
+<p>JavaScript pode ser <em>confuso</em> e <em>ambíguo</em>. Por isso muitos desenvolvedores <em>devem</em> utilizar <em>frameworks</em> que facilitam o desenvolvimento e padronizam a codificação.</p>
 
-<p>Essa história parece familiar?</p>
+<p>Codificar utilizando JavaScript <em>puro</em> não é uma tarefa fácil.</p>
 
-<p>Isso já aconteceu comigo — mais de uma vez — e talvez esteja acontecendo com você agora mesmo.</p>
+<p>Então surgiram os <a href="https://en.wikipedia.org/wiki/Source-to-source_compiler">Transpilers</a>.</p>
 
-<p>Hoje vou lhe apresentar uma técnica (antiga) para modularizar seus sistemas, facilitando a manutenção e, possivelmente, diminuir a complexidade do código.</p>
+<p>Um Transpiler é um compilador que, a partir de um código-fonte escrito em uma linguagem de programação como sua entrada, produz um código-fonte equivalente em outra linguagem de programação.</p>
 
-<p>Esse artigo irá focar numa dessas técnicas chamada <a href="https://en.wikipedia.org/wiki/Inter-process_communication">Inter-process Communication</a> ou IPC.</p>
+<p>Existem <a href="https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS">vários</a> Transpilers para JavaScript a partir de várias linguagens de programação. O mais famoso deles, eu acredito, é a linguagem TypeScript da Microsoft.</p>
 
-<h2 id="ipc">IPC</h2>
+<p>A linguagem Pascal está incluída nesse pacote de Transpilers, no entanto, além de existir poucos, eles são comerciais.</p>
 
-<p>Um sistema pode ser modularizado de várias maneiras. Podemos utilizar algumas técnicas como DLL’s, <a href="/posts/pacotes-e-versoes-no-lazarus/"><em>Packages</em></a>, WebServices, <a href="/posts/microservices-delphi-parte-1/">Microservices</a> e algumas outras.</p>
+<p>Felizmente, agora temos uma opção gratuita e Open Source chamada <strong>Pas2JS</strong>.</p>
 
-<p>O IPC permite que dois processos (executáveis) distintos se comuniquem entre si através de mensagens que são gerenciadas pelo sistema operacional.</p>
+<h2 id="pas2js">Pas2JS</h2>
 
-<p>Essa técnica é muito utilizada por sistemas operacionais de microkernel como, por exemplo, o sistema operacional <a href="http://www.minix3.org/">MINIX3</a>.</p>
+<p>Michael Van Canneyt (Free Pascal Team), Mattias Gaertner (Lazarus Team), e colaboradores, <a href="http://lists.lazarus-ide.org/pipermail/lazarus/2017-December/233592.html">lançaram oficialmente</a> o compilador utilitário chamado <a href="http://wiki.freepascal.org/pas2js">Pas2JS</a>, em 16 de Dezembro de 2017, na lista oficial do Free Pascal.</p>
 
-<p>O objetivo principal é diminuir o número de funcionalidades de um executável monolítico, utilizando um <em>design</em> mas modular, onde haverá uma comunicação entre processos colaborativos ao invés de haver um único processo que faz tudo.</p>
+<p>O JavaScript gerado a partir de um código-fonte Pascal é utilizável no <em>browser</em> ou até mesmo no Node.js.</p>
 
-<p>A comunicação por IPC é do tipo cliente/servidor, sendo que cada processo pode ser tanto um como outro ao mesmo tempo.</p>
+<p>Ao invés de gerar um executável com seu código Pascal, um arquivo .js será gerado, compatível com seu <em>browser</em>, sem a necessidade de haver um servidor de aplicação (CGI, FastCGI, ISAPI, etc) se o aplicativo não necessitar de dados externos.</p>
 
-<p>Então, imagine projetar um sistema onde seus módulos seriam divididos em vários executáveis. Um módulo com as Regras de Negócio, outro de Relatórios para disponibilizá-los tanto na Web quanto no Desktop, outro para <em>login</em>, etc.</p>
+<p>Como disse Michael no seu email de lançamento (tradução livre):</p>
 
-<p>Alguns destes módulos seriam executados na mesma máquina e, portanto, seria mais vantajoso se esses executáveis se comunicassem através de mensagens gerenciadas pelo Sistema Operacional ao invés de utilizar uma nova camada de protocolos (REST, SOAP, etc). Para esses casos, podemos utilizar o IPC.</p>
+<blockquote>
+  <p>“Isso torna o Free Pascal um ambiente de desenvolvimento completo para o desenvolvimento Web”.</p>
+</blockquote>
 
-<p>Mas como implementá-lo?</p>
+<p>Na verdade, o desenvolvimento ainda não está (totalmente) completo. Funciona muito bem, porém ainda há melhorias a serem feitas, como pode ser visto <a href="http://wiki.freepascal.org/pas2js#Other_not_implemented_features">aqui</a>.</p>
 
-<h2 id="simpleipc">SimpleIPC</h2>
+<p><strong>A sintaxe básica é a mesma do Delphi 7</strong>, porém ainda não temos o suporte a Interfaces. Acredito que teremos isso em breve, no entanto.</p>
 
-<p>No compilador <a href="https://freepascal.org/"><em>Free Pascal</em></a> existe um <em>package</em> chamado <a href="https://svn.freepascal.org/svn/fpc/branches/fixes_3_0/packages/fcl-process/">fcl-process</a> que implementa o IPC.</p>
+<p><strong>A RTL teve que ser reescrita</strong>, gerando novas versões das Unidades padrão para que pudessem ser utilizadas perfeitamente na conversão de Pascal para JavaScript. A lista das unidades você pode ver <a href="http://wiki.freepascal.org/pas2js#RTL">aqui</a>.</p>
 
-<p>Essa implementação foi codificada numa única Unidade chamada <code>simpleipc.pp</code> e é <em>cross-platform</em>, ou seja, um único código que funciona em sistemas <em>Unix-like</em> e <em>Windows</em>.</p>
+<p><strong>O debugging pode ser feito diretamente no código Object Pascal</strong>, dentro do <em>browser</em>. Isso é possível por quê o Pas2JS emite um <em>“source map”</em> para que o <em>browser</em> exiba o código original em vez do código JavaScript, o que é muito útil para encontrar bugs no código original Pascal.</p>
 
-<p>O próprio <a href="http://www.lazarus-ide.org/"><em>Lazarus</em></a> utiliza o <em>SimpleIPC</em> para fazer a <a href="http://wiki.freepascal.org/Help_protocol">comunicação</a> entre a IDE e o <em>Help Viewer</em>.</p>
+<p><strong>Lazarus já tem suporte para a sintaxe do Pas2JS</strong>, então o <em>code completion</em> irá funcionar (versão trunk).</p>
 
-<p>Basicamente são duas classes principais a saber:</p>
+<p>A integração completa do Pas2JS está sendo codificada no Lazarus e, futuramente, eles já falam em desenvolver pacotes de componentes para execução no <em>browser</em>.</p>
 
-<ol>
-  <li>A classe <a href="http://lazarus-ccr.sourceforge.net/docs/fcl/simpleipc/tsimpleipcclient.html"><code>TSimpleIPCClient</code></a> implementa o envio das mensagens</li>
-  <li>A classe <a href="http://lazarus-ccr.sourceforge.net/docs/fcl/simpleipc/tsimpleipcserver.html"><code>TSimpleIPCServer</code></a> implementa o recebimento das mensagens</li>
-</ol>
+<p><strong>TMS Web componentes vai chegar no início de 2018</strong>. São componentes visuais no bom estilo RAD para desenvolver aplicações Web utilizando <code>TForm</code>.</p>
 
-<p>Exemplos de uso de ambas as Classes podem ser visto nos <em>demos</em> disponibilizados no próprio <em>package</em>, <a href="https://svn.freepascal.org/svn/fpc/branches/fixes_3_0/packages/fcl-process/examples/">aqui</a>.</p>
+<p>Cito a TMS aqui por quê, no email do Michael, ele diz (tradução livre):</p>
 
-<h2 id="alternativas">Alternativas</h2>
+<blockquote>
+  <p>“Em um futuro muito próximo, um importante fornecedor de componentes da Delphi anunciará um pacote completo para desenvolvimento web RAD no Delphi IDE.”</p>
+</blockquote>
 
-<p>Para aqueles que não utilizam <em>Free Pascal</em>, existe a opção de utilizar a implementação do <em>SimpleIPC</em> no formato de DLL.</p>
+<p>Eu <em>acredito</em> que ele estava falando da <a href="https://www.tmssoftware.com/site/">TMS</a>, empresa conceituada que se dedica à fabricação de componentes e frameworks para Delphi e Lazarus.</p>
 
-<p>O projeto <a href="http://wiki.lazarus.freepascal.org/SimpleIPC_Library"><em>SimpleIPC Library</em></a> encapsula a implementação do <em>Free Pascal</em> numa DLL que pode ser utilizada por praticamente qualquer linguagem.</p>
+<p>A alguns dias atrás os desenvolvedores do Brasil tiveram a chance de ver algumas palestras sobre Delphi e uma delas foi o anúncio da nova tecnologia da TMS para desenvolvimento Web, por Wagner Landgraf.</p>
 
-<p>O código é bastante procedural — padrão em DLL’s — porém pode ser uma alternativa rápida para começar a utilizar essa técnica ao invés de implentá-la do zero.</p>
+<p>Para quem acompanha os pré-anúncios do Pas2JS já algum tempo — pois ele está sendo desenvolvido ao longo de 10 anos — basta “ligar os pontos” para ter quase certeza que os componentes TMS Web utiliza a tecnologia Pas2JS ou, no mínimo, se inspirou nela.</p>
 
-<p>Considere que mesmo que sua linguagem já implemente tal padrão, talvez ele não seja compatível com outras linguagens. Nesses casos o uso de uma DLL padrão pode fazer sentido.</p>
+<p>No entanto, na palestra do Wagner não há nenhuma menção ao Pas2JS.</p>
 
-<p>No Windows o IPC pode ser “traduzido” como uma <em>Windows Message</em> do tipo <code>WM_COPYDATA</code>. Sabemos que é relativamente fácil trabalhar com mensagens do Windows no <em>Object Pascal</em>  então, se o desenvolvimento for apenas para a plataforma Windows, talvez seja mais simples utilizar mensagens do tipo <code>WM_COPYDATA</code>. Esses links <a href="https://www.thoughtco.com/send-information-between-applications-1058476">aqui</a>, <a href="https://stackoverflow.com/questions/7257719/wm-copydata-string-not-appearing-in-target-application">aqui</a> e <a href="https://stackoverflow.com/questions/7540706/wm-copydata-with-and-without-quotes-yields-different-results">aqui</a>, podem ajudar.</p>
+<p>Se eu estou certo, ou seja, se a TMS Web realmente utiliza o Pas2JS no seu novo produto, eu considero uma <em>falha</em> não mencionar quem criou o Transpiler.</p>
+
+<p>Não há nenhum problema em criar componentes para comercialização, no entanto é necessário dar o crédito a quem é devido.</p>
+
+<p>Entretanto, isso é apenas uma suposição pessoal. Se a TMS não utiliza/utilizou o Pas2JS, acredito que saberemos disso em breve.</p>
+
+<p>Mas, independentemente da TMS utilizar ou não o Pas2JS, fico ansioso para ver o lançamento oficial do novo <em>framework</em>, visto que tais componentes irão funcionar também no Lazarus.</p>
+
+<p>Sendo a TMS <em>referência</em> em componentes desde a primeira versão do Delphi, é de se esperar que esse será mais um grande sucesso.</p>
+
+<p>O <em>preview</em> da tecnologia exposto na palestra foi excelente e motivador.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Nos anos 60 já existiam tais técnicas de modularização. No entanto, ainda hoje, continuamos a desenvolver softwares monolíticos, pesados e de difícil manutenção.</p>
+<p>Para uma linguagem que muitos consideram “morta”, ter um Transpiler de Object Pascal para JavaScript é um grande impulso para por a linguagem (novamente) nos “trilhos do mercado”.</p>
 
-<p>Como visto nesse artigo, utilizar o IPC pode facilitar a manutenção do código, pois cada subprojeto (executável) iria lidar apenas com poucos <a href="/posts/delegacao-de-implementacao-de-interfaces/#contextos">contextos</a>, possivelmente diminuindo a complexidade.</p>
+<p>Sabemos que hoje em dia muitas empresas optam por desenvolver soluções 100% online, via <em>browser</em>, ao invés de aplicações Desktop.</p>
 
-<p>Cada subprojeto poderia evoluir e ser utilizado independentemente.</p>
+<p>Com o Pas2JS será possível termos uma <em>única</em> base de código Object Pascal — uma linguagem fortemente tipada, limpa e de fácil aprendizagem — onde poderemos utilizar todo o nosso conhecimento da linguagem, da RTL e componentes, para provermos aplicações 100% Web. Confiáveis, rápidas e de fácil manutenção.</p>
+
+<p>É esperar, pra ver.</p>
 
 <p>Até logo.</p>
-
 
 </article>
 
@@ -291,33 +303,33 @@
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/ipc" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/pas2js" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Inter-process Communication&via=mdbs99;url=http://objectpascalprogramming.com/ipc" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Pas2JS: Codificando em Pascal, Executando em JavaScript&via=mdbs99;url=http://objectpascalprogramming.com/pas2js" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/ipc" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/pas2js" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/ipc&title=Inter-process Communication" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/ipc&title=Inter-process Communication" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/pas2js&title=Pas2JS: Codificando em Pascal, Executando em JavaScript" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/ipc&t=Inter-process Communication" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/pas2js&title=Pas2JS: Codificando em Pascal, Executando em JavaScript" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/pas2js&t=Pas2JS: Codificando em Pascal, Executando em JavaScript" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -355,15 +367,6 @@
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/pas2js" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Pas2JS: Codificando em Pascal, Executando em JavaScript</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/argumentos-const" class="post-link">
@@ -446,6 +449,15 @@
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/ipc" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Inter-process Communication</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -453,8 +465,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/ipc';
-      var disqus_title      = 'Inter-process Communication';
+      var disqus_identifier = '/pas2js';
+      var disqus_title      = 'Pas2JS: Codificando em Pascal, Executando em JavaScript';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
