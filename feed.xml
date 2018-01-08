@@ -8,6 +8,146 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>O Procedimento Exit</title>
+        <description>&lt;p&gt;Todos os programadores Pascal conhecem o procedimento &lt;code&gt;Exit()&lt;/code&gt; desde as primeiras versões dos compiladores. Mas será que todos sabem utilizá-lo corretamente?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-kev-seto-94686.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Kev Seto on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;O procedimento &lt;code&gt;Exit()&lt;/code&gt; é utilizado quando queremos sair de um escopo em execução. Esse escopo pode ser uma função, procedimento, método ou até mesmo o próprio programa.&lt;/p&gt;
+
+&lt;p&gt;Vamos dizer que um programa console chame um procedimento &lt;code&gt;Execute&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure Execute;
+begin
+  Writeln(&#39;1. Passing on this line...&#39;);
+  Exit;
+  Writeln(&#39;2. It will not pass here&#39;);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;No exemplo acima, somente a informação do primeiro &lt;code&gt;Writeln&lt;/code&gt; será mostrado no console.&lt;/p&gt;
+
+&lt;p&gt;Ao sair de um escopo, o programa retorna imediatamente para o escopo anterior (outra função/procedimento/método ou o próprio programa). A única exceção a essa regra é quando há blocos &lt;code&gt;try-finally&lt;/code&gt;. Se &lt;code&gt;Exit()&lt;/code&gt; for chamado dentro de um bloco &lt;code&gt;try-finally&lt;/code&gt; o compilador irá executar o código dentro do &lt;code&gt;finally-end&lt;/code&gt; &lt;em&gt;antes&lt;/em&gt; de sair do escopo.&lt;/p&gt;
+
+&lt;p&gt;Aqui está outro exemplo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure Execute;
+begin
+  try
+    Writeln(&#39;1. Passing on this line...&#39;);
+    Exit;
+  finally
+    Writeln(&#39;2. I am still here!&#39;);
+  end;
+  Writeln(&#39;3. It will not pass here&#39;);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Os textos #1 e #2 serão mostrados no console. Mesmo que &lt;code&gt;Exit()&lt;/code&gt; tenha sido chamado antes da impressão do texto #2, ainda sim o código é executado devido ao &lt;code&gt;try-finally&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Outro exemplo de uso do &lt;code&gt;Exit()&lt;/code&gt; é quando fazemos validações. Se uma validação ou checagem não retornar verdadeiro, utilizamos o &lt;code&gt;Exit()&lt;/code&gt; para parar a execução do escopo atual.&lt;/p&gt;
+
+&lt;p&gt;Suponha que queremos somar dois números inteiros, mas só queremos números maiores que zero:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function Sum(A, B: Integer): string;
+begin
+  Result := &#39;Invalid result&#39;;
+  if (A &amp;lt; 0) or (B &amp;lt; 0) then
+    Exit;
+  Result := Format(&#39;The result is %d&#39;, [A + B]);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;No exemplo acima, o retorno da função &lt;code&gt;Sum&lt;/code&gt; é inicializado com um valor inválido e depois há uma validação para saber se os valores são menores que &lt;code&gt;0&lt;/code&gt;. Se o teste falhar, o programa irá retornar para o escopo anterior à chamada da função &lt;code&gt;Sum&lt;/code&gt; com o resultado inválido. Mas se o teste não falhar, o resultado da função será a soma de A e B.&lt;/p&gt;
+
+&lt;p&gt;Há aqueles que são adeptos da programação estruturada e preferem não “quebrar” a execução do programa com uma “saída antecipada”, ou seja, não fazem uso do &lt;code&gt;Exit()&lt;/code&gt; por acreditarem que o código ficaria mais simples.&lt;/p&gt;
+
+&lt;p&gt;Então vamos reescrever o exemplo anterior:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function Sum(A, B: Integer): string;
+begin
+  if (A &amp;gt; 0) and (B &amp;gt; 0) then
+    Result := Format(&#39;The result is %d&#39;, [A + B]);
+  else
+    Result := &#39;Invalid result&#39;;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Parece mais simples? Bem, nesse exemplo eu diria que sim. Porém para exemplos com mais condicionais, eu diria que não (vamos ver isso mais abaixo).&lt;/p&gt;
+
+&lt;p&gt;E se quiséssemos dizer ao usuário que seus dados não estão corretos?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function Sum(A, B: Integer): string;
+begin
+  Result := &#39;Invalid result&#39;;
+  if (A &amp;gt; 0) then
+  begin
+    if (B &amp;gt; 0) then
+      Result := Format(&#39;The result is %d&#39;, [A + B]);
+    else
+      Writeln(&#39;B should be greater than zero&#39;);
+  end
+  else
+    Writeln(&#39;A should be greater than zero&#39;);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nesse exemplo não utilizamos &lt;code&gt;Exit()&lt;/code&gt; e eu acho que o código está bem confuso. Os testes estão “separados” do retorno de aviso para o usuário (&lt;code&gt;Writeln&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Kent Beck , Martin Fowler &lt;a href=&quot;https://en.wikipedia.org/wiki/Structured_programming#Early_exit&quot;&gt;afirmaram&lt;/a&gt; categoricamente que &lt;em&gt;“um ponto de saída não é realmente uma regra útil. A clareza é o princípio chave: se o método for mais claro com um ponto de saída, use um ponto de saída, caso contrário, não”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Então vamos reescrever o exemplo anterior com o uso de &lt;code&gt;Exit()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function Sum(A, B: Integer): string;
+begin
+  Result := &#39;Invalid result&#39;;
+  if (A &amp;lt; 0) then
+  begin
+    Writeln(&#39;A should be greater than zero&#39;);
+    Exit;
+  end;
+  if (B &amp;lt; 0) then
+  begin
+    Writeln(&#39;B should be greater than zero&#39;);
+    Exit;
+  end;
+  Result := Format(&#39;The result is %d&#39;, [A + B]);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O código ficou um pouco maior, é verdade, porém os testes e avisos para o usuário ficaram mais simples, na minha opinião. Você não precisa acompanhar todos os &lt;code&gt;if-else&lt;/code&gt; aninhados. A cada teste que falhar, o aviso está logo abaixo e o escopo será abortado com o uso do &lt;code&gt;Exit()&lt;/code&gt;. Se todos os testes não falharem, a função irá retornar a soma de A e B.&lt;/p&gt;
+
+&lt;p&gt;No Delphi, a partir da &lt;a href=&quot;http://docs.embarcadero.com/products/rad_studio/delphiAndcpp2009/HelpUpdate2/EN/html/delphivclwin32/System_Exit.html&quot;&gt;versão 2009&lt;/a&gt;, o procedimento &lt;code&gt;Exit()&lt;/code&gt; ganhou uma melhoria: &lt;code&gt;Exit()&lt;/code&gt; pode ter um parâmetro especificando um resultado. O parâmetro deve ser do mesmo tipo que o resultado da função.&lt;/p&gt;
+
+&lt;p&gt;O FPC também tem a &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/system/exit.html&quot;&gt;mesma definição&lt;/a&gt;, porém não sei quem implementou essa nova &lt;em&gt;feature&lt;/em&gt; primeiro.&lt;/p&gt;
+
+&lt;p&gt;Então vamos reescrever o exemplo anterior:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function Sum(A, B: Integer): string;
+begin
+  if (A &amp;lt; 0) then
+    Exit(&#39;A should be greater than zero&#39;);
+  if (B &amp;lt; 0) then
+    Exit(&#39;B should be greater than zero&#39;);
+  Result := Format(&#39;The result is %d&#39;, [A + B]);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&quot;/posts/simplicidade/&quot;&gt;Simples&lt;/a&gt; e limpo.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Exit()&lt;/code&gt; pode receber como parâmetro qualquer tipo de retorno, até mesmo instâncias de &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;. Utilizando esse parâmetro, é como se ganhássemos o mesmo comportamento da palavra reservada &lt;code&gt;return&lt;/code&gt;, em Java. No entanto, &lt;code&gt;Exit()&lt;/code&gt; em conjunto com &lt;code&gt;Result&lt;/code&gt; nos dá ainda mais possibilidades de retorno para as funções.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 08 Jan 2018 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/exit-proc</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/exit-proc</guid>
+      </item>
+    
+      <item>
         <title>Pas2JS: Codificando em Pascal, Executando em JavaScript</title>
         <description>&lt;p&gt;A equipe do Free Pascal e Lazarus nos deram um grande presente de Final de Ano: Um Transpiler de Pascal para JavaScript.&lt;/p&gt;
 
@@ -1494,77 +1634,6 @@ end;
         <pubDate>Mon, 25 Sep 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes</guid>
-      </item>
-    
-      <item>
-        <title>Xavier Package</title>
-        <description>&lt;p&gt;Xavier é uma biblioteca leve, Orientada a Objetos, para trabalhar com XML.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-xavier.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Hoje em dia, todas as bibliotecas XML são muito complexas. Cada classe pode ter tantos métodos que pode ser muito difícil utilizá-las e compreendê-las. Essas implementações são muito procedurais também.&lt;/p&gt;
-
-&lt;p&gt;Que tal se tivéssemos uma &lt;em&gt;Library&lt;/em&gt; leve, &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientada a Objetos&lt;/a&gt;, que trabalha com XML e que compila em &lt;a href=&quot;https://freepascal.org/&quot;&gt;&lt;em&gt;Free Pascal&lt;/em&gt;&lt;/a&gt; e &lt;a href=&quot;https://www.embarcadero.com/products/delphi&quot;&gt;&lt;em&gt;Delphi&lt;/em&gt;&lt;/a&gt;?&lt;/p&gt;
-
-&lt;p&gt;Hoje quero apresentar a você o meu mais novo projeto.&lt;/p&gt;
-
-&lt;h2 id=&quot;xavier&quot;&gt;Xavier&lt;/h2&gt;
-
-&lt;p&gt;Eu não trabalhava no &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;Projeto James&lt;/a&gt; já fazia mais ou menos um mês. Além da falta de tempo — os projetos dos clientes são prioridade, certo? — &lt;del&gt;temos&lt;/del&gt; tínhamos uma &lt;a href=&quot;https://github.com/mdbs99/james/issues/65&quot;&gt;&lt;em&gt;issue&lt;/em&gt;&lt;/a&gt; que não nos deixava prosseguir.&lt;/p&gt;
-
-&lt;p&gt;Estávamos tentando compatibilizar o código com o &lt;em&gt;Delphi&lt;/em&gt;, porém a parte que trata de XML é um tanto complicado.&lt;/p&gt;
-
-&lt;p&gt;O maior problema é que o &lt;em&gt;Free Pascal&lt;/em&gt; não tem a mesma implementação do &lt;em&gt;Delphi&lt;/em&gt; para leitura e escrita de &lt;em&gt;streams&lt;/em&gt; e arquivos XML.&lt;/p&gt;
-
-&lt;p&gt;No &lt;em&gt;Free Pascal&lt;/em&gt; a implementação é baseada apenas em Classes, enquanto no &lt;em&gt;Delphi&lt;/em&gt; a implementação é baseada em Interfaces — ponto para o &lt;em&gt;Delphi&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Os desenvolvedores do &lt;em&gt;Free Pascal&lt;/em&gt; sempre tentam compatibilizar suas implementações com o &lt;em&gt;Delphi&lt;/em&gt; porém, ao que parece, a implementação de XML no &lt;em&gt;Free Pascal&lt;/em&gt; foi feita &lt;em&gt;antes&lt;/em&gt; da implementação do &lt;em&gt;Delphi&lt;/em&gt; e eles escolheram fazer tudo apenas com Classes.&lt;/p&gt;
-
-&lt;p&gt;A maioria das &lt;em&gt;libs&lt;/em&gt; que são compativeis entre ambos os compiladores utilizam-se de &lt;a href=&quot;/diretivas-de-compilacao&quot;&gt;diretivas de compilação&lt;/a&gt; para que seus códigos funcionem. Essa técnica, apesar de muito útil, pode transformar seu código em “espaguete” rapidamente.&lt;/p&gt;
-
-&lt;p&gt;Veja esse exemplo de como salvar um &lt;code&gt;TXMLDocument&lt;/code&gt; em &lt;em&gt;stream&lt;/em&gt;, no compilador &lt;em&gt;Free Pascal&lt;/em&gt; e &lt;em&gt;Delphi&lt;/em&gt;, utilizando diretivas:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/c630eb809a9d030917af1efcd7e453d6.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;E que tal isso?&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/96e6f11f9a2184e4e9e932202751b9d0.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Meio bizarro, improdutivo e confuso, não?&lt;/p&gt;
-
-&lt;p&gt;Quero escrever código mais elegante, limpo e sustentável usando a Orientação a Objetos e, infelizmente, as opções &lt;em&gt;Open Source&lt;/em&gt; atuais não foram suficientes, considerando meus critérios pessoais.&lt;/p&gt;
-
-&lt;p&gt;Então, criei o &lt;a href=&quot;https://github.com/mdbs99/xavier&quot;&gt;Xavier&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;O principal objetivo do Xavier é substituir o código procedural comum em nossos projetos, que podem ter tantas condicionais e variáveis, num código mais declarativo e Orientado a Objetos, para trabalhar mais facilmente com o XML, sem diretivas de compilação no código final.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;A implementação do Xavier ainda está no início mas todo o código disponível hoje está funcionando, com cobertura de testes automatizados.&lt;/p&gt;
-
-&lt;p&gt;Eu escrevi o código em apenas algumas horas. Ainda há muito o que fazer.&lt;/p&gt;
-
-&lt;p&gt;Estou fazendo minha parte…&lt;/p&gt;
-
-&lt;p&gt;E você, que tal fazer um &lt;a href=&quot;https://github.com/mdbs99/xavier#fork-destination-box&quot;&gt;&lt;em&gt;fork&lt;/em&gt;&lt;/a&gt; do projeto e colaborar?&lt;/p&gt;
-
-&lt;p&gt;Link do projeto &lt;a href=&quot;https://github.com/mdbs99/xavier&quot;&gt;https://github.com/mdbs99/xavier&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;EDIT 2017-12-11&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Xavier foi incorporado ao &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;James&lt;/a&gt; como um sub-módulo.&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Mon, 18 Sep 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/xavier-package</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/xavier-package</guid>
       </item>
     
   </channel>

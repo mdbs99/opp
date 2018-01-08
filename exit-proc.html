@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Atributos Primários e Secundários &#8211; Object Pascal Programming</title>
+    <title>O Procedimento Exit &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="OO">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, atributo, primário, secundário, attribute, primary, secondary">
-    <link rel="canonical" href="http://objectpascalprogramming.com/atributos-primarios-secundarios">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, exit, exit procedure">
+    <link rel="canonical" href="http://objectpascalprogramming.com/exit-proc">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Atributos Primários e Secundários">
-    <meta property="og:description" content="Um Objeto pode ter Atributos Primários e Secundários.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/atributos-primarios-secundarios">
+    <meta property="og:title" content="O Procedimento Exit">
+    <meta property="og:description" content="Todos os programadores Pascal conhecem o procedimento `Exit()` desde as primeiras versões dos compiladores. Mas será que todos sabem utilizá-lo corretamente?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/exit-proc">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-tim-gouw-60216.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-kev-seto-94686.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Atributos Primários e Secundários" />
+    <meta name="twitter:title" content="O Procedimento Exit" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/atributos-primarios-secundarios" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/exit-proc" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,66 +191,147 @@
 
 
 <div class="post-header mb2">
-  <h1>Atributos Primários e Secundários</h1>
-  <span class="post-meta">Jun 12, 2017</span><br>
+  <h1>O Procedimento Exit</h1>
+  <span class="post-meta">Jan 8, 2018</span><br>
   
   <span class="post-meta small">
   
-    1 minute read
+    4 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Um Objeto pode ter Atributos Primários e Secundários.</p>
+  <p>Todos os programadores Pascal conhecem o procedimento <code>Exit()</code> desde as primeiras versões dos compiladores. Mas será que todos sabem utilizá-lo corretamente?</p>
 
 <!--more-->
 
-<p><img src="/images/2017/photo-tim-gouw-60216.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2018/photo-kev-seto-94686.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Kev Seto on Unsplash</span></p>
 
-<h2 id="introducao">Introdução</h2>
+<p>O procedimento <code>Exit()</code> é utilizado quando queremos sair de um escopo em execução. Esse escopo pode ser uma função, procedimento, método ou até mesmo o próprio programa.</p>
 
-<p>Os <a href="/posts/menos-e-mais/#atributos">atributos</a> de um Objeto são a representação do seu conhecimento, ou seja, tudo que o Objeto <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">encapsula</a> é representado por atributos.</p>
+<p>Vamos dizer que um programa console chame um procedimento <code>Execute</code>:</p>
 
-<p>Assim como uma Classe pode ter 2 tipos de <a href="/posts/construtores-da-classe-primario-secundarios/">construtores</a>, um Objeto pode ter 2 tipos de atributos: Primários e Secundários.</p>
+<pre><code>procedure Execute;
+begin
+  Writeln('1. Passing on this line...');
+  Exit;
+  Writeln('2. It will not pass here');
+end;
+</code></pre>
 
-<h2 id="primarios">Primários</h2>
+<p>No exemplo acima, somente a informação do primeiro <code>Writeln</code> será mostrado no console.</p>
 
-<p>Atributos Primários são aqueles que fazem parte do <a href="/estado-do-objeto">Estado do Objeto</a>.</p>
+<p>Ao sair de um escopo, o programa retorna imediatamente para o escopo anterior (outra função/procedimento/método ou o próprio programa). A única exceção a essa regra é quando há blocos <code>try-finally</code>. Se <code>Exit()</code> for chamado dentro de um bloco <code>try-finally</code> o compilador irá executar o código dentro do <code>finally-end</code> <em>antes</em> de sair do escopo.</p>
 
-<p>São os atributos inicializados pela Classe, passados ao Objeto através do construtor com a finalidade de representar uma <a href="/posts/objetos-representam-entidades/#o-que-e-uma-entidade">Entidade</a>.</p>
+<p>Aqui está outro exemplo:</p>
 
-<p>Vejamos um exemplo:</p>
+<pre><code>procedure Execute;
+begin
+  try
+    Writeln('1. Passing on this line...');
+    Exit;
+  finally
+    Writeln('2. I am still here!');
+  end;
+  Writeln('3. It will not pass here');
+end;
+</code></pre>
 
-<script src="https://gist.github.com/mdbs99/5952c6f39810803d91b05a6f1c4b8766.js"></script>
+<p>Os textos #1 e #2 serão mostrados no console. Mesmo que <code>Exit()</code> tenha sido chamado antes da impressão do texto #2, ainda sim o código é executado devido ao <code>try-finally</code>.</p>
 
-<p>Na Classe <code>TFile</code> acima, há apenas 1 argumento no construtor. Esse argumento será parte do Estado do Objeto e, portanto, irá inicializar um Atributo Primário chamado <code>FFilePath</code>.</p>
+<p>Outro exemplo de uso do <code>Exit()</code> é quando fazemos validações. Se uma validação ou checagem não retornar verdadeiro, utilizamos o <code>Exit()</code> para parar a execução do escopo atual.</p>
 
-<h2 id="secundario">Secundários</h2>
+<p>Suponha que queremos somar dois números inteiros, mas só queremos números maiores que zero:</p>
 
-<p>Atributos Secundários são todos os atributos que não foram inicializados pelo construtor da Classe.</p>
+<pre><code>function Sum(A, B: Integer): string;
+begin
+  Result := 'Invalid result';
+  if (A &lt; 0) or (B &lt; 0) then
+    Exit;
+  Result := Format('The result is %d', [A + B]);
+end;
+</code></pre>
 
-<p>São atributos de <em>suporte tecnológico</em>.</p>
+<p>No exemplo acima, o retorno da função <code>Sum</code> é inicializado com um valor inválido e depois há uma validação para saber se os valores são menores que <code>0</code>. Se o teste falhar, o programa irá retornar para o escopo anterior à chamada da função <code>Sum</code> com o resultado inválido. Mas se o teste não falhar, o resultado da função será a soma de A e B.</p>
 
-<p>Vejamos um exemplo:</p>
+<p>Há aqueles que são adeptos da programação estruturada e preferem não “quebrar” a execução do programa com uma “saída antecipada”, ou seja, não fazem uso do <code>Exit()</code> por acreditarem que o código ficaria mais simples.</p>
 
-<script src="https://gist.github.com/mdbs99/48237c902271b6f2c3a314d3b6f5b8c0.js"></script>
+<p>Então vamos reescrever o exemplo anterior:</p>
 
-<p>Nesse exemplo acima a Classe <code>TFile</code> foi atualizada. Um novo atributo <code>FStream</code> foi adicionado.</p>
+<pre><code>function Sum(A, B: Integer): string;
+begin
+  if (A &gt; 0) and (B &gt; 0) then
+    Result := Format('The result is %d', [A + B]);
+  else
+    Result := 'Invalid result';
+end;
+</code></pre>
 
-<p>Esse atributo não foi passado no construtor, então ele é um Atributo Secundário.</p>
+<p>Parece mais simples? Bem, nesse exemplo eu diria que sim. Porém para exemplos com mais condicionais, eu diria que não (vamos ver isso mais abaixo).</p>
 
-<p>O método <code>Stream</code> irá retornar o <em>stream</em> do arquivo, no entanto os dados do arquivo em disco serão lidos apenas na primeira execução, pois após inicializar o atributo <code>FStream</code> ele não é mais atualizado.</p>
+<p>E se quiséssemos dizer ao usuário que seus dados não estão corretos?</p>
 
-<p>A Classe <code>TDataStream</code> é irrelevante para o entendimento, mas veja que o <em>path</em> do arquivo é passado. Então essa Classe irá ler o arquivo em disco e retornar uma instância de <code>IDataStream</code>.</p>
+<pre><code>function Sum(A, B: Integer): string;
+begin
+  Result := 'Invalid result';
+  if (A &gt; 0) then
+  begin
+    if (B &gt; 0) then
+      Result := Format('The result is %d', [A + B]);
+    else
+      Writeln('B should be greater than zero');
+  end
+  else
+    Writeln('A should be greater than zero');
+end;
+</code></pre>
 
-<h2 id="conclusao">Conclusão</h2>
+<p>Nesse exemplo não utilizamos <code>Exit()</code> e eu acho que o código está bem confuso. Os testes estão “separados” do retorno de aviso para o usuário (<code>Writeln</code>).</p>
 
-<p>Atributos Primários são inicializados através do construtor da Classe e <em>devem</em> ser <a href="/posts/objetos-imutaveis/">imutáveis</a>.</p>
+<p>Kent Beck , Martin Fowler <a href="https://en.wikipedia.org/wiki/Structured_programming#Early_exit">afirmaram</a> categoricamente que <em>“um ponto de saída não é realmente uma regra útil. A clareza é o princípio chave: se o método for mais claro com um ponto de saída, use um ponto de saída, caso contrário, não”</em></p>
 
-<p>Atributos Secundários podem ou não ser inicializados através do construtor da Classe, pois eles podem ser inicializados a qualquer momento e em qualquer lugar do Objeto.</p>
+<p>Então vamos reescrever o exemplo anterior com o uso de <code>Exit()</code>:</p>
 
-<p>Tudo são atributos, mas saber essa diferença sutil entre Atributos Primários e Secundários é essencial para construírmos Classes melhores.</p>
+<pre><code>function Sum(A, B: Integer): string;
+begin
+  Result := 'Invalid result';
+  if (A &lt; 0) then
+  begin
+    Writeln('A should be greater than zero');
+    Exit;
+  end;
+  if (B &lt; 0) then
+  begin
+    Writeln('B should be greater than zero');
+    Exit;
+  end;
+  Result := Format('The result is %d', [A + B]);
+end;
+</code></pre>
+
+<p>O código ficou um pouco maior, é verdade, porém os testes e avisos para o usuário ficaram mais simples, na minha opinião. Você não precisa acompanhar todos os <code>if-else</code> aninhados. A cada teste que falhar, o aviso está logo abaixo e o escopo será abortado com o uso do <code>Exit()</code>. Se todos os testes não falharem, a função irá retornar a soma de A e B.</p>
+
+<p>No Delphi, a partir da <a href="http://docs.embarcadero.com/products/rad_studio/delphiAndcpp2009/HelpUpdate2/EN/html/delphivclwin32/System_Exit.html">versão 2009</a>, o procedimento <code>Exit()</code> ganhou uma melhoria: <code>Exit()</code> pode ter um parâmetro especificando um resultado. O parâmetro deve ser do mesmo tipo que o resultado da função.</p>
+
+<p>O FPC também tem a <a href="https://www.freepascal.org/docs-html/rtl/system/exit.html">mesma definição</a>, porém não sei quem implementou essa nova <em>feature</em> primeiro.</p>
+
+<p>Então vamos reescrever o exemplo anterior:</p>
+
+<pre><code>function Sum(A, B: Integer): string;
+begin
+  if (A &lt; 0) then
+    Exit('A should be greater than zero');
+  if (B &lt; 0) then
+    Exit('B should be greater than zero');
+  Result := Format('The result is %d', [A + B]);
+end;
+</code></pre>
+
+<p><a href="/posts/simplicidade/">Simples</a> e limpo.</p>
+
+<p><code>Exit()</code> pode receber como parâmetro qualquer tipo de retorno, até mesmo instâncias de <a href="/posts/interfaces-em-todo-lugar/">Interfaces</a>. Utilizando esse parâmetro, é como se ganhássemos o mesmo comportamento da palavra reservada <code>return</code>, em Java. No entanto, <code>Exit()</code> em conjunto com <code>Result</code> nos dá ainda mais possibilidades de retorno para as funções.</p>
 
 <p>Até logo.</p>
 
@@ -262,33 +343,33 @@
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/atributos-primarios-secundarios" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/exit-proc" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Atributos Primários e Secundários&via=mdbs99;url=http://objectpascalprogramming.com/atributos-primarios-secundarios" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=O Procedimento Exit&via=mdbs99;url=http://objectpascalprogramming.com/exit-proc" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/atributos-primarios-secundarios" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/exit-proc" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/atributos-primarios-secundarios&title=Atributos Primários e Secundários" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/atributos-primarios-secundarios&title=Atributos Primários e Secundários" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/exit-proc&title=O Procedimento Exit" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/atributos-primarios-secundarios&t=Atributos Primários e Secundários" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/exit-proc&title=O Procedimento Exit" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/exit-proc&t=O Procedimento Exit" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -326,15 +407,6 @@
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/exit-proc" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>O Procedimento Exit</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/pas2js" class="post-link">
@@ -417,6 +489,15 @@
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/xavier-package" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Xavier Package</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -424,8 +505,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/atributos-primarios-secundarios';
-      var disqus_title      = 'Atributos Primários e Secundários';
+      var disqus_identifier = '/exit-proc';
+      var disqus_title      = 'O Procedimento Exit';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
