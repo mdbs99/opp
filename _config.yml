@@ -35,7 +35,7 @@ destination: ../site
 highlighter: pygments
 permalink: /posts/:title/
 excerpt_separator: <!--more-->
-paginate: 9
+paginate: 15
 markdown: kramdown
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data']
