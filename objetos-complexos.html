@@ -15,7 +15,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201801150137" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201801150156" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -209,15 +209,15 @@
 <p><img src="/images/2018/photo-chuttersnap-378918.jpg" alt="Unsplash image" />
 <span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by chuttersnap on Unsplash</span></p>
 
-<p>No mundo real convivemos constantemente com Objetos (humanos, animais, plantas, coisas, etc) que possuem todo tipo de comportamento especializado. Alguns desses Objetos — talvez a maioria — fazem coisas demais, ou seja, eles agregam muitas funcionalidades num único “corpo”. Eles são <em>complexos</em>.</p>
+<p>No mundo real convivemos constantemente com Objetos (humanos, animais, plantas, coisas, etc) que possuem todo tipo de <a href="/posts/objetos-pensam-e-tomam-decisoes/">comportamento</a> especializado. Alguns desses Objetos — talvez a maioria — fazem coisas demais, ou seja, eles agregam muitas funcionalidades num único “corpo”. Eles são <em>complexos</em>.</p>
 
-<p>Quando tentamos abstrair e implementar um Objeto ou Entidade no <em>software</em>, utilizando uma linguagem de programação em conjunto com o paradigma da Orientação a Objetos, uma dúvida comum em quase todos os desenvolvedores iniciantes — ou mesmo experientes — é tentar identificar quais métodos irão ser implementados na Classe, baseado apenas no comportamento “final” do Objeto ou Entidade do mundo real.</p>
+<p>Quando tentamos abstrair e implementar um <a href="/posts/objetos-representam-entidades/">Objeto ou Entidade</a> no <em>software</em>, utilizando uma linguagem de programação em conjunto com o paradigma da Orientação a Objetos, uma dúvida comum em quase todos os desenvolvedores iniciantes — ou mesmo experientes — é tentar identificar quais métodos irão ser implementados na Classe, baseado apenas no comportamento “final” do Objeto ou Entidade do mundo real.</p>
 
 <p>O comportamento final ao que me refiro é como vemos um Objeto e suas funcionalidades sem considerar as partes que os compõem. Vemos um Objeto como um <em>todo</em> e não como uma soma das partes.</p>
 
 <p>Esse é um grande equívoco no desenvolvimento de software.</p>
 
-<p>Vejamos um exemplo. Como representamos um <em>Carro</em> utilizando a Orientação a Objetos?</p>
+<p>Vejamos um exemplo. Como representamos um <em>Carro</em> utilizando a <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>?</p>
 
 <p>O primeiro passo seria determinar o nível de abstração dos comportamentos que precisamos implementar ou descartar. Em outras palavras, é necessário saber os requisitos do sistema para sabermos o que é realmente necessário.  Se a cor do carro é irrelevante para os requisitos do usuário dentro do <em>software</em>, então não há necessidade de implementarmos. É necessário saber se a carroceria utiliza fibra de carbono ou alumínio? Se o carro é 4x4, sua velocidade máxima, quantidade de airbags, tipo de roda? Se nada disso for importante, descartamos. Então, o mais fácil a fazer é pensarmos no que é <em>necessário</em>, pois é quase certo que qualquer Objeto implementado não irá representar uma entidade completamente, ou seja, com todo comportamento que a entidade possui no mundo real.</p>
 
@@ -242,7 +242,7 @@
 
 <p>A Classe acima mostra de forma simples os comportamentos necessários que foram solicitados, hipoteticamente, nos requisitos do usuário. Mas será esse é o design <em>correto</em> para representar um carro dentro do <em>software</em>?</p>
 
-<p>Apesar das funcionalidades estarem bem evidentes e com nomes (métodos) bem explicativos, essa é uma implementação totalmente equivocada.</p>
+<p>Apesar das funcionalidades estarem bem evidentes e com <a href="/posts/nomeando-variaveis-e-metodos/">nomes de métodos</a> bem “explicativos”, essa é uma implementação totalmente equivocada.</p>
 
 <p>Um carro não <em>corre</em>. É o motor que gira e, através de mecanismos e engrenagens, passa energia para as rodas fazendo o carro se mover através do atrito dos pneus com o asfalto.</p>
 
@@ -294,13 +294,13 @@
 
 <p>O design deve ser o mais simples possível, porém correto, reutilizável (partes independentes) e testável (cada parte em separado).</p>
 
-<p>Na minha opinião, a simplicidade, a reutilização e a testabilidade devem ser alguns dos maiores objetivos a serem seguidos no design de cada Classe.</p>
+<p>Na minha opinião, a <a href="/posts/simplicidade/">simplicidade</a>, a reutilização e a testabilidade devem ser alguns dos maiores objetivos a serem seguidos no design de cada Classe.</p>
 
 <p>Essa foi uma maneira de implementar algo complexo de forma simples.</p>
 
-<p>Um outro padrão de desenvolvimento que podemos utilizar para implementarmos algo complexo é chamado de Decoração de Objetos.</p>
+<p>Um outro padrão de desenvolvimento que podemos utilizar para implementarmos algo complexo é chamado de <a href="/posts/decorator-pattern/">Decoração de Objetos</a>.</p>
 
-<p>Imagine que você tenha diferentes modelos de motores. Utilizar herança de Classes pode ser a primeira técnica que vem a sua mente, porém a Decoração de Objetos pode ser bem melhor. Utilizando essa técnica, podemos decorar Objetos em <em>runtime</em> de acordo com os requisitos ou escolhas feita pelos usuários num determinado momento.</p>
+<p>Imagine que você tenha diferentes modelos de motores. Utilizar <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">herança de Classes</a> pode ser a primeira técnica que vem a sua mente, porém a Decoração de Objetos pode ser bem melhor. Utilizando essa técnica, podemos decorar Objetos em <em>runtime</em> de acordo com os requisitos ou escolhas feita pelos usuários num determinado momento.</p>
 
 <p>Então, seguindo nosso exemplo, imagine um motor chamado X13 e uma versão com mais performance chamada X15 que possui um turbo compressor. Ao implementarmos essas Classes, gostaríamos de reutilizar as partes em comum. Sendo o X15 uma melhoria do X13, que tal <em>decorar</em> o X13 em <em>runtime</em>?</p>
 

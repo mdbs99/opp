@@ -16,15 +16,15 @@
 &lt;p&gt;&lt;img src=&quot;/images/2018/photo-chuttersnap-378918.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
 &lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by chuttersnap on Unsplash&lt;/span&gt;&lt;/p&gt;
 
-&lt;p&gt;No mundo real convivemos constantemente com Objetos (humanos, animais, plantas, coisas, etc) que possuem todo tipo de comportamento especializado. Alguns desses Objetos — talvez a maioria — fazem coisas demais, ou seja, eles agregam muitas funcionalidades num único “corpo”. Eles são &lt;em&gt;complexos&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;No mundo real convivemos constantemente com Objetos (humanos, animais, plantas, coisas, etc) que possuem todo tipo de &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;comportamento&lt;/a&gt; especializado. Alguns desses Objetos — talvez a maioria — fazem coisas demais, ou seja, eles agregam muitas funcionalidades num único “corpo”. Eles são &lt;em&gt;complexos&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;Quando tentamos abstrair e implementar um Objeto ou Entidade no &lt;em&gt;software&lt;/em&gt;, utilizando uma linguagem de programação em conjunto com o paradigma da Orientação a Objetos, uma dúvida comum em quase todos os desenvolvedores iniciantes — ou mesmo experientes — é tentar identificar quais métodos irão ser implementados na Classe, baseado apenas no comportamento “final” do Objeto ou Entidade do mundo real.&lt;/p&gt;
+&lt;p&gt;Quando tentamos abstrair e implementar um &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Objeto ou Entidade&lt;/a&gt; no &lt;em&gt;software&lt;/em&gt;, utilizando uma linguagem de programação em conjunto com o paradigma da Orientação a Objetos, uma dúvida comum em quase todos os desenvolvedores iniciantes — ou mesmo experientes — é tentar identificar quais métodos irão ser implementados na Classe, baseado apenas no comportamento “final” do Objeto ou Entidade do mundo real.&lt;/p&gt;
 
 &lt;p&gt;O comportamento final ao que me refiro é como vemos um Objeto e suas funcionalidades sem considerar as partes que os compõem. Vemos um Objeto como um &lt;em&gt;todo&lt;/em&gt; e não como uma soma das partes.&lt;/p&gt;
 
 &lt;p&gt;Esse é um grande equívoco no desenvolvimento de software.&lt;/p&gt;
 
-&lt;p&gt;Vejamos um exemplo. Como representamos um &lt;em&gt;Carro&lt;/em&gt; utilizando a Orientação a Objetos?&lt;/p&gt;
+&lt;p&gt;Vejamos um exemplo. Como representamos um &lt;em&gt;Carro&lt;/em&gt; utilizando a &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;?&lt;/p&gt;
 
 &lt;p&gt;O primeiro passo seria determinar o nível de abstração dos comportamentos que precisamos implementar ou descartar. Em outras palavras, é necessário saber os requisitos do sistema para sabermos o que é realmente necessário.  Se a cor do carro é irrelevante para os requisitos do usuário dentro do &lt;em&gt;software&lt;/em&gt;, então não há necessidade de implementarmos. É necessário saber se a carroceria utiliza fibra de carbono ou alumínio? Se o carro é 4x4, sua velocidade máxima, quantidade de airbags, tipo de roda? Se nada disso for importante, descartamos. Então, o mais fácil a fazer é pensarmos no que é &lt;em&gt;necessário&lt;/em&gt;, pois é quase certo que qualquer Objeto implementado não irá representar uma entidade completamente, ou seja, com todo comportamento que a entidade possui no mundo real.&lt;/p&gt;
 
@@ -49,7 +49,7 @@
 
 &lt;p&gt;A Classe acima mostra de forma simples os comportamentos necessários que foram solicitados, hipoteticamente, nos requisitos do usuário. Mas será esse é o design &lt;em&gt;correto&lt;/em&gt; para representar um carro dentro do &lt;em&gt;software&lt;/em&gt;?&lt;/p&gt;
 
-&lt;p&gt;Apesar das funcionalidades estarem bem evidentes e com nomes (métodos) bem explicativos, essa é uma implementação totalmente equivocada.&lt;/p&gt;
+&lt;p&gt;Apesar das funcionalidades estarem bem evidentes e com &lt;a href=&quot;/posts/nomeando-variaveis-e-metodos/&quot;&gt;nomes de métodos&lt;/a&gt; bem “explicativos”, essa é uma implementação totalmente equivocada.&lt;/p&gt;
 
 &lt;p&gt;Um carro não &lt;em&gt;corre&lt;/em&gt;. É o motor que gira e, através de mecanismos e engrenagens, passa energia para as rodas fazendo o carro se mover através do atrito dos pneus com o asfalto.&lt;/p&gt;
 
@@ -101,13 +101,13 @@
 
 &lt;p&gt;O design deve ser o mais simples possível, porém correto, reutilizável (partes independentes) e testável (cada parte em separado).&lt;/p&gt;
 
-&lt;p&gt;Na minha opinião, a simplicidade, a reutilização e a testabilidade devem ser alguns dos maiores objetivos a serem seguidos no design de cada Classe.&lt;/p&gt;
+&lt;p&gt;Na minha opinião, a &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simplicidade&lt;/a&gt;, a reutilização e a testabilidade devem ser alguns dos maiores objetivos a serem seguidos no design de cada Classe.&lt;/p&gt;
 
 &lt;p&gt;Essa foi uma maneira de implementar algo complexo de forma simples.&lt;/p&gt;
 
-&lt;p&gt;Um outro padrão de desenvolvimento que podemos utilizar para implementarmos algo complexo é chamado de Decoração de Objetos.&lt;/p&gt;
+&lt;p&gt;Um outro padrão de desenvolvimento que podemos utilizar para implementarmos algo complexo é chamado de &lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;Decoração de Objetos&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Imagine que você tenha diferentes modelos de motores. Utilizar herança de Classes pode ser a primeira técnica que vem a sua mente, porém a Decoração de Objetos pode ser bem melhor. Utilizando essa técnica, podemos decorar Objetos em &lt;em&gt;runtime&lt;/em&gt; de acordo com os requisitos ou escolhas feita pelos usuários num determinado momento.&lt;/p&gt;
+&lt;p&gt;Imagine que você tenha diferentes modelos de motores. Utilizar &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;herança de Classes&lt;/a&gt; pode ser a primeira técnica que vem a sua mente, porém a Decoração de Objetos pode ser bem melhor. Utilizando essa técnica, podemos decorar Objetos em &lt;em&gt;runtime&lt;/em&gt; de acordo com os requisitos ou escolhas feita pelos usuários num determinado momento.&lt;/p&gt;
 
 &lt;p&gt;Então, seguindo nosso exemplo, imagine um motor chamado X13 e uma versão com mais performance chamada X15 que possui um turbo compressor. Ao implementarmos essas Classes, gostaríamos de reutilizar as partes em comum. Sendo o X15 uma melhoria do X13, que tal &lt;em&gt;decorar&lt;/em&gt; o X13 em &lt;em&gt;runtime&lt;/em&gt;?&lt;/p&gt;
 
