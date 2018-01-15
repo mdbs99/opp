@@ -30,15 +30,15 @@ Um Objeto não é apenas uma instância de uma Classe. Ele pode conter instânci
 ![Unsplash image]({{ page.image }})
 <span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by chuttersnap on Unsplash</span>
 
-No mundo real convivemos constantemente com Objetos (humanos, animais, plantas, coisas, etc) que possuem todo tipo de comportamento especializado. Alguns desses Objetos — talvez a maioria — fazem coisas demais, ou seja, eles agregam muitas funcionalidades num único "corpo". Eles são *complexos*.
+No mundo real convivemos constantemente com Objetos (humanos, animais, plantas, coisas, etc) que possuem todo tipo de [comportamento]({% post_url 2016-03-14-objetos-pensam-e-tomam-decisoes %}) especializado. Alguns desses Objetos — talvez a maioria — fazem coisas demais, ou seja, eles agregam muitas funcionalidades num único "corpo". Eles são *complexos*.
 
-Quando tentamos abstrair e implementar um Objeto ou Entidade no *software*, utilizando uma linguagem de programação em conjunto com o paradigma da Orientação a Objetos, uma dúvida comum em quase todos os desenvolvedores iniciantes — ou mesmo experientes — é tentar identificar quais métodos irão ser implementados na Classe, baseado apenas no comportamento "final" do Objeto ou Entidade do mundo real.
+Quando tentamos abstrair e implementar um [Objeto ou Entidade]({% post_url 2016-02-29-objetos-representam-entidades %}) no *software*, utilizando uma linguagem de programação em conjunto com o paradigma da Orientação a Objetos, uma dúvida comum em quase todos os desenvolvedores iniciantes — ou mesmo experientes — é tentar identificar quais métodos irão ser implementados na Classe, baseado apenas no comportamento "final" do Objeto ou Entidade do mundo real.
 
 O comportamento final ao que me refiro é como vemos um Objeto e suas funcionalidades sem considerar as partes que os compõem. Vemos um Objeto como um *todo* e não como uma soma das partes.
 
 Esse é um grande equívoco no desenvolvimento de software.
 
-Vejamos um exemplo. Como representamos um *Carro* utilizando a Orientação a Objetos?
+Vejamos um exemplo. Como representamos um *Carro* utilizando a [Orientação a Objetos]({% post_url 2015-12-29-o-que-e-orientacao-a-objetos %})?
 
 O primeiro passo seria determinar o nível de abstração dos comportamentos que precisamos implementar ou descartar. Em outras palavras, é necessário saber os requisitos do sistema para sabermos o que é realmente necessário.  Se a cor do carro é irrelevante para os requisitos do usuário dentro do *software*, então não há necessidade de implementarmos. É necessário saber se a carroceria utiliza fibra de carbono ou alumínio? Se o carro é 4x4, sua velocidade máxima, quantidade de airbags, tipo de roda? Se nada disso for importante, descartamos. Então, o mais fácil a fazer é pensarmos no que é *necessário*, pois é quase certo que qualquer Objeto implementado não irá representar uma entidade completamente, ou seja, com todo comportamento que a entidade possui no mundo real.
 
@@ -62,7 +62,7 @@ Após termos o comportamento necessário já definido, o próximo passo é pensa
 
 A Classe acima mostra de forma simples os comportamentos necessários que foram solicitados, hipoteticamente, nos requisitos do usuário. Mas será esse é o design *correto* para representar um carro dentro do *software*?
 
-Apesar das funcionalidades estarem bem evidentes e com nomes (métodos) bem explicativos, essa é uma implementação totalmente equivocada.
+Apesar das funcionalidades estarem bem evidentes e com [nomes de métodos]({% post_url 2016-07-25-nomeando-variaveis-e-metodos %}) bem "explicativos", essa é uma implementação totalmente equivocada.
 
 Um carro não *corre*. É o motor que gira e, através de mecanismos e engrenagens, passa energia para as rodas fazendo o carro se mover através do atrito dos pneus com o asfalto.
 
@@ -113,13 +113,13 @@ Há várias possibilidade de implementação, mas a opção sugerida acima separ
 
 O design deve ser o mais simples possível, porém correto, reutilizável (partes independentes) e testável (cada parte em separado).
 
-Na minha opinião, a simplicidade, a reutilização e a testabilidade devem ser alguns dos maiores objetivos a serem seguidos no design de cada Classe.
+Na minha opinião, a [simplicidade]({% post_url 2016-12-19-simplicidade %}), a reutilização e a testabilidade devem ser alguns dos maiores objetivos a serem seguidos no design de cada Classe.
 
 Essa foi uma maneira de implementar algo complexo de forma simples.
 
-Um outro padrão de desenvolvimento que podemos utilizar para implementarmos algo complexo é chamado de Decoração de Objetos.
+Um outro padrão de desenvolvimento que podemos utilizar para implementarmos algo complexo é chamado de [Decoração de Objetos]({% post_url 2016-05-02-decorator-pattern %}).
 
-Imagine que você tenha diferentes modelos de motores. Utilizar herança de Classes pode ser a primeira técnica que vem a sua mente, porém a Decoração de Objetos pode ser bem melhor. Utilizando essa técnica, podemos decorar Objetos em *runtime* de acordo com os requisitos ou escolhas feita pelos usuários num determinado momento.
+Imagine que você tenha diferentes modelos de motores. Utilizar [herança de Classes]({% post_url 2016-05-23-heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1 %}) pode ser a primeira técnica que vem a sua mente, porém a Decoração de Objetos pode ser bem melhor. Utilizando essa técnica, podemos decorar Objetos em *runtime* de acordo com os requisitos ou escolhas feita pelos usuários num determinado momento.
 
 Então, seguindo nosso exemplo, imagine um motor chamado X13 e uma versão com mais performance chamada X15 que possui um turbo compressor. Ao implementarmos essas Classes, gostaríamos de reutilizar as partes em comum. Sendo o X15 uma melhoria do X13, que tal *decorar* o X13 em *runtime*?
 
