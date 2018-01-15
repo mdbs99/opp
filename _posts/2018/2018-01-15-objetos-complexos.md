@@ -135,7 +135,7 @@ Então, seguindo nosso exemplo, imagine um motor chamado X13 e uma versão com m
 
 Nesse exemplo, a variável `Engine` será, de certa forma, um Objeto *combinado* de duas instâncias de Classes diferentes, porém complementares.
 
-Para implementarmos Objetos complexos, devemos analisar suas partes, de acordo com o nível de abstração requerido, e implementar cada uma delas, combinando-as entre , para então termos a implementação de um Objeto maior e mais *complexo*.
+Para implementarmos Objetos complexos, devemos analisar suas partes, de acordo com o nível de abstração requerido, e implementar cada uma delas, combinando-as entre si, para então termos a implementação de um Objeto maior e mais *complexo*.
 
 *"O todo é maior que a soma das partes".*
 
