@@ -124,7 +124,7 @@ end
 
 &lt;p&gt;Nesse exemplo, a variável &lt;code&gt;Engine&lt;/code&gt; será, de certa forma, um Objeto &lt;em&gt;combinado&lt;/em&gt; de duas instâncias de Classes diferentes, porém complementares.&lt;/p&gt;
 
-&lt;p&gt;Para implementarmos Objetos complexos, devemos analisar suas partes, de acordo com o nível de abstração requerido, e implementar cada uma delas, combinando-as entre , para então termos a implementação de um Objeto maior e mais &lt;em&gt;complexo&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Para implementarmos Objetos complexos, devemos analisar suas partes, de acordo com o nível de abstração requerido, e implementar cada uma delas, combinando-as entre si, para então termos a implementação de um Objeto maior e mais &lt;em&gt;complexo&lt;/em&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;“O todo é maior que a soma das partes”.&lt;/em&gt;&lt;/p&gt;
 
