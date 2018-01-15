@@ -8,6 +8,134 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Objetos Complexos</title>
+        <description>&lt;p&gt;Um Objeto não é apenas uma instância de uma Classe. Ele pode conter instâncias (quase) infinitas de diferentes Classes combinadas.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-chuttersnap-378918.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by chuttersnap on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;No mundo real convivemos constantemente com Objetos (humanos, animais, plantas, coisas, etc) que possuem todo tipo de comportamento especializado. Alguns desses Objetos — talvez a maioria — fazem coisas demais, ou seja, eles agregam muitas funcionalidades num único “corpo”. Eles são &lt;em&gt;complexos&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Quando tentamos abstrair e implementar um Objeto ou Entidade no &lt;em&gt;software&lt;/em&gt;, utilizando uma linguagem de programação em conjunto com o paradigma da Orientação a Objetos, uma dúvida comum em quase todos os desenvolvedores iniciantes — ou mesmo experientes — é tentar identificar quais métodos irão ser implementados na Classe, baseado apenas no comportamento “final” do Objeto ou Entidade do mundo real.&lt;/p&gt;
+
+&lt;p&gt;O comportamento final ao que me refiro é como vemos um Objeto e suas funcionalidades sem considerar as partes que os compõem. Vemos um Objeto como um &lt;em&gt;todo&lt;/em&gt; e não como uma soma das partes.&lt;/p&gt;
+
+&lt;p&gt;Esse é um grande equívoco no desenvolvimento de software.&lt;/p&gt;
+
+&lt;p&gt;Vejamos um exemplo. Como representamos um &lt;em&gt;Carro&lt;/em&gt; utilizando a Orientação a Objetos?&lt;/p&gt;
+
+&lt;p&gt;O primeiro passo seria determinar o nível de abstração dos comportamentos que precisamos implementar ou descartar. Em outras palavras, é necessário saber os requisitos do sistema para sabermos o que é realmente necessário.  Se a cor do carro é irrelevante para os requisitos do usuário dentro do &lt;em&gt;software&lt;/em&gt;, então não há necessidade de implementarmos. É necessário saber se a carroceria utiliza fibra de carbono ou alumínio? Se o carro é 4x4, sua velocidade máxima, quantidade de airbags, tipo de roda? Se nada disso for importante, descartamos. Então, o mais fácil a fazer é pensarmos no que é &lt;em&gt;necessário&lt;/em&gt;, pois é quase certo que qualquer Objeto implementado não irá representar uma entidade completamente, ou seja, com todo comportamento que a entidade possui no mundo real.&lt;/p&gt;
+
+&lt;p&gt;Após termos o comportamento necessário já definido, o próximo passo é pensar na estrutura da Classe.&lt;/p&gt;
+
+&lt;p&gt;É aqui, neste momento, que a grande maioria dos desenvolvedores utiliza o paradigma procedural, porém pensam que estão programando Orientado a Objetos apenas por quê estão utilizando Classes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TCar = class
+  public
+    procedure Run;
+    procedure Brake;
+    function CheckBrakeFluid: Boolean;
+    function CheckOil: Boolean;
+    function CheckWater: Boolean;
+    procedure LockDoors;
+    procedure UnlockDoors;
+    procedure StartEngine;
+    procedure StopEngine;
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A Classe acima mostra de forma simples os comportamentos necessários que foram solicitados, hipoteticamente, nos requisitos do usuário. Mas será esse é o design &lt;em&gt;correto&lt;/em&gt; para representar um carro dentro do &lt;em&gt;software&lt;/em&gt;?&lt;/p&gt;
+
+&lt;p&gt;Apesar das funcionalidades estarem bem evidentes e com nomes (métodos) bem explicativos, essa é uma implementação totalmente equivocada.&lt;/p&gt;
+
+&lt;p&gt;Um carro não &lt;em&gt;corre&lt;/em&gt;. É o motor que gira e, através de mecanismos e engrenagens, passa energia para as rodas fazendo o carro se mover através do atrito dos pneus com o asfalto.&lt;/p&gt;
+
+&lt;p&gt;Um carro não &lt;em&gt;freia&lt;/em&gt;. É o motorista que através de um pedal, em conjunto com cabos ou mesmo eletrônica, envia um comando às pinças de freio. Essas, em conjunto com os discos de freio, fazem o carro parar.&lt;/p&gt;
+
+&lt;p&gt;Um carro não faz &lt;em&gt;checagens&lt;/em&gt; de fluídos. Existem sensores específicos para fazer essa leitura a cada segundo ou microssegundo.&lt;/p&gt;
+
+&lt;p&gt;Fica claro aqui, que não devemos ver a entidade como um todo, mas sim pensar nas partes específicas que a compõe. No entanto, não devemos especializar demais para não complicarmos o modelo desnecessariamente.&lt;/p&gt;
+
+&lt;p&gt;Vamos reescrever a Classe acima.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TBrakes = class(TInterfacedObject, IBrakes)
+  public
+    function Brake(AForce: Double): IBrakes;
+  end;
+  
+  TSensors = class(TInterfacedObject, ISensors)
+  public
+    function CheckBrakeFluid: Boolean;
+    function CheckOil: Boolean;
+    function CheckWater: Boolean;
+  end;
+  
+  TDoors = class(TInterfacedObject, IDoors)
+  public
+    function Lock: IDoors;
+    function Unlock: IDoors;
+  end;
+  
+  TEngine = class(TInterfacedObject, IEngine)
+  public
+    procedure Start;
+    procedure Stop;
+    function Work: IEngine;
+  end;
+  
+  TCar = class(TInterfacedObject, ICar)
+  public
+    procedure Run;
+    function Brakes: IBrakes;
+    function Sensors: ISensors;
+    function Doors: IDoors;
+    function Engine: IEngine;
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Há várias possibilidade de implementação, mas a opção sugerida acima separa bem o comportamento de um carro através da composição de Objetos. No entanto, não há necessidade de especializar tudo. Por exemplo, o método &lt;code&gt;Run&lt;/code&gt; continua o mesmo; existe apenas uma Classe &lt;code&gt;TSensors&lt;/code&gt; para todos os sensores — seria muito melhor se tivéssemos uma Classe por sensor.&lt;/p&gt;
+
+&lt;p&gt;O design deve ser o mais simples possível, porém correto, reutilizável (partes independentes) e testável (cada parte em separado).&lt;/p&gt;
+
+&lt;p&gt;Na minha opinião, a simplicidade, a reutilização e a testabilidade devem ser alguns dos maiores objetivos a serem seguidos no design de cada Classe.&lt;/p&gt;
+
+&lt;p&gt;Essa foi uma maneira de implementar algo complexo de forma simples.&lt;/p&gt;
+
+&lt;p&gt;Um outro padrão de desenvolvimento que podemos utilizar para implementarmos algo complexo é chamado de Decoração de Objetos.&lt;/p&gt;
+
+&lt;p&gt;Imagine que você tenha diferentes modelos de motores. Utilizar herança de Classes pode ser a primeira técnica que vem a sua mente, porém a Decoração de Objetos pode ser bem melhor. Utilizando essa técnica, podemos decorar Objetos em &lt;em&gt;runtime&lt;/em&gt; de acordo com os requisitos ou escolhas feita pelos usuários num determinado momento.&lt;/p&gt;
+
+&lt;p&gt;Então, seguindo nosso exemplo, imagine um motor chamado X13 e uma versão com mais performance chamada X15 que possui um turbo compressor. Ao implementarmos essas Classes, gostaríamos de reutilizar as partes em comum. Sendo o X15 uma melhoria do X13, que tal &lt;em&gt;decorar&lt;/em&gt; o X13 em &lt;em&gt;runtime&lt;/em&gt;?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var
+  Engine: IEngine;
+begin
+  Engine := 
+    TX15Engine.New(
+      0.6, // pressure
+      TX13Engine.New()
+    );
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nesse exemplo, a variável &lt;code&gt;Engine&lt;/code&gt; será, de certa forma, um Objeto &lt;em&gt;combinado&lt;/em&gt; de duas instâncias de Classes diferentes, porém complementares.&lt;/p&gt;
+
+&lt;p&gt;Para implementarmos Objetos complexos, devemos analisar suas partes, de acordo com o nível de abstração requerido, e implementar cada uma delas, combinando-as entre , para então termos a implementação de um Objeto maior e mais &lt;em&gt;complexo&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;“O todo é maior que a soma das partes”.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/objetos-complexos</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/objetos-complexos</guid>
+      </item>
+    
+      <item>
         <title>O Procedimento Exit</title>
         <description>&lt;p&gt;Todos os programadores Pascal conhecem o procedimento &lt;code&gt;Exit()&lt;/code&gt; desde as primeiras versões dos compiladores. Mas será que todos sabem utilizá-lo corretamente?&lt;/p&gt;
 
@@ -1477,163 +1605,6 @@ end;
         <pubDate>Mon, 02 Oct 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/nomeando-classes-em-libraries</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/nomeando-classes-em-libraries</guid>
-      </item>
-    
-      <item>
-        <title>Versionando e Organizando seus Pacotes</title>
-        <description>&lt;p&gt;O desenvolvimento de Pacotes reutilizáveis pode se tornar complicado quando cada projeto está utilizando diferentes versões do mesmo pacote.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-neonbrand-345038.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by NeONBRAND on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;A modularização de sistemas é um conceito muito abrangente. Podemos modularizar um projeto desde o nível de arquivos (unidades) até o uso de WebServices e Microservices executando em servidores completamente distintos.&lt;/p&gt;
-
-&lt;p&gt;Nesse meio, temos a modularização por Pacotes.&lt;/p&gt;
-
-&lt;p&gt;Acredito que o uso de Pacotes seja o meio mais eficaz e simples para modularizar sistemas pequenos a médios.&lt;/p&gt;
-
-&lt;p&gt;Até mesmo grandes sistemas podem (e devem) se beneficiar do uso de Pacotes, porém como a interoperabilidade com outras aplicações é quase mandatória em sistemas maiores, outras técnicas de modularização devem ser utilizadas em complemento.&lt;/p&gt;
-
-&lt;p&gt;Mas essa eficácia tem um (baixo) custo que é &lt;del&gt;gastar&lt;/del&gt; investir parte do tempo do desenvolvimento na organização e versionamento desses Pacotes.&lt;/p&gt;
-
-&lt;p&gt;Eu já escrevi sobre esse assunto &lt;a href=&quot;/posts/pacotes-e-versoes-no-lazarus/&quot;&gt;aqui&lt;/a&gt;, porém esse artigo é um aprimoramento sobre como versionar e consequentemente organizar seus Pacotes no &lt;a href=&quot;http://www.lazarus-ide.org/&quot;&gt;Lazarus&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Talvez as ideias a seguir possam funcionar também no Delphi, mas eu não sei. Eu não encontrei nenhum artigo sobre como ter mais de uma versão de um mesmo (&lt;em&gt;runtime&lt;/em&gt;) Pacote no Delphi. Na verdade encontrei &lt;em&gt;workarounds&lt;/em&gt; estranhas como &lt;a href=&quot;https://stackoverflow.com/a/998096&quot;&gt;essa resposta&lt;/a&gt; no &lt;em&gt;StackOverflow&lt;/em&gt; sobre como instalar múltiplas versões.&lt;/p&gt;
-
-&lt;h2 id=&quot;pacotes-registrados&quot;&gt;Pacotes Registrados&lt;/h2&gt;
-
-&lt;p&gt;No Lazarus, todo Pacote &lt;em&gt;runtime&lt;/em&gt; é registrado automaticamente na IDE quando você o compila. Simples assim. Abra o Pacote. Compile. Pronto.&lt;/p&gt;
-
-&lt;p&gt;Após o “registro” do Pacote, ele estará disponível para ser adicionado em qualquer projeto através da janela do &lt;em&gt;“Project Inspector -&amp;gt; Required Packages”&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa funcionalidade é muito, muito útil para a modularização de qualquer projeto.&lt;/p&gt;
-
-&lt;p&gt;Imagine você poder criar um Pacote a qualquer momento, adicionar algumas Unidades e tê-lo disponível para uso sem preocupações com &lt;em&gt;paths&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Ao abrirmos a janela &lt;em&gt;Required Packages&lt;/em&gt;, todos os pacotes registrados aparecem numa &lt;em&gt;combo box&lt;/em&gt; com auto-completar ao digitar.&lt;/p&gt;
-
-&lt;p&gt;Quase perfeito.&lt;/p&gt;
-
-&lt;p&gt;No entanto, é comum um Pacote ser utilizado por mais de um projeto. Então, se modificarmos algo nesse Pacote compartilhado, talvez todos os projetos que o utilizam deverão sofrer alterações… o que pode ser um problema caso você tenha dezenas de projetos ou mais.&lt;/p&gt;
-
-&lt;p&gt;Mas, e se tivermos múltiplas versões de um mesmo Pacote, sendo que cada projeto poderá escolher qual versão utilizar?&lt;/p&gt;
-
-&lt;p&gt;Isso resolveria o problema.&lt;/p&gt;
-
-&lt;h2 id=&quot;versionamento&quot;&gt;Versionamento&lt;/h2&gt;
-
-&lt;p&gt;Quando desenvolvemos um Pacote, na maioria das vezes, temos 2 objetivos primários: Modularização e  Compartilhamento.&lt;/p&gt;
-
-&lt;p&gt;Modularizar o sistema em pequenas partes mais gerenciáveis, encapsulando contextos menores e bem definidos, facilita o desenvolvimento e a manutenção de todo o sistema. A modularização por Pacotes já nos dá um grande benefício.&lt;/p&gt;
-
-&lt;p&gt;No entanto, acredito que a principal razão para a maioria dos desenvolvedores criarem pacotes é devido ao compartilhamento de Unidades entre projetos. Esse é um pensamento lógico e razoável. Mas se algo é compartilhado entre mais de um projeto, como ter o controle de qualidade ao fazer uma mudança no código do Pacote que é utilizado em muitos lugares?&lt;/p&gt;
-
-&lt;p&gt;Por exemplo, se você alterar a interface de uma Classe, acrescentar mais um método numa Interface, remover algo que não é mais necessário, etc, como saber quais projetos serão afetados?&lt;/p&gt;
-
-&lt;p&gt;Não há como saber.&lt;/p&gt;
-
-&lt;p&gt;Então você segue em frente e faz as alterações necessárias no seu Pacote e também no seu projeto atual, sem pensar nos projetos mais antigos.&lt;/p&gt;
-
-&lt;p&gt;Poderia haver outros projetos que utilizam o mesmo Pacote e que, ao tentar compilá-los futuramente, eles não irão compilar e você teria que lembrar o que fez anteriormente e ir alterando cada parte do projeto para torná-lo compatível com a nova versão do Pacote, novamente.&lt;/p&gt;
-
-&lt;p&gt;É claro, você terá que fazer isso em algum momento. O problema é que abrimos projetos antigos, na maioria das vezes, apenas para acrescentar ou consertar algo. E o que em teoria seria uma tarefa simples, poderia demorar horas ou dias apenas por que você, primeiro, terá que compatibilizar o código do projeto com o código do seu Pacote recém alterado.&lt;/p&gt;
-
-&lt;p&gt;A &lt;em&gt;solução&lt;/em&gt; é o versionamento dos Pacotes.&lt;/p&gt;
-
-&lt;p&gt;Todo Pacote (compartilhado entre projetos) deve ser versionado. Isso quer dizer que você terá que ter N diretórios do mesmo Pacote, ou seja, cada diretório irá tratar de uma específica versão do Pacote. A versão é definida pelos números Mínimo e Máximo para cada versão do Pacote.&lt;/p&gt;
-
-&lt;p&gt;Tendo essas versões definidas, basta &lt;a href=&quot;http://wiki.freepascal.org/Lazarus_Packages#Using_minimum.2C_maximum_version&quot;&gt;escolhermos&lt;/a&gt; uma versão mínima para cada projeto quando o Pacote for incluído como uma dependência.&lt;/p&gt;
-
-&lt;p&gt;As versões de dependência do(s) Pacote(s), que ficam gravadas nos arquivos do projeto, é tudo que o Lazarus precisa saber para carregar a versão correta quando um projeto for aberto na IDE.&lt;/p&gt;
-
-&lt;p&gt;E, &lt;em&gt;voilá&lt;/em&gt;! Você não precisa mas alterar todos os projetos que utilizam determinado Pacote. Você pode evoluir a versão mais atual, mas mantendo as versões antigas totalmente funcionais. Então, ao abrir projetos antigos, você só iria fazer modificações para utilizar a versão do Pacote mais atual se, e somente se, fosse estritamente necessário. Do contrário, continue trabalhando com a versão antiga que o projeto já utilizava anteriormente, pois ela não deixou de funcionar.&lt;/p&gt;
-
-&lt;p&gt;Perfeito agora?&lt;/p&gt;
-
-&lt;h2 id=&quot;solucao&quot;&gt;Fluxo, Organização e Desenvolvimento&lt;/h2&gt;
-
-&lt;p&gt;Se quisermos ter um sistema simples, eficaz e organizado, precisamos dedicar algum tempo à sua manutenção ao invés de somente codificar as &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/#regras-de-negocio&quot;&gt;Regras de Negócio&lt;/a&gt; do projeto.&lt;/p&gt;
-
-&lt;p&gt;Ao criamos esses Pacotes, precisamos definir um fluxo de trabalho para que tudo dê certo não só agora, mas principalmente no longo prazo.&lt;/p&gt;
-
-&lt;p&gt;Hoje em dia, com o acesso quase irrestrito a informação, qualquer programador iniciante consegue criar um pequeno ou médio sistema totalmente funcional. Mas o que separa programadores iniciantes dos verdadeiros profissionais, é a arquitetura bem estruturada dos projetos, Pacotes, e todo o resto… no longo prazo.&lt;/p&gt;
-
-&lt;h3 id=&quot;passo-a-passo&quot;&gt;Passo a Passo&lt;/h3&gt;
-
-&lt;p&gt;Essa é a maneira que utilizo para organizar meus Pacotes ou Libs:&lt;/p&gt;
-
-&lt;p&gt;A primeira coisa a fazer, é criar o diretório do Pacote e depois um subdiretório para o primeiro &lt;em&gt;release&lt;/em&gt; — normalmente a versão 1.0.&lt;/p&gt;
-
-&lt;p&gt;Diferentemente do que eu disse &lt;a href=&quot;/posts/pacotes-e-versoes-no-lazarus/#preferencial&quot;&gt;aqui&lt;/a&gt; sobre a nomenclatura, considere nomear os diretórios de Pacotes com o número da versão correspondente — para projetos, no entanto, a nomenclatura sugerida continua válida — mas isso não faz diferença para o compilador, sendo apenas uma questão de organização visual.&lt;/p&gt;
-
-&lt;p&gt;Exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;yourpack
-  |
-  1.0
-    |
-    bin  : todos os arquivos binários e libs
-    |
-    pkg  : pacotes e configurações
-    |
-    src  : fontes de produção
-    |
-    test : fontes de testes
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Segundo, você irá trabalhar nos fontes do seu Pacote. Irá criar Unidades, implementar testes, projeto com os testes, etc. Não esqueça de definir a versão atual real, por exemplo, 0.8 (lembre-se que ainda não chegamos na versão 1.0.&lt;/p&gt;
-
-&lt;p&gt;Então, digamos que ele já pode ser utilizado em algum dos seus projetos, mesmo que a versão atual não seja a 1.0.&lt;/p&gt;
-
-&lt;p&gt;Terceiro, você vai adicionar ao seu projeto uma nova dependência para o seu pacote, mas ao adicioná-lo no projeto, irá definir a versão &lt;em&gt;mínima&lt;/em&gt; de uso que, atualmente, é a 0.8.&lt;/p&gt;
-
-&lt;p&gt;A versão &lt;em&gt;máxima&lt;/em&gt; de uso é opcional (nesse caso) pois mesmo que você atualize a versão do Pacote para, digamos 0.9.2, seu projeto continuará funcionando pois apenas a versão mínima foi definida.&lt;/p&gt;
-
-&lt;p&gt;O Lazarus procura os Pacotes pelo seu nome, versão e &lt;em&gt;path&lt;/em&gt;, no arquivo &lt;code&gt;packagesfiles.xml&lt;/code&gt;, que é gerenciado pela IDE.&lt;/p&gt;
-
-&lt;p&gt;Então, ambos os projetos (seu projeto e o Pacote) vão sendo atualizados, até que você resolve publicar a versão 1.0 do Pacote — determinado pelo mesmo nome do diretório.&lt;/p&gt;
-
-&lt;p&gt;Nesse momento, você irá fazer um cópia do diretório &lt;code&gt;/1.0&lt;/code&gt; para gerar um novo diretório, por exemplo o &lt;code&gt;/2.0&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;yourpack
-  |
-  2.0
-    |
-    bin  : todos os arquivos binários e libs
-    |
-    doc  : toda a documentação
-    |
-    pkg  : pacotes e configurações
-    |
-    src  : fontes de produção
-    |
-    test : fontes de testes
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Veja que, hipoteticamente, somente na versão 2.0 foi criado um diretório &lt;code&gt;/doc&lt;/code&gt; com a documentação do projeto. Está evoluindo…&lt;/p&gt;
-
-&lt;p&gt;A partir do diretório 2.0 você irá continuar seu trabalho com as próximas versões: 1.1, 1.2… até chegar na 2.0 quando o ciclo recomeça.&lt;/p&gt;
-
-&lt;p&gt;No meio desse ciclo, imagine que seu cliente, dono do primeiro projeto de exemplo, abre um &lt;em&gt;ticket&lt;/em&gt;  relatando um problema. Você então abre o antigo projeto e “magicamente” a IDE faz o &lt;em&gt;load&lt;/em&gt; da versão correta do Pacote, ou seja, a versão 1.0 que esse projeto ainda utiliza. Você não precisa compatibilizar esse projeto com a versão 2.0 do seu Pacote agora. Você pode (deve) fazer isso mais tarde, pois a prioridade agora é resolver o &lt;em&gt;ticket&lt;/em&gt; do seu cliente.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Na conclusão do &lt;a href=&quot;/posts/pacotes-e-versoes-no-lazarus/&quot;&gt;artigo&lt;/a&gt; anterior sobre esse assunto, eu disse que &lt;a href=&quot;http://wiki.freepascal.org/Lazarus_Packages#Different_versions_of_a_package&quot;&gt;marcava&lt;/a&gt; as dependências como &lt;em&gt;preferencial&lt;/em&gt; — opção que utiliza o &lt;em&gt;path&lt;/em&gt; do pacote, não a versão. Porém, percebi que utilizando o fluxo descrito acima eu teria &lt;em&gt;liberdade&lt;/em&gt; na configuração das dependências do meu projeto. O &lt;em&gt;path&lt;/em&gt; seria gerenciado pela IDE e para utilizar novas versões dos Pacotes bastaria mudar os números mínimo e máximo.&lt;/p&gt;
-
-&lt;p&gt;Para a maioria dos desenvolvedores, Pacotes são sinônimos de Componentes instalados na IDE. Mas eles são muito mais que isso.&lt;/p&gt;
-
-&lt;p&gt;A modularização de sistemas utilizando Pacotes sempre foi muito negligenciada e espero que esse artigo tenha aberto seus olhos.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 25 Sep 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/versionando-e-organizando-seus-pacotes</guid>
       </item>
     
   </channel>
