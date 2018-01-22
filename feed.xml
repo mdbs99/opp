@@ -8,6 +8,54 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Versões Antigas dos Compiladores</title>
+        <description>&lt;p&gt;A primeira versão do Delphi data de 1995, após o Turbo Pascal,enquanto o compilador Free Pascal é de 1993.&lt;/p&gt;
+
+&lt;p&gt;Estamos em 2018 agora. Será que vale a pena manter seu código executando nas versões antigas do compilador?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-danielle-macinnes-222441.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Danielle MacInnes on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Talvez não valha a pena manter o código dos seus projetos funcionando nas versões antigas, uma vez que você tenha conseguido migrar todo o código-fonte para uma versão mais nova. No entanto, suas bibliotecas — especialmente as públicas, Open Source — poderiam (ou deveriam?) continuar compilando nas versões mais antigas dos compiladores.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O primeiro motivo&lt;/strong&gt; é bem simples. &lt;em&gt;Compatibilidade&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas por quê isso é importante?&lt;/p&gt;
+
+&lt;p&gt;Trabalho profissionalmente com o Delphi desde sua versão 4 e um dos critérios que me fizeram continuar na ferramenta foi a retrocompatibilidade. Um código que executava na versão anterior, continuava executando na versão mais nova.&lt;/p&gt;
+
+&lt;p&gt;Lembro das palestras e encontros proporcionados pela antiga Borland, onde o palestrante abria aquele “Projeto dos Peixinhos” feito no Delphi 1~2 e ele continuava compilando normalmente, sem alterações, na versão mais nova.&lt;/p&gt;
+
+&lt;p&gt;É difícil ver esse nível de comprometimento com o usuário/desenvolvedor hoje em dia. Quantos frameworks a Microsoft já criou e matou na plataforma .NET? Temos que ficar correndo como “ratos” atrás do próximo “queijo sofisticado” para fazer o mesmo tipo de projeto que já estávamos fazendo a 20 anos atrás? Tenho certeza que não.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O segundo motivo&lt;/strong&gt; é proporcionar mais &lt;em&gt;opções&lt;/em&gt; de bibliotecas à comunidade Object Pascal.&lt;/p&gt;
+
+&lt;p&gt;Hoje em dia a linguagem se tornou um (pequeno) nicho. Enquanto nascem “centenas” de frameworks JavaScript todos os dias, não vemos o mesmo empenho na comunidade Pascal. Então, é importante manter o código legado funcionando para manter os desenvolvedores fieis a linguagem. Senão eles irão procurar alternativas lá fora. Melhor ainda, seria se tivéssemos mais opções a escolher, no entanto.&lt;/p&gt;
+
+&lt;p&gt;Eu já publiquei algumas bibliotecas Open Source a alguns anos, mas agora elas não existem mais. Não valiam a pena. Eram só “brinquedos”. Elas deveriam mesmo desaparecer. No entanto existem bibliotecas que fizeram e ainda fazem muita diferença no desenvolvimento hoje como a RX e JEDI. Acredito que essas bibliotecas não compilem utilizando versões antigas, no entanto elas foram atualizadas, o que já é um grande mérito para seus mantenedores.&lt;/p&gt;
+
+&lt;p&gt;Existem ainda alguns &lt;em&gt;ninjas&lt;/em&gt; do Object Pascal que mantém uma &lt;em&gt;única&lt;/em&gt; base de código desde o Delphi 6 até o Delphi 10.2 Tokyo, compilando também no FPC 2.7.1/3.1.1 em diante. Me refiro ao framework &lt;a href=&quot;https://synopse.info/fossil/wiki?name=SQLite3+Framework&quot;&gt;mORMot&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;mORMot é o estado-da-arte&lt;/strong&gt; dentre todos os projetos Object Pascal que conheço. Com uma &lt;em&gt;única&lt;/em&gt; base de código e sintaxe “old-school”, sem generics, sem classes anônimas, sem métodos anônimos, sem n.a.m.e.s.p.a.c.e.s, ou seja, “apenas” com Classes, Interfaces e funções, o autor Arnaud Bouchez e colaboradores foram capazes de criar e manter ao longo dos anos, um framework Client-Server ORM/ODM SOA MVC completo, quase sem dependências externas, com performance &lt;em&gt;superior&lt;/em&gt; as soluções &lt;em&gt;modernas&lt;/em&gt; como Node.js.&lt;/p&gt;
+
+&lt;p&gt;Isso prova que &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simplicidade&lt;/a&gt; e arquitetura bem feita são muito mais importantes que novas &lt;em&gt;features&lt;/em&gt; na linguagem, novos componentes, nova IDE…&lt;/p&gt;
+
+&lt;p&gt;A alguns anos eu voltei a publicar projetos Open Source, com uma nova abordagem e profissionalismo. Mas quando vejo projetos como o mORMot, tenho a plena convicção do quanto eu ainda tenho que aprender.&lt;/p&gt;
+
+&lt;p&gt;Hoje utilizo FPC/Lazarus mais do que Delphi. Comecei a migrar meus sistemas e bibliotecas privadas para a “plataforma concorrente” a alguns anos. Nessa época o Lazarus era um “brinquedo” mas, felizmente, continuei a utilizá-lo e hoje o Lazarus é tão bom quanto o Delphi — talvez melhor. No entanto, o &lt;em&gt;Delphi 7&lt;/em&gt; ainda faz parte do meu dia-a-dia. Então, vale a pena fazer bibliotecas para essa versão? Talvez.&lt;/p&gt;
+
+&lt;p&gt;Saber que as mesmas bibliotecas que eu sempre utilizei foram sendo atualizadas ao londo de todos esses anos, é um conforto. Não precisarei reescrever meus sistemas… pelo menos enquanto mantermos a linguagem viva.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 22 Jan 2018 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/versoes-antigas-dos-compiladores</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/versoes-antigas-dos-compiladores</guid>
+      </item>
+    
+      <item>
         <title>Objetos Complexos</title>
         <description>&lt;p&gt;Um Objeto não é apenas uma instância de uma Classe. Ele pode conter instâncias (quase) infinitas de diferentes Classes combinadas.&lt;/p&gt;
 
@@ -1454,157 +1502,6 @@ end;
         <pubDate>Mon, 16 Oct 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/injecao-de-dependencia</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/injecao-de-dependencia</guid>
-      </item>
-    
-      <item>
-        <title>Nomeando Classes em Libraries</title>
-        <description>&lt;p&gt;Veja nesse artigo algumas ideias que você deveria considerar ao nomear suas Classes em projetos do tipo Library.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-marcel-strauss-334864.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Marcel Strauß on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Uma Library ou Lib, para encurtar, é definida na &lt;a href=&quot;https://en.wikipedia.org/wiki/Library_(computing)&quot;&gt;Wikipedia&lt;/a&gt; como “uma coleção de subprogramas utilizados no desenvolvimento de software”.&lt;/p&gt;
-
-&lt;p&gt;Eu gosto mais da próxima definição: “Uma Lib é também uma coleção de implementações de &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;comportamento&lt;/a&gt;”.&lt;/p&gt;
-
-&lt;p&gt;Não pense numa Lib somente em termos de arquivos dll/so. Vamos aumentar esse conceito. Pense em Libs como dll/so, pacotes de software ou até mesmo um programa. Pense em termos de definição de comportamento especializado.&lt;/p&gt;
-
-&lt;p&gt;Uma Lib é — ou deveria ser — um especialista em um assunto, dentro de um contexto bem definido.&lt;/p&gt;
-
-&lt;p&gt;Eu diria que é (quase) a mesma definição do Objeto.&lt;/p&gt;
-
-&lt;p&gt;No entanto, enquanto há Objetos tão simples com apenas um método, uma Lib parece mais como uma composição de muitos Objetos, trabalhando colaborativamente entre si, fazendo emergir um comportamento especializado.&lt;/p&gt;
-
-&lt;p&gt;Os Objetos são como peças intercambiáveis. Podem ser simples ou complexos através do uso da composição.&lt;/p&gt;
-
-&lt;p&gt;Uma Lib, eu acredito, é uma personificação de alguma entidade especializada.&lt;/p&gt;
-
-&lt;p&gt;E toda entidade precisa ter um nome.&lt;/p&gt;
-
-&lt;h2 id=&quot;lib&quot;&gt;Nomeando uma Lib&lt;/h2&gt;
-
-&lt;p&gt;Há muitos anos eu já publicava alguns pequenos projetos no &lt;a href=&quot;https://sourceforge.net/&quot;&gt;SourceForge&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;A maioria desses projetos eram pequenos pacotes de componentes para Delphi mas, apesar de ter tido alguns pouquíssimos colaboradores, tais projetos nunca foram relevantes para a comunidade.&lt;/p&gt;
-
-&lt;p&gt;Bem, eu sabia quase nada sobre OpenSource e também não tinha muita experiência em desenvolvimento, então utilizei isso apenas como um aprendizado.&lt;/p&gt;
-
-&lt;p&gt;Na época eu nomeava meus pacotes de componentes com nomes abstratos. Eles não representavam uma entidade especializada. Eram apenas arquivos agrupados num pacote. Um bom nome não era relevante naquela época — eu pensava.&lt;/p&gt;
-
-&lt;p&gt;Anos se passaram.&lt;/p&gt;
-
-&lt;p&gt;Então, eu aprendi mais sobre &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt; e &lt;a href=&quot;https://en.wikipedia.org/wiki/Semantics&quot;&gt;semântica&lt;/a&gt; e como é importante utilizar bons nomes nos identificadores no código.&lt;/p&gt;
-
-&lt;p&gt;Dizem que &lt;em&gt;nomear coisas e invalidar cache&lt;/em&gt; são as duas coisas mais difíceis de fazer na computação. E é verdade.&lt;/p&gt;
-
-&lt;p&gt;Nomear coisas é difícil. Nunca fica perfeito. Escolhemos um nome pensando ser a melhor opção e daqui a duas horas estamos refatorando e renomeando…&lt;/p&gt;
-
-&lt;p&gt;É quase uma &lt;em&gt;arte&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Muitas vezes demora mais tempo para descobrirmos que um nome não foi bem escolhido.&lt;/p&gt;
-
-&lt;p&gt;Há pouco mais de 5 anos atrás eu publiquei um projeto OpenSource chamado &lt;a href=&quot;https://github.com/mdbs99/greyhound&quot;&gt;Greyhound&lt;/a&gt;, mas muitos não sabem qual o motivo da escolha desse nome.&lt;/p&gt;
-
-&lt;p&gt;Aqui está a explicação: Enquanto a &lt;em&gt;Cheetah&lt;/em&gt; (símbolo do Free Pascal) é o animal terrestre mais rápido, &lt;em&gt;Greyhound&lt;/em&gt; é a raça mais rápida entre cães.&lt;/p&gt;
-
-&lt;p&gt;E o que esse nome tem haver com um projeto que abstrai entidades de um Banco de Dados? — você pode estar pensando.&lt;/p&gt;
-
-&lt;p&gt;É, concordo com você que esse nome não foi uma boa escolha.&lt;/p&gt;
-
-&lt;p&gt;Mas ainda acho que é um nome bem interessante. Talvez para uma Lib que trabalhe com &lt;em&gt;stream&lt;/em&gt; de dados ou um novo sistema operacional. Talvez algo relacionado a velocidade? Não sei.&lt;/p&gt;
-
-&lt;p&gt;Pode não ter sido a melhor escolha para o meu projeto, mas por causa dele eu passei a utilizar nomes cada vez mais comuns.&lt;/p&gt;
-
-&lt;p&gt;Hoje em dia todos os meus projetos (privados) ganham nomes próprios comuns. Alguns desses nomes provocam sorrisos em reuniões sempre que são pronunciados. Não devido ao nome em si, mas devido a relação do nome com o sistema que ele representa.&lt;/p&gt;
-
-&lt;p&gt;Eu também levei essa nomenclatura para o mundo OpenSource através das minhas Libs mais recentes: &lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;James&lt;/a&gt; e &lt;a href=&quot;https://github.com/mdbs99/xavier&quot;&gt;Xavier&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se esses são bons nomes ou não, você decide.&lt;/p&gt;
-
-&lt;p&gt;O aprendizado aqui é que bons nomes podem fazer a diferença pois o nome não será utilizado apenas na URL do seu projeto, mas sim em (quase) todas as Classes.&lt;/p&gt;
-
-&lt;h2 id=&quot;classes&quot;&gt;Nomeando Classes&lt;/h2&gt;
-
-&lt;p&gt;Na época do SourceForge minhas Classes tinham minhas iniciais “MD” como prefixo ou qualquer outras “duas letras” abstratas.&lt;/p&gt;
-
-&lt;p&gt;Prefixos. Vemos essa prática ainda hoje em dia para diminuir a colisão de nomes entre classes similares. Exemplo: &lt;code&gt;TAbStream&lt;/code&gt; vs &lt;code&gt;TCdStream&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa prática é visto até mesmo em grandes &lt;em&gt;frameworks&lt;/em&gt; e outros ecosistemas como Java e C#.&lt;/p&gt;
-
-&lt;p&gt;Por quê?&lt;/p&gt;
-
-&lt;p&gt;Bem, precisamos diferenciar a classe padrão &lt;code&gt;TStream&lt;/code&gt; da sua &lt;code&gt;TMyStream&lt;/code&gt;, por exemplo.&lt;/p&gt;
-
-&lt;p&gt;Poderíamos utilizar a Unidade como prefixo, mas ninguém gosta de escrever o nome totalmente qualificado como &lt;code&gt;acme.streams.TStream&lt;/code&gt; sempre que tiver que usar a Classe &lt;code&gt;TStream&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então o prefixo &lt;code&gt;My&lt;/code&gt;, nesse caso, faz diferença.&lt;/p&gt;
-
-&lt;p&gt;No entanto, um grande problema é que não controlamos os prefixos que são utilizados em projetos ao redor do mundo. Eu quero dizer, por exemplo, que se você escolhe &lt;code&gt;Ab&lt;/code&gt; como prefixo de suas Classes, é bem possível que exista alguma outra Lib que já utiliza esse prefixo — e tem, chama-se &lt;a href=&quot;https://github.com/TurboPack/Abbrevia&quot;&gt;Abbrevia&lt;/a&gt; e eu a utilizo.&lt;/p&gt;
-
-&lt;p&gt;O prefixo &lt;code&gt;Ab&lt;/code&gt; deixa os identificadores pequenos — o que é bom — porém a ambiguidade continua existindo, visto que, por serem apenas 2 letras, a probabilidade é que outro desenvolvedor já tenha escolhido esse mesmo prefixo.&lt;/p&gt;
-
-&lt;p&gt;E esse não é o maior problema.&lt;/p&gt;
-
-&lt;p&gt;É comum utilizarmos prefixos em grandes sistemas, compostos de muitos módulos, representando implementações diferentes para um mesmo conceito. Então se um desses prefixos for &lt;code&gt;Ab&lt;/code&gt; e já estiver sendo utilizado dentro de um grande sistema — imagine que esse prefixo faz todo o sentido para o sistema da empresa, podendo representar uma área, setor ou algo bem importante — a ambiguidade é ainda pior, visto que poderia confundir o desenvolvedor: “Essa é uma Classe da empresa ou da Lib?”.&lt;/p&gt;
-
-&lt;p&gt;É claro que basta posicionarmos o mouse em cima do identificador para vermos um &lt;em&gt;hint&lt;/em&gt; com a informação de qual unidade ele pertence. Mas, e se você já utiliza o mesmo nome como &lt;code&gt;TAbStream&lt;/code&gt; (exemplo dado acima) dentro um grande sistema? Você muda o identificador que faz mais sentido para empresa para não conflitar com o identificador da Lib ou &lt;a href=&quot;/redeclarando-classes&quot;&gt;redefine&lt;/a&gt; todas as Classes da Lib?&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“Nomear coisas e invalidar cache são as duas tarefas mais difíceis na computação.”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Acredito que muitos desenvolvedores nem sequer pensam nesses conflitos.&lt;/p&gt;
-
-&lt;p&gt;“Ei! O código está funcionando, é o que importa”, eles dizem.&lt;/p&gt;
-
-&lt;p&gt;Bem, existem bons profissionais, outros nem tanto.&lt;/p&gt;
-
-&lt;p&gt;E como resolver esse impasse?&lt;/p&gt;
-
-&lt;p&gt;Como ter identificadores curtos, porém com uma boa semântica?&lt;/p&gt;
-
-&lt;p&gt;Como diminuir ou (quase) acabar com conflitos de nomenclatura?&lt;/p&gt;
-
-&lt;p&gt;Minha única resposta é: Não use prefixos abstratos em Classes, use um &lt;em&gt;nome&lt;/em&gt; de verdade.&lt;/p&gt;
-
-&lt;p&gt;O primeiro passo é escolher um bom nome: Simples, memorável e que represente um &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/#contextos&quot;&gt;contexto&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;contextualizando&quot;&gt;Contextualizando&lt;/h2&gt;
-
-&lt;p&gt;Um contexto encapsula uma possível implementação para um determinado problema.&lt;/p&gt;
-
-&lt;p&gt;Ao invés de utilizar &lt;code&gt;TAbStream&lt;/code&gt;, você utilizaria &lt;code&gt;TAbbreviaStream&lt;/code&gt;, por exemplo — eu não sei se tal Classe realmente existe nessa Lib.&lt;/p&gt;
-
-&lt;p&gt;Não parece muito, mas essa pequena alteração pode fazer uma grande diferença em médios a grandes sistemas.&lt;/p&gt;
-
-&lt;p&gt;Ao invés de termos apenas 2 letras abstratas, temos um nome que identifica um contexto.&lt;/p&gt;
-
-&lt;p&gt;Esse contexto é o mesmo que dizer: “Essa é a implementação de Abbrevia para representar um &lt;em&gt;Stream&lt;/em&gt;” — essa seria a “tradução” ao vermos a Classe &lt;code&gt;TAbbreviaStream&lt;/code&gt; declarada no código.&lt;/p&gt;
-
-&lt;p&gt;É muito menos provável que outra Lib, com a mesma especialidade, utilize o mesmo nome. A probabilidade diminui ao utilizarmos mais letras, concorda?&lt;/p&gt;
-
-&lt;p&gt;Além disso, é muito menos provável que você utilize nomes assim para representar contextos (área, setor ou algo bem importante) dentro de um sistema da empresa.&lt;/p&gt;
-
-&lt;p&gt;Esse foi o tipo de refatoração que fiz a poucos dias no projeto &lt;a href=&quot;https://github.com/mdbs99/xavier&quot;&gt;Xavier&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Uma Lib é um especialista em determinado assunto. Dar um nome memorável, apropriado e curto a sua Lib irá facilitar tanto a identificação das Classes quando o uso da mesma.&lt;/p&gt;
-
-&lt;p&gt;Evite o uso de prefixos abstratos. Eles não eliminam a ambiguidade e podem tornar as coisas ainda mais confusas, caso você tenha outros pacotes que, por ventura, utilize o mesmo prefixo.&lt;/p&gt;
-
-&lt;p&gt;Escolha nomes simples, de fácil memorização, curtos o suficiente, que tenham alguma relação ou que personifique a entidade especializada.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 02 Oct 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/nomeando-classes-em-libraries</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/nomeando-classes-em-libraries</guid>
       </item>
     
   </channel>
