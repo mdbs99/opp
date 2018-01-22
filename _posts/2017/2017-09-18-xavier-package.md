@@ -40,6 +40,12 @@ Xavier é uma biblioteca leve, Orientada a Objetos, para trabalhar com XML.
 
 ![Unsplash image]({{ page.image }}) 
 
+---
+
+**2017-12-11:** Xavier agora é parte do [Projeto James](https://github.com/mdbs99/james).
+
+---
+
 ## Introdução {#introducao}
 
 Hoje em dia, todas as bibliotecas XML são muito complexas. Cada classe pode ter tantos métodos que pode ser muito difícil utilizá-las e compreendê-las. Essas implementações são muito procedurais também.
@@ -91,7 +97,3 @@ E você, que tal fazer um [*fork*](https://github.com/mdbs99/xavier#fork-destina
 Link do projeto [https://github.com/mdbs99/xavier](https://github.com/mdbs99/xavier).
 
 Até logo.
-
-**EDIT 2017-12-11** 
-
-  * Xavier foi incorporado ao [James](https://github.com/mdbs99/james) como um sub-módulo.
