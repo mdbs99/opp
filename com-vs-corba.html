@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Classes de Exceção &#8211; Object Pascal Programming</title>
+    <title>Interfaces COM vs. CORBA &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Linguagem">
-    <meta name="keywords" content="exception, exceções, raise exception, delphi, freepascal, lazarus">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/classes-de-excecao/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, COM, CORBA, interface-com, interface-corba">
+    <link rel="canonical" href="http://objectpascalprogramming.com/com-vs-corba">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Classes de Exceção">
-    <meta property="og:description" content="Devemos codificar uma Classe para cada tipo de Exceção ou utilizar apenas um único tipo?">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/classes-de-excecao/">
+    <meta property="og:title" content="Interfaces COM vs. CORBA">
+    <meta property="og:description" content="Existem dois tipos de Interfaces no Free Pascal definidos como COM e CORBA. Será que existem vantagens ao utilizar o tipo CORBA?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/com-vs-corba">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-hans-eiskonen-136904.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-hermes-rivera-265372.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Classes de Exceção" />
+    <meta name="twitter:title" content="Interfaces COM vs. CORBA" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/classes-de-excecao/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/com-vs-corba" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,74 +191,72 @@
 
 
 <div class="post-header mb2">
-  <h1>Classes de Exceção</h1>
-  <span class="post-meta">Feb 20, 2017</span><br>
+  <h1>Interfaces COM vs. CORBA</h1>
+  <span class="post-meta">Jan 29, 2018</span><br>
   
   <span class="post-meta small">
   
-    2 minute read
+    3 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Devemos codificar uma Classe para cada tipo de Exceção ou utilizar apenas um único tipo?</p>
+  <p>Existem dois tipos de Interfaces no Free Pascal definidos como COM e CORBA. No Delphi temos apenas o tipo COM. Mas será que existem vantagens ao utilizar o tipo CORBA?</p>
 
 <!--more-->
 
-<p><img src="/images/photo-hans-eiskonen-136904.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2018/photo-hermes-rivera-265372.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Hermes Rivera on Unsplash</span></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>O conceito de Exceção foi criado para simplificar o código, removendo condicionais e verificações, para que o programador fique focado na lógica que o programa deve fazer ao invés de se preocupar em testar cada linha do código.</p>
+<p>No Delphi, quando definimos que um Objeto é do tipo Interface, quer dizer que (por padrão) ele será a liberado automaticamente da memória pelo compilador quando a variável sair do escopo e sua <a href="/posts/interfaces-delegacao-problemas-solucoes/#contador-de-referencias">contagem de referência</a> chegar a zero.</p>
 
-<p>A idéia principal é fazer com que todos os possíveis erros (exceções) sejam concentrados e verificados num ponto em comum.</p>
+<p>Para utilizar essa <em>feature</em>, basta implementar sua Classe herdando de <code>TInterfacedObject</code>, afim de utilizar a implementação padrão para Interfaces COM.</p>
 
-<p>Esse ponto em comum pode ser único para todo o sistema, mas também pode ser um ponto em comum por Módulo, por <em>Unit</em>, por Classe. Depende. Mas isso é um assunto para outro artigo.</p>
+<p>Se você não quiser utilizar <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">herança</a>, terá que implementar os <a href="/posts/interfaces-delegacao-problemas-solucoes/#contador-de-referencias">3-métodos</a> obrigatórios para toda Classe que implementa Interfaces COM e isso realmente pode parecer estranho para programadores que estão vindo de outras linguagens.</p>
 
-<p>Nesse artigo o foco é outro. Vamos ter uma conversa se devemos criar ou não novos tipos de exceção para cada tipo de erro ou problema.</p>
+<p><em>“Por quê eu deveria implementar métodos que não estão definidos na Interface?”</em></p>
 
-<h2 id="classes-de-excecao">Classes de Exceção</h2>
+<p>Realmente, não parece fazer muito sentido.</p>
 
-<p>Divisão por zero. Erro na leitura de um <em>stream</em>. Erro de banco de dados…</p>
+<h2 id="corba">CORBA</h2>
 
-<p>Temos Classes de Exceção definida para cada um desses erros. Em qualquer linguagem é assim.</p>
+<p>No Free Pascal você tem uma escolha. Pode-se utilizar Interfaces COM ou CORBA. O primeiro tipo se comporta do mesmo jeito que no Delphi. Tem contagem de referência e liberação automática de memória, enquanto o tipo CORBA é exatamente o contrário. Esse tipo não tem contagem de referência e, por isso, não tem a ajuda do compilador para liberar a memória automaticamente. Cabe ao programador liberar os Objetos utilizando seus respectivos destrutores.</p>
 
-<p>Por quê?</p>
+<p>Também não é possível liberar uma instância apenas atribuindo <code>nil</code>. É necessário que se tenha a instância de uma Classe ou que a Interface tenha algum método que possa ser utilizado como destrutor, por exemplo, <code>Free</code>.</p>
 
-<p>Não é para tomada de decisões, com certeza. Você não deve mudar o fluxo de um programa de acordo com a exceção gerada. Todas as exceções tem um único objetivo: parar o fluxo normal do programa.</p>
-
-<p>Para o usuário não importa o Tipo da Classe, mas sim a <strong>mensagem</strong> que é exibida quando um erro ocorre.</p>
-
-<p>Uma exceção define um ponto de ruptura no fluxo do código. A execução normal é interrompida e o fluxo vai para o ponto de tratamento das exceções.</p>
-
-<p>Então não haveria necessidade de criar novos tipos de Classes.
-Basta informar ao usuário o que ocorreu. A mensagem.</p>
-
-<p>No entanto… eu vejo um motivo para criar novos Tipos de Exceções: <a href="/posts/codigo-duplicado-talvez-nao/">Reaproveitamento</a> de código.</p>
-
-<p>Por exemplo, se um arquivo não é encontrado poderíamos gerar uma exceção do tipo <code>Exception</code> — a exceção mais genérica — ou criar uma nova Classe <code>EFileNotFound</code>.</p>
-
-<p>Para dar a informação ao usuário, as duas exceções abaixo são equivalentes:</p>
-
-<pre><code>raise Exception.CreateFmt('File %s not found', ['foo.txt']);
-
-raise EFileNotFound.Create('foo.txt');
+<pre><code>type
+  IFoo = interface
+    procedure Execute;
+    procedure Free;
+  end;
 </code></pre>
 
-<p>A diferença é que <code>EFileNotFound</code> já encapsula a mensagem <em>“File %s not found”</em> e não precisamos repetir a mesma mensagem toda vez que quisermos dizer ao usuário que um arquivo não foi encontrado.</p>
+<p>O tipo CORBA não exige do programador a implementação “obscura” de métodos de <a href="/posts/codigo-duplicado-talvez-nao/#infraestrutura">infraestrutura</a> além do que está declarado na Interface. Apenas os métodos das Interfaces devem ser implementados nas Classes. Essa é uma vantagem em relação ao tipo COM.</p>
 
-<p>Assim fica fácil mudar a mensagem num único ponto no código.</p>
+<p>Então, se você estiver desenvolvendo utilizando Free Pascal e não quer trabalhar com contagem de referência, utilizar CORBA pode ser uma boa opção.  Sua sintaxe e <em>design</em> “limpos” não obrigam o programador a implementar os 3-métodos padrões de COM.</p>
+
+<p>Entretanto, lembre-se que todas as Interfaces dentro da mesma Unit terão o mesmo tipo, seja COM ou CORBA.</p>
+
+<h2 id="com">COM</h2>
+
+<p>Muitos programadores não gostam de utilizar o tipo COM devido aos problemas com referência de Objetos. Mesmo que a <a href="/posts/interfaces-e-o-metodo-estatico-new/">solução</a> seja simples para resolvê-los.</p>
+
+<p>Enquanto o tipo CORBA pode ter um <em>design</em> mais simples, o tipo COM é mais <em>customizável</em> pois pode ser implementado sem contagem de referência. Basta implementarmos os 3-métodos obrigatórios sem incrementar a contagem.</p>
+
+<p>Pessoalmente, sempre prefiro utilizar o tipo COM e a contagem de referência para a liberação automática dos objetos na memória. Entretanto, se eu quiser que apenas algumas Classes não tenham a contagem de referência, basta sobrescrever os métodos necessários para ter o mesmo comportamento das Classes que implementam Interfaces CORBA.</p>
+
+<p>Considero isso uma <em>grande</em> vantagem!</p>
+
+<p>Por exemplo. Posso ter uma única Interface mas com implementações distintas em Classes diferentes, utilizando ou não a contagem de referência.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Não utilize Tipos de Classes de Exceção para controlar o fluxo do programa. Isso é errado.</p>
+<p>Minha conclusão é que o tipo COM é <em>melhor</em> do que CORBA por quê podemos implementar os dois tipos de comportamentos (com ou sem contagem de referência), enquanto com CORBA implementamos apenas um comportamento.</p>
 
-<p>Toda Exceção <em>deve</em> definir um ponto de ruptura. Algo de muito errado aconteceu. Para tudo. Não importa o Tipo de Classe.</p>
-
-<p>Para o usuário apenas a mensagem importa. Basta ser bem explicativa.</p>
-
-<p>Devemos criar novas Classe de Exceção apenas para reaproveitar e encapsular informações.</p>
+<p>O comportamento deve estar nas Classes, não nas Interfaces ou diretivas de compilação.</p>
 
 <p>Até logo.</p>
 
@@ -270,33 +268,33 @@ raise EFileNotFound.Create('foo.txt');
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/classes-de-excecao/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/com-vs-corba" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Classes de Exceção&via=mdbs99;url=http://objectpascalprogramming.com/posts/classes-de-excecao/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Interfaces COM vs. CORBA&via=mdbs99;url=http://objectpascalprogramming.com/com-vs-corba" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/classes-de-excecao/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/com-vs-corba" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/classes-de-excecao/&title=Classes de Exceção" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/classes-de-excecao/&title=Classes de Exceção" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/com-vs-corba&title=Interfaces COM vs. CORBA" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/classes-de-excecao/&t=Classes de Exceção" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/com-vs-corba&title=Interfaces COM vs. CORBA" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/com-vs-corba&t=Interfaces COM vs. CORBA" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -343,15 +341,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/com-vs-corba" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Interfaces COM vs. CORBA</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/versoes-antigas-dos-compiladores" class="post-link">
@@ -434,6 +423,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/injecao-de-dependencia" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Injeção de Dependência sem XML, Atributos/Anotações ou Frameworks</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -441,8 +439,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/classes-de-excecao';
-      var disqus_title      = 'Classes de Exceção';
+      var disqus_identifier = '/com-vs-corba';
+      var disqus_title      = 'Interfaces COM vs. CORBA';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

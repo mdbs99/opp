@@ -8,6 +8,71 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Interfaces COM vs. CORBA</title>
+        <description>&lt;p&gt;Existem dois tipos de Interfaces no Free Pascal definidos como COM e CORBA. No Delphi temos apenas o tipo COM. Mas será que existem vantagens ao utilizar o tipo CORBA?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-hermes-rivera-265372.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Hermes Rivera on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;No Delphi, quando definimos que um Objeto é do tipo Interface, quer dizer que (por padrão) ele será a liberado automaticamente da memória pelo compilador quando a variável sair do escopo e sua &lt;a href=&quot;/posts/interfaces-delegacao-problemas-solucoes/#contador-de-referencias&quot;&gt;contagem de referência&lt;/a&gt; chegar a zero.&lt;/p&gt;
+
+&lt;p&gt;Para utilizar essa &lt;em&gt;feature&lt;/em&gt;, basta implementar sua Classe herdando de &lt;code&gt;TInterfacedObject&lt;/code&gt;, afim de utilizar a implementação padrão para Interfaces COM.&lt;/p&gt;
+
+&lt;p&gt;Se você não quiser utilizar &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;herança&lt;/a&gt;, terá que implementar os &lt;a href=&quot;/posts/interfaces-delegacao-problemas-solucoes/#contador-de-referencias&quot;&gt;3-métodos&lt;/a&gt; obrigatórios para toda Classe que implementa Interfaces COM e isso realmente pode parecer estranho para programadores que estão vindo de outras linguagens.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;“Por quê eu deveria implementar métodos que não estão definidos na Interface?”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Realmente, não parece fazer muito sentido.&lt;/p&gt;
+
+&lt;h2 id=&quot;corba&quot;&gt;CORBA&lt;/h2&gt;
+
+&lt;p&gt;No Free Pascal você tem uma escolha. Pode-se utilizar Interfaces COM ou CORBA. O primeiro tipo se comporta do mesmo jeito que no Delphi. Tem contagem de referência e liberação automática de memória, enquanto o tipo CORBA é exatamente o contrário. Esse tipo não tem contagem de referência e, por isso, não tem a ajuda do compilador para liberar a memória automaticamente. Cabe ao programador liberar os Objetos utilizando seus respectivos destrutores.&lt;/p&gt;
+
+&lt;p&gt;Também não é possível liberar uma instância apenas atribuindo &lt;code&gt;nil&lt;/code&gt;. É necessário que se tenha a instância de uma Classe ou que a Interface tenha algum método que possa ser utilizado como destrutor, por exemplo, &lt;code&gt;Free&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  IFoo = interface
+    procedure Execute;
+    procedure Free;
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O tipo CORBA não exige do programador a implementação “obscura” de métodos de &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/#infraestrutura&quot;&gt;infraestrutura&lt;/a&gt; além do que está declarado na Interface. Apenas os métodos das Interfaces devem ser implementados nas Classes. Essa é uma vantagem em relação ao tipo COM.&lt;/p&gt;
+
+&lt;p&gt;Então, se você estiver desenvolvendo utilizando Free Pascal e não quer trabalhar com contagem de referência, utilizar CORBA pode ser uma boa opção.  Sua sintaxe e &lt;em&gt;design&lt;/em&gt; “limpos” não obrigam o programador a implementar os 3-métodos padrões de COM.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, lembre-se que todas as Interfaces dentro da mesma Unit terão o mesmo tipo, seja COM ou CORBA.&lt;/p&gt;
+
+&lt;h2 id=&quot;com&quot;&gt;COM&lt;/h2&gt;
+
+&lt;p&gt;Muitos programadores não gostam de utilizar o tipo COM devido aos problemas com referência de Objetos. Mesmo que a &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;solução&lt;/a&gt; seja simples para resolvê-los.&lt;/p&gt;
+
+&lt;p&gt;Enquanto o tipo CORBA pode ter um &lt;em&gt;design&lt;/em&gt; mais simples, o tipo COM é mais &lt;em&gt;customizável&lt;/em&gt; pois pode ser implementado sem contagem de referência. Basta implementarmos os 3-métodos obrigatórios sem incrementar a contagem.&lt;/p&gt;
+
+&lt;p&gt;Pessoalmente, sempre prefiro utilizar o tipo COM e a contagem de referência para a liberação automática dos objetos na memória. Entretanto, se eu quiser que apenas algumas Classes não tenham a contagem de referência, basta sobrescrever os métodos necessários para ter o mesmo comportamento das Classes que implementam Interfaces CORBA.&lt;/p&gt;
+
+&lt;p&gt;Considero isso uma &lt;em&gt;grande&lt;/em&gt; vantagem!&lt;/p&gt;
+
+&lt;p&gt;Por exemplo. Posso ter uma única Interface mas com implementações distintas em Classes diferentes, utilizando ou não a contagem de referência.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Minha conclusão é que o tipo COM é &lt;em&gt;melhor&lt;/em&gt; do que CORBA por quê podemos implementar os dois tipos de comportamentos (com ou sem contagem de referência), enquanto com CORBA implementamos apenas um comportamento.&lt;/p&gt;
+
+&lt;p&gt;O comportamento deve estar nas Classes, não nas Interfaces ou diretivas de compilação.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/com-vs-corba</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/com-vs-corba</guid>
+      </item>
+    
+      <item>
         <title>Versões Antigas dos Compiladores</title>
         <description>&lt;p&gt;A primeira versão do Delphi data de 1995, após o Turbo Pascal,enquanto o compilador Free Pascal é de 1993.&lt;/p&gt;
 
@@ -1263,245 +1328,6 @@ type
         <pubDate>Mon, 30 Oct 2017 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/api-unit</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/api-unit</guid>
-      </item>
-    
-      <item>
-        <title>Injeção de Dependência sem XML, Atributos/Anotações ou Frameworks</title>
-        <description>&lt;p&gt;É possível utilizar a Injeção de Dependência na Orientação Objetos sem depender de características específicas da linguagem, Arquivos XML, Atributos/Anotações ou &lt;em&gt;Frameworks&lt;/em&gt;?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-vadim-sherbakov-36.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Vadim Sherbakov on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;A &lt;a href=&quot;https://en.wikipedia.org/wiki/Dependency_injection&quot;&gt;Injeção de Dependência&lt;/a&gt; ou apenas DI (em Inglês: &lt;em&gt;“Dependency Injection”&lt;/em&gt;) pode ser um assunto bem controverso que ainda geram muitas dúvidas entre desenvolvedores.&lt;/p&gt;
-
-&lt;p&gt;Será que DI é algo complexo que exige um &lt;em&gt;framework&lt;/em&gt; para gerenciar as dependências entre Classes de um &lt;em&gt;software&lt;/em&gt;?&lt;/p&gt;
-
-&lt;p&gt;É necessário um arquivo XML para que o desenvolvedor possa configurar tais dependências?&lt;/p&gt;
-
-&lt;p&gt;Talvez possamos utilizar Atributos/Anotações para facilitar essas configurações?&lt;/p&gt;
-
-&lt;p&gt;Como podemos utilizar o conceito de &lt;a href=&quot;https://en.wikipedia.org/wiki/Inversion_of_control&quot;&gt;IoC&lt;/a&gt; sem um &lt;em&gt;framework&lt;/em&gt;?&lt;/p&gt;
-
-&lt;p&gt;O mercado tem várias maneiras de “injetar” alguma coisa, porém eu lhe digo: Injeção de Dependência é apenas passagem de parâmetro entre Objetos.&lt;/p&gt;
-
-&lt;h2 id=&quot;artefatos&quot;&gt;Artefatos&lt;/h2&gt;
-
-&lt;p&gt;Qualquer sistema &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientado a Objetos&lt;/a&gt; que faça algo de útil, terá dependências entre suas Classes ou Módulos.&lt;/p&gt;
-
-&lt;p&gt;Um Módulo/Classe &lt;code&gt;A&lt;/code&gt; que usa &lt;code&gt;B&lt;/code&gt; que usa &lt;code&gt;C&lt;/code&gt; (&lt;code&gt;A-&amp;gt;B-&amp;gt;C&lt;/code&gt;) estão conectados entre si.&lt;/p&gt;
-
-&lt;p&gt;Sempre devemos minimizar essas dependências afim de facilitarmos a manutenção do código, porém é impossível não tê-las.&lt;/p&gt;
-
-&lt;p&gt;Mesmo assim, o mercado resolveu criar todo tipo de “artefatos” como &lt;em&gt;frameworks&lt;/em&gt;, atributos/anotações ou configurações em arquivos XML, para “facilitar” a comunicação entre os Objetos, tornando “transparente” para o desenvolvedor as dependências existentes entre as Classes.&lt;/p&gt;
-
-&lt;p&gt;Na minha opinião, eles trouxeram mais problemas e &lt;em&gt;complexidade&lt;/em&gt; do que uma real solução.&lt;/p&gt;
-
-&lt;p&gt;Pense bem:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Um &lt;em&gt;Framework&lt;/em&gt; para Injeção de Dependência, deixa seu código &lt;em&gt;dependente&lt;/em&gt; do próprio &lt;em&gt;framework&lt;/em&gt; que gerencia as dependências!&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Os Atributos/Anotações que informam quais atributos do Objeto devem ser inicializados “magicamente” utilizando &lt;em&gt;reflection/RTTI&lt;/em&gt; ou utilizando &lt;a href=&quot;https://en.wikipedia.org/wiki/Service_locator_pattern&quot;&gt;&lt;em&gt;Services Locators&lt;/em&gt;&lt;/a&gt;, retiram do Objeto seus &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt;, tornando-o &lt;em&gt;anêmico&lt;/em&gt; e &lt;em&gt;procedural&lt;/em&gt;, pois é preciso chamar &lt;a href=&quot;/posts/getters-e-setters/#setters&quot;&gt;&lt;em&gt;Setters&lt;/em&gt;&lt;/a&gt; para “configurar” o Objeto antes de fazer algo de útil com ele. Seu uso é totalmente desencorajado pois viola o &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulamento&lt;/a&gt; transformando o Objeto num &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;“saco de dados”&lt;/a&gt;, além de introduzir &lt;a href=&quot;http://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/&quot;&gt;acoplamento temporal&lt;/a&gt;.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Arquivos XML de configuração que armazenam quais Classes serão utilizadas para instanciar tais &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt; é algo abominável: é estático, não segue o princípio &lt;a href=&quot;https://en.wikipedia.org/wiki/Don%27t_repeat_yourself&quot;&gt;DRY&lt;/a&gt;, e não tem checagem de sintaxe.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Tais “soluções” criam, na verdade, outros problemas.&lt;/p&gt;
-
-&lt;p&gt;Mas, e se fosse possível ter um código mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt;, sem XML, sem Atributos/Anotações ou mesmo sem &lt;em&gt;Frameworks&lt;/em&gt;, para trabalharmos com a Injeção de Dependência utilizando &lt;em&gt;somente&lt;/em&gt; Classes e Objetos, você iria continuar utilizando outros artefatos complexos?&lt;/p&gt;
-
-&lt;p&gt;Vamos ver quais são os tipos de dependências mais utilizadas e então veremos se é possível termos soluções simples para cada uma delas.&lt;/p&gt;
-
-&lt;h2 id=&quot;dependencia-por-construtor&quot;&gt;Dependência por Construtor&lt;/h2&gt;
-
-&lt;p&gt;Dependência por Construtor é a maneira mais simples e eficaz de resolver dependências entre Objetos.&lt;/p&gt;
-
-&lt;p&gt;Esse é o tipo de &lt;em&gt;dependência pura&lt;/em&gt; que é negligenciado por muitos desenvolvedores.&lt;/p&gt;
-
-&lt;p&gt;Exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;THash.New(
-  TFile.New(&#39;file.xml&#39;).Stream
-).Calc
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;No exemplo acima a Classe &lt;code&gt;THash&lt;/code&gt; recebe um &lt;code&gt;Stream&lt;/code&gt; (dependência) no seu construtor. Obviamente o tipo do argumento é uma Interface (ex: &lt;code&gt;IStream&lt;/code&gt;) para que não haja uma dependência “física” entre as Classes.&lt;/p&gt;
-
-&lt;p&gt;Não há &lt;em&gt;nenhum&lt;/em&gt; problema a ser solucionado aqui. Essa é a forma mais correta e eficaz para “injetar” uma dependência.&lt;/p&gt;
-
-&lt;p&gt;Sempre tente utilizar construtores para passar as dependências para os Objetos. A única exigência é que os argumentos do construtor sejam do tipo Interface ao invés de Classes.&lt;/p&gt;
-
-&lt;h2 id=&quot;dependencia-por-decoracao&quot;&gt;Dependência por Decoração&lt;/h2&gt;
-
-&lt;p&gt;A utilização de bibliotecas (Libs) é muito útil para desenvolvermos mais rápido. Ao invés de criamos tudo que o software precisa, podemos delegar vários serviços às Libs especialistas no assunto. É como “contratar” consultores profissionais para cada especialidade.&lt;/p&gt;
-
-&lt;p&gt;O “problema” é que essas Libs utilizam seus próprios Objetos. Bem, elas sabem o que fazem, porém há momentos que gostaríamos de “dizer” a essas Libs quais Objetos deveriam retornar em alguns momentos.&lt;/p&gt;
-
-&lt;p&gt;Seria interessante se pudéssemos &lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;decorar&lt;/a&gt; instâncias retornadas por Objetos pertencentes a Lib.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo. No código abaixo nós obtemos uma instância de um Objeto que representa um Atributo num arquivo XML:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Attr := 
-  TXMLPack.New(
-    TFile.New(&#39;file.xml&#39;).Stream
-  )
-  .Node(&#39;/root&#39;)
-  .Attrs
-  .Item(&#39;id&#39;);
-ShowMessage(Attr.Text);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Veja que o desenvolvedor não tem controle sobre como a Lib irá instanciar esse Objeto internamente, pois primeiro &lt;code&gt;TXMLPack&lt;/code&gt; retorna outro Objeto em &lt;code&gt;Node()&lt;/code&gt; e então retorna uma lista &lt;code&gt;Attrs&lt;/code&gt; para então pesquisar e retornar a instância que queremos.&lt;/p&gt;
-
-&lt;p&gt;É claro que podemos decorar qualquer instância retornada por qualquer Lib dentro do nosso próprio código, mas teríamos que fazer isso todas as vezes em todos os lugares.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo, se quiséssemos decorar instâncias de &lt;code&gt;TXMLAttribute&lt;/code&gt; (Lib) com a nossa Classe &lt;code&gt;TMyAttribute&lt;/code&gt;, teríamos que implementar dessa forma:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Node := TXMLPack.New(
-  TFile.New(&#39;file.xml&#39;).Stream
-)
-.Node(&#39;/root&#39;);
-
-// id attribute
-IdAttr := 
-  TMyAttribute.New(
-    Node(&#39;/root&#39;).Attrs.Item(&#39;id&#39;)
-  );
-
-// name attribute
-NameAttr := 
-  TMyAttribute.New(
-    Node(&#39;/root&#39;).Attrs.Item(&#39;name&#39;)
-  );
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Veja acima que foi preciso decorar cada instância (Atributos &lt;code&gt;id&lt;/code&gt; e &lt;code&gt;name&lt;/code&gt;) com a nossa Classe.&lt;/p&gt;
-
-&lt;p&gt;Mas mesmo sendo um código &lt;em&gt;repetitivo&lt;/em&gt;, é &lt;em&gt;viável&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;No entanto, se a Lib for desenvolvida para dar a opção ao desenvolvedor para decorar esses Objetos criados internamente, é provável que ela utilize o padrão &lt;a href=&quot;https://en.wikipedia.org/wiki/Abstract_factory_pattern&quot;&gt;&lt;em&gt;Abstract Factory&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Essa seria uma opção simples para utilizar Injeção de Dependência de forma totalmente desacoplada e sem repetições.&lt;/p&gt;
-
-&lt;p&gt;Vamos a um exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{ First we need to include a factory
-  in some place of the code }
-  
-TXAttributeFactories.New
-  .Add(
-    // your own factory
-    TMyAttributeFactory.New
-  );
-
-// ...  
-  
-{ Then, Lib&#39;s code will use these factories
-  to decorate each new Attribute instance }
-  
-function TCAttributes.Item(AIndex: Integer): IXAttribute;
-var
-  A: TDOMNode;
-begin
-  A := FNode.Attributes.Item[AIndex];
-  if not Assigned(A) then
-    raise EXError.CreateFmt(
-      &#39;Node not found on index %d.&#39;, [AIndex]
-    );
-
-  { At this point, factories instance will 
-    find TMyAttributeFactory instance and it 
-    will use to return a new instance, 
-    wrapping TCAttribute instance }
-
-  Result := 
-    TXAttributeFactories.New
-      .Decorate(
-        TCAttribute.New(FNode, A)
-      );
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O código acima é do &lt;a href=&quot;https://github.com/mdbs99/xavier/blob/47240049ff594904a856320d0b6e4ed8c979529f/src/xavier.xml.fpc.pas#L179&quot;&gt;Projeto Xavier&lt;/a&gt;, porém a chamada à Classe &lt;code&gt;TXAttributeFactories&lt;/code&gt; é apenas uma simulação, exemplificando como a implementação poderia ser codificada.&lt;/p&gt;
-
-&lt;p&gt;Veja que o método &lt;code&gt;Decorate(Attr: IXAttribute)&lt;/code&gt; recebe apenas uma instância já criada, ou seja, a fábrica não sabe como criar uma nova instância de &lt;code&gt;IXAttribute&lt;/code&gt;, ela apenas sabe como decorar uma instância já existente.&lt;/p&gt;
-
-&lt;h2 id=&quot;dependencia-tardia&quot;&gt;Dependência Tardia&lt;/h2&gt;
-
-&lt;p&gt;Chamo de dependência tardia quando um &lt;code&gt;Objeto A&lt;/code&gt; só precisa de uma instância &lt;code&gt;B&lt;/code&gt; num dado momento, dependendo de uma escolha do usuário ou evento externo. Em outras palavras, não sabemos se iremos precisar ou não da instância do &lt;code&gt;Objeto B&lt;/code&gt; quando estivermos compondo nossos Objetos para trabalhar numa determinada tarefa.&lt;/p&gt;
-
-&lt;p&gt;Talvez esse tenha sido o grande problema que mais motivou a construção dos artefatos e &lt;em&gt;frameworks&lt;/em&gt; já citados.&lt;/p&gt;
-
-&lt;p&gt;Vamos a um exemplo:&lt;/p&gt;
-
-&lt;p&gt;Suponha que o &lt;code&gt;Objeto A&lt;/code&gt; receba uma conexão com um SGBD através de seu construtor e em um dos seus métodos é instanciado um &lt;code&gt;Objeto B&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;A instância de &lt;code&gt;B&lt;/code&gt; também precisa da conexão com o SGBD, então basta passarmos no construtor de &lt;code&gt;B&lt;/code&gt; a conexão já recebida no &lt;code&gt;Objeto A&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então &lt;code&gt;B&lt;/code&gt;, em um de seus métodos, instancia e retorna um &lt;code&gt;Objeto C&lt;/code&gt; e, nesse caso, &lt;code&gt;C&lt;/code&gt; não precisa de uma conexão. No seu construtor não há nenhum argumento desse tipo.&lt;/p&gt;
-
-&lt;p&gt;O programa continua e agora essa instância de &lt;code&gt;C&lt;/code&gt; precisa instanciar um &lt;code&gt;Objeto D&lt;/code&gt;. Esse último Objeto, tem métodos que retornam outros Objetos, porém para instanciá-los uma conexão ao SGBD é necessária… mas nesse ponto não temos esse Objeto da conexão.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;A (conection)
-  B (conection)
-    C ()
-      D ()
-        E (conection ?)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Esse é o &lt;em&gt;grande&lt;/em&gt; problema.&lt;/p&gt;
-
-&lt;p&gt;Onde o &lt;code&gt;Objeto D&lt;/code&gt; iria conseguir uma conexão ao SGBD para utilizar como argumento na criação de outros Objetos que necessitam de tal argumento?&lt;/p&gt;
-
-&lt;p&gt;Nas linguagens Funcionais, existe o conceito de &lt;a href=&quot;https://pt.wikipedia.org/wiki/Currying&quot;&gt;Currying&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Ao invés de termos funções que recebem N parâmetros, haverá funções com apenas 1 parâmetro que chamará outra função, e outra, e mais outra…&lt;/p&gt;
-
-&lt;p&gt;Esse vídeo explica o conceito:&lt;/p&gt;
-
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/ZasXwtTRkio&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;No entanto, pode ser um conceito difícil de entender pra quem é acostumando com linguagens imperativas.&lt;/p&gt;
-
-&lt;p&gt;Bem, não temos &lt;em&gt;Currying&lt;/em&gt; nas linguagens Orientadas a Objetos, mas temos &lt;em&gt;Classes&lt;/em&gt; e Objetos.&lt;/p&gt;
-
-&lt;p&gt;Então, utilizando apenas Classes e Objetos, como podemos fazer a Injeção de Dependência e obter argumentos onde e quando for preciso?&lt;/p&gt;
-
-&lt;p&gt;A resposta é a mesma: &lt;a href=&quot;https://en.wikipedia.org/wiki/Abstract_factory_pattern&quot;&gt;&lt;em&gt;Abstract Factory&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;No entanto, ao invés de apenas decorar uma instância, a fábrica iria criar uma nova do início.&lt;/p&gt;
-
-&lt;p&gt;Essas fábricas teriam mais métodos, possivelmente métodos com as mesmas assinaturas dos construtores e &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Métodos New&lt;/a&gt; já existente na Classe original.&lt;/p&gt;
-
-&lt;p&gt;No exemplo anterior, o método &lt;code&gt;Decorate(...)&lt;/code&gt; foi utilizado para decorar uma instância já existente. Aqui, sugiro utilizar a nomenclatura &lt;code&gt;Make(...)&lt;/code&gt; que irá criar uma nova instância.&lt;/p&gt;
-
-&lt;p&gt;Esse tipo de fábrica seria muito mais utilizado em aplicações do que em Libs, no entanto.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Injeção de Dependência é &lt;a href=&quot;http://blog.ploeh.dk/2017/01/27/dependency-injection-is-passing-an-argument/&quot;&gt;passagem de parâmetro&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Vimos nesse artigo algumas possíveis opções para resolver os tipos de Dependência mais comuns.&lt;/p&gt;
-
-&lt;p&gt;Vimos que não é necessário &lt;em&gt;frameworks&lt;/em&gt; complexos ou qualquer outro artefato além de Classes e Objetos simples para utilizarmos Injeção de Dependência na sua forma mais pura.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente o espaço de um único artigo não é suficiente para implementarmos uma solução completa.&lt;/p&gt;
-
-&lt;p&gt;Seja simples. Utilize Classes e respeite seus Objetos sem quebrar o encapsulamento.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 16 Oct 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/injecao-de-dependencia</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/injecao-de-dependencia</guid>
       </item>
     
   </channel>
