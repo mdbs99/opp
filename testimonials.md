@@ -76,3 +76,5 @@ Se você escreveu algo parecido e não está na lista, porfavor aponte o link pa
 [![Testemunho]({{ page.image_path }}thiago-nunes.png)](https://www.facebook.com/objectpascalprogramming/posts/506966219656201?comment_id=507253156294174)
 
 [![Testemunho]({{ page.image_path }}luiz-paulo-ferrari.png)](http://objectpascalprogramming.com/nomeando-classes-em-libraries#comment-3546762646)
+
+![Testemunho]({{ page.image_path }}andre-medeiros.png)
