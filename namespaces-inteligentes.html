@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Namespaces Inteligentes &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, namespaces, unit">
+    <link rel="canonical" href="http://objectpascalprogramming.com/namespaces-inteligentes">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201802050157" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Namespaces Inteligentes">
+    <meta property="og:description" content="Na minha opinião, a implementação atual de Namespaces no Delphi poderia ser muito mais inteligente, simples e sem ambiguidades.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/namespaces-inteligentes">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-fervent-jan-121249.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Namespaces Inteligentes" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/namespaces-inteligentes" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>E-Book</a>
+<a href="/archive/">Arquivo</a>
+<a href="/testimonials/">Testemunhos</a>
+<a href="/webinars/">Webinários</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+            
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Namespaces Inteligentes</h1>
+  <span class="post-meta">Feb 5, 2018</span><br>
+  
+  <span class="post-meta small">
+  
+    7 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Na minha opinião, a implementação atual de Namespaces no Delphi poderia ser muito mais inteligente, simples e sem ambiguidades.</p>
+
+<!--more-->
+
+<p><img src="/images/2018/photo-fervent-jan-121249.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Fervent Jan on Unsplash</span></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>A linguagem Pascal foi criada com o conceito de Namespace desde o início chamado <em>Units</em>. As Unidades agrupam os identificadores, variáveis, tipos, classes…tudo que faz parte de um mesmo contexto.</p>
+
+<p>No entanto, hoje em dia nós, desenvolvedores Object Pascal, ganhamos uma definição diferente para Unit e Namespace.</p>
+
+<p>Talvez, devido a influência de outras linguagens “mais modernas”, ter apenas Unidades não parece ser mais suficiente para a modularização de sistemas.</p>
+
+<p>Concordo que ainda há espaço para melhorias no conceito das Unidades, porém a implementação proposta pela Embarcadero é suficiente para, agora, dizermos que a linguagem foi atualizada e que Namespaces é uma evolução?</p>
+
+<h1 id="atual">Namespaces Atual</h1>
+
+<p>A partir do Delphi 2007~2009 a Embarcadero implementou o “novo” conceito chamado <a href="http://docwiki.embarcadero.com/RADStudio/Tokyo/en/Using_Namespaces_with_Delphi">Namespace</a>, onde é possível termos nomes de Unidades pontilhadas, como já existem em algumas outras linguagens.</p>
+
+<p>Além da questão estética para termos <a href="/posts/nomeando-unidades/">nomes de arquivos</a> mais legíveis, esse conceito permite que o compilador localize as Unidades declaradas no código não apenas por seu nome, mas também levando em consideração o Namespace (prefixo) da Unidade.</p>
+
+<p>Segundo a Embarcadero, um Namespace é um <a href="/posts/datamodule-e-apenas-um-container/">container</a> de Unidades.</p>
+
+<p>Nesse <a href="http://docwiki.embarcadero.com/RADStudio/Tokyo/en/Using_Namespaces_with_Delphi">link</a>
+oficial diz que <em>“Namespaces fornece uma maneira de organizar identificadores e tipos, e são utilizados para desambiguar tipos com o mesmo nome”</em>.</p>
+
+<p>Mas já temos isso com as Unidades então, qual é a grande atualização?</p>
+
+<p>O documento segue dizendo: <em>“Desde que eles são um container para Unidades Delphi, os Namespaces também podem ser utilizados para diferenciação de unidades com o mesmo nome, que residem em pacotes diferentes”</em>.</p>
+
+<p>Aqui parece haver uma vantagem. O texto afirma que podemos ter pacotes distintos porém cada um deles contendo Unidades com o mesmo nome e mesmo assim poderíamos utilizar tais pacotes em um mesmo projeto — algo que não seria possível sem essa <em>feature</em>.</p>
+
+<p>Enquanto eu escrevo esse artigo, tomando uma xícara quente de café na Starbucks, não tenho disponível uma versão atual do Delphi para fazer esse teste, mas eu acredito que funcione desde que eu utilize o Namespace do Pacote para referenciar todas as Unidades dele no meu projeto.</p>
+
+<p>Meu entendimento é esse:</p>
+
+<ol>
+  <li>Existe um Pacote chamado <code>Acme.Xpto.MyPack</code>;</li>
+  <li>Dentro desse pacote existe as Unidades <code>Foo.pas</code> e <code>Bar.pas</code>;</li>
+  <li>No meu projeto eu desejo utilizar as Unidades do Pacote, então eu preciso declara-las como <code>Acme.Xpto.Foo</code> e <code>Acme.Xpto.Bar</code> respectivamente.</li>
+</ol>
+
+<p>Se eu tenho que escrever as Unidades de forma totalmente qualificada, qual é a grande vantagem? Não seria mais simples todas as Unidades do Pacote já serem totalmente qualificadas?</p>
+
+<p>De fato, é possível não escrever os Namespaces, em alguns casos.</p>
+
+<p>É possível, por exemplo, declarar a Unidade <code>Dialogs</code> no código do seu projeto mas a referência real será <code>Vcl.Dialogs</code> ou <code>FMX.Dialogs</code>, bastando definir um parâmetro para o compilador. Parece ser uma <em>feature</em> interessante mas, e se eu quisesse utilizar ambas as Unidades no mesmo projeto, como o compilador iria saber qual <code>Dialogs</code> utilizar? Será que uma das Unidades deveria ser totalmente qualificada enquanto a outra não? Se assim for, é uma solução <em>inconsistente</em>.</p>
+
+<p>Talvez, o Objetivo da implementação padrão serviu apenas aos interesses da Embarcadero para o uso da VCL/FMX ao invés de ser realmente uma nova <em>feature</em> para o desenvolvedor.</p>
+
+<p>Namespaces, na minha opinião, deveriam ser implementados de outra forma.</p>
+
+<h2 id="problema">O Problema</h2>
+
+<p>Uma Unidade já agrupa, de forma inequívoca, um identificador. Sempre tivemos isso na linguagem Object Pascal mas muitos acham que esse conceito só apareceu em linguagens mais recentes.</p>
+
+<p>Porém, hoje em dia eu posso ver uma referência a <code>Dialogs</code> no código e não ter certeza se é da VCL ou qualquer outra Lib que utiliza Namespaces. É necessário verificar as configurações do compilador.</p>
+
+<p>Olhar “só” o código não é mais suficiente.</p>
+
+<p>Outro problema existe com o uso de Libs externas. Não sabemos, previamente, quais nomes de Unidades serão utilizadas pelos programadores ao redor do mundo. Esse é o motivo pelo qual sempre utilizamos prefixos (2~3 letras) nos nomes da Unidades/Classes para simular um Namespace único.</p>
+
+<p>Incrivelmente, essa pratica tem sido suficiente para a maioria dos casos. Pelo menos, para a maioria dos projetos Open Source mais conhecidos como Zeos(Z), RX, Indy(Id), JEDI(Jc) ou Synopse mORMot(Syn). Parece haver um certo “cavalheirismo” entre programadores em não utilizar os prefixos “já em uso” na comunidade Open Source.</p>
+
+<p>No Java, eles resolveram esse problema de forma mais simples: Utilize a URL da empresa/projeto como um Namespace para cada projeto.</p>
+
+<p>E é só isso. Não há ambiguidades, pois não há URL iguais.</p>
+
+<p>Então, bastaria fazermos o mesmo em Object Pascal. O mesmo que a comunidade de Java fez. Basta utilizar o maior nome possível para uma Unidade. Não haverá ambiguidade. Não haverá conflito. Não é necessário implementar nada no compilador.</p>
+
+<p>Resolvido?</p>
+
+<p>Em teoria sim. No entanto a implementação atual do Namespaces clama em dizer que é muito mais quem um nome único (veremos mais sobre isso abaixo).</p>
+
+<p>Além disso, Object Pascal não é assim, tão verboso. Gostamos de nomes simples e de fácil memorização. Podemos programar utilizando um editor simples de texto. Em Java, por exemplo, é necessário haver uma IDE inteligente para ter o mínimo de eficiência na codificação, visto que a IDE incluí automaticamente as “unidades” que serão importadas, além de fazer uma tonelada de checagens.</p>
+
+<p>Bem, se vamos alterar ou melhorar o conceito de Unidades, por quê não fazer isso de forma inteligente, ainda mais <a href="/posts/simplicidade/">simples</a>, eficaz e sem os problemas de ambiguidades na utilização dos Namespaces atuais?</p>
+
+<p>Podemos sugerir algumas ideias.</p>
+
+<h2 id="desejavel">Namespaces Desejável</h2>
+
+<p>Então, qual seria o <em>nirvana</em> da implementação de Namespaces no Delphi e Lazarus?</p>
+
+<p>Eu posso lhe dizer minhas ideias (atuais) e no fim veremos se você concorda.</p>
+
+<p><strong>Namespaces deveriam ser únicos e explícitos no código</strong>, sem ambiguidades.</p>
+
+<p>É <em>errado</em> e anti-Pascal ter uma Unidade que não está 100% explícita no código sobre o que ela representa ou se há ambiguidades sobre o que ela representa.</p>
+
+<p>Isso quer dizer que <code>Dialogs</code> <em>não</em> pode representar, ora <code>FMX.Dialogs</code>, ora <code>Vcl.Dialogs</code>.</p>
+
+<p>Mesmo que eles possam ser configuráveis, eles deveriam ser únicos no código para não haver ambiguidades.</p>
+
+<p><strong>Namespaces deveriam ser dinâmicos</strong>, porém explícitos no código.</p>
+
+<p>Ser dinâmico implica em configuração. Então, a ideia de definirmos Namespaces como argumentos do compilador é boa, porém sua implementação atual não foi bem executada.</p>
+
+<p>Sim, Namespaces deveriam ser definidos <em>por</em> Pacote, porém o <em>erro</em> é defini-los utilizando os nomes dos Pacotes.</p>
+
+<p>A <em>configuração</em> deveria ser local.</p>
+
+<p><strong>Namespaces deveriam ser locais</strong>, ou seja, cada projeto implementa os Namespaces de acordo com a nomenclatura que desejar.</p>
+
+<p>Na minha opinião, ao adicionar um Pacote ao meu projeto, eu poderia (ou deveria) definir um Namespace para ele. É o mesmo que dizer que todas as Unidades do Pacotes seriam “renomeadas” com o novo prefixo — muito similar com a solução atual — porém sem ambiguidades.</p>
+
+<p>Imagine 2 Pacotes: <code>FooPack</code> e <code>BarPack</code>.</p>
+
+<p>Os desenvolvedores de ambos não deveriam se importar sobre Namespaces. Cada Pacote está bem definido em seus próprios contextos locais, sem se preocupar com o mundo afora. Não importa se os projetos que irão utilizá-los serão pequenos ou gigantescos com inúmeras dependências de vários outros Pacotes. Isso deveria ser irrelevante para os autores de Pacotes.</p>
+
+<p>Cabe a cada Projeto definir o Namespace para cada Pacote, se assim o desejar.</p>
+
+<p>Por exemplo, se ambos os Pacotes tem uma Unidade chamada <code>Utils</code>, nos iríamos referenciá-las como <code>Foo.Utils</code> e <code>Bar.Utils</code> dentro do código do Projeto.</p>
+
+<p>Essa foram escolhas óbvias. Mas ou invés de <code>Foo.Utils</code> e <code>Bar.Utils</code> poderiam ser <code>FoPack.Utils</code> e <code>BrPack.Utils</code>, respectivamente. O mais importante aqui é que estas são <em>escolhas do Projeto</em>, do usuário do Pacote, não daqueles que criaram os Pacotes.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>É necessário uma implementação mais moderna do conceito de Namespace, porém sem perder as características originais do Object Pascal.</p>
+
+<p>Tudo na linguagem é previamente declarado, exatamente para não haver ambiguidades. Unidades devem ser únicas em todo o projeto. Não importa se elas estão na VCL/LCL, RTL, Libs, etc. Não deveriam haver ambiguidades.</p>
+
+<p>Tudo é ou deveria ser explícito no código. Deixar o compilador decidir se um identificador corresponde a X ou a Y em tempo de execução, não me parece ser algo tão explícito.</p>
+
+<p>Finalmente, as ideias propostas nesse artigo tem a finalidade e o desejo de melhorar a linguagem Object Pascal e não depreciar as escolhas de <em>design</em> dos desenvolvedores da linguagem e do compilador.</p>
+
+<p>Esses são meus pensamentos… Você concorda?</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/namespaces-inteligentes" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Namespaces Inteligentes&via=mdbs99;url=http://objectpascalprogramming.com/namespaces-inteligentes" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/namespaces-inteligentes" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/namespaces-inteligentes&title=Namespaces Inteligentes" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/namespaces-inteligentes&title=Namespaces Inteligentes" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/namespaces-inteligentes&t=Namespaces Inteligentes" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+
+Gostaria de me pagar um café?  
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="WQ9SBWT3CM2SC">
+<input type="image" src="https://www.paypalobjects.com/pt_BR/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - A maneira fácil e segura de enviar pagamentos online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif" width="1" height="1">
+</form>
+  
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/com-vs-corba" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces COM vs. CORBA</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/versoes-antigas-dos-compiladores" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Versões Antigas dos Compiladores</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/objetos-complexos" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Objetos Complexos</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/exit-proc" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>O Procedimento Exit</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/pas2js" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pas2JS: Codificando em Pascal, Executando em JavaScript</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/argumentos-const" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Mais Performance usando Argumentos "const" para Interfaces</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/heranca-de-formulario-e-para-iniciantes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança de Formulário é para Iniciantes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/eliminando-metodos-privados" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Eliminando Métodos Privados</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/classes-aninhadas" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/api-unit" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>API Unit: Tudo num só lugar</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/namespaces-inteligentes';
+      var disqus_title      = 'Namespaces Inteligentes';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

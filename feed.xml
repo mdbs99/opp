@@ -8,6 +8,145 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Namespaces Inteligentes</title>
+        <description>&lt;p&gt;Na minha opinião, a implementação atual de Namespaces no Delphi poderia ser muito mais inteligente, simples e sem ambiguidades.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-fervent-jan-121249.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Fervent Jan on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;A linguagem Pascal foi criada com o conceito de Namespace desde o início chamado &lt;em&gt;Units&lt;/em&gt;. As Unidades agrupam os identificadores, variáveis, tipos, classes…tudo que faz parte de um mesmo contexto.&lt;/p&gt;
+
+&lt;p&gt;No entanto, hoje em dia nós, desenvolvedores Object Pascal, ganhamos uma definição diferente para Unit e Namespace.&lt;/p&gt;
+
+&lt;p&gt;Talvez, devido a influência de outras linguagens “mais modernas”, ter apenas Unidades não parece ser mais suficiente para a modularização de sistemas.&lt;/p&gt;
+
+&lt;p&gt;Concordo que ainda há espaço para melhorias no conceito das Unidades, porém a implementação proposta pela Embarcadero é suficiente para, agora, dizermos que a linguagem foi atualizada e que Namespaces é uma evolução?&lt;/p&gt;
+
+&lt;h1 id=&quot;atual&quot;&gt;Namespaces Atual&lt;/h1&gt;
+
+&lt;p&gt;A partir do Delphi 2007~2009 a Embarcadero implementou o “novo” conceito chamado &lt;a href=&quot;http://docwiki.embarcadero.com/RADStudio/Tokyo/en/Using_Namespaces_with_Delphi&quot;&gt;Namespace&lt;/a&gt;, onde é possível termos nomes de Unidades pontilhadas, como já existem em algumas outras linguagens.&lt;/p&gt;
+
+&lt;p&gt;Além da questão estética para termos &lt;a href=&quot;/posts/nomeando-unidades/&quot;&gt;nomes de arquivos&lt;/a&gt; mais legíveis, esse conceito permite que o compilador localize as Unidades declaradas no código não apenas por seu nome, mas também levando em consideração o Namespace (prefixo) da Unidade.&lt;/p&gt;
+
+&lt;p&gt;Segundo a Embarcadero, um Namespace é um &lt;a href=&quot;/posts/datamodule-e-apenas-um-container/&quot;&gt;container&lt;/a&gt; de Unidades.&lt;/p&gt;
+
+&lt;p&gt;Nesse &lt;a href=&quot;http://docwiki.embarcadero.com/RADStudio/Tokyo/en/Using_Namespaces_with_Delphi&quot;&gt;link&lt;/a&gt;
+oficial diz que &lt;em&gt;“Namespaces fornece uma maneira de organizar identificadores e tipos, e são utilizados para desambiguar tipos com o mesmo nome”&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas já temos isso com as Unidades então, qual é a grande atualização?&lt;/p&gt;
+
+&lt;p&gt;O documento segue dizendo: &lt;em&gt;“Desde que eles são um container para Unidades Delphi, os Namespaces também podem ser utilizados para diferenciação de unidades com o mesmo nome, que residem em pacotes diferentes”&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Aqui parece haver uma vantagem. O texto afirma que podemos ter pacotes distintos porém cada um deles contendo Unidades com o mesmo nome e mesmo assim poderíamos utilizar tais pacotes em um mesmo projeto — algo que não seria possível sem essa &lt;em&gt;feature&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Enquanto eu escrevo esse artigo, tomando uma xícara quente de café na Starbucks, não tenho disponível uma versão atual do Delphi para fazer esse teste, mas eu acredito que funcione desde que eu utilize o Namespace do Pacote para referenciar todas as Unidades dele no meu projeto.&lt;/p&gt;
+
+&lt;p&gt;Meu entendimento é esse:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Existe um Pacote chamado &lt;code&gt;Acme.Xpto.MyPack&lt;/code&gt;;&lt;/li&gt;
+  &lt;li&gt;Dentro desse pacote existe as Unidades &lt;code&gt;Foo.pas&lt;/code&gt; e &lt;code&gt;Bar.pas&lt;/code&gt;;&lt;/li&gt;
+  &lt;li&gt;No meu projeto eu desejo utilizar as Unidades do Pacote, então eu preciso declara-las como &lt;code&gt;Acme.Xpto.Foo&lt;/code&gt; e &lt;code&gt;Acme.Xpto.Bar&lt;/code&gt; respectivamente.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Se eu tenho que escrever as Unidades de forma totalmente qualificada, qual é a grande vantagem? Não seria mais simples todas as Unidades do Pacote já serem totalmente qualificadas?&lt;/p&gt;
+
+&lt;p&gt;De fato, é possível não escrever os Namespaces, em alguns casos.&lt;/p&gt;
+
+&lt;p&gt;É possível, por exemplo, declarar a Unidade &lt;code&gt;Dialogs&lt;/code&gt; no código do seu projeto mas a referência real será &lt;code&gt;Vcl.Dialogs&lt;/code&gt; ou &lt;code&gt;FMX.Dialogs&lt;/code&gt;, bastando definir um parâmetro para o compilador. Parece ser uma &lt;em&gt;feature&lt;/em&gt; interessante mas, e se eu quisesse utilizar ambas as Unidades no mesmo projeto, como o compilador iria saber qual &lt;code&gt;Dialogs&lt;/code&gt; utilizar? Será que uma das Unidades deveria ser totalmente qualificada enquanto a outra não? Se assim for, é uma solução &lt;em&gt;inconsistente&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Talvez, o Objetivo da implementação padrão serviu apenas aos interesses da Embarcadero para o uso da VCL/FMX ao invés de ser realmente uma nova &lt;em&gt;feature&lt;/em&gt; para o desenvolvedor.&lt;/p&gt;
+
+&lt;p&gt;Namespaces, na minha opinião, deveriam ser implementados de outra forma.&lt;/p&gt;
+
+&lt;h2 id=&quot;problema&quot;&gt;O Problema&lt;/h2&gt;
+
+&lt;p&gt;Uma Unidade já agrupa, de forma inequívoca, um identificador. Sempre tivemos isso na linguagem Object Pascal mas muitos acham que esse conceito só apareceu em linguagens mais recentes.&lt;/p&gt;
+
+&lt;p&gt;Porém, hoje em dia eu posso ver uma referência a &lt;code&gt;Dialogs&lt;/code&gt; no código e não ter certeza se é da VCL ou qualquer outra Lib que utiliza Namespaces. É necessário verificar as configurações do compilador.&lt;/p&gt;
+
+&lt;p&gt;Olhar “só” o código não é mais suficiente.&lt;/p&gt;
+
+&lt;p&gt;Outro problema existe com o uso de Libs externas. Não sabemos, previamente, quais nomes de Unidades serão utilizadas pelos programadores ao redor do mundo. Esse é o motivo pelo qual sempre utilizamos prefixos (2~3 letras) nos nomes da Unidades/Classes para simular um Namespace único.&lt;/p&gt;
+
+&lt;p&gt;Incrivelmente, essa pratica tem sido suficiente para a maioria dos casos. Pelo menos, para a maioria dos projetos Open Source mais conhecidos como Zeos(Z), RX, Indy(Id), JEDI(Jc) ou Synopse mORMot(Syn). Parece haver um certo “cavalheirismo” entre programadores em não utilizar os prefixos “já em uso” na comunidade Open Source.&lt;/p&gt;
+
+&lt;p&gt;No Java, eles resolveram esse problema de forma mais simples: Utilize a URL da empresa/projeto como um Namespace para cada projeto.&lt;/p&gt;
+
+&lt;p&gt;E é só isso. Não há ambiguidades, pois não há URL iguais.&lt;/p&gt;
+
+&lt;p&gt;Então, bastaria fazermos o mesmo em Object Pascal. O mesmo que a comunidade de Java fez. Basta utilizar o maior nome possível para uma Unidade. Não haverá ambiguidade. Não haverá conflito. Não é necessário implementar nada no compilador.&lt;/p&gt;
+
+&lt;p&gt;Resolvido?&lt;/p&gt;
+
+&lt;p&gt;Em teoria sim. No entanto a implementação atual do Namespaces clama em dizer que é muito mais quem um nome único (veremos mais sobre isso abaixo).&lt;/p&gt;
+
+&lt;p&gt;Além disso, Object Pascal não é assim, tão verboso. Gostamos de nomes simples e de fácil memorização. Podemos programar utilizando um editor simples de texto. Em Java, por exemplo, é necessário haver uma IDE inteligente para ter o mínimo de eficiência na codificação, visto que a IDE incluí automaticamente as “unidades” que serão importadas, além de fazer uma tonelada de checagens.&lt;/p&gt;
+
+&lt;p&gt;Bem, se vamos alterar ou melhorar o conceito de Unidades, por quê não fazer isso de forma inteligente, ainda mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt;, eficaz e sem os problemas de ambiguidades na utilização dos Namespaces atuais?&lt;/p&gt;
+
+&lt;p&gt;Podemos sugerir algumas ideias.&lt;/p&gt;
+
+&lt;h2 id=&quot;desejavel&quot;&gt;Namespaces Desejável&lt;/h2&gt;
+
+&lt;p&gt;Então, qual seria o &lt;em&gt;nirvana&lt;/em&gt; da implementação de Namespaces no Delphi e Lazarus?&lt;/p&gt;
+
+&lt;p&gt;Eu posso lhe dizer minhas ideias (atuais) e no fim veremos se você concorda.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Namespaces deveriam ser únicos e explícitos no código&lt;/strong&gt;, sem ambiguidades.&lt;/p&gt;
+
+&lt;p&gt;É &lt;em&gt;errado&lt;/em&gt; e anti-Pascal ter uma Unidade que não está 100% explícita no código sobre o que ela representa ou se há ambiguidades sobre o que ela representa.&lt;/p&gt;
+
+&lt;p&gt;Isso quer dizer que &lt;code&gt;Dialogs&lt;/code&gt; &lt;em&gt;não&lt;/em&gt; pode representar, ora &lt;code&gt;FMX.Dialogs&lt;/code&gt;, ora &lt;code&gt;Vcl.Dialogs&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mesmo que eles possam ser configuráveis, eles deveriam ser únicos no código para não haver ambiguidades.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Namespaces deveriam ser dinâmicos&lt;/strong&gt;, porém explícitos no código.&lt;/p&gt;
+
+&lt;p&gt;Ser dinâmico implica em configuração. Então, a ideia de definirmos Namespaces como argumentos do compilador é boa, porém sua implementação atual não foi bem executada.&lt;/p&gt;
+
+&lt;p&gt;Sim, Namespaces deveriam ser definidos &lt;em&gt;por&lt;/em&gt; Pacote, porém o &lt;em&gt;erro&lt;/em&gt; é defini-los utilizando os nomes dos Pacotes.&lt;/p&gt;
+
+&lt;p&gt;A &lt;em&gt;configuração&lt;/em&gt; deveria ser local.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Namespaces deveriam ser locais&lt;/strong&gt;, ou seja, cada projeto implementa os Namespaces de acordo com a nomenclatura que desejar.&lt;/p&gt;
+
+&lt;p&gt;Na minha opinião, ao adicionar um Pacote ao meu projeto, eu poderia (ou deveria) definir um Namespace para ele. É o mesmo que dizer que todas as Unidades do Pacotes seriam “renomeadas” com o novo prefixo — muito similar com a solução atual — porém sem ambiguidades.&lt;/p&gt;
+
+&lt;p&gt;Imagine 2 Pacotes: &lt;code&gt;FooPack&lt;/code&gt; e &lt;code&gt;BarPack&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Os desenvolvedores de ambos não deveriam se importar sobre Namespaces. Cada Pacote está bem definido em seus próprios contextos locais, sem se preocupar com o mundo afora. Não importa se os projetos que irão utilizá-los serão pequenos ou gigantescos com inúmeras dependências de vários outros Pacotes. Isso deveria ser irrelevante para os autores de Pacotes.&lt;/p&gt;
+
+&lt;p&gt;Cabe a cada Projeto definir o Namespace para cada Pacote, se assim o desejar.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo, se ambos os Pacotes tem uma Unidade chamada &lt;code&gt;Utils&lt;/code&gt;, nos iríamos referenciá-las como &lt;code&gt;Foo.Utils&lt;/code&gt; e &lt;code&gt;Bar.Utils&lt;/code&gt; dentro do código do Projeto.&lt;/p&gt;
+
+&lt;p&gt;Essa foram escolhas óbvias. Mas ou invés de &lt;code&gt;Foo.Utils&lt;/code&gt; e &lt;code&gt;Bar.Utils&lt;/code&gt; poderiam ser &lt;code&gt;FoPack.Utils&lt;/code&gt; e &lt;code&gt;BrPack.Utils&lt;/code&gt;, respectivamente. O mais importante aqui é que estas são &lt;em&gt;escolhas do Projeto&lt;/em&gt;, do usuário do Pacote, não daqueles que criaram os Pacotes.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;É necessário uma implementação mais moderna do conceito de Namespace, porém sem perder as características originais do Object Pascal.&lt;/p&gt;
+
+&lt;p&gt;Tudo na linguagem é previamente declarado, exatamente para não haver ambiguidades. Unidades devem ser únicas em todo o projeto. Não importa se elas estão na VCL/LCL, RTL, Libs, etc. Não deveriam haver ambiguidades.&lt;/p&gt;
+
+&lt;p&gt;Tudo é ou deveria ser explícito no código. Deixar o compilador decidir se um identificador corresponde a X ou a Y em tempo de execução, não me parece ser algo tão explícito.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, as ideias propostas nesse artigo tem a finalidade e o desejo de melhorar a linguagem Object Pascal e não depreciar as escolhas de &lt;em&gt;design&lt;/em&gt; dos desenvolvedores da linguagem e do compilador.&lt;/p&gt;
+
+&lt;p&gt;Esses são meus pensamentos… Você concorda?&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/namespaces-inteligentes</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/namespaces-inteligentes</guid>
+      </item>
+    
+      <item>
         <title>Interfaces COM vs. CORBA</title>
         <description>&lt;p&gt;Existem dois tipos de Interfaces no Free Pascal definidos como COM e CORBA. No Delphi temos apenas o tipo COM. Mas será que existem vantagens ao utilizar o tipo CORBA?&lt;/p&gt;
 
@@ -1143,191 +1282,6 @@ end.
         <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/classes-aninhadas</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/classes-aninhadas</guid>
-      </item>
-    
-      <item>
-        <title>API Unit: Tudo num só lugar</title>
-        <description>&lt;p&gt;Uma única técnica que resolve muitos problemas.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-nordwood-themes-166423.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by NordWood Themes on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Quando você utiliza uma Classe muitas vezes, já deve ter memorizado em qual Unit a Classe foi implementada.&lt;/p&gt;
-
-&lt;p&gt;Mas e se &lt;em&gt;Library&lt;/em&gt; (Lib) que você está utilizando é nova ou foi completamente remodelada?&lt;/p&gt;
-
-&lt;p&gt;E se você está tentando fazer um trabalho que nunca fez antes?&lt;/p&gt;
-
-&lt;p&gt;Como saber as Classes existentes na Lib?&lt;/p&gt;
-
-&lt;p&gt;Há basicamente 3 opções:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Abrir todas as Units da Lib e ler o código;&lt;/li&gt;
-  &lt;li&gt;Ler a documentação, se houver;&lt;/li&gt;
-  &lt;li&gt;Abrir apenas uma Unit que contenha todas as Interfaces e Classes;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Esse artigo é sobre a última opção, que eu chamo de “API Unit”.&lt;/p&gt;
-
-&lt;h2 id=&quot;api-unit&quot;&gt;API Unit&lt;/h2&gt;
-
-&lt;p&gt;&lt;em&gt;API Unit&lt;/em&gt; é um conceito em fase de experimentação.&lt;/p&gt;
-
-&lt;p&gt;A ideia é simples: Disponibilizar ao desenvolvedor, todas as Interfaces e Classes de &lt;em&gt;uso público&lt;/em&gt; em apenas 1 Unit.&lt;/p&gt;
-
-&lt;p&gt;Não estou dizendo que deveríamos codificar &lt;em&gt;tudo&lt;/em&gt; num único arquivo. Isso seria insano. Mas se houvesse uma maneira de continuarmos codificando em módulos mas, ao mesmo tempo, termos tudo disponível para uso em apenas 1 única Unit, não acha que seria interessante?&lt;/p&gt;
-
-&lt;p&gt;Já vi projetos onde os autores utilizavam arquivos &lt;code&gt;*.inc&lt;/code&gt; para ir montando a “verdadeira” Unit — o FPC e Lazarus utilizam essa técnica — mas eu acho confuso de administrar, além de dificultar a leitura do código.&lt;/p&gt;
-
-&lt;p&gt;Não fui por esse caminho e continuei pensando…&lt;/p&gt;
-
-&lt;p&gt;Então, tive uma ideia que chamei de &lt;em&gt;API Unit&lt;/em&gt;, meio que “por acaso”, após a publicação desse &lt;a href=&quot;/nomeando-classes-em-libraries&quot;&gt;artigo&lt;/a&gt;. Eu estava pensando em outras possibilidades para nomear Interfaces e Classes, algo que já havia explicado em outro artigo.&lt;/p&gt;
-
-&lt;p&gt;Por quê?&lt;/p&gt;
-
-&lt;p&gt;Bem, a técnica de nomenclatura que expliquei anteriormente continua válida, porém pode haver Libs mais complexas com &lt;a href=&quot;/posts/nomeando-classes/&quot;&gt;nomes de Classes&lt;/a&gt; bem especializadas. Esses nomes tem a tendência de serem maiores e adicionar o nome da Lib como prefixo — conforme explicado no &lt;a href=&quot;/nomeando-classes-em-libraries&quot;&gt;artigo&lt;/a&gt; — deixando o nome da Classe ainda mais verboso.&lt;/p&gt;
-
-&lt;p&gt;A linguagem Object Pascal não tem uma sintaxe para “renomear” uma Unit dentro do código. Algo &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; de se fazer em linguagens como Python, C# e Lua, por exemplo. Nessas linguagens, após o &lt;em&gt;“import”&lt;/em&gt; do arquivo, o desenvolvedor pode escolher um &lt;em&gt;alias&lt;/em&gt; para a “unidade”, ou seja, ele pode renomear dinamicamente o arquivo que irá conter as Interfaces, Classes e todo o resto.&lt;/p&gt;
-
-&lt;p&gt;Eu mesmo já &lt;a href=&quot;http://wiki.freepascal.org/Namespaces#The_.22uses.22_clause&quot;&gt;solicitei&lt;/a&gt; essa &lt;em&gt;feature&lt;/em&gt; para os desenvolvedores do &lt;a href=&quot;https://freepascal.org/&quot;&gt;Free Pascal&lt;/a&gt;, porém o pedido foi ignorado devido haver outras prioridades.&lt;/p&gt;
-
-&lt;p&gt;Como isso não é possível (hoje), voltei para os meus pensamentos.&lt;/p&gt;
-
-&lt;p&gt;Seria possível utilizar a nomenclatura mais simples (nomes curtos para Units, Interfaces e Classes) sem haver colisão de nomes?&lt;/p&gt;
-
-&lt;p&gt;Meus requisitos foram:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Classes com nomes curtos e simples;&lt;/li&gt;
-  &lt;li&gt;Havendo colisão de nomes entre Classes, a Unit seria utilizada como prefixo;&lt;/li&gt;
-  &lt;li&gt;Units devem ter o nome mais curto possível, porém legível e sem ambiguidades;&lt;/li&gt;
-  &lt;li&gt;O usuário da Lib deveria ter o controle da nomenclatura utilizada em seus sistemas;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Vamos analisar cada item:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Classes com nomes curtos e simples&lt;/strong&gt; deveria ser a norma utilizada em &lt;em&gt;todos&lt;/em&gt; os sistemas. Mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; de ler, mas fácil de entender.&lt;/p&gt;
-
-&lt;p&gt;Ao invés de escrevermos &lt;code&gt;TAcCar&lt;/code&gt; ou &lt;code&gt;TAcmeCar&lt;/code&gt;, iríamos utilizar apenas &lt;code&gt;TCar&lt;/code&gt;. Mas, conforme explicado no artigo sobre nomenclatura, há grandes possibilidades de haver uma colisão de nomes caso duas ou mais unidades tenham utilizado o mesmo identificador &lt;code&gt;TCar&lt;/code&gt; e isso nos leva ao segundo requisito.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Havendo colisão de nomes entre Classes, a Unit seria utilizada como prefixo&lt;/strong&gt; e o problema estaria resolvido. No entanto, é muito verboso declarar um método assim:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function TDriver.Drive(
-  ACar: Acme.Interfaces.Cars.ICar): IDriver;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O argumento &lt;code&gt;ACar&lt;/code&gt; é um tipo de Interface declarado em alguma Lib externa chamada &lt;code&gt;Acme&lt;/code&gt;. E foi preciso prefixar a Interface &lt;code&gt;ICar&lt;/code&gt; por que o seu projeto, hipoteticamente, também tem uma interface com o mesmo nome em outra Unit.&lt;/p&gt;
-
-&lt;p&gt;Imagine agora esse mesmo método com mais 4 argumentos, sendo cada um deles prefixado com a Unit. O método ficaria muito mais verboso e, talvez, difícil de entender.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Units devem ter o nome mais curto possível, porém legível e sem ambiguidades&lt;/strong&gt; mas a linguagem não nos dá essa opção. Se fosse possível criar um &lt;em&gt;alias&lt;/em&gt; no Object Pascal poderíamos fazer isso:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;uses
-  Acme.Interfaces.Cars.ICar as Acme;
-
-function TDriver.Drive(ACar: Acme.ICar): IDriver;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Nesse ponto você pode estar pensando que voltamos a utilizar a mesma &lt;a href=&quot;/nomeando-classes-em-libraries&quot;&gt;técnica&lt;/a&gt; anterior, ou seja, o nome da Lib é o prefixo.&lt;/p&gt;
-
-&lt;p&gt;Ora, afinal o identificador &lt;code&gt;Acme.ICar&lt;/code&gt; não é tão diferente de &lt;code&gt;IAcmeCar&lt;/code&gt;, não é?&lt;/p&gt;
-
-&lt;p&gt;Sim, é verdade, porém com o uso (hipotético) de &lt;em&gt;alias&lt;/em&gt; é o usuário que tem o controle de qual nome utilizar como prefixo em todo o projeto. Algo que lhe dá liberdade, fazendo muita diferença.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;O usuário da Lib deveria ter o controle da nomenclatura utilizada em seus sistemas&lt;/strong&gt; e não deixar que a Lib “imponha” um nome que, muitas vezes, é ambíguo, mal escolhido, confuso, verboso ou completamente sem sentido.&lt;/p&gt;
-
-&lt;p&gt;É claro que identificadores fixos como &lt;code&gt;IAcmeCar&lt;/code&gt; podem ser &lt;a href=&quot;/redeclarando-classes&quot;&gt;redeclarados&lt;/a&gt;, porém se houver muitas Classes e Interfaces, poderia ser uma tarefa bem dispendiosa.&lt;/p&gt;
-
-&lt;p&gt;Então, o uso de &lt;em&gt;alias&lt;/em&gt; na linguagem Object Pascal seria uma solução inovadora, porém não a temos.&lt;/p&gt;
-
-&lt;p&gt;E é aí que entra a ideia da &lt;em&gt;API Unit&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se todos os identificadores estivessem declarados em apenas uma única Unit, representando toda a Lib, poderíamos simular um &lt;em&gt;alias&lt;/em&gt; utilizando um arquivo físico.&lt;/p&gt;
-
-&lt;p&gt;Veja &lt;a href=&quot;https://github.com/mdbs99/james/blob/d63a1b93e246012ffc49fa6ea86ad644ceef12f5/src/james.api.pas#L24&quot;&gt;aqui&lt;/a&gt; um bom exemplo do que é uma &lt;em&gt;API Unit&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;No &lt;em&gt;link&lt;/em&gt; acima podemos ver que todas as Interfaces e Classes da Lib estão declaradas (apenas um &lt;em&gt;alias&lt;/em&gt; para os identificadores em outras Unit ) em apenas uma única Unit e isso nos dá &lt;em&gt;grandes&lt;/em&gt; possibilidades que irei explicar mais adiante.&lt;/p&gt;
-
-&lt;p&gt;No entanto, sempre haverá vantagens de desvantagens.&lt;/p&gt;
-
-&lt;h2 id=&quot;desvantagens&quot;&gt;Desvantagens&lt;/h2&gt;
-
-&lt;p&gt;Vou começar pelas desvantagens, pois as vantagens são bem maiores.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Você irá deixar o código do desenvolvedor da Lib um pouquinho mais verboso&lt;/strong&gt; por que, para cada Interface ou Classe existente, você terá que declarar um &lt;em&gt;alias&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo, veja nesse &lt;a href=&quot;https://github.com/mdbs99/james/blob/d63a1b93e246012ffc49fa6ea86ad644ceef12f5/src/james.data.clss.pas#L34-L52&quot;&gt;link&lt;/a&gt; que a Classe &lt;code&gt;TDataStream&lt;/code&gt; tem um &lt;em&gt;alias&lt;/em&gt; declarado como &lt;code&gt;TDataStreamAlias = TDataStream;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;A princípio, o identificador &lt;code&gt;TDataStreamAlias&lt;/code&gt; não faz sentido para a Unit na qual ele foi declarado, mas será importante para montarmos a &lt;em&gt;API Unit&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Todas as Interfaces e Classes para os usuários devem estar numa única Unit&lt;/strong&gt; e isso é meio chato e talvez um pouco trabalhoso de se fazer.&lt;/p&gt;
-
-&lt;p&gt;O desenvolvedor terá um pequeno retrabalho adicionando as Interfaces e Classes de outras Unit  na Unit de API. O desenvolvedor poderia até esquecer de fazer isso. No entanto se a Lib possuir testes automatizados, não haverá esquecimento, pois os próprios testes irão utilizar apenas a &lt;em&gt;API Unit&lt;/em&gt; e para testar uma Classe ela deve estar declarada lá.&lt;/p&gt;
-
-&lt;h2 id=&quot;vantagens&quot;&gt;Vantagens&lt;/h2&gt;
-
-&lt;p&gt;Agora vamos falar um pouco sobre as vantagens em utilizarmos essa simples técnica.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Se toda a Lib pode ser utilizada através de apenas 1 Unit&lt;/strong&gt; você pode criar um &lt;em&gt;alias&lt;/em&gt; apenas renomeando o arquivo original.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo. Se a Lib Acme do exemplo acima tivesse uma &lt;em&gt;API Unit&lt;/em&gt; ela poderia se chamar &lt;code&gt;Acme.API.pas&lt;/code&gt;. Mas se você não gostou do nome, se ele ainda é verboso ou se você já tem uma Unit com esse nome no seu projeto, bastaria renomear a Unit para, digamos, &lt;code&gt;LibAcme.pas&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então, qualquer colisão de nome entre Interfaces e Classes poderia ser resolvida apenas adicionando o “novo” nome da Lib como, por exemplo, &lt;code&gt;LibAcme.ICar&lt;/code&gt;. Simples, curto, fácil de entender e totalmente sob o controle do usuário da Lib.&lt;/p&gt;
-
-&lt;p&gt;Se o desenvolvedor da Lib quiser ser ainda mais “legal” com o usuário, ele poderia criar um &lt;code&gt;.inc&lt;/code&gt; com todos os identificadores e declarar a &lt;code&gt;Acme.API &lt;/code&gt;assim:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;unit Acme.API;
-
-{$include api.inc}
-
-end.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Então o usuário nem mesmo precisaria renomear o arquivo original. Bastaria criar um novo arquivo, por exemplo &lt;code&gt;LibAcme.pas&lt;/code&gt;, no mesmo diretório e incluir a &lt;code&gt;api.inc&lt;/code&gt; no corpo da nova Unit.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Como é fácil renomear a Unit que contém a API&lt;/strong&gt; o desenvolvedor não precisaria mais se preocupar em adicionar prefixos de 2~3 letras em Interfaces e Classes afim de diminuir a colisão de nomes nos projetos que utilizam a Lib. Qualquer nome simples pode ser utilizado, pois qualquer conflito será &lt;em&gt;fácil&lt;/em&gt; de resolver adicionando a Unit quando for necessário.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;O usuário não precisa memorizar as Units da Lib&lt;/strong&gt; pois tudo está num único só lugar. Simples e conveniente.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;O desenvolvedor da Lib poderia incluir mais Interfaces e Classes&lt;/strong&gt; porém apenas para o uso “privado” da Lib sem que o usuário precise saber da existência desses novos artefatos. O usuário já estaria acostumado a utilizar apenas uma única Unit, então ele não iria ter “acesso” a outros identificadores que não estão listados lá. É claro que ele ainda poderia utilizar as Units reais da Lib, porém isso poderia ser informado na documentação que isso seria considerado um &lt;em&gt;“hack”&lt;/em&gt; ou quebra de &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulamento&lt;/a&gt; e o usuário estaria por conta própria.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Ao definir um &lt;em&gt;alias&lt;/em&gt; para cada Interface ou Classe&lt;/strong&gt; — exemplo &lt;code&gt;TDataStreamAlias&lt;/code&gt;— não seria necessário &lt;a href=&quot;/redeclarando-classes&quot;&gt;redeclarar&lt;/a&gt; os identificadores na API utilizando as Units reais como prefixo.&lt;/p&gt;
-
-&lt;p&gt;Compare as duas opções abaixo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;unit James.API;
-
-type
-  {1} TDataStream = TDataStreamAlias;
-  {2} TDataStream = James.Data.Clss.TDataStream;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Com certeza a primeira linha e menos verbosa.&lt;/p&gt;
-
-&lt;p&gt;Esse é o motivo de haver esses identificadores que são apenas &lt;em&gt;alias&lt;/em&gt;. Além de ser menos verboso, o desenvolvedor poderia mover a &lt;code&gt;TDataStream&lt;/code&gt; para outra Unit e não precisaria alterar a API.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Quando a API começar a ficar grande demais&lt;/strong&gt; será um sinal — ou um “cheiro” — de que a Lib pode estar fazendo coisas demais. Então a &lt;em&gt;API Unit&lt;/em&gt; é, também, uma restrição. Mas isso é bom. &lt;a href=&quot;/posts/menos-e-mais/&quot;&gt;Menos é mais&lt;/a&gt;, lembre-se disso.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Esse artigo tentou demostrar que utilizando apenas uma única técnica simples e um pouco mais trabalho, é possível melhorar muito a qualidade do código, resolvendo problemas de escopo, nomenclatura e legibilidade.&lt;/p&gt;
-
-&lt;p&gt;Estou utilizando &lt;em&gt;API Unit&lt;/em&gt; em alguns projetos privados e &lt;em&gt;Open Sources&lt;/em&gt; (&lt;a href=&quot;https://github.com/mdbs99/james&quot;&gt;aqui&lt;/a&gt; e &lt;a href=&quot;https://github.com/mdbs99/xavier&quot;&gt;aqui&lt;/a&gt;) e a legibilidade tem melhorado.&lt;/p&gt;
-
-&lt;p&gt;Penso em utilizar o mesmo conceito para delimitar API’s (módulos) em grandes sistemas, mas a &lt;a href=&quot;/posts/interfaces-e-a-referencia-circular-entre-objetos/&quot;&gt;referência circular&lt;/a&gt; entre Units pode ser um problema. Então o design do projeto tem que levar isso em conta desde o início.&lt;/p&gt;
-
-&lt;p&gt;Se vai valer a pena… o tempo dirá.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 30 Oct 2017 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/api-unit</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/api-unit</guid>
       </item>
     
   </channel>
