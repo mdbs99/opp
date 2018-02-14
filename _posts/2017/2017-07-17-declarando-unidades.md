@@ -32,13 +32,13 @@ Determinar uma ordem para declarar as Unidades no código poderá facilitar a ma
 
 ## Introdução {#introducao}
 
-Quando você organiza suas coisas, tem a tendência de manter mais perto, mais fácil de utilizar ou pegar, todos os objetos que são mais utilizados no dia-a-dia, certo?
+Quando organizamos nossas coisas, temos a tendência de manter mais perto todos os objetos que são mais utilizados no dia-a-dia, certo?
 
 Assim também deveria ser com as [Unidades](http://castle-engine.io/modern_pascal_introduction.html#_units) de um Projeto.
 
 A ordem em que aparecem as Unidades no código pode facilitar ou dificultar a manutenção.
 
-Nesse artigo irei lhe mostrar qual a ordem que utilizo ao declarar as Unidades no meus projetos.
+Nesse artigo irei lhe mostrar qual a ordem que utilizo ao declarar as Unidades nos meus projetos.
 
 ## Compilador {#compilador}
 
