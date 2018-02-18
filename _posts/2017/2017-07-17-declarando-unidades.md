@@ -118,7 +118,7 @@ Definir a ordem de declaração das Unidades em cada Unidade de seu projeto pode
 
 Conforme você for adicionando novos identificadores, você terá a certeza que o compilador dará "prioridade" para uso dos identificadores do seu projeto, sem precisar prefixar com o nome da Unidade.
 
-Caso você adicione algum identificador e este entre em conflito com outra Unidade que possui o mesmo nome, basta prefixar esse identificador com o nome da Unidade, seja ela de terceiros ou do próprio ambiente. Entretando esse conflito não existirá nos identificadores das Unidades do seu projeto.
+Caso você adicione algum identificador e este entre em conflito com outra Unidade que possui o mesmo nome, basta prefixar esse identificador com o nome da Unidade, seja ela de terceiros ou do próprio ambiente. Entretanto, esse conflito não existirá nos identificadores das Unidades do seu projeto.
 
 Portanto deixe mais "próximo" do código as Unidades que pertencem ao projeto, ou seja, as Unidades que são mais utilizadas e mais "distantes" as Unidades auxiliares.
 
