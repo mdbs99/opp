@@ -8,6 +8,168 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Listas Genéricas, sem Generics</title>
+        <description>&lt;p&gt;É possível utilizarmos listas genéricas, com checagem de tipo, mas sem o uso da sintaxe com &lt;em&gt;Generics&lt;/em&gt;?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-john-murzaku-269690.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by John Murzaku on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Muitos programadores adoram utilizar novas &lt;em&gt;features&lt;/em&gt; dos compiladores. Uma dessas “novidades” — bem, já faz alguns anos — é o uso de Generics.&lt;/p&gt;
+
+&lt;p&gt;Com Generics é possível, por exemplo, termos listas genéricas que podem ser utilizados com qualquer tipo de classe ou interface. Generics possuem uma “checagem estática” de tipo, tanto para armazenamento como para a recuperação dos itens da lista.&lt;/p&gt;
+
+&lt;p&gt;Ao invés de termos as “velhas” listas de ponteiros, fazendo &lt;em&gt;casting&lt;/em&gt; dos objetos quando acessamos seus itens, hoje, utilizando Generics, podemos utilizar classes de listas já existentes na VCL/LCL para instanciar e manter uma lista de objetos que irão trabalhar com os tipos já definidos no nosso código.&lt;/p&gt;
+
+&lt;p&gt;Na declaração de uma variável de uma lista genérica, informamos o &lt;em&gt;tipo&lt;/em&gt; dos itens que irão compor a lista e o compilador faz o resto do trabalho.&lt;/p&gt;
+
+&lt;p&gt;Esse artigo não irá abordar as vantagens e desvantagens no uso de Generics. Ao invés disso, irei apenas mostrar como &lt;em&gt;simular&lt;/em&gt; uma lista genérica utilizando Object Pascal “clássico”.&lt;/p&gt;
+
+&lt;p&gt;Por quê isso é relevante?&lt;/p&gt;
+
+&lt;p&gt;Existem alguns motivos como, por exemplo, estar trabalhando com código legado numa versão do compilador sem suporte a Generics; almejar uma melhor performance, mesmo utilizando objetos; manter projetos (libs e frameworks) que podem ser utilizados desde os compiladores mais antigos até a versão mais atual.&lt;/p&gt;
+
+&lt;p&gt;O problema de termos uma lista genérica, sem o uso de Generics, é o &lt;em&gt;casting&lt;/em&gt; que precisaríamos fazer todas as vezes que recuperarmos os itens da lista.&lt;/p&gt;
+
+&lt;p&gt;O mesmo &lt;em&gt;casting&lt;/em&gt; seria &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/&quot;&gt;replicado&lt;/a&gt; várias vezes, em todos os pontos que fossem necessário recuperar os objetos.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;uses
+  Contnrs;
+
+type
+  TFoo = class
+    Name: string;
+  end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  F: TFoo;
+  OL: TObjectList;
+begin
+  OL := TObjectList.Create(True);
+  try
+    F := TFoo.Create;
+    F.Name := &#39;Bar&#39;;
+    OL.Add(F);
+    ShowMessage(
+      (OL.Items[0] as TFoo).Name // &amp;lt;&amp;lt;&amp;lt; casting
+    );
+  finally
+    OL.Free;
+  end;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O código acima utiliza a classe &lt;code&gt;TObjectList&lt;/code&gt; da unit &lt;code&gt;Contnrs&lt;/code&gt;. Essa classe trabalha com itens de objetos. Em seu construtor, um argumento &lt;code&gt;boolean&lt;/code&gt; indica que os objetos serão automaticamente liberados quando a lista for destruída.&lt;/p&gt;
+
+&lt;p&gt;Funciona. Mas, o inconveniente é termos que fazer o casting na chamada de &lt;code&gt;Items[]&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;No entanto, é possível não utilizar casting, mesmo sem o uso de Generics. Para tal, vamos utilizar apenas classes simples e sintaxe clássica de Object Pascal.&lt;/p&gt;
+
+&lt;p&gt;Primeiro, precisamos codificar nossa própria lista de objetos, &lt;a href=&quot;/posts/como-utilizar-heranca-apropriadamente/#classes-de-suporte&quot;&gt;sem herdar diretamente de classes de infraestrutura&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TMyObjects = class
+  private
+    FList: TObjectList;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function Add(Obj: TObject): TMyObjects;
+    function Get(Index: Integer): TObject;
+    function Count: Integer;
+end;
+
+{ TMyObjects }
+
+constructor TMyObjects.Create;
+begin
+  FList := TObjectList.Create(True);
+end;
+
+destructor TMyObjects.Destroy;
+begin
+  FList.Free;
+  inherited;
+end;
+
+function TMyObjects.Add(Obj: TObject): TMyObjects;
+begin
+  Result := Self;
+  FList.Add(Obj);
+end;
+
+function TMyObjects.Get(Index: Integer): TObject;
+begin
+  Result := FList.Items[Index];
+end;
+
+function TMyObjects.Count: Integer;
+begin
+  Result := FList.Count;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A classe &lt;code&gt;TMyObjects&lt;/code&gt; poderá ser utilizada para armazenar qualquer tipo de instância de &lt;code&gt;TObject&lt;/code&gt;. Mas, o inconveniente ainda permanece, pois ao utilizar &lt;code&gt;Get(Index)&lt;/code&gt; o casting será necessário.&lt;/p&gt;
+
+&lt;p&gt;Segundo, a solução mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; é utilizarmos &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;herança de classe&lt;/a&gt; e &lt;em&gt;reintroduzir&lt;/em&gt; o método que recupera os objetos, utilizando uma nova assinatura.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TFooObjects = class(TMyObjects)
+  public
+    function Get(Index: Integer): TFoo; reintroduce;
+  end;
+
+{ TFooObjects }
+
+function TFooObjects.Get(Index: Integer): TFoo;
+begin
+  Result := inherited Get(Index) as TFoo;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A nova classe &lt;code&gt;TFooObjects&lt;/code&gt; tem uma nova assinatura de &lt;code&gt;Get()&lt;/code&gt;. Isso quer dizer que quando o desenvolvedor utilizar o &lt;em&gt;code-completion&lt;/em&gt; da IDE, apenas essa “versão” do &lt;code&gt;Get(Index: Integer): TFoo&lt;/code&gt; será exibida.&lt;/p&gt;
+
+&lt;p&gt;Então, podemos alterar o código de teste anterior para utilizar a nova classe:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure TForm1.Button1Click(Sender: TObject);
+var
+  F: TFoo;
+  OL: TFooObjects;
+begin
+  OL := TFooObjects.Create;
+  try
+    F := TFoo.Create;
+    F.Name := &#39;Bar&#39;;
+    OL.Add(F);
+    ShowMessage(OL.Get(0).Name);
+  finally
+    OL.Free;
+  end;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Sem casting, limpo e mais “elegante” do que utilizar Generics.&lt;/p&gt;
+
+&lt;p&gt;A mesma técnica deve ser utilizada para o método &lt;code&gt;Add(Obj)&lt;/code&gt; afim de certificarmos que apenas instâncias de &lt;code&gt;TFoo&lt;/code&gt; serão armazenadas.&lt;/p&gt;
+
+&lt;p&gt;A classe &lt;code&gt;TMyObjects&lt;/code&gt; foi codificada apenas uma vez e poderá ser reutilizada como base para várias outras classes.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, alguns desenvolvedores poderão sugerir que tivemos que implementar “muito” código para ter a mesma funcionalidade que a sintaxe de Generics já nos dá. Bem, isso depende do ponto de vista. Além dos motivos sugeridos nesse artigo, o &lt;em&gt;não&lt;/em&gt; uso de Generics pode fazer muito sentido quando estamos trabalhando na Camada de Negócio, onde o código deve representar as Regras de Negócio do cliente. Uma classe “inchada” com dezenas de métodos de manipulação de itens na lista pode não representar fielmente, por exemplo, uma “lista de produtos” do cliente.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, é você quem vai decidir sobre os &lt;em&gt;trade-offs&lt;/em&gt; envolvidos no design do seu código. Mas, sempre tenha em mente que nem tudo que é &lt;em&gt;antigo&lt;/em&gt; será pior que o mais &lt;em&gt;novo&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/listas-genericas-sem-generics</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/listas-genericas-sem-generics</guid>
+      </item>
+    
+      <item>
         <title>Namespaces Inteligentes</title>
         <description>&lt;p&gt;Na minha opinião, a implementação atual de Namespaces no Delphi poderia ser muito mais inteligente, simples e sem ambiguidades.&lt;/p&gt;
 
@@ -1139,149 +1301,6 @@ end.
         <pubDate>Mon, 20 Nov 2017 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/eliminando-metodos-privados</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/eliminando-metodos-privados</guid>
-      </item>
-    
-      <item>
-        <title>Classes Aninhadas</title>
-        <description>&lt;p&gt;As Classes Aninhadas reduzem o número de Classes públicas, melhoram o encapsulamento, o polimorfismo local e a legibilidade do código.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-iorni-321845.jpg&quot; alt=&quot;Unsplash image&quot; /&gt; 
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by iorni on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;A maneira mais fácil (preguiçosa e errada) de reaproveitar código é utilizando &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;herança&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Esse é o início do aprendizado sobre &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Como muito mais tempo, aprendemos que a &lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;Decoração&lt;/a&gt; e Composição de Objetos é o &lt;em&gt;melhor&lt;/em&gt; caminho para &lt;em&gt;adicionar&lt;/em&gt; e &lt;em&gt;reaproveitar&lt;/em&gt; comportamento, respectivamente.&lt;/p&gt;
-
-&lt;p&gt;Classes Aninhadas tem tudo haver com Decoração e Composição.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo você irá aprender como utilizar Classes Aninhadas para melhorar o encapsulamento e polimorfismo, acrescentando comportamento específico e localizado, sem o uso de &lt;em&gt;“Class Helpers”&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;classes-aninhadas&quot;&gt;Classes Aninhadas&lt;/h2&gt;
-
-&lt;p&gt;A linguagem Object Pascal, apesar de ser bem antiga, está em constante desenvolvimento.&lt;/p&gt;
-
-&lt;p&gt;Mas, eu sou avesso a grandes mudanças na linguagem. Em qualquer linguagem.&lt;/p&gt;
-
-&lt;p&gt;Também não sou a favor de acrescentar novas &lt;em&gt;features&lt;/em&gt; apenas por quê existem em &lt;em&gt;outras&lt;/em&gt; linguagens.&lt;/p&gt;
-
-&lt;p&gt;Quanto mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; for uma linguagem, mais fácil será o entendimento do código.&lt;/p&gt;
-
-&lt;p&gt;Na minha opinião, ao invés de acrescentar novas &lt;em&gt;features&lt;/em&gt; numa linguagem, os desenvolvedores deviam trabalhar em novas &lt;em&gt;Libraries&lt;/em&gt; que resolvem problemas específicos.&lt;/p&gt;
-
-&lt;p&gt;No entanto, algumas &lt;em&gt;features&lt;/em&gt; realmente podem fazer a diferença, ou seja, tornar o código melhor e mais simples.&lt;/p&gt;
-
-&lt;p&gt;O conceito de Classes Aninhadas é simples: Permitir a declaração de Classes dentro de Classes. Sejam elas privadas ou públicas.&lt;/p&gt;
-
-&lt;p&gt;Veja um exemplo da sintaxe:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/96820c816ffa3e1eb5296a330e3a1cef.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;No código acima, para declarar uma Classe &lt;code&gt;TBar&lt;/code&gt;, foi necessário fazer a referência a Classe &lt;code&gt;TFoo&lt;/code&gt;, primeiramente.&lt;/p&gt;
-
-&lt;p&gt;Então, &lt;code&gt;TBar&lt;/code&gt; é uma Classe Aninhada em &lt;code&gt;TFoo&lt;/code&gt; ou, em outras palavras, &lt;code&gt;TBar&lt;/code&gt; está encapsulada em &lt;code&gt;TFoo&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Acredito que para o compilador, uma Classe Aninhada é apenas outra qualquer. Não há penalidades no código. A primeira Classe da hierarquia &lt;em&gt;não&lt;/em&gt; irá criar Objetos maiores devido as Classes Aninhadas.&lt;/p&gt;
-
-&lt;p&gt;Para nós, desenvolvedores, é apenas um &lt;a href=&quot;https://en.wikipedia.org/wiki/Syntactic_sugar&quot;&gt;&lt;em&gt;Syntactic sugar&lt;/em&gt;&lt;/a&gt; que parece não valer muito a pena prestar atenção.&lt;/p&gt;
-
-&lt;p&gt;No entanto, para um &lt;em&gt;design&lt;/em&gt; realmente &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientado a Objetos&lt;/a&gt;, esta é uma &lt;em&gt;feature&lt;/em&gt; que proporciona uma &lt;em&gt;grande&lt;/em&gt; melhoria no código.&lt;/p&gt;
-
-&lt;h2 id=&quot;redescobrindo&quot;&gt;Redescobrindo&lt;/h2&gt;
-
-&lt;p&gt;O fato é que não faz tanto tampo que eu descobri que a linguagem Object Pascal tem suporte a Classes Aninhadas. Bem, talvez eu já tenha lido sobre isso já faz alguns anos, mas a verdade é que eu nunca tinha utilizado tal recurso em sistemas reais.&lt;/p&gt;
-
-&lt;p&gt;Há 3 semanas atrás, esse conceito retornou a minha mente após receber um e-mail relacionado a uma nova &lt;em&gt;issue&lt;/em&gt; num sistema privado.&lt;/p&gt;
-
-&lt;p&gt;Eu tinha que fazer uma manutenção no código e um dos requisitos dizia que uma parte do sistema deveria se comportar de maneira ligeiramente diferente da condição atual, mas por um curto período de tempo.&lt;/p&gt;
-
-&lt;p&gt;O motivo era que um segundo sistema estava sendo alterado e, enquanto essa tarefa não estivesse concluída, o primeiro sistema deveria se comportar de acordo com o requisito citado.&lt;/p&gt;
-
-&lt;p&gt;Como o sistema é privado, o requisito real é irrelevante.&lt;/p&gt;
-
-&lt;p&gt;Mas, para que você entenda como as Classes Aninhadas me ajudaram a implementar o requisito de forma simples, clássica e seguindo os &lt;a href=&quot;lista-vip/&quot;&gt;princípios&lt;/a&gt; da Orientação a Objetos, vou apresentar uma forma bem simplificada do que deveria ser alterado no código para a solução da tarefa.&lt;/p&gt;
-
-&lt;h2 id=&quot;problema&quot;&gt;O Problema&lt;/h2&gt;
-
-&lt;p&gt;Imagine que você tenha uma Unit com algumas Classes.&lt;/p&gt;
-
-&lt;p&gt;Essas Classes utilizam outras Classes de outras Units.&lt;/p&gt;
-
-&lt;p&gt;Para implementar o requisito, uma dessas Classes deveria ser alterada. No entanto, a alteração era relacionada com a Composição de outra Classe — na verdade eram outras Classes, no plural, mas vamos manter simples.&lt;/p&gt;
-
-&lt;p&gt;Então temos o seguinte:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;A Classe &lt;code&gt;TFoo&lt;/code&gt; é a que temos que alterar. No entanto ela trabalha com uma instância de &lt;code&gt;TBar&lt;/code&gt; internamente — novamente, por motivos de simplificação, vamos esquecer que a instância de &lt;code&gt;TBar&lt;/code&gt; deveria ser &lt;a href=&quot;/injecao-de-dependencia&quot;&gt;injetada&lt;/a&gt; no &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtor&lt;/a&gt; da Classe &lt;code&gt;TFoo&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;A interação entre as Classes &lt;code&gt;TFoo&lt;/code&gt; e &lt;code&gt;TBar&lt;/code&gt; era o que deveria ser alterado para a conclusão do requisito. No entanto, todas as outras Classes pertencentes a mesma Unit de &lt;code&gt;TFoo&lt;/code&gt; deveriam continuar com o mesmo comportamento atual. Em outras palavras, a Classe &lt;code&gt;TBar&lt;/code&gt; deveria ser alterada &lt;em&gt;apenas&lt;/em&gt; na implementação (local) de &lt;code&gt;TFoo&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Temos várias maneiras de implementar isso, é claro.&lt;/p&gt;
-
-&lt;p&gt;Antes, vamos &lt;a href=&quot;/posts/nomeando-unidades/&quot;&gt;nomear&lt;/a&gt; algumas coisas para facilitar o entendimento:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code&gt;Acme.Foos.Clss&lt;/code&gt; -&amp;gt; é a Unit onde a Classe &lt;code&gt;TFoo&lt;/code&gt; está declarada;&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Acme.Bars.Clss&lt;/code&gt; -&amp;gt; é a Unit onde a Classe &lt;code&gt;TBar&lt;/code&gt; está declarada;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Então, para implementar o requisito, nós poderíamos:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Implementar uma nova Classe na Sessão de Interface da &lt;code&gt;Acme.Bars.Clss&lt;/code&gt; chamada &lt;code&gt;TBarEx&lt;/code&gt; ou;&lt;/li&gt;
-  &lt;li&gt;Implementar uma nova Classe na Sessão de Interface da &lt;code&gt;Acme.Foos.Clss&lt;/code&gt; chamada &lt;code&gt;TBarEx&lt;/code&gt; ou;&lt;/li&gt;
-  &lt;li&gt;Criar uma nova Unit &lt;code&gt;Acme.Bars.Ex.Clss&lt;/code&gt; e implementar uma nova Classe chamada &lt;code&gt;TBarEx&lt;/code&gt; ou;&lt;/li&gt;
-  &lt;li&gt;Implementar uma nova Classe chamada &lt;code&gt;TBarEx&lt;/code&gt; na Sessão de Implementação da unit &lt;code&gt;Acme.Foos.Clss&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;O caminho a ser escolhido é quase infinito, porém essas seriam as opções mais comuns, considerando que não queremos fazer uma refatoração muito grande no código. Será uma alteração temporária, lembra?&lt;/p&gt;
-
-&lt;p&gt;Infelizmente, existem problemas de &lt;em&gt;design&lt;/em&gt; com todas as opções acima.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Implementar a nova Classe &lt;code&gt;TBarEx&lt;/code&gt; na Sessão de Interface de &lt;code&gt;Acme.Bars.Clss&lt;/code&gt; ou &lt;code&gt;Acme.Foos.Clss&lt;/code&gt; irá disponibilizar a nova Classe para todo o sistema. Como é uma Classe temporária, ela não deveria estar disponível… não dessa forma.&lt;/li&gt;
-  &lt;li&gt;Criar uma nova Unit &lt;code&gt;Acme.Bars.Ex.Clss&lt;/code&gt; é ainda pior, pois depois de algum tempo a Unit deverá ser removida, havendo mais alterações no código.&lt;/li&gt;
-  &lt;li&gt;Por fim, implementar uma nova Classe chamada &lt;code&gt;TBarEx&lt;/code&gt; na Sessão de Implementação da unit &lt;code&gt;Acme.Foos.Clss&lt;/code&gt; seria a opção mais viável. No entanto não teria sido um código elegante, pois essa nova Classe seria criada para apenas para um caso específico mas elas estaria disponível para a Unit inteira. Também tem o fato de que a Classe &lt;em&gt;deve&lt;/em&gt; ter um nome diferente (&lt;code&gt;TBar&lt;/code&gt; vs &lt;code&gt;TBarEx&lt;/code&gt;) — esse é um dos motivos de adicionarmos prefixos ou sufixos estranhos — para não haver conflito com todas as instâncias de &lt;code&gt;TBar&lt;/code&gt; que continuam sendo utilizadas por toda a Unit &lt;code&gt;Acme.Foos.Clss&lt;/code&gt;. O ideal seria continuar utilizando a nomenclatura &lt;code&gt;TBar&lt;/code&gt;, de acordo com o domínio. Mas, infelizmente, a técnica de &lt;a href=&quot;/redeclarando-classes&quot;&gt;redeclaração de Classes&lt;/a&gt; não seria possível, pois só queremos uma &lt;code&gt;TBar&lt;/code&gt; diferente em apenas um lugar na Unit.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Eu não escolhi nenhuma das possíveis soluções acima.&lt;/p&gt;
-
-&lt;h2 id=&quot;solucionando&quot;&gt;A Solução&lt;/h2&gt;
-
-&lt;p&gt;Após pensar por alguns minutos sobre como resolver o requisito, o conceito de Classes Aninhadas retornou a minha mente como a melhor escolha.&lt;/p&gt;
-
-&lt;p&gt;A solução é tão simples que você já a conhece. Está no início desse artigo!&lt;/p&gt;
-
-&lt;p&gt;Vou apenas adicionar mais código para deixar a implementação mais contextualizada:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/b292e33439d9867b2c8c92d8caba4a96.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Agora, em todos os métodos de &lt;code&gt;TFoo&lt;/code&gt; que for preciso decorar instâncias de &lt;code&gt;IBar&lt;/code&gt;, uma Classe de &lt;a href=&quot;/posts/nomeando-classes/&quot;&gt;nomenclatura&lt;/a&gt; simples e &lt;em&gt;local&lt;/em&gt; poderá ser utilizada sem haver conflito de nomes na Unit.&lt;/p&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;TFoo&lt;/code&gt; tem sua própria implementação privada de &lt;code&gt;TBar&lt;/code&gt;. Nenhum outro código no sistema poderá utilizar essa implementação.&lt;/p&gt;
-
-&lt;p&gt;É uma solução &lt;em&gt;local&lt;/em&gt;, sem &lt;em&gt;workarounds&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Espero que os exemplos não tenham sido muito abstratos. A ideia foi mostrar o potencial dessa simples &lt;em&gt;feature&lt;/em&gt; sem deixar o artigo muito longo.&lt;/p&gt;
-
-&lt;p&gt;É uma solução simples e bastante elegante. Totalmente de acordo com os princípios da Orientação a Objetos, encapsulamento e polimorfismo.&lt;/p&gt;
-
-&lt;p&gt;A nomenclatura das Classes é simples, mantendo a legibilidade do código.&lt;/p&gt;
-
-&lt;p&gt;A linguagem Object Pascal continua a me surpreender, mesmo após mais de 16 anos que a utilizo.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 13 Nov 2017 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/classes-aninhadas</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/classes-aninhadas</guid>
       </item>
     
   </channel>

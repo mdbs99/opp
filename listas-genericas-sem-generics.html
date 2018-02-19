@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Imutabilidade do Estado &#8211; Object Pascal Programming</title>
+    <title>Listas Genéricas, sem Generics &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
     <meta name="keywords" content="">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object-pascal, object-oriented, oop, mdbs99, imutabilidade, immutability, imutable">
-    <link rel="canonical" href="http://objectpascalprogramming.com/imutabilidade-do-estado">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, generics">
+    <link rel="canonical" href="http://objectpascalprogramming.com/listas-genericas-sem-generics">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Imutabilidade do Estado">
-    <meta property="og:description" content="Na Orientação a Objetos, um Objeto pode ser considerável Imutável mesmo que ele... mude.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/imutabilidade-do-estado">
+    <meta property="og:title" content="Listas Genéricas, sem Generics">
+    <meta property="og:description" content="É possível utilizarmos listas genéricas, com checagem de tipo, mas sem o uso da sintaxe com *Generics*?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/listas-genericas-sem-generics">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-morgan-harper-nichols-157838.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-john-murzaku-269690.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Imutabilidade do Estado" />
+    <meta name="twitter:title" content="Listas Genéricas, sem Generics" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/imutabilidade-do-estado" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/listas-genericas-sem-generics" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,8 +191,8 @@
 
 
 <div class="post-header mb2">
-  <h1>Imutabilidade do Estado</h1>
-  <span class="post-meta">Jul 31, 2017</span><br>
+  <h1>Listas Genéricas, sem Generics</h1>
+  <span class="post-meta">Feb 19, 2018</span><br>
   
   <span class="post-meta small">
   
@@ -202,110 +202,158 @@
 </div>
 
 <article class="post-content">
-  <p>Na Orientação a Objetos, um Objeto pode ser considerável Imutável mesmo que ele… mude.</p>
+  <p>É possível utilizarmos listas genéricas, com checagem de tipo, mas sem o uso da sintaxe com <em>Generics</em>?</p>
 
 <!--more-->
 
-<p><img src="/images/2017/photo-morgan-harper-nichols-157838.jpg" alt="Unsplash image" />
-<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Morgan Harper Nichols on Unsplash</span></p>
+<p><img src="/images/2018/photo-john-murzaku-269690.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by John Murzaku on Unsplash</span></p>
 
-<h2 id="introducao">Introdução</h2>
+<p>Muitos programadores adoram utilizar novas <em>features</em> dos compiladores. Uma dessas “novidades” — bem, já faz alguns anos — é o uso de Generics.</p>
 
-<p>O aprendizado de um conceito complexo, tende a ser melhor absorvido se dividirmos o conceito em pequenas partes.</p>
+<p>Com Generics é possível, por exemplo, termos listas genéricas que podem ser utilizados com qualquer tipo de classe ou interface. Generics possuem uma “checagem estática” de tipo, tanto para armazenamento como para a recuperação dos itens da lista.</p>
 
-<p>Por exemplo, quando começamos a aprender Inglês, nos é ensinado que, para nos referirmos a algo que ocorreu no passado, devemos utilizar os verbos no passado para fazer afirmações ou utilizamos o verbo modal <em>did</em> ou <em>did not</em> para fazermos perguntas ou negações. Esse é o tempo verbal <em>Simple Past</em>.</p>
+<p>Ao invés de termos as “velhas” listas de ponteiros, fazendo <em>casting</em> dos objetos quando acessamos seus itens, hoje, utilizando Generics, podemos utilizar classes de listas já existentes na VCL/LCL para instanciar e manter uma lista de objetos que irão trabalhar com os tipos já definidos no nosso código.</p>
 
-<p>Exemplo: <em>I saw this movie</em> (tradução: eu vi esse filme).</p>
+<p>Na declaração de uma variável de uma lista genérica, informamos o <em>tipo</em> dos itens que irão compor a lista e o compilador faz o resto do trabalho.</p>
 
-<p>Então, quando você começa a estudar mais a língua, descobre que existe muitas outras maneiras de expressar algo que ocorreu no passado. Por exemplo, o uso do tempo verbal <em>Present Perfect</em>.</p>
+<p>Esse artigo não irá abordar as vantagens e desvantagens no uso de Generics. Ao invés disso, irei apenas mostrar como <em>simular</em> uma lista genérica utilizando Object Pascal “clássico”.</p>
 
-<p>Exemplo: <em>I have seen this movie</em> (tradução: eu vi esse filme).</p>
+<p>Por quê isso é relevante?</p>
 
-<p>Aqui vemos o uso do verbo modal <em>have</em> e o uso do <em>Past Participle</em> do verbo <em>to see</em>.</p>
+<p>Existem alguns motivos como, por exemplo, estar trabalhando com código legado numa versão do compilador sem suporte a Generics; almejar uma melhor performance, mesmo utilizando objetos; manter projetos (libs e frameworks) que podem ser utilizados desde os compiladores mais antigos até a versão mais atual.</p>
 
-<p>Ambas as frases dizem o mesmo quando traduzimos para o Português, porém a segunda frase pode ser considerada mais <em>correta</em> do que a primeira — você só descobre isso depois que aprende o <em>Present Perfect</em>.
-Mas isso não é um blog de Inglês, vamos voltar para a Orientação a Objetos.</p>
+<p>O problema de termos uma lista genérica, sem o uso de Generics, é o <em>casting</em> que precisaríamos fazer todas as vezes que recuperarmos os itens da lista.</p>
 
-<p>Essa introdução é para lhe mostrar que primeiro devemos aprender um conceito na sua forma mais simples; depois aprimoramos.</p>
+<p>O mesmo <em>casting</em> seria <a href="/posts/codigo-duplicado-talvez-nao/">replicado</a> várias vezes, em todos os pontos que fossem necessário recuperar os objetos.</p>
 
-<h2 id="conceitos">Conceitos da Imutabilidade</h2>
+<p>Por exemplo:</p>
 
-<p>Quando você aprendeu sobre <a href="/posts/objetos-imutaveis/">Imutabilidade</a> pode ter pensado que um Objeto é imutável se, depois de criado, nada é alterado dentro dele ou que o Objeto retorna sempre a mesma informação quando um método é chamado.</p>
+<pre><code>uses
+  Contnrs;
 
-<p>Bem, não é tão simples assim.</p>
+type
+  TFoo = class
+    Name: string;
+  end;
 
-<p>Diferentemente das linguagens funcionais, onde tudo é imutável por padrão, na Orientação a Objetos esse conceito pode ser mais amplo.</p>
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  F: TFoo;
+  OL: TObjectList;
+begin
+  OL := TObjectList.Create(True);
+  try
+    F := TFoo.Create;
+    F.Name := 'Bar';
+    OL.Add(F);
+    ShowMessage(
+      (OL.Items[0] as TFoo).Name // &lt;&lt;&lt; casting
+    );
+  finally
+    OL.Free;
+  end;
+end;
+</code></pre>
 
-<p>Vamos ver alguns conceitos.</p>
+<p>O código acima utiliza a classe <code>TObjectList</code> da unit <code>Contnrs</code>. Essa classe trabalha com itens de objetos. Em seu construtor, um argumento <code>boolean</code> indica que os objetos serão automaticamente liberados quando a lista for destruída.</p>
 
-<h3 id="ex1">Conteúdo Externo</h3>
+<p>Funciona. Mas, o inconveniente é termos que fazer o casting na chamada de <code>Items[]</code>.</p>
 
-<p>Uma classe que representa um arquivo pode ser imútável de duas maneiras:</p>
+<p>No entanto, é possível não utilizar casting, mesmo sem o uso de Generics. Para tal, vamos utilizar apenas classes simples e sintaxe clássica de Object Pascal.</p>
 
-<script src="https://gist.github.com/mdbs99/48237c902271b6f2c3a314d3b6f5b8c0.js"></script>
+<p>Primeiro, precisamos codificar nossa própria lista de objetos, <a href="/posts/como-utilizar-heranca-apropriadamente/#classes-de-suporte">sem herdar diretamente de classes de infraestrutura</a>:</p>
 
-<p>No código acima, o método <code>TFile.Stream: IDataStream</code> sempre irá retornar o mesmo valor lido na primeira execução.</p>
+<pre><code>type
+  TMyObjects = class
+  private
+    FList: TObjectList;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function Add(Obj: TObject): TMyObjects;
+    function Get(Index: Integer): TObject;
+    function Count: Integer;
+end;
 
-<p>O Objeto é imutável e <em>constante</em>.</p>
+{ TMyObjects }
 
-<p>Mas, e se alterarmos o método confome abaixo, a classe continuaria sendo imutável?</p>
+constructor TMyObjects.Create;
+begin
+  FList := TObjectList.Create(True);
+end;
 
-<script src="https://gist.github.com/mdbs99/0aea75fefaf8612d0bc84d5fc9ce85a0.js"></script>
+destructor TMyObjects.Destroy;
+begin
+  FList.Free;
+  inherited;
+end;
 
-<p>Sim, com certeza.</p>
+function TMyObjects.Add(Obj: TObject): TMyObjects;
+begin
+  Result := Self;
+  FList.Add(Obj);
+end;
 
-<p>Apesar do retorno do método poder ser diferente em cada chamada — o conteúdo do arquivo pode ser alterado por outro processo — o Objeto continuaria sendo imutável pois seu <a href="/estado-do-objeto">Estado</a> (<code>FFilePath</code>) não foi alterado.</p>
+function TMyObjects.Get(Index: Integer): TObject;
+begin
+  Result := FList.Items[Index];
+end;
 
-<p>Ele é imutável, porém <em>não</em> é constante.</p>
+function TMyObjects.Count: Integer;
+begin
+  Result := FList.Count;
+end;
+</code></pre>
 
-<p>O mesmo conceito se aplica para um conteúdo vindo de um Banco de Dados, site na Web, etc.</p>
+<p>A classe <code>TMyObjects</code> poderá ser utilizada para armazenar qualquer tipo de instância de <code>TObject</code>. Mas, o inconveniente ainda permanece, pois ao utilizar <code>Get(Index)</code> o casting será necessário.</p>
 
-<h3 id="ex2">Conteúdo em Memória</h3>
+<p>Segundo, a solução mais <a href="/posts/simplicidade/">simples</a> é utilizarmos <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">herança de classe</a> e <em>reintroduzir</em> o método que recupera os objetos, utilizando uma nova assinatura.</p>
 
-<p>Uma lista de Objetos é considerada mutável se adicionarmos itens após ela ter sido criada?</p>
+<pre><code>type
+  TFooObjects = class(TMyObjects)
+  public
+    function Get(Index: Integer): TFoo; reintroduce;
+  end;
 
-<p>Vejamos no código:</p>
+{ TFooObjects }
 
-<script src="https://gist.github.com/mdbs99/af8769161d1b111128349b05b74bccb9.js"></script>
+function TFooObjects.Get(Index: Integer): TFoo;
+begin
+  Result := inherited Get(Index) as TFoo;
+end;
+</code></pre>
 
-<p><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Copyright (c) <a href="https://github.com/mdbs99/james">James Project</a></span></p>
+<p>A nova classe <code>TFooObjects</code> tem uma nova assinatura de <code>Get()</code>. Isso quer dizer que quando o desenvolvedor utilizar o <em>code-completion</em> da IDE, apenas essa “versão” do <code>Get(Index: Integer): TFoo</code> será exibida.</p>
 
-<p>A Classe <code>TDataParams</code> encapsula uma lista do tipo <code>TInterfaceList</code>.</p>
+<p>Então, podemos alterar o código de teste anterior para utilizar a nova classe:</p>
 
-<p>A cada inclusão de um novo item, é delegada à essa lista interna, a persistência em memória dos Objetos.</p>
+<pre><code>procedure TForm1.Button1Click(Sender: TObject);
+var
+  F: TFoo;
+  OL: TFooObjects;
+begin
+  OL := TFooObjects.Create;
+  try
+    F := TFoo.Create;
+    F.Name := 'Bar';
+    OL.Add(F);
+    ShowMessage(OL.Get(0).Name);
+  finally
+    OL.Free;
+  end;
+end;
+</code></pre>
 
-<p>Você acha que, assim, estamos alterando o Estado (<code>FList</code>) do Objeto?</p>
+<p>Sem casting, limpo e mais “elegante” do que utilizar Generics.</p>
 
-<p>Não estamos.</p>
+<p>A mesma técnica deve ser utilizada para o método <code>Add(Obj)</code> afim de certificarmos que apenas instâncias de <code>TFoo</code> serão armazenadas.</p>
 
-<p>O motivo é que não estamos redefinindo <code>FList</code>. Não estamos recriando uma nova lista.</p>
+<p>A classe <code>TMyObjects</code> foi codificada apenas uma vez e poderá ser reutilizada como base para várias outras classes.</p>
 
-<p>Uma lista de itens está sendo criada em memória — blocos de memória — mas o endereço inicial de <code>FList</code> continua intacto.</p>
+<p>Entretanto, alguns desenvolvedores poderão sugerir que tivemos que implementar “muito” código para ter a mesma funcionalidade que a sintaxe de Generics já nos dá. Bem, isso depende do ponto de vista. Além dos motivos sugeridos nesse artigo, o <em>não</em> uso de Generics pode fazer muito sentido quando estamos trabalhando na Camada de Negócio, onde o código deve representar as Regras de Negócio do cliente. Uma classe “inchada” com dezenas de métodos de manipulação de itens na lista pode não representar fielmente, por exemplo, uma “lista de produtos” do cliente.</p>
 
-<p>Além disso, <code>FList</code> é um <a href="/atributos-primarios-secundarios#secundarios">Atributo Secundário</a>, então nós até poderíamos redefinir esse atributo sem estar em desacordo com o princípio. Mas, se a instância da lista fosse passada no construtor, então não poderíamos redefinir o Objeto, pois esse seria considerado como um <a href="/atributos-primarios-secundarios#primarios">Atributo Primário</a>.</p>
-
-<h2 id="estado">Imutabilidade do Estado</h2>
-
-<p>Se mesmo após algumas mudanças internas ou externas ao Objeto, ele continua sendo considerado imutável, como saber se não estamos violando o princípio da Imutabilidade?</p>
-
-<p><strong>Simples</strong>: Se o <a href="/estado-do-objeto">Estado do Objeto</a>, ou seja, seus <a href="/atributos-primarios-secundarios#primarios">Atributos Primários</a>, não for alterado/redefinindo, então ele é imutável.</p>
-
-<p>Uma vez que um atributo é instânciado, ele não poderá ter seu <em>endereço de memória</em> alterado. Esses atributos serão inicializados no <a href="/posts/construtores-da-classe-primario-secundarios/">construtor</a> da classe e jamais poderão ser reinicializados.</p>
-
-<p>Seu Objeto deve ser <em>fiél</em> aos argumentos passados no construtor da Classe, no entanto ele é <em>livre</em> para trabalhar e responder o que quiser em seus métodos.</p>
-
-<h2 id="conclusao">Conclusão</h2>
-
-<p>Imutabilidade, na Orientação a Objetos, não é só sobre as não-mudanças internas ou externas ao Objeto, mas sim sobre não alterar o Estado Primário do Objeto.</p>
-
-<p>Não confunda <a href="/posts/classes-de-dados/">dados</a> com o Estado do Objeto.</p>
-
-<p>Infelizmente nenhum compilador <em>Object Pascal</em> que eu conheça possui uma sintaxe para que essas regras não sejam quebradas. Java, por exemplo, tem atributos <em>final</em> onde, uma vez inicializados, não podem ter seu endereço de memória substituído.</p>
-
-<p>Sven Barth, um integrante do FPC team, <a href="http://lists.freepascal.org/pipermail/fpc-pascal/2017-July/051941.html">me falou</a> sobre um <code>{$modeswitch
-finalfields}</code> que foi implementado para a interoperabilidade do FPC para a JVM plataforma, porém ainda não disponível.</p>
-
-<p>Então temos que trabalhar apenas com o conceito ou utilizar ferramentas de verificação de código para que essa regra não seja quebrada.</p>
+<p>Finalmente, é você quem vai decidir sobre os <em>trade-offs</em> envolvidos no design do seu código. Mas, sempre tenha em mente que nem tudo que é <em>antigo</em> será pior que o mais <em>novo</em>.</p>
 
 <p>Até logo.</p>
 
@@ -317,33 +365,33 @@ finalfields}</code> que foi implementado para a interoperabilidade do FPC para a
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/imutabilidade-do-estado" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/listas-genericas-sem-generics" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Imutabilidade do Estado&via=mdbs99;url=http://objectpascalprogramming.com/imutabilidade-do-estado" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Listas Genéricas, sem Generics&via=mdbs99;url=http://objectpascalprogramming.com/listas-genericas-sem-generics" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/imutabilidade-do-estado" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/listas-genericas-sem-generics" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/imutabilidade-do-estado&title=Imutabilidade do Estado" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/imutabilidade-do-estado&title=Imutabilidade do Estado" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/listas-genericas-sem-generics&title=Listas Genéricas, sem Generics" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/imutabilidade-do-estado&t=Imutabilidade do Estado" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/listas-genericas-sem-generics&title=Listas Genéricas, sem Generics" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/listas-genericas-sem-generics&t=Listas Genéricas, sem Generics" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -390,15 +438,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/listas-genericas-sem-generics" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Listas Genéricas, sem Generics</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/namespaces-inteligentes" class="post-link">
@@ -481,6 +520,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/classes-aninhadas" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Aninhadas</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -488,8 +536,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/imutabilidade-do-estado';
-      var disqus_title      = 'Imutabilidade do Estado';
+      var disqus_identifier = '/listas-genericas-sem-generics';
+      var disqus_title      = 'Listas Genéricas, sem Generics';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

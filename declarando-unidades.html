@@ -15,7 +15,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201802050157" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201802190309" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -210,13 +210,13 @@
 
 <h2 id="introducao">Introdução</h2>
 
-<p>Quando você organiza suas coisas, tem a tendência de manter mais perto, mais fácil de utilizar ou pegar, todos os objetos que são mais utilizados no dia-a-dia, certo?</p>
+<p>Quando organizamos nossas coisas, temos a tendência de manter mais perto todos os objetos que são mais utilizados no dia-a-dia, certo?</p>
 
 <p>Assim também deveria ser com as <a href="http://castle-engine.io/modern_pascal_introduction.html#_units">Unidades</a> de um Projeto.</p>
 
 <p>A ordem em que aparecem as Unidades no código pode facilitar ou dificultar a manutenção.</p>
 
-<p>Nesse artigo irei lhe mostrar qual a ordem que utilizo ao declarar as Unidades no meus projetos.</p>
+<p>Nesse artigo irei lhe mostrar qual a ordem que utilizo ao declarar as Unidades nos meus projetos.</p>
 
 <h2 id="compilador">Compilador</h2>
 
@@ -299,7 +299,7 @@ uses
 
 <p>Conforme você for adicionando novos identificadores, você terá a certeza que o compilador dará “prioridade” para uso dos identificadores do seu projeto, sem precisar prefixar com o nome da Unidade.</p>
 
-<p>Caso você adicione algum identificador e este entre em conflito com outra Unidade que possui o mesmo nome, basta prefixar esse identificador com o nome da Unidade, seja ela de terceiros ou do próprio ambiente. Entretando esse conflito não existirá nos identificadores das Unidades do seu projeto.</p>
+<p>Caso você adicione algum identificador e este entre em conflito com outra Unidade que possui o mesmo nome, basta prefixar esse identificador com o nome da Unidade, seja ela de terceiros ou do próprio ambiente. Entretanto, esse conflito não existirá nos identificadores das Unidades do seu projeto.</p>
 
 <p>Portanto deixe mais “próximo” do código as Unidades que pertencem ao projeto, ou seja, as Unidades que são mais utilizadas e mais “distantes” as Unidades auxiliares.</p>
 
@@ -388,6 +388,15 @@ Gostaria de me pagar um café?
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
+      <a href="/listas-genericas-sem-generics" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Listas Genéricas, sem Generics</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/namespaces-inteligentes" class="post-link">
         <ul>
           <h4 class="post-title"><li>Namespaces Inteligentes</li></h4>
@@ -463,15 +472,6 @@ Gostaria de me pagar um café?
       <a href="/eliminando-metodos-privados" class="post-link">
         <ul>
           <h4 class="post-title"><li>Eliminando Métodos Privados</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/classes-aninhadas" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Classes Aninhadas</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
       </a>
