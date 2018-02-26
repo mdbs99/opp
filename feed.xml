@@ -8,6 +8,97 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Construtores Virtuais</title>
+        <description>&lt;p&gt;A linguagem Object Pascal possui uma feature que não existe em nenhuma outra linguagem &lt;i&gt;mainstream&lt;/i&gt; do mercado.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-eddie-kopp-264813-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Eddie Kopp on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Construtores Virtuais permitem a criação customizada de novas instâncias sem a necessidade do uso de classes de fábricas.&lt;/p&gt;
+
+&lt;p&gt;É possível que desenvolvedores Object Pascal ao redor do mundo utilizem essa feature diariamente mesmo sem saber que só é possível utilizá-la na linguagem Object Pascal.&lt;/p&gt;
+
+&lt;p&gt;Toda classe possui um ou mais &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt; no qual são responsáveis por instanciar um novo objeto.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, ter um construtor virtual &lt;a href=&quot;https://stackoverflow.com/questions/3651354/in-net-can-a-class-have-virtual-constructor&quot;&gt;não é comum&lt;/a&gt; em outras linguagens.&lt;/p&gt;
+
+&lt;p&gt;Diferentemente das demais linguagens, os construtores na linguagem Object Pascal são como métodos “marcados” para serem construtores. Um fato sobre isso é que, em Object Pascal, podemos dar o nome que quisermos aos construtores — mesmo que o padrão de nomenclatura recomendado e utilizado seja &lt;code&gt;Create&lt;/code&gt; — e como os métodos podem ser &lt;i&gt;virtuais&lt;/i&gt;, assim também são os construtores.&lt;/p&gt;
+
+&lt;p&gt;Mas, qual é a grande vantagem de utilizá-los?&lt;/p&gt;
+
+&lt;h2 id=&quot;construtores&quot;&gt;Construtores Virtuais&lt;/h2&gt;
+
+&lt;p&gt;Na documentação sobre &lt;em&gt;Factory and Repository patterns&lt;/em&gt; do framework &lt;a href=&quot;https://synopse.info/files/html/Synopse%20mORMot%20Framework%20SAD%201.18.html#TITLE_600&quot;&gt;Synopse mORMot&lt;/a&gt; você encontrará o seguinte texto:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In fact, Delphi is ahead of Java or C#, since it allows virtual constructors to be defined. Those virtual constructors are in fact a clean and efficient way of implementing a Factory, and also fulfill SOLID principles, especially the Liskov Substitution Principle: the parent class define an abstract constructor on which you rely, but the implementation will take place in the overridden constructor.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;No texto acima, eu sugiro apenas alterarmos a palavra “Delphi” por “Object Pascal”, visto que essa é uma feature da linguagem Object Pascal e não apenas da implementação do Delphi.&lt;/p&gt;
+
+&lt;p&gt;Na maioria das linguagens, o padrão Factory é implementado através de métodos (estáticos, abstratos ou virtuais) das classes e não através dos construtores. Esse é um dos motivos para o autor afirmar que o Delphi (Object Pascal) está a frente de C# e Java nesse quesito. Eu concordo.&lt;/p&gt;
+
+&lt;p&gt;Em Object Pascal podemos criar uma fábrica de objetos onde o tipo da classe original é a própria fábrica.&lt;/p&gt;
+
+&lt;p&gt;Pense no modelo clássico implementado em várias linguagens. Por exemplo, teríamos uma entidade principal &lt;code&gt;TFoo&lt;/code&gt; e uma fábrica &lt;code&gt;TFooFactory&lt;/code&gt;,  que retorna classes-filhas da entidade principal. É importante lembrar que &lt;code&gt;TFoo&lt;/code&gt; deveria &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;implementar alguma Interface&lt;/a&gt; relacionada ao domínio, porém isso é irrelevante para o entendimento do problema.&lt;/p&gt;
+
+&lt;p&gt;O código principal iria utilizar a fábrica para ter instâncias de &lt;code&gt;TFoo&lt;/code&gt;. A fábrica, no entanto, poderia retornar instâncias de novas classes-filhas, herdadas de &lt;code&gt;TFoo&lt;/code&gt; e isso seria transparente para o código principal. Essa é uma das features que queremos ao utilizarmos uma fábrica.&lt;/p&gt;
+
+&lt;p&gt;Mas, primeiro teríamos que criar a fábrica para que ela retornasse as instâncias que realmente necessitamos.&lt;/p&gt;
+
+&lt;p&gt;Em Object Pascal não precisamos de uma classe específica para ser a fábrica de objetos. Nós podemos ter variáveis/argumentos do tipo classe e, dessa maneira, podemos passar diretamente a classe que deve ser utilizada para criar a instância; sem intermediários.&lt;/p&gt;
+
+&lt;p&gt;Imagine que temos uma simples library (lib) que soma 2 números. Essa lib tem uma classe &lt;i&gt;default&lt;/i&gt; para fazer a soma, mas ela permite que a classe seja customizada, lembrando muito o &lt;a href=&quot;https://en.wikipedia.org/wiki/Strategy_pattern&quot;&gt;padrão Strategy&lt;/a&gt;.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/0294f260c0d44b7c8b7f9a78df7662c1.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;No exemplo acima temos a classe &lt;code&gt;TLibCalc&lt;/code&gt; que representa a lib. No construtor podemos customizar a classe que representa o algoritmo da soma, caso contrário a lib irá utilizar a classe &lt;code&gt;TSum&lt;/code&gt; padrão.&lt;/p&gt;
+
+&lt;p&gt;A classe &lt;code&gt;TSum&lt;/code&gt; é simples. Ela soma dois inteiros. Mas repare que seu construtor é &lt;code&gt;virtual&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;O próximo passo é criar um programa de teste.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/8589ff42e90b1311aa3f4b5bab2b7d16.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;A saída do programa será: &lt;code&gt;Result is 8&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se tudo estiver funcionando por aí, vamos aos próximos passos:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;criar nossa própria classe para somar 2 números&lt;/li&gt;
+  &lt;li&gt;alterar o programa, customizando a lib&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/e364be559715b056463868d849e681ef.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;No código acima foi implementado uma nova classe &lt;code&gt;TMySum&lt;/code&gt; e inicializamos a lib &lt;code&gt;TLibCalc.Create(TMySum);&lt;/code&gt; com essa classe.&lt;/p&gt;
+
+&lt;p&gt;Execute o programa e veja o resultado.&lt;/p&gt;
+
+&lt;p&gt;Não foi necessária nenhuma fábrica. Nenhum “registro de classes” também foi necessário. Implementamos um padrão utilizando apenas classes simples da linguagem.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, a linguagem Object Pascal é tão simples que bastou utilizarmos uma &lt;i&gt;instância de classe&lt;/i&gt; contendo &lt;i&gt;construtores virtuais&lt;/i&gt; para instanciar a classe correta.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Em Object Pascal não é necessário termos fábricas; a classe customizada é a própria fábrica.&lt;/p&gt;
+
+&lt;p&gt;Até onde eu sei, não existe essa feature em nenhuma linguagem &lt;i&gt;mainstream&lt;/i&gt;, apenas em Object Pascal.&lt;/p&gt;
+
+&lt;p&gt;Com essa feature não é necessário criar classes de fábrica apenas para inicializar nossos verdadeiros objetos. Teremos menos classes, menos objetos, menos métodos, menos uso de memória, mais eficiência e &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simplicidade&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 26 Feb 2018 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/construtores-virtuais</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/construtores-virtuais</guid>
+      </item>
+    
+      <item>
         <title>Listas Genéricas, sem Generics</title>
         <description>&lt;p&gt;É possível utilizarmos listas genéricas, com checagem de tipo, mas sem o uso da sintaxe com &lt;em&gt;Generics&lt;/em&gt;?&lt;/p&gt;
 
@@ -1145,162 +1236,6 @@ end.
         <pubDate>Mon, 27 Nov 2017 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes</guid>
-      </item>
-    
-      <item>
-        <title>Eliminando Métodos Privados</title>
-        <description>&lt;p&gt;A utilização de Métodos Privados é um erro comum no &lt;em&gt;design&lt;/em&gt; do código.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-james-sutton-187816.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by James Sutton on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;em&gt;“Existe um pensamento que diz que todo Método Privado deveria ser, na verdade, a implementação de outro Objeto”&lt;/em&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Eu escrevi esse texto acima em outro &lt;a href=&quot;/posts/metodos-privados/&quot;&gt;artigo&lt;/a&gt; aqui no blog… e eu acho que faz muito sentido.&lt;/p&gt;
-
-&lt;p&gt;No entanto, o artigo tentou demonstrar que os Métodos Privados não representam um mal no código e que podemos conviver com eles pacificamente.&lt;/p&gt;
-
-&lt;p&gt;É verdade que eles não representam um &lt;em&gt;grande&lt;/em&gt; mal ao projeto. Existem tantos outros males &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;piores&lt;/a&gt; para nos preocuparmos no dia-a-dia que não damos muita importância aos Métodos Privados.&lt;/p&gt;
-
-&lt;p&gt;Eu mesmo venho utilizando-os em meus projetos à muitos anos — tanto que já escrevi um artigo defendendo-os.&lt;/p&gt;
-
-&lt;p&gt;Mas, toda vez que eu codifico um Método Privado eu tenho a sensação de que alguma coisa está &lt;em&gt;errada&lt;/em&gt;, mesmo quando eles &lt;em&gt;facilitam&lt;/em&gt; a minha vida.&lt;/p&gt;
-
-&lt;h2 id=&quot;metodos-privados&quot;&gt;Métodos Privados&lt;/h2&gt;
-
-&lt;p&gt;Você provavelmente sabe que Métodos Privados são utilizados somente pela Classe na qual eles foram implementados e nenhum Objeto externo tem acesso à eles.&lt;/p&gt;
-
-&lt;p&gt;Praticamente, toda linguagem que suporta o paradigma da &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt; tem uma sintaxe para a codificação de Métodos Privados.&lt;/p&gt;
-
-&lt;p&gt;É de uso comum.&lt;/p&gt;
-
-&lt;p&gt;Todos nós utilizamos, diariamente.&lt;/p&gt;
-
-&lt;p&gt;Mas, em teoria, a interface de um Objeto — seus Métodos Públicos — deveria ser suficiente para ele exercer o trabalho que lhe foi designado.&lt;/p&gt;
-
-&lt;p&gt;Se o trabalho é complexo e o Objeto necessitar de “ajuda”, ele deveria delegar à outros Objetos e &lt;em&gt;não&lt;/em&gt; tentar fazer tudo “sozinho” utilizando Métodos Privados.&lt;/p&gt;
-
-&lt;p&gt;No entanto, as linguagens dão suporte para escrevê-los.&lt;/p&gt;
-
-&lt;p&gt;As linguagens diferenciam Métodos privados, protegidos e públicos.&lt;/p&gt;
-
-&lt;p&gt;Então, entendemos que era correto utilizá-los e estamos fazendo isso desde então.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, se por um lado os Métodos Privados não representam um grande mal, por outro eles também não são o &lt;em&gt;ideal&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;facilitadores&quot;&gt;Facilitadores&lt;/h2&gt;
-
-&lt;p&gt;Métodos Privados são apenas &lt;em&gt;facilitadores&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Eles são utilizados do mesmo jeito que a maioria das pessoas utilizam, por exemplo, a fita &lt;a href=&quot;https://pt.wikipedia.org/wiki/Silver_Tape&quot;&gt;Silver Tape®&lt;/a&gt;, ou seja, como uma &lt;em&gt;solução alternativa&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se algo quebrou no seu carro durante uma viagem (uma mangueira arrebentou, algo rachou, vazamentos, etc) e você não tem tempo para fazer um reparo perfeito ou as ferramentas apropriadas, você improvisa.&lt;/p&gt;
-
-&lt;p&gt;Você pode utilizar uma fita para manter as coisas no lugar na esperança de que, no futuro, você possa fazer o reparo do jeito correto.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente podemos nos esquecer desses reparos temporários e seguir adiante, já que a “solução alternativa” continua mantendo tudo funcionando “perfeitamente” — como a mangueira de esguicho de água do para-brisa do meu carro que rachou e está com uma fita a mais de 2 anos.&lt;/p&gt;
-
-&lt;p&gt;Um Método Privado é algo localizado e sem muita importância por que está encapsulado numa Classe e pode ser alterado a qualquer momento (em teoria) sem efeitos colaterais.&lt;/p&gt;
-
-&lt;p&gt;Eu utilizo pouco o esguicho de água do para-brisa e mesmo assim ele continua funcionando mas, mesmo se parar de funcionar, não vai por minha vida em risco… teoricamente. Não haverá efeitos colaterais se eu fizer o conserto agora ou mais tarde.&lt;/p&gt;
-
-&lt;p&gt;Nota: Não me entenda mal. Eu faço a manutenção do meu carro quase que religiosamente, mas a prioridade sempre será o motor, fluídos e suspensão.&lt;/p&gt;
-
-&lt;p&gt;Projetos de Software também tem prioridades nos dizendo para não “perder tempo” codificando outras Classes, quando é mais &lt;em&gt;rápido&lt;/em&gt; codificar Métodos Privados e resolver o problema da maneira mais “fácil”.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, sabemos que “mais fácil” não combina com &lt;em&gt;sustentabilidade&lt;/em&gt; no longo prazo.&lt;/p&gt;
-
-&lt;h2 id=&quot;motivos&quot;&gt;Motivos&lt;/h2&gt;
-
-&lt;p&gt;Há 9 meses atrás houve uma &lt;a href=&quot;http://objectpascalprogramming.com/posts/metodos-privados/#comment-3127567762&quot;&gt;discussão&lt;/a&gt; na área de comentários do blog sobre utilizar ou não Métodos Privados.&lt;/p&gt;
-
-&lt;p&gt;Num dos comentários eu escrevi:&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;“Minha opinião é que, como são Privados, não há nenhum impacto direto no código. Sempre posso modificá-los a qualquer momento.”&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;E isso é, de fato, verdade.&lt;/p&gt;
-
-&lt;p&gt;Se algo é privado a Classe, você pode modificá-lo sem haver impactos externos, na teoria. Faz parte do conceito de &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulamento&lt;/a&gt; de toda linguagem OO. Se é privado, somente a Classe tem acesso — sem levar em conta algo chamado &lt;em&gt;Reflexion&lt;/em&gt; ou RTTI.&lt;/p&gt;
-
-&lt;p&gt;Então, quais seriam os motivos para deixar de utilizar Métodos Privados?&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Ao introduzir Métodos Privados, você pode estar codificando de forma procedural ao invés de Orientada a Objetos.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Você pode estar introduzindo &lt;em&gt;funções procedurais&lt;/em&gt; ao invés de Métodos que implementam o comportamento da &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Entidade&lt;/a&gt; representada.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/bbdc509810890ea5724a94a021f16791.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Na Classe acima, o método &lt;code&gt;CleanName&lt;/code&gt; é apenas uma &lt;em&gt;função utilitária&lt;/em&gt;. A função não pertence ao contexto representado por um &lt;code&gt;Employee&lt;/code&gt; e por isso eu não a considero como um Método do Objeto.&lt;/p&gt;
-
-&lt;p&gt;Um &lt;code&gt;Employee&lt;/code&gt; não “limpa” o próprio nome.&lt;/p&gt;
-
-&lt;p&gt;Essa é a tendência ao utilizarmos Métodos Privados: Adicionar funções utilitárias, por quê é fácil, conveniente e “ninguém está vendo”.&lt;/p&gt;
-
-&lt;p&gt;Os nomes dessas funções também tem a tendência de serem &lt;a href=&quot;/posts/nomeando-variaveis-e-metodos/#metodos&quot;&gt;nomes compostos&lt;/a&gt; que é mais um &lt;em&gt;indício&lt;/em&gt; mostrando que a função pode pertencer a &lt;em&gt;outro&lt;/em&gt; contexto.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Métodos Privados também podem gerar &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/&quot;&gt;duplicação de código&lt;/a&gt;, escondendo &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;comportamentos&lt;/a&gt; que poderiam ser compartilhados entre os Objetos mas, como são privados, não podem reutilizados&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Veja mais um exemplo:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/a303d0bf83930fcf580aee818ee23a52.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;O Método &lt;code&gt;SplitName&lt;/code&gt; — também um função utilitária — acima poderia ser reutilizado por outra Classe que também encapsula uma instância de &lt;code&gt;IName&lt;/code&gt;. Mas aqui a Classe &lt;code&gt;TEmployeeName&lt;/code&gt; tem sua própria implementação privada, não havendo outra maneira de reutilizar o mesmo algoritmo fora da Classe.&lt;/p&gt;
-
-&lt;p&gt;Em outras palavras, caso você precisasse utilizar o mesmo algoritmo implementado em &lt;code&gt;SplitName&lt;/code&gt;, você teria que fazer uma cópia.&lt;/p&gt;
-
-&lt;p&gt;Acredito que estes podem ser bons motivos para eliminarmos os Métodos Privados dos nossos projetos desde o início ou quando for possível fazer a refatoração.&lt;/p&gt;
-
-&lt;h2 id=&quot;eliminando&quot;&gt;Eliminando&lt;/h2&gt;
-
-&lt;p&gt;Acredito que podemos remover quaisquer Métodos Privados utilizando apenas Classes.&lt;/p&gt;
-
-&lt;p&gt;As Classes podem ser &lt;em&gt;públicas&lt;/em&gt; (disponível a todo o sistema) e/ou &lt;a href=&quot;/classes-aninhadas&quot;&gt;Aninhadas&lt;/a&gt; a outras Classes.&lt;/p&gt;
-
-&lt;p&gt;Talvez os exemplos acima podem não ter convencido você.&lt;/p&gt;
-
-&lt;p&gt;Você poderia dizer que haverá casos em que os Métodos Privados fazem, sim, parte do mesmo contexto e por isso deveriam &lt;em&gt;existir&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/8afe1f70a803556a59513fb2dff36e21.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;A Classe &lt;code&gt;THttpClient&lt;/code&gt; não está completa, mas a parte que falta é irrelevante.&lt;/p&gt;
-
-&lt;p&gt;Veja que há o Método &lt;code&gt;Send&lt;/code&gt; que é utilizado em 2 outros Métodos: &lt;code&gt;Get&lt;/code&gt; e &lt;code&gt;Post&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então, é possível substituir o Método &lt;code&gt;Send&lt;/code&gt; por uma Classe?&lt;/p&gt;
-
-&lt;p&gt;Com certeza.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/3cda576e9e13ac25ee5b4005a3b47a1a.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;E a vantagem de fazer isso é que deixamos a Classe mais simples e compacta, removendo o comportamento privado para uma nova Classe; agora podemos reutilizar o código externamente; se quisermos decorar &lt;code&gt;THttpProtocol&lt;/code&gt; com outras Classes como Log, por exemplo, também podemos.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Após muito ponderar, cheguei a conclusão que prover uma sintaxe para codificar Métodos Privados é um &lt;em&gt;erro&lt;/em&gt; no &lt;em&gt;design&lt;/em&gt; da linguagem. Não só em Object Pascal, mas também em Java, C# e tantas outras.&lt;/p&gt;
-
-&lt;p&gt;Considere, então, que o uso de Métodos Privados foi o primeiro nível de aprendizado para sabermos dividir código dentro de uma Classe, entendê-los e saber como utilizá-los de forma consciente, &lt;em&gt;facilitando&lt;/em&gt; a transição da Programação Procedural para a Orientada a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Sabemos que particularidades da linguagem nos fazem criar Métodos Privados intencionalmente como, por exemplo, Métodos que executam &lt;a href=&quot;/eventos-e-objetos&quot;&gt;eventos&lt;/a&gt; — o Método Privado irá verificar se um evento foi ou não &lt;a href=&quot;/posts/getters-e-setters/#setters&quot;&gt;setado&lt;/a&gt; — e tudo bem se o método é apenas uma implementação de &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/#infraestrutura&quot;&gt;infraestrutura&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Lembre-se também que, ao criar mais Classes públicas, ao invés de Métodos Privados, haverá mais código para documentar. No entanto, você poderá manter essas Classes “escondidas” do usuário final utilizando o conceito de &lt;a href=&quot;/api-unit&quot;&gt;API Unit&lt;/a&gt;, declarando na API apenas as Classes que você “permite” utilizar.&lt;/p&gt;
-
-&lt;p&gt;Um código final com um mínimo de Métodos Privados pode representar um bom sinal de &lt;em&gt;design&lt;/em&gt; do código, com Classes &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; e elegantes.&lt;/p&gt;
-
-&lt;p&gt;Então, não codifique Métodos Privados, a não ser que haja uma real necessidade para fazê-lo. Evite-os.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 20 Nov 2017 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/eliminando-metodos-privados</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/eliminando-metodos-privados</guid>
       </item>
     
   </channel>

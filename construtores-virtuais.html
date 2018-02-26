@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>O Procedimento Exit &#8211; Object Pascal Programming</title>
+    <title>Construtores Virtuais &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
     <meta name="keywords" content="">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, exit, exit procedure">
-    <link rel="canonical" href="http://objectpascalprogramming.com/exit-proc">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, construtor, constructor, construtor virtual, virtual constructor">
+    <link rel="canonical" href="http://objectpascalprogramming.com/construtores-virtuais">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="O Procedimento Exit">
-    <meta property="og:description" content="Todos os programadores Pascal conhecem o procedimento `Exit()` desde as primeiras versões dos compiladores. Mas será que todos sabem utilizá-lo corretamente?">
-    <meta property="og:url" content="http://objectpascalprogramming.com/exit-proc">
+    <meta property="og:title" content="Construtores Virtuais">
+    <meta property="og:description" content="A linguagem Object Pascal possui uma feature que não existe em nenhuma outra linguagem mainstream do mercado.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/construtores-virtuais">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-kev-seto-94686.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-eddie-kopp-264813-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="O Procedimento Exit" />
+    <meta name="twitter:title" content="Construtores Virtuais" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/exit-proc" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/construtores-virtuais" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,8 +191,8 @@
 
 
 <div class="post-header mb2">
-  <h1>O Procedimento Exit</h1>
-  <span class="post-meta">Jan 8, 2018</span><br>
+  <h1>Construtores Virtuais</h1>
+  <span class="post-meta">Feb 26, 2018</span><br>
   
   <span class="post-meta small">
   
@@ -202,136 +202,87 @@
 </div>
 
 <article class="post-content">
-  <p>Todos os programadores Pascal conhecem o procedimento <code>Exit()</code> desde as primeiras versões dos compiladores. Mas será que todos sabem utilizá-lo corretamente?</p>
+  <p>A linguagem Object Pascal possui uma feature que não existe em nenhuma outra linguagem <i>mainstream</i> do mercado.</p>
 
 <!--more-->
 
-<p><img src="/images/2018/photo-kev-seto-94686.jpg" alt="Unsplash image" />
-<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Kev Seto on Unsplash</span></p>
+<p><img src="/images/2018/photo-eddie-kopp-264813-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Eddie Kopp on Unsplash</span></p>
 
-<p>O procedimento <code>Exit()</code> é utilizado quando queremos sair de um escopo em execução. Esse escopo pode ser uma função, procedimento, método ou até mesmo o próprio programa.</p>
+<h2 id="introducao">Introdução</h2>
 
-<p>Vamos dizer que um programa console chame um procedimento <code>Execute</code>:</p>
+<p>Construtores Virtuais permitem a criação customizada de novas instâncias sem a necessidade do uso de classes de fábricas.</p>
 
-<pre><code>procedure Execute;
-begin
-  Writeln('1. Passing on this line...');
-  Exit;
-  Writeln('2. It will not pass here');
-end;
-</code></pre>
+<p>É possível que desenvolvedores Object Pascal ao redor do mundo utilizem essa feature diariamente mesmo sem saber que só é possível utilizá-la na linguagem Object Pascal.</p>
 
-<p>No exemplo acima, somente a informação do primeiro <code>Writeln</code> será mostrado no console.</p>
+<p>Toda classe possui um ou mais <a href="/posts/construtores-da-classe-primario-secundarios/">construtores</a> no qual são responsáveis por instanciar um novo objeto.</p>
 
-<p>Ao sair de um escopo, o programa retorna imediatamente para o escopo anterior (outra função/procedimento/método ou o próprio programa). A única exceção a essa regra é quando há blocos <code>try-finally</code>. Se <code>Exit()</code> for chamado dentro de um bloco <code>try-finally</code> o compilador irá executar o código dentro do <code>finally-end</code> <em>antes</em> de sair do escopo.</p>
+<p>Entretanto, ter um construtor virtual <a href="https://stackoverflow.com/questions/3651354/in-net-can-a-class-have-virtual-constructor">não é comum</a> em outras linguagens.</p>
 
-<p>Aqui está outro exemplo:</p>
+<p>Diferentemente das demais linguagens, os construtores na linguagem Object Pascal são como métodos “marcados” para serem construtores. Um fato sobre isso é que, em Object Pascal, podemos dar o nome que quisermos aos construtores — mesmo que o padrão de nomenclatura recomendado e utilizado seja <code>Create</code> — e como os métodos podem ser <i>virtuais</i>, assim também são os construtores.</p>
 
-<pre><code>procedure Execute;
-begin
-  try
-    Writeln('1. Passing on this line...');
-    Exit;
-  finally
-    Writeln('2. I am still here!');
-  end;
-  Writeln('3. It will not pass here');
-end;
-</code></pre>
+<p>Mas, qual é a grande vantagem de utilizá-los?</p>
 
-<p>Os textos #1 e #2 serão mostrados no console. Mesmo que <code>Exit()</code> tenha sido chamado antes da impressão do texto #2, ainda sim o código é executado devido ao <code>try-finally</code>.</p>
+<h2 id="construtores">Construtores Virtuais</h2>
 
-<p>Outro exemplo de uso do <code>Exit()</code> é quando fazemos validações. Se uma validação ou checagem não retornar verdadeiro, utilizamos o <code>Exit()</code> para parar a execução do escopo atual.</p>
+<p>Na documentação sobre <em>Factory and Repository patterns</em> do framework <a href="https://synopse.info/files/html/Synopse%20mORMot%20Framework%20SAD%201.18.html#TITLE_600">Synopse mORMot</a> você encontrará o seguinte texto:</p>
 
-<p>Suponha que queremos somar dois números inteiros, mas só queremos números maiores que zero:</p>
+<blockquote>
+  <p>In fact, Delphi is ahead of Java or C#, since it allows virtual constructors to be defined. Those virtual constructors are in fact a clean and efficient way of implementing a Factory, and also fulfill SOLID principles, especially the Liskov Substitution Principle: the parent class define an abstract constructor on which you rely, but the implementation will take place in the overridden constructor.</p>
+</blockquote>
 
-<pre><code>function Sum(A, B: Integer): string;
-begin
-  Result := 'Invalid result';
-  if (A &lt; 0) or (B &lt; 0) then
-    Exit;
-  Result := Format('The result is %d', [A + B]);
-end;
-</code></pre>
+<p>No texto acima, eu sugiro apenas alterarmos a palavra “Delphi” por “Object Pascal”, visto que essa é uma feature da linguagem Object Pascal e não apenas da implementação do Delphi.</p>
 
-<p>No exemplo acima, o retorno da função <code>Sum</code> é inicializado com um valor inválido e depois há uma validação para saber se os valores são menores que <code>0</code>. Se o teste falhar, o programa irá retornar para o escopo anterior à chamada da função <code>Sum</code> com o resultado inválido. Mas se o teste não falhar, o resultado da função será a soma de A e B.</p>
+<p>Na maioria das linguagens, o padrão Factory é implementado através de métodos (estáticos, abstratos ou virtuais) das classes e não através dos construtores. Esse é um dos motivos para o autor afirmar que o Delphi (Object Pascal) está a frente de C# e Java nesse quesito. Eu concordo.</p>
 
-<p>Há aqueles que são adeptos da programação estruturada e preferem não “quebrar” a execução do programa com uma “saída antecipada”, ou seja, não fazem uso do <code>Exit()</code> por acreditarem que o código ficaria mais simples.</p>
+<p>Em Object Pascal podemos criar uma fábrica de objetos onde o tipo da classe original é a própria fábrica.</p>
 
-<p>Então vamos reescrever o exemplo anterior:</p>
+<p>Pense no modelo clássico implementado em várias linguagens. Por exemplo, teríamos uma entidade principal <code>TFoo</code> e uma fábrica <code>TFooFactory</code>,  que retorna classes-filhas da entidade principal. É importante lembrar que <code>TFoo</code> deveria <a href="/posts/interfaces-em-todo-lugar/">implementar alguma Interface</a> relacionada ao domínio, porém isso é irrelevante para o entendimento do problema.</p>
 
-<pre><code>function Sum(A, B: Integer): string;
-begin
-  if (A &gt; 0) and (B &gt; 0) then
-    Result := Format('The result is %d', [A + B]);
-  else
-    Result := 'Invalid result';
-end;
-</code></pre>
+<p>O código principal iria utilizar a fábrica para ter instâncias de <code>TFoo</code>. A fábrica, no entanto, poderia retornar instâncias de novas classes-filhas, herdadas de <code>TFoo</code> e isso seria transparente para o código principal. Essa é uma das features que queremos ao utilizarmos uma fábrica.</p>
 
-<p>Parece mais simples? Bem, nesse exemplo eu diria que sim. Porém para exemplos com mais condicionais, eu diria que não (vamos ver isso mais abaixo).</p>
+<p>Mas, primeiro teríamos que criar a fábrica para que ela retornasse as instâncias que realmente necessitamos.</p>
 
-<p>E se quiséssemos dizer ao usuário que seus dados não estão corretos?</p>
+<p>Em Object Pascal não precisamos de uma classe específica para ser a fábrica de objetos. Nós podemos ter variáveis/argumentos do tipo classe e, dessa maneira, podemos passar diretamente a classe que deve ser utilizada para criar a instância; sem intermediários.</p>
 
-<pre><code>function Sum(A, B: Integer): string;
-begin
-  Result := 'Invalid result';
-  if (A &gt; 0) then
-  begin
-    if (B &gt; 0) then
-      Result := Format('The result is %d', [A + B]);
-    else
-      Writeln('B should be greater than zero');
-  end
-  else
-    Writeln('A should be greater than zero');
-end;
-</code></pre>
+<p>Imagine que temos uma simples library (lib) que soma 2 números. Essa lib tem uma classe <i>default</i> para fazer a soma, mas ela permite que a classe seja customizada, lembrando muito o <a href="https://en.wikipedia.org/wiki/Strategy_pattern">padrão Strategy</a>.</p>
 
-<p>Nesse exemplo não utilizamos <code>Exit()</code> e eu acho que o código está bem confuso. Os testes estão “separados” do retorno de aviso para o usuário (<code>Writeln</code>).</p>
+<script src="https://gist.github.com/mdbs99/0294f260c0d44b7c8b7f9a78df7662c1.js"></script>
 
-<p>Kent Beck , Martin Fowler <a href="https://en.wikipedia.org/wiki/Structured_programming#Early_exit">afirmaram</a> categoricamente que <em>“um ponto de saída não é realmente uma regra útil. A clareza é o princípio chave: se o método for mais claro com um ponto de saída, use um ponto de saída, caso contrário, não”</em></p>
+<p>No exemplo acima temos a classe <code>TLibCalc</code> que representa a lib. No construtor podemos customizar a classe que representa o algoritmo da soma, caso contrário a lib irá utilizar a classe <code>TSum</code> padrão.</p>
 
-<p>Então vamos reescrever o exemplo anterior com o uso de <code>Exit()</code>:</p>
+<p>A classe <code>TSum</code> é simples. Ela soma dois inteiros. Mas repare que seu construtor é <code>virtual</code>.</p>
 
-<pre><code>function Sum(A, B: Integer): string;
-begin
-  Result := 'Invalid result';
-  if (A &lt; 0) then
-  begin
-    Writeln('A should be greater than zero');
-    Exit;
-  end;
-  if (B &lt; 0) then
-  begin
-    Writeln('B should be greater than zero');
-    Exit;
-  end;
-  Result := Format('The result is %d', [A + B]);
-end;
-</code></pre>
+<p>O próximo passo é criar um programa de teste.</p>
 
-<p>O código ficou um pouco maior, é verdade, porém os testes e avisos para o usuário ficaram mais simples, na minha opinião. Você não precisa acompanhar todos os <code>if-else</code> aninhados. A cada teste que falhar, o aviso está logo abaixo e o escopo será abortado com o uso do <code>Exit()</code>. Se todos os testes não falharem, a função irá retornar a soma de A e B.</p>
+<script src="https://gist.github.com/mdbs99/8589ff42e90b1311aa3f4b5bab2b7d16.js"></script>
 
-<p>No Delphi, a partir da <a href="http://docs.embarcadero.com/products/rad_studio/delphiAndcpp2009/HelpUpdate2/EN/html/delphivclwin32/System_Exit.html">versão 2009</a>, o procedimento <code>Exit()</code> ganhou uma melhoria: <code>Exit()</code> pode ter um parâmetro especificando um resultado. O parâmetro deve ser do mesmo tipo que o resultado da função.</p>
+<p>A saída do programa será: <code>Result is 8</code>.</p>
 
-<p>O FPC também tem a <a href="https://www.freepascal.org/docs-html/rtl/system/exit.html">mesma definição</a>, porém não sei quem implementou essa nova <em>feature</em> primeiro.</p>
+<p>Se tudo estiver funcionando por aí, vamos aos próximos passos:</p>
 
-<p>Então vamos reescrever o exemplo anterior:</p>
+<ol>
+  <li>criar nossa própria classe para somar 2 números</li>
+  <li>alterar o programa, customizando a lib</li>
+</ol>
 
-<pre><code>function Sum(A, B: Integer): string;
-begin
-  if (A &lt; 0) then
-    Exit('A should be greater than zero');
-  if (B &lt; 0) then
-    Exit('B should be greater than zero');
-  Result := Format('The result is %d', [A + B]);
-end;
-</code></pre>
+<script src="https://gist.github.com/mdbs99/e364be559715b056463868d849e681ef.js"></script>
 
-<p><a href="/posts/simplicidade/">Simples</a> e limpo.</p>
+<p>No código acima foi implementado uma nova classe <code>TMySum</code> e inicializamos a lib <code>TLibCalc.Create(TMySum);</code> com essa classe.</p>
 
-<p><code>Exit()</code> pode receber como parâmetro qualquer tipo de retorno, até mesmo instâncias de <a href="/posts/interfaces-em-todo-lugar/">Interfaces</a>. Utilizando esse parâmetro, é como se ganhássemos o mesmo comportamento da palavra reservada <code>return</code>, em Java. No entanto, <code>Exit()</code> em conjunto com <code>Result</code> nos dá ainda mais possibilidades de retorno para as funções.</p>
+<p>Execute o programa e veja o resultado.</p>
+
+<p>Não foi necessária nenhuma fábrica. Nenhum “registro de classes” também foi necessário. Implementamos um padrão utilizando apenas classes simples da linguagem.</p>
+
+<p>Finalmente, a linguagem Object Pascal é tão simples que bastou utilizarmos uma <i>instância de classe</i> contendo <i>construtores virtuais</i> para instanciar a classe correta.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Em Object Pascal não é necessário termos fábricas; a classe customizada é a própria fábrica.</p>
+
+<p>Até onde eu sei, não existe essa feature em nenhuma linguagem <i>mainstream</i>, apenas em Object Pascal.</p>
+
+<p>Com essa feature não é necessário criar classes de fábrica apenas para inicializar nossos verdadeiros objetos. Teremos menos classes, menos objetos, menos métodos, menos uso de memória, mais eficiência e <a href="/posts/simplicidade/">simplicidade</a>.</p>
 
 <p>Até logo.</p>
 
@@ -343,33 +294,33 @@ end;
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/exit-proc" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/construtores-virtuais" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=O Procedimento Exit&via=mdbs99;url=http://objectpascalprogramming.com/exit-proc" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Construtores Virtuais&via=mdbs99;url=http://objectpascalprogramming.com/construtores-virtuais" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/exit-proc" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/construtores-virtuais" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/exit-proc&title=O Procedimento Exit" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/exit-proc&title=O Procedimento Exit" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/construtores-virtuais&title=Construtores Virtuais" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/exit-proc&t=O Procedimento Exit" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/construtores-virtuais&title=Construtores Virtuais" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/construtores-virtuais&t=Construtores Virtuais" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -418,15 +369,6 @@ Gostaria de me pagar um café?
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/construtores-virtuais" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Construtores Virtuais</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/listas-genericas-sem-generics" class="post-link">
         <ul>
           <h4 class="post-title"><li>Listas Genéricas, sem Generics</li></h4>
@@ -466,6 +408,15 @@ Gostaria de me pagar um café?
       <a href="/objetos-complexos" class="post-link">
         <ul>
           <h4 class="post-title"><li>Objetos Complexos</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/exit-proc" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>O Procedimento Exit</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
       </a>
@@ -514,8 +465,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/exit-proc';
-      var disqus_title      = 'O Procedimento Exit';
+      var disqus_identifier = '/construtores-virtuais';
+      var disqus_title      = 'Construtores Virtuais';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
