@@ -4,7 +4,7 @@ title: "Construtores Virtuais"
 date: 2018-02-26
 permalink: /:title
 description:
-  A linguagem Object Pascal possui uma feature que não existe em nenhuma outra linguagem *mainstream* do mercado.
+  A linguagem Object Pascal possui uma feature que não existe em nenhuma outra linguagem mainstream do mercado.
 image: /images/2018/photo-eddie-kopp-264813-unsplash.jpg
 tags:
   - Object Pascal
@@ -24,7 +24,7 @@ keywords:
   - virtual constructor
 ---
 
-A linguagem Object Pascal possui uma feature que não existe em nenhuma outra linguagem *mainstream* do mercado.
+A linguagem Object Pascal possui uma feature que não existe em nenhuma outra linguagem <i>mainstream</i> do mercado.
 
 <!--more-->
 
