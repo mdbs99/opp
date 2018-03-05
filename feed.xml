@@ -8,6 +8,83 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Assertions é uma boa prática</title>
+        <description>&lt;p&gt;Assertions auxiliam o programador no desenvolvimento e depuração do código, sendo a primeira linha de defesa contra bugs.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-andrew-ruiz-394426-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Andrew Ruiz on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Quando estamos desenvolvendo, é comum executar o programa várias vezes, digitar alguma entrada de dados “falsa”, e seguir adiante, afim de testar outras funcionalidades.&lt;/p&gt;
+
+&lt;p&gt;Assim, vamos construindo um protótipo.&lt;/p&gt;
+
+&lt;p&gt;Um protótipo pode ser codificado muito rapidamente, sendo comum codificarmos várias funcionalidades apenas para visualizarmos como seria o sistema real.&lt;/p&gt;
+
+&lt;p&gt;Como um protótipo pode ser alterado inúmeras vezes, vários bugs podem aparecer.&lt;/p&gt;
+
+&lt;p&gt;Aqui entram as &lt;a href=&quot;https://www.freepascal.org/docs-html/3.0.2/rtl/system/assert.html&quot;&gt;Assertions&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;De acordo com a &lt;a href=&quot;https://en.wikipedia.org/wiki/Assertion_(software_development)&quot;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In computer programming, an assertion is a statement that a predicate (Boolean-valued function, i.e. a true–false expression) is expected to always be true at that point in the code. If an assertion evaluates to false at run time, an assertion failure results, which typically causes the program to crash, or to throw an assertion exception.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Então, uma Assertion sempre deve ser verdadeira ou uma exceção &lt;code&gt;EAssertionFailed&lt;/code&gt; será gerada e o sistema será abortado, retornando o código &lt;code&gt;227&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;No entanto, se a unit &lt;code&gt;SysUtils&lt;/code&gt; for declarada em algum lugar do código, é possível verificar mais informações da exceção como a linha e a unit onde o erro foi gerado, além da &lt;i&gt;mensagem&lt;/i&gt; opcional que o desenvolvedor pode utilizar para cada Assertion.&lt;/p&gt;
+
+&lt;p&gt;Uma Assertion funciona dessa forma:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure TForm1.Button1Click(Sender: TObject);
+var
+  I: Integer;
+begin
+  I := 0;
+  Assert(I = 1, &#39;The I variable is not 1&#39;);
+  ShowMessage(I.ToString);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;No código acima, temos um &lt;code&gt;Form&lt;/code&gt; com um botão. No evento desse botão o Assert irá verificar se a variável &lt;code&gt;I&lt;/code&gt; é igual a &lt;code&gt;1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;O resultado será falso e uma exceção será gerada.&lt;/p&gt;
+
+&lt;p&gt;Na minha IDE eu vejo essa mensagem:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;The I variable is not 1 (unit1.pas, line 34).
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Eu compilei o projeto &lt;i&gt;sem&lt;/i&gt; informações de &lt;i&gt;debugger&lt;/i&gt;. Mesmo assim, é possível ver a linha onde a validação ocorreu, tornando muito útil o uso de Assert para identificar onde e por quê um erro ocorreu.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, as Assertions não deve ser utilizadas em produção. Suas informações técnicas só deveriam ser vistas por programadores, não usuários finais.&lt;/p&gt;
+
+&lt;p&gt;Por esse motivo nós &lt;b&gt;devemos&lt;/b&gt; desabilitar as Assertions quando fizermos o &lt;i&gt;deploy&lt;/i&gt; do sistema para o usuário final.&lt;/p&gt;
+
+&lt;p&gt;Para desabilitar Assertions, o compilador tem uma diretiva de compilação global.&lt;/p&gt;
+
+&lt;p&gt;Há duas opções:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ASSERTIONS ON/OFF (long form)
+$C +/- (short form)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Mas isso pode ser definido diretamente na IDE, na sessão de debugger nas  opções do projeto, sem haver necessidade de escrever uma linha de código.&lt;/p&gt;
+
+&lt;p&gt;Quando as Assertions estão desabilitadas, as verificações não são executadas. Isso libera o sistema de todo &lt;i&gt;overhead&lt;/i&gt; das verificações no produto final.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, Assertions não substituem Testes de Unidade ou Teste de Integração, sendo apenas mais um tipo de ferramenta para testar o código na fase de desenvolvimento.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/assertions</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/assertions</guid>
+      </item>
+    
+      <item>
         <title>Construtores Virtuais</title>
         <description>&lt;p&gt;A linguagem Object Pascal possui uma feature que não existe em nenhuma outra linguagem &lt;i&gt;mainstream&lt;/i&gt; do mercado.&lt;/p&gt;
 
@@ -1120,122 +1197,6 @@ end.
         <pubDate>Mon, 11 Dec 2017 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/argumentos-const</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/argumentos-const</guid>
-      </item>
-    
-      <item>
-        <title>Herança de Formulário é para Iniciantes</title>
-        <description>&lt;p&gt;Depois que você aprendeu como funciona a Herança de Formulários, pode esquecê-la.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-ken-treloar-346065.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Ken Treloar on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;No início da minha carreira, a muitos anos atrás, alguém me mostrou a Herança de Formulário no Delphi.&lt;/p&gt;
-
-&lt;p&gt;Mesmo em &lt;em&gt;design time&lt;/em&gt;, dois Formulários herdados estavam “sincronizados”.&lt;/p&gt;
-
-&lt;p&gt;Ao alterar um componente de lugar (&lt;em&gt;Top&lt;/em&gt; / &lt;em&gt;Left&lt;/em&gt;) no Formulário 1, automaticamente também era alterado no outro Formulário 2 devido a Herança entre eles.&lt;/p&gt;
-
-&lt;p&gt;E na época eu pensei: UAU!&lt;/p&gt;
-
-&lt;p&gt;Como era rápido fazer um Formulário (simplório) de CRUD. Basta herdar e setar algumas propriedades e sobrescrever alguns Métodos.&lt;/p&gt;
-
-&lt;p&gt;Acredito que essa é uma das &lt;em&gt;features&lt;/em&gt; mais utilizadas hoje em dia.&lt;/p&gt;
-
-&lt;p&gt;Mas, o que tem de errado com isso?&lt;/p&gt;
-
-&lt;h2 id=&quot;problemas&quot;&gt;Problemas&lt;/h2&gt;
-
-&lt;p&gt;Utilizar Herança de Formulário é bom apenas para os &lt;em&gt;iniciantes&lt;/em&gt; na programação Orientada a Objetos e para o uso &lt;em&gt;superficial&lt;/em&gt; do Delphi ou Lazarus.&lt;/p&gt;
-
-&lt;p&gt;Pode ser considerado “Ok” para criar aplicações de exemplo, ensinar sobre &lt;del&gt;como não utilizar&lt;/del&gt; a Herança simplificada e… talvez, apenas isso.&lt;/p&gt;
-
-&lt;p&gt;Para aplicações realmente importantes, sugiro esquecer a Herança de Formulário por completo.&lt;/p&gt;
-
-&lt;p&gt;Enquanto a &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;Herança de Classes é um mal&lt;/a&gt; que pode ser gerenciado ou mesmo utilizado de forma mais &lt;a href=&quot;/posts/como-utilizar-heranca-apropriadamente/&quot;&gt;apropriada&lt;/a&gt;, a Herança de Formulário acaba com todos os conceitos da verdadeira &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;O &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento&quot;&gt;encapsulamento&lt;/a&gt; é perdido&lt;/strong&gt; quando utilizamos Herança de Formulários, pois o desenvolvedor precisa ter conhecimento do comportamento interno do formulário-pai afim de conseguir fazer algo de útil no formulário-filho.&lt;/p&gt;
-
-&lt;p&gt;Muitas vezes encontramos formulários contendo apenas Métodos protegidos ou &lt;a href=&quot;/posts/metodos-privados/&quot;&gt;privados&lt;/a&gt; sem nenhum comportamento público; eles vem do formulário-pai. E isso é muito estranho. Por quê teríamos uma Classe (Form) que, a primeira vista, não tem nenhum comportamento para o mundo externo?&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;A ordem de execução dos Métodos protegidos&lt;/strong&gt; que devem ser sobrescritos, devem ser de conhecimento do desenvolvedor, mais uma vez quebrando o encapsulamento.&lt;/p&gt;
-
-&lt;p&gt;É necessário visualizar o código do formulário-pai afim de saber onde e em que momento tais métodos abstratos e protegidos são utilizados.&lt;/p&gt;
-
-&lt;p&gt;É comum ver métodos sobrescritos que não chamam o Método herdado, “matando” o comportamento padrão da Classe ancestral quando o Método não é abstrato.&lt;/p&gt;
-
-&lt;p&gt;Pedaços de código serão duplicados pois estão em métodos não acessíveis nos formulários-filhos.&lt;/p&gt;
-
-&lt;p&gt;Uma bagunça.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Componentes herdados não podem ser excluídos&lt;/strong&gt;, o que resulta em mais bagunça e “código espaguete”.&lt;/p&gt;
-
-&lt;p&gt;Como não é possível excluir componentes em formulários-filho, o desenvolvedor tem que habilitar/desabilitar ou torná-los visível/não-visível. No entanto tais componentes continuarão a serem criados no formulário…&lt;/p&gt;
-
-&lt;p&gt;Criar formulários com componentes que não serão utilizados é realmente um desperdício de memória RAM.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Qualquer alteração no formulário-pai irá refletir nos formulários-filhos&lt;/strong&gt;, e isso quer dizer que você pode quebrar o sistema inteiro com pequenas modificações.&lt;/p&gt;
-
-&lt;p&gt;Você poderia argumentar que mesmo se não utilizasse Herança, mas sim Composição de Objetos, um Objeto que fosse reaproveitado por todo o sistema também poderia quebrá-lo caso algo fosse indevidamente alterado no seu código.&lt;/p&gt;
-
-&lt;p&gt;Correto. Mas a grande diferença é que é muito mais fácil alterar um código de apenas uma Classe &lt;a href=&quot;/posts/classes-devem-implementar-apenas-uma-responsabilidade/&quot;&gt;pequena&lt;/a&gt; e sem dependências externas ou heranças de Classes-filhas, do que um código de Formulário onde toda lógica está contido nele além de ter a preocupação se alguma alteração irá impactar negativamente nos nos formulários-filhos.&lt;/p&gt;
-
-&lt;h2 id=&quot;solucoes&quot;&gt;Soluções&lt;/h2&gt;
-
-&lt;p&gt;Vejamos então algumas opções para a completa substituição da Herança de Formulário, utilizando outras técnicas mais Orientadas a Objetos, &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; e limpas.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;A Composição e &lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;Decoração&lt;/a&gt; de Objetos&lt;/strong&gt; são as opções mais simples e corretas para substituir praticamente qualquer tipo de Herança.&lt;/p&gt;
-
-&lt;p&gt;Você pode criar Classes intermediárias ou &lt;a href=&quot;/posts/classes-adaptadoras/&quot;&gt;adaptadoras&lt;/a&gt; que se comunicam entre si para instanciar Formulários complexos.&lt;/p&gt;
-
-&lt;p&gt;Com o uso de pequenas Classes utilizadas como “interface de acesso” aos Formulários, você consegue instanciá-los, desacoplá-los entre si, instanciar &lt;em&gt;Frames&lt;/em&gt;, ler e escrever dados em componentes. Tudo em &lt;em&gt;runtime&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;O uso de &lt;em&gt;Frames&lt;/em&gt; é uma ótima opção&lt;/strong&gt; para o uso de composição visual, visto que são mini-formulários embutidos em outros Formulários.&lt;/p&gt;
-
-&lt;p&gt;Pense em como são construídas as páginas de um website. Não há herança, apenas &lt;em&gt;includes&lt;/em&gt; de “pedaços de código”: &lt;em&gt;Header&lt;/em&gt;, &lt;em&gt;Footer&lt;/em&gt;, &lt;em&gt;JavaScript&lt;/em&gt;, etc.&lt;/p&gt;
-
-&lt;p&gt;Você pode utilizar o mesmo pensamento para o uso de &lt;em&gt;Frames&lt;/em&gt;. Pode criar um &lt;em&gt;Frame&lt;/em&gt; apenas com os botões de CRUD; outro com &lt;em&gt;Grids&lt;/em&gt;; outro para o &lt;em&gt;footer&lt;/em&gt; de todo formulário.&lt;/p&gt;
-
-&lt;p&gt;Eu utilizo &lt;em&gt;Frames&lt;/em&gt; até mesmo sem pensar na reutilização…&lt;/p&gt;
-
-&lt;p&gt;Explico. Imagine um Formulário com algumas abas utilizando um &lt;a href=&quot;http://wiki.lazarus.freepascal.org/TPageControl&quot;&gt;TPageControl&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Bem, não podemos ter nomes de componentes iguais num único Formulário, ou seja, se você definiu que um &lt;code&gt;TEdit&lt;/code&gt; se chama &lt;code&gt;NameEdit&lt;/code&gt; na aba 1, você não pode nomear outro &lt;code&gt;TEdit&lt;/code&gt; com o mesmo nome na aba 2, pois ambos pertencem ao mesmo Formulário.&lt;/p&gt;
-
-&lt;p&gt;Você precisa acrescentar mais prefixos/sufixos na &lt;a href=&quot;/posts/nomeando-variaveis-e-metodos/&quot;&gt;nomenclatura&lt;/a&gt; e isso torna o código mais verboso e confuso, além do fato de que seu Formulário terá que lidar com todos os componentes de uma só vez.&lt;/p&gt;
-
-&lt;p&gt;Em meus projetos, uma aba pode conter a instância de um &lt;em&gt;Frame&lt;/em&gt;, caso haja ações diferentes em cada aba.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo, se eu precisar adicionar uma barra de botões (ações) na aba 2, então essa aba será um &lt;em&gt;Frame&lt;/em&gt; com sua própria implementação, componentes de nomenclatura simples e ações específicas.&lt;/p&gt;
-
-&lt;p&gt;Dentro de um &lt;em&gt;Frame&lt;/em&gt; eu não preciso me preocupar em lidar com um único código inchado que lida com todos os &lt;em&gt;widgets&lt;/em&gt; dentro de um Formulário.&lt;/p&gt;
-
-&lt;p&gt;E se um &lt;em&gt;Frame&lt;/em&gt; precisar notificar o Formulário principal, isso pode ser feito através de &lt;a href=&quot;/eventos-e-objetos&quot;&gt;Eventos&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Criar Componentes no Delphi/Lazarus é tão fácil&lt;/strong&gt; que se você precisar utilizar muito um comportamento, pode ser uma boa ideia criar um novo componente e disponibilizá-lo na IDE.&lt;/p&gt;
-
-&lt;p&gt;Já vi muito isso em empresas, onde existem componentes genéricos que podem ser utilizados por qualquer sistema, mas também componentes específicos por projeto.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, apesar de manter um padrão de uso de componentes por toda a equipe, pode ser difícil manter todas as IDE’s do Delphi atualizadas após um novo &lt;em&gt;release&lt;/em&gt; desses componentes — no Lazarus essa tarefa seria mais fácil devido sua “não-instalação” e componentes “registrados” em apenas 1 arquivo XML, no entanto.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;O objetivo do artigo não é depreciar desenvolvedores que ainda utilizam Herança de Formulários, mas sim apresentar técnicas muito mais eficazes de construção, visando a manutenibilidade do código no longo prazo.&lt;/p&gt;
-
-&lt;p&gt;Eu mesmo ainda trabalho em alguns projetos totalmente baseado em Herança de Formulários. Nesses projetos eu sou &lt;em&gt;obrigado&lt;/em&gt; a utilizar herança pois todo o &lt;em&gt;framework&lt;/em&gt; funciona a partir de alguns formulários base. No entanto, esses projetos estão longe de ter um código ideal.&lt;/p&gt;
-
-&lt;p&gt;Mantenha seus projetos atuais, mas repense o uso de Herança de Formulários em projetos futuros.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 27 Nov 2017 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes</guid>
       </item>
     
   </channel>

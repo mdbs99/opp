@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Herança de Formulário é para Iniciantes &#8211; Object Pascal Programming</title>
+    <title>Assertions é uma boa prática &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
     <meta name="keywords" content="">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, object-oriented, oop, mdbs99, herança, inheritance, form, formulário">
-    <link rel="canonical" href="http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, assertion">
+    <link rel="canonical" href="http://objectpascalprogramming.com/assertions">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Herança de Formulário é para Iniciantes">
-    <meta property="og:description" content="Depois que você aprendeu como funciona a Herança de Formulários, pode esquecê-la.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes">
+    <meta property="og:title" content="Assertions é uma boa prática">
+    <meta property="og:description" content="Assertions auxiliam o programador no desenvolvimento e depuração do código, sendo a primeira linha de defesa contra bugs.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/assertions">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-ken-treloar-346065.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-andrew-ruiz-394426-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Herança de Formulário é para Iniciantes" />
+    <meta name="twitter:title" content="Assertions é uma boa prática" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/assertions" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,125 +191,86 @@
 
 
 <div class="post-header mb2">
-  <h1>Herança de Formulário é para Iniciantes</h1>
-  <span class="post-meta">Nov 27, 2017</span><br>
+  <h1>Assertions é uma boa prática</h1>
+  <span class="post-meta">Mar 5, 2018</span><br>
   
   <span class="post-meta small">
   
-    5 minute read
+    2 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Depois que você aprendeu como funciona a Herança de Formulários, pode esquecê-la.</p>
+  <p>Assertions auxiliam o programador no desenvolvimento e depuração do código, sendo a primeira linha de defesa contra bugs.</p>
 
 <!--more-->
 
-<p><img src="/images/2017/photo-ken-treloar-346065.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2018/photo-andrew-ruiz-394426-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Andrew Ruiz on Unsplash</span></p>
 
-<p><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Ken Treloar on Unsplash</span></p>
+<p>Quando estamos desenvolvendo, é comum executar o programa várias vezes, digitar alguma entrada de dados “falsa”, e seguir adiante, afim de testar outras funcionalidades.</p>
 
-<h2 id="introducao">Introdução</h2>
+<p>Assim, vamos construindo um protótipo.</p>
 
-<p>No início da minha carreira, a muitos anos atrás, alguém me mostrou a Herança de Formulário no Delphi.</p>
+<p>Um protótipo pode ser codificado muito rapidamente, sendo comum codificarmos várias funcionalidades apenas para visualizarmos como seria o sistema real.</p>
 
-<p>Mesmo em <em>design time</em>, dois Formulários herdados estavam “sincronizados”.</p>
+<p>Como um protótipo pode ser alterado inúmeras vezes, vários bugs podem aparecer.</p>
 
-<p>Ao alterar um componente de lugar (<em>Top</em> / <em>Left</em>) no Formulário 1, automaticamente também era alterado no outro Formulário 2 devido a Herança entre eles.</p>
+<p>Aqui entram as <a href="https://www.freepascal.org/docs-html/3.0.2/rtl/system/assert.html">Assertions</a>.</p>
 
-<p>E na época eu pensei: UAU!</p>
+<p>De acordo com a <a href="https://en.wikipedia.org/wiki/Assertion_(software_development)">Wikipedia</a>:</p>
 
-<p>Como era rápido fazer um Formulário (simplório) de CRUD. Basta herdar e setar algumas propriedades e sobrescrever alguns Métodos.</p>
+<blockquote>
+  <p>In computer programming, an assertion is a statement that a predicate (Boolean-valued function, i.e. a true–false expression) is expected to always be true at that point in the code. If an assertion evaluates to false at run time, an assertion failure results, which typically causes the program to crash, or to throw an assertion exception.</p>
+</blockquote>
 
-<p>Acredito que essa é uma das <em>features</em> mais utilizadas hoje em dia.</p>
+<p>Então, uma Assertion sempre deve ser verdadeira ou uma exceção <code>EAssertionFailed</code> será gerada e o sistema será abortado, retornando o código <code>227</code></p>
 
-<p>Mas, o que tem de errado com isso?</p>
+<p>No entanto, se a unit <code>SysUtils</code> for declarada em algum lugar do código, é possível verificar mais informações da exceção como a linha e a unit onde o erro foi gerado, além da <i>mensagem</i> opcional que o desenvolvedor pode utilizar para cada Assertion.</p>
 
-<h2 id="problemas">Problemas</h2>
+<p>Uma Assertion funciona dessa forma:</p>
 
-<p>Utilizar Herança de Formulário é bom apenas para os <em>iniciantes</em> na programação Orientada a Objetos e para o uso <em>superficial</em> do Delphi ou Lazarus.</p>
+<pre><code>procedure TForm1.Button1Click(Sender: TObject);
+var
+  I: Integer;
+begin
+  I := 0;
+  Assert(I = 1, 'The I variable is not 1');
+  ShowMessage(I.ToString);
+end;
+</code></pre>
 
-<p>Pode ser considerado “Ok” para criar aplicações de exemplo, ensinar sobre <del>como não utilizar</del> a Herança simplificada e… talvez, apenas isso.</p>
+<p>No código acima, temos um <code>Form</code> com um botão. No evento desse botão o Assert irá verificar se a variável <code>I</code> é igual a <code>1</code>.</p>
 
-<p>Para aplicações realmente importantes, sugiro esquecer a Herança de Formulário por completo.</p>
+<p>O resultado será falso e uma exceção será gerada.</p>
 
-<p>Enquanto a <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">Herança de Classes é um mal</a> que pode ser gerenciado ou mesmo utilizado de forma mais <a href="/posts/como-utilizar-heranca-apropriadamente/">apropriada</a>, a Herança de Formulário acaba com todos os conceitos da verdadeira <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>.</p>
+<p>Na minha IDE eu vejo essa mensagem:</p>
 
-<p><strong>O <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-2/#encapsulamento">encapsulamento</a> é perdido</strong> quando utilizamos Herança de Formulários, pois o desenvolvedor precisa ter conhecimento do comportamento interno do formulário-pai afim de conseguir fazer algo de útil no formulário-filho.</p>
+<pre><code>The I variable is not 1 (unit1.pas, line 34).
+</code></pre>
 
-<p>Muitas vezes encontramos formulários contendo apenas Métodos protegidos ou <a href="/posts/metodos-privados/">privados</a> sem nenhum comportamento público; eles vem do formulário-pai. E isso é muito estranho. Por quê teríamos uma Classe (Form) que, a primeira vista, não tem nenhum comportamento para o mundo externo?</p>
+<p>Eu compilei o projeto <i>sem</i> informações de <i>debugger</i>. Mesmo assim, é possível ver a linha onde a validação ocorreu, tornando muito útil o uso de Assert para identificar onde e por quê um erro ocorreu.</p>
 
-<p><strong>A ordem de execução dos Métodos protegidos</strong> que devem ser sobrescritos, devem ser de conhecimento do desenvolvedor, mais uma vez quebrando o encapsulamento.</p>
+<p>Entretanto, as Assertions não deve ser utilizadas em produção. Suas informações técnicas só deveriam ser vistas por programadores, não usuários finais.</p>
 
-<p>É necessário visualizar o código do formulário-pai afim de saber onde e em que momento tais métodos abstratos e protegidos são utilizados.</p>
+<p>Por esse motivo nós <b>devemos</b> desabilitar as Assertions quando fizermos o <i>deploy</i> do sistema para o usuário final.</p>
 
-<p>É comum ver métodos sobrescritos que não chamam o Método herdado, “matando” o comportamento padrão da Classe ancestral quando o Método não é abstrato.</p>
+<p>Para desabilitar Assertions, o compilador tem uma diretiva de compilação global.</p>
 
-<p>Pedaços de código serão duplicados pois estão em métodos não acessíveis nos formulários-filhos.</p>
+<p>Há duas opções:</p>
 
-<p>Uma bagunça.</p>
+<pre><code>$ASSERTIONS ON/OFF (long form)
+$C +/- (short form)
+</code></pre>
 
-<p><strong>Componentes herdados não podem ser excluídos</strong>, o que resulta em mais bagunça e “código espaguete”.</p>
+<p>Mas isso pode ser definido diretamente na IDE, na sessão de debugger nas  opções do projeto, sem haver necessidade de escrever uma linha de código.</p>
 
-<p>Como não é possível excluir componentes em formulários-filho, o desenvolvedor tem que habilitar/desabilitar ou torná-los visível/não-visível. No entanto tais componentes continuarão a serem criados no formulário…</p>
+<p>Quando as Assertions estão desabilitadas, as verificações não são executadas. Isso libera o sistema de todo <i>overhead</i> das verificações no produto final.</p>
 
-<p>Criar formulários com componentes que não serão utilizados é realmente um desperdício de memória RAM.</p>
-
-<p><strong>Qualquer alteração no formulário-pai irá refletir nos formulários-filhos</strong>, e isso quer dizer que você pode quebrar o sistema inteiro com pequenas modificações.</p>
-
-<p>Você poderia argumentar que mesmo se não utilizasse Herança, mas sim Composição de Objetos, um Objeto que fosse reaproveitado por todo o sistema também poderia quebrá-lo caso algo fosse indevidamente alterado no seu código.</p>
-
-<p>Correto. Mas a grande diferença é que é muito mais fácil alterar um código de apenas uma Classe <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/">pequena</a> e sem dependências externas ou heranças de Classes-filhas, do que um código de Formulário onde toda lógica está contido nele além de ter a preocupação se alguma alteração irá impactar negativamente nos nos formulários-filhos.</p>
-
-<h2 id="solucoes">Soluções</h2>
-
-<p>Vejamos então algumas opções para a completa substituição da Herança de Formulário, utilizando outras técnicas mais Orientadas a Objetos, <a href="/posts/simplicidade/">simples</a> e limpas.</p>
-
-<p><strong>A Composição e <a href="/posts/decorator-pattern/">Decoração</a> de Objetos</strong> são as opções mais simples e corretas para substituir praticamente qualquer tipo de Herança.</p>
-
-<p>Você pode criar Classes intermediárias ou <a href="/posts/classes-adaptadoras/">adaptadoras</a> que se comunicam entre si para instanciar Formulários complexos.</p>
-
-<p>Com o uso de pequenas Classes utilizadas como “interface de acesso” aos Formulários, você consegue instanciá-los, desacoplá-los entre si, instanciar <em>Frames</em>, ler e escrever dados em componentes. Tudo em <em>runtime</em>.</p>
-
-<p><strong>O uso de <em>Frames</em> é uma ótima opção</strong> para o uso de composição visual, visto que são mini-formulários embutidos em outros Formulários.</p>
-
-<p>Pense em como são construídas as páginas de um website. Não há herança, apenas <em>includes</em> de “pedaços de código”: <em>Header</em>, <em>Footer</em>, <em>JavaScript</em>, etc.</p>
-
-<p>Você pode utilizar o mesmo pensamento para o uso de <em>Frames</em>. Pode criar um <em>Frame</em> apenas com os botões de CRUD; outro com <em>Grids</em>; outro para o <em>footer</em> de todo formulário.</p>
-
-<p>Eu utilizo <em>Frames</em> até mesmo sem pensar na reutilização…</p>
-
-<p>Explico. Imagine um Formulário com algumas abas utilizando um <a href="http://wiki.lazarus.freepascal.org/TPageControl">TPageControl</a>.</p>
-
-<p>Bem, não podemos ter nomes de componentes iguais num único Formulário, ou seja, se você definiu que um <code>TEdit</code> se chama <code>NameEdit</code> na aba 1, você não pode nomear outro <code>TEdit</code> com o mesmo nome na aba 2, pois ambos pertencem ao mesmo Formulário.</p>
-
-<p>Você precisa acrescentar mais prefixos/sufixos na <a href="/posts/nomeando-variaveis-e-metodos/">nomenclatura</a> e isso torna o código mais verboso e confuso, além do fato de que seu Formulário terá que lidar com todos os componentes de uma só vez.</p>
-
-<p>Em meus projetos, uma aba pode conter a instância de um <em>Frame</em>, caso haja ações diferentes em cada aba.</p>
-
-<p>Por exemplo, se eu precisar adicionar uma barra de botões (ações) na aba 2, então essa aba será um <em>Frame</em> com sua própria implementação, componentes de nomenclatura simples e ações específicas.</p>
-
-<p>Dentro de um <em>Frame</em> eu não preciso me preocupar em lidar com um único código inchado que lida com todos os <em>widgets</em> dentro de um Formulário.</p>
-
-<p>E se um <em>Frame</em> precisar notificar o Formulário principal, isso pode ser feito através de <a href="/eventos-e-objetos">Eventos</a>.</p>
-
-<p><strong>Criar Componentes no Delphi/Lazarus é tão fácil</strong> que se você precisar utilizar muito um comportamento, pode ser uma boa ideia criar um novo componente e disponibilizá-lo na IDE.</p>
-
-<p>Já vi muito isso em empresas, onde existem componentes genéricos que podem ser utilizados por qualquer sistema, mas também componentes específicos por projeto.</p>
-
-<p>Entretanto, apesar de manter um padrão de uso de componentes por toda a equipe, pode ser difícil manter todas as IDE’s do Delphi atualizadas após um novo <em>release</em> desses componentes — no Lazarus essa tarefa seria mais fácil devido sua “não-instalação” e componentes “registrados” em apenas 1 arquivo XML, no entanto.</p>
-
-<h2 id="conclusao">Conclusão</h2>
-
-<p>O objetivo do artigo não é depreciar desenvolvedores que ainda utilizam Herança de Formulários, mas sim apresentar técnicas muito mais eficazes de construção, visando a manutenibilidade do código no longo prazo.</p>
-
-<p>Eu mesmo ainda trabalho em alguns projetos totalmente baseado em Herança de Formulários. Nesses projetos eu sou <em>obrigado</em> a utilizar herança pois todo o <em>framework</em> funciona a partir de alguns formulários base. No entanto, esses projetos estão longe de ter um código ideal.</p>
-
-<p>Mantenha seus projetos atuais, mas repense o uso de Herança de Formulários em projetos futuros.</p>
+<p>Finalmente, Assertions não substituem Testes de Unidade ou Teste de Integração, sendo apenas mais um tipo de ferramenta para testar o código na fase de desenvolvimento.</p>
 
 <p>Até logo.</p>
-
 
 </article>
 
@@ -319,33 +280,33 @@
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/assertions" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Herança de Formulário é para Iniciantes&via=mdbs99;url=http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Assertions é uma boa prática&via=mdbs99;url=http://objectpascalprogramming.com/assertions" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/assertions" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes&title=Herança de Formulário é para Iniciantes" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes&title=Herança de Formulário é para Iniciantes" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/assertions&title=Assertions é uma boa prática" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/heranca-de-formulario-e-para-iniciantes&t=Herança de Formulário é para Iniciantes" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/assertions&title=Assertions é uma boa prática" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/assertions&t=Assertions é uma boa prática" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -392,15 +353,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/assertions" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Assertions é uma boa prática</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/construtores-virtuais" class="post-link">
@@ -483,6 +435,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/heranca-de-formulario-e-para-iniciantes" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Herança de Formulário é para Iniciantes</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -490,8 +451,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/heranca-de-formulario-e-para-iniciantes';
-      var disqus_title      = 'Herança de Formulário é para Iniciantes';
+      var disqus_identifier = '/assertions';
+      var disqus_title      = 'Assertions é uma boa prática';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
