@@ -82,7 +82,7 @@ Ao utilizarmos Interfaces, somos obrigados a implementar esses 3 Métodos
 — a não ser que utilizemos Interfaces CORBA, que não tem contagem de
 referência e nem liberação automática da memória.
 
-Então utizamos a herança de alguma Classe que já implemente esses Métodos.
+Então, precisamos herdar de alguma Classe que já implemente esses Métodos.
 
 E aqui começam os problemas.
 
