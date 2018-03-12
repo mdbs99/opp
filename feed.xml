@@ -8,6 +8,119 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>A função Supports pode ser traiçoeira</title>
+        <description>&lt;p&gt;Quando você se acostuma a utilizar somente instancias de interfaces, pode ser difícil entender alguns erros em tempo de execução, utilizando instâncias de classes com suporte a interfaces.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-michal-parzuchowski-224092-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Michał Parzuchowski on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Você pode desenvolver seu projeto do zero, utilizando apenas &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;instâncias de interfaces&lt;/a&gt;, e (quase) tudo estará sob seu controle.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, há muitos projetos onde só iremos fazer algum tipo de manutenção. Esses projetos podem não utilizar o conceito de interfaces como explicado em vários artigos desse blog. Nesses casos, é necessário codificar de forma que mantenha o código legado funcionando, ao mesmo tempo que introduzimos boas práticas de &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Em tais projetos, é comum vermos variáveis declaradas como tipo de alguma classe ao invés de alguma interface.&lt;/p&gt;
+
+&lt;p&gt;Isso quer dizer que haverá chamadas aos métodos &lt;code&gt;Free&lt;/code&gt; de cada instância, por todo o código.&lt;/p&gt;
+
+&lt;p&gt;E não há nada de errado com isso. Essa é uma das características da linguagem Object Pascal que a torna muito eficiente para projetos de alta &lt;a href=&quot;/argumentos-const&quot;&gt;performance&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;No entanto, como já foi dito muitas vezes aqui nesse blog, o uso de instâncias de interfaces pode trazer muitos benefícios quando utilizada apropriadamente.&lt;/p&gt;
+
+&lt;p&gt;Os benefícios, entretanto, podem ser ofuscados pelo não funcionamento correto do código ao utilizarmos instâncias de classes junto com interfaces.&lt;/p&gt;
+
+&lt;p&gt;Veja o código abaixo e, antes de compilar e executar o programa no seu computador, tente descobrir se há algo errado:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;program Project1;
+
+uses
+  SysUtils;
+
+type
+  IBar = interface
+  [&#39;{C22FB8F4-1EC6-42C4-81E4-F2A52CC52258}&#39;]
+  end;
+
+  TBar = class(TInterfacedObject, IBar)
+  end;
+
+var
+  Bar: TBar;
+begin
+  Bar := TBar.Create;
+  try
+    if Supports(Bar, IBar) then
+      Writeln(&#39;Bar supports...&#39;);
+  finally
+    Bar.Free;
+  end;
+end.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O código compila?&lt;/p&gt;
+
+&lt;p&gt;O código possui &lt;i&gt;memory leaks&lt;/i&gt;?&lt;/p&gt;
+
+&lt;p&gt;O código irá lançar algum &lt;i&gt;Access Violation&lt;/i&gt; (AV)?&lt;/p&gt;
+
+&lt;p&gt;Pense por um minuto…&lt;/p&gt;
+
+&lt;p&gt;Bem, eu posso lhe afirmar que o código compila sem erros mas há um grande problema de &lt;i&gt;design&lt;/i&gt;.&lt;/p&gt;
+
+&lt;p&gt;A lógica geral está correta. Temos uma instância de classe chamada &lt;code&gt;Bar&lt;/code&gt;; depois, checamos se essa instância suporta ou implementa a interface &lt;code&gt;IBar&lt;/code&gt; utilizando a função &lt;code&gt;Supports()&lt;/code&gt; da &lt;code&gt;SysUtils&lt;/code&gt;; então, imprimimos algo na tela em caso afirmativo; finalmente, a instância &lt;i&gt;deveria&lt;/i&gt; ser destruída utilizando &lt;code&gt;Bar.Free&lt;/code&gt;, visto que é uma instância de classe e não de interface. Certo?&lt;/p&gt;
+
+&lt;p&gt;Errado.&lt;/p&gt;
+
+&lt;p&gt;Você irá receber um &lt;i&gt;AV&lt;/i&gt; quando o compilador tentar destruir o objeto na linha &lt;code&gt;Bar.Free&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;E por quê isso ocorre?&lt;/p&gt;
+
+&lt;p&gt;Estamos utilizando uma das implementações da função &lt;code&gt;Supports()&lt;/code&gt; — há alguns &lt;i&gt;overloads&lt;/i&gt; — que retorna apenas um &lt;code&gt;boolean&lt;/code&gt; para dizer ao programa se determinada instância suporta ou não uma determinada interface.&lt;/p&gt;
+
+&lt;p&gt;Ao fazer isso, &lt;code&gt;Supports()&lt;/code&gt; irá obter uma instância de &lt;code&gt;IBar&lt;/code&gt;, extraída da variável &lt;code&gt;Bar&lt;/code&gt;. Isso irá alterar a contagem de referência e após o retorno da função, a instância &lt;code&gt;Bar&lt;/code&gt; será destruída… antes de chegar na linha &lt;code&gt;Bar.Free&lt;/code&gt;!&lt;/p&gt;
+
+&lt;p&gt;Na minha opinião, isso é um &lt;i&gt;erro&lt;/i&gt; mesmo sendo &lt;i&gt;&lt;a href=&quot;http://docwiki.embarcadero.com/Libraries/XE2/en/System.SysUtils.Supports&quot;&gt;by design&lt;/a&gt;&lt;/i&gt;.&lt;/p&gt;
+
+&lt;p&gt;Delphi e FPC funcionam da mesma forma.&lt;/p&gt;
+
+&lt;p&gt;Então, como consertar o código?&lt;/p&gt;
+
+&lt;p&gt;Basta alterar o tipo da variável para &lt;code&gt;Bar: IBar&lt;/code&gt;. Ao fazer isso, o compilador irá lhe dizer que não é mais necessário chamar &lt;code&gt;Bar.Free&lt;/code&gt;. Remova também essa linha e, consequentemente, a construção &lt;code&gt;try-finally&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var
+  Bar: IBar;
+begin
+  Bar := TBar.Create;
+  if Supports(Bar, IBar) then
+    Writeln(&#39;Bar supports...&#39;);
+end.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Após fazer isso, compile e execute novamente o programa.&lt;/p&gt;
+
+&lt;p&gt;Utilizando FPC 3.0.4 com &lt;code&gt;-gl&lt;/code&gt; habilitado, eu vejo a saída abaixo, sem nenhum &lt;i&gt;memory leak&lt;/i&gt; ou erros:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;c:\temp&amp;gt;project1.exe
+Bar supports...
+Heap dump by heaptrc unit
+48 memory blocks allocated : 1189/1296
+48 memory blocks freed     : 1189/1296
+0 unfreed memory blocks : 0
+True heap size : 163840 (80 used in System startup)
+True free heap : 163760
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Muito cuidado ao utilizar instâncias de classes com suporte a interfaces e contagem de referência.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 12 Mar 2018 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/supports-traicoeira</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/supports-traicoeira</guid>
+      </item>
+    
+      <item>
         <title>Assertions é uma boa prática</title>
         <description>&lt;p&gt;Assertions auxiliam o programador no desenvolvimento e depuração do código, sendo a primeira linha de defesa contra bugs.&lt;/p&gt;
 
@@ -955,248 +1068,6 @@ end;
         <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/pas2js</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/pas2js</guid>
-      </item>
-    
-      <item>
-        <title>Mais Performance usando Argumentos &quot;const&quot; para Interfaces</title>
-        <description>&lt;p&gt;Se você utiliza instâncias de Interfaces em todos os lugares e quer aumentar um pouco a performance do seu código, leia esse artigo.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017/photo-alex-holyoake-334209.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Alex Holyoake on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Em um código verdadeiramente Orientado a Objetos, as instâncias dos Objetos devem ser do tipo Interface em &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;todos os lugares&lt;/a&gt; do código.&lt;/p&gt;
-
-&lt;p&gt;Além de prover um contrato entre os Objetos, as instâncias de Interfaces são auto-gerenciadas, ou seja, a memória é liberada automaticamente pelo compilador.&lt;/p&gt;
-
-&lt;p&gt;No Free Pascal, no entanto, podemos ter instâncias de Interfaces que não são auto-gerenciadas. Essas interfaces utilizam o modelo &lt;a href=&quot;https://www.freepascal.org/docs-html/prog/progsu37.html&quot;&gt;CORBA&lt;/a&gt; com a directiva &lt;code&gt;{$interfaces corba}&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Porém, o &lt;em&gt;default&lt;/em&gt; de uso de Interfaces é o modelo COM, com auto-gerenciamento de memória através de um contador interno de referências à instância.&lt;/p&gt;
-
-&lt;p&gt;Esse auto-gerenciamento tem um custo computacional de execução, mas pode ser extremamente minimizado com apenas uma pequena alteração no código.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, para você entender como essa pequena alteração irá afetar a performance do seu código, antes você precisa saber como o compilador faz o auto-gerenciamento de memória de instâncias de Interfaces.&lt;/p&gt;
-
-&lt;h2 id=&quot;metodos-especiais&quot;&gt;Métodos Especiais&lt;/h2&gt;
-
-&lt;p&gt;Todo Objeto que implementa uma Interface COM — &lt;code&gt;IUnknown&lt;/code&gt; — deve implementar 3 Métodos especiais que não fazem parte da Interface.&lt;/p&gt;
-
-&lt;p&gt;Funciona assim:&lt;/p&gt;
-
-&lt;p&gt;Quando criamos uma instância do tipo Interface, o compilador irá chamar um método especial do Objeto chamado &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/system/iunknown._addref.html&quot;&gt;_AddRef&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Esse método irá aumentar uma contagem de referência, toda vez que uma nova variável receber a mesma instância do Objeto.&lt;/p&gt;
-
-&lt;p&gt;Da mesma forma, toda vez que uma variável sair do escopo de execução, o compilador irá chamar o método &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/system/iunknown._release.html&quot;&gt;_Release&lt;/a&gt; para decrementar a contagem.&lt;/p&gt;
-
-&lt;p&gt;Quando a contagem de referência — o atributo &lt;code&gt;FRefCount: LongInt&lt;/code&gt; — chegar a zero, o destrutor do Objeto será executado e a memória será liberada.&lt;/p&gt;
-
-&lt;p&gt;Esse mecanismo é muito, muito mais simples do que ter um &lt;em&gt;garbage collector&lt;/em&gt; sendo executado em paralelo, como é feito em outras linguagens.&lt;/p&gt;
-
-&lt;p&gt;Existe mais um terceiro e último método chamado &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/system/iunknown.queryinterface.html&quot;&gt;QueryInterface&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Esse método é utilizado quando fazemos &lt;a href=&quot;/posts/nao-utilize-casting/&quot;&gt;&lt;em&gt;casting&lt;/em&gt;&lt;/a&gt; do Objeto para Interface utilizando a estrutura &lt;code&gt;Intf := Obj as IMyInterface;&lt;/code&gt; ou quando utilizamos a função &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/sysutils/supports.html&quot;&gt;Supports&lt;/a&gt; para determinar se uma instância implementa ou não uma determinada Interface.&lt;/p&gt;
-
-&lt;p&gt;Todas as Classes que implementam uma ou mais Interfaces, devem ter esses 3 métodos implementados.&lt;/p&gt;
-
-&lt;p&gt;Esse é o motivo de herdarmos quase todas as nossas Classes de &lt;code&gt;TInterfacedObject&lt;/code&gt;, pois ela já contém a implementação destes métodos para lidar com a contagem de referência.&lt;/p&gt;
-
-&lt;p&gt;Implementamos esses métodos apenas para o compilador e é possível sabermos o momento no qual o compilador irá chamá-los, sobrecarregando o código com execuções além da implementação padrão dos Métodos do Objeto.&lt;/p&gt;
-
-&lt;p&gt;Então, se conseguirmos evitar tais chamadas, nosso código terá mais performance pois ciclos de CPU serão poupados.&lt;/p&gt;
-
-&lt;h2 id=&quot;sobrecarga&quot;&gt;Sobrecarga&lt;/h2&gt;
-
-&lt;p&gt;Devido as chamadas automáticas de &lt;code&gt;_AddRef&lt;/code&gt; e &lt;code&gt;_Release&lt;/code&gt; em toda atribuição e saída de escopo das variáveis, muitos desenvolvedores acham que essa é uma &lt;em&gt;grande&lt;/em&gt; sobrecarga para o código.&lt;/p&gt;
-
-&lt;p&gt;Na Engenharia nada é grátis, havendo sempre prós e contras.&lt;/p&gt;
-
-&lt;p&gt;Se por um lado temos o auto-gerenciamento de memória para instâncias de Interfaces, por outro temos essa sobrecarga do incremento e decremento da contagem de referência.&lt;/p&gt;
-
-&lt;p&gt;Além disso, toda vez que &lt;code&gt;_Release&lt;/code&gt; for chamado, haverá uma checagem para saber se a contagem chegou a zero para que o destrutor do Objeto também seja chamado.&lt;/p&gt;
-
-&lt;p&gt;Eu acredito que essa é uma sobrecarga &lt;em&gt;mínima&lt;/em&gt;, considerando todas as &lt;em&gt;vantagens&lt;/em&gt; que temos ao utilizar instâncias de Interfaces.&lt;/p&gt;
-
-&lt;p&gt;Mas nem todos os desenvolvedores pensam da mesma forma.&lt;/p&gt;
-
-&lt;p&gt;De fato, existem algoritmos que não podem se dar o luxo de perder ciclos de CPU fazendo operações de infraestrutura da linguagem — incremento/decremento da contagem de referência.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, a linguagem Object Pascal nos dá uma “saída” bastante elegante para a diminuição de toda essa sobrecarga.&lt;/p&gt;
-
-&lt;h2 id=&quot;argumentos-const&quot;&gt;Argumentos “const”&lt;/h2&gt;
-
-&lt;p&gt;Sempre que uma instância for passada por parâmetro a outro Objeto através de um argumento, haverá o incremento da contagem de referência.&lt;/p&gt;
-
-&lt;p&gt;A menos que você utilize Argumentos “const”.&lt;/p&gt;
-
-&lt;p&gt;Vamos chamá-los de “&lt;em&gt;ConstArgs&lt;/em&gt;”, para encurtar.&lt;/p&gt;
-
-&lt;p&gt;Aqui está a definição, em tradução livre, de &lt;a href=&quot;https://www.freepascal.org/docs-html/ref/refsu67.html&quot;&gt;const&lt;/a&gt; na documentação do Free Pascal:&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;“Especificar um parâmetro como Constante está dando ao compilador uma dica de que o conteúdo do parâmetro não será alterado pela rotina chamada. Isso permite que o compilador execute otimizações que não poderia fazer de outra forma, e também para executar determinadas verificações no código dentro da rotina: ou seja, pode proibir atribuições ao parâmetro. Além disso, um parâmetro const não pode ser transmitido para outra função que requer um parâmetro variável: o compilador pode verificar isso também. O principal uso para isso é reduzir o tamanho da pilha, portanto, melhorar o desempenho e ainda manter a semântica de passagem por valor…”&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Eles não falam nada sobre utilizar “const” para argumentos do tipo Interface, no entanto eu posso lhe afirmar que utilizá-los irá aumentar a performance do seu código.&lt;/p&gt;
-
-&lt;p&gt;O motivo é simples: &lt;em&gt;ConstArgs&lt;/em&gt; não executam &lt;code&gt;_AddRef&lt;/code&gt; e &lt;code&gt;_Release&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Isso quer dizer que o incremento/decremento do atributo de contagem de referência não irão ocorrer.&lt;/p&gt;
-
-&lt;p&gt;A checagem se o contador interno chegou a zero também não irá existir no ASSEMBLY final gerado pelo compilador.&lt;/p&gt;
-
-&lt;p&gt;Vou demostrar isso, começando com a unidade base de todos os exemplos:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/d7583833ddaf07df796321c95ee8faa8.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;A &lt;code&gt;Unit1&lt;/code&gt; contém uma Interface e uma Classe que a implementa.&lt;/p&gt;
-
-&lt;p&gt;Os Métodos &lt;code&gt;_AddRef&lt;/code&gt; e &lt;code&gt;_Release&lt;/code&gt; foram sobrescritos para termos o controle do que ocorre dentro deles quando o compilador chamá-los.&lt;/p&gt;
-
-&lt;p&gt;Então vamos criar o primeiro programa de teste que utiliza a &lt;code&gt;Unit1&lt;/code&gt;:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/ac9932e2b0e5a3525fdf05223051d5c9.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Esse é um programa &lt;em&gt;CLI&lt;/em&gt; (&lt;em&gt;command-line&lt;/em&gt;) bem simples.&lt;/p&gt;
-
-&lt;p&gt;É necessário setar a utilização do &lt;a href=&quot;http://wiki.freepascal.org/heaptrc&quot;&gt;&lt;em&gt;heaptrc&lt;/em&gt;&lt;/a&gt; no Lazarus para mostrar os vazamentos de memória (se houver) no final da execução do programa.&lt;/p&gt;
-
-&lt;p&gt;Então, após a execução, no meu laptop a saída foi essa:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;c:\temp&amp;gt;project1.exe
-_AddRef called
-RefCount is 1
-_AddRef called
-RefCount is 2
-Acting...
-_Release called
-_Release called
-RefCount is 0
-Destroing...
-Heap dump by heaptrc unit
-64 memory blocks allocated : 1593/1720
-64 memory blocks freed     : 1593/1720
-0 unfreed memory blocks : 0
-True heap size : 196608 (80 used in System startup)
-True free heap : 196528
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A execução foi bem sucedida, e não contém vazamentos de memória.&lt;/p&gt;
-
-&lt;p&gt;Porém, veja que &lt;code&gt;_AddRef&lt;/code&gt; e &lt;code&gt;_Release&lt;/code&gt; foram, ambos, chamados 2 vezes cada. Isso ocorre por quê, ao criar a instância em &lt;code&gt;A&lt;/code&gt;, há o incremento e ao passar essa instância para &lt;code&gt;Execute&lt;/code&gt;, há um novo incremento da contagem.&lt;/p&gt;
-
-&lt;p&gt;Agora apenas altere a assinatura do procedimento, adicionando &lt;code&gt;const&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure Execute(const A: IAction);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Execute novamente.&lt;/p&gt;
-
-&lt;p&gt;Esse é o resultado por aqui:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;c:\temp&amp;gt;project1.exe
-_AddRef called
-RefCount is 1
-Acting...
-_Release called
-RefCount is 0
-Destroing...
-Heap dump by heaptrc unit
-64 memory blocks allocated : 1593/1720
-64 memory blocks freed     : 1593/1720
-0 unfreed memory blocks : 0
-True heap size : 196608 (80 used in System startup)
-True free heap : 196528
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A mesma memória foi consumida, mas &lt;code&gt;_AddRef&lt;/code&gt; e &lt;code&gt;_Release&lt;/code&gt; foram chamados apenas 1 vez cada.&lt;/p&gt;
-
-&lt;p&gt;Isso se traduz em &lt;em&gt;mais&lt;/em&gt; performance ou &lt;em&gt;menos&lt;/em&gt; sobrecarga, dependendo do seu ponto de vista.&lt;/p&gt;
-
-&lt;p&gt;Imagine se esse mesmo procedimento fosse chamado 100 vezes. Sem o “const” haveria mais de 100 chamadas aos Métodos especiais.&lt;/p&gt;
-
-&lt;p&gt;Mas, se é tão simples eliminar essa sobrecarga apenas especificando o tipo do argumento, por quê nem todos os desenvolvedores utilizam essa técnica?&lt;/p&gt;
-
-&lt;p&gt;Talvez seja apenas falta de conhecimento ou talvez eles tenham lido sobre problemas obscuros de vazamento de memória com o uso de &lt;em&gt;ConstArgs&lt;/em&gt; e Interfaces.&lt;/p&gt;
-
-&lt;h2 id=&quot;problemas&quot;&gt;Argumentos e Interfaces&lt;/h2&gt;
-
-&lt;p&gt;Há alguns artigos na Internet dizendo que temos que ter &lt;a href=&quot;https://pascal.today/2016/12/16/take-care-of-const-and-interface-parameters/&quot;&gt;cuidado&lt;/a&gt; ao utilizarmos &lt;em&gt;ConstArgs&lt;/em&gt; em conjunto com instâncias de Interfaces.&lt;/p&gt;
-
-&lt;p&gt;Sim, &lt;em&gt;devemos&lt;/em&gt; ter cuidado.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;O código realmente pode ficar intrincado e vazamentos de memória podem ocorrer&lt;/strong&gt; em lugares onde tudo parece estar correto.&lt;/p&gt;
-
-&lt;p&gt;Para demonstrar vamos a outro exemplo:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/979c82ffe9288ec129b5792cfef0d9b0.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;É o mesmo programa anterior, porém agora a instância de &lt;code&gt;TAction&lt;/code&gt; é criada “inline”.&lt;/p&gt;
-
-&lt;p&gt;Após executar, esse é o resultado por aqui:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;c:\temp&amp;gt;project1.exe
-Acting...
-Heap dump by heaptrc unit
-64 memory blocks allocated : 1593/1720
-63 memory blocks freed     : 1577/1704
-1 unfreed memory blocks : 16
-True heap size : 229376 (80 used in System startup)
-True free heap : 229200
-Should be : 229216
-Call trace for block $01872E88 size 16
-  $004015C7  main,  line 14 of C:/temp/project1.lpr
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Veja que os Métodos especiais não foram executados e há um vazamento de memória, o que não é nada bom.&lt;/p&gt;
-
-&lt;p&gt;Mas se você retirar o “const” do procedimento, o vazamento é corrigido.&lt;/p&gt;
-
-&lt;p&gt;Se o argumento não for um &lt;em&gt;ConstArgs&lt;/em&gt; ele poderá incrementar a contagem e não haverá vazamentos de memória.&lt;/p&gt;
-
-&lt;p&gt;Por isso há o mito de que “não devemos utilizar &lt;em&gt;ConstArgs&lt;/em&gt; com Interfaces” ou que devemos evitar seu uso.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Felizmente a solução para toda essa complexidade é muito simples&lt;/strong&gt;, bastando utilizar uma técnica que eu publiquei a quase dois anos atrás, na qual eu chamo de &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Altere &lt;code&gt;TAction&lt;/code&gt; adicionando o Método &lt;code&gt;New&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;TAction = class(TInterfacedObject, IAction)
-public
-  class function New: IAction;
-  // ...
-end;
-
-implementation
-
-class function TAction.New: IAction;
-begin
-  Result := Create;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Altere também o programa, dessa forma:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;begin
-  Execute(TAction.New);
-end.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Execute e veja o resultado você mesmo.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Se você criar suas instâncias utilizando &lt;code&gt;New&lt;/code&gt; — um método da Classe — ao invés de chamar diretamente os &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt;, eu lhe asseguro que você não terá problemas de vazamento de memória, se a utilizar corretamente.&lt;/p&gt;
-
-&lt;p&gt;Vimos nesse artigo que uma simples mudança no código pode gerar um ganho considerável de performance.&lt;/p&gt;
-
-&lt;p&gt;Utilizando &lt;em&gt;ConstArgs&lt;/em&gt; em conjunto com a técnica chamada &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New&lt;/a&gt;, você poderá deixar seu código mais rápido e sem vazamentos de memória.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 11 Dec 2017 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/argumentos-const</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/argumentos-const</guid>
       </item>
     
   </channel>

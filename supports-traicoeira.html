@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Versões Antigas dos Compiladores &#8211; Object Pascal Programming</title>
+    <title>A função Supports pode ser traiçoeira &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
     <meta name="keywords" content="">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, old-school, delphi 6, delphi 7, mormot">
-    <link rel="canonical" href="http://objectpascalprogramming.com/versoes-antigas-dos-compiladores">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, supports, function">
+    <link rel="canonical" href="http://objectpascalprogramming.com/supports-traicoeira">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Versões Antigas dos Compiladores">
-    <meta property="og:description" content="Vale a pena manter seu código executando nas versões antigas do compilador?">
-    <meta property="og:url" content="http://objectpascalprogramming.com/versoes-antigas-dos-compiladores">
+    <meta property="og:title" content="A função Supports pode ser traiçoeira">
+    <meta property="og:description" content="Quando você se acostuma a utilizar somente instancias de interfaces, pode ser difícil entender alguns erros em tempo de execução, utilizando instâncias de classes com suporte a interfaces.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/supports-traicoeira">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-danielle-macinnes-222441.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-michal-parzuchowski-224092-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Versões Antigas dos Compiladores" />
+    <meta name="twitter:title" content="A função Supports pode ser traiçoeira" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/versoes-antigas-dos-compiladores" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/supports-traicoeira" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,8 +191,8 @@
 
 
 <div class="post-header mb2">
-  <h1>Versões Antigas dos Compiladores</h1>
-  <span class="post-meta">Jan 22, 2018</span><br>
+  <h1>A função Supports pode ser traiçoeira</h1>
+  <span class="post-meta">Mar 12, 2018</span><br>
   
   <span class="post-meta small">
   
@@ -202,44 +202,109 @@
 </div>
 
 <article class="post-content">
-  <p>A primeira versão do Delphi data de 1995, após o Turbo Pascal,enquanto o compilador Free Pascal é de 1993.</p>
-
-<p>Estamos em 2018 agora. Será que vale a pena manter seu código executando nas versões antigas do compilador?</p>
+  <p>Quando você se acostuma a utilizar somente instancias de interfaces, pode ser difícil entender alguns erros em tempo de execução, utilizando instâncias de classes com suporte a interfaces.</p>
 
 <!--more-->
 
-<p><img src="/images/2018/photo-danielle-macinnes-222441.jpg" alt="Unsplash image" />
-<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Danielle MacInnes on Unsplash</span></p>
+<p><img src="/images/2018/photo-michal-parzuchowski-224092-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Michał Parzuchowski on Unsplash</span></p>
 
-<p>Talvez não valha a pena manter o código dos seus projetos funcionando nas versões antigas, uma vez que você tenha conseguido migrar todo o código-fonte para uma versão mais nova. No entanto, suas bibliotecas — especialmente as públicas, Open Source — poderiam (ou deveriam?) continuar compilando nas versões mais antigas dos compiladores.</p>
+<p>Você pode desenvolver seu projeto do zero, utilizando apenas <a href="/posts/interfaces-em-todo-lugar/">instâncias de interfaces</a>, e (quase) tudo estará sob seu controle.</p>
 
-<p><strong>O primeiro motivo</strong> é bem simples. <em>Compatibilidade</em>.</p>
+<p>Entretanto, há muitos projetos onde só iremos fazer algum tipo de manutenção. Esses projetos podem não utilizar o conceito de interfaces como explicado em vários artigos desse blog. Nesses casos, é necessário codificar de forma que mantenha o código legado funcionando, ao mesmo tempo que introduzimos boas práticas de <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>.</p>
 
-<p>Mas por quê isso é importante?</p>
+<p>Em tais projetos, é comum vermos variáveis declaradas como tipo de alguma classe ao invés de alguma interface.</p>
 
-<p>Trabalho profissionalmente com o Delphi desde sua versão 4 e um dos critérios que me fizeram continuar na ferramenta foi a retrocompatibilidade. Um código que executava na versão anterior, continuava executando na versão mais nova.</p>
+<p>Isso quer dizer que haverá chamadas aos métodos <code>Free</code> de cada instância, por todo o código.</p>
 
-<p>Lembro das palestras e encontros proporcionados pela antiga Borland, onde o palestrante abria aquele “Projeto dos Peixinhos” feito no Delphi 1~2 e ele continuava compilando normalmente, sem alterações, na versão mais nova.</p>
+<p>E não há nada de errado com isso. Essa é uma das características da linguagem Object Pascal que a torna muito eficiente para projetos de alta <a href="/argumentos-const">performance</a>.</p>
 
-<p>É difícil ver esse nível de comprometimento com o usuário/desenvolvedor hoje em dia. Quantos frameworks a Microsoft já criou e matou na plataforma .NET? Temos que ficar correndo como “ratos” atrás do próximo “queijo sofisticado” para fazer o mesmo tipo de projeto que já estávamos fazendo a 20 anos atrás? Tenho certeza que não.</p>
+<p>No entanto, como já foi dito muitas vezes aqui nesse blog, o uso de instâncias de interfaces pode trazer muitos benefícios quando utilizada apropriadamente.</p>
 
-<p><strong>O segundo motivo</strong> é proporcionar mais <em>opções</em> de bibliotecas à comunidade Object Pascal.</p>
+<p>Os benefícios, entretanto, podem ser ofuscados pelo não funcionamento correto do código ao utilizarmos instâncias de classes junto com interfaces.</p>
 
-<p>Hoje em dia a linguagem se tornou um (pequeno) nicho. Enquanto nascem “centenas” de frameworks JavaScript todos os dias, não vemos o mesmo empenho na comunidade Pascal. Então, é importante manter o código legado funcionando para manter os desenvolvedores fieis a linguagem. Senão eles irão procurar alternativas lá fora. Melhor ainda, seria se tivéssemos mais opções a escolher, no entanto.</p>
+<p>Veja o código abaixo e, antes de compilar e executar o programa no seu computador, tente descobrir se há algo errado:</p>
 
-<p>Eu já publiquei algumas bibliotecas Open Source a alguns anos, mas agora elas não existem mais. Não valiam a pena. Eram só “brinquedos”. Elas deveriam mesmo desaparecer. No entanto existem bibliotecas que fizeram e ainda fazem muita diferença no desenvolvimento hoje como a RX e JEDI. Acredito que essas bibliotecas não compilem utilizando versões antigas, no entanto elas foram atualizadas, o que já é um grande mérito para seus mantenedores.</p>
+<pre><code>program Project1;
 
-<p>Existem ainda alguns <em>ninjas</em> do Object Pascal que mantém uma <em>única</em> base de código desde o Delphi 6 até o Delphi 10.2 Tokyo, compilando também no FPC 2.7.1/3.1.1 em diante. Me refiro ao framework <a href="https://synopse.info/fossil/wiki?name=SQLite3+Framework">mORMot</a>.</p>
+uses
+  SysUtils;
 
-<p><strong>mORMot é o estado-da-arte</strong> dentre todos os projetos Object Pascal que conheço. Com uma <em>única</em> base de código e sintaxe “old-school”, sem generics, sem classes anônimas, sem métodos anônimos, sem n.a.m.e.s.p.a.c.e.s, ou seja, “apenas” com Classes, Interfaces e funções, o autor Arnaud Bouchez e colaboradores foram capazes de criar e manter ao longo dos anos, um framework Client-Server ORM/ODM SOA MVC completo, quase sem dependências externas, com performance <em>superior</em> as soluções <em>modernas</em> como Node.js.</p>
+type
+  IBar = interface
+  ['{C22FB8F4-1EC6-42C4-81E4-F2A52CC52258}']
+  end;
 
-<p>Isso prova que <a href="/posts/simplicidade/">simplicidade</a> e arquitetura bem feita são muito mais importantes que novas <em>features</em> na linguagem, novos componentes, nova IDE…</p>
+  TBar = class(TInterfacedObject, IBar)
+  end;
 
-<p>A alguns anos eu voltei a publicar projetos Open Source, com uma nova abordagem e profissionalismo. Mas quando vejo projetos como o mORMot, tenho a plena convicção do quanto eu ainda tenho que aprender.</p>
+var
+  Bar: TBar;
+begin
+  Bar := TBar.Create;
+  try
+    if Supports(Bar, IBar) then
+      Writeln('Bar supports...');
+  finally
+    Bar.Free;
+  end;
+end.
+</code></pre>
 
-<p>Hoje utilizo FPC/Lazarus mais do que Delphi. Comecei a migrar meus sistemas e bibliotecas privadas para a “plataforma concorrente” a alguns anos. Nessa época o Lazarus era um “brinquedo” mas, felizmente, continuei a utilizá-lo e hoje o Lazarus é tão bom quanto o Delphi — talvez melhor. No entanto, o <em>Delphi 7</em> ainda faz parte do meu dia-a-dia. Então, vale a pena fazer bibliotecas para essa versão? Talvez.</p>
+<p>O código compila?</p>
 
-<p>Saber que as mesmas bibliotecas que eu sempre utilizei foram sendo atualizadas ao londo de todos esses anos, é um conforto. Não precisarei reescrever meus sistemas… pelo menos enquanto mantermos a linguagem viva.</p>
+<p>O código possui <i>memory leaks</i>?</p>
+
+<p>O código irá lançar algum <i>Access Violation</i> (AV)?</p>
+
+<p>Pense por um minuto…</p>
+
+<p>Bem, eu posso lhe afirmar que o código compila sem erros mas há um grande problema de <i>design</i>.</p>
+
+<p>A lógica geral está correta. Temos uma instância de classe chamada <code>Bar</code>; depois, checamos se essa instância suporta ou implementa a interface <code>IBar</code> utilizando a função <code>Supports()</code> da <code>SysUtils</code>; então, imprimimos algo na tela em caso afirmativo; finalmente, a instância <i>deveria</i> ser destruída utilizando <code>Bar.Free</code>, visto que é uma instância de classe e não de interface. Certo?</p>
+
+<p>Errado.</p>
+
+<p>Você irá receber um <i>AV</i> quando o compilador tentar destruir o objeto na linha <code>Bar.Free</code>.</p>
+
+<p>E por quê isso ocorre?</p>
+
+<p>Estamos utilizando uma das implementações da função <code>Supports()</code> — há alguns <i>overloads</i> — que retorna apenas um <code>boolean</code> para dizer ao programa se determinada instância suporta ou não uma determinada interface.</p>
+
+<p>Ao fazer isso, <code>Supports()</code> irá obter uma instância de <code>IBar</code>, extraída da variável <code>Bar</code>. Isso irá alterar a contagem de referência e após o retorno da função, a instância <code>Bar</code> será destruída… antes de chegar na linha <code>Bar.Free</code>!</p>
+
+<p>Na minha opinião, isso é um <i>erro</i> mesmo sendo <i><a href="http://docwiki.embarcadero.com/Libraries/XE2/en/System.SysUtils.Supports">by design</a></i>.</p>
+
+<p>Delphi e FPC funcionam da mesma forma.</p>
+
+<p>Então, como consertar o código?</p>
+
+<p>Basta alterar o tipo da variável para <code>Bar: IBar</code>. Ao fazer isso, o compilador irá lhe dizer que não é mais necessário chamar <code>Bar.Free</code>. Remova também essa linha e, consequentemente, a construção <code>try-finally</code>:</p>
+
+<pre><code>var
+  Bar: IBar;
+begin
+  Bar := TBar.Create;
+  if Supports(Bar, IBar) then
+    Writeln('Bar supports...');
+end.
+</code></pre>
+
+<p>Após fazer isso, compile e execute novamente o programa.</p>
+
+<p>Utilizando FPC 3.0.4 com <code>-gl</code> habilitado, eu vejo a saída abaixo, sem nenhum <i>memory leak</i> ou erros:</p>
+
+<pre><code>c:\temp&gt;project1.exe
+Bar supports...
+Heap dump by heaptrc unit
+48 memory blocks allocated : 1189/1296
+48 memory blocks freed     : 1189/1296
+0 unfreed memory blocks : 0
+True heap size : 163840 (80 used in System startup)
+True free heap : 163760
+</code></pre>
+
+<p>Muito cuidado ao utilizar instâncias de classes com suporte a interfaces e contagem de referência.</p>
 
 <p>Até logo.</p>
 
@@ -251,33 +316,33 @@
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/versoes-antigas-dos-compiladores" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/supports-traicoeira" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Versões Antigas dos Compiladores&via=mdbs99;url=http://objectpascalprogramming.com/versoes-antigas-dos-compiladores" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=A função Supports pode ser traiçoeira&via=mdbs99;url=http://objectpascalprogramming.com/supports-traicoeira" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/versoes-antigas-dos-compiladores" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/supports-traicoeira" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/versoes-antigas-dos-compiladores&title=Versões Antigas dos Compiladores" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/versoes-antigas-dos-compiladores&title=Versões Antigas dos Compiladores" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/supports-traicoeira&title=A função Supports pode ser traiçoeira" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/versoes-antigas-dos-compiladores&t=Versões Antigas dos Compiladores" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/supports-traicoeira&title=A função Supports pode ser traiçoeira" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/supports-traicoeira&t=A função Supports pode ser traiçoeira" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -326,15 +391,6 @@ Gostaria de me pagar um café?
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/supports-traicoeira" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>A função Supports pode ser traiçoeira</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
       <a href="/assertions" class="post-link">
         <ul>
           <h4 class="post-title"><li>Assertions é uma boa prática</li></h4>
@@ -374,6 +430,15 @@ Gostaria de me pagar um café?
       <a href="/com-vs-corba" class="post-link">
         <ul>
           <h4 class="post-title"><li>Interfaces COM vs. CORBA</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/versoes-antigas-dos-compiladores" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Versões Antigas dos Compiladores</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
       </a>
@@ -422,8 +487,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/versoes-antigas-dos-compiladores';
-      var disqus_title      = 'Versões Antigas dos Compiladores';
+      var disqus_identifier = '/supports-traicoeira';
+      var disqus_title      = 'A função Supports pode ser traiçoeira';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
