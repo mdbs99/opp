@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Validações no Construtor &#8211; Object Pascal Programming</title>
+    <title>A Declaração WITH-DO Perfeita &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="É possível validar um Objeto antes de criá-lo?">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="OO">
-    <meta name="keywords" content="validation, validação, construtor">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/validacoes-no-construtor/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, with-do">
+    <link rel="canonical" href="http://objectpascalprogramming.com/a-declaracao-with-do-perfeita">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Validações no Construtor">
-    <meta property="og:description" content="É possível validar um Objeto antes de criá-lo?">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/validacoes-no-construtor/">
+    <meta property="og:title" content="A Declaração WITH-DO Perfeita">
+    <meta property="og:description" content="A utilização do WITH-DO pode deixar o código mais simples de ler, pois haverá menos declarações, atribuições e inicializações de variáveis. No entanto, a sintaxe atual não é perfeita. Dependendo do seu uso, o benefício pode ser o inverso.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/a-declaracao-with-do-perfeita">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-EnF7DhHROS8OMEp2pCkx_Duferfood.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-alex-wong-17993-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Validações no Construtor" />
-    <meta name="twitter:description" content="É possível validar um Objeto antes de criá-lo?" />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/validacoes-no-construtor/" />
+    <meta name="twitter:title" content="A Declaração WITH-DO Perfeita" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/a-declaracao-with-do-perfeita" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,104 +191,142 @@
 
 
 <div class="post-header mb2">
-  <h1>Validações no Construtor</h1>
-  <span class="post-meta">May 9, 2016</span><br>
+  <h1>A Declaração WITH-DO Perfeita</h1>
+  <span class="post-meta">Apr 2, 2018</span><br>
   
   <span class="post-meta small">
   
-    3 minute read
+    4 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Dizem que um Objeto não pode ter um <strong>estado inválido</strong> e que 
-sua validação deve ser feita no seu <strong>Construtor</strong>, ou seja, se 
-os argumentos do Construtor não são suficientes, não deveríamos
-criar o Objeto.</p>
-
-<p>Imagine um mundo onde tudo são objetos.</p>
-
-<p>Como você irá verificar se um Objeto é inválido antes de você criá-lo?</p>
+  <p>A utilização do WITH-DO pode deixar o código mais simples de ler, pois haverá menos declarações, atribuições e inicializações de variáveis. No entanto, a sintaxe atual não é perfeita. Dependendo do seu uso, o benefício pode ser o inverso.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-EnF7DhHROS8OMEp2pCkx_Duferfood.jpg" alt="Imagem" /></p>
+<p><img src="/images/2018/photo-alex-wong-17993-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Alex wong on Unsplash</span></p>
 
-<p>O que significa <strong>estado inválido</strong>?</p>
+<h2 id="introducao">Introdução</h2>
 
-<p>Se os argumentos do construtor de um Objeto não forem suficientes, e não fizermos uma
-validação prévia desses argumentos, poderíamos criar um Objeto com estado inválido.
-Quero dizer que seu <strong>Estado</strong> não estaria válido para que ele pudesse fazer o trabalho
-para o qual ele foi/será designado.</p>
+<p>A declaração WITH-DO <a href="/posts/a-declaracao-with-do-e-do-mal/">pode ser utilizada</a> mas sua sintaxe não é perfeita.</p>
 
-<p>E porque isso seria um problema?</p>
+<p>Vai depender muito do design do seu código para que você possa utilizar o WITH-DO sem problemas.</p>
 
-<p>Bem, eu não acho que seria um problema. A única <strong>exceção</strong> é
-a utilização de <a href="/posts/nao-utilize-nil-ou-null/">Objetos Nulos</a>. Nesse 
-caso sim, seria um <strong>erro</strong>.</p>
+<p>Por exemplo. Classes com muitos atributos ou métodos poderá aumentar a probabilidade de haver alguma <a href="/posts/nomeando-classes/">colisão de nomes</a> entre outras classes e/ou variáveis locais.</p>
 
-<p>Vamos a um exemplo. Vamos definir uma classe <code>TDbQuery</code> que irá encapsular um SQL.
-Essa classe só terá um método (simplificando) para executar o SQL.</p>
+<p>Esse artigo é a minha proposta para melhorar a sintaxe do WITH-DO nos compiladores Object Pascal.</p>
+
+<h2 id="sintaxe">A Sintaxe Perfeita</h2>
+
+<p>O grande problema ao utilizarmos WITH-DO é a ambiguidade que ele pode trazer ao código.</p>
+
+<p>Considere o código abaixo:</p>
 
 <pre><code>type
-  TDbQuery = class
-  private
-    FScript: string;
-  public
-    construtor Create(const Script: string);
-    function Execute: Integer;
+   TFoo = class
+      X: Integer;
+   end;
+
+procedure Execute;
+var
+  X: Integer;
+begin
+  with TFoo.Create do
+  try
+     X := 10;
+  finally
+     Free;
   end;
+end;
 </code></pre>
 
-<p>O construtor tem um argumento do tipo <code>string</code> e o usuário da classe poderia passar qualquer
-valor como um SQL válido, mas também letras, números ou até mesmo uma string em branco.</p>
+<p>A linha <code>X := 10;</code> atribui 10 ao atributo de <code>TFoo</code> ou a variável local <code>X</code>?</p>
 
-<p>Precisamos saber se o SQL é válido antes da hora de chamar <code>Execute</code>? <strong>Não</strong>.</p>
+<p>Outro problema é o seguinte: se renomearmos <code>TFoo.X</code> para <code>TFoo.Z</code> poderíamos esperar um erro de compilação, no entanto o código iria continuar funcionando devido ao compilador localizar o identificador <code>X</code> como uma variável local.</p>
 
-<p>Existem validações simples como verificar se uma <code>string</code> está em branco, mas há outras validações
-muito mais complexas.</p>
+<p>A ambiguidade pode ser ainda maior quando utilizamos múltiplas instancias na declaração WITH-DO, como a seguir:</p>
 
-<p>Para validar a classe acima seria muito complexo.</p>
+<pre><code>with TFoo.Create, TBar.Create do
+try
+  X := 10;
+  Z := 20;
+finally
+  Free; // belongs to TFoo or TBar?
+  Free; // belongs to TFoo or TBar?
+end;
+</code></pre>
 
-<p>Por que?</p>
+<p>Esse são apenas alguns casos do uso irrestrito do WITH-DO. E, por essas e outras razões, que muitos desenvolvedores consideram o WITH-DO um mal no código.</p>
 
-<p>Você teria que validar a sintaxe do SQL,
-talvez utilizando <em>Regular Expression</em> (RegExpr). Se tivéssemos Objetos que implementam RegExpr, então
-teríamos muitas instâncias de Objetos para validar a <code>string</code>. São Objetos, que chamam outros, que chamam outros…</p>
+<p>No entanto, o que não está correto não é seu uso, mas sua sintaxe.</p>
 
-<p>E, mesmo depois de toda essa validação sintática, a execução do SQL ainda poderia gerar erro! A tabela não existe,
-o nome da coluna foi digitado errado, etc.</p>
+<p>Na minha opinião, seria muito melhor se a sintaxe fosse algo parecido com o exemplo abaixo:</p>
 
-<p>Pior. Talvez o algoritmo em execução nem precisasse chamar esse Objeto, talvez o usuário tenha cancelado a operação
-antes… então você perdeu tempo validando e nem precisou executar o <em>Script</em>!</p>
+<pre><code>procedure Execute;
+begin
+  with F =: TFoo.New, B =: TBar.New do
+  begin
+    F.Execute;
+    B.Execute;
+  end;
+end;
+</code></pre>
 
-<p>Se tudo são Objetos, eles devem ser criados <strong>antes</strong> de serem validados. Essa operação deve ocorrer o <strong>mais rápido</strong>
-possível, no <strong>menor custo</strong> computacional possível, mesmo em “estado inválido”.</p>
+<p>No código acima não há variáveis declaradas explicitamente, no entanto as instâncias são referenciadas por algum tipo de <i>alias</i>.</p>
 
-<p>Em outro momento ele será validado pois não há como validar algo que ainda não existe!</p>
+<p>Afim de diferenciar essa nova sintaxe, para não haver ambiguidades com a sintaxe já existente de atribuição, escolhi utilizar uma “atribuição invertida” neste formato “<code>=:</code>”.</p>
 
-<p>Ainda não concorda?</p>
+<p>Alguns puristas do Pascal iriam dizer que o código acima não é muito “Pascalish” por quê tudo no Pascal deve ser explicitamente declarado antes e, neste caso, as variáveis não foram declaradas previamente. Eu concordo. Porém acho que deveríamos considerar essa exceção.</p>
 
-<p>Então vamos ver um exemplo no mundo real.</p>
+<p>A sintaxe para a captura de exceções, por exemplo, tem (quase) a <i>mesma</i> sintaxe proposta qui e todos convivem bem com isso.</p>
 
-<p>Para fazer um bom prato você precisa ter bons ingredientes. Um <em>Spaghetti a Lá Carbonara</em> precisa de uns 4 ovos — eu
-gosto de fazer esse prato — bacon, queijo parmesão…
-No <a href="https://en.wikipedia.org/wiki/Mise_en_place">Mise en place</a> você precisa bater os ovos e misturar com parmesão; 
-então você vai quebrando os ovos e descobre que um deles está podre (estado inválido). Você não vai utilizá-lo.
-Esse Objeto não serve… mas ele existe! Estava lá, junto com os outros “ovos válidos”. Ele ocupava espaço, tinha a 
-mesma aparência dos demais mas estava “inválido”. O mundo é assim.</p>
+<p>Por exemplo:</p>
 
-<blockquote>
-  <p>Se existisse um mundo onde todos os Objetos fossem validados antes de serem criados, então seria um mundo perfeito com Objetos perfeitos.</p>
-</blockquote>
+<pre><code>procedure Execute;
+var
+  X: Integer;
+begin
+  try
+     X := 10 / 0;
+  except
+    on E: EDivByZero do
+       ShowMessage(E.Message);
+  end;
+end;
+</code></pre>
 
-<p>A <a href="https://en.wikipedia.org/wiki/The_Matrix">Matrix</a> tentou criar um mundo assim — ou foram 3, talvez 4? Não lembro — 
-mas não deu muito certo… ao que parece os seres humanos precisam de estado inválido e não lidam bem com perfeição 
-— o primeiro filme da série foi o melhor, não é? :)</p>
+<p>A variável <code>E</code> não foi previamente declarada na seção de variáveis locais. Isso vai contra a filosofia Pascal, onde devemos declarar tudo antes de utilizar. Mas, tudo bem. Essa é uma exceção a regra que é bem vinda.</p>
 
-<p>Se nosso <strong>mundo real</strong> foi “implementado” assim, contendo “Objetos com estado inválido”, porque você acha que 
-seus Objetos são — ou deveriam ser — mais <strong>perfeitos</strong> do que os objetos do mundo real, do qual eles representam?</p>
+<p>Voltando ao primeiro exemplo, você pode ter sentido falta às chamadas aos destrutores das instâncias. Bem, eu utilizei a <a href="/posts/interfaces-e-o-metodo-estatico-new/">função New</a> justamente para não haver essa necessidade — considerando que esses métodos retornam uma instância de <a href="/posts/interfaces-em-todo-lugar/">interface</a>.</p>
+
+<p>Mas se você não quiser utilizar essa técnica, basta reescrever assim:</p>
+
+<pre><code>with F =: TFoo.Create, B =: TBar.Create do
+try
+  F.Execute;
+  B.Execute;
+finally
+  F.Free;
+  B.Free;
+end;
+</code></pre>
+
+<p>Na linguagem C# eles tem a declaração <code>using</code> que é bem parecido com o que estou propondo — a criação de <i>alias</i> para as instâncias. No entanto, lá o objetivo é o compilador chamar o método <code>Dispose</code> de cada instância no fim do bloco, independentemente se houver ou não uma exceção. Para que essa “mágica” aconteça, a instância deve implementar a interface <code>IDisposable</code>.</p>
+
+<p>Eu acho essa abordagem desnecessária para o Pascal — no entanto, possível — pois o código fica mais explicito com o uso do <code>try-finally</code> se você não estiver utilizando instâncias de interfaces.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Acredito que o uso de WITH-DO proposto aqui iria nos ajudar a implementar um código mais simples.</p>
+
+<p>A nova sintaxe com a atribuição invertida não iria entrar em conflito com a sintaxe atual.</p>
+
+<p>Poderíamos criar blocos de código independentes dentro de métodos. Visto que, no exemplos acima, as variáveis <code>F</code> e <code>B</code> só poderiam ser utilizadas dentro do WITH-DO e não em todo o escopo do método.</p>
+
+<p>Só iríamos declarar variáveis “globais ao método” na sessão de variáveis locais ao método, mas todas as outras instâncias seriam inicializadas em blocos WITH-DO para restringir ainda mais o escopo e visibilidade às variáveis.</p>
 
 <p>Até logo.</p>
 
@@ -298,33 +338,33 @@ seus Objetos são — ou deveriam ser — mais <strong>perfeitos</strong> do que
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/validacoes-no-construtor/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/a-declaracao-with-do-perfeita" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Validações no Construtor&via=mdbs99;url=http://objectpascalprogramming.com/posts/validacoes-no-construtor/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=A Declaração WITH-DO Perfeita&via=mdbs99;url=http://objectpascalprogramming.com/a-declaracao-with-do-perfeita" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/validacoes-no-construtor/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/a-declaracao-with-do-perfeita" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/validacoes-no-construtor/&title=Validações no Construtor" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/validacoes-no-construtor/&title=Validações no Construtor" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/a-declaracao-with-do-perfeita&title=A Declaração WITH-DO Perfeita" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/validacoes-no-construtor/&t=Validações no Construtor" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/a-declaracao-with-do-perfeita&title=A Declaração WITH-DO Perfeita" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/a-declaracao-with-do-perfeita&t=A Declaração WITH-DO Perfeita" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -371,15 +411,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/a-declaracao-with-do-perfeita" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>A Declaração WITH-DO Perfeita</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/supports-traicoeira" class="post-link">
@@ -462,6 +493,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/pas2js" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pas2JS: Codificando em Pascal, Executando em JavaScript</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -469,8 +509,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/validacoes-no-construtor';
-      var disqus_title      = 'Validações no Construtor';
+      var disqus_identifier = '/a-declaracao-with-do-perfeita';
+      var disqus_title      = 'A Declaração WITH-DO Perfeita';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

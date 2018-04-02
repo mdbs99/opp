@@ -8,6 +8,141 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>A Declaração WITH-DO Perfeita</title>
+        <description>&lt;p&gt;A utilização do WITH-DO pode deixar o código mais simples de ler, pois haverá menos declarações, atribuições e inicializações de variáveis. No entanto, a sintaxe atual não é perfeita. Dependendo do seu uso, o benefício pode ser o inverso.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-alex-wong-17993-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Alex wong on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;A declaração WITH-DO &lt;a href=&quot;/posts/a-declaracao-with-do-e-do-mal/&quot;&gt;pode ser utilizada&lt;/a&gt; mas sua sintaxe não é perfeita.&lt;/p&gt;
+
+&lt;p&gt;Vai depender muito do design do seu código para que você possa utilizar o WITH-DO sem problemas.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo. Classes com muitos atributos ou métodos poderá aumentar a probabilidade de haver alguma &lt;a href=&quot;/posts/nomeando-classes/&quot;&gt;colisão de nomes&lt;/a&gt; entre outras classes e/ou variáveis locais.&lt;/p&gt;
+
+&lt;p&gt;Esse artigo é a minha proposta para melhorar a sintaxe do WITH-DO nos compiladores Object Pascal.&lt;/p&gt;
+
+&lt;h2 id=&quot;sintaxe&quot;&gt;A Sintaxe Perfeita&lt;/h2&gt;
+
+&lt;p&gt;O grande problema ao utilizarmos WITH-DO é a ambiguidade que ele pode trazer ao código.&lt;/p&gt;
+
+&lt;p&gt;Considere o código abaixo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+   TFoo = class
+      X: Integer;
+   end;
+
+procedure Execute;
+var
+  X: Integer;
+begin
+  with TFoo.Create do
+  try
+     X := 10;
+  finally
+     Free;
+  end;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A linha &lt;code&gt;X := 10;&lt;/code&gt; atribui 10 ao atributo de &lt;code&gt;TFoo&lt;/code&gt; ou a variável local &lt;code&gt;X&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;Outro problema é o seguinte: se renomearmos &lt;code&gt;TFoo.X&lt;/code&gt; para &lt;code&gt;TFoo.Z&lt;/code&gt; poderíamos esperar um erro de compilação, no entanto o código iria continuar funcionando devido ao compilador localizar o identificador &lt;code&gt;X&lt;/code&gt; como uma variável local.&lt;/p&gt;
+
+&lt;p&gt;A ambiguidade pode ser ainda maior quando utilizamos múltiplas instancias na declaração WITH-DO, como a seguir:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;with TFoo.Create, TBar.Create do
+try
+  X := 10;
+  Z := 20;
+finally
+  Free; // belongs to TFoo or TBar?
+  Free; // belongs to TFoo or TBar?
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Esse são apenas alguns casos do uso irrestrito do WITH-DO. E, por essas e outras razões, que muitos desenvolvedores consideram o WITH-DO um mal no código.&lt;/p&gt;
+
+&lt;p&gt;No entanto, o que não está correto não é seu uso, mas sua sintaxe.&lt;/p&gt;
+
+&lt;p&gt;Na minha opinião, seria muito melhor se a sintaxe fosse algo parecido com o exemplo abaixo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure Execute;
+begin
+  with F =: TFoo.New, B =: TBar.New do
+  begin
+    F.Execute;
+    B.Execute;
+  end;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;No código acima não há variáveis declaradas explicitamente, no entanto as instâncias são referenciadas por algum tipo de &lt;i&gt;alias&lt;/i&gt;.&lt;/p&gt;
+
+&lt;p&gt;Afim de diferenciar essa nova sintaxe, para não haver ambiguidades com a sintaxe já existente de atribuição, escolhi utilizar uma “atribuição invertida” neste formato “&lt;code&gt;=:&lt;/code&gt;”.&lt;/p&gt;
+
+&lt;p&gt;Alguns puristas do Pascal iriam dizer que o código acima não é muito “Pascalish” por quê tudo no Pascal deve ser explicitamente declarado antes e, neste caso, as variáveis não foram declaradas previamente. Eu concordo. Porém acho que deveríamos considerar essa exceção.&lt;/p&gt;
+
+&lt;p&gt;A sintaxe para a captura de exceções, por exemplo, tem (quase) a &lt;i&gt;mesma&lt;/i&gt; sintaxe proposta qui e todos convivem bem com isso.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure Execute;
+var
+  X: Integer;
+begin
+  try
+     X := 10 / 0;
+  except
+    on E: EDivByZero do
+       ShowMessage(E.Message);
+  end;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A variável &lt;code&gt;E&lt;/code&gt; não foi previamente declarada na seção de variáveis locais. Isso vai contra a filosofia Pascal, onde devemos declarar tudo antes de utilizar. Mas, tudo bem. Essa é uma exceção a regra que é bem vinda.&lt;/p&gt;
+
+&lt;p&gt;Voltando ao primeiro exemplo, você pode ter sentido falta às chamadas aos destrutores das instâncias. Bem, eu utilizei a &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;função New&lt;/a&gt; justamente para não haver essa necessidade — considerando que esses métodos retornam uma instância de &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;interface&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas se você não quiser utilizar essa técnica, basta reescrever assim:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;with F =: TFoo.Create, B =: TBar.Create do
+try
+  F.Execute;
+  B.Execute;
+finally
+  F.Free;
+  B.Free;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Na linguagem C# eles tem a declaração &lt;code&gt;using&lt;/code&gt; que é bem parecido com o que estou propondo — a criação de &lt;i&gt;alias&lt;/i&gt; para as instâncias. No entanto, lá o objetivo é o compilador chamar o método &lt;code&gt;Dispose&lt;/code&gt; de cada instância no fim do bloco, independentemente se houver ou não uma exceção. Para que essa “mágica” aconteça, a instância deve implementar a interface &lt;code&gt;IDisposable&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Eu acho essa abordagem desnecessária para o Pascal — no entanto, possível — pois o código fica mais explicito com o uso do &lt;code&gt;try-finally&lt;/code&gt; se você não estiver utilizando instâncias de interfaces.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Acredito que o uso de WITH-DO proposto aqui iria nos ajudar a implementar um código mais simples.&lt;/p&gt;
+
+&lt;p&gt;A nova sintaxe com a atribuição invertida não iria entrar em conflito com a sintaxe atual.&lt;/p&gt;
+
+&lt;p&gt;Poderíamos criar blocos de código independentes dentro de métodos. Visto que, no exemplos acima, as variáveis &lt;code&gt;F&lt;/code&gt; e &lt;code&gt;B&lt;/code&gt; só poderiam ser utilizadas dentro do WITH-DO e não em todo o escopo do método.&lt;/p&gt;
+
+&lt;p&gt;Só iríamos declarar variáveis “globais ao método” na sessão de variáveis locais ao método, mas todas as outras instâncias seriam inicializadas em blocos WITH-DO para restringir ainda mais o escopo e visibilidade às variáveis.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 02 Apr 2018 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/a-declaracao-with-do-perfeita</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/a-declaracao-with-do-perfeita</guid>
+      </item>
+    
+      <item>
         <title>A função Supports pode ser traiçoeira</title>
         <description>&lt;p&gt;Quando você se acostuma a utilizar somente instancias de interfaces, pode ser difícil entender alguns erros em tempo de execução, utilizando instâncias de classes com suporte a interfaces.&lt;/p&gt;
 
@@ -968,106 +1103,6 @@ end;
         <pubDate>Mon, 08 Jan 2018 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/exit-proc</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/exit-proc</guid>
-      </item>
-    
-      <item>
-        <title>Pas2JS: Codificando em Pascal, Executando em JavaScript</title>
-        <description>&lt;p&gt;A equipe do Free Pascal e Lazarus nos deram um grande presente de Final de Ano: Um Transpiler de Pascal para JavaScript.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/photo-greg-rakozy-129733.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Greg Rakozy on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;O uso do JavaScript é necessário para qualquer aplicação Web. Somos obrigados a utilizá-lo por quê (por enquanto) é a única linguagem que os &lt;em&gt;browsers&lt;/em&gt; entendem.&lt;/p&gt;
-
-&lt;p&gt;Mas JavaScript não é fortemente tipado como Pascal e isso pode ser um grande problema quando codificamos aplicações maiores utilizando somente JavaScript.&lt;/p&gt;
-
-&lt;p&gt;JavaScript pode ser &lt;em&gt;confuso&lt;/em&gt; e &lt;em&gt;ambíguo&lt;/em&gt;. Por isso muitos desenvolvedores &lt;em&gt;devem&lt;/em&gt; utilizar &lt;em&gt;frameworks&lt;/em&gt; que facilitam o desenvolvimento e padronizam a codificação.&lt;/p&gt;
-
-&lt;p&gt;Codificar utilizando JavaScript &lt;em&gt;puro&lt;/em&gt; não é uma tarefa fácil.&lt;/p&gt;
-
-&lt;p&gt;Então surgiram os &lt;a href=&quot;https://en.wikipedia.org/wiki/Source-to-source_compiler&quot;&gt;Transpilers&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Um Transpiler é um compilador que, a partir de um código-fonte escrito em uma linguagem de programação como sua entrada, produz um código-fonte equivalente em outra linguagem de programação.&lt;/p&gt;
-
-&lt;p&gt;Existem &lt;a href=&quot;https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS&quot;&gt;vários&lt;/a&gt; Transpilers para JavaScript a partir de várias linguagens de programação. O mais famoso deles, eu acredito, é a linguagem TypeScript da Microsoft.&lt;/p&gt;
-
-&lt;p&gt;A linguagem Pascal está incluída nesse pacote de Transpilers, no entanto, além de existir poucos, eles são comerciais.&lt;/p&gt;
-
-&lt;p&gt;Felizmente, agora temos uma opção gratuita e Open Source chamada &lt;strong&gt;Pas2JS&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;pas2js&quot;&gt;Pas2JS&lt;/h2&gt;
-
-&lt;p&gt;Michael Van Canneyt (Free Pascal Team), Mattias Gaertner (Lazarus Team), e colaboradores, &lt;a href=&quot;http://lists.lazarus-ide.org/pipermail/lazarus/2017-December/233592.html&quot;&gt;lançaram oficialmente&lt;/a&gt; o compilador utilitário chamado &lt;a href=&quot;http://wiki.freepascal.org/pas2js&quot;&gt;Pas2JS&lt;/a&gt;, em 16 de Dezembro de 2017, na lista oficial do Free Pascal.&lt;/p&gt;
-
-&lt;p&gt;O JavaScript gerado a partir de um código-fonte Pascal é utilizável no &lt;em&gt;browser&lt;/em&gt; ou até mesmo no Node.js.&lt;/p&gt;
-
-&lt;p&gt;Ao invés de gerar um executável com seu código Pascal, um arquivo .js será gerado, compatível com seu &lt;em&gt;browser&lt;/em&gt;, sem a necessidade de haver um servidor de aplicação (CGI, FastCGI, ISAPI, etc) se o aplicativo não necessitar de dados externos.&lt;/p&gt;
-
-&lt;p&gt;Como disse Michael no seu email de lançamento (tradução livre):&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“Isso torna o Free Pascal um ambiente de desenvolvimento completo para o desenvolvimento Web”.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Na verdade, o desenvolvimento ainda não está (totalmente) completo. Funciona muito bem, porém ainda há melhorias a serem feitas, como pode ser visto &lt;a href=&quot;http://wiki.freepascal.org/pas2js#Other_not_implemented_features&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;A sintaxe básica é a mesma do Delphi 7&lt;/strong&gt;, porém ainda não temos o suporte a Interfaces. Acredito que teremos isso em breve, no entanto.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;A RTL teve que ser reescrita&lt;/strong&gt;, gerando novas versões das Unidades padrão para que pudessem ser utilizadas perfeitamente na conversão de Pascal para JavaScript. A lista das unidades você pode ver &lt;a href=&quot;http://wiki.freepascal.org/pas2js#RTL&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;O debugging pode ser feito diretamente no código Object Pascal&lt;/strong&gt;, dentro do &lt;em&gt;browser&lt;/em&gt;. Isso é possível por quê o Pas2JS emite um &lt;em&gt;“source map”&lt;/em&gt; para que o &lt;em&gt;browser&lt;/em&gt; exiba o código original em vez do código JavaScript, o que é muito útil para encontrar bugs no código original Pascal.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Lazarus já tem suporte para a sintaxe do Pas2JS&lt;/strong&gt;, então o &lt;em&gt;code completion&lt;/em&gt; irá funcionar (versão trunk).&lt;/p&gt;
-
-&lt;p&gt;A integração completa do Pas2JS está sendo codificada no Lazarus e, futuramente, eles já falam em desenvolver pacotes de componentes para execução no &lt;em&gt;browser&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;TMS Web componentes vai chegar no início de 2018&lt;/strong&gt;. São componentes visuais no bom estilo RAD para desenvolver aplicações Web utilizando &lt;code&gt;TForm&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Cito a TMS aqui por quê, no email do Michael, ele diz (tradução livre):&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“Em um futuro muito próximo, um importante fornecedor de componentes da Delphi anunciará um pacote completo para desenvolvimento web RAD no Delphi IDE.”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Eu &lt;em&gt;acredito&lt;/em&gt; que ele estava falando da &lt;a href=&quot;https://www.tmssoftware.com/site/&quot;&gt;TMS&lt;/a&gt;, empresa conceituada que se dedica à fabricação de componentes e frameworks para Delphi e Lazarus.&lt;/p&gt;
-
-&lt;p&gt;A alguns dias atrás os desenvolvedores do Brasil tiveram a chance de ver algumas palestras sobre Delphi e uma delas foi o anúncio da nova tecnologia da TMS para desenvolvimento Web, por Wagner Landgraf.&lt;/p&gt;
-
-&lt;p&gt;Para quem acompanha os pré-anúncios do Pas2JS já algum tempo — pois ele está sendo desenvolvido ao longo de 10 anos — basta “ligar os pontos” para ter quase certeza que os componentes TMS Web utiliza a tecnologia Pas2JS ou, no mínimo, se inspirou nela.&lt;/p&gt;
-
-&lt;p&gt;No entanto, na palestra do Wagner não há nenhuma menção ao Pas2JS.&lt;/p&gt;
-
-&lt;p&gt;Se eu estou certo, ou seja, se a TMS Web realmente utiliza o Pas2JS no seu novo produto, eu considero uma &lt;em&gt;falha&lt;/em&gt; não mencionar quem criou o Transpiler.&lt;/p&gt;
-
-&lt;p&gt;Não há nenhum problema em criar componentes para comercialização, no entanto é necessário dar o crédito a quem é devido.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, isso é apenas uma suposição pessoal. Se a TMS não utiliza/utilizou o Pas2JS, acredito que saberemos disso em breve.&lt;/p&gt;
-
-&lt;p&gt;Mas, independentemente da TMS utilizar ou não o Pas2JS, fico ansioso para ver o lançamento oficial do novo &lt;em&gt;framework&lt;/em&gt;, visto que tais componentes irão funcionar também no Lazarus.&lt;/p&gt;
-
-&lt;p&gt;Sendo a TMS &lt;em&gt;referência&lt;/em&gt; em componentes desde a primeira versão do Delphi, é de se esperar que esse será mais um grande sucesso.&lt;/p&gt;
-
-&lt;p&gt;O &lt;em&gt;preview&lt;/em&gt; da tecnologia exposto na palestra foi excelente e motivador.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Para uma linguagem que muitos consideram “morta”, ter um Transpiler de Object Pascal para JavaScript é um grande impulso para por a linguagem (novamente) nos “trilhos do mercado”.&lt;/p&gt;
-
-&lt;p&gt;Sabemos que hoje em dia muitas empresas optam por desenvolver soluções 100% online, via &lt;em&gt;browser&lt;/em&gt;, ao invés de aplicações Desktop.&lt;/p&gt;
-
-&lt;p&gt;Com o Pas2JS será possível termos uma &lt;em&gt;única&lt;/em&gt; base de código Object Pascal — uma linguagem fortemente tipada, limpa e de fácil aprendizagem — onde poderemos utilizar todo o nosso conhecimento da linguagem, da RTL e componentes, para provermos aplicações 100% Web. Confiáveis, rápidas e de fácil manutenção.&lt;/p&gt;
-
-&lt;p&gt;É esperar, pra ver.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/pas2js</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/pas2js</guid>
       </item>
     
   </channel>
