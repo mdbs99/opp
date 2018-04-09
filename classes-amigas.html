@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Assinatura Digital em Arquivos XML &#8211; Object Pascal Programming</title>
+    <title>Classes Amigas &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Veja como assinar digitalmente arquivos XML utilizando Object Pascal.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Pascal">
-    <meta name="keywords" content="digital signature">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, classes-amigas, friends classes">
+    <link rel="canonical" href="http://objectpascalprogramming.com/classes-amigas">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Assinatura Digital em Arquivos XML">
-    <meta property="og:description" content="Veja como assinar digitalmente arquivos XML utilizando Object Pascal.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/">
+    <meta property="og:title" content="Classes Amigas">
+    <meta property="og:description" content="Classes Amigas tem acesso ao estado (privado) de seus objetos. Apesar dessa prática ser entendida por muitos desenvolvedores como uma quebra do encapsulamento, na verdade ela pode até aprimorá-lo.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/classes-amigas">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1430760903787-4d91bbf15384.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-ben-white-178537-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Assinatura Digital em Arquivos XML" />
-    <meta name="twitter:description" content="Veja como assinar digitalmente arquivos XML utilizando Object Pascal." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/" />
+    <meta name="twitter:title" content="Classes Amigas" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/classes-amigas" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,168 +191,137 @@
 
 
 <div class="post-header mb2">
-  <h1>Assinatura Digital em Arquivos XML</h1>
-  <span class="post-meta">Jul 11, 2016</span><br>
+  <h1>Classes Amigas</h1>
+  <span class="post-meta">Apr 9, 2018</span><br>
   
   <span class="post-meta small">
   
-    3 minute read
+    5 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>A Assinatura Digital é cada vez mais utilizada devido a segurança de integridade que ela proporciona.
-Nesse artigo vou demostrar como Assinar Digitalmente um arquivo XML utilizando o <em>framework</em> ACBr.</p>
+  <p>Classes Amigas tem acesso ao estado (privado) de seus objetos. Apesar dessa prática ser entendida por muitos desenvolvedores como uma quebra do encapsulamento, na verdade ela pode até aprimorá-lo.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1430760903787-4d91bbf15384.jpg" alt="Imagem" /></p>
+<p><img src="/images/2018/photo-ben-white-178537-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Ben White on Unsplash</span></p>
 
-<h2 id="introducao">Introdução</h2>
+<p>Classes Amigas existem na linguagem C++ a muito tempo, assim como na linguagem Object Pascal.</p>
 
-<p>A Assinatura Digital nos dá mais segurança no envio de arquivos entre servidores, utilizando WebServices e/ou Serviços REST.</p>
+<p>Enquanto na linguagem C++ é necessária uma sintaxe específica, em Object Pascal basta declararmos as classes na mesma unit para que elas sejam “amigas”. E não importa se elas fazem parte ou não de uma hierarquia de herança.</p>
 
-<p>No mundo Java e .NET tem-se muitos <em>frameworks</em> para trabalhar com Assinatura Digital… mas e em <em>Object Pascal</em>?</p>
+<p>Eu conheço alguns desenvolvedores que não lidam muito bem com isso. Para eles, o que é privado nunca deveria ser acessado por outra instância além do próprio objeto.</p>
 
-<p>Eu conhecia o <a href="http://www.projetoacbr.com.br/">Projeto ACBr</a> a muito tempo. Eu utilizei esse projeto, anos atrás, para fazer a integração de NF-e para um cliente que, na época, utilizava Delphi 6.</p>
+<p>Eles estão certos.</p>
 
-<p>A integração foi feita em apenas 1 semana — conte com as madrugadas — e tudo funcionou perfeitamente.</p>
+<p>Mas essa é uma regra geral. Precisamos saber quando “quebrar” as regras, se isso for aumentar a <i>qualidade</i> do software.</p>
 
-<p>Anos se passaram e eu não tive mais projetos que envolvessem NF-e e/ou Assinatura Digital. Pelo menos não que eu mesmo tivesse que implementá-los.</p>
+<p>Eu também fui contra a essa <i>feature by design</i> por muito tempo. A muitos anos atrás eu declarava as classes em units separadas, mesmo que seus objetos existissem apenas para “conversar” entre si, ou seja, mesmo que tais objetos fossem bem “íntimos”.</p>
 
-<p>Este ano eu tenho um Novo Projeto.</p>
+<p>A fim de seguir a “regra de ouro” do encapsulamento, eu declarava tais classes em units separadas pensando que eu estava desenvolvendo mais Orientado a Objetos <i>protegendo</i> seus estados.</p>
 
-<p>Nesse projeto tenho que utilizar Assinatura Digital em arquivos XML. Não são Notas Fiscais Eletrônicas (NF-e). São arquivos XML que precisam ser assinados antes do envio e verificados na outra ponta. A segurança é levado muito a sério nesse projeto.</p>
+<p>Mas, ao mesmo tempo, eu declarava as propriedades de acesso — também conhecidos com <a href="/posts/getters-e-setters/">Get/Set</a> — para que o estado desses objetos pudessem ser acessados por alguma instância de <i>fora</i>!</p>
 
-<p>Lembrei do Projeto ACBr, é claro.</p>
+<p>E isso não faz sentido.</p>
 
-<h2 id="utilizando-acbr">Utilizando o ACBr</h2>
+<p>Eu estava escrevendo e complicando mais o código, sem ganhar nenhum benefício, já que toda essa “proteção”, na verdade, não existia.</p>
 
-<p>O ACBr trabalha com dois tipos de Assinadores: CAPICOM (Microsoft) e OpenSSL (OpenSource e crossplataforma).</p>
+<p>Então, eu voltei a rever esse conceito das Classes Amigas.</p>
 
-<p>Meu cliente só utiliza Windows, então eu escolhi a opção mais óbvia.</p>
+<p>Eu diria que Classes Amigas enfraquecem o encapsulamento local (na unit) afim de <i>fortalecer</i> o encapsulamento global (por todo o projeto).</p>
 
-<p>O ACBr compila em Delphi e FreePascal perfeitamente.</p>
+<p>Ainda assim, é claro, isso irá depender de alguns fatores. Utilizá-las é mais uma exceção à regra e deve ser muito bem pensado afim de obter mais prós do que contras.</p>
 
-<p>Para instalar no Delphi é mais fácil. O projeto dispõe de um Instalador <em>next-next-finish</em>.</p>
+<p>Vamos a um exemplo: Imagine que você tem uma classe que representa um livro. Na interface da classe desse livro nós só queremos ter o básico que, no nosso exemplo, irá conter métodos para retornar o título, autor e ISBN.</p>
 
-<p>Para instalar no FreePascal eu não sei se é o mesmo instalador. O que fiz foi instalar os pacotes manualmente, pela IDE do Lazarus.</p>
-
-<p>Então fiz um programa simples para assinar um XML e tentar validar o resultado em um dos WebServices do cliente.</p>
-
-<p>Precisei criar o XML Template, que é o XML que tenho que enviar ao WebService:</p>
-
-<pre><code>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
-&lt;Principal&gt;
-  &lt;Solicitacao Id="123"&gt;&lt;Parametros Codigo="Todos" /&gt;&lt;/Solicitacao&gt;
-  &lt;Assinatura&gt;
-    &lt;Signature xmlns="http://www.w3.org/2000/09/xmldsig#"&gt;
-      &lt;SignedInfo&gt;
-        &lt;CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /&gt;
-        &lt;SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /&gt;
-        &lt;Reference URI="#123"&gt;
-          &lt;Transforms&gt;
-            &lt;Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /&gt;
-            &lt;Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/&gt;
-          &lt;/Transforms&gt;
-          &lt;DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /&gt;
-          &lt;DigestValue&gt;&lt;/DigestValue&gt;
-        &lt;/Reference&gt;
-      &lt;/SignedInfo&gt;
-    &lt;SignatureValue/&gt;
-    &lt;/Signature&gt;
-  &lt;/Assinatura&gt;
-&lt;/Principal&gt;
-</code></pre>
-
-<p>Veja que já existe os nós da assinatura (Signature), mas estão em branco ou incompletos. Esse é o template que o ACBr irá utilizar para realmente assinar e gerar um novo XML.</p>
-
-<p>Então codifiquei um pequeno programa em Object Pascal para fazer os testes.</p>
-
-<pre><code>procedure TMainForm.Assinar;
-var
-  A: TDFeSSL;
-  I: Integer;
-begin
-  A := TDFeSSL.Create;
-  A.SSLLib := libCapicom;
-  A.SelecionarCertificado;
-  with TStringList.Create do
-  try
-    // carrega o XML de template
-    LoadFromFile('template.xml');
-    // obtém o XML assinado no Text do StringList
-    Text := '&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;'
-          + A.Assinar(Text, 'Assinatura', '');
-    // salva o XML em disco
-    SaveToFile('assinado.xml');
-  finally
-    Free;
+<pre><code>type
+  IBook = interface
+    function Title: string;
+    function Author: string;
+    function ISBN: string;
   end;
-  A.Free;
-end;
-</code></pre>
-
-<p>A tela para escolher o certificado — previamente instalado no computador — aparece e o usuário, que pode selecionar qual ele deseja.</p>
-
-<p>O XML é assinado (<em>node</em> Assinatura) e tudo parece perfeito… mas o WebService do cliente não valida a Assinatura.</p>
-
-<p>Algo estava errado.</p>
-
-<h1 id="solucao">Solução</h1>
-
-<p>Após ajuda do pessoal do ACBr e amigos, chegamos a conclusão que os espaços em branco no Template eram o problema.</p>
-
-<p>Modifiquei o projeto de teste, intruduzindo algumas linhas de código para retirar os espaços e quebras de linha. Funcionou.</p>
-
-<pre><code>procedure TMainForm.Assinar;
-var
-  A: TDFeSSL;
-  S: AnsiString;
-  I: Integer;
-begin
-  A := TDFeSSL.Create;
-  A.SSLLib := libCapicom;
-  A.SelecionarCertificado;
-  with TStringList.Create do
-  try
-    // carrega o XML de template
-    LoadFromFile('template.xml');
-    S := '';
-    // retira dos os espaços em braco e quebras de linha
-    for I := 0 to Count-1 do
-    begin
-      S := S + Trim(
-        StringReplace(
-          StringReplace(Strings[I], #13, '', [rfReplaceAll]),
-          #10, '', [rfReplaceAll]
-        )
-      )
-    end;
-    // obtém o XML assinado no Text do StringList
-    Text := '&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;'
-          + A.Assinar(S, 'Assinatura', '');
-    // salva o XML em disco
-    SaveToFile('assinado.xml');
-  finally
-    Free;
+  
+  TBook = class(TInterfacedObject, IBook)
+  private
+    FDoc: IXMLDocument;
+  public
+    constructor Create(const Doc: IXMLDocument);
+    function Title: string;
+    function Author: string;
+    function ISBN: string;
   end;
-  A.Free;
-end;
 </code></pre>
 
-<h2 id="conclusao">Conclusão</h2>
+<p>Temos uma interface <code>IBook</code> e também uma classe que a implementa.</p>
 
-<p>O Projeto ACBr me ajudou bastante me poupando muito tempo de desenvolvimento.</p>
+<p>O código é bem simples e de fácil entendimento.</p>
 
-<p>Há alguns detalhes que não mencionei. Foram necessários pequenas modificações no código do ACBr devido a alguns <em>nodes</em> customizados que eu precisa fazer no XML mas que o ACBr original não suportava. Essas modificações foram enviadas aos programadores do ACBr.</p>
+<p>A classe <code>TBook</code> recebe uma instância de <code>IXMLDocument</code> proveniente de algum lugar. Não importa.</p>
 
-<p>É isso.</p>
+<p>Esse objeto XML possui toda a informação referente a um livro.</p>
 
-<p>Agradeço a todos os desenvolvedores e amigos que ajudaram na solução.</p>
+<p>Hoje, apenas os 3 atributos estariam contidos no XML mas tenha em mente que ele pode ser alterado. Poderíamos adicionar mais nós de informação futuramente, se assim o desejarmos.</p>
 
-<p>Obrigado e até logo.</p>
+<p>Internamente a classe <code>TBook</code> irá fazer o parser do XML, retornando suas informações através dos respectivos métodos.</p>
+
+<p>Imaginemos que tudo funciona bem por meses e muitas outras classes podem ter implementado a mesma interface <code>IBook</code>. Por exemplo, <code>TDbBook</code>, <code>TEmptyBook</code>, <code>TNullBook</code>, <code>TJSONBook</code>, <code>TXMLBook</code>, etc.</p>
+
+<p>Então, uma nova regra de negócio é solicitada: é necessário saber o <i>título original</i> e o <i>ano de publicação</i>.</p>
+
+<p>Se alterarmos a interface atual, teremos que implementar os novos métodos em todas as classes que a implementam. Isso é bastante trabalho e pode não ser uma boa ideia.</p>
+
+<p>Outra opção é implementar uma nova classe, especializando <code>IXMLDocument</code> como uma interface para ser implementada por uma <a href="/posts/classes-de-dados/">classe de dados</a>. Por exemplo, <code>IBookData</code>. Todo o código de parser que antes estava contido em <code>TBook</code>, deverá ser migrado para a nova classe, refatorando não só <code>TBook</code> mas também todas as outras implementações de <code>IBook</code> que, porventura, tenham o construtor parecido. Isso também é bastante trabalho, talvez mais trabalho do que a primeira opção.</p>
+
+<p>A outra opção (mas pode haver muitas) é utilizar Classes Amigas criando apenas o necessário sem alterar nenhuma outra classe, escrevendo menos e de forma mais simples.</p>
+
+<pre><code>type
+  ICompletedBook = interface(IBook)
+    function OriginalTitle: string;
+    function Year: Integer;
+  end;
+  
+  TCompletedBook = class(TBook, ICompletedBook)
+  public
+    function OriginalTitle: string;
+    function Year: Integer;
+  end;
+</code></pre>
+
+<p>Agora temos uma nova interface e uma nova classe que a implementa. Ambos utilizando <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">herança</a>, pois ambas são muito íntimas dos seus predecessores.</p>
+
+<p>Dentro dos métodos da classe <code>TCompletedBook</code>, será necessário ter acesso ao atributo privado de <code>TBook</code> denominado <code>FDoc</code>.</p>
+
+<p>Entretanto, se ambas as classes são amigas, ou seja, declaradas na mesma unit, não haverá problemas para fazer isso:</p>
+
+<pre><code>  function TCompletedBook.OriginalTitle: string;
+  begin
+    Result := FDoc.Node('original-title').AsString;
+  end;
+
+  function TCompletedBook.Year: Integer;
+  begin
+    Result := FDoc.Node('year').AsInteger;
+  end;
+</code></pre>
+
+<p>O atributo <code>FDoc</code> é acessível, mesmo sendo privado.</p>
+
+<p>Você poderia pensar em alterar a visibilidade desse atributo para <code>protected</code> e deixar que até mesmo o código de outros usuários possam herdar de <code>TBook</code>, mas isso seria um erro.</p>
+
+<p>Ao tornar os atributos acessíveis para qualquer classe, você <i>enfraquece</i> o encapsulamento global e pode perder o controle do código. Seria muito mais difícil fazer alguma alteração em <code>TBook</code> pois não há como saber, com certeza, quem está utilizando os atributos privados.</p>
+
+<p>Finalmente, ao utilizar o modelo de Classes Amigas, você sabe quais classes deverão ser alteradas se houver alguma refatoração, pois todas elas estarão declaradas na mesma unit, obrigatoriamente.</p>
+
+<p>Suas classes serão <a href="/posts/menos-e-mais/">menores</a> e mais simples.</p>
+
+<p>Há seres humanos que são mais ligados intimamente a uns do que outros — mesmo todos sendo provenientes da mesma “classe” — que sabem seus gostos, desejos e segredos mais íntimos.</p>
+
+<p>A mesma lógica pode também ser aplicada a apenas algumas classes onde seus objetos são mais amigos, concedendo acesso irrestrito uns aos outros, mas bloqueando esse acesso ao mundo exterior.</p>
+
+<p>Até logo.</p>
 
 </article>
 
@@ -360,33 +331,33 @@ end;
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/classes-amigas" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Assinatura Digital em Arquivos XML&via=mdbs99;url=http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Classes Amigas&via=mdbs99;url=http://objectpascalprogramming.com/classes-amigas" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/classes-amigas" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/&title=Assinatura Digital em Arquivos XML" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/&title=Assinatura Digital em Arquivos XML" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/classes-amigas&title=Classes Amigas" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/assinatura-digital-em-arquivos-xml/&t=Assinatura Digital em Arquivos XML" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/classes-amigas&title=Classes Amigas" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/classes-amigas&t=Classes Amigas" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -433,15 +404,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/classes-amigas" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Classes Amigas</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/a-declaracao-with-do-perfeita" class="post-link">
@@ -524,6 +486,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/exit-proc" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>O Procedimento Exit</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -531,8 +502,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/assinatura-digital-em-arquivos-xml';
-      var disqus_title      = 'Assinatura Digital em Arquivos XML';
+      var disqus_identifier = '/classes-amigas';
+      var disqus_title      = 'Classes Amigas';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

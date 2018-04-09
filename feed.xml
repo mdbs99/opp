@@ -8,6 +8,134 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Classes Amigas</title>
+        <description>&lt;p&gt;Classes Amigas tem acesso ao estado (privado) de seus objetos. Apesar dessa prática ser entendida por muitos desenvolvedores como uma quebra do encapsulamento, na verdade ela pode até aprimorá-lo.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-ben-white-178537-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Ben White on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Classes Amigas existem na linguagem C++ a muito tempo, assim como na linguagem Object Pascal.&lt;/p&gt;
+
+&lt;p&gt;Enquanto na linguagem C++ é necessária uma sintaxe específica, em Object Pascal basta declararmos as classes na mesma unit para que elas sejam “amigas”. E não importa se elas fazem parte ou não de uma hierarquia de herança.&lt;/p&gt;
+
+&lt;p&gt;Eu conheço alguns desenvolvedores que não lidam muito bem com isso. Para eles, o que é privado nunca deveria ser acessado por outra instância além do próprio objeto.&lt;/p&gt;
+
+&lt;p&gt;Eles estão certos.&lt;/p&gt;
+
+&lt;p&gt;Mas essa é uma regra geral. Precisamos saber quando “quebrar” as regras, se isso for aumentar a &lt;i&gt;qualidade&lt;/i&gt; do software.&lt;/p&gt;
+
+&lt;p&gt;Eu também fui contra a essa &lt;i&gt;feature by design&lt;/i&gt; por muito tempo. A muitos anos atrás eu declarava as classes em units separadas, mesmo que seus objetos existissem apenas para “conversar” entre si, ou seja, mesmo que tais objetos fossem bem “íntimos”.&lt;/p&gt;
+
+&lt;p&gt;A fim de seguir a “regra de ouro” do encapsulamento, eu declarava tais classes em units separadas pensando que eu estava desenvolvendo mais Orientado a Objetos &lt;i&gt;protegendo&lt;/i&gt; seus estados.&lt;/p&gt;
+
+&lt;p&gt;Mas, ao mesmo tempo, eu declarava as propriedades de acesso — também conhecidos com &lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;Get/Set&lt;/a&gt; — para que o estado desses objetos pudessem ser acessados por alguma instância de &lt;i&gt;fora&lt;/i&gt;!&lt;/p&gt;
+
+&lt;p&gt;E isso não faz sentido.&lt;/p&gt;
+
+&lt;p&gt;Eu estava escrevendo e complicando mais o código, sem ganhar nenhum benefício, já que toda essa “proteção”, na verdade, não existia.&lt;/p&gt;
+
+&lt;p&gt;Então, eu voltei a rever esse conceito das Classes Amigas.&lt;/p&gt;
+
+&lt;p&gt;Eu diria que Classes Amigas enfraquecem o encapsulamento local (na unit) afim de &lt;i&gt;fortalecer&lt;/i&gt; o encapsulamento global (por todo o projeto).&lt;/p&gt;
+
+&lt;p&gt;Ainda assim, é claro, isso irá depender de alguns fatores. Utilizá-las é mais uma exceção à regra e deve ser muito bem pensado afim de obter mais prós do que contras.&lt;/p&gt;
+
+&lt;p&gt;Vamos a um exemplo: Imagine que você tem uma classe que representa um livro. Na interface da classe desse livro nós só queremos ter o básico que, no nosso exemplo, irá conter métodos para retornar o título, autor e ISBN.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  IBook = interface
+    function Title: string;
+    function Author: string;
+    function ISBN: string;
+  end;
+  
+  TBook = class(TInterfacedObject, IBook)
+  private
+    FDoc: IXMLDocument;
+  public
+    constructor Create(const Doc: IXMLDocument);
+    function Title: string;
+    function Author: string;
+    function ISBN: string;
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Temos uma interface &lt;code&gt;IBook&lt;/code&gt; e também uma classe que a implementa.&lt;/p&gt;
+
+&lt;p&gt;O código é bem simples e de fácil entendimento.&lt;/p&gt;
+
+&lt;p&gt;A classe &lt;code&gt;TBook&lt;/code&gt; recebe uma instância de &lt;code&gt;IXMLDocument&lt;/code&gt; proveniente de algum lugar. Não importa.&lt;/p&gt;
+
+&lt;p&gt;Esse objeto XML possui toda a informação referente a um livro.&lt;/p&gt;
+
+&lt;p&gt;Hoje, apenas os 3 atributos estariam contidos no XML mas tenha em mente que ele pode ser alterado. Poderíamos adicionar mais nós de informação futuramente, se assim o desejarmos.&lt;/p&gt;
+
+&lt;p&gt;Internamente a classe &lt;code&gt;TBook&lt;/code&gt; irá fazer o parser do XML, retornando suas informações através dos respectivos métodos.&lt;/p&gt;
+
+&lt;p&gt;Imaginemos que tudo funciona bem por meses e muitas outras classes podem ter implementado a mesma interface &lt;code&gt;IBook&lt;/code&gt;. Por exemplo, &lt;code&gt;TDbBook&lt;/code&gt;, &lt;code&gt;TEmptyBook&lt;/code&gt;, &lt;code&gt;TNullBook&lt;/code&gt;, &lt;code&gt;TJSONBook&lt;/code&gt;, &lt;code&gt;TXMLBook&lt;/code&gt;, etc.&lt;/p&gt;
+
+&lt;p&gt;Então, uma nova regra de negócio é solicitada: é necessário saber o &lt;i&gt;título original&lt;/i&gt; e o &lt;i&gt;ano de publicação&lt;/i&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se alterarmos a interface atual, teremos que implementar os novos métodos em todas as classes que a implementam. Isso é bastante trabalho e pode não ser uma boa ideia.&lt;/p&gt;
+
+&lt;p&gt;Outra opção é implementar uma nova classe, especializando &lt;code&gt;IXMLDocument&lt;/code&gt; como uma interface para ser implementada por uma &lt;a href=&quot;/posts/classes-de-dados/&quot;&gt;classe de dados&lt;/a&gt;. Por exemplo, &lt;code&gt;IBookData&lt;/code&gt;. Todo o código de parser que antes estava contido em &lt;code&gt;TBook&lt;/code&gt;, deverá ser migrado para a nova classe, refatorando não só &lt;code&gt;TBook&lt;/code&gt; mas também todas as outras implementações de &lt;code&gt;IBook&lt;/code&gt; que, porventura, tenham o construtor parecido. Isso também é bastante trabalho, talvez mais trabalho do que a primeira opção.&lt;/p&gt;
+
+&lt;p&gt;A outra opção (mas pode haver muitas) é utilizar Classes Amigas criando apenas o necessário sem alterar nenhuma outra classe, escrevendo menos e de forma mais simples.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  ICompletedBook = interface(IBook)
+    function OriginalTitle: string;
+    function Year: Integer;
+  end;
+  
+  TCompletedBook = class(TBook, ICompletedBook)
+  public
+    function OriginalTitle: string;
+    function Year: Integer;
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Agora temos uma nova interface e uma nova classe que a implementa. Ambos utilizando &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;herança&lt;/a&gt;, pois ambas são muito íntimas dos seus predecessores.&lt;/p&gt;
+
+&lt;p&gt;Dentro dos métodos da classe &lt;code&gt;TCompletedBook&lt;/code&gt;, será necessário ter acesso ao atributo privado de &lt;code&gt;TBook&lt;/code&gt; denominado &lt;code&gt;FDoc&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, se ambas as classes são amigas, ou seja, declaradas na mesma unit, não haverá problemas para fazer isso:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  function TCompletedBook.OriginalTitle: string;
+  begin
+    Result := FDoc.Node(&#39;original-title&#39;).AsString;
+  end;
+
+  function TCompletedBook.Year: Integer;
+  begin
+    Result := FDoc.Node(&#39;year&#39;).AsInteger;
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O atributo &lt;code&gt;FDoc&lt;/code&gt; é acessível, mesmo sendo privado.&lt;/p&gt;
+
+&lt;p&gt;Você poderia pensar em alterar a visibilidade desse atributo para &lt;code&gt;protected&lt;/code&gt; e deixar que até mesmo o código de outros usuários possam herdar de &lt;code&gt;TBook&lt;/code&gt;, mas isso seria um erro.&lt;/p&gt;
+
+&lt;p&gt;Ao tornar os atributos acessíveis para qualquer classe, você &lt;i&gt;enfraquece&lt;/i&gt; o encapsulamento global e pode perder o controle do código. Seria muito mais difícil fazer alguma alteração em &lt;code&gt;TBook&lt;/code&gt; pois não há como saber, com certeza, quem está utilizando os atributos privados.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, ao utilizar o modelo de Classes Amigas, você sabe quais classes deverão ser alteradas se houver alguma refatoração, pois todas elas estarão declaradas na mesma unit, obrigatoriamente.&lt;/p&gt;
+
+&lt;p&gt;Suas classes serão &lt;a href=&quot;/posts/menos-e-mais/&quot;&gt;menores&lt;/a&gt; e mais simples.&lt;/p&gt;
+
+&lt;p&gt;Há seres humanos que são mais ligados intimamente a uns do que outros — mesmo todos sendo provenientes da mesma “classe” — que sabem seus gostos, desejos e segredos mais íntimos.&lt;/p&gt;
+
+&lt;p&gt;A mesma lógica pode também ser aplicada a apenas algumas classes onde seus objetos são mais amigos, concedendo acesso irrestrito uns aos outros, mas bloqueando esse acesso ao mundo exterior.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 09 Apr 2018 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/classes-amigas</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/classes-amigas</guid>
+      </item>
+    
+      <item>
         <title>A Declaração WITH-DO Perfeita</title>
         <description>&lt;p&gt;A utilização do WITH-DO pode deixar o código mais simples de ler, pois haverá menos declarações, atribuições e inicializações de variáveis. No entanto, a sintaxe atual não é perfeita. Dependendo do seu uso, o benefício pode ser o inverso.&lt;/p&gt;
 
@@ -963,146 +1091,6 @@ end
         <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/objetos-complexos</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/objetos-complexos</guid>
-      </item>
-    
-      <item>
-        <title>O Procedimento Exit</title>
-        <description>&lt;p&gt;Todos os programadores Pascal conhecem o procedimento &lt;code&gt;Exit()&lt;/code&gt; desde as primeiras versões dos compiladores. Mas será que todos sabem utilizá-lo corretamente?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/photo-kev-seto-94686.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Kev Seto on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;O procedimento &lt;code&gt;Exit()&lt;/code&gt; é utilizado quando queremos sair de um escopo em execução. Esse escopo pode ser uma função, procedimento, método ou até mesmo o próprio programa.&lt;/p&gt;
-
-&lt;p&gt;Vamos dizer que um programa console chame um procedimento &lt;code&gt;Execute&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure Execute;
-begin
-  Writeln(&#39;1. Passing on this line...&#39;);
-  Exit;
-  Writeln(&#39;2. It will not pass here&#39;);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;No exemplo acima, somente a informação do primeiro &lt;code&gt;Writeln&lt;/code&gt; será mostrado no console.&lt;/p&gt;
-
-&lt;p&gt;Ao sair de um escopo, o programa retorna imediatamente para o escopo anterior (outra função/procedimento/método ou o próprio programa). A única exceção a essa regra é quando há blocos &lt;code&gt;try-finally&lt;/code&gt;. Se &lt;code&gt;Exit()&lt;/code&gt; for chamado dentro de um bloco &lt;code&gt;try-finally&lt;/code&gt; o compilador irá executar o código dentro do &lt;code&gt;finally-end&lt;/code&gt; &lt;em&gt;antes&lt;/em&gt; de sair do escopo.&lt;/p&gt;
-
-&lt;p&gt;Aqui está outro exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure Execute;
-begin
-  try
-    Writeln(&#39;1. Passing on this line...&#39;);
-    Exit;
-  finally
-    Writeln(&#39;2. I am still here!&#39;);
-  end;
-  Writeln(&#39;3. It will not pass here&#39;);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Os textos #1 e #2 serão mostrados no console. Mesmo que &lt;code&gt;Exit()&lt;/code&gt; tenha sido chamado antes da impressão do texto #2, ainda sim o código é executado devido ao &lt;code&gt;try-finally&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Outro exemplo de uso do &lt;code&gt;Exit()&lt;/code&gt; é quando fazemos validações. Se uma validação ou checagem não retornar verdadeiro, utilizamos o &lt;code&gt;Exit()&lt;/code&gt; para parar a execução do escopo atual.&lt;/p&gt;
-
-&lt;p&gt;Suponha que queremos somar dois números inteiros, mas só queremos números maiores que zero:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function Sum(A, B: Integer): string;
-begin
-  Result := &#39;Invalid result&#39;;
-  if (A &amp;lt; 0) or (B &amp;lt; 0) then
-    Exit;
-  Result := Format(&#39;The result is %d&#39;, [A + B]);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;No exemplo acima, o retorno da função &lt;code&gt;Sum&lt;/code&gt; é inicializado com um valor inválido e depois há uma validação para saber se os valores são menores que &lt;code&gt;0&lt;/code&gt;. Se o teste falhar, o programa irá retornar para o escopo anterior à chamada da função &lt;code&gt;Sum&lt;/code&gt; com o resultado inválido. Mas se o teste não falhar, o resultado da função será a soma de A e B.&lt;/p&gt;
-
-&lt;p&gt;Há aqueles que são adeptos da programação estruturada e preferem não “quebrar” a execução do programa com uma “saída antecipada”, ou seja, não fazem uso do &lt;code&gt;Exit()&lt;/code&gt; por acreditarem que o código ficaria mais simples.&lt;/p&gt;
-
-&lt;p&gt;Então vamos reescrever o exemplo anterior:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function Sum(A, B: Integer): string;
-begin
-  if (A &amp;gt; 0) and (B &amp;gt; 0) then
-    Result := Format(&#39;The result is %d&#39;, [A + B]);
-  else
-    Result := &#39;Invalid result&#39;;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Parece mais simples? Bem, nesse exemplo eu diria que sim. Porém para exemplos com mais condicionais, eu diria que não (vamos ver isso mais abaixo).&lt;/p&gt;
-
-&lt;p&gt;E se quiséssemos dizer ao usuário que seus dados não estão corretos?&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function Sum(A, B: Integer): string;
-begin
-  Result := &#39;Invalid result&#39;;
-  if (A &amp;gt; 0) then
-  begin
-    if (B &amp;gt; 0) then
-      Result := Format(&#39;The result is %d&#39;, [A + B]);
-    else
-      Writeln(&#39;B should be greater than zero&#39;);
-  end
-  else
-    Writeln(&#39;A should be greater than zero&#39;);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Nesse exemplo não utilizamos &lt;code&gt;Exit()&lt;/code&gt; e eu acho que o código está bem confuso. Os testes estão “separados” do retorno de aviso para o usuário (&lt;code&gt;Writeln&lt;/code&gt;).&lt;/p&gt;
-
-&lt;p&gt;Kent Beck , Martin Fowler &lt;a href=&quot;https://en.wikipedia.org/wiki/Structured_programming#Early_exit&quot;&gt;afirmaram&lt;/a&gt; categoricamente que &lt;em&gt;“um ponto de saída não é realmente uma regra útil. A clareza é o princípio chave: se o método for mais claro com um ponto de saída, use um ponto de saída, caso contrário, não”&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Então vamos reescrever o exemplo anterior com o uso de &lt;code&gt;Exit()&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function Sum(A, B: Integer): string;
-begin
-  Result := &#39;Invalid result&#39;;
-  if (A &amp;lt; 0) then
-  begin
-    Writeln(&#39;A should be greater than zero&#39;);
-    Exit;
-  end;
-  if (B &amp;lt; 0) then
-  begin
-    Writeln(&#39;B should be greater than zero&#39;);
-    Exit;
-  end;
-  Result := Format(&#39;The result is %d&#39;, [A + B]);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O código ficou um pouco maior, é verdade, porém os testes e avisos para o usuário ficaram mais simples, na minha opinião. Você não precisa acompanhar todos os &lt;code&gt;if-else&lt;/code&gt; aninhados. A cada teste que falhar, o aviso está logo abaixo e o escopo será abortado com o uso do &lt;code&gt;Exit()&lt;/code&gt;. Se todos os testes não falharem, a função irá retornar a soma de A e B.&lt;/p&gt;
-
-&lt;p&gt;No Delphi, a partir da &lt;a href=&quot;http://docs.embarcadero.com/products/rad_studio/delphiAndcpp2009/HelpUpdate2/EN/html/delphivclwin32/System_Exit.html&quot;&gt;versão 2009&lt;/a&gt;, o procedimento &lt;code&gt;Exit()&lt;/code&gt; ganhou uma melhoria: &lt;code&gt;Exit()&lt;/code&gt; pode ter um parâmetro especificando um resultado. O parâmetro deve ser do mesmo tipo que o resultado da função.&lt;/p&gt;
-
-&lt;p&gt;O FPC também tem a &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/system/exit.html&quot;&gt;mesma definição&lt;/a&gt;, porém não sei quem implementou essa nova &lt;em&gt;feature&lt;/em&gt; primeiro.&lt;/p&gt;
-
-&lt;p&gt;Então vamos reescrever o exemplo anterior:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function Sum(A, B: Integer): string;
-begin
-  if (A &amp;lt; 0) then
-    Exit(&#39;A should be greater than zero&#39;);
-  if (B &amp;lt; 0) then
-    Exit(&#39;B should be greater than zero&#39;);
-  Result := Format(&#39;The result is %d&#39;, [A + B]);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&quot;/posts/simplicidade/&quot;&gt;Simples&lt;/a&gt; e limpo.&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;Exit()&lt;/code&gt; pode receber como parâmetro qualquer tipo de retorno, até mesmo instâncias de &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;. Utilizando esse parâmetro, é como se ganhássemos o mesmo comportamento da palavra reservada &lt;code&gt;return&lt;/code&gt;, em Java. No entanto, &lt;code&gt;Exit()&lt;/code&gt; em conjunto com &lt;code&gt;Result&lt;/code&gt; nos dá ainda mais possibilidades de retorno para as funções.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 08 Jan 2018 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/exit-proc</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/exit-proc</guid>
       </item>
     
   </channel>
