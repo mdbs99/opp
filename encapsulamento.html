@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Interfaces COM vs. CORBA &#8211; Object Pascal Programming</title>
+    <title>Encapsulamento &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
     <meta name="keywords" content="">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, COM, CORBA, interface-com, interface-corba">
-    <link rel="canonical" href="http://objectpascalprogramming.com/com-vs-corba">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, encapsulamento, encapsulation">
+    <link rel="canonical" href="http://objectpascalprogramming.com/encapsulamento">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Interfaces COM vs. CORBA">
-    <meta property="og:description" content="Existem dois tipos de Interfaces no Free Pascal definidos como COM e CORBA. Será que existem vantagens ao utilizar o tipo CORBA?">
-    <meta property="og:url" content="http://objectpascalprogramming.com/com-vs-corba">
+    <meta property="og:title" content="Encapsulamento">
+    <meta property="og:description" content="O Encapsulamento é um dos pilares da Orientação a Objetos. Mas você sabe o que realmente significa esse conceito?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/encapsulamento">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-hermes-rivera-265372.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-erwan-hesry-166245-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Interfaces COM vs. CORBA" />
+    <meta name="twitter:title" content="Encapsulamento" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/com-vs-corba" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/encapsulamento" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,74 +191,182 @@
 
 
 <div class="post-header mb2">
-  <h1>Interfaces COM vs. CORBA</h1>
-  <span class="post-meta">Jan 29, 2018</span><br>
+  <h1>Encapsulamento</h1>
+  <span class="post-meta">Apr 16, 2018</span><br>
   
   <span class="post-meta small">
   
-    3 minute read
+    4 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Existem dois tipos de Interfaces no Free Pascal definidos como COM e CORBA. No Delphi temos apenas o tipo COM. Mas será que existem vantagens ao utilizar o tipo CORBA?</p>
+  <p>O Encapsulamento é um dos pilares da Orientação a Objetos. Mas você sabe o que realmente significa esse conceito?</p>
 
 <!--more-->
 
-<p><img src="/images/2018/photo-hermes-rivera-265372.jpg" alt="Unsplash image" />
-<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Hermes Rivera on Unsplash</span></p>
+<p><img src="/images/2018/photo-erwan-hesry-166245-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Erwan Hesry on Unsplash</span></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>No Delphi, quando definimos que um Objeto é do tipo Interface, quer dizer que (por padrão) ele será a liberado automaticamente da memória pelo compilador quando a variável sair do escopo e sua <a href="/posts/interfaces-delegacao-problemas-solucoes/#contador-de-referencias">contagem de referência</a> chegar a zero.</p>
+<p>De acordo com o dicionário, Encapsulamento significa: colocar ou encerrar em cápsula; capsular.</p>
 
-<p>Para utilizar essa <em>feature</em>, basta implementar sua Classe herdando de <code>TInterfacedObject</code>, afim de utilizar a implementação padrão para Interfaces COM.</p>
+<p>Uma cápsula não pode — ou não deveria — ser quebrada. O mundo externo ao objeto não pode saber o que há em seu interior a menos que o objeto queira lhes dizer “com suas próprias palavras”, ou seja, através de métodos que retornam informações mas não necessariamente seu <a href="/estado-do-objeto">Estado</a>.</p>
 
-<p>Se você não quiser utilizar <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">herança</a>, terá que implementar os <a href="/posts/interfaces-delegacao-problemas-solucoes/#contador-de-referencias">3-métodos</a> obrigatórios para toda Classe que implementa Interfaces COM e isso realmente pode parecer estranho para programadores que estão vindo de outras linguagens.</p>
+<p>O mundo externo só deve conhecer os métodos públicos de um objeto. Seus métodos públicos representam sua Interface para fazer o que ele deve fazer. Qualquer método ou atributo interno ao objeto é de propriedade dele e de mais ninguém.</p>
 
-<p><em>“Por quê eu deveria implementar métodos que não estão definidos na Interface?”</em></p>
+<p>Atributos e <a href="/eliminando-metodos-privados">métodos privados</a> estão encapsulados no objeto e nunca deveriam ser acessados externamente.</p>
 
-<p>Realmente, não parece fazer muito sentido.</p>
+<p>Essa é a teoria.</p>
 
-<h2 id="corba">CORBA</h2>
+<h2 id="codigo">Encapsulamento pelo Código</h2>
 
-<p>No Free Pascal você tem uma escolha. Pode-se utilizar Interfaces COM ou CORBA. O primeiro tipo se comporta do mesmo jeito que no Delphi. Tem contagem de referência e liberação automática de memória, enquanto o tipo CORBA é exatamente o contrário. Esse tipo não tem contagem de referência e, por isso, não tem a ajuda do compilador para liberar a memória automaticamente. Cabe ao programador liberar os Objetos utilizando seus respectivos destrutores.</p>
+<p>Toda a <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a> é sobre encapsulamento e envio de mensagens.</p>
 
-<p>Também não é possível liberar uma instância apenas atribuindo <code>nil</code>. É necessário que se tenha a instância de uma Classe ou que a Interface tenha algum método que possa ser utilizado como destrutor, por exemplo, <code>Free</code>.</p>
+<p>Infelizmente, ambos os conceitos não são implementados perfeitamente em Object Pascal ou em nenhuma outra linguagem <i>mainstream</i> do mercado como Java e C#.</p>
+
+<p>E isso gera muitas dúvidas.</p>
+
+<p>Vamos falar sobre Encapsulamento e tentar expandir nossas mentes além do código, além dos conceitos pré-concebidos e do básico.</p>
+
+<p>O que é estar encapsulado? Essa pergunta parece tola, mas veremos que depende do ponto de vista do observador para respondê-la.</p>
+
+<p>Por exemplo. Um atributo privado está encapsulado no objeto e não pode ser acessado pelo mundo externo, certo?</p>
 
 <pre><code>type
-  IFoo = interface
-    procedure Execute;
-    procedure Free;
+  TFoo = class
+  private
+     FValue: Integer;
+  public
+     function GetValue: Integer;
+  end;
+
+function TFoo.GetValue: Integer;
+begin
+  Result := FValue;
+end;
+
+procedure TMainForm.ExecButton(Sender: TObject);
+var
+  F: TFoo;
+begin
+  F := TFoo.Create;
+  ShowMessage(F.GetValue.ToString);
+  F.Free;
+end;
+</code></pre>
+
+<p>No exemplo acima, o mundo externo representado pela instância de  <code>TMainForm</code> consegue acessar o atributo privado da instância da classe <code>TFoo</code>?</p>
+
+<p>Não, você diria.</p>
+
+<p>O atributo privado está sendo acessado por um método público que o “protege”. Além disso, como o atributo é <a href="/posts/tipos-primitivos-nos-argumentos/">primitivo</a>, ele não é passado por referência. Então, o mundo externo não pode nem mesmo alterá-lo.</p>
+
+<p>Está correto.</p>
+
+<p>Então, vamos alterar um pouco o código.</p>
+
+<pre><code>type
+  TFoo = class
+  private
+     FValue: TDataValue;
+  public
+     function GetValue: TDataValue;
+  end;
+
+function TFoo.GetValue: TDataValue;
+begin
+  Result := FValue;
+end;
+
+procedure TMainForm.ExecButton(Sender: TObject);
+var
+  F: TFoo;
+begin
+  F := TFoo.Create;
+  F.GetValue.Free;
+  F.Free;
+end;
+</code></pre>
+
+<p>Agora <code>GetValue</code> retorna uma instância de objeto.</p>
+
+<p>É possível criar o objeto <code>F</code>, acessar (indiretamente) seu atributo privado e destruí-lo chamando <code>Free</code>, pois<code>GetValue</code> retornar a referência direta do atributo.</p>
+
+<p>Ora, o atributo não é público! Não temos um <a href="/posts/getters-e-setters/">setter</a> para ele e, mesmo assim, o “mundo externo” consegue destruí-lo? Ele não deveria ser intocável externamente?</p>
+
+<p>Vejamos agora:</p>
+
+<pre><code>type
+  TFoo = class
+  public
+     Value: TDataValue;
   end;
 </code></pre>
 
-<p>O tipo CORBA não exige do programador a implementação “obscura” de métodos de <a href="/posts/codigo-duplicado-talvez-nao/#infraestrutura">infraestrutura</a> além do que está declarado na Interface. Apenas os métodos das Interfaces devem ser implementados nas Classes. Essa é uma vantagem em relação ao tipo COM.</p>
+<p>Nessa versão a classe <code>TFoo</code> tem um atributo público <code>Value</code>.</p>
 
-<p>Então, se você estiver desenvolvendo utilizando Free Pascal e não quer trabalhar com contagem de referência, utilizar CORBA pode ser uma boa opção.  Sua sintaxe e <em>design</em> “limpos” não obrigam o programador a implementar os 3-métodos padrões de COM.</p>
+<p>Se o mundo externo acessar esse atributo, estaríamos quebrando o encapsulamento do objeto?</p>
 
-<p>Entretanto, lembre-se que todas as Interfaces dentro da mesma Unit terão o mesmo tipo, seja COM ou CORBA.</p>
+<p>Na verdade, não.</p>
 
-<h2 id="com">COM</h2>
+<p>Não há nada encapsulado no objeto e, portanto, por definição não há nenhuma quebra de encapsulamento!</p>
 
-<p>Muitos programadores não gostam de utilizar o tipo COM devido aos problemas com referência de Objetos. Mesmo que a <a href="/posts/interfaces-e-o-metodo-estatico-new/">solução</a> seja simples para resolvê-los.</p>
+<p>Talvez a linguagem não devesse permitir que atributos fossem públicos, mas esse seria um debate para outro artigo.</p>
 
-<p>Enquanto o tipo CORBA pode ter um <em>design</em> mais simples, o tipo COM é mais <em>customizável</em> pois pode ser implementado sem contagem de referência. Basta implementarmos os 3-métodos obrigatórios sem incrementar a contagem.</p>
+<p>Quer outro exemplo? Imagine que <code>GetValue</code> agora é <i>privado</i>. Imagine uma outra classe chamada <code>TBar</code> com essa definição:</p>
 
-<p>Pessoalmente, sempre prefiro utilizar o tipo COM e a contagem de referência para a liberação automática dos objetos na memória. Entretanto, se eu quiser que apenas algumas Classes não tenham a contagem de referência, basta sobrescrever os métodos necessários para ter o mesmo comportamento das Classes que implementam Interfaces CORBA.</p>
+<pre><code>type
+  TDataValueFunc = function: TDataValue of object; 
 
-<p>Considero isso uma <em>grande</em> vantagem!</p>
+  TBar = class
+  private
+     FFunc: TDataValueFunc;
+  public
+     constructor Create(Func: TDataValueFunc);
+     function Data: TDataValue;
+  end;
 
-<p>Por exemplo. Posso ter uma única Interface mas com implementações distintas em Classes diferentes, utilizando ou não a contagem de referência.</p>
+function TBar.Data: TDataValue;
+begin
+  Result := FFunc;
+end;
+</code></pre>
+
+<p>E o (novo) construtor de <code>TFoo</code> seria assim:</p>
+
+<pre><code>constructor TFoo.Create;
+begin
+  FBar := TBar.Create(@GetValue);
+  FBar.Data;
+end;
+</code></pre>
+
+<p>Não estaria <code>TBar.Data</code> executando um código privado de <code>TFoo</code>, mesmo que indiretamente? Um objeto “acessando” um método privado de outro objeto. Seria essa uma quebra de encapsulamento?</p>
+
+<p>O que eu estou tentando lhe mostrar é que não é apenas o código puramente técnico que irá definir um bom nível de encapsulamento no seu projeto.</p>
+
+<p>É necessário que você pense em encapsulamento no nível de design do projeto e não apenas na implementação técnica das classes.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Minha conclusão é que o tipo COM é <em>melhor</em> do que CORBA por quê podemos implementar os dois tipos de comportamentos (com ou sem contagem de referência), enquanto com CORBA implementamos apenas um comportamento.</p>
+<p>Vimos que a linguagem Object Pascal permite-nos acessar atributos e 
+métodos privados, mesmo que indiretamente.</p>
 
-<p>O comportamento deve estar nas Classes, não nas Interfaces ou diretivas de compilação.</p>
+<p>O mesmo pode ser feito em outras linguagens consideradas “mais” Orientadas a Objetos.</p>
+
+<p>Então, discutir sobre encapsulamento no nível puramente técnico da linguagem é perda de tempo. Seria muito difícil — mas não impossível — implementar um código onde todos os atributos privados não fossem acessados, de alguma maneira, pelo mundo externo sem perder performance ou complicar o modelo de classes apenas para afirmar que os atributos estão protegidos e intocados.</p>
+
+<p>No mundo real, sistemas devem ter boa performance e serem simples de manutenção.</p>
+
+<p>É melhor quebrar algumas regras e deixar as coisas <a href="/posts/simplicidade/">simples</a> do que ser purista e não ter nenhum benefício real.</p>
+
+<p>Finalmente, o conceito de Encapsulamento na Orientação Objetos é mais sobre como projetar a comunicação entre os objetos e módulos utilizando o mínimo necessário ao invés de se preocupar unicamente com a sintaxe utilizada.</p>
 
 <p>Até logo.</p>
+
 
 </article>
 
@@ -268,33 +376,33 @@
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/com-vs-corba" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/encapsulamento" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Interfaces COM vs. CORBA&via=mdbs99;url=http://objectpascalprogramming.com/com-vs-corba" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Encapsulamento&via=mdbs99;url=http://objectpascalprogramming.com/encapsulamento" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/com-vs-corba" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/encapsulamento" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/com-vs-corba&title=Interfaces COM vs. CORBA" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/com-vs-corba&title=Interfaces COM vs. CORBA" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/encapsulamento&title=Encapsulamento" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/com-vs-corba&t=Interfaces COM vs. CORBA" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/encapsulamento&title=Encapsulamento" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/encapsulamento&t=Encapsulamento" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -341,15 +449,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/encapsulamento" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Encapsulamento</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/classes-amigas" class="post-link">
@@ -415,6 +514,15 @@ Gostaria de me pagar um café?
     </div>
   
     <div class="post ml2">
+      <a href="/com-vs-corba" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces COM vs. CORBA</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/versoes-antigas-dos-compiladores" class="post-link">
         <ul>
           <h4 class="post-title"><li>Versões Antigas dos Compiladores</li></h4>
@@ -439,8 +547,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/com-vs-corba';
-      var disqus_title      = 'Interfaces COM vs. CORBA';
+      var disqus_identifier = '/encapsulamento';
+      var disqus_title      = 'Encapsulamento';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

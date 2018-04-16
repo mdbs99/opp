@@ -8,6 +8,179 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Encapsulamento</title>
+        <description>&lt;p&gt;O Encapsulamento é um dos pilares da Orientação a Objetos. Mas você sabe o que realmente significa esse conceito?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-erwan-hesry-166245-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Erwan Hesry on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;De acordo com o dicionário, Encapsulamento significa: colocar ou encerrar em cápsula; capsular.&lt;/p&gt;
+
+&lt;p&gt;Uma cápsula não pode — ou não deveria — ser quebrada. O mundo externo ao objeto não pode saber o que há em seu interior a menos que o objeto queira lhes dizer “com suas próprias palavras”, ou seja, através de métodos que retornam informações mas não necessariamente seu &lt;a href=&quot;/estado-do-objeto&quot;&gt;Estado&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;O mundo externo só deve conhecer os métodos públicos de um objeto. Seus métodos públicos representam sua Interface para fazer o que ele deve fazer. Qualquer método ou atributo interno ao objeto é de propriedade dele e de mais ninguém.&lt;/p&gt;
+
+&lt;p&gt;Atributos e &lt;a href=&quot;/eliminando-metodos-privados&quot;&gt;métodos privados&lt;/a&gt; estão encapsulados no objeto e nunca deveriam ser acessados externamente.&lt;/p&gt;
+
+&lt;p&gt;Essa é a teoria.&lt;/p&gt;
+
+&lt;h2 id=&quot;codigo&quot;&gt;Encapsulamento pelo Código&lt;/h2&gt;
+
+&lt;p&gt;Toda a &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt; é sobre encapsulamento e envio de mensagens.&lt;/p&gt;
+
+&lt;p&gt;Infelizmente, ambos os conceitos não são implementados perfeitamente em Object Pascal ou em nenhuma outra linguagem &lt;i&gt;mainstream&lt;/i&gt; do mercado como Java e C#.&lt;/p&gt;
+
+&lt;p&gt;E isso gera muitas dúvidas.&lt;/p&gt;
+
+&lt;p&gt;Vamos falar sobre Encapsulamento e tentar expandir nossas mentes além do código, além dos conceitos pré-concebidos e do básico.&lt;/p&gt;
+
+&lt;p&gt;O que é estar encapsulado? Essa pergunta parece tola, mas veremos que depende do ponto de vista do observador para respondê-la.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo. Um atributo privado está encapsulado no objeto e não pode ser acessado pelo mundo externo, certo?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TFoo = class
+  private
+     FValue: Integer;
+  public
+     function GetValue: Integer;
+  end;
+
+function TFoo.GetValue: Integer;
+begin
+  Result := FValue;
+end;
+
+procedure TMainForm.ExecButton(Sender: TObject);
+var
+  F: TFoo;
+begin
+  F := TFoo.Create;
+  ShowMessage(F.GetValue.ToString);
+  F.Free;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;No exemplo acima, o mundo externo representado pela instância de  &lt;code&gt;TMainForm&lt;/code&gt; consegue acessar o atributo privado da instância da classe &lt;code&gt;TFoo&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;Não, você diria.&lt;/p&gt;
+
+&lt;p&gt;O atributo privado está sendo acessado por um método público que o “protege”. Além disso, como o atributo é &lt;a href=&quot;/posts/tipos-primitivos-nos-argumentos/&quot;&gt;primitivo&lt;/a&gt;, ele não é passado por referência. Então, o mundo externo não pode nem mesmo alterá-lo.&lt;/p&gt;
+
+&lt;p&gt;Está correto.&lt;/p&gt;
+
+&lt;p&gt;Então, vamos alterar um pouco o código.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TFoo = class
+  private
+     FValue: TDataValue;
+  public
+     function GetValue: TDataValue;
+  end;
+
+function TFoo.GetValue: TDataValue;
+begin
+  Result := FValue;
+end;
+
+procedure TMainForm.ExecButton(Sender: TObject);
+var
+  F: TFoo;
+begin
+  F := TFoo.Create;
+  F.GetValue.Free;
+  F.Free;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Agora &lt;code&gt;GetValue&lt;/code&gt; retorna uma instância de objeto.&lt;/p&gt;
+
+&lt;p&gt;É possível criar o objeto &lt;code&gt;F&lt;/code&gt;, acessar (indiretamente) seu atributo privado e destruí-lo chamando &lt;code&gt;Free&lt;/code&gt;, pois&lt;code&gt;GetValue&lt;/code&gt; retornar a referência direta do atributo.&lt;/p&gt;
+
+&lt;p&gt;Ora, o atributo não é público! Não temos um &lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;setter&lt;/a&gt; para ele e, mesmo assim, o “mundo externo” consegue destruí-lo? Ele não deveria ser intocável externamente?&lt;/p&gt;
+
+&lt;p&gt;Vejamos agora:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TFoo = class
+  public
+     Value: TDataValue;
+  end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nessa versão a classe &lt;code&gt;TFoo&lt;/code&gt; tem um atributo público &lt;code&gt;Value&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se o mundo externo acessar esse atributo, estaríamos quebrando o encapsulamento do objeto?&lt;/p&gt;
+
+&lt;p&gt;Na verdade, não.&lt;/p&gt;
+
+&lt;p&gt;Não há nada encapsulado no objeto e, portanto, por definição não há nenhuma quebra de encapsulamento!&lt;/p&gt;
+
+&lt;p&gt;Talvez a linguagem não devesse permitir que atributos fossem públicos, mas esse seria um debate para outro artigo.&lt;/p&gt;
+
+&lt;p&gt;Quer outro exemplo? Imagine que &lt;code&gt;GetValue&lt;/code&gt; agora é &lt;i&gt;privado&lt;/i&gt;. Imagine uma outra classe chamada &lt;code&gt;TBar&lt;/code&gt; com essa definição:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TDataValueFunc = function: TDataValue of object; 
+
+  TBar = class
+  private
+     FFunc: TDataValueFunc;
+  public
+     constructor Create(Func: TDataValueFunc);
+     function Data: TDataValue;
+  end;
+
+function TBar.Data: TDataValue;
+begin
+  Result := FFunc;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;E o (novo) construtor de &lt;code&gt;TFoo&lt;/code&gt; seria assim:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;constructor TFoo.Create;
+begin
+  FBar := TBar.Create(@GetValue);
+  FBar.Data;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Não estaria &lt;code&gt;TBar.Data&lt;/code&gt; executando um código privado de &lt;code&gt;TFoo&lt;/code&gt;, mesmo que indiretamente? Um objeto “acessando” um método privado de outro objeto. Seria essa uma quebra de encapsulamento?&lt;/p&gt;
+
+&lt;p&gt;O que eu estou tentando lhe mostrar é que não é apenas o código puramente técnico que irá definir um bom nível de encapsulamento no seu projeto.&lt;/p&gt;
+
+&lt;p&gt;É necessário que você pense em encapsulamento no nível de design do projeto e não apenas na implementação técnica das classes.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Vimos que a linguagem Object Pascal permite-nos acessar atributos e 
+métodos privados, mesmo que indiretamente.&lt;/p&gt;
+
+&lt;p&gt;O mesmo pode ser feito em outras linguagens consideradas “mais” Orientadas a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Então, discutir sobre encapsulamento no nível puramente técnico da linguagem é perda de tempo. Seria muito difícil — mas não impossível — implementar um código onde todos os atributos privados não fossem acessados, de alguma maneira, pelo mundo externo sem perder performance ou complicar o modelo de classes apenas para afirmar que os atributos estão protegidos e intocados.&lt;/p&gt;
+
+&lt;p&gt;No mundo real, sistemas devem ter boa performance e serem simples de manutenção.&lt;/p&gt;
+
+&lt;p&gt;É melhor quebrar algumas regras e deixar as coisas &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; do que ser purista e não ter nenhum benefício real.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, o conceito de Encapsulamento na Orientação Objetos é mais sobre como projetar a comunicação entre os objetos e módulos utilizando o mínimo necessário ao invés de se preocupar unicamente com a sintaxe utilizada.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 16 Apr 2018 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/encapsulamento</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/encapsulamento</guid>
+      </item>
+    
+      <item>
         <title>Classes Amigas</title>
         <description>&lt;p&gt;Classes Amigas tem acesso ao estado (privado) de seus objetos. Apesar dessa prática ser entendida por muitos desenvolvedores como uma quebra do encapsulamento, na verdade ela pode até aprimorá-lo.&lt;/p&gt;
 
@@ -963,134 +1136,6 @@ oficial diz que &lt;em&gt;“Namespaces fornece uma maneira de organizar identif
         <pubDate>Mon, 22 Jan 2018 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/versoes-antigas-dos-compiladores</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/versoes-antigas-dos-compiladores</guid>
-      </item>
-    
-      <item>
-        <title>Objetos Complexos</title>
-        <description>&lt;p&gt;Um Objeto não é apenas uma instância de uma Classe. Ele pode conter instâncias (quase) infinitas de diferentes Classes combinadas.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/photo-chuttersnap-378918.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by chuttersnap on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;No mundo real convivemos constantemente com Objetos (humanos, animais, plantas, coisas, etc) que possuem todo tipo de &lt;a href=&quot;/posts/objetos-pensam-e-tomam-decisoes/&quot;&gt;comportamento&lt;/a&gt; especializado. Alguns desses Objetos — talvez a maioria — fazem coisas demais, ou seja, eles agregam muitas funcionalidades num único “corpo”. Eles são &lt;em&gt;complexos&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Quando tentamos abstrair e implementar um &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;Objeto ou Entidade&lt;/a&gt; no &lt;em&gt;software&lt;/em&gt;, utilizando uma linguagem de programação em conjunto com o paradigma da Orientação a Objetos, uma dúvida comum em quase todos os desenvolvedores iniciantes — ou mesmo experientes — é tentar identificar quais métodos irão ser implementados na Classe, baseado apenas no comportamento “final” do Objeto ou Entidade do mundo real.&lt;/p&gt;
-
-&lt;p&gt;O comportamento final ao que me refiro é como vemos um Objeto e suas funcionalidades sem considerar as partes que os compõem. Vemos um Objeto como um &lt;em&gt;todo&lt;/em&gt; e não como uma soma das partes.&lt;/p&gt;
-
-&lt;p&gt;Esse é um grande equívoco no desenvolvimento de software.&lt;/p&gt;
-
-&lt;p&gt;Vejamos um exemplo. Como representamos um &lt;em&gt;Carro&lt;/em&gt; utilizando a &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;?&lt;/p&gt;
-
-&lt;p&gt;O primeiro passo seria determinar o nível de abstração dos comportamentos que precisamos implementar ou descartar. Em outras palavras, é necessário saber os requisitos do sistema para sabermos o que é realmente necessário.  Se a cor do carro é irrelevante para os requisitos do usuário dentro do &lt;em&gt;software&lt;/em&gt;, então não há necessidade de implementarmos. É necessário saber se a carroceria utiliza fibra de carbono ou alumínio? Se o carro é 4x4, sua velocidade máxima, quantidade de airbags, tipo de roda? Se nada disso for importante, descartamos. Então, o mais fácil a fazer é pensarmos no que é &lt;em&gt;necessário&lt;/em&gt;, pois é quase certo que qualquer Objeto implementado não irá representar uma entidade completamente, ou seja, com todo comportamento que a entidade possui no mundo real.&lt;/p&gt;
-
-&lt;p&gt;Após termos o comportamento necessário já definido, o próximo passo é pensar na estrutura da Classe.&lt;/p&gt;
-
-&lt;p&gt;É aqui, neste momento, que a grande maioria dos desenvolvedores utiliza o paradigma procedural, porém pensam que estão programando Orientado a Objetos apenas por quê estão utilizando Classes.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TCar = class
-  public
-    procedure Run;
-    procedure Brake;
-    function CheckBrakeFluid: Boolean;
-    function CheckOil: Boolean;
-    function CheckWater: Boolean;
-    procedure LockDoors;
-    procedure UnlockDoors;
-    procedure StartEngine;
-    procedure StopEngine;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A Classe acima mostra de forma simples os comportamentos necessários que foram solicitados, hipoteticamente, nos requisitos do usuário. Mas será esse é o design &lt;em&gt;correto&lt;/em&gt; para representar um carro dentro do &lt;em&gt;software&lt;/em&gt;?&lt;/p&gt;
-
-&lt;p&gt;Apesar das funcionalidades estarem bem evidentes e com &lt;a href=&quot;/posts/nomeando-variaveis-e-metodos/&quot;&gt;nomes de métodos&lt;/a&gt; bem “explicativos”, essa é uma implementação totalmente equivocada.&lt;/p&gt;
-
-&lt;p&gt;Um carro não &lt;em&gt;corre&lt;/em&gt;. É o motor que gira e, através de mecanismos e engrenagens, passa energia para as rodas fazendo o carro se mover através do atrito dos pneus com o asfalto.&lt;/p&gt;
-
-&lt;p&gt;Um carro não &lt;em&gt;freia&lt;/em&gt;. É o motorista que através de um pedal, em conjunto com cabos ou mesmo eletrônica, envia um comando às pinças de freio. Essas, em conjunto com os discos de freio, fazem o carro parar.&lt;/p&gt;
-
-&lt;p&gt;Um carro não faz &lt;em&gt;checagens&lt;/em&gt; de fluídos. Existem sensores específicos para fazer essa leitura a cada segundo ou microssegundo.&lt;/p&gt;
-
-&lt;p&gt;Fica claro aqui, que não devemos ver a entidade como um todo, mas sim pensar nas partes específicas que a compõe. No entanto, não devemos especializar demais para não complicarmos o modelo desnecessariamente.&lt;/p&gt;
-
-&lt;p&gt;Vamos reescrever a Classe acima.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TBrakes = class(TInterfacedObject, IBrakes)
-  public
-    function Brake(AForce: Double): IBrakes;
-  end;
-  
-  TSensors = class(TInterfacedObject, ISensors)
-  public
-    function CheckBrakeFluid: Boolean;
-    function CheckOil: Boolean;
-    function CheckWater: Boolean;
-  end;
-  
-  TDoors = class(TInterfacedObject, IDoors)
-  public
-    function Lock: IDoors;
-    function Unlock: IDoors;
-  end;
-  
-  TEngine = class(TInterfacedObject, IEngine)
-  public
-    procedure Start;
-    procedure Stop;
-    function Work: IEngine;
-  end;
-  
-  TCar = class(TInterfacedObject, ICar)
-  public
-    procedure Run;
-    function Brakes: IBrakes;
-    function Sensors: ISensors;
-    function Doors: IDoors;
-    function Engine: IEngine;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Há várias possibilidade de implementação, mas a opção sugerida acima separa bem o comportamento de um carro através da composição de Objetos. No entanto, não há necessidade de especializar tudo. Por exemplo, o método &lt;code&gt;Run&lt;/code&gt; continua o mesmo; existe apenas uma Classe &lt;code&gt;TSensors&lt;/code&gt; para todos os sensores — seria muito melhor se tivéssemos uma Classe por sensor.&lt;/p&gt;
-
-&lt;p&gt;O design deve ser o mais simples possível, porém correto, reutilizável (partes independentes) e testável (cada parte em separado).&lt;/p&gt;
-
-&lt;p&gt;Na minha opinião, a &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simplicidade&lt;/a&gt;, a reutilização e a testabilidade devem ser alguns dos maiores objetivos a serem seguidos no design de cada Classe.&lt;/p&gt;
-
-&lt;p&gt;Essa foi uma maneira de implementar algo complexo de forma simples.&lt;/p&gt;
-
-&lt;p&gt;Um outro padrão de desenvolvimento que podemos utilizar para implementarmos algo complexo é chamado de &lt;a href=&quot;/posts/decorator-pattern/&quot;&gt;Decoração de Objetos&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Imagine que você tenha diferentes modelos de motores. Utilizar &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;herança de Classes&lt;/a&gt; pode ser a primeira técnica que vem a sua mente, porém a Decoração de Objetos pode ser bem melhor. Utilizando essa técnica, podemos decorar Objetos em &lt;em&gt;runtime&lt;/em&gt; de acordo com os requisitos ou escolhas feita pelos usuários num determinado momento.&lt;/p&gt;
-
-&lt;p&gt;Então, seguindo nosso exemplo, imagine um motor chamado X13 e uma versão com mais performance chamada X15 que possui um turbo compressor. Ao implementarmos essas Classes, gostaríamos de reutilizar as partes em comum. Sendo o X15 uma melhoria do X13, que tal &lt;em&gt;decorar&lt;/em&gt; o X13 em &lt;em&gt;runtime&lt;/em&gt;?&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var
-  Engine: IEngine;
-begin
-  Engine := 
-    TX15Engine.New(
-      0.6, // pressure
-      TX13Engine.New()
-    );
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Nesse exemplo, a variável &lt;code&gt;Engine&lt;/code&gt; será, de certa forma, um Objeto &lt;em&gt;combinado&lt;/em&gt; de duas instâncias de Classes diferentes, porém complementares.&lt;/p&gt;
-
-&lt;p&gt;Para implementarmos Objetos complexos, devemos analisar suas partes, de acordo com o nível de abstração requerido, e implementar cada uma delas, combinando-as entre si, para então termos a implementação de um Objeto maior e mais &lt;em&gt;complexo&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;“O todo é maior que a soma das partes”.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/objetos-complexos</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/objetos-complexos</guid>
       </item>
     
   </channel>
