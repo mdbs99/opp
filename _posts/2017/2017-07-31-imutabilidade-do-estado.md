@@ -85,7 +85,7 @@ O mesmo conceito se aplica para um conteúdo vindo de um Banco de Dados, site na
 
 ### Conteúdo em Memória {#ex2}
 
-Uma lista de Objetos é considerada mutável se adicionarmos itens após ela ter sido criada?
+Uma lista de Objetos pode ser considerada imutável se adicionarmos itens após ela ter sido criada?
 
 Vejamos no código:
 
