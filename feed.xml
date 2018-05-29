@@ -19,7 +19,7 @@ Felizmente, estamos vivendo uma nova fase no ambiente Object Pascal.&lt;/p&gt;
 
 &lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
 
-&lt;p&gt;A tecnologia Web Broker foi apresentada no &lt;a href=&quot;https://en.wikipedia.org/wiki/Delphi_(IDE)#Borland_Delphi_3&quot;&gt;Delphi 3&lt;/a&gt; em 1997 e desde esse tempo não houveram muitas melhorias. Pelo menos, não na parte do &lt;em&gt;arquitetura&lt;/em&gt; das aplicações.&lt;/p&gt;
+&lt;p&gt;A tecnologia Web Broker foi apresentada no &lt;a href=&quot;https://en.wikipedia.org/wiki/Delphi_(IDE)#Borland_Delphi_3&quot;&gt;Delphi 3&lt;/a&gt; em 1997 e desde esse tempo não houve muitas melhorias. Pelo menos, não na parte do &lt;em&gt;arquitetura&lt;/em&gt; das aplicações.&lt;/p&gt;
 
 &lt;p&gt;O Web Broker é um sistema baseado em Web Modules. Cada Web Module pode ter uma lista de Actions, e cada Action corresponde a uma URL onde você define um &lt;em&gt;evento&lt;/em&gt; que será executado.&lt;/p&gt;
 
