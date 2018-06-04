@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Objetos Complexos &#8211; Object Pascal Programming</title>
+    <title>Construindo uma Aplicação Básica com fpWeb &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
     <meta name="keywords" content="">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, objetos complexos, complex objects, how implement complex objects">
-    <link rel="canonical" href="http://objectpascalprogramming.com/objetos-complexos">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, fpweb, web, web development">
+    <link rel="canonical" href="http://objectpascalprogramming.com/fpweb-hello">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Objetos Complexos">
-    <meta property="og:description" content="Um Objeto não é apenas uma instância de uma Classe. Ele pode conter instâncias (quase) infinitas de diferentes Classes combinadas.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/objetos-complexos">
+    <meta property="og:title" content="Construindo uma Aplicação Básica com fpWeb">
+    <meta property="og:description" content="As vezes, tudo que precisamos é uma aplicação &quot;Alô Mundo&quot;.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/fpweb-hello">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-chuttersnap-378918.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-rawpixel-296622-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Objetos Complexos" />
+    <meta name="twitter:title" content="Construindo uma Aplicação Básica com fpWeb" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/objetos-complexos" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/fpweb-hello" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,135 +191,157 @@
 
 
 <div class="post-header mb2">
-  <h1>Objetos Complexos</h1>
-  <span class="post-meta">Jan 15, 2018</span><br>
+  <h1>Construindo uma Aplicação Básica com fpWeb</h1>
+  <span class="post-meta">Jun 4, 2018</span><br>
   
   <span class="post-meta small">
   
-    5 minute read
+    4 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Um Objeto não é apenas uma instância de uma Classe. Ele pode conter instâncias (quase) infinitas de diferentes Classes combinadas.</p>
+  <p>As vezes, tudo que precisamos é uma aplicação “Alô Mundo”.</p>
 
 <!--more-->
 
-<p><img src="/images/2018/photo-chuttersnap-378918.jpg" alt="Unsplash image" />
-<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by chuttersnap on Unsplash</span></p>
+<p><img src="/images/2018/photo-rawpixel-296622-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by rawpixel on Unsplash</span></p>
 
-<p>No mundo real convivemos constantemente com Objetos (humanos, animais, plantas, coisas, etc) que possuem todo tipo de <a href="/posts/objetos-pensam-e-tomam-decisoes/">comportamento</a> especializado. Alguns desses Objetos — talvez a maioria — fazem coisas demais, ou seja, eles agregam muitas funcionalidades num único “corpo”. Eles são <em>complexos</em>.</p>
+<h2 id="introducao">Introdução</h2>
 
-<p>Quando tentamos abstrair e implementar um <a href="/posts/objetos-representam-entidades/">Objeto ou Entidade</a> no <em>software</em>, utilizando uma linguagem de programação em conjunto com o paradigma da Orientação a Objetos, uma dúvida comum em quase todos os desenvolvedores iniciantes — ou mesmo experientes — é tentar identificar quais métodos irão ser implementados na Classe, baseado apenas no comportamento “final” do Objeto ou Entidade do mundo real.</p>
+<p>Neste artigo você verá como preparar seu ambiente Lazarus para o desenvolvimento Web com fpWeb.</p>
 
-<p>O comportamento final ao que me refiro é como vemos um Objeto e suas funcionalidades sem considerar as partes que os compõem. Vemos um Objeto como um <em>todo</em> e não como uma soma das partes.</p>
+<p>Eu estou utilizando a versão mais atual e revisada do Lazarus 1.8.5,  <a href="https://svn.freepascal.org/svn/lazarus/branches/fixes_1_8">fixes_1_8</a>, revisão 58049.</p>
 
-<p>Esse é um grande equívoco no desenvolvimento de software.</p>
+<p>Para o compilador, também estou utilizando a versão mais atual e revisada do FPC 3.0.5, <a href="https://svn.freepascal.org/svn/fpc/branches/fixes_3_0">fixes_3_0</a>, revisão 38970.</p>
 
-<p>Vejamos um exemplo. Como representamos um <em>Carro</em> utilizando a <a href="/posts/o-que-e-orientacao-a-objetos/">Orientação a Objetos</a>?</p>
+<p>O artigo presume que você já tem o FPC e Lazarus instalados e funcionando no seu computador.</p>
 
-<p>O primeiro passo seria determinar o nível de abstração dos comportamentos que precisamos implementar ou descartar. Em outras palavras, é necessário saber os requisitos do sistema para sabermos o que é realmente necessário.  Se a cor do carro é irrelevante para os requisitos do usuário dentro do <em>software</em>, então não há necessidade de implementarmos. É necessário saber se a carroceria utiliza fibra de carbono ou alumínio? Se o carro é 4x4, sua velocidade máxima, quantidade de airbags, tipo de roda? Se nada disso for importante, descartamos. Então, o mais fácil a fazer é pensarmos no que é <em>necessário</em>, pois é quase certo que qualquer Objeto implementado não irá representar uma entidade completamente, ou seja, com todo comportamento que a entidade possui no mundo real.</p>
+<h2 id="instalando">Instalando fpWeb</h2>
 
-<p>Após termos o comportamento necessário já definido, o próximo passo é pensar na estrutura da Classe.</p>
+<p>A primeira instalação a ser realizada será a do pacote <code>lazwebextra</code>. Esse pacote adiciona opções para a criação de novos projetos do tipo Web como CGI Application, FastCGI Application e outros.</p>
 
-<p>É aqui, neste momento, que a grande maioria dos desenvolvedores utiliza o paradigma procedural, porém pensam que estão programando Orientado a Objetos apenas por quê estão utilizando Classes.</p>
+<p>Esse pacote não é obrigatório, mas facilita a criação de novos projetos. No entanto, se você não quiser instalá-lo, ainda poderá criar uma aplicação console simples e ir alterando manualmente o código conforme for lendo o artigo.</p>
 
-<pre><code>type
-  TCar = class
-  public
-    procedure Run;
-    procedure Brake;
-    function CheckBrakeFluid: Boolean;
-    function CheckOil: Boolean;
-    function CheckWater: Boolean;
-    procedure LockDoors;
-    procedure UnlockDoors;
-    procedure StartEngine;
-    procedure StopEngine;
-  end;
-</code></pre>
+<p>Para prosseguir com a instalação, abra o menu <code>Package&gt;Install/Uninstall Packages</code> e localize o pacote <code>lazwebextra</code> no box “Available for installation”.</p>
 
-<p>A Classe acima mostra de forma simples os comportamentos necessários que foram solicitados, hipoteticamente, nos requisitos do usuário. Mas será esse é o design <em>correto</em> para representar um carro dentro do <em>software</em>?</p>
+<p>Na figura abaixo, o pacote é mostrado no box esquerdo, pois já foi instalado no meu computador.</p>
 
-<p>Apesar das funcionalidades estarem bem evidentes e com <a href="/posts/nomeando-variaveis-e-metodos/">nomes de métodos</a> bem “explicativos”, essa é uma implementação totalmente equivocada.</p>
+<p><img src="/images/2018/laz-install-lazwebextra.jpg" alt="Install/Uninstall Packages" /></p>
 
-<p>Um carro não <em>corre</em>. É o motor que gira e, através de mecanismos e engrenagens, passa energia para as rodas fazendo o carro se mover através do atrito dos pneus com o asfalto.</p>
+<p>Clique em “Save e Rebuild IDE”.</p>
 
-<p>Um carro não <em>freia</em>. É o motorista que através de um pedal, em conjunto com cabos ou mesmo eletrônica, envia um comando às pinças de freio. Essas, em conjunto com os discos de freio, fazem o carro parar.</p>
+<p>Se tudo deu certo, você poderá seguir para o próximo passo, ou seja, o início da construção de um sistema Web simples.</p>
 
-<p>Um carro não faz <em>checagens</em> de fluídos. Existem sensores específicos para fazer essa leitura a cada segundo ou microssegundo.</p>
+<h2 id="desenvolvimento">Desenvolvimento</h2>
 
-<p>Fica claro aqui, que não devemos ver a entidade como um todo, mas sim pensar nas partes específicas que a compõe. No entanto, não devemos especializar demais para não complicarmos o modelo desnecessariamente.</p>
+<p>Após a instalação do pacote de integração com a IDE, você estará habilitado a construir aplicativos Web utilizando o fpWeb framework.</p>
 
-<p>Vamos reescrever a Classe acima.</p>
+<p>Abra o menu <code>File&gt;New</code> e escolha a opção “FastCGI Application”.</p>
 
-<pre><code>type
-  TBrakes = class(TInterfacedObject, IBrakes)
-  public
-    function Brake(AForce: Double): IBrakes;
-  end;
-  
-  TSensors = class(TInterfacedObject, ISensors)
-  public
-    function CheckBrakeFluid: Boolean;
-    function CheckOil: Boolean;
-    function CheckWater: Boolean;
-  end;
-  
-  TDoors = class(TInterfacedObject, IDoors)
-  public
-    function Lock: IDoors;
-    function Unlock: IDoors;
-  end;
-  
-  TEngine = class(TInterfacedObject, IEngine)
-  public
-    procedure Start;
-    procedure Stop;
-    function Work: IEngine;
-  end;
-  
-  TCar = class(TInterfacedObject, ICar)
-  public
-    procedure Run;
-    function Brakes: IBrakes;
-    function Sensors: ISensors;
-    function Doors: IDoors;
-    function Engine: IEngine;
-  end;
-</code></pre>
+<p>Apesar de escolhermos essa opção, não iremos criar uma aplicação FastCGI que precisará ser executada em algum servidor Web como Apache ou Microsoft IIS. Ao invés disso, iremos criar um executável Standalone que irá responder as requisições do browser sem a necessidade de existir um servidor.</p>
 
-<p>Há várias possibilidade de implementação, mas a opção sugerida acima separa bem o comportamento de um carro através da composição de Objetos. No entanto, não há necessidade de especializar tudo. Por exemplo, o método <code>Run</code> continua o mesmo; existe apenas uma Classe <code>TSensors</code> para todos os sensores — seria muito melhor se tivéssemos uma Classe por sensor.</p>
+<p>Após clicar nessa opção, um novo projeto será criado.</p>
 
-<p>O design deve ser o mais simples possível, porém correto, reutilizável (partes independentes) e testável (cada parte em separado).</p>
+<p>Infelizmente, nessa versão do Lazarus eles ainda mantém a versão antiga do fpWeb como padrão, ou seja, aquela baseada no modelo Web Broker. No entanto, queremos utilizar a <a href="/fpweb">nova</a> versão e para isso precisaremos fazer algumas modificações manuais.</p>
 
-<p>Na minha opinião, a <a href="/posts/simplicidade/">simplicidade</a>, a reutilização e a testabilidade devem ser alguns dos maiores objetivos a serem seguidos no design de cada Classe.</p>
+<p>Feche a <code>Unit1</code> sem salvar e remova-a do projeto (<code>lpr</code>). Salve o projeto, escolhendo um nome — eu digitei <code>hello.lpr</code>.</p>
 
-<p>Essa foi uma maneira de implementar algo complexo de forma simples.</p>
+<pre><code>program hello;
 
-<p>Um outro padrão de desenvolvimento que podemos utilizar para implementarmos algo complexo é chamado de <a href="/posts/decorator-pattern/">Decoração de Objetos</a>.</p>
+{$mode objfpc}{$H+}
 
-<p>Imagine que você tenha diferentes modelos de motores. Utilizar <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">herança de Classes</a> pode ser a primeira técnica que vem a sua mente, porém a Decoração de Objetos pode ser bem melhor. Utilizando essa técnica, podemos decorar Objetos em <em>runtime</em> de acordo com os requisitos ou escolhas feita pelos usuários num determinado momento.</p>
+uses
+ fpFCGI;
 
-<p>Então, seguindo nosso exemplo, imagine um motor chamado X13 e uma versão com mais performance chamada X15 que possui um turbo compressor. Ao implementarmos essas Classes, gostaríamos de reutilizar as partes em comum. Sendo o X15 uma melhoria do X13, que tal <em>decorar</em> o X13 em <em>runtime</em>?</p>
-
-<pre><code>var
-  Engine: IEngine;
 begin
-  Engine := 
-    TX15Engine.New(
-      0.6, // pressure
-      TX13Engine.New()
-    );
-end
+  Application.Title := 'Hello World';
+  { Uncomment the port setting here if you want to run the
+    FastCGI application stand-alone (e.g. for NGINX) }
+  // Application.Port:=2015; // For example
+  Application.Initialize;
+  Application.Run;
+end.
 </code></pre>
 
-<p>Nesse exemplo, a variável <code>Engine</code> será, de certa forma, um Objeto <em>combinado</em> de duas instâncias de Classes diferentes, porém complementares.</p>
+<p>Por enquanto esse é todo o projeto. Ele ainda não faz nada de útil. É necessário criar alguma rota que execute alguma ação.</p>
 
-<p>Para implementarmos Objetos complexos, devemos analisar suas partes, de acordo com o nível de abstração requerido, e implementar cada uma delas, combinando-as entre si, para então termos a implementação de um Objeto maior e mais <em>complexo</em>.</p>
+<p>Como iremos criar uma aplicação Standalone, precisaremos substituir a seção <code>uses</code> com outras unidades e também definir a porta de acesso que estará em execução quando acessarmos <code>localhost</code>:</p>
 
-<p><em>“O todo é maior que a soma das partes”.</em></p>
+<pre><code>program hello;
+
+{$mode objfpc}{$H+}
+
+uses
+  SysUtils, httpdefs, httproute, fphttpapp;
+
+begin
+  Application.Title := 'Hello World';
+  Application.Port := 8080;
+  Application.Initialize;
+  Application.Run;
+end.
+</code></pre>
+
+<p>As duas unidades mais importantes são <code>httproute</code>, que define os objetos relacionados às rotas e <code>fphttpapp</code>, que substitui o tipo de projeto de FastCGI para Standalone.</p>
+
+<p>Feito isso é necessário definir ao menos uma rota para executar alguma ação.</p>
+
+<p>A maneira mais fácil é implementar uma nova classe, tendo como base a <code>TRouteObject</code>, padrão do fpWeb. Essa nova classe deverá sobrescrever o método <code>HandleRequest</code> e retornar algo como resposta.</p>
+
+<p>Vamos criar uma nova classe chamada <code>THelloRoute</code>, implementando o método <code>HandleRequest</code> da forma mais simples possível. Depois, é necessário registrar essa rota em algum lugar, antes da aplicação realmente iniciar — você poderá utilizar as seções <code>initialization</code> de cada nova unidade que você criar, porém aqui, para manter simples, basta registrar a rota antes de <code>Application.Run</code>.</p>
+
+<p>Abaixo pode-se ver o programa completo:</p>
+
+<pre><code>program hello;
+
+{$mode objfpc}{$H+}
+
+uses
+  SysUtils, httpdefs, httproute, fphttpapp;
+
+type
+  THelloRoute = class(TRouteObject)
+  public
+    procedure HandleRequest(
+      ARequest: TRequest; AResponse: TResponse); override;
+  end;
+
+{ THelloRoute }
+
+procedure THelloRoute.HandleRequest(
+  ARequest: TRequest; AResponse: TResponse);
+begin
+  AResponse.Content := 'Hello!';
+  AResponse.SendResponse;
+end;
+
+begin
+  HTTPRouter.RegisterRoute('/hello', rmAll, THelloRoute);
+  Application.Title := 'Hello World';
+  Application.Port := 8080;
+  Application.Initialize;
+  Application.Run;
+end.
+</code></pre>
+
+<p>Agora execute a aplicação diretamente pela IDE.</p>
+
+<p>Depois, abra algum browser se sua preferência e digite: <a href="http://localhost:8080/hello">http://localhost:8080/hello</a></p>
+
+<p>Se tudo deu certo, você estará vendo “Hello!” como resposta.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>Esse artigo mostrou como criar uma aplicação Web simples que pode ser executada e testada sem a necessidade de um servidor Web.</p>
+
+<p>Tenha em mente que “todo esse trabalho” só será feito uma vez. Após criar um projeto de “template”, bastará copiar/colar e renomear o projeto. Todo o restante do trabalho será criando novas unidades e rotas relacionadas às suas regras de negócio.</p>
+
+<p>Até a data de publicação desse artigo não havia documentação sobre esse novo estilo de desenvolvimento utilizando o fpWeb framework. Então, talvez esse seja um dos primeiros artigos a explicar essa nova tecnologia.</p>
+
+<p>Espero que você tenha ficado motivado a pesquisar mais a respeito sobre desenvolvimento Web com Free Pascal e Lazarus.</p>
 
 <p>Até logo.</p>
 
@@ -331,33 +353,33 @@ end
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/objetos-complexos" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/fpweb-hello" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Objetos Complexos&via=mdbs99;url=http://objectpascalprogramming.com/objetos-complexos" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Construindo uma Aplicação Básica com fpWeb&via=mdbs99;url=http://objectpascalprogramming.com/fpweb-hello" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/objetos-complexos" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/fpweb-hello" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/objetos-complexos&title=Objetos Complexos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/objetos-complexos&title=Objetos Complexos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/fpweb-hello&title=Construindo uma Aplicação Básica com fpWeb" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/objetos-complexos&t=Objetos Complexos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/fpweb-hello&title=Construindo uma Aplicação Básica com fpWeb" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/fpweb-hello&t=Construindo uma Aplicação Básica com fpWeb" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -404,15 +426,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/fpweb-hello" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Construindo uma Aplicação Básica com fpWeb</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/fpweb" class="post-link">
@@ -495,6 +508,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/com-vs-corba" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Interfaces COM vs. CORBA</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -502,8 +524,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/objetos-complexos';
-      var disqus_title      = 'Objetos Complexos';
+      var disqus_identifier = '/fpweb-hello';
+      var disqus_title      = 'Construindo uma Aplicação Básica com fpWeb';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

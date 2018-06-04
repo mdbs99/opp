@@ -8,6 +8,156 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Construindo uma Aplicação Básica com fpWeb</title>
+        <description>&lt;p&gt;As vezes, tudo que precisamos é uma aplicação “Alô Mundo”.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-rawpixel-296622-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by rawpixel on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Neste artigo você verá como preparar seu ambiente Lazarus para o desenvolvimento Web com fpWeb.&lt;/p&gt;
+
+&lt;p&gt;Eu estou utilizando a versão mais atual e revisada do Lazarus 1.8.5,  &lt;a href=&quot;https://svn.freepascal.org/svn/lazarus/branches/fixes_1_8&quot;&gt;fixes_1_8&lt;/a&gt;, revisão 58049.&lt;/p&gt;
+
+&lt;p&gt;Para o compilador, também estou utilizando a versão mais atual e revisada do FPC 3.0.5, &lt;a href=&quot;https://svn.freepascal.org/svn/fpc/branches/fixes_3_0&quot;&gt;fixes_3_0&lt;/a&gt;, revisão 38970.&lt;/p&gt;
+
+&lt;p&gt;O artigo presume que você já tem o FPC e Lazarus instalados e funcionando no seu computador.&lt;/p&gt;
+
+&lt;h2 id=&quot;instalando&quot;&gt;Instalando fpWeb&lt;/h2&gt;
+
+&lt;p&gt;A primeira instalação a ser realizada será a do pacote &lt;code&gt;lazwebextra&lt;/code&gt;. Esse pacote adiciona opções para a criação de novos projetos do tipo Web como CGI Application, FastCGI Application e outros.&lt;/p&gt;
+
+&lt;p&gt;Esse pacote não é obrigatório, mas facilita a criação de novos projetos. No entanto, se você não quiser instalá-lo, ainda poderá criar uma aplicação console simples e ir alterando manualmente o código conforme for lendo o artigo.&lt;/p&gt;
+
+&lt;p&gt;Para prosseguir com a instalação, abra o menu &lt;code&gt;Package&amp;gt;Install/Uninstall Packages&lt;/code&gt; e localize o pacote &lt;code&gt;lazwebextra&lt;/code&gt; no box “Available for installation”.&lt;/p&gt;
+
+&lt;p&gt;Na figura abaixo, o pacote é mostrado no box esquerdo, pois já foi instalado no meu computador.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/laz-install-lazwebextra.jpg&quot; alt=&quot;Install/Uninstall Packages&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Clique em “Save e Rebuild IDE”.&lt;/p&gt;
+
+&lt;p&gt;Se tudo deu certo, você poderá seguir para o próximo passo, ou seja, o início da construção de um sistema Web simples.&lt;/p&gt;
+
+&lt;h2 id=&quot;desenvolvimento&quot;&gt;Desenvolvimento&lt;/h2&gt;
+
+&lt;p&gt;Após a instalação do pacote de integração com a IDE, você estará habilitado a construir aplicativos Web utilizando o fpWeb framework.&lt;/p&gt;
+
+&lt;p&gt;Abra o menu &lt;code&gt;File&amp;gt;New&lt;/code&gt; e escolha a opção “FastCGI Application”.&lt;/p&gt;
+
+&lt;p&gt;Apesar de escolhermos essa opção, não iremos criar uma aplicação FastCGI que precisará ser executada em algum servidor Web como Apache ou Microsoft IIS. Ao invés disso, iremos criar um executável Standalone que irá responder as requisições do browser sem a necessidade de existir um servidor.&lt;/p&gt;
+
+&lt;p&gt;Após clicar nessa opção, um novo projeto será criado.&lt;/p&gt;
+
+&lt;p&gt;Infelizmente, nessa versão do Lazarus eles ainda mantém a versão antiga do fpWeb como padrão, ou seja, aquela baseada no modelo Web Broker. No entanto, queremos utilizar a &lt;a href=&quot;/fpweb&quot;&gt;nova&lt;/a&gt; versão e para isso precisaremos fazer algumas modificações manuais.&lt;/p&gt;
+
+&lt;p&gt;Feche a &lt;code&gt;Unit1&lt;/code&gt; sem salvar e remova-a do projeto (&lt;code&gt;lpr&lt;/code&gt;). Salve o projeto, escolhendo um nome — eu digitei &lt;code&gt;hello.lpr&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;program hello;
+
+{$mode objfpc}{$H+}
+
+uses
+ fpFCGI;
+
+begin
+  Application.Title := &#39;Hello World&#39;;
+  { Uncomment the port setting here if you want to run the
+    FastCGI application stand-alone (e.g. for NGINX) }
+  // Application.Port:=2015; // For example
+  Application.Initialize;
+  Application.Run;
+end.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Por enquanto esse é todo o projeto. Ele ainda não faz nada de útil. É necessário criar alguma rota que execute alguma ação.&lt;/p&gt;
+
+&lt;p&gt;Como iremos criar uma aplicação Standalone, precisaremos substituir a seção &lt;code&gt;uses&lt;/code&gt; com outras unidades e também definir a porta de acesso que estará em execução quando acessarmos &lt;code&gt;localhost&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;program hello;
+
+{$mode objfpc}{$H+}
+
+uses
+  SysUtils, httpdefs, httproute, fphttpapp;
+
+begin
+  Application.Title := &#39;Hello World&#39;;
+  Application.Port := 8080;
+  Application.Initialize;
+  Application.Run;
+end.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As duas unidades mais importantes são &lt;code&gt;httproute&lt;/code&gt;, que define os objetos relacionados às rotas e &lt;code&gt;fphttpapp&lt;/code&gt;, que substitui o tipo de projeto de FastCGI para Standalone.&lt;/p&gt;
+
+&lt;p&gt;Feito isso é necessário definir ao menos uma rota para executar alguma ação.&lt;/p&gt;
+
+&lt;p&gt;A maneira mais fácil é implementar uma nova classe, tendo como base a &lt;code&gt;TRouteObject&lt;/code&gt;, padrão do fpWeb. Essa nova classe deverá sobrescrever o método &lt;code&gt;HandleRequest&lt;/code&gt; e retornar algo como resposta.&lt;/p&gt;
+
+&lt;p&gt;Vamos criar uma nova classe chamada &lt;code&gt;THelloRoute&lt;/code&gt;, implementando o método &lt;code&gt;HandleRequest&lt;/code&gt; da forma mais simples possível. Depois, é necessário registrar essa rota em algum lugar, antes da aplicação realmente iniciar — você poderá utilizar as seções &lt;code&gt;initialization&lt;/code&gt; de cada nova unidade que você criar, porém aqui, para manter simples, basta registrar a rota antes de &lt;code&gt;Application.Run&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Abaixo pode-se ver o programa completo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;program hello;
+
+{$mode objfpc}{$H+}
+
+uses
+  SysUtils, httpdefs, httproute, fphttpapp;
+
+type
+  THelloRoute = class(TRouteObject)
+  public
+    procedure HandleRequest(
+      ARequest: TRequest; AResponse: TResponse); override;
+  end;
+
+{ THelloRoute }
+
+procedure THelloRoute.HandleRequest(
+  ARequest: TRequest; AResponse: TResponse);
+begin
+  AResponse.Content := &#39;Hello!&#39;;
+  AResponse.SendResponse;
+end;
+
+begin
+  HTTPRouter.RegisterRoute(&#39;/hello&#39;, rmAll, THelloRoute);
+  Application.Title := &#39;Hello World&#39;;
+  Application.Port := 8080;
+  Application.Initialize;
+  Application.Run;
+end.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Agora execute a aplicação diretamente pela IDE.&lt;/p&gt;
+
+&lt;p&gt;Depois, abra algum browser se sua preferência e digite: &lt;a href=&quot;http://localhost:8080/hello&quot;&gt;http://localhost:8080/hello&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Se tudo deu certo, você estará vendo “Hello!” como resposta.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Esse artigo mostrou como criar uma aplicação Web simples que pode ser executada e testada sem a necessidade de um servidor Web.&lt;/p&gt;
+
+&lt;p&gt;Tenha em mente que “todo esse trabalho” só será feito uma vez. Após criar um projeto de “template”, bastará copiar/colar e renomear o projeto. Todo o restante do trabalho será criando novas unidades e rotas relacionadas às suas regras de negócio.&lt;/p&gt;
+
+&lt;p&gt;Até a data de publicação desse artigo não havia documentação sobre esse novo estilo de desenvolvimento utilizando o fpWeb framework. Então, talvez esse seja um dos primeiros artigos a explicar essa nova tecnologia.&lt;/p&gt;
+
+&lt;p&gt;Espero que você tenha ficado motivado a pesquisar mais a respeito sobre desenvolvimento Web com Free Pascal e Lazarus.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 04 Jun 2018 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/fpweb-hello</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/fpweb-hello</guid>
+      </item>
+    
+      <item>
         <title>Desenvolvimento Web com fpWeb Framework</title>
         <description>&lt;p&gt;Durante anos, o desenvolvimento Web no Delphi e Lazarus sempre seguiram o antigo padrão Web Broker.
 Felizmente, estamos vivendo uma nova fase no ambiente Object Pascal.&lt;/p&gt;
@@ -1110,71 +1260,6 @@ oficial diz que &lt;em&gt;“Namespaces fornece uma maneira de organizar identif
         <pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/namespaces-inteligentes</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/namespaces-inteligentes</guid>
-      </item>
-    
-      <item>
-        <title>Interfaces COM vs. CORBA</title>
-        <description>&lt;p&gt;Existem dois tipos de Interfaces no Free Pascal definidos como COM e CORBA. No Delphi temos apenas o tipo COM. Mas será que existem vantagens ao utilizar o tipo CORBA?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/photo-hermes-rivera-265372.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Hermes Rivera on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;No Delphi, quando definimos que um Objeto é do tipo Interface, quer dizer que (por padrão) ele será a liberado automaticamente da memória pelo compilador quando a variável sair do escopo e sua &lt;a href=&quot;/posts/interfaces-delegacao-problemas-solucoes/#contador-de-referencias&quot;&gt;contagem de referência&lt;/a&gt; chegar a zero.&lt;/p&gt;
-
-&lt;p&gt;Para utilizar essa &lt;em&gt;feature&lt;/em&gt;, basta implementar sua Classe herdando de &lt;code&gt;TInterfacedObject&lt;/code&gt;, afim de utilizar a implementação padrão para Interfaces COM.&lt;/p&gt;
-
-&lt;p&gt;Se você não quiser utilizar &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;herança&lt;/a&gt;, terá que implementar os &lt;a href=&quot;/posts/interfaces-delegacao-problemas-solucoes/#contador-de-referencias&quot;&gt;3-métodos&lt;/a&gt; obrigatórios para toda Classe que implementa Interfaces COM e isso realmente pode parecer estranho para programadores que estão vindo de outras linguagens.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;“Por quê eu deveria implementar métodos que não estão definidos na Interface?”&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Realmente, não parece fazer muito sentido.&lt;/p&gt;
-
-&lt;h2 id=&quot;corba&quot;&gt;CORBA&lt;/h2&gt;
-
-&lt;p&gt;No Free Pascal você tem uma escolha. Pode-se utilizar Interfaces COM ou CORBA. O primeiro tipo se comporta do mesmo jeito que no Delphi. Tem contagem de referência e liberação automática de memória, enquanto o tipo CORBA é exatamente o contrário. Esse tipo não tem contagem de referência e, por isso, não tem a ajuda do compilador para liberar a memória automaticamente. Cabe ao programador liberar os Objetos utilizando seus respectivos destrutores.&lt;/p&gt;
-
-&lt;p&gt;Também não é possível liberar uma instância apenas atribuindo &lt;code&gt;nil&lt;/code&gt;. É necessário que se tenha a instância de uma Classe ou que a Interface tenha algum método que possa ser utilizado como destrutor, por exemplo, &lt;code&gt;Free&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  IFoo = interface
-    procedure Execute;
-    procedure Free;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O tipo CORBA não exige do programador a implementação “obscura” de métodos de &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/#infraestrutura&quot;&gt;infraestrutura&lt;/a&gt; além do que está declarado na Interface. Apenas os métodos das Interfaces devem ser implementados nas Classes. Essa é uma vantagem em relação ao tipo COM.&lt;/p&gt;
-
-&lt;p&gt;Então, se você estiver desenvolvendo utilizando Free Pascal e não quer trabalhar com contagem de referência, utilizar CORBA pode ser uma boa opção.  Sua sintaxe e &lt;em&gt;design&lt;/em&gt; “limpos” não obrigam o programador a implementar os 3-métodos padrões de COM.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, lembre-se que todas as Interfaces dentro da mesma Unit terão o mesmo tipo, seja COM ou CORBA.&lt;/p&gt;
-
-&lt;h2 id=&quot;com&quot;&gt;COM&lt;/h2&gt;
-
-&lt;p&gt;Muitos programadores não gostam de utilizar o tipo COM devido aos problemas com referência de Objetos. Mesmo que a &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;solução&lt;/a&gt; seja simples para resolvê-los.&lt;/p&gt;
-
-&lt;p&gt;Enquanto o tipo CORBA pode ter um &lt;em&gt;design&lt;/em&gt; mais simples, o tipo COM é mais &lt;em&gt;customizável&lt;/em&gt; pois pode ser implementado sem contagem de referência. Basta implementarmos os 3-métodos obrigatórios sem incrementar a contagem.&lt;/p&gt;
-
-&lt;p&gt;Pessoalmente, sempre prefiro utilizar o tipo COM e a contagem de referência para a liberação automática dos objetos na memória. Entretanto, se eu quiser que apenas algumas Classes não tenham a contagem de referência, basta sobrescrever os métodos necessários para ter o mesmo comportamento das Classes que implementam Interfaces CORBA.&lt;/p&gt;
-
-&lt;p&gt;Considero isso uma &lt;em&gt;grande&lt;/em&gt; vantagem!&lt;/p&gt;
-
-&lt;p&gt;Por exemplo. Posso ter uma única Interface mas com implementações distintas em Classes diferentes, utilizando ou não a contagem de referência.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Minha conclusão é que o tipo COM é &lt;em&gt;melhor&lt;/em&gt; do que CORBA por quê podemos implementar os dois tipos de comportamentos (com ou sem contagem de referência), enquanto com CORBA implementamos apenas um comportamento.&lt;/p&gt;
-
-&lt;p&gt;O comportamento deve estar nas Classes, não nas Interfaces ou diretivas de compilação.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/com-vs-corba</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/com-vs-corba</guid>
       </item>
     
   </channel>
