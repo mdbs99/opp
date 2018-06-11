@@ -8,6 +8,55 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>fpWeb: Verificando Vazamentos de Memória</title>
+        <description>&lt;p&gt;A linguagem Object Pascal, assim como C ou C++, não possui &lt;em&gt;Garbage Collector&lt;/em&gt; para liberar os objetos e recursos da memória automaticamente. Pode ser difícil ter 100% de certeza que todos os objetos estão sendo liberados (manualmente) pelo código. Mas, se algum objeto não for liberado, ocorrerá um vazamento de memória.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/photo-steve-johnson-548294-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Steve Johnson on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Quando utilizamos a linguagem Object Pascal precisamos nos preocupar com &lt;a href=&quot;/posts/interfaces-delegacao-problemas-solucoes/#vazamentos-de-memoria&quot;&gt;vazamentos de memória&lt;/a&gt;, até mesmo nos sistemas mais simples.&lt;/p&gt;
+
+&lt;p&gt;Vazamentos de memória podem ser ainda mais prejudiciais em sistemas Web comparado com sistemas Desktop. Se uma aplicação Desktop tem vazamentos de memória, em algum momento o usuário poderá fechar a aplicação e todo o vazamento será recuperado pelo Sistema Operacional. Mas em aplicações Web, onde podem haver múltiplas requisições por segundo enquanto o servidor mantém em memória cópias do executável (FastCGI), tais vazamentos poderiam diminuir drasticamente com os recursos do servidor.&lt;/p&gt;
+
+&lt;p&gt;No &lt;a href=&quot;/fpweb-hello&quot;&gt;artigo anterior&lt;/a&gt; fizemos um programa simples que responde “Hello!” quando uma determinada URL  acessada.&lt;/p&gt;
+
+&lt;p&gt;Como não há vazamentos de memória nesse programa, teremos que simulá-lo, alterando o método &lt;code&gt;HandleRequest&lt;/code&gt; conforme abaixo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure THelloRoute.HandleRequest(
+  ARequest: TRequest; AResponse: TResponse);
+begin
+  TStringList.Create;
+  AResponse.Content := &#39;Hello!&#39;;
+  AResponse.SendResponse;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Mesmo após compilar o programa com o &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/heaptrc/usage.html&quot;&gt;HeapTrc&lt;/a&gt; habilitado, iniciá-lo e executá-lo utilizando o browser, não será possível ver o vazamento — diferentemente de aplicações Desktop que, ao término do programa, mostra um “relatório” sobre a memória &lt;em&gt;utilizada vs. liberada&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Para ser possível ver o relatório, você tem que finalizar a aplicação apropriadamente. O problema é que, mesmo após finalizada a requisição pelo browser, ela continua em execução aguardando mais e mais requisições.&lt;/p&gt;
+
+&lt;p&gt;Felizmente, há uma maneira de ver o relatório do HeapTrc, alterando o código conforme a seguir:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/90b319e7bcf5d37383c1083179b69546.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;No código acima, foi introduzido um procedimento &lt;code&gt;TerminateCall&lt;/code&gt;, algumas configurações do &lt;code&gt;heaptrc&lt;/code&gt; e a inclusão de uma nova rota &lt;code&gt;/quit&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Compile e execute a aplicação novamente. Depois, faça uma requisição a URL &lt;code&gt;/hello&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então, aponte seu browser para fazer uma requisição a URL &lt;code&gt;/quit&lt;/code&gt;. Nesse momento você verá que a janela da aplicação foi finalizada.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, abra o arquivo &lt;code&gt;log.txt&lt;/code&gt;, localizado no mesmo diretório do executável, para visualizar todos os vazamentos de memória.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 11 Jun 2018 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/fpweb-memleak</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/fpweb-memleak</guid>
+      </item>
+    
+      <item>
         <title>Construindo uma Aplicação Básica com fpWeb</title>
         <description>&lt;p&gt;As vezes, tudo que precisamos é uma aplicação “Alô Mundo”.&lt;/p&gt;
 
@@ -1121,145 +1170,6 @@ end;
         <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/listas-genericas-sem-generics</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/listas-genericas-sem-generics</guid>
-      </item>
-    
-      <item>
-        <title>Namespaces Inteligentes</title>
-        <description>&lt;p&gt;Na minha opinião, a implementação atual de Namespaces no Delphi poderia ser muito mais inteligente, simples e sem ambiguidades.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/photo-fervent-jan-121249.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Fervent Jan on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;A linguagem Pascal foi criada com o conceito de Namespace desde o início chamado &lt;em&gt;Units&lt;/em&gt;. As Unidades agrupam os identificadores, variáveis, tipos, classes…tudo que faz parte de um mesmo contexto.&lt;/p&gt;
-
-&lt;p&gt;No entanto, hoje em dia nós, desenvolvedores Object Pascal, ganhamos uma definição diferente para Unit e Namespace.&lt;/p&gt;
-
-&lt;p&gt;Talvez, devido a influência de outras linguagens “mais modernas”, ter apenas Unidades não parece ser mais suficiente para a modularização de sistemas.&lt;/p&gt;
-
-&lt;p&gt;Concordo que ainda há espaço para melhorias no conceito das Unidades, porém a implementação proposta pela Embarcadero é suficiente para, agora, dizermos que a linguagem foi atualizada e que Namespaces é uma evolução?&lt;/p&gt;
-
-&lt;h1 id=&quot;atual&quot;&gt;Namespaces Atual&lt;/h1&gt;
-
-&lt;p&gt;A partir do Delphi 2007~2009 a Embarcadero implementou o “novo” conceito chamado &lt;a href=&quot;http://docwiki.embarcadero.com/RADStudio/Tokyo/en/Using_Namespaces_with_Delphi&quot;&gt;Namespace&lt;/a&gt;, onde é possível termos nomes de Unidades pontilhadas, como já existem em algumas outras linguagens.&lt;/p&gt;
-
-&lt;p&gt;Além da questão estética para termos &lt;a href=&quot;/posts/nomeando-unidades/&quot;&gt;nomes de arquivos&lt;/a&gt; mais legíveis, esse conceito permite que o compilador localize as Unidades declaradas no código não apenas por seu nome, mas também levando em consideração o Namespace (prefixo) da Unidade.&lt;/p&gt;
-
-&lt;p&gt;Segundo a Embarcadero, um Namespace é um &lt;a href=&quot;/posts/datamodule-e-apenas-um-container/&quot;&gt;container&lt;/a&gt; de Unidades.&lt;/p&gt;
-
-&lt;p&gt;Nesse &lt;a href=&quot;http://docwiki.embarcadero.com/RADStudio/Tokyo/en/Using_Namespaces_with_Delphi&quot;&gt;link&lt;/a&gt;
-oficial diz que &lt;em&gt;“Namespaces fornece uma maneira de organizar identificadores e tipos, e são utilizados para desambiguar tipos com o mesmo nome”&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Mas já temos isso com as Unidades então, qual é a grande atualização?&lt;/p&gt;
-
-&lt;p&gt;O documento segue dizendo: &lt;em&gt;“Desde que eles são um container para Unidades Delphi, os Namespaces também podem ser utilizados para diferenciação de unidades com o mesmo nome, que residem em pacotes diferentes”&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Aqui parece haver uma vantagem. O texto afirma que podemos ter pacotes distintos porém cada um deles contendo Unidades com o mesmo nome e mesmo assim poderíamos utilizar tais pacotes em um mesmo projeto — algo que não seria possível sem essa &lt;em&gt;feature&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Enquanto eu escrevo esse artigo, tomando uma xícara quente de café na Starbucks, não tenho disponível uma versão atual do Delphi para fazer esse teste, mas eu acredito que funcione desde que eu utilize o Namespace do Pacote para referenciar todas as Unidades dele no meu projeto.&lt;/p&gt;
-
-&lt;p&gt;Meu entendimento é esse:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Existe um Pacote chamado &lt;code&gt;Acme.Xpto.MyPack&lt;/code&gt;;&lt;/li&gt;
-  &lt;li&gt;Dentro desse pacote existe as Unidades &lt;code&gt;Foo.pas&lt;/code&gt; e &lt;code&gt;Bar.pas&lt;/code&gt;;&lt;/li&gt;
-  &lt;li&gt;No meu projeto eu desejo utilizar as Unidades do Pacote, então eu preciso declara-las como &lt;code&gt;Acme.Xpto.Foo&lt;/code&gt; e &lt;code&gt;Acme.Xpto.Bar&lt;/code&gt; respectivamente.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Se eu tenho que escrever as Unidades de forma totalmente qualificada, qual é a grande vantagem? Não seria mais simples todas as Unidades do Pacote já serem totalmente qualificadas?&lt;/p&gt;
-
-&lt;p&gt;De fato, é possível não escrever os Namespaces, em alguns casos.&lt;/p&gt;
-
-&lt;p&gt;É possível, por exemplo, declarar a Unidade &lt;code&gt;Dialogs&lt;/code&gt; no código do seu projeto mas a referência real será &lt;code&gt;Vcl.Dialogs&lt;/code&gt; ou &lt;code&gt;FMX.Dialogs&lt;/code&gt;, bastando definir um parâmetro para o compilador. Parece ser uma &lt;em&gt;feature&lt;/em&gt; interessante mas, e se eu quisesse utilizar ambas as Unidades no mesmo projeto, como o compilador iria saber qual &lt;code&gt;Dialogs&lt;/code&gt; utilizar? Será que uma das Unidades deveria ser totalmente qualificada enquanto a outra não? Se assim for, é uma solução &lt;em&gt;inconsistente&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Talvez, o Objetivo da implementação padrão serviu apenas aos interesses da Embarcadero para o uso da VCL/FMX ao invés de ser realmente uma nova &lt;em&gt;feature&lt;/em&gt; para o desenvolvedor.&lt;/p&gt;
-
-&lt;p&gt;Namespaces, na minha opinião, deveriam ser implementados de outra forma.&lt;/p&gt;
-
-&lt;h2 id=&quot;problema&quot;&gt;O Problema&lt;/h2&gt;
-
-&lt;p&gt;Uma Unidade já agrupa, de forma inequívoca, um identificador. Sempre tivemos isso na linguagem Object Pascal mas muitos acham que esse conceito só apareceu em linguagens mais recentes.&lt;/p&gt;
-
-&lt;p&gt;Porém, hoje em dia eu posso ver uma referência a &lt;code&gt;Dialogs&lt;/code&gt; no código e não ter certeza se é da VCL ou qualquer outra Lib que utiliza Namespaces. É necessário verificar as configurações do compilador.&lt;/p&gt;
-
-&lt;p&gt;Olhar “só” o código não é mais suficiente.&lt;/p&gt;
-
-&lt;p&gt;Outro problema existe com o uso de Libs externas. Não sabemos, previamente, quais nomes de Unidades serão utilizadas pelos programadores ao redor do mundo. Esse é o motivo pelo qual sempre utilizamos prefixos (2~3 letras) nos nomes da Unidades/Classes para simular um Namespace único.&lt;/p&gt;
-
-&lt;p&gt;Incrivelmente, essa pratica tem sido suficiente para a maioria dos casos. Pelo menos, para a maioria dos projetos Open Source mais conhecidos como Zeos(Z), RX, Indy(Id), JEDI(Jc) ou Synopse mORMot(Syn). Parece haver um certo “cavalheirismo” entre programadores em não utilizar os prefixos “já em uso” na comunidade Open Source.&lt;/p&gt;
-
-&lt;p&gt;No Java, eles resolveram esse problema de forma mais simples: Utilize a URL da empresa/projeto como um Namespace para cada projeto.&lt;/p&gt;
-
-&lt;p&gt;E é só isso. Não há ambiguidades, pois não há URL iguais.&lt;/p&gt;
-
-&lt;p&gt;Então, bastaria fazermos o mesmo em Object Pascal. O mesmo que a comunidade de Java fez. Basta utilizar o maior nome possível para uma Unidade. Não haverá ambiguidade. Não haverá conflito. Não é necessário implementar nada no compilador.&lt;/p&gt;
-
-&lt;p&gt;Resolvido?&lt;/p&gt;
-
-&lt;p&gt;Em teoria sim. No entanto a implementação atual do Namespaces clama em dizer que é muito mais quem um nome único (veremos mais sobre isso abaixo).&lt;/p&gt;
-
-&lt;p&gt;Além disso, Object Pascal não é assim, tão verboso. Gostamos de nomes simples e de fácil memorização. Podemos programar utilizando um editor simples de texto. Em Java, por exemplo, é necessário haver uma IDE inteligente para ter o mínimo de eficiência na codificação, visto que a IDE incluí automaticamente as “unidades” que serão importadas, além de fazer uma tonelada de checagens.&lt;/p&gt;
-
-&lt;p&gt;Bem, se vamos alterar ou melhorar o conceito de Unidades, por quê não fazer isso de forma inteligente, ainda mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt;, eficaz e sem os problemas de ambiguidades na utilização dos Namespaces atuais?&lt;/p&gt;
-
-&lt;p&gt;Podemos sugerir algumas ideias.&lt;/p&gt;
-
-&lt;h2 id=&quot;desejavel&quot;&gt;Namespaces Desejável&lt;/h2&gt;
-
-&lt;p&gt;Então, qual seria o &lt;em&gt;nirvana&lt;/em&gt; da implementação de Namespaces no Delphi e Lazarus?&lt;/p&gt;
-
-&lt;p&gt;Eu posso lhe dizer minhas ideias (atuais) e no fim veremos se você concorda.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Namespaces deveriam ser únicos e explícitos no código&lt;/strong&gt;, sem ambiguidades.&lt;/p&gt;
-
-&lt;p&gt;É &lt;em&gt;errado&lt;/em&gt; e anti-Pascal ter uma Unidade que não está 100% explícita no código sobre o que ela representa ou se há ambiguidades sobre o que ela representa.&lt;/p&gt;
-
-&lt;p&gt;Isso quer dizer que &lt;code&gt;Dialogs&lt;/code&gt; &lt;em&gt;não&lt;/em&gt; pode representar, ora &lt;code&gt;FMX.Dialogs&lt;/code&gt;, ora &lt;code&gt;Vcl.Dialogs&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Mesmo que eles possam ser configuráveis, eles deveriam ser únicos no código para não haver ambiguidades.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Namespaces deveriam ser dinâmicos&lt;/strong&gt;, porém explícitos no código.&lt;/p&gt;
-
-&lt;p&gt;Ser dinâmico implica em configuração. Então, a ideia de definirmos Namespaces como argumentos do compilador é boa, porém sua implementação atual não foi bem executada.&lt;/p&gt;
-
-&lt;p&gt;Sim, Namespaces deveriam ser definidos &lt;em&gt;por&lt;/em&gt; Pacote, porém o &lt;em&gt;erro&lt;/em&gt; é defini-los utilizando os nomes dos Pacotes.&lt;/p&gt;
-
-&lt;p&gt;A &lt;em&gt;configuração&lt;/em&gt; deveria ser local.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Namespaces deveriam ser locais&lt;/strong&gt;, ou seja, cada projeto implementa os Namespaces de acordo com a nomenclatura que desejar.&lt;/p&gt;
-
-&lt;p&gt;Na minha opinião, ao adicionar um Pacote ao meu projeto, eu poderia (ou deveria) definir um Namespace para ele. É o mesmo que dizer que todas as Unidades do Pacotes seriam “renomeadas” com o novo prefixo — muito similar com a solução atual — porém sem ambiguidades.&lt;/p&gt;
-
-&lt;p&gt;Imagine 2 Pacotes: &lt;code&gt;FooPack&lt;/code&gt; e &lt;code&gt;BarPack&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Os desenvolvedores de ambos não deveriam se importar sobre Namespaces. Cada Pacote está bem definido em seus próprios contextos locais, sem se preocupar com o mundo afora. Não importa se os projetos que irão utilizá-los serão pequenos ou gigantescos com inúmeras dependências de vários outros Pacotes. Isso deveria ser irrelevante para os autores de Pacotes.&lt;/p&gt;
-
-&lt;p&gt;Cabe a cada Projeto definir o Namespace para cada Pacote, se assim o desejar.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo, se ambos os Pacotes tem uma Unidade chamada &lt;code&gt;Utils&lt;/code&gt;, nos iríamos referenciá-las como &lt;code&gt;Foo.Utils&lt;/code&gt; e &lt;code&gt;Bar.Utils&lt;/code&gt; dentro do código do Projeto.&lt;/p&gt;
-
-&lt;p&gt;Essa foram escolhas óbvias. Mas ou invés de &lt;code&gt;Foo.Utils&lt;/code&gt; e &lt;code&gt;Bar.Utils&lt;/code&gt; poderiam ser &lt;code&gt;FoPack.Utils&lt;/code&gt; e &lt;code&gt;BrPack.Utils&lt;/code&gt;, respectivamente. O mais importante aqui é que estas são &lt;em&gt;escolhas do Projeto&lt;/em&gt;, do usuário do Pacote, não daqueles que criaram os Pacotes.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;É necessário uma implementação mais moderna do conceito de Namespace, porém sem perder as características originais do Object Pascal.&lt;/p&gt;
-
-&lt;p&gt;Tudo na linguagem é previamente declarado, exatamente para não haver ambiguidades. Unidades devem ser únicas em todo o projeto. Não importa se elas estão na VCL/LCL, RTL, Libs, etc. Não deveriam haver ambiguidades.&lt;/p&gt;
-
-&lt;p&gt;Tudo é ou deveria ser explícito no código. Deixar o compilador decidir se um identificador corresponde a X ou a Y em tempo de execução, não me parece ser algo tão explícito.&lt;/p&gt;
-
-&lt;p&gt;Finalmente, as ideias propostas nesse artigo tem a finalidade e o desejo de melhorar a linguagem Object Pascal e não depreciar as escolhas de &lt;em&gt;design&lt;/em&gt; dos desenvolvedores da linguagem e do compilador.&lt;/p&gt;
-
-&lt;p&gt;Esses são meus pensamentos… Você concorda?&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/namespaces-inteligentes</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/namespaces-inteligentes</guid>
       </item>
     
   </channel>

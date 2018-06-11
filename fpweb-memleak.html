@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Listas Genéricas, sem Generics &#8211; Object Pascal Programming</title>
+    <title>fpWeb: Verificando Vazamentos de Memória &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
     <meta name="keywords" content="">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, generics">
-    <link rel="canonical" href="http://objectpascalprogramming.com/listas-genericas-sem-generics">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, fpweb, web, web development">
+    <link rel="canonical" href="http://objectpascalprogramming.com/fpweb-memleak">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Listas Genéricas, sem Generics">
-    <meta property="og:description" content="É possível utilizarmos listas genéricas, com checagem de tipo, mas sem o uso da sintaxe com *Generics*?">
-    <meta property="og:url" content="http://objectpascalprogramming.com/listas-genericas-sem-generics">
+    <meta property="og:title" content="fpWeb: Verificando Vazamentos de Memória">
+    <meta property="og:description" content="Veja nesse artigo como visualizar o relatório de vazamentos de memória de uma aplicação Web.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/fpweb-memleak">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-john-murzaku-269690.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/photo-steve-johnson-548294-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Listas Genéricas, sem Generics" />
+    <meta name="twitter:title" content="fpWeb: Verificando Vazamentos de Memória" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/listas-genericas-sem-generics" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/fpweb-memleak" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,169 +191,56 @@
 
 
 <div class="post-header mb2">
-  <h1>Listas Genéricas, sem Generics</h1>
-  <span class="post-meta">Feb 19, 2018</span><br>
+  <h1>fpWeb: Verificando Vazamentos de Memória</h1>
+  <span class="post-meta">Jun 11, 2018</span><br>
   
   <span class="post-meta small">
   
-    4 minute read
+    1 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>É possível utilizarmos listas genéricas, com checagem de tipo, mas sem o uso da sintaxe com <em>Generics</em>?</p>
+  <p>A linguagem Object Pascal, assim como C ou C++, não possui <em>Garbage Collector</em> para liberar os objetos e recursos da memória automaticamente. Pode ser difícil ter 100% de certeza que todos os objetos estão sendo liberados (manualmente) pelo código. Mas, se algum objeto não for liberado, ocorrerá um vazamento de memória.</p>
 
 <!--more-->
 
-<p><img src="/images/2018/photo-john-murzaku-269690.jpg" alt="Unsplash image" />
-<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by John Murzaku on Unsplash</span></p>
+<p><img src="/images/2018/photo-steve-johnson-548294-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Steve Johnson on Unsplash</span></p>
 
-<p>Muitos programadores adoram utilizar novas <em>features</em> dos compiladores. Uma dessas “novidades” — bem, já faz alguns anos — é o uso de Generics.</p>
+<p>Quando utilizamos a linguagem Object Pascal precisamos nos preocupar com <a href="/posts/interfaces-delegacao-problemas-solucoes/#vazamentos-de-memoria">vazamentos de memória</a>, até mesmo nos sistemas mais simples.</p>
 
-<p>Com Generics é possível, por exemplo, termos listas genéricas que podem ser utilizados com qualquer tipo de classe ou interface. Generics possuem uma “checagem estática” de tipo, tanto para armazenamento como para a recuperação dos itens da lista.</p>
+<p>Vazamentos de memória podem ser ainda mais prejudiciais em sistemas Web comparado com sistemas Desktop. Se uma aplicação Desktop tem vazamentos de memória, em algum momento o usuário poderá fechar a aplicação e todo o vazamento será recuperado pelo Sistema Operacional. Mas em aplicações Web, onde podem haver múltiplas requisições por segundo enquanto o servidor mantém em memória cópias do executável (FastCGI), tais vazamentos poderiam diminuir drasticamente com os recursos do servidor.</p>
 
-<p>Ao invés de termos as “velhas” listas de ponteiros, fazendo <em>casting</em> dos objetos quando acessamos seus itens, hoje, utilizando Generics, podemos utilizar classes de listas já existentes na VCL/LCL para instanciar e manter uma lista de objetos que irão trabalhar com os tipos já definidos no nosso código.</p>
+<p>No <a href="/fpweb-hello">artigo anterior</a> fizemos um programa simples que responde “Hello!” quando uma determinada URL  acessada.</p>
 
-<p>Na declaração de uma variável de uma lista genérica, informamos o <em>tipo</em> dos itens que irão compor a lista e o compilador faz o resto do trabalho.</p>
+<p>Como não há vazamentos de memória nesse programa, teremos que simulá-lo, alterando o método <code>HandleRequest</code> conforme abaixo:</p>
 
-<p>Esse artigo não irá abordar as vantagens e desvantagens no uso de Generics. Ao invés disso, irei apenas mostrar como <em>simular</em> uma lista genérica utilizando Object Pascal “clássico”.</p>
-
-<p>Por quê isso é relevante?</p>
-
-<p>Existem alguns motivos como, por exemplo, estar trabalhando com código legado numa versão do compilador sem suporte a Generics; almejar uma melhor performance, mesmo utilizando objetos; manter projetos (libs e frameworks) que podem ser utilizados desde os compiladores mais antigos até a versão mais atual.</p>
-
-<p>O problema de termos uma lista genérica, sem o uso de Generics, é o <em>casting</em> que precisaríamos fazer todas as vezes que recuperarmos os itens da lista.</p>
-
-<p>O mesmo <em>casting</em> seria <a href="/posts/codigo-duplicado-talvez-nao/">replicado</a> várias vezes, em todos os pontos que fossem necessário recuperar os objetos.</p>
-
-<p>Por exemplo:</p>
-
-<pre><code>uses
-  Contnrs;
-
-type
-  TFoo = class
-    Name: string;
-  end;
-
-procedure TForm1.Button1Click(Sender: TObject);
-var
-  F: TFoo;
-  OL: TObjectList;
+<pre><code>procedure THelloRoute.HandleRequest(
+  ARequest: TRequest; AResponse: TResponse);
 begin
-  OL := TObjectList.Create(True);
-  try
-    F := TFoo.Create;
-    F.Name := 'Bar';
-    OL.Add(F);
-    ShowMessage(
-      (OL.Items[0] as TFoo).Name // &lt;&lt;&lt; casting
-    );
-  finally
-    OL.Free;
-  end;
+  TStringList.Create;
+  AResponse.Content := 'Hello!';
+  AResponse.SendResponse;
 end;
 </code></pre>
 
-<p>O código acima utiliza a classe <code>TObjectList</code> da unit <code>Contnrs</code>. Essa classe trabalha com itens de objetos. Em seu construtor, um argumento <code>boolean</code> indica que os objetos serão automaticamente liberados quando a lista for destruída.</p>
+<p>Mesmo após compilar o programa com o <a href="https://www.freepascal.org/docs-html/rtl/heaptrc/usage.html">HeapTrc</a> habilitado, iniciá-lo e executá-lo utilizando o browser, não será possível ver o vazamento — diferentemente de aplicações Desktop que, ao término do programa, mostra um “relatório” sobre a memória <em>utilizada vs. liberada</em>.</p>
 
-<p>Funciona. Mas, o inconveniente é termos que fazer o casting na chamada de <code>Items[]</code>.</p>
+<p>Para ser possível ver o relatório, você tem que finalizar a aplicação apropriadamente. O problema é que, mesmo após finalizada a requisição pelo browser, ela continua em execução aguardando mais e mais requisições.</p>
 
-<p>No entanto, é possível não utilizar casting, mesmo sem o uso de Generics. Para tal, vamos utilizar apenas classes simples e sintaxe clássica de Object Pascal.</p>
+<p>Felizmente, há uma maneira de ver o relatório do HeapTrc, alterando o código conforme a seguir:</p>
 
-<p>Primeiro, precisamos codificar nossa própria lista de objetos, <a href="/posts/como-utilizar-heranca-apropriadamente/#classes-de-suporte">sem herdar diretamente de classes de infraestrutura</a>:</p>
+<script src="https://gist.github.com/mdbs99/90b319e7bcf5d37383c1083179b69546.js"></script>
 
-<pre><code>type
-  TMyObjects = class
-  private
-    FList: TObjectList;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    function Add(Obj: TObject): TMyObjects;
-    function Get(Index: Integer): TObject;
-    function Count: Integer;
-end;
+<p>No código acima, foi introduzido um procedimento <code>TerminateCall</code>, algumas configurações do <code>heaptrc</code> e a inclusão de uma nova rota <code>/quit</code>.</p>
 
-{ TMyObjects }
+<p>Compile e execute a aplicação novamente. Depois, faça uma requisição a URL <code>/hello</code>.</p>
 
-constructor TMyObjects.Create;
-begin
-  FList := TObjectList.Create(True);
-end;
+<p>Então, aponte seu browser para fazer uma requisição a URL <code>/quit</code>. Nesse momento você verá que a janela da aplicação foi finalizada.</p>
 
-destructor TMyObjects.Destroy;
-begin
-  FList.Free;
-  inherited;
-end;
-
-function TMyObjects.Add(Obj: TObject): TMyObjects;
-begin
-  Result := Self;
-  FList.Add(Obj);
-end;
-
-function TMyObjects.Get(Index: Integer): TObject;
-begin
-  Result := FList.Items[Index];
-end;
-
-function TMyObjects.Count: Integer;
-begin
-  Result := FList.Count;
-end;
-</code></pre>
-
-<p>A classe <code>TMyObjects</code> poderá ser utilizada para armazenar qualquer tipo de instância de <code>TObject</code>. Mas, o inconveniente ainda permanece, pois ao utilizar <code>Get(Index)</code> o casting será necessário.</p>
-
-<p>Segundo, a solução mais <a href="/posts/simplicidade/">simples</a> é utilizarmos <a href="/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/">herança de classe</a> e <em>reintroduzir</em> o método que recupera os objetos, utilizando uma nova assinatura.</p>
-
-<pre><code>type
-  TFooObjects = class(TMyObjects)
-  public
-    function Get(Index: Integer): TFoo; reintroduce;
-  end;
-
-{ TFooObjects }
-
-function TFooObjects.Get(Index: Integer): TFoo;
-begin
-  Result := inherited Get(Index) as TFoo;
-end;
-</code></pre>
-
-<p>A nova classe <code>TFooObjects</code> tem uma nova assinatura de <code>Get()</code>. Isso quer dizer que quando o desenvolvedor utilizar o <em>code-completion</em> da IDE, apenas essa “versão” do <code>Get(Index: Integer): TFoo</code> será exibida.</p>
-
-<p>Então, podemos alterar o código de teste anterior para utilizar a nova classe:</p>
-
-<pre><code>procedure TForm1.Button1Click(Sender: TObject);
-var
-  F: TFoo;
-  OL: TFooObjects;
-begin
-  OL := TFooObjects.Create;
-  try
-    F := TFoo.Create;
-    F.Name := 'Bar';
-    OL.Add(F);
-    ShowMessage(OL.Get(0).Name);
-  finally
-    OL.Free;
-  end;
-end;
-</code></pre>
-
-<p>Sem casting, limpo e mais “elegante” do que utilizar Generics.</p>
-
-<p>A mesma técnica deve ser utilizada para o método <code>Add(Obj)</code> afim de certificarmos que apenas instâncias de <code>TFoo</code> serão armazenadas.</p>
-
-<p>A classe <code>TMyObjects</code> foi codificada apenas uma vez e poderá ser reutilizada como base para várias outras classes.</p>
-
-<p>Entretanto, alguns desenvolvedores poderão sugerir que tivemos que implementar “muito” código para ter a mesma funcionalidade que a sintaxe de Generics já nos dá. Bem, isso depende do ponto de vista. Além dos motivos sugeridos nesse artigo, o <em>não</em> uso de Generics pode fazer muito sentido quando estamos trabalhando na Camada de Negócio, onde o código deve representar as Regras de Negócio do cliente. Uma classe “inchada” com dezenas de métodos de manipulação de itens na lista pode não representar fielmente, por exemplo, uma “lista de produtos” do cliente.</p>
-
-<p>Finalmente, é você quem vai decidir sobre os <em>trade-offs</em> envolvidos no design do seu código. Mas, sempre tenha em mente que nem tudo que é <em>antigo</em> será pior que o mais <em>novo</em>.</p>
+<p>Finalmente, abra o arquivo <code>log.txt</code>, localizado no mesmo diretório do executável, para visualizar todos os vazamentos de memória.</p>
 
 <p>Até logo.</p>
 
@@ -365,33 +252,33 @@ end;
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/listas-genericas-sem-generics" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/fpweb-memleak" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Listas Genéricas, sem Generics&via=mdbs99;url=http://objectpascalprogramming.com/listas-genericas-sem-generics" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=fpWeb: Verificando Vazamentos de Memória&via=mdbs99;url=http://objectpascalprogramming.com/fpweb-memleak" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/listas-genericas-sem-generics" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/fpweb-memleak" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/listas-genericas-sem-generics&title=Listas Genéricas, sem Generics" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/listas-genericas-sem-generics&title=Listas Genéricas, sem Generics" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/fpweb-memleak&title=fpWeb: Verificando Vazamentos de Memória" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/listas-genericas-sem-generics&t=Listas Genéricas, sem Generics" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/fpweb-memleak&title=fpWeb: Verificando Vazamentos de Memória" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/fpweb-memleak&t=fpWeb: Verificando Vazamentos de Memória" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -438,15 +325,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/fpweb-memleak" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>fpWeb: Verificando Vazamentos de Memória</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/fpweb-hello" class="post-link">
@@ -521,6 +399,15 @@ Gostaria de me pagar um café?
     </div>
   
     <div class="post ml2">
+      <a href="/listas-genericas-sem-generics" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Listas Genéricas, sem Generics</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/namespaces-inteligentes" class="post-link">
         <ul>
           <h4 class="post-title"><li>Namespaces Inteligentes</li></h4>
@@ -536,8 +423,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/listas-genericas-sem-generics';
-      var disqus_title      = 'Listas Genéricas, sem Generics';
+      var disqus_identifier = '/fpweb-memleak';
+      var disqus_title      = 'fpWeb: Verificando Vazamentos de Memória';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
