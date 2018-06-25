@@ -109,8 +109,6 @@ Faz muito tempo que solicitei a implementação de uma nova sintaxe à equipe Fr
 
 A razão para esse pedido é poder declarar unidades com nomes longos no código, mas dar-lhes um apelido curto para servir de prefixo a algumas classes que tem nomes iguais em unidades diferentes.
 
-Nunca fui atendido.
-
 Então pensei numa alternativa que chamei de [API Unit]({% post_url 2017-10-30-api-unit %}). As vantagens e desvantagens estão no artigo.
 
 Infelizmente essa ideia não se mostrou muito eficaz para projetos com muitas unidades, já que é necessário redeclarar todas as unidades, suas classes e interfaces em um único arquivo.
