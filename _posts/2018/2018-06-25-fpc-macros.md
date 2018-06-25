@@ -4,7 +4,7 @@ title: "Free Pascal Macros"
 date: 2018-06-25
 permalink: /fpc-macros
 description:
-  Uma linguagem simples e como um design elegante como Object Pascal não necessitaria de suporte a macros como existem em C/C++. No entanto, Free Pascal as tem. Devemos utilizá-las?
+  Uma linguagem simples e com um design elegante como Object Pascal não necessitaria de suporte a macros como existem em C/C++. No entanto, Free Pascal as tem. Devemos utilizá-las?
 image: /images/2018/remi-jacquaint-441559-unsplash.jpg
 tags:
   - fpWeb
@@ -21,7 +21,7 @@ keywords:
   - macro
 ---
 
-Uma linguagem simples e como um design elegante como Object Pascal não necessitaria de suporte a macros como existem em C/C++. No entanto, Free Pascal as tem. Devemos utilizá-las?
+Uma linguagem simples e com um design elegante como Object Pascal não necessitaria de suporte a macros como existem em C/C++. No entanto, Free Pascal as tem. Devemos utilizá-las?
 
 <!--more-->
 
