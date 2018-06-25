@@ -38,7 +38,7 @@ Na minha opinião, macros são *hacks*.
 
 Bem, talvez a maioria...
 
-Não acho que que o suporte a macros não tenha sido implementado com o objetivo de melhorar o design e legibilidade do código.
+Não acho que o suporte a macros não tenha sido implementado com o objetivo de melhorar o design e legibilidade do código.
 
 No entanto, acredito que podemos tirar proveito dessa feature.
 
