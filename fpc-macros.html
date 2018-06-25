@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Nomeando Variáveis e Métodos &#8211; Object Pascal Programming</title>
+    <title>Free Pascal Macros &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A nomenclatura correta de Variáveis e Métodos simplifica o código.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Pascal">
-    <meta name="keywords" content="naming, nomeando, variaveis, métodos, variable, method">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, macro">
+    <link rel="canonical" href="http://objectpascalprogramming.com/fpc-macros">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Nomeando Variáveis e Métodos">
-    <meta property="og:description" content="A nomenclatura correta de Variáveis e Métodos simplifica o código.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/">
+    <meta property="og:title" content="Free Pascal Macros">
+    <meta property="og:description" content="Uma linguagem simples e com um design elegante como Object Pascal não necessitaria de suporte a macros como existem em C/C++. No entanto, Free Pascal as tem. Devemos utilizá-las?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/fpc-macros">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-08208oju93773-4746gf33.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/remi-jacquaint-441559-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Nomeando Variáveis e Métodos" />
-    <meta name="twitter:description" content="A nomenclatura correta de Variáveis e Métodos simplifica o código." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/" />
+    <meta name="twitter:title" content="Free Pascal Macros" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/fpc-macros" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,112 +191,159 @@
 
 
 <div class="post-header mb2">
-  <h1>Nomeando Variáveis e Métodos</h1>
-  <span class="post-meta">Jul 25, 2016</span><br>
+  <h1>Free Pascal Macros</h1>
+  <span class="post-meta">Jun 25, 2018</span><br>
   
   <span class="post-meta small">
   
-    4 minute read
+    5 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>A nomenclatura correta de Variáveis e Métodos simplifica e melhora o entendimento do código.</p>
-
-<p>Basicamente há uma única Regra para nomear ambos: <strong>Não utilize prefixos</strong>.</p>
+  <p>Uma linguagem simples e com um design elegante como Object Pascal não necessitaria de suporte a macros como existem em C/C++. No entanto, Free Pascal as tem. Devemos utilizá-las?</p>
 
 <!--more-->
 
-<p><img src="/images/photo-08208oju93773-4746gf33.jpg" alt="Imagem" /></p>
+<p><img src="/images/2018/remi-jacquaint-441559-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Rémi Jacquaint on Unsplash</span></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>A regra de <a href="/posts/nomeando-classes/">nomenclatura para Classes</a> é sobre utilizar um prefixo (contexto) além do seu nome.</p>
+<p>O uso de <a href="https://en.wikipedia.org/wiki/Macro_(computer_science)">macros</a> já existe no Free Pascal faz tempo, porém nunca havia pensando utilizar tal feature.</p>
 
-<p>A primeira regra de <a href="/posts/nomeando-unidades/">nomenclatura para Unidades</a> é sobre utilizar prefixos.</p>
+<p>Se você é leitor assíduo do blog já deve ter percebido que eu prefiro ter um bom design e consistência no código do que utilizar “hacks” para escrever menos, porém com a perda da legibilidade e da manutenibilidade.</p>
 
-<p>Ambas as regras falam sobre prefixos. O maior objetivo para os utilizarmos é evitar colisões de nomes. Unidades e Classes podem ser utilizadas globalmente em todo o projeto e por isso precisam ter nomes que minimizam ao máximo ambiguidades.</p>
+<p>Na minha opinião, macros são <em>hacks</em>.</p>
 
-<p>No entanto, ao nomear Variáveis ou Métodos na programação <a href="/posts/o-que-e-orientacao-a-objetos/">Orientada a Objetos</a>, você deve esquecer os prefixos.</p>
+<p>Bem, talvez a maioria…</p>
 
-<p>Prefixos de qualquer tipo, esqueça-os.</p>
+<p>Não acho que que o suporte a macros não tenha sido implementado com o objetivo de melhorar o design e legibilidade do código.</p>
 
-<h2 id="variaveis">Nomeando Variáveis</h2>
+<p>No entanto, acredito que podemos tirar proveito dessa feature.</p>
 
-<p>Acho que não preciso lembrá-lo que utilizar <a href="/posts/singleton-e-um-anti-padrao/#variaveis-globais">variáveis globais</a> é um anti-padrão.</p>
+<h2 id="macros">Macros</h2>
 
-<p>Então toda variável é, ou deveria ser, local.</p>
+<p>No código Pascal podemos definir macros que serão pré-processadas pelo compilador. Esse processamento irá gerar um resultado, que será como uma constante. Mas, essa constante pode representar uma expressão, um algorítimo, uma unidade, etc.</p>
 
-<p>Se variáveis são locais, não deveria haver colisões de nomes. Se não há colisões de nomes, por que utilizar prefixos?</p>
+<p>Vejamos um exemplo:</p>
 
-<p>Mas o problema — você deve estar pensando — é que há colisões de nomes de variáveis até mesmo dentro de um único método. Pode não ser exatamente uma colisão de nome onde o compilador não conseguir ir adiante. Talvez haja só uma confusão de nomes, daquelas que você olha o código e pensa:</p>
+<pre><code>{$macro on}
+{$define VALUE := A+B}
 
-<p>“Essa é uma variável-atributo, uma variável local ou argumento do método?</p>
+function Sum(A, B: Integer): Integer;
+begin
+  Result := VALUE;
+end;
 
-<p>Acontece, certo?</p>
+function Concat(const A, B: string): string;
+begin
+  Result := VALUE;
+end;
+{ TForm1 }
 
-<p>Bem, continue lendo.</p>
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  ShowMessage(Sum(1,2).ToString); // 3
+  ShowMessage(Concat('A','B'));   // 'AB'
+end;
+</code></pre>
 
-<h2 id="metodos">Nomeando Métodos</h2>
+<p>A primeira coisa a se fazer é ativar o uso de macros utilizando a diretiva <code>{$macro on}</code>, pois macros não são ativadas por padrão. Outra maneira de ativá-as para todas as unidades é passando o argumento <code>-Sm</code> para o compilador.</p>
 
-<p>Métodos de uma Classe definem a implementação de um <a href="/posts/interfaces-em-todo-lugar/#interfaces-sao-contratos">contrato</a> de uma Interface.</p>
+<p>O exemplo acima não faz muito sentido, pois para se fazer uma soma não é necessário o uso de macros. No entanto, serviu para lhe mostrar o que é possível fazer com elas.</p>
 
-<p>Toda Classe deveria implementar apenas uma <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/#unica-responsabilidade">única responsabilidade</a>. Se a Classe tem apenas uma única responsabilidade, dificilmente você irá utilizar prefixos nos métodos.</p>
+<p>Repare que <code>A</code> e <code>B</code> são definidos na macro como 2 identificadores que ainda não existem. Esses identificadores virão do contexto onde as macros serão chamadas, ou seja, as funções <code>Sum</code> e <code>Concat</code>.</p>
 
-<p>Veja nesse <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-tradicional">exemplo de código</a> os métodos <code>SaveXxx</code>.</p>
+<p>Para a macro, não importa o tipo de <code>A</code> e <code>B</code>. Então, elas funcionam como <em>Generics</em>, o que já é bem legal.</p>
 
-<p>A palavra <code>Save</code> é um prefixo — nem sempre um nome composto será um prefixo, mas nesse caso ele é.</p>
+<p>Mas <em>Generics</em> são muito mais poderosos do que isso, então não pense em macros como substitutos aos Generics.</p>
 
-<p>Compare agora com a <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo">versão</a> Orientada a Objetos e verá que as Classes ficaram muito mais simples, utilizando nomes de métodos simples. Cada Classe só implementa apenas uma única responsabilidade. Por isso seus Métodos são simples e diretos.</p>
+<p>Vamos a outro exemplo onde Generics não ajudam em nada:</p>
 
-<p>Consegue ver a diferença?</p>
+<pre><code>{$macro on}
+{$ifdef debug}
+  {$define foo := foo.debug}
+{$else}
+  {$define foo := foo.run}
+{$endif}
 
-<h2 id="o-que-esta-errado">O que há de errado com Prefixos?</h2>
+uses
+  foo;
+begin
+  foo.SomeFunc;
+end.
+</code></pre>
 
-<p>Os prefixos podem ser o mais diversos.</p>
+<p>Nesse exemplo acima, há um teste se a diretiva <code>debug</code> foi definida. Se for verdadeiro, definimos uma macro <code>foo</code> com o nome da unidade <code>foo.debug</code>, senão definimos <code>foo</code> como <code>foo.run</code>.</p>
 
-<p>Quando comecei a programar eu utilizava a <a href="https://en.wikipedia.org/wiki/Hungarian_notation">notação húngara</a>. Também já utilizei outros prefixos, dependendo da empresa/projeto.</p>
+<p>Repare que na cláusula <code>uses</code> há somente <code>foo</code>. Imagine agora por as diretivas em outro lugar, talvez arquivos <code>.inc</code>, e teremos uma unidade com o código limpo que irá utilizar as classes corretas dependendo da diretiva escolhida.</p>
 
-<p>Meu último “padrão pessoal de prefixo” foi utilizar um “l” (L minúsculo) para qualquer variável local…</p>
+<p>Bem legal, não é?</p>
 
-<p>Nada disso era ou é necessário.</p>
+<p>Entretanto, isso também não foi o que mais me chamou atenção no uso das macros. Pois, para fazer o mesmo que no exemplo acima, não é preciso macros. Basta você ter unidades como o mesmo nome, porém em diretórios diferentes, e passar o path correspondente ao compilador dependendo se há ou não a diretiva <code>debug</code>. O Lazarus IDE lhe dá essa opção.</p>
 
-<p>Utilizamos prefixos em Métodos e Variáveis com o mesmo objetivo de quando nomeamos Classes e Unidades: evitar a colisão de nomes.</p>
+<p>Se há outras alternativas na própria linguagem para o uso de macros, por quê então utilizá-las?</p>
 
-<p>É isso, não é?</p>
+<h2 id="alias">Unit Alias</h2>
 
-<p>Bem, se você está fazendo isso — como eu mesmo fiz durante muito tempo — eu tenho que lhe dizer:</p>
+<p>Faz muito tempo que solicitei a implementação de uma nova sintaxe à equipe Free Pascal para ser possível <a href="/redeclarando-classes">redeclarar</a> uma unidade diretamente no código. A linguagem C# tem isso, assim como Python.</p>
 
-<p>Seu código <strong>não</strong> tem um bom <em>design</em>. Ele está acoplado e não está modularizado o sufiente.</p>
+<p>A razão para esse pedido é poder declarar unidades com nomes longos no código, mas dar-lhes um apelido curto para servir de prefixo a algumas classes que tem nomes iguais em unidades diferentes.</p>
 
-<p>Se você está utilizando prefixos em Variáveis dentro de um método, quer dizer que seu Método está fazendo coisas demais. Você precisa identificar “quem é quem” dentro de um código possivelmente grande. Isso é errado. Refatore.</p>
+<p>Então pensei numa alternativa que chamei de <a href="/api-unit">API Unit</a>. As vantagens e desvantagens estão no artigo.</p>
 
-<p>Alias, aqui vai uma <strong>dica</strong>: Refatore o Método que tiver utilizando mais de 5 variáveis.</p>
+<p>Infelizmente essa ideia não se mostrou muito eficaz para projetos com muitas unidades, já que é necessário redeclarar todas as unidades, suas classes e interfaces em um único arquivo.</p>
 
-<p>Se você está utilizando prefixos em Métodos, sua Classe está fazendo coisas demais. Esses Métodos com prefixos estão “gritando” à você que eles pertencem a outra Classe e que não deveriam estar ali! Isso é muito mais errado. Refatore imediatamente.</p>
+<p>Mas com macros, tudo muda.</p>
 
-<p>Variáveis e Métodos devem ter o nome mais simples possível. Isso deveria ser um requisito de <em>design</em>, uma restrição. Toda restrição impõe limites, que leva a regras, que leva a uma melhor organização de todo o código.</p>
+<p>Hipoteticamente, vamos supor que as unidades <code>Windows</code> e <code>Graphics</code> pertencem ao namespace <code>FPC.RTL.</code>, ou seja, um “nome longo”.</p>
 
-<h2 id="argumentos-dos-metodos">Argumentos dos Métodos</h2>
+<p>Então, minha proposta (antiga) seria utilizar essa sintaxe:</p>
 
-<p>E para Argumentos dos Métodos, é necessário algum prefixo?</p>
+<pre><code>uses
+  FPC.RTL.Windows as Win,
+  FPC.RTL.Graphics as Graph;
+var
+  B1: Win.TBitmap;
+  B2: Graph.TBitmap;
+</code></pre>
 
-<p>Você continua não precisando de prefixos, mas Argumentos podem ter nomes mais verbosos a fim de facilitar o uso do Método, sem que o programador tenha que ler alguma documentação.</p>
+<p>Eu não estou me referindo aqui o uso de namespaces do Delphi — que já foi implementado no Free Pascal — onde poderíamos definir um <code>NS="FPC.RTL"</code> e declarar apenas <code>Windows</code> e <code>Graphics</code> respectivamente.</p>
 
-<p>A linguagem <em>Object Pascal</em> tem mais uma particularidade: Não é <em>case-sensitive</em>.</p>
+<p>Não é isso.</p>
 
-<p>Por isso utilizamos prefixos como “T” para Classes, “I” para Interfaces, “P” para tipos ponteiro, etc. Nessa mesma linha de pensamento, alguns programadores utilizam o prefixo “A” para Argumentos.</p>
+<p>Utilizando essa sintaxe, teríamos o <em>controle local</em> sobre a nomenclatura das unidades.</p>
 
-<p>Não vejo problema nessa prática. No entanto se você codificar Classes e Métodos pequenos, talvez não será necessário utilizar nenhum prefixo nos argumentos, pois haverá pouco código para existência de conflitos de nomes.</p>
+<p>Quando solicitei isso na época, eu pensava que iria exigir mudanças no parser da linguagem, que daria muito trabalho, etc.</p>
+
+<p>Não era prioridade.</p>
+
+<p>Porém, veja que com o uso de macros, bastaria o compilador substituir os <code>uses</code> acima, que utiliza a palavra reservada <code>as</code>, pelo código abaixo:</p>
+
+<pre><code>uses
+  {$macro on}
+  FPC.RTL.Windows,
+  {$define Win := FPC.RTL.Windows}
+  FPC.RTL.Graphics;
+  {$define Graph := FPC.RTL.Graphics}
+var
+  B1: Win.TBitmap;
+  B2: Graph.TBitmap;
+</code></pre>
+
+<p>E então eu poderia “renomear” as unidades com nomes longos como <code>Acme.SysFoo.Finances.Billing.Utils.Classes</code> para apenas <code>Billing</code>. Porém, em outra unidade, eu poderia renomear para <code>Utils</code> se assim o desejasse.</p>
+
+<p>Teríamos a possibilidade de definir um apelido local (por unidade) a cada unidade. Perfeito.</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Escolher bons nomes para Métodos e Variáveis é bem mais simples que escolher nomes para Unidades, Classes e Interfaces, mas ainda assim é uma arte.</p>
+<p>A resposta a pergunta inicial é, sim. O uso de macros, quando bem utilizado, pode melhorar muito a legibilidade e design do código.</p>
 
-<p>Novamente lhe digo que não existe o <strong>certo absoluto</strong>. Talvez o padrão de nomenclatura que você já utiliza seja melhor pra você. Tudo bem. Mas o que tenho observado ao longo de alguns anos é que a minha “obrigação” de utilizar nomes mais simples deixa o código melhor. Não apenas por causa dos nomes em si, mas devido as Classes implementarem apena uma única responsabilidade, sendo os nomes uma espécie de métrica para verificar essa prática.</p>
+<p>Não temos (ainda?) a sintaxe com o uso de <code>as</code>, que seria apenas uma <em>syntax sugar</em> para o uso de macros, porém já podemos renomear unidades localmente. O que é um grande avanço, na minha opinião.</p>
 
-<p>Após anos de desenvolvimento, utilizando dezenas de padrões de nomenclatura em diversas empresas e projetos distintos, cheguei a conclusão que o “não-padrão” — sem prefixos e sem burocracia — é o melhor. É como estar organizado, sem organizar. Faz sentido?</p>
+<p>O único contra que eu vejo é que, infelizmente, essa feature não existe no Delphi… por enquanto?</p>
 
 <p>Até logo.</p>
 
@@ -306,33 +355,33 @@
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/fpc-macros" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Nomeando Variáveis e Métodos&via=mdbs99;url=http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Free Pascal Macros&via=mdbs99;url=http://objectpascalprogramming.com/fpc-macros" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/fpc-macros" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/&title=Nomeando Variáveis e Métodos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/&title=Nomeando Variáveis e Métodos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/fpc-macros&title=Free Pascal Macros" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/nomeando-variaveis-e-metodos/&t=Nomeando Variáveis e Métodos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/fpc-macros&title=Free Pascal Macros" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/fpc-macros&t=Free Pascal Macros" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -379,15 +428,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/fpc-macros" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Free Pascal Macros</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/fpweb-memleak" class="post-link">
@@ -470,6 +510,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/listas-genericas-sem-generics" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Listas Genéricas, sem Generics</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -477,8 +526,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/nomeando-variaveis-e-metodos';
-      var disqus_title      = 'Nomeando Variáveis e Métodos';
+      var disqus_identifier = '/fpc-macros';
+      var disqus_title      = 'Free Pascal Macros';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
