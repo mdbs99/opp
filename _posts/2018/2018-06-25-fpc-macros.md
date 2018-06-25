@@ -150,6 +150,8 @@ Porém, veja que com o uso de macros, bastaria o compilador substituir os `uses`
 
 E então eu poderia "renomear" as unidades com nomes longos como `Acme.SysFoo.Finances.Billing.Utils.Classes` para apenas `Billing`. Porém, em outra unidade, eu poderia renomear para `Utils` se assim o desejasse.
 
+Teríamos a possibilidade de definir um apelido local (por unidade) a cada unidade. Perfeito.
+
 ## Conclusão {#conclusao}
 
 A resposta a pergunta inicial é, sim. O uso de macros, quando bem utilizado, pode melhorar muito a legibilidade e design do código.
