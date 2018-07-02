@@ -8,6 +8,78 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Quem é o Responsável por Liberar os Objetos?</title>
+        <description>&lt;p&gt;Você consideraria um bom design para seu projeto, ter métodos ou funções que criam objetos que serão liberados em outro local, por outro objeto ou função?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/w-a-t-a-r-i-535375-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by W A T A R I on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Em linguagens onde a liberação de memória e recursos é algo manual que depende do desenvolvedor, ter funções ou métodos (vamos nos referir apenas a métodos de agora em diante) que criam novos objetos para que “alguém”, em algum lugar, faça a limpeza da memória é uma má ideia.&lt;/p&gt;
+
+&lt;p&gt;Ao longo dos anos tenho visto código como esse:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function TFoo.Build(const Name: string; Value: Integer): TBar;
+begin
+  Result := TBar.Create;
+  Result.Name := Name;
+  Result.Value := Value;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Uma classe &lt;code&gt;TFoo&lt;/code&gt; que, através do método &lt;code&gt;Build&lt;/code&gt;, retorna uma nova instância de &lt;code&gt;TBar&lt;/code&gt; sem manter uma referência para o objeto criado.&lt;/p&gt;
+
+&lt;p&gt;Acredito que esses tipos de métodos são criados com a intenção de “facilitar” a codificação. Ao invés de criar um objeto &lt;code&gt;TBar&lt;/code&gt; e ter que iniciar suas propriedades em muitos lugares no código, cria-se um método que &lt;a href=&quot;/encapsulamento&quot;&gt;encapsula&lt;/a&gt; a criação do objeto sem ter que &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/&quot;&gt;duplicar o código&lt;/a&gt; em outros lugares.&lt;/p&gt;
+
+&lt;p&gt;Parece bom?&lt;/p&gt;
+
+&lt;p&gt;Eu considero essa abordagem &lt;em&gt;péssima&lt;/em&gt;, pois é o início para ocorrer eventuais vazamentos de memória.&lt;/p&gt;
+
+&lt;p&gt;A linguagem Object Pascal não obriga o desenvolvedor a armazenar o retorno de um método em alguma variável — assim como Java e C#. Então, se não tivermos uma referência através de um variável, o objeto não seria liberado, gerando um vazamento de memória.&lt;/p&gt;
+
+&lt;p&gt;Mas você poderia dizer que não há sentido em criar um objeto e não fazer nada com ele, então o desenvolvedor iria ter uma variável… bem, nem sempre. Mas no caso acima, eu concordo.&lt;/p&gt;
+
+&lt;p&gt;Então, digamos que o desenvolvedor armazena o objeto em uma variável.&lt;/p&gt;
+
+&lt;p&gt;Infelizmente, isso também não garante que ele irá liberar a memória após seu uso.&lt;/p&gt;
+
+&lt;p&gt;OK. Esse não é um problema. Sei que isso é intrínseco ao design da linguagem: O desenvolvedor deve liberar os objetos chamando os destrutores.&lt;/p&gt;
+
+&lt;p&gt;No entanto, há uma grande diferença.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo: Quando temos objetos que possuem objetos, naturalmente não nos preocupamos quem irá liberar a memória alocada. Sabemos que alguém irá liberá-los. O motivo é simples: &lt;em&gt;não fomos nós que os criamos&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Então, temos uma regra aqui:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Aquele que cria é também o responsável por destruir a instância e/ou liberar o recurso.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Mas, quando utilizamos métodos que retornam objetos, como saber se devemos ou não liberar os recursos manualmente?&lt;/p&gt;
+
+&lt;p&gt;Será que o próprio objeto irá fazer o trabalho?&lt;/p&gt;
+
+&lt;p&gt;Como o desenvolvedor iria saber?&lt;/p&gt;
+
+&lt;p&gt;Só lendo a documentação ou código da classe, o que é um péssimo design de projeto.&lt;/p&gt;
+
+&lt;p&gt;Ao voltarmos para o nosso primeiro exemplo, a instância da classe &lt;code&gt;TFoo&lt;/code&gt; seria, então, responsável por liberar quaisquer objetos que porventura tenha criado para estar de acordo com a regra acima. O que não é o caso.&lt;/p&gt;
+
+&lt;p&gt;O que fazer?&lt;/p&gt;
+
+&lt;p&gt;Existe alguma técnica que nos permite criar e retornar novos objetos sem ter de nos preocupar (muito) quem irá liberar a memória?&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Sim&lt;/em&gt;, contanto que você utilize &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;interfaces&lt;/a&gt; ao invés de instâncias de classes. Para esses casos eu proponho a técnica do &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;método estático New&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 02 Jul 2018 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/quem-libera-os-objetos</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/quem-libera-os-objetos</guid>
+      </item>
+    
+      <item>
         <title>Free Pascal Macros</title>
         <description>&lt;p&gt;Uma linguagem simples e com um design elegante como Object Pascal não necessitaria de suporte a macros como existem em C/C++. No entanto, Free Pascal as tem. Devemos utilizá-las?&lt;/p&gt;
 
@@ -26,7 +98,7 @@
 
 &lt;p&gt;Bem, talvez a maioria…&lt;/p&gt;
 
-&lt;p&gt;Não acho que que o suporte a macros não tenha sido implementado com o objetivo de melhorar o design e legibilidade do código.&lt;/p&gt;
+&lt;p&gt;Não acho que o suporte a macros não tenha sido implementado com o objetivo de melhorar o design e legibilidade do código.&lt;/p&gt;
 
 &lt;p&gt;No entanto, acredito que podemos tirar proveito dessa feature.&lt;/p&gt;
 
@@ -1069,97 +1141,6 @@ $C +/- (short form)
         <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/assertions</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/assertions</guid>
-      </item>
-    
-      <item>
-        <title>Construtores Virtuais</title>
-        <description>&lt;p&gt;A linguagem Object Pascal possui uma feature que não existe em nenhuma outra linguagem &lt;i&gt;mainstream&lt;/i&gt; do mercado.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/photo-eddie-kopp-264813-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Eddie Kopp on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Construtores Virtuais permitem a criação customizada de novas instâncias sem a necessidade do uso de classes de fábricas.&lt;/p&gt;
-
-&lt;p&gt;É possível que desenvolvedores Object Pascal ao redor do mundo utilizem essa feature diariamente mesmo sem saber que só é possível utilizá-la na linguagem Object Pascal.&lt;/p&gt;
-
-&lt;p&gt;Toda classe possui um ou mais &lt;a href=&quot;/posts/construtores-da-classe-primario-secundarios/&quot;&gt;construtores&lt;/a&gt; no qual são responsáveis por instanciar um novo objeto.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, ter um construtor virtual &lt;a href=&quot;https://stackoverflow.com/questions/3651354/in-net-can-a-class-have-virtual-constructor&quot;&gt;não é comum&lt;/a&gt; em outras linguagens.&lt;/p&gt;
-
-&lt;p&gt;Diferentemente das demais linguagens, os construtores na linguagem Object Pascal são como métodos “marcados” para serem construtores. Um fato sobre isso é que, em Object Pascal, podemos dar o nome que quisermos aos construtores — mesmo que o padrão de nomenclatura recomendado e utilizado seja &lt;code&gt;Create&lt;/code&gt; — e como os métodos podem ser &lt;i&gt;virtuais&lt;/i&gt;, assim também são os construtores.&lt;/p&gt;
-
-&lt;p&gt;Mas, qual é a grande vantagem de utilizá-los?&lt;/p&gt;
-
-&lt;h2 id=&quot;construtores&quot;&gt;Construtores Virtuais&lt;/h2&gt;
-
-&lt;p&gt;Na documentação sobre &lt;em&gt;Factory and Repository patterns&lt;/em&gt; do framework &lt;a href=&quot;https://synopse.info/files/html/Synopse%20mORMot%20Framework%20SAD%201.18.html#TITLE_600&quot;&gt;Synopse mORMot&lt;/a&gt; você encontrará o seguinte texto:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;In fact, Delphi is ahead of Java or C#, since it allows virtual constructors to be defined. Those virtual constructors are in fact a clean and efficient way of implementing a Factory, and also fulfill SOLID principles, especially the Liskov Substitution Principle: the parent class define an abstract constructor on which you rely, but the implementation will take place in the overridden constructor.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;No texto acima, eu sugiro apenas alterarmos a palavra “Delphi” por “Object Pascal”, visto que essa é uma feature da linguagem Object Pascal e não apenas da implementação do Delphi.&lt;/p&gt;
-
-&lt;p&gt;Na maioria das linguagens, o padrão Factory é implementado através de métodos (estáticos, abstratos ou virtuais) das classes e não através dos construtores. Esse é um dos motivos para o autor afirmar que o Delphi (Object Pascal) está a frente de C# e Java nesse quesito. Eu concordo.&lt;/p&gt;
-
-&lt;p&gt;Em Object Pascal podemos criar uma fábrica de objetos onde o tipo da classe original é a própria fábrica.&lt;/p&gt;
-
-&lt;p&gt;Pense no modelo clássico implementado em várias linguagens. Por exemplo, teríamos uma entidade principal &lt;code&gt;TFoo&lt;/code&gt; e uma fábrica &lt;code&gt;TFooFactory&lt;/code&gt;,  que retorna classes-filhas da entidade principal. É importante lembrar que &lt;code&gt;TFoo&lt;/code&gt; deveria &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;implementar alguma Interface&lt;/a&gt; relacionada ao domínio, porém isso é irrelevante para o entendimento do problema.&lt;/p&gt;
-
-&lt;p&gt;O código principal iria utilizar a fábrica para ter instâncias de &lt;code&gt;TFoo&lt;/code&gt;. A fábrica, no entanto, poderia retornar instâncias de novas classes-filhas, herdadas de &lt;code&gt;TFoo&lt;/code&gt; e isso seria transparente para o código principal. Essa é uma das features que queremos ao utilizarmos uma fábrica.&lt;/p&gt;
-
-&lt;p&gt;Mas, primeiro teríamos que criar a fábrica para que ela retornasse as instâncias que realmente necessitamos.&lt;/p&gt;
-
-&lt;p&gt;Em Object Pascal não precisamos de uma classe específica para ser a fábrica de objetos. Nós podemos ter variáveis/argumentos do tipo classe e, dessa maneira, podemos passar diretamente a classe que deve ser utilizada para criar a instância; sem intermediários.&lt;/p&gt;
-
-&lt;p&gt;Imagine que temos uma simples library (lib) que soma 2 números. Essa lib tem uma classe &lt;i&gt;default&lt;/i&gt; para fazer a soma, mas ela permite que a classe seja customizada, lembrando muito o &lt;a href=&quot;https://en.wikipedia.org/wiki/Strategy_pattern&quot;&gt;padrão Strategy&lt;/a&gt;.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/0294f260c0d44b7c8b7f9a78df7662c1.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;No exemplo acima temos a classe &lt;code&gt;TLibCalc&lt;/code&gt; que representa a lib. No construtor podemos customizar a classe que representa o algoritmo da soma, caso contrário a lib irá utilizar a classe &lt;code&gt;TSum&lt;/code&gt; padrão.&lt;/p&gt;
-
-&lt;p&gt;A classe &lt;code&gt;TSum&lt;/code&gt; é simples. Ela soma dois inteiros. Mas repare que seu construtor é &lt;code&gt;virtual&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;O próximo passo é criar um programa de teste.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/8589ff42e90b1311aa3f4b5bab2b7d16.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;A saída do programa será: &lt;code&gt;Result is 8&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se tudo estiver funcionando por aí, vamos aos próximos passos:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;criar nossa própria classe para somar 2 números&lt;/li&gt;
-  &lt;li&gt;alterar o programa, customizando a lib&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/e364be559715b056463868d849e681ef.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;No código acima foi implementado uma nova classe &lt;code&gt;TMySum&lt;/code&gt; e inicializamos a lib &lt;code&gt;TLibCalc.Create(TMySum);&lt;/code&gt; com essa classe.&lt;/p&gt;
-
-&lt;p&gt;Execute o programa e veja o resultado.&lt;/p&gt;
-
-&lt;p&gt;Não foi necessária nenhuma fábrica. Nenhum “registro de classes” também foi necessário. Implementamos um padrão utilizando apenas classes simples da linguagem.&lt;/p&gt;
-
-&lt;p&gt;Finalmente, a linguagem Object Pascal é tão simples que bastou utilizarmos uma &lt;i&gt;instância de classe&lt;/i&gt; contendo &lt;i&gt;construtores virtuais&lt;/i&gt; para instanciar a classe correta.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Em Object Pascal não é necessário termos fábricas; a classe customizada é a própria fábrica.&lt;/p&gt;
-
-&lt;p&gt;Até onde eu sei, não existe essa feature em nenhuma linguagem &lt;i&gt;mainstream&lt;/i&gt;, apenas em Object Pascal.&lt;/p&gt;
-
-&lt;p&gt;Com essa feature não é necessário criar classes de fábrica apenas para inicializar nossos verdadeiros objetos. Teremos menos classes, menos objetos, menos métodos, menos uso de memória, mais eficiência e &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simplicidade&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 26 Feb 2018 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/construtores-virtuais</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/construtores-virtuais</guid>
       </item>
     
   </channel>
