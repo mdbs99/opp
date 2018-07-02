@@ -155,8 +155,6 @@ Esse contexto é o mesmo que dizer: "Essa é a implementação de Abbrevia para 
 
 Além disso, é muito menos provável que você utilize nomes assim para representar contextos (área, setor ou algo bem importante) dentro de um sistema da empresa.
 
-Esse foi o tipo de refatoração que fiz a poucos dias no projeto [Xavier](https://github.com/mdbs99/xavier).
-
 ## Conclusão {#conclusao}
 
 Uma Lib é um especialista em determinado assunto. Dar um nome memorável, apropriado e curto a sua Lib irá facilitar tanto a identificação das Classes quando o uso da mesma.
