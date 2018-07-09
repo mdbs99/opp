@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Decorator Pattern &#8211; Object Pascal Programming</title>
+    <title>Como Trabalhar com Libraries sem Pacotes &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="OO">
-    <meta name="keywords" content="decorator, pattern">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/decorator-pattern/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, pacotes, packages, search path">
+    <link rel="canonical" href="http://objectpascalprogramming.com/libraries-sem-pacotes">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Decorator Pattern">
-    <meta property="og:description" content="Agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/decorator-pattern/">
+    <meta property="og:title" content="Como Trabalhar com Libraries sem Pacotes">
+    <meta property="og:description" content="Como seria trabalhar em um projeto que utiliza libraries que não possuem pacotes?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/libraries-sem-pacotes">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1461709444300-a6217cec3dff.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/aditya-romansa-117300-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Decorator Pattern" />
-    <meta name="twitter:description" content="Agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/decorator-pattern/" />
+    <meta name="twitter:title" content="Como Trabalhar com Libraries sem Pacotes" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/libraries-sem-pacotes" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,8 +191,8 @@
 
 
 <div class="post-header mb2">
-  <h1>Decorator Pattern</h1>
-  <span class="post-meta">May 2, 2016</span><br>
+  <h1>Como Trabalhar com Libraries sem Pacotes</h1>
+  <span class="post-meta">Jul 9, 2018</span><br>
   
   <span class="post-meta small">
   
@@ -200,57 +202,44 @@
 </div>
 
 <article class="post-content">
-  <p>Como agregar responsabilidade a Objetos individuais, em tempo de execução, independente de sua Classe?</p>
-
-<p>Utilizando <em>Decorator Pattern</em>.</p>
-
-<p>Os Decoradores oferecem uma alternativa simples e flexível ou uso de subclasses para extensão de funcionalidades.</p>
+  <p>Como seria trabalhar em um projeto que utiliza libraries que não possuem pacotes? Se cada desenvolvedor tiver cópias das libraries em paths diferentes, as configurações do projeto não devem utilizar paths pré-determinados.</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1461709444300-a6217cec3dff.jpg" alt="Decorator" /></p>
+<p><img src="/images/2018/aditya-romansa-117300-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Aditya Romansa on Unsplash</span></p>
 
-<p>Para mim, <a href="https://en.wikipedia.org/wiki/Decorator_pattern"><em>Decorador</em></a> é um dos mais importantes padrões de <em>design</em>.
-Infelizmente esse padrão quase nunca é utilizado, pelo menos nos projetos que vi nos últimos anos, independentemente
-da linguagem de programação utilizada.</p>
+<p>Pacotes facilitam muito o desenvolvimento, pois eles registram na IDE onde estão o código-fonte de suas libraries. Assim, cada desenvolvedor pode ter suas próprias cópias de libraries salvos em quaisquer pastas em seus computadores.</p>
 
-<p>Por que?</p>
+<p>Um projeto que utiliza pacotes apenas irá fazer referência à eles e deixará a IDE o trabalho de localizá-los para informar ao compilador os códigos-fontes referentes aos pacotes.</p>
 
-<p>Não tenho uma resposta exata, mas suponho que o motivo do não uso de Decoradores seja devido a escolha “natural” de 
-utilizarmos <strong>Herança de Classes</strong> para estender funcionalidades.</p>
+<p>Mas, e se uma library não possuir pacotes?</p>
 
-<p>Aprendemos que a Orientação a Objetos tem 3 pilares: <strong>Herança, Encapsulamento e Polimorfismo.</strong></p>
+<p>Nesse caso basta adicionarmos o path da library no <em>search path</em> do projeto. Ao compilarmos, os fontes serão localizados pela IDE.</p>
 
-<p>Herança de Classe é utilizada para estender funcionalidades, implementando uma nova Classe que herda as funcionalidades
-da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre será a escolha mais correta para extensão de funcionalidades?</p>
+<p>Funciona. Porém, se o projeto tiver muitos desenvolvedores, como garantir que todos irão utilizar o mesmo path? Há uma grande possibilidade de haver divergências de paths em projetos colaborativos com mais de um desenvolvedor.</p>
 
-<p>Eu acho que não. Em 90~95% dos casos, eu utilizo <strong>Decoradores</strong> e <strong>Composição de Objetos</strong>.</p>
+<p>Desenvolvedores podem utilizar diferentes paths para projetos, componentes e libraries. Cada um organiza seus projetos da forma que achar melhor em seus próprios computadores.</p>
 
-<blockquote>
-  <p>
-    Um Decorador oferece uma abordagem do tipo "use quando for necessário” para adição de responsabilidades. Em vez de tentar
-    suportar todas as características previsíveis em uma Classe complexa e customizada, você pode definir uma Classe simples e 
-    acrescentar funcionalidade de modo incremental com objetos Decoradores.
-  </p>
-  <footer><cite title="Padrões de Projeto">— Padrões de Projeto, Erich Gamma, pág.173</cite></footer>
-</blockquote>
+<p>Um projeto sem pacotes não tem a ajuda da IDE para localizar os fontes. O desenvolvedor deve informar onde eles estão.  Como cada desenvolvedor “gosta” de ter sua própria hierarquia de pastas, como configurar o <em>search path</em> do projeto?</p>
 
-<p>Decoradores são tão simples de implementar como Herança, mas traz mais benefícios.</p>
+<p><em>Macros.</em></p>
 
-<ul>
-  <li>Você não precisa prever o futuro utilizando Decoradores. Utilizando Herança você tem que se preocupar com a hierarquia
-  das Classes desde o início, desde a Classe mais básica até a mais específica, como se pudesse prever o futuro;</li>
-  <li>Evita Classes sobrecarregadas de características e funcionalidades;</li>
-  <li>Classes pequenas e coesas;</li>
-</ul>
+<p>No Lazarus há <a href="http://wiki.lazarus.freepascal.org/IDE_Macros_in_paths_and_filenames">macros</a> que podem ser interpretadas em <em>run-time</em> pela IDE.</p>
 
-<p>Exemplos de código?</p>
+<p>A macro que precisamos para resolver o problema de paths é a <code>$Env(name)</code>.</p>
 
-<ol>
-  <li>Parte do código de um projeto em produção que utiliza Decoradores para consumir um WebService, <a href="/posts/pensando-em-objetos/#exemplo-2">aqui</a>.</li>
-  <li>Implementação de um Log com Decoradores para memória, arquivo, banco de dados e e-mail, <a href="/posts/classes-devem-implementar-apenas-uma-responsabilidade/#implementacao-oo">aqui</a>;</li>
-  <li>Utilizando a Classe <code>TEmployeeSalaryWithCommission</code> como Decorador de <code>TEmployeeSalary</code>, <a href="/posts/objetos-pensam-e-tomam-decisoes/#versao-orientada-a-objetos">aqui</a>;</li>
-</ol>
+<p>Agora, imagine um library chamada <code>DBFast</code>, <em>sem</em> pacotes.</p>
+
+<p>O desenvolvedor José tem a cópia da library em <code>c:\dev\libs\dbfast</code> enquanto o Márcio tem a mesma library em <code>d:\pascal\components\dbfast</code>.</p>
+
+<p>Dois paths bem diferentes para um mesmo projeto.</p>
+
+<p>Felizmente, utilizando macros a configuração é simplificada.</p>
+
+<p>José e Márcio devem criar uma variável de ambiente em seus computadores apontando para esses paths. A variável de ambiente deve ter o <em>mesmo</em> nome, por exemplo, <code>DBFastSource</code>.</p>
+
+<p>Finalmente, basta adicionarmos a macro <code>$Env(DBFastSource)</code> no <a href="http://wiki.freepascal.org/IDE_Window:_Compiler_Options#Paths">search path</a> do projeto para que tudo funcione com paths diferentes para cada desenvolvedor.</p>
 
 <p>Até logo.</p>
 
@@ -262,33 +251,33 @@ da primeira e de toda uma hierarquia. Então você acha que usar Herança sempre
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/decorator-pattern/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/libraries-sem-pacotes" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Decorator Pattern&via=mdbs99;url=http://objectpascalprogramming.com/posts/decorator-pattern/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Como Trabalhar com Libraries sem Pacotes&via=mdbs99;url=http://objectpascalprogramming.com/libraries-sem-pacotes" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/decorator-pattern/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/libraries-sem-pacotes" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/decorator-pattern/&title=Decorator Pattern" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/decorator-pattern/&title=Decorator Pattern" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/libraries-sem-pacotes&title=Como Trabalhar com Libraries sem Pacotes" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/decorator-pattern/&t=Decorator Pattern" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/libraries-sem-pacotes&title=Como Trabalhar com Libraries sem Pacotes" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/libraries-sem-pacotes&t=Como Trabalhar com Libraries sem Pacotes" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -335,15 +324,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/libraries-sem-pacotes" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Como Trabalhar com Libraries sem Pacotes</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/quem-libera-os-objetos" class="post-link">
@@ -426,6 +406,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/assertions" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Assertions é uma boa prática</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -433,8 +422,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/decorator-pattern';
-      var disqus_title      = 'Decorator Pattern';
+      var disqus_identifier = '/libraries-sem-pacotes';
+      var disqus_title      = 'Como Trabalhar com Libraries sem Pacotes';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

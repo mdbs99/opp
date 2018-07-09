@@ -8,6 +8,54 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Como Trabalhar com Libraries sem Pacotes</title>
+        <description>&lt;p&gt;Como seria trabalhar em um projeto que utiliza libraries que não possuem pacotes? Se cada desenvolvedor tiver cópias das libraries em paths diferentes, as configurações do projeto não devem utilizar paths pré-determinados.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/aditya-romansa-117300-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Aditya Romansa on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Pacotes facilitam muito o desenvolvimento, pois eles registram na IDE onde estão o código-fonte de suas libraries. Assim, cada desenvolvedor pode ter suas próprias cópias de libraries salvos em quaisquer pastas em seus computadores.&lt;/p&gt;
+
+&lt;p&gt;Um projeto que utiliza pacotes apenas irá fazer referência à eles e deixará a IDE o trabalho de localizá-los para informar ao compilador os códigos-fontes referentes aos pacotes.&lt;/p&gt;
+
+&lt;p&gt;Mas, e se uma library não possuir pacotes?&lt;/p&gt;
+
+&lt;p&gt;Nesse caso basta adicionarmos o path da library no &lt;em&gt;search path&lt;/em&gt; do projeto. Ao compilarmos, os fontes serão localizados pela IDE.&lt;/p&gt;
+
+&lt;p&gt;Funciona. Porém, se o projeto tiver muitos desenvolvedores, como garantir que todos irão utilizar o mesmo path? Há uma grande possibilidade de haver divergências de paths em projetos colaborativos com mais de um desenvolvedor.&lt;/p&gt;
+
+&lt;p&gt;Desenvolvedores podem utilizar diferentes paths para projetos, componentes e libraries. Cada um organiza seus projetos da forma que achar melhor em seus próprios computadores.&lt;/p&gt;
+
+&lt;p&gt;Um projeto sem pacotes não tem a ajuda da IDE para localizar os fontes. O desenvolvedor deve informar onde eles estão.  Como cada desenvolvedor “gosta” de ter sua própria hierarquia de pastas, como configurar o &lt;em&gt;search path&lt;/em&gt; do projeto?&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Macros.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;No Lazarus há &lt;a href=&quot;http://wiki.lazarus.freepascal.org/IDE_Macros_in_paths_and_filenames&quot;&gt;macros&lt;/a&gt; que podem ser interpretadas em &lt;em&gt;run-time&lt;/em&gt; pela IDE.&lt;/p&gt;
+
+&lt;p&gt;A macro que precisamos para resolver o problema de paths é a &lt;code&gt;$Env(name)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Agora, imagine um library chamada &lt;code&gt;DBFast&lt;/code&gt;, &lt;em&gt;sem&lt;/em&gt; pacotes.&lt;/p&gt;
+
+&lt;p&gt;O desenvolvedor José tem a cópia da library em &lt;code&gt;c:\dev\libs\dbfast&lt;/code&gt; enquanto o Márcio tem a mesma library em &lt;code&gt;d:\pascal\components\dbfast&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Dois paths bem diferentes para um mesmo projeto.&lt;/p&gt;
+
+&lt;p&gt;Felizmente, utilizando macros a configuração é simplificada.&lt;/p&gt;
+
+&lt;p&gt;José e Márcio devem criar uma variável de ambiente em seus computadores apontando para esses paths. A variável de ambiente deve ter o &lt;em&gt;mesmo&lt;/em&gt; nome, por exemplo, &lt;code&gt;DBFastSource&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, basta adicionarmos a macro &lt;code&gt;$Env(DBFastSource)&lt;/code&gt; no &lt;a href=&quot;http://wiki.freepascal.org/IDE_Window:_Compiler_Options#Paths&quot;&gt;search path&lt;/a&gt; do projeto para que tudo funcione com paths diferentes para cada desenvolvedor.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 09 Jul 2018 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/libraries-sem-pacotes</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/libraries-sem-pacotes</guid>
+      </item>
+    
+      <item>
         <title>Quem é o Responsável por Liberar os Objetos?</title>
         <description>&lt;p&gt;Você consideraria um bom design para seu projeto, ter métodos ou funções que criam objetos que serão liberados em outro local, por outro objeto ou função?&lt;/p&gt;
 
@@ -1064,83 +1112,6 @@ True free heap : 163760
         <pubDate>Mon, 12 Mar 2018 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/supports-traicoeira</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/supports-traicoeira</guid>
-      </item>
-    
-      <item>
-        <title>Assertions é uma boa prática</title>
-        <description>&lt;p&gt;Assertions auxiliam o programador no desenvolvimento e depuração do código, sendo a primeira linha de defesa contra bugs.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/photo-andrew-ruiz-394426-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Andrew Ruiz on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Quando estamos desenvolvendo, é comum executar o programa várias vezes, digitar alguma entrada de dados “falsa”, e seguir adiante, afim de testar outras funcionalidades.&lt;/p&gt;
-
-&lt;p&gt;Assim, vamos construindo um protótipo.&lt;/p&gt;
-
-&lt;p&gt;Um protótipo pode ser codificado muito rapidamente, sendo comum codificarmos várias funcionalidades apenas para visualizarmos como seria o sistema real.&lt;/p&gt;
-
-&lt;p&gt;Como um protótipo pode ser alterado inúmeras vezes, vários bugs podem aparecer.&lt;/p&gt;
-
-&lt;p&gt;Aqui entram as &lt;a href=&quot;https://www.freepascal.org/docs-html/3.0.2/rtl/system/assert.html&quot;&gt;Assertions&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;De acordo com a &lt;a href=&quot;https://en.wikipedia.org/wiki/Assertion_(software_development)&quot;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;In computer programming, an assertion is a statement that a predicate (Boolean-valued function, i.e. a true–false expression) is expected to always be true at that point in the code. If an assertion evaluates to false at run time, an assertion failure results, which typically causes the program to crash, or to throw an assertion exception.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Então, uma Assertion sempre deve ser verdadeira ou uma exceção &lt;code&gt;EAssertionFailed&lt;/code&gt; será gerada e o sistema será abortado, retornando o código &lt;code&gt;227&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;No entanto, se a unit &lt;code&gt;SysUtils&lt;/code&gt; for declarada em algum lugar do código, é possível verificar mais informações da exceção como a linha e a unit onde o erro foi gerado, além da &lt;i&gt;mensagem&lt;/i&gt; opcional que o desenvolvedor pode utilizar para cada Assertion.&lt;/p&gt;
-
-&lt;p&gt;Uma Assertion funciona dessa forma:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure TForm1.Button1Click(Sender: TObject);
-var
-  I: Integer;
-begin
-  I := 0;
-  Assert(I = 1, &#39;The I variable is not 1&#39;);
-  ShowMessage(I.ToString);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;No código acima, temos um &lt;code&gt;Form&lt;/code&gt; com um botão. No evento desse botão o Assert irá verificar se a variável &lt;code&gt;I&lt;/code&gt; é igual a &lt;code&gt;1&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;O resultado será falso e uma exceção será gerada.&lt;/p&gt;
-
-&lt;p&gt;Na minha IDE eu vejo essa mensagem:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;The I variable is not 1 (unit1.pas, line 34).
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Eu compilei o projeto &lt;i&gt;sem&lt;/i&gt; informações de &lt;i&gt;debugger&lt;/i&gt;. Mesmo assim, é possível ver a linha onde a validação ocorreu, tornando muito útil o uso de Assert para identificar onde e por quê um erro ocorreu.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, as Assertions não deve ser utilizadas em produção. Suas informações técnicas só deveriam ser vistas por programadores, não usuários finais.&lt;/p&gt;
-
-&lt;p&gt;Por esse motivo nós &lt;b&gt;devemos&lt;/b&gt; desabilitar as Assertions quando fizermos o &lt;i&gt;deploy&lt;/i&gt; do sistema para o usuário final.&lt;/p&gt;
-
-&lt;p&gt;Para desabilitar Assertions, o compilador tem uma diretiva de compilação global.&lt;/p&gt;
-
-&lt;p&gt;Há duas opções:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ASSERTIONS ON/OFF (long form)
-$C +/- (short form)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Mas isso pode ser definido diretamente na IDE, na sessão de debugger nas  opções do projeto, sem haver necessidade de escrever uma linha de código.&lt;/p&gt;
-
-&lt;p&gt;Quando as Assertions estão desabilitadas, as verificações não são executadas. Isso libera o sistema de todo &lt;i&gt;overhead&lt;/i&gt; das verificações no produto final.&lt;/p&gt;
-
-&lt;p&gt;Finalmente, Assertions não substituem Testes de Unidade ou Teste de Integração, sendo apenas mais um tipo de ferramenta para testar o código na fase de desenvolvimento.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/assertions</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/assertions</guid>
       </item>
     
   </channel>
