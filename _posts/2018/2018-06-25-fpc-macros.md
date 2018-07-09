@@ -7,7 +7,7 @@ description:
   Uma linguagem simples e com um design elegante como Object Pascal não necessitaria de suporte a macros como existem em C/C++. No entanto, Free Pascal as tem. Devemos utilizá-las?
 image: /images/2018/remi-jacquaint-441559-unsplash.jpg
 tags:
-  - fpWeb
+  - macro
 keywords:
   - freepascal
   - fpc

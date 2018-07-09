@@ -7,7 +7,7 @@ description:
   Você consideraria um bom design para seu projeto, ter métodos ou funções que criam objetos que serão liberados em outro local, por outro objeto ou função?
 image: /images/2018/w-a-t-a-r-i-535375-unsplash.jpg
 tags:
-  - fpWeb
+  - Object Pascal
 keywords:
   - freepascal
   - fpc
