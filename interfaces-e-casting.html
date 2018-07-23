@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Imutabilidade do Estado &#8211; Object Pascal Programming</title>
+    <title>Interfaces e Casting &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
     <meta name="keywords" content="">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object-pascal, object-oriented, oop, mdbs99, imutabilidade, immutability, imutable">
-    <link rel="canonical" href="http://objectpascalprogramming.com/imutabilidade-do-estado">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, interface, supports, casting">
+    <link rel="canonical" href="http://objectpascalprogramming.com/interfaces-e-casting">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Imutabilidade do Estado">
-    <meta property="og:description" content="Na Orientação a Objetos, um Objeto pode ser considerável Imutável mesmo que ele... mude.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/imutabilidade-do-estado">
+    <meta property="og:title" content="Interfaces e Casting">
+    <meta property="og:description" content="Seria um anti-padrão verificar se um objeto implementa determinada(s) interface(s)? Seria essa prática considerada o mesmo que casting?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/interfaces-e-casting">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-morgan-harper-nichols-157838.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/stefan-stefancik-257625-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Imutabilidade do Estado" />
+    <meta name="twitter:title" content="Interfaces e Casting" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/imutabilidade-do-estado" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/interfaces-e-casting" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,123 +191,66 @@
 
 
 <div class="post-header mb2">
-  <h1>Imutabilidade do Estado</h1>
-  <span class="post-meta">Jul 31, 2017</span><br>
+  <h1>Interfaces e Casting</h1>
+  <span class="post-meta">Jul 23, 2018</span><br>
   
   <span class="post-meta small">
   
-    4 minute read
+    1 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Na Orientação a Objetos, um Objeto pode ser considerável Imutável mesmo que ele… mude.</p>
+  <p>Seria um anti-padrão verificar se um objeto implementa determinada(s) interface(s)? Seria essa prática considerada o mesmo que <em>casting</em>?</p>
 
 <!--more-->
 
-<p><img src="/images/2017/photo-morgan-harper-nichols-157838.jpg" alt="Unsplash image" />
-<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Morgan Harper Nichols on Unsplash</span></p>
+<p><img src="/images/2018/stefan-stefancik-257625-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Štefan Štefančík on Unsplash</span></p>
 
-<h2 id="introducao">Introdução</h2>
+<p>Já faz mais de 2 anos que <a href="/posts/nao-utilize-casting/">escrevi</a> que não devemos utilizar casting.</p>
 
-<p>O aprendizado de um conceito complexo, tende a ser melhor absorvido se dividirmos o conceito em pequenas partes.</p>
+<p>Essa pode ser uma afirmação difícil de acreditar, se você não por sua mente no contexto certo antes.</p>
 
-<p>Por exemplo, quando começamos a aprender Inglês, nos é ensinado que, para nos referirmos a algo que ocorreu no passado, devemos utilizar os verbos no passado para fazer afirmações ou utilizamos o verbo modal <em>did</em> ou <em>did not</em> para fazermos perguntas ou negações. Esse é o tempo verbal <em>Simple Past</em>.</p>
+<p>Alguns desenvolvedores tem me perguntado, como é possível fazer uma aplicação sem haver <em>casting</em>?</p>
 
-<p>Exemplo: <em>I saw this movie</em> (tradução: eu vi esse filme).</p>
+<p>Bem, em uma aplicação de médio tamanho eu diria que pode ser até difícil, mas não impossível. Entretanto, irá depender do <em>tipo</em> de casting que estamos tratando.</p>
 
-<p>Então, quando você começa a estudar mais a língua, descobre que existe muitas outras maneiras de expressar algo que ocorreu no passado. Por exemplo, o uso do tempo verbal <em>Present Perfect</em>.</p>
+<p>Na programação orientada a objetos só haverá objetos. Então vamos esquecer os tipos primitivos. Um cast de uma <em>string</em> em um <em>Integer</em>, por exemplo, é algo <em>necessário</em> em linguagens que possuem tipos primitivos.</p>
 
-<p>Exemplo: <em>I have seen this movie</em> (tradução: eu vi esse filme).</p>
+<p>Esse não é o problema.</p>
 
-<p>Aqui vemos o uso do verbo modal <em>have</em> e o uso do <em>Past Participle</em> do verbo <em>to see</em>.</p>
+<p>O casting a que me refiro é sobre <em>objetos</em>.</p>
 
-<p>Ambas as frases dizem o mesmo quando traduzimos para o Português, porém a segunda frase pode ser considerada mais <em>correta</em> do que a primeira — você só descobre isso depois que aprende o <em>Present Perfect</em>.
-Mas isso não é um blog de Inglês, vamos voltar para a Orientação a Objetos.</p>
+<p>Passar um parâmetro para um método com o tipo <code>TObject</code> para, então, fazer um casting interno para outro objeto é como ter um “pré-conceito” sobre o objeto que irá fazer o trabalho.</p>
 
-<p>Essa introdução é para lhe mostrar que primeiro devemos aprender um conceito na sua forma mais simples; depois aprimoramos.</p>
+<p>O objeto em si não é suficiente?</p>
 
-<h2 id="conceitos">Conceitos da Imutabilidade</h2>
+<p>Se você está verificando o <em>tipo</em> do objeto para fazer o trabalho, é pré-conceito.</p>
 
-<p>Quando você aprendeu sobre <a href="/posts/objetos-imutaveis/">Imutabilidade</a> pode ter pensado que um Objeto é imutável se, depois de criado, nada é alterado dentro dele ou que o Objeto retorna sempre a mesma informação quando um método é chamado.</p>
+<p>Você não confia nele. Você tem sempre que <em>gerenciá-lo</em>, dizendo quem ele deve <em>representar</em> em cada parte do código.</p>
 
-<p>Bem, não é tão simples assim.</p>
+<p>Mas, há alguma maneira de trabalhar com objetos sem utilizar casting?</p>
 
-<p>Diferentemente das linguagens funcionais, onde tudo é imutável por padrão, na Orientação a Objetos esse conceito pode ser mais amplo.</p>
+<p>O “segredo” está nas <a href="/posts/interfaces-em-todo-lugar/">Interfaces</a>. Uma interface é um contrato entre o cliente (sistema) e o trabalhador (objeto).</p>
 
-<p>Vamos ver alguns conceitos.</p>
+<p>No entanto, um objeto pode implementar mais de uma interface, tendo muitas <em>especialidades</em> por assim dizer.</p>
 
-<h3 id="ex1">Conteúdo Externo</h3>
+<p>Então, é possível que um mesmo objeto possa trabalhar em muitas especialidades diferentes. Mas a única maneira de saber isso é <em>perguntar</em> ao próprio objeto se ele <em>sabe</em> fazer o serviço especializado.</p>
 
-<p>Uma classe que representa um arquivo pode ser imútável de duas maneiras:</p>
+<p>Vejamos um exemplo:</p>
 
-<script src="https://gist.github.com/mdbs99/48237c902271b6f2c3a314d3b6f5b8c0.js"></script>
+<script src="https://gist.github.com/mdbs99/e8312b8e539ac0e1b1baac28be18efe3.js"></script>
 
-<p>No código acima, o método <code>TFile.Stream: IDataStream</code> sempre irá retornar o mesmo valor lido na primeira execução.</p>
+<p>O mesmo empregado pode ser um analista e/ou programador.</p>
 
-<p>O Objeto é imutável e <em>constante</em>.</p>
+<p>A função <a href="/supports-traicoeira">Supports</a> “pergunta” ao objeto se ele também sabe fazer um “outro trabalho”, determinado pelo “contrato” no segundo parâmetro da função.</p>
 
-<p>Mas, e se alterarmos o método confome abaixo, a classe continuaria sendo imutável?</p>
-
-<script src="https://gist.github.com/mdbs99/0aea75fefaf8612d0bc84d5fc9ce85a0.js"></script>
-
-<p>Sim, com certeza.</p>
-
-<p>Apesar do retorno do método poder ser diferente em cada chamada — o conteúdo do arquivo pode ser alterado por outro processo — o Objeto continuaria sendo imutável pois seu <a href="/estado-do-objeto">Estado</a> (<code>FFilePath</code>) não foi alterado.</p>
-
-<p>Ele é imutável, porém <em>não</em> é constante.</p>
-
-<p>O mesmo conceito se aplica para um conteúdo vindo de um Banco de Dados, site na Web, etc.</p>
-
-<h3 id="ex2">Conteúdo em Memória</h3>
-
-<p>Uma lista de Objetos pode ser considerada imutável se adicionarmos itens após ela ter sido criada?</p>
-
-<p>Vejamos no código:</p>
-
-<script src="https://gist.github.com/mdbs99/af8769161d1b111128349b05b74bccb9.js"></script>
-
-<p><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Copyright (c) <a href="https://github.com/mdbs99/james">James Project</a></span></p>
-
-<p>A Classe <code>TDataParams</code> encapsula uma lista do tipo <code>TInterfaceList</code>.</p>
-
-<p>A cada inclusão de um novo item, é delegada à essa lista interna, a persistência em memória dos Objetos.</p>
-
-<p>Você acha que, assim, estamos alterando o Estado (<code>FList</code>) do Objeto?</p>
-
-<p>Não estamos.</p>
-
-<p>O motivo é que não estamos redefinindo <code>FList</code>. Não estamos recriando uma nova lista.</p>
-
-<p>Uma lista de itens está sendo criada em memória — blocos de memória — mas o endereço inicial de <code>FList</code> continua intacto.</p>
-
-<p>Além disso, <code>FList</code> é um <a href="/atributos-primarios-secundarios#secundarios">Atributo Secundário</a>, então nós até poderíamos redefinir esse atributo sem estar em desacordo com o princípio. Mas, se a instância da lista fosse passada no construtor, então não poderíamos redefinir o Objeto, pois esse seria considerado como um <a href="/atributos-primarios-secundarios#primarios">Atributo Primário</a>.</p>
-
-<h2 id="estado">Imutabilidade do Estado</h2>
-
-<p>Se mesmo após algumas mudanças internas ou externas ao Objeto, ele continua sendo considerado imutável, como saber se não estamos violando o princípio da Imutabilidade?</p>
-
-<p><strong>Simples</strong>: Se o <a href="/estado-do-objeto">Estado do Objeto</a>, ou seja, seus <a href="/atributos-primarios-secundarios#primarios">Atributos Primários</a>, não for alterado/redefinindo, então ele é imutável.</p>
-
-<p>Uma vez que um atributo é instânciado, ele não poderá ter seu <em>endereço de memória</em> alterado. Esses atributos serão inicializados no <a href="/posts/construtores-da-classe-primario-secundarios/">construtor</a> da classe e jamais poderão ser reinicializados.</p>
-
-<p>Seu Objeto deve ser <em>fiél</em> aos argumentos passados no construtor da Classe, no entanto ele é <em>livre</em> para trabalhar e responder o que quiser em seus métodos.</p>
-
-<h2 id="conclusao">Conclusão</h2>
-
-<p>Imutabilidade, na Orientação a Objetos, não é só sobre as não-mudanças internas ou externas ao Objeto, mas sim sobre não alterar o Estado Primário do Objeto.</p>
-
-<p>Não confunda <a href="/posts/classes-de-dados/">dados</a> com o Estado do Objeto.</p>
-
-<p>Infelizmente nenhum compilador <em>Object Pascal</em> que eu conheça possui uma sintaxe para que essas regras não sejam quebradas. Java, por exemplo, tem atributos <em>final</em> onde, uma vez inicializados, não podem ter seu endereço de memória substituído.</p>
-
-<p>Sven Barth, um integrante do FPC team, <a href="http://lists.freepascal.org/pipermail/fpc-pascal/2017-July/051941.html">me falou</a> sobre um <code>{$modeswitch
-finalfields}</code> que foi implementado para a interoperabilidade do FPC para a JVM plataforma, porém ainda não disponível.</p>
-
-<p>Então temos que trabalhar apenas com o conceito ou utilizar ferramentas de verificação de código para que essa regra não seja quebrada.</p>
+<p>A diferença é sutil, mas importante: Tentar transformar um objeto em outro é equivocado, mas perguntar à ele se tem uma determinada especialidade, não.</p>
 
 <p>Até logo.</p>
+
 
 </article>
 
@@ -317,33 +260,33 @@ finalfields}</code> que foi implementado para a interoperabilidade do FPC para a
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/imutabilidade-do-estado" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/interfaces-e-casting" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Imutabilidade do Estado&via=mdbs99;url=http://objectpascalprogramming.com/imutabilidade-do-estado" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Interfaces e Casting&via=mdbs99;url=http://objectpascalprogramming.com/interfaces-e-casting" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/imutabilidade-do-estado" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/interfaces-e-casting" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/imutabilidade-do-estado&title=Imutabilidade do Estado" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/imutabilidade-do-estado&title=Imutabilidade do Estado" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/interfaces-e-casting&title=Interfaces e Casting" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/imutabilidade-do-estado&t=Imutabilidade do Estado" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/interfaces-e-casting&title=Interfaces e Casting" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/interfaces-e-casting&t=Interfaces e Casting" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -390,15 +333,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/interfaces-e-casting" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Interfaces e Casting</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/libraries-sem-pacotes" class="post-link">
@@ -481,6 +415,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/supports-traicoeira" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>A função Supports pode ser traiçoeira</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -488,8 +431,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/imutabilidade-do-estado';
-      var disqus_title      = 'Imutabilidade do Estado';
+      var disqus_identifier = '/interfaces-e-casting';
+      var disqus_title      = 'Interfaces e Casting';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

@@ -8,6 +8,63 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Interfaces e Casting</title>
+        <description>&lt;p&gt;Seria um anti-padrão verificar se um objeto implementa determinada(s) interface(s)? Seria essa prática considerada o mesmo que &lt;em&gt;casting&lt;/em&gt;?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/stefan-stefancik-257625-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Štefan Štefančík on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Já faz mais de 2 anos que &lt;a href=&quot;/posts/nao-utilize-casting/&quot;&gt;escrevi&lt;/a&gt; que não devemos utilizar casting.&lt;/p&gt;
+
+&lt;p&gt;Essa pode ser uma afirmação difícil de acreditar, se você não por sua mente no contexto certo antes.&lt;/p&gt;
+
+&lt;p&gt;Alguns desenvolvedores tem me perguntado, como é possível fazer uma aplicação sem haver &lt;em&gt;casting&lt;/em&gt;?&lt;/p&gt;
+
+&lt;p&gt;Bem, em uma aplicação de médio tamanho eu diria que pode ser até difícil, mas não impossível. Entretanto, irá depender do &lt;em&gt;tipo&lt;/em&gt; de casting que estamos tratando.&lt;/p&gt;
+
+&lt;p&gt;Na programação orientada a objetos só haverá objetos. Então vamos esquecer os tipos primitivos. Um cast de uma &lt;em&gt;string&lt;/em&gt; em um &lt;em&gt;Integer&lt;/em&gt;, por exemplo, é algo &lt;em&gt;necessário&lt;/em&gt; em linguagens que possuem tipos primitivos.&lt;/p&gt;
+
+&lt;p&gt;Esse não é o problema.&lt;/p&gt;
+
+&lt;p&gt;O casting a que me refiro é sobre &lt;em&gt;objetos&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Passar um parâmetro para um método com o tipo &lt;code&gt;TObject&lt;/code&gt; para, então, fazer um casting interno para outro objeto é como ter um “pré-conceito” sobre o objeto que irá fazer o trabalho.&lt;/p&gt;
+
+&lt;p&gt;O objeto em si não é suficiente?&lt;/p&gt;
+
+&lt;p&gt;Se você está verificando o &lt;em&gt;tipo&lt;/em&gt; do objeto para fazer o trabalho, é pré-conceito.&lt;/p&gt;
+
+&lt;p&gt;Você não confia nele. Você tem sempre que &lt;em&gt;gerenciá-lo&lt;/em&gt;, dizendo quem ele deve &lt;em&gt;representar&lt;/em&gt; em cada parte do código.&lt;/p&gt;
+
+&lt;p&gt;Mas, há alguma maneira de trabalhar com objetos sem utilizar casting?&lt;/p&gt;
+
+&lt;p&gt;O “segredo” está nas &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;. Uma interface é um contrato entre o cliente (sistema) e o trabalhador (objeto).&lt;/p&gt;
+
+&lt;p&gt;No entanto, um objeto pode implementar mais de uma interface, tendo muitas &lt;em&gt;especialidades&lt;/em&gt; por assim dizer.&lt;/p&gt;
+
+&lt;p&gt;Então, é possível que um mesmo objeto possa trabalhar em muitas especialidades diferentes. Mas a única maneira de saber isso é &lt;em&gt;perguntar&lt;/em&gt; ao próprio objeto se ele &lt;em&gt;sabe&lt;/em&gt; fazer o serviço especializado.&lt;/p&gt;
+
+&lt;p&gt;Vejamos um exemplo:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/mdbs99/e8312b8e539ac0e1b1baac28be18efe3.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;O mesmo empregado pode ser um analista e/ou programador.&lt;/p&gt;
+
+&lt;p&gt;A função &lt;a href=&quot;/supports-traicoeira&quot;&gt;Supports&lt;/a&gt; “pergunta” ao objeto se ele também sabe fazer um “outro trabalho”, determinado pelo “contrato” no segundo parâmetro da função.&lt;/p&gt;
+
+&lt;p&gt;A diferença é sutil, mas importante: Tentar transformar um objeto em outro é equivocado, mas perguntar à ele se tem uma determinada especialidade, não.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 23 Jul 2018 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/interfaces-e-casting</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/interfaces-e-casting</guid>
+      </item>
+    
+      <item>
         <title>Como Trabalhar com Libraries sem Pacotes</title>
         <description>&lt;p&gt;Como seria trabalhar em um projeto que utiliza libraries que não possuem pacotes? Se cada desenvolvedor tiver cópias das libraries em paths diferentes, as configurações do projeto não devem utilizar paths pré-determinados.&lt;/p&gt;
 
@@ -999,119 +1056,6 @@ end;
         <pubDate>Mon, 02 Apr 2018 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/a-declaracao-with-do-perfeita</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/a-declaracao-with-do-perfeita</guid>
-      </item>
-    
-      <item>
-        <title>A função Supports pode ser traiçoeira</title>
-        <description>&lt;p&gt;Quando você se acostuma a utilizar somente instancias de interfaces, pode ser difícil entender alguns erros em tempo de execução, utilizando instâncias de classes com suporte a interfaces.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/photo-michal-parzuchowski-224092-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Michał Parzuchowski on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Você pode desenvolver seu projeto do zero, utilizando apenas &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;instâncias de interfaces&lt;/a&gt;, e (quase) tudo estará sob seu controle.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, há muitos projetos onde só iremos fazer algum tipo de manutenção. Esses projetos podem não utilizar o conceito de interfaces como explicado em vários artigos desse blog. Nesses casos, é necessário codificar de forma que mantenha o código legado funcionando, ao mesmo tempo que introduzimos boas práticas de &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Em tais projetos, é comum vermos variáveis declaradas como tipo de alguma classe ao invés de alguma interface.&lt;/p&gt;
-
-&lt;p&gt;Isso quer dizer que haverá chamadas aos métodos &lt;code&gt;Free&lt;/code&gt; de cada instância, por todo o código.&lt;/p&gt;
-
-&lt;p&gt;E não há nada de errado com isso. Essa é uma das características da linguagem Object Pascal que a torna muito eficiente para projetos de alta &lt;a href=&quot;/argumentos-const&quot;&gt;performance&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;No entanto, como já foi dito muitas vezes aqui nesse blog, o uso de instâncias de interfaces pode trazer muitos benefícios quando utilizada apropriadamente.&lt;/p&gt;
-
-&lt;p&gt;Os benefícios, entretanto, podem ser ofuscados pelo não funcionamento correto do código ao utilizarmos instâncias de classes junto com interfaces.&lt;/p&gt;
-
-&lt;p&gt;Veja o código abaixo e, antes de compilar e executar o programa no seu computador, tente descobrir se há algo errado:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;program Project1;
-
-uses
-  SysUtils;
-
-type
-  IBar = interface
-  [&#39;{C22FB8F4-1EC6-42C4-81E4-F2A52CC52258}&#39;]
-  end;
-
-  TBar = class(TInterfacedObject, IBar)
-  end;
-
-var
-  Bar: TBar;
-begin
-  Bar := TBar.Create;
-  try
-    if Supports(Bar, IBar) then
-      Writeln(&#39;Bar supports...&#39;);
-  finally
-    Bar.Free;
-  end;
-end.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O código compila?&lt;/p&gt;
-
-&lt;p&gt;O código possui &lt;i&gt;memory leaks&lt;/i&gt;?&lt;/p&gt;
-
-&lt;p&gt;O código irá lançar algum &lt;i&gt;Access Violation&lt;/i&gt; (AV)?&lt;/p&gt;
-
-&lt;p&gt;Pense por um minuto…&lt;/p&gt;
-
-&lt;p&gt;Bem, eu posso lhe afirmar que o código compila sem erros mas há um grande problema de &lt;i&gt;design&lt;/i&gt;.&lt;/p&gt;
-
-&lt;p&gt;A lógica geral está correta. Temos uma instância de classe chamada &lt;code&gt;Bar&lt;/code&gt;; depois, checamos se essa instância suporta ou implementa a interface &lt;code&gt;IBar&lt;/code&gt; utilizando a função &lt;code&gt;Supports()&lt;/code&gt; da &lt;code&gt;SysUtils&lt;/code&gt;; então, imprimimos algo na tela em caso afirmativo; finalmente, a instância &lt;i&gt;deveria&lt;/i&gt; ser destruída utilizando &lt;code&gt;Bar.Free&lt;/code&gt;, visto que é uma instância de classe e não de interface. Certo?&lt;/p&gt;
-
-&lt;p&gt;Errado.&lt;/p&gt;
-
-&lt;p&gt;Você irá receber um &lt;i&gt;AV&lt;/i&gt; quando o compilador tentar destruir o objeto na linha &lt;code&gt;Bar.Free&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;E por quê isso ocorre?&lt;/p&gt;
-
-&lt;p&gt;Estamos utilizando uma das implementações da função &lt;code&gt;Supports()&lt;/code&gt; — há alguns &lt;i&gt;overloads&lt;/i&gt; — que retorna apenas um &lt;code&gt;boolean&lt;/code&gt; para dizer ao programa se determinada instância suporta ou não uma determinada interface.&lt;/p&gt;
-
-&lt;p&gt;Ao fazer isso, &lt;code&gt;Supports()&lt;/code&gt; irá obter uma instância de &lt;code&gt;IBar&lt;/code&gt;, extraída da variável &lt;code&gt;Bar&lt;/code&gt;. Isso irá alterar a contagem de referência e após o retorno da função, a instância &lt;code&gt;Bar&lt;/code&gt; será destruída… antes de chegar na linha &lt;code&gt;Bar.Free&lt;/code&gt;!&lt;/p&gt;
-
-&lt;p&gt;Na minha opinião, isso é um &lt;i&gt;erro&lt;/i&gt; mesmo sendo &lt;i&gt;&lt;a href=&quot;http://docwiki.embarcadero.com/Libraries/XE2/en/System.SysUtils.Supports&quot;&gt;by design&lt;/a&gt;&lt;/i&gt;.&lt;/p&gt;
-
-&lt;p&gt;Delphi e FPC funcionam da mesma forma.&lt;/p&gt;
-
-&lt;p&gt;Então, como consertar o código?&lt;/p&gt;
-
-&lt;p&gt;Basta alterar o tipo da variável para &lt;code&gt;Bar: IBar&lt;/code&gt;. Ao fazer isso, o compilador irá lhe dizer que não é mais necessário chamar &lt;code&gt;Bar.Free&lt;/code&gt;. Remova também essa linha e, consequentemente, a construção &lt;code&gt;try-finally&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var
-  Bar: IBar;
-begin
-  Bar := TBar.Create;
-  if Supports(Bar, IBar) then
-    Writeln(&#39;Bar supports...&#39;);
-end.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Após fazer isso, compile e execute novamente o programa.&lt;/p&gt;
-
-&lt;p&gt;Utilizando FPC 3.0.4 com &lt;code&gt;-gl&lt;/code&gt; habilitado, eu vejo a saída abaixo, sem nenhum &lt;i&gt;memory leak&lt;/i&gt; ou erros:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;c:\temp&amp;gt;project1.exe
-Bar supports...
-Heap dump by heaptrc unit
-48 memory blocks allocated : 1189/1296
-48 memory blocks freed     : 1189/1296
-0 unfreed memory blocks : 0
-True heap size : 163840 (80 used in System startup)
-True free heap : 163760
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Muito cuidado ao utilizar instâncias de classes com suporte a interfaces e contagem de referência.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 12 Mar 2018 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/supports-traicoeira</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/supports-traicoeira</guid>
       </item>
     
   </channel>
