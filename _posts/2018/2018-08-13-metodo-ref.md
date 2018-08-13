@@ -4,7 +4,7 @@ title: "Como Transformar uma Instância de Classe em Instância de Interface"
 date: 2018-08-13
 permalink: /:title
 description:
-  E se a linguagem Object Pascal nos permitisse codificar uma instância de classe que se auto destrói quando não mais precisamos dele?
+  E se a linguagem Object Pascal nos permitisse codificar uma instância de classe que se auto destrói quando não mais precisamos dela?
 image: /images/2018/julie-north-720719-unsplash.jpg
 tags:
   - Object Pascal
@@ -21,7 +21,7 @@ keywords:
   - interface
 ---
 
-E se a linguagem Object Pascal nos permitisse codificar uma instância de classe que se auto destrói quando não mais precisamos dele?
+E se a linguagem Object Pascal nos permitisse codificar uma instância de classe que se auto destrói quando não mais precisamos dela?
 
 É possível transformar uma instância de classe para se comportar como uma instância de interface?
 
