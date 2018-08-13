@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Interfaces e o Método estático New &#8211; Object Pascal Programming</title>
+    <title>Como Transformar uma Instância de Classe em Instância de Interface &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Pascal">
-    <meta name="keywords" content="oop, object pascal, orientação a objetos">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, interface">
+    <link rel="canonical" href="http://objectpascalprogramming.com/metodo-ref">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Interfaces e o Método estático New">
-    <meta property="og:description" content="Como implementar seu Garbage Collector no Object Pascal de forma segura">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/">
+    <meta property="og:title" content="Como Transformar uma Instância de Classe em Instância de Interface">
+    <meta property="og:description" content="E se a linguagem Object Pascal nos permitisse codificar uma instância de classe que se auto destrói quando não mais precisamos dela?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/metodo-ref">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/829d24cf.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/julie-north-720719-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Interfaces e o Método estático New" />
-    <meta name="twitter:description" content="Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/" />
+    <meta name="twitter:title" content="Como Transformar uma Instância de Classe em Instância de Interface" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/metodo-ref" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -189,180 +191,180 @@
 
 
 <div class="post-header mb2">
-  <h1>Interfaces e o Método estático New</h1>
-  <span class="post-meta">Jan 10, 2016</span><br>
+  <h1>Como Transformar uma Instância de Classe em Instância de Interface</h1>
+  <span class="post-meta">Aug 13, 2018</span><br>
   
   <span class="post-meta small">
   
-    4 minute read
+    5 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>No <a href="/posts/pensando-em-objetos/">post anterior</a> eu mostrei um código
-Orientado a Objetos onde os Objetos eram instanciados utilizando um Método estático chamado <em>New</em>.</p>
+  <p>E se a linguagem Object Pascal nos permitisse codificar uma instância de classe que se auto destrói quando não mais precisamos dela?</p>
 
-<p>Este método <em>New</em> não é padrão da linguagem Object Pascal. Ele também não é um <code>constructor</code>.
-Ele é um <strong>Método de classe</strong> que retorna a mesma Interface que a classe implementa.</p>
-
-<p>A utilização do Método <em>New</em> é um padrão que defini para todos os meus projetos.</p>
+<p>É possível transformar uma instância de classe para se comportar como uma instância de interface?</p>
 
 <!--more-->
 
-<p><img src="/images/829d24cf.jpg" alt="Pensando" /></p>
+<p><img src="/images/2018/julie-north-720719-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Julie North on Unsplash</span></p>
 
-<h2 id="object-pascal-e-seu-garbage-collector">Object Pascal e seu “<em>Garbage Collector</em>”</h2>
+<p>Há alguns dias eu acompanhei alguns desenvolvedores solicitarem algumas “novas features” para o compilador Free Pascal..</p>
 
-<p>Ok. Object Pascal não tem <em>garbage collector</em> como no Java ou C# — e isso é ótimo quando precisamos de performance —
-porém temos algo parecido quando utilizamos Interfaces.</p>
+<p>Uma dessas features é a possibilidade de fazer um <em>“auto free”</em> de uma instância de classe. Sim, como no Java ou C#, onde um objeto do tipo de uma classe é liberado automaticamente quando a VM acha que deve fazê-lo.</p>
 
-<p>Toda variável que tem uma Interface como seu tipo, por padrão, será desalocada da memória assim que
-sair do escopo de execução. Vamos chamar essas variáveis de <strong>variável-interface</strong>.</p>
+<p>No entanto, devemos lembrar dos princípios da linguagem Object Pascal antes de solicitar tais mudanças. A linguagem Object Pascal não possui uma VM, portanto não temos um “robozinho” para ficar monitorando nossos objetos. Devemos liberar nossos objetos “manualmente” chamando <code>obj.Free</code> na maioria dos casos.</p>
 
-<p>No momento que o compilador sabe que a variável-interface não será mais utilizada, ele desaloca a memória
-chamando o <code>destructor</code> da instância.</p>
+<p><a href="/posts/simplicidade/">Simples</a> e eficiente.</p>
 
-<p>Isso é ótimo para a programação Orientada a Objetos.</p>
+<p>Mas eu posso entender o motivo de tal solicitação: É muito cômodo declarar objetos sem se preocupar em liberá-los da memória… e eu tenho feito isso há anos utilizando a “técnica” do <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a> em conjunto com instâncias de interfaces.</p>
 
-<p>Significa que, se eu fizer isso corretamente, poderei criar Objetos dentro de Objetos, encadear chamadas de Objetos,
-criar novas instâncias <code>inline</code> para utilizar em argumentos e muito mais… assim como fazem no Java ou C#.</p>
+<p>O tipo de <a href="/posts/interfaces-em-todo-lugar/">interface</a> é liberado automaticamente pelo compilador quando a variável sai do escopo. Mas isso não existe para instâncias de classe, proposto no pedido da nova feature.</p>
 
-<h2 id="o-problema">O problema</h2>
+<p>Então, se houvesse um jeito de liberar automaticamente as instâncias de classes, “convertendo-as” em instâncias de interfaces, sem utilizar nenhum tipo de <a href="/posts/nao-utilize-casting/">casting</a>, teríamos a liberação automática sem que fosse necessária alterações no compilador.</p>
 
-<p>Existe um grande problema em utilizar Interfaces:</p>
+<p>Bem, o que vou lhe apresentar agora pode já estar sendo utilizando por muitos desenvolvedores ao redor do mundo, e é algo tão simples que podemos até mesmo substituir o <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a> — tão difundido na comunidade brasileira e mundo afora — por essa simples “técnica” que mostrarei mais abaixo.</p>
 
-<p>A falta da variável-interface.</p>
+<p>Mas antes, o que há de errado com o <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a>?</p>
 
-<p>Se não implementar da forma correta, você terá algumas violações de acesso (<code>Access Violation</code>)
-e/ou vazamentos de memória (<code>memleaks</code>).</p>
+<p>Esse método foi criado com o intuito de implementar a liberação automática da instância, sem haver a necessidade de declarar uma variável local para incrementar a contagem de referência.</p>
 
-<p>Para que o <em>garbage colletor</em> funcione corretamente você precisa ter uma variável-interface para receber a instância, sempre.</p>
+<p>Funciona.</p>
 
-<p>Considere o código abaixo:</p>
+<p>No entanto, há alguns problemas com essa abordagem.</p>
 
-<pre><code>function TFoo.Execute(const Name: string): string;
+<p>Primeiro, ele é um método estático da classe. Deveríamos <del>não utilizar</del> evitar métodos de classe a todo custo, dando [preferência] em utilizar instâncias de interfaces, onde não existem métodos estáticos.</p>
+
+<p>Segundo, é redundante ter que codificar sempre os mesmos parâmetros da(s) mesma(s) assinatura do(s) construtor(es). Isso, além de ser no mínimo chato, é um pouco custoso para a manutenção pois (quase sempre) haverá 2 lugares para alterar os argumentos.</p>
+
+<p>Terceiro, o método não impede que um programador que não conheça a técnica, chame diretamente o construtor da classe, <em>by passing</em> o método estático. Isso pode gerar <em>memory leaks</em>, como já foi explicado em alguns outros artigos aqui do blog.</p>
+
+<p>Embora haja todos esses problemas, a utilização do <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a> se mostrou eficiente, melhorando e simplificando a base de código em muitos projetos.</p>
+
+<p>Entretanto, a técnica a seguir traz todas as vantagens do <code>New</code> porém sem as desvantagens.</p>
+
+<p>Você pode fazer essa “mágica” adicionando mais um método na classe.</p>
+
+<p>Eu o chamo de Método <code>Ref</code>, que significa <em>reference for</em>:</p>
+
+<pre><code>function TFoo.Ref: ISomething;
 begin
-  Result := TAction.Create(TTask.Create(Name)).Execute.ToString;
+  result := self;
 end;
 </code></pre>
 
-<ol>
-  <li>TTask é uma classe que recebe uma <code>string</code> no construtor;</li>
-  <li>TTask implementa ITask, uma Interface;</li>
-  <li>TAction é uma classe que recebe uma <strong>interface</strong> ITask no construtor;</li>
-  <li>TAction implementa IAction, uma Interface;</li>
-  <li>TAction tem um método Execute que retorna uma interface IResult;</li>
-  <li>IResult tem um método ToString que retorna o resultado no formato <code>string</code>;</li>
-</ol>
+<p>Sim, é só isso.</p>
 
-<p>Quantos vazamentos de memória teremos: 0, 1 ou 2?</p>
+<p>Um método que retorna <code>self</code>, sendo o tipo do retorno a interface que a classe implementa.</p>
 
-<p>A resposta é 1.</p>
+<p>Diferentemente do <code>New</code>, o método <code>Ref</code> não é estático e não duplica a assinatura do(s) construtor(s), eliminando as primeiras duas desvantagens.</p>
 
-<p>Por quê?</p>
+<p>Sim, há a possibilidade do desenvolvedor esquecer de utilizá-lo ao chamar o construtor da classe diretamente ao invés do <code>New</code>e isso poderia ocasionar <em>memory leaks</em>. Mas sua vantagem é que você tem a <em>opção</em> em não utilizá-lo para aumentar a performance na criação dos objetos <em>by passing</em> um método de classe (o método <code>New</code>) antes de chegar ao construtor, ganhando, talvez, alguns milionésimos de segundos.</p>
 
-<p>O compilador fará o seguinte (mais ou menos, em termos leigos):</p>
+<p>Veja um exemplo:</p>
 
-<ol>
-  <li>Executar TTask.Create(Name), criando a instância;</li>
-  <li>A instância criada irá ser passada no argumento, que é do tipo ITask, do construtor de TAction;</li>
-  <li>TAction irá criar uma instância de IResult quando chamar Execute;</li>
-  <li>Utilizando a instância de IResult, o método ToString é chamado e uma <code>string</code> é retornada;</li>
-</ol>
-
-<p>Onde está o erro?</p>
-
-<p>Na chamada <code>TAction.Create</code> porque a instância não é referenciada por nenhuma variável-interface!</p>
-
-<p>O compilador não tem uma referência, então ele não sabe se deve desalocar a memória.</p>
-
-<p>Na chamada <code>TTask.Create(Name)</code> não há problema. O argumento de <code>TAction</code> recebe uma <code>ITask</code>, então o compilador
-sabe que deverá desalocar essa instância logo que não precisar mais dela.</p>
-
-<p>Então vamos acertar o código:</p>
-
-<pre><code>function TFoo.Execute(const Name: string): string;
-var
-  A: IAction;
+<pre><code>procedure DoIt;
 begin
-  A := TAction.Create(TTask.Create(Name));
-  Result := A.Execute.ToString;
+  TFoo.Create(TBar.Create).Ref.Execute;
 end;
 </code></pre>
 
-<p>Agora não haverá <code>memleaks</code> porque agora o compilador tem a referência <code>A</code> para <code>TAction</code>. No fim do método
-<code>TFoo.Execute</code> a instância em <code>A</code> será liberada automaticamente.</p>
+<p>Se ambas as classes implementam interfaces, temos a possibilidade de não utilizar <code>Ref</code> no argumento do construtor de <code>TFoo</code>, chamando apenas o construtor de <code>TBar</code>. Mas, somos “obrigados” a utilizar <code>Ref</code> na chamada mais externa para executar algum método da interface que <code>TFoo</code> implementa, afim de evitar <em>memory leaks</em>, pois não há nenhuma variável (local) para receber a instância da interface.</p>
 
-<p>Se não me falha a memória isso foi implementado no Delphi
-a partir da versão 3 (me corrijam se eu estiver errado).</p>
+<p>Agora você deve estar se perguntando, o que isso tem have com o título do artigo?</p>
 
-<p>Tem muito material sobre isso na Internet se quiserem mais detalhes, mas acredito que você já sabia disso
-ou ao menos já leu sobre isso alguma vez.</p>
+<p>Tudo.</p>
 
-<h2 id="o-mtodo-new">O método New</h2>
+<p>É padrão da linguagem que, ao trabalharmos com instâncias de interfaces, o compilador utilize um contador de referências para saber quando destruir um objeto, liberando a memória alocada.</p>
 
-<p>Se você prestou atenção nos códigos acima, vai reparar que está na mão do programador saber quando utilizar
-uma variável-interface para “dizer” ao compilador que a instância deverá ser liberada automaticamente…</p>
+<p>Então, se você criar um objeto do tipo de classe e depois utilizar o método <code>Ref</code> ou apenas atribuir a instância a uma variável do tipo interface, você irá “transformar” sua instância de classe em instância de interface, ganhando a contagem de referência e a auto destruição do objeto… de graça.</p>
 
-<p>E é claro que você vai esquecer disso quando estiver programando… várias vezes! Aconteceu comigo. Centenas de vezes.</p>
+<p>Vejamos um exemplo completo:</p>
 
-<p>Nem precisa ser esquecimento, basta o código mudar numa parte para começar a ter <code>memleaks</code>, exemplo:</p>
+<pre><code>program Project1;
 
-<p>Se o argumento é do tipo Interface, não há problema em criar uma instância <code>inline</code>, mas e se o código for
-alterado para receber uma classe concreta (mudou de IAction para TAction o argumento)? 
-O código pode continuar funcionando, porém haverá <code>memleaks</code> porque
-o compilador não irá mais desalocar a instância criada no argumento por não ser mais do tipo Interface.</p>
+{$mode delphi}
 
-<p>Ora podemos criar <code>inline</code>, ora não… isso é muito chato!</p>
+uses
+  SysUtils,
+  Classes;
 
-<h3 id="a-soluo">A Solução</h3>
-
-<p>Todas as novas instâncias terão uma variável-interface para receber a referência.</p>
-
-<p>Eu implemento essa “mágica” de forma muito simples utilizando o método <em>New</em>.</p>
-
-<pre><code>type
-  TAction = class(TInterfacedObject, IAction)
-  public
-    constructor Create(Task: ITask);
-    class function New(Task: ITask): IAction;
-    function Execute: IResult;
+type
+  IFoo = interface
+  ['{1D26066C-984B-4632-95B2-B25253AF149E}']
+    procedure ShowMsg;
   end;
-  
-class function TAction.New(Task: ITask): IAction;
+
+type
+  TFoo = class(TInterfacedObject, IFoo)
+  private
+    fText: string;
+  public
+    constructor Create(const aText: string);
+    destructor Destroy; override;
+    function Ref: IFoo;
+    procedure ShowMsg;
+  end;
+
+{ TFoo }
+
+constructor TFoo.Create(const aText: string);
 begin
-  Result := TAction.Create(Task);
-end;  
-
-{ Implementação de Create e Execute... irrelevantes }  
-
-{ Implementação do método New também para TTask... }
-
-{...}  
-  
-function TFoo.Execute(const Name: string): string;
-begin
-  Result := TAction.New(TTask.New(Name)).Execute.ToString;
+  inherited Create;
+  fText := aText;
+  writeln('Creating '+ FRefCount.ToString);
 end;
+
+destructor TFoo.Destroy;
+begin
+  writeln('Destroing ' + FRefCount.ToString);
+  inherited Destroy;
+end;
+
+function TFoo.Ref: IFoo;
+begin
+  result := self;
+end;
+
+procedure TFoo.ShowMsg;
+begin
+  writeln(fText);
+end;
+
+var
+  f: TFoo; // class, not an interface
+begin
+  f := TFoo.Create('teste');
+  f.Ref.ShowMsg;
+  // f.Free; &lt;&lt; you don't need it
+end.
 </code></pre>
 
-<p>Agora nós estamos chamando <code>TAction.New</code> ao invés de <code>TAction.Create</code>.</p>
+<p>Execute o código acima e verá que não existe nenhum <em>memory leak</em>, mesmo <code>f</code> sendo do tipo <code>TFoo</code>, uma classe.</p>
 
-<p>O método <em>New</em> irá retornar uma instância de <code>IAction</code> (interface) diferentemente do construtor
-<code>Create</code> que iria retornar uma instância de <code>TAction</code> (classe).</p>
+<p>A mágica acontece quando chamamos <code>Ref</code>. Ele retorna um tipo de interface que é o próprio objeto <code>self</code>. Assim, a “nova” instância passa a ter uma contagem de referência e será destruída automaticamente.</p>
 
-<ul>
-  <li>Sem problemas de <code>memleaks</code></li>
-  <li>Código mais limpo, sem variáveis locais</li>
-  <li>Código mais limpo, sem try-finally para desalocar variáveis locais</li>
-</ul>
+<pre><code>c:\temp&gt;project1.exe
+Creating 1
+teste
+Destroing 0
+Heap dump by heaptrc unit of c:\temp\project1.exe
+76 memory blocks allocated : 1967/2120
+76 memory blocks freed     : 1967/2120
+0 unfreed memory blocks : 0
+True heap size : 196608 (80 used in System startup)
+True free heap : 196528
+</code></pre>
 
-<p>Utilize o método <em>New</em> em todas as suas classes e nunca mais chame o construtor diretamente.
-Assim você não terá o problema da falta da variável-interface, seja por esquecimento ou por
-mudanças no código.</p>
+<p>A linguagem Object Pascal pode parecer simples demais para alguns desenvolvedores (que não conhecem bem a linguagem).</p>
 
-<p>Tá gostando? Alguma dúvida? Não concorda? Posta aí nos comentários.</p>
+<p>Alguns dizem que é “apenas uma linguagem para aprendizado” ou que não acompanhou as “novas features” das linguagens mais “modernas”.</p>
+
+<p>Me diga então, qual linguagem você conhece que nos dá a eficiência em poder liberar nossos objetos no melhor momento que quisermos, mas também ter objetos que se “auto destroem” e ainda conseguir fazer a transição de um tipo para o outro?</p>
+
+<p>Até logo.</p>
 
 </article>
 
@@ -372,33 +374,33 @@ mudanças no código.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/metodo-ref" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Interfaces e o Método estático New&via=mdbs99;url=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Como Transformar uma Instância de Classe em Instância de Interface&via=mdbs99;url=http://objectpascalprogramming.com/metodo-ref" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/metodo-ref" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/&title=Interfaces e o Método estático New" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/&title=Interfaces e o Método estático New" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/metodo-ref&title=Como Transformar uma Instância de Classe em Instância de Interface" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/&t=Interfaces e o Método estático New" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/metodo-ref&title=Como Transformar uma Instância de Classe em Instância de Interface" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/metodo-ref&t=Como Transformar uma Instância de Classe em Instância de Interface" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -445,15 +447,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/metodo-ref" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Como Transformar uma Instância de Classe em Instância de Interface</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/interfaces-e-casting" class="post-link">
@@ -536,6 +529,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/a-declaracao-with-do-perfeita" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>A Declaração WITH-DO Perfeita</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -543,8 +545,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/interfaces-e-o-metodo-estatico-new';
-      var disqus_title      = 'Interfaces e o Método estático New';
+      var disqus_identifier = '/metodo-ref';
+      var disqus_title      = 'Como Transformar uma Instância de Classe em Instância de Interface';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
