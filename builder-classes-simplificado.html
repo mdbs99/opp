@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Organização de Projetos &#8211; Object Pascal Programming</title>
+    <title>Builder Classes Simplificado &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Projeto">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, c#, csharp, java, object-oriented, oop, mdbs99, project, organização, organize, organization">
-    <link rel="canonical" href="http://objectpascalprogramming.com/organizacao-de-projetos">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, builder">
+    <link rel="canonical" href="http://objectpascalprogramming.com/builder-classes-simplificado">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Organização de Projetos">
-    <meta property="og:description" content="Como você organiza a parte física e lógica dos seus Projetos?">
-    <meta property="og:url" content="http://objectpascalprogramming.com/organizacao-de-projetos">
+    <meta property="og:title" content="Builder Classes Simplificado">
+    <meta property="og:description" content="Nesse artigo irei utilizar um Builder simplificado, que irá utilizar a mesma classe tanto para construir como para representar a instância final.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/builder-classes-simplificado">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2017/photo-jeff-hopper-17306.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/christopher-burns-360244-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Organização de Projetos" />
+    <meta name="twitter:title" content="Builder Classes Simplificado" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/organizacao-de-projetos" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/builder-classes-simplificado" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,165 +191,103 @@
 
 
 <div class="post-header mb2">
-  <h1>Organização de Projetos</h1>
-  <span class="post-meta">May 1, 2017</span><br>
+  <h1>Builder Classes Simplificado</h1>
+  <span class="post-meta">Sep 11, 2018</span><br>
   
   <span class="post-meta small">
   
-    5 minute read
+    2 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Todo novo Projeto é uma boa oportunidade para melhorarmos nossa habilidade de organização.</p>
+  <p>O padrão Builder utiliza no mínimo 2 classes: 1 classe para instância a ser construída e 1 classe para a instância construtora.</p>
 
-<p>Como você organiza a parte física e lógica dos seus Projetos?</p>
+<p>Nesse artigo irei utilizar um Builder simplificado, que irá utilizar a mesma classe tanto para construir como para representar a instância final.</p>
 
 <!--more-->
 
-<p><img src="/images/2017/photo-jeff-hopper-17306.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2018/christopher-burns-360244-unsplash.jpg" alt="Unsplash image" />
+<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Christopher Burns on Unsplash</span></p>
 
-<h2 id="introducao">Introdução</h2>
+<p>O padrão <a href="https://en.wikipedia.org/wiki/Builder_pattern">Builder</a> já é muito conhecido e utilizado mundo afora.</p>
 
-<p>A organização do Projeto é uma etapa muito importante no desenvolvimento do <em>software</em>.</p>
+<p>Esse artigo não tem a pretensão de ensiná-lo para que serve esse padrão — há milhares de artigos sobre isso na Internet, com implementação em várias linguagens diferentes.</p>
 
-<p>Trabalhar num Projeto organizado é muito mais satisfatório e eficaz.</p>
-
-<p>No entanto, muitos desenvolvedores ainda acham que é perda de tempo organizar e querem logo iniciar a codificação, sem pensar na modularização e nomenclaturas de todas as partes que irão compor o Projeto.</p>
-
-<p>Utilizar uma boa nomenclatura, padronizando os nomes dos pacotes e arquivos é de suma importância para que o desenvolvimento flua de forma eficaz entre a equipe.</p>
-
-<p>Uma boa nomenclatura também ajuda na modularização, como veremos a seguir.</p>
-
-<h2 id="projeto">Nome do Projeto</h2>
-
-<p>Todo Projeto é construído para alguma empresa e por isso toda empresa deve ter sua própria árvore de Projetos. Caso seu Projeto seja feito para uma pessoa e não empresa, utilize o nome da pessoa.</p>
-
-<p>Então vem o nome do Projeto, que deve ser curto, de fácil memorização e escrita.</p>
-
-<p>Por quê?</p>
-
-<p>Primeiro, o nome do Projeto irá fazer parte do nome das <em>units</em> como um prefixo, evitando a colisão de nomes com outros Projetos ou <em>Libs</em>.</p>
-
-<p>Segundo, o nome do Projeto será utilizado por outras ferramentas de análise e acompanhamento das tarefas (tickets) e prazos. Todo nome deve ser de fácil memorização e como uma boa identidade.</p>
-
-<p>Não use nomes indecifráveis com <em>SisXpto10</em> ou nomes grandes e sem personalidade como <em>Sistema de Tickets ABC</em>.</p>
-
-<p>Nomes de Projetos devem ser curtos, fáceis de lembrar e… <em>sexys</em>, por que não?</p>
-
-<p>Tenho Projetos chamados Sophia, <a href="https://github.com/mdbs99/james">James</a>, Odin, <a href="https://github.com/mdbs99/greyhound">Greyhound</a>, Dog, Nicole, e muitos outros.</p>
-
-<p>Tente encontrar um nome que tenha haver com o Projeto. Pode ser por causa da definição do nome em si, o que ele representa, uma sátira, apelido, pela “sonoridade” ou porque é <em>legal</em>.</p>
-
-<h2 id="diretorios-e-arquivos">Diretórios e Arquivos</h2>
-
-<p>Nos meus Projetos, sejam eles individuais ou em equipe, eles tem basicamente essa estrutura logo abaixo.</p>
-
-<h3 id="diretorios">Diretórios</h3>
-
-<p>A começar pela nomenclatura dos diretórios, utilizo a seguinte divisão:</p>
-
-<pre><code>empresa
-  |
-  projeto
-    |
-    bin  : todos os arquivos binários e libs
-    |
-    doc  : toda a documentação
-    |
-    pkg  : todos os pacotes
-    |
-    src  : fontes de produção
-    |
-    test : fontes de testes
-</code></pre>
-
-<p>Obviamente eu não inventei essa estrutura que é bem simples e lógica. Muitos Projetos <em>Open Source</em> já a utilizam a muito tempo.</p>
-
-<p>O nome dos diretórios poderiam ser <code>/binaries</code>, <code>/documentation</code>, <code>/packages</code>, <code>/source</code> e <code>/tests</code> porém para nomes de diretórios, quanto menor, melhor. Você irá lembrar disso quando tiver que digitar no console, digitar os <em>paths</em> na IDE, etc.</p>
-
-<p>Considero uma árvore simples e limpa. Mas nem todos os projetos a utilizam.</p>
-
-<p>Por exemplo. A maioria dos projetos Java são codificados com base na URL da empresa em conjunto com algum padrão estranho.</p>
-
-<p>Exemplo: <code>empresa/projeto/src/main/java/com/acme/projeto</code>.</p>
-
-<p>Na minha opinião, esta é uma nomenclatura muito deselegante e repetitiva.</p>
-
-<p>Por quê o nome do projeto se repete nos diretórios? Não sei. Talvez a IDE faça isso e ninguém dá a mínima.</p>
-
-<p>O que o <code>/com</code> significa no contexto do Projeto? Nada. Apenas um padrão que seguem para evitar a colisão de nomes, talvez.</p>
-
-<p>E por quê <code>/java</code> deve fazer parte da árvore de diretórios?!</p>
-
-<p>Realmente não sei.</p>
-
-<h3 id="arquivos">Arquivos</h3>
-
-<p>Já o nome dos arquivos, ou seja, das <em>units</em>, devem seguir o seguinte padrão:</p>
-
-<p><code>&lt;projeto&gt;.&lt;grupo&gt;.&lt;subgrupo&gt;.&lt;nome&gt;</code></p>
-
-<p>Apenas <code>&lt;projeto&gt;</code> e <code>&lt;grupo&gt;</code> são obrigatórios.</p>
-
-<p>Por quê?</p>
-
-<p>Bem, cada <em>unit</em> no <em>Object Pascal</em> pode conter mais de uma Classe. Então não é necessário um <code>&lt;nome&gt;</code> de Classe, por exemplo, como é o caso do Java.</p>
-
-<p>Apenas para Formulários e <a href="/posts/datamodule-e-apenas-um-container/"><em>DataModules</em></a>, o nome será obrigatório.</p>
-
-<p>Vejamos alguns exemplos:</p>
-
-<ol>
-  <li><a href="https://github.com/mdbs99/james/blob/master/src/james.data.pas">james.data</a> contém <code>&lt;projeto&gt;</code> e <code>&lt;grupo&gt;</code>;</li>
-  <li><a href="https://github.com/mdbs99/james/blob/master/src/james.data.clss.pas">james.data.clss</a> contém <code>&lt;projeto&gt;</code>, <code>&lt;grupo&gt;</code> e <code>&lt;subgrupo&gt;</code>;</li>
-  <li><a href="https://github.com/mdbs99/james/blob/master/src/james.data.stream.clss.pas">james.data.stream.clss</a> contém <code>&lt;projeto&gt;</code>, <code>&lt;grupo&gt;</code> e dois <code>&lt;subgrupo&gt;</code>;</li>
-</ol>
-
-<p>Existem alguns <em>sufixos</em> de arquivos que utilizo bastante:</p>
-
-<ol>
-  <li>Clss : conterá classes que implementam interfaces;</li>
-  <li>Tests : contém as classes de testes;</li>
-  <li>Form : utilizado para todos os formulários;</li>
-  <li>Module : utilizado para todos os <em>DataModules</em>;</li>
-</ol>
-
-<p>Para o nome das Classes, veja <a href="/posts/nomeando-classes/">esse artigo</a>.</p>
-
-<h2 id="dividir">Dividir para Conquistar</h2>
-
-<p>Todo projeto de tamanho médio ou grande, deve ser dividido em módulos lógicos, ou seja, subdiretórios dentro de <code>/src</code>.</p>
-
-<p>Essa divisão irá depender exclusivamente do seu projeto e contextos.</p>
+<p>No entanto, um bom resumo é encontrado na Wikipedia:</p>
 
 <blockquote>
-  <p>“Dividir para conquistar” — Napoleão</p>
+  <p>“Separar a construção de um objeto complexo da sua representação de modo que o mesmo processo de construção possa criar diferentes representações.”</p>
 </blockquote>
 
-<p>Essa divisão em subdiretórios é importante para termos a reutilização dos fontes por outros Projetos e ao mesmo tempo a restrição de visibilidade.</p>
+<p>Como podemos ver nos exemplos em C# da Wikipedia, foi utilizado uma classe <code>Car</code> e uma interface <code>ICarBuilder</code>. Depois, temos uma implementação dessa interface com a definição da classe <code>FerrariBuilder</code> e, finalmente, outra classe para customizar a Ferrari chamada <code>SportsCarBuildDirector</code>.</p>
 
-<p>Se os fontes de um Projeto ficasse em apenas um diretório, outros Projetos poderiam ter acesso a tudo. Dividindo em subdiretórios você pode restringir a visibilidade e acesso para esses outros Projetos.</p>
+<p>Podemos simplificar esse exemplo?</p>
 
-<p>Outra possibilidade bem interessante é dividir os módulos em <a href="/posts/james-e-testes-de-unidade/#pacote-de-testes">Pacotes</a> reutilizáveis entre Projetos distintos.
-Nesse padrão a divisão dos fontes não é apenas por subdiretórios, mas sim por árvores completamente diferentes.</p>
+<p>Primeiramente, <code>Car</code> poderia ser uma interface <code>ICar</code> e não uma classe. Então, poderíamos ter a classe <code>TFerrari</code> que implementa <code>ICar</code>.</p>
 
-<p>É normal criarmos Pacotes para componentes e <em>Libs</em> reutilizáveis, mas criar Pacotes entre Projetos também pode ser muito eficaz para o desenvolvimento.</p>
+<p>Na minha opinião, o único <code>Builder</code> do exemplo é a classe <code>TSportsCarBuildDirector</code> que customiza uma Ferrari para diretores. No entanto, eu também não concordo com sua existência e acho que podemos simplificar ainda mais esse exemplo — veja mais abaixo.</p>
 
-<p>No Lazarus, basta abrir um Pacote uma única vez que ele já fica registrado na IDE. Depois basta adicionar o Pacote no(s) Projeto(s) para reutilizar seus fontes. Caso queira mudar o <em>path</em> do Pacote, basta fazer num único lugar (XML de configuração da IDE) para que todos os outros Projetos sejam atualizados. Isso é muito melhor do que ter que alterar <em>paths</em> de diretório reutilizáveis em cada Projeto.</p>
+<p>Vamos começar pela primeira interface, mantendo-a <a href="/posts/simplicidade/">simples</a>, retornando tipos primitivos:</p>
 
-<h2 id="conclusao">Conclusão</h2>
+<pre><code>ICar = interface
+  function Model: string;
+  function NumDoors: Integer;
+  function Color: TColor;
+  procedure Run;
+end;      
+</code></pre>
 
-<p>Um Projeto de <em>software</em> não é apenas código-fonte. Devemos fazer um estudo desde o nome a ser utilizado, passando pela nomenclatura, diretórios e divisões de cada módulo.</p>
+<p>Depois, codificamos a classe <code>TFerrari</code>, que implementa <code>ICar</code>. Veja que essa classe não é um Builder, mas sim apenas uma classe comum.</p>
 
-<p>Seu Projeto poderá ter uma vida mais longa se você souber onde encontrar cada peça facilmente.</p>
+<pre><code>TFerrari = class(TInterfacedObject, ICar)
+private
+  fModel: string;
+  fNumDoors: Integer;
+  fColor: TColor;
+public
+  constructor Create(const aModel: string;
+    aNumDoors: Integer; aColor: TColor);
+  function Model: string;
+  function NumDoors: Integer;
+  function Color: TColor;
+  procedure Run;
+end;
+</code></pre>
 
-<p>A divisão por módulos irá facilitar a manutenção no longo prazo e a nomenclatura correta irá deixar tudo mais fácil.</p>
+<p>Como disse acima, não acho necessidade de haver um <code>Builder</code> chamado <code>TSportsCarBuildDirector</code>. Para implementar essa classe seria necessário implementar uma nova interface <code>ICarBuilder</code> além da própria classe, o que seria desnecessário.</p>
 
-<p>E você, como organiza seus Projetos?</p>
+<p>Podemos simplificar esse exemplo utilizando <a href="/posts/como-utilizar-heranca-apropriadamente/">herança</a> dessa forma:</p>
+
+<pre><code>TDirectorSportCar = class(TFerrari)
+public
+  constructor Create(aColor: TColor); reintroduce;
+end;
+
+constructor TDirectorSportCar.Create(aColor: TColor);
+begin
+  inherited Create('488 Spider', 2, aColor);
+end;
+</code></pre>
+
+<p>Acabamos de criar um Builder mas utilizando a própria classe que irá representar um <code>ICar</code>, ou seja, a <code>TDirectorSportCar</code>. Não precisamos de mais uma interface abstrata como <code>ICarBuilder</code> ou sua implementação.</p>
+
+<p>Para demonstrar o código, poderíamos ter algo assim:</p>
+
+<pre><code>procedure DoSomethingWithCars;
+var
+  car: ICar;
+begin
+  car := TDirectorSportCar.Create(clRed);
+  car.Run;
+end;
+</code></pre>
+
+<p>Sem Builders (aparentes), sem o método “Construct”, sem o método “GetResult”, e utilizando objetos <a href="/posts/objetos-imutaveis/">imutáveis</a>.</p>
 
 <p>Até logo.</p>
+
 
 </article>
 
@@ -359,33 +297,33 @@ Nesse padrão a divisão dos fontes não é apenas por subdiretórios, mas sim p
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/organizacao-de-projetos" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/builder-classes-simplificado" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Organização de Projetos&via=mdbs99;url=http://objectpascalprogramming.com/organizacao-de-projetos" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Builder Classes Simplificado&via=mdbs99;url=http://objectpascalprogramming.com/builder-classes-simplificado" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/organizacao-de-projetos" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/builder-classes-simplificado" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/organizacao-de-projetos&title=Organização de Projetos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/organizacao-de-projetos&title=Organização de Projetos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/builder-classes-simplificado&title=Builder Classes Simplificado" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/organizacao-de-projetos&t=Organização de Projetos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/builder-classes-simplificado&title=Builder Classes Simplificado" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/builder-classes-simplificado&t=Builder Classes Simplificado" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -432,15 +370,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/builder-classes-simplificado" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Builder Classes Simplificado</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/metodo-ref" class="post-link">
@@ -523,6 +452,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/classes-amigas" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Amigas</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -530,8 +468,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/organizacao-de-projetos';
-      var disqus_title      = 'Organização de Projetos';
+      var disqus_identifier = '/builder-classes-simplificado';
+      var disqus_title      = 'Builder Classes Simplificado';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

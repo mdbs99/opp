@@ -8,6 +8,100 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Builder Classes Simplificado</title>
+        <description>&lt;p&gt;O padrão Builder utiliza no mínimo 2 classes: 1 classe para instância a ser construída e 1 classe para a instância construtora.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo irei utilizar um Builder simplificado, que irá utilizar a mesma classe tanto para construir como para representar a instância final.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/christopher-burns-360244-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Christopher Burns on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;O padrão &lt;a href=&quot;https://en.wikipedia.org/wiki/Builder_pattern&quot;&gt;Builder&lt;/a&gt; já é muito conhecido e utilizado mundo afora.&lt;/p&gt;
+
+&lt;p&gt;Esse artigo não tem a pretensão de ensiná-lo para que serve esse padrão — há milhares de artigos sobre isso na Internet, com implementação em várias linguagens diferentes.&lt;/p&gt;
+
+&lt;p&gt;No entanto, um bom resumo é encontrado na Wikipedia:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Separar a construção de um objeto complexo da sua representação de modo que o mesmo processo de construção possa criar diferentes representações.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Como podemos ver nos exemplos em C# da Wikipedia, foi utilizado uma classe &lt;code&gt;Car&lt;/code&gt; e uma interface &lt;code&gt;ICarBuilder&lt;/code&gt;. Depois, temos uma implementação dessa interface com a definição da classe &lt;code&gt;FerrariBuilder&lt;/code&gt; e, finalmente, outra classe para customizar a Ferrari chamada &lt;code&gt;SportsCarBuildDirector&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Podemos simplificar esse exemplo?&lt;/p&gt;
+
+&lt;p&gt;Primeiramente, &lt;code&gt;Car&lt;/code&gt; poderia ser uma interface &lt;code&gt;ICar&lt;/code&gt; e não uma classe. Então, poderíamos ter a classe &lt;code&gt;TFerrari&lt;/code&gt; que implementa &lt;code&gt;ICar&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Na minha opinião, o único &lt;code&gt;Builder&lt;/code&gt; do exemplo é a classe &lt;code&gt;TSportsCarBuildDirector&lt;/code&gt; que customiza uma Ferrari para diretores. No entanto, eu também não concordo com sua existência e acho que podemos simplificar ainda mais esse exemplo — veja mais abaixo.&lt;/p&gt;
+
+&lt;p&gt;Vamos começar pela primeira interface, mantendo-a &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt;, retornando tipos primitivos:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ICar = interface
+  function Model: string;
+  function NumDoors: Integer;
+  function Color: TColor;
+  procedure Run;
+end;      
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Depois, codificamos a classe &lt;code&gt;TFerrari&lt;/code&gt;, que implementa &lt;code&gt;ICar&lt;/code&gt;. Veja que essa classe não é um Builder, mas sim apenas uma classe comum.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TFerrari = class(TInterfacedObject, ICar)
+private
+  fModel: string;
+  fNumDoors: Integer;
+  fColor: TColor;
+public
+  constructor Create(const aModel: string;
+    aNumDoors: Integer; aColor: TColor);
+  function Model: string;
+  function NumDoors: Integer;
+  function Color: TColor;
+  procedure Run;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Como disse acima, não acho necessidade de haver um &lt;code&gt;Builder&lt;/code&gt; chamado &lt;code&gt;TSportsCarBuildDirector&lt;/code&gt;. Para implementar essa classe seria necessário implementar uma nova interface &lt;code&gt;ICarBuilder&lt;/code&gt; além da própria classe, o que seria desnecessário.&lt;/p&gt;
+
+&lt;p&gt;Podemos simplificar esse exemplo utilizando &lt;a href=&quot;/posts/como-utilizar-heranca-apropriadamente/&quot;&gt;herança&lt;/a&gt; dessa forma:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TDirectorSportCar = class(TFerrari)
+public
+  constructor Create(aColor: TColor); reintroduce;
+end;
+
+constructor TDirectorSportCar.Create(aColor: TColor);
+begin
+  inherited Create(&#39;488 Spider&#39;, 2, aColor);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Acabamos de criar um Builder mas utilizando a própria classe que irá representar um &lt;code&gt;ICar&lt;/code&gt;, ou seja, a &lt;code&gt;TDirectorSportCar&lt;/code&gt;. Não precisamos de mais uma interface abstrata como &lt;code&gt;ICarBuilder&lt;/code&gt; ou sua implementação.&lt;/p&gt;
+
+&lt;p&gt;Para demonstrar o código, poderíamos ter algo assim:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure DoSomethingWithCars;
+var
+  car: ICar;
+begin
+  car := TDirectorSportCar.Create(clRed);
+  car.Run;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Sem Builders (aparentes), sem o método “Construct”, sem o método “GetResult”, e utilizando objetos &lt;a href=&quot;/posts/objetos-imutaveis/&quot;&gt;imutáveis&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 11 Sep 2018 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/builder-classes-simplificado</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/builder-classes-simplificado</guid>
+      </item>
+    
+      <item>
         <title>Como Transformar uma Instância de Classe em Instância de Interface</title>
         <description>&lt;p&gt;E se a linguagem Object Pascal nos permitisse codificar uma instância de classe que se auto destrói quando não mais precisamos dela?&lt;/p&gt;
 
@@ -964,134 +1058,6 @@ métodos privados, mesmo que indiretamente.&lt;/p&gt;
         <pubDate>Mon, 16 Apr 2018 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/encapsulamento</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/encapsulamento</guid>
-      </item>
-    
-      <item>
-        <title>Classes Amigas</title>
-        <description>&lt;p&gt;Classes Amigas tem acesso ao estado (privado) de seus objetos. Apesar dessa prática ser entendida por muitos desenvolvedores como uma quebra do encapsulamento, na verdade ela pode até aprimorá-lo.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/photo-ben-white-178537-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Ben White on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Classes Amigas existem na linguagem C++ a muito tempo, assim como na linguagem Object Pascal.&lt;/p&gt;
-
-&lt;p&gt;Enquanto na linguagem C++ é necessária uma sintaxe específica, em Object Pascal basta declararmos as classes na mesma unit para que elas sejam “amigas”. E não importa se elas fazem parte ou não de uma hierarquia de herança.&lt;/p&gt;
-
-&lt;p&gt;Eu conheço alguns desenvolvedores que não lidam muito bem com isso. Para eles, o que é privado nunca deveria ser acessado por outra instância além do próprio objeto.&lt;/p&gt;
-
-&lt;p&gt;Eles estão certos.&lt;/p&gt;
-
-&lt;p&gt;Mas essa é uma regra geral. Precisamos saber quando “quebrar” as regras, se isso for aumentar a &lt;i&gt;qualidade&lt;/i&gt; do software.&lt;/p&gt;
-
-&lt;p&gt;Eu também fui contra a essa &lt;i&gt;feature by design&lt;/i&gt; por muito tempo. A muitos anos atrás eu declarava as classes em units separadas, mesmo que seus objetos existissem apenas para “conversar” entre si, ou seja, mesmo que tais objetos fossem bem “íntimos”.&lt;/p&gt;
-
-&lt;p&gt;A fim de seguir a “regra de ouro” do encapsulamento, eu declarava tais classes em units separadas pensando que eu estava desenvolvendo mais Orientado a Objetos &lt;i&gt;protegendo&lt;/i&gt; seus estados.&lt;/p&gt;
-
-&lt;p&gt;Mas, ao mesmo tempo, eu declarava as propriedades de acesso — também conhecidos com &lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;Get/Set&lt;/a&gt; — para que o estado desses objetos pudessem ser acessados por alguma instância de &lt;i&gt;fora&lt;/i&gt;!&lt;/p&gt;
-
-&lt;p&gt;E isso não faz sentido.&lt;/p&gt;
-
-&lt;p&gt;Eu estava escrevendo e complicando mais o código, sem ganhar nenhum benefício, já que toda essa “proteção”, na verdade, não existia.&lt;/p&gt;
-
-&lt;p&gt;Então, eu voltei a rever esse conceito das Classes Amigas.&lt;/p&gt;
-
-&lt;p&gt;Eu diria que Classes Amigas enfraquecem o encapsulamento local (na unit) afim de &lt;i&gt;fortalecer&lt;/i&gt; o encapsulamento global (por todo o projeto).&lt;/p&gt;
-
-&lt;p&gt;Ainda assim, é claro, isso irá depender de alguns fatores. Utilizá-las é mais uma exceção à regra e deve ser muito bem pensado afim de obter mais prós do que contras.&lt;/p&gt;
-
-&lt;p&gt;Vamos a um exemplo: Imagine que você tem uma classe que representa um livro. Na interface da classe desse livro nós só queremos ter o básico que, no nosso exemplo, irá conter métodos para retornar o título, autor e ISBN.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  IBook = interface
-    function Title: string;
-    function Author: string;
-    function ISBN: string;
-  end;
-  
-  TBook = class(TInterfacedObject, IBook)
-  private
-    FDoc: IXMLDocument;
-  public
-    constructor Create(const Doc: IXMLDocument);
-    function Title: string;
-    function Author: string;
-    function ISBN: string;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Temos uma interface &lt;code&gt;IBook&lt;/code&gt; e também uma classe que a implementa.&lt;/p&gt;
-
-&lt;p&gt;O código é bem simples e de fácil entendimento.&lt;/p&gt;
-
-&lt;p&gt;A classe &lt;code&gt;TBook&lt;/code&gt; recebe uma instância de &lt;code&gt;IXMLDocument&lt;/code&gt; proveniente de algum lugar. Não importa.&lt;/p&gt;
-
-&lt;p&gt;Esse objeto XML possui toda a informação referente a um livro.&lt;/p&gt;
-
-&lt;p&gt;Hoje, apenas os 3 atributos estariam contidos no XML mas tenha em mente que ele pode ser alterado. Poderíamos adicionar mais nós de informação futuramente, se assim o desejarmos.&lt;/p&gt;
-
-&lt;p&gt;Internamente a classe &lt;code&gt;TBook&lt;/code&gt; irá fazer o parser do XML, retornando suas informações através dos respectivos métodos.&lt;/p&gt;
-
-&lt;p&gt;Imaginemos que tudo funciona bem por meses e muitas outras classes podem ter implementado a mesma interface &lt;code&gt;IBook&lt;/code&gt;. Por exemplo, &lt;code&gt;TDbBook&lt;/code&gt;, &lt;code&gt;TEmptyBook&lt;/code&gt;, &lt;code&gt;TNullBook&lt;/code&gt;, &lt;code&gt;TJSONBook&lt;/code&gt;, &lt;code&gt;TXMLBook&lt;/code&gt;, etc.&lt;/p&gt;
-
-&lt;p&gt;Então, uma nova regra de negócio é solicitada: é necessário saber o &lt;i&gt;título original&lt;/i&gt; e o &lt;i&gt;ano de publicação&lt;/i&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se alterarmos a interface atual, teremos que implementar os novos métodos em todas as classes que a implementam. Isso é bastante trabalho e pode não ser uma boa ideia.&lt;/p&gt;
-
-&lt;p&gt;Outra opção é implementar uma nova classe, especializando &lt;code&gt;IXMLDocument&lt;/code&gt; como uma interface para ser implementada por uma &lt;a href=&quot;/posts/classes-de-dados/&quot;&gt;classe de dados&lt;/a&gt;. Por exemplo, &lt;code&gt;IBookData&lt;/code&gt;. Todo o código de parser que antes estava contido em &lt;code&gt;TBook&lt;/code&gt;, deverá ser migrado para a nova classe, refatorando não só &lt;code&gt;TBook&lt;/code&gt; mas também todas as outras implementações de &lt;code&gt;IBook&lt;/code&gt; que, porventura, tenham o construtor parecido. Isso também é bastante trabalho, talvez mais trabalho do que a primeira opção.&lt;/p&gt;
-
-&lt;p&gt;A outra opção (mas pode haver muitas) é utilizar Classes Amigas criando apenas o necessário sem alterar nenhuma outra classe, escrevendo menos e de forma mais simples.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  ICompletedBook = interface(IBook)
-    function OriginalTitle: string;
-    function Year: Integer;
-  end;
-  
-  TCompletedBook = class(TBook, ICompletedBook)
-  public
-    function OriginalTitle: string;
-    function Year: Integer;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Agora temos uma nova interface e uma nova classe que a implementa. Ambos utilizando &lt;a href=&quot;/posts/heranca-pode-ser-o-mal-da-orientacao-a-objetos-parte-1/&quot;&gt;herança&lt;/a&gt;, pois ambas são muito íntimas dos seus predecessores.&lt;/p&gt;
-
-&lt;p&gt;Dentro dos métodos da classe &lt;code&gt;TCompletedBook&lt;/code&gt;, será necessário ter acesso ao atributo privado de &lt;code&gt;TBook&lt;/code&gt; denominado &lt;code&gt;FDoc&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, se ambas as classes são amigas, ou seja, declaradas na mesma unit, não haverá problemas para fazer isso:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  function TCompletedBook.OriginalTitle: string;
-  begin
-    Result := FDoc.Node(&#39;original-title&#39;).AsString;
-  end;
-
-  function TCompletedBook.Year: Integer;
-  begin
-    Result := FDoc.Node(&#39;year&#39;).AsInteger;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;O atributo &lt;code&gt;FDoc&lt;/code&gt; é acessível, mesmo sendo privado.&lt;/p&gt;
-
-&lt;p&gt;Você poderia pensar em alterar a visibilidade desse atributo para &lt;code&gt;protected&lt;/code&gt; e deixar que até mesmo o código de outros usuários possam herdar de &lt;code&gt;TBook&lt;/code&gt;, mas isso seria um erro.&lt;/p&gt;
-
-&lt;p&gt;Ao tornar os atributos acessíveis para qualquer classe, você &lt;i&gt;enfraquece&lt;/i&gt; o encapsulamento global e pode perder o controle do código. Seria muito mais difícil fazer alguma alteração em &lt;code&gt;TBook&lt;/code&gt; pois não há como saber, com certeza, quem está utilizando os atributos privados.&lt;/p&gt;
-
-&lt;p&gt;Finalmente, ao utilizar o modelo de Classes Amigas, você sabe quais classes deverão ser alteradas se houver alguma refatoração, pois todas elas estarão declaradas na mesma unit, obrigatoriamente.&lt;/p&gt;
-
-&lt;p&gt;Suas classes serão &lt;a href=&quot;/posts/menos-e-mais/&quot;&gt;menores&lt;/a&gt; e mais simples.&lt;/p&gt;
-
-&lt;p&gt;Há seres humanos que são mais ligados intimamente a uns do que outros — mesmo todos sendo provenientes da mesma “classe” — que sabem seus gostos, desejos e segredos mais íntimos.&lt;/p&gt;
-
-&lt;p&gt;A mesma lógica pode também ser aplicada a apenas algumas classes onde seus objetos são mais amigos, concedendo acesso irrestrito uns aos outros, mas bloqueando esse acesso ao mundo exterior.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 09 Apr 2018 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/classes-amigas</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/classes-amigas</guid>
       </item>
     
   </channel>
