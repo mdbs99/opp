@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Como Transformar uma Instância de Classe em Instância de Interface &#8211; Object Pascal Programming</title>
+    <title>Records - Antiga Nova Tecnologia &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
     <meta name="keywords" content="">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, interface">
-    <link rel="canonical" href="http://objectpascalprogramming.com/metodo-ref">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, records">
+    <link rel="canonical" href="http://objectpascalprogramming.com/records-antiga-nova-tecnologia">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Como Transformar uma Instância de Classe em Instância de Interface">
-    <meta property="og:description" content="E se a linguagem Object Pascal nos permitisse codificar uma instância de classe que se auto destrói quando não mais precisamos dela?">
-    <meta property="og:url" content="http://objectpascalprogramming.com/metodo-ref">
+    <meta property="og:title" content="Records - Antiga Nova Tecnologia">
+    <meta property="og:description" content="O tipo Record pode ter métodos e até mesmo campos privados. Seria isso considerado uma abominação para um código Orientado a Objetos?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/records-antiga-nova-tecnologia">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/julie-north-720719-unsplash.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/alvaro-reyes-517391-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Como Transformar uma Instância de Classe em Instância de Interface" />
+    <meta name="twitter:title" content="Records - Antiga Nova Tecnologia" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/metodo-ref" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/records-antiga-nova-tecnologia" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,178 +191,161 @@
 
 
 <div class="post-header mb2">
-  <h1>Como Transformar uma Instância de Classe em Instância de Interface</h1>
-  <span class="post-meta">Aug 13, 2018</span><br>
+  <h1>Records - Antiga Nova Tecnologia</h1>
+  <span class="post-meta">Oct 22, 2018</span><br>
   
   <span class="post-meta small">
   
-    5 minute read
+    4 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>E se a linguagem Object Pascal nos permitisse codificar uma instância de classe que se auto destrói quando não mais precisamos dela?</p>
-
-<p>É possível transformar uma instância de classe para se comportar como uma instância de interface?</p>
+  <p>O tipo Record pode ter métodos e até mesmo campos privados. Seria isso considerado uma abominação para um código Orientado a Objetos?</p>
 
 <!--more-->
 
-<p><img src="/images/2018/julie-north-720719-unsplash.jpg" alt="Unsplash image" />
-<span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Julie North on Unsplash</span></p>
+<p><img src="/images/2018/alvaro-reyes-517391-unsplash.jpg" alt="Unsplash image" />
+<br /><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Alvaro Reyes on Unsplash</span></p>
 
-<p>Há alguns dias eu acompanhei alguns desenvolvedores solicitarem algumas “novas features” para o compilador Free Pascal..</p>
+<p>Na programação Orientada a Objetos, utilizamos objetos.</p>
 
-<p>Uma dessas features é a possibilidade de fazer um <em>“auto free”</em> de uma instância de classe. Sim, como no Java ou C#, onde um objeto do tipo de uma classe é liberado automaticamente quando a VM acha que deve fazê-lo.</p>
+<p>Se você precisasse de um objeto para representar os <em>dados</em> de um usuário, apenas login, password e nome, como seria a definição da classe?</p>
 
-<p>No entanto, devemos lembrar dos princípios da linguagem Object Pascal antes de solicitar tais mudanças. A linguagem Object Pascal não possui uma VM, portanto não temos um “robozinho” para ficar monitorando nossos objetos. Devemos liberar nossos objetos “manualmente” chamando <code>obj.Free</code> na maioria dos casos.</p>
+<p>Vamos tentar:</p>
 
-<p><a href="/posts/simplicidade/">Simples</a> e eficiente.</p>
-
-<p>Mas eu posso entender o motivo de tal solicitação: É muito cômodo declarar objetos sem se preocupar em liberá-los da memória… e eu tenho feito isso há anos utilizando a “técnica” do <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a> em conjunto com instâncias de interfaces.</p>
-
-<p>O tipo de <a href="/posts/interfaces-em-todo-lugar/">interface</a> é liberado automaticamente pelo compilador quando a variável sai do escopo. Mas isso não existe para instâncias de classe, proposto no pedido da nova feature.</p>
-
-<p>Então, se houvesse um jeito de liberar automaticamente as instâncias de classes, “convertendo-as” em instâncias de interfaces, sem utilizar nenhum tipo de <a href="/posts/nao-utilize-casting/">casting</a>, teríamos a liberação automática sem que fosse necessária alterações no compilador.</p>
-
-<p>Bem, o que vou lhe apresentar agora pode já estar sendo utilizando por muitos desenvolvedores ao redor do mundo, e é algo tão simples que podemos até mesmo substituir o <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a> — tão difundido na comunidade brasileira e mundo afora — por essa simples “técnica” que mostrarei mais abaixo.</p>
-
-<p>Mas antes, o que há de errado com o <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a>?</p>
-
-<p>Esse método foi criado com o intuito de implementar a liberação automática da instância, sem haver a necessidade de declarar uma variável local para incrementar a contagem de referência.</p>
-
-<p>Funciona.</p>
-
-<p>No entanto, há alguns problemas com essa abordagem.</p>
-
-<p>Primeiro, ele é um método estático da classe. Deveríamos <del>não utilizar</del> evitar métodos de classe a todo custo, dando [preferência] em utilizar instâncias de interfaces, onde não existem métodos estáticos.</p>
-
-<p>Segundo, é redundante ter que codificar sempre os mesmos parâmetros da(s) mesma(s) assinatura do(s) construtor(es). Isso, além de ser no mínimo chato, é um pouco custoso para a manutenção pois (quase sempre) haverá 2 lugares para alterar os argumentos.</p>
-
-<p>Terceiro, o método não impede que um programador que não conheça a técnica, chame diretamente o construtor da classe, <em>by passing</em> o método estático. Isso pode gerar <em>memory leaks</em>, como já foi explicado em alguns outros artigos aqui do blog.</p>
-
-<p>Embora haja todos esses problemas, a utilização do <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New</a> se mostrou eficiente, melhorando e simplificando a base de código em muitos projetos.</p>
-
-<p>Entretanto, a técnica a seguir traz todas as vantagens do <code>New</code> porém sem as desvantagens.</p>
-
-<p>Você pode fazer essa “mágica” adicionando mais um método na classe.</p>
-
-<p>Eu o chamo de Método <code>Ref</code>, que significa <em>reference for</em>:</p>
-
-<pre><code>function TFoo.Ref: ISomething;
-begin
-  result := self;
+<pre><code>TUserData = class
+private
+  fLogin: string;
+  fPassword: string;
+  fName: string;
+public
+  property Login: string read fLogin write fLogin;
+  property Password: string read fPassword write fPassword;
+  property Name: string read fName write fName;
 end;
 </code></pre>
 
-<p>Sim, é só isso.</p>
+<p>Esse seria um estilo de implementação que podemos ver em muitos sistemas que se dizem ser Orientados a Objetos.</p>
 
-<p>Um método que retorna <code>self</code>, sendo o tipo do retorno a interface que a classe implementa.</p>
+<p>No entanto, essa classe irá gerar “objetos” que são mais conhecidos como DTO (Data Transfer Object) o que, por definição, é um conceito errado.</p>
 
-<p>Diferentemente do <code>New</code>, o método <code>Ref</code> não é estático e não duplica a assinatura do(s) construtor(s), eliminando as primeiras duas desvantagens.</p>
+<p>Objetos não são <a href="/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados">“baldes de dados”</a>.</p>
 
-<p>Sim, há a possibilidade do desenvolvedor esquecer de utilizá-lo ao chamar o construtor da classe diretamente ao invés do <code>New</code>e isso poderia ocasionar <em>memory leaks</em>. Mas sua vantagem é que você tem a <em>opção</em> em não utilizá-lo para aumentar a performance na criação dos objetos <em>by passing</em> um método de classe (o método <code>New</code>) antes de chegar ao construtor, ganhando, talvez, alguns milionésimos de segundos.</p>
+<p>Objetos verdadeiros possuem comportamento e <a href="/encapsulamento">encapsulam</a> dados e/ou outros objetos em seu interior. O que está encapsulado não deveria ser visível ou acessado diretamente por outro objeto externo.</p>
 
-<p>Veja um exemplo:</p>
+<p>Essa é a <em>teoria</em>.</p>
 
-<pre><code>procedure DoIt;
-begin
-  TFoo.Create(TBar.Create).Ref.Execute;
+<p>Mas, e se no contexto do seu sistema você realmente não necessitasse de nenhum método para representar os dados de um usuário?</p>
+
+<p>Por muito tempo eu tenho utilizado objetos para tudo, até mesmo para representar dados, mas sem utilizar objetos anêmicos como esse, no entanto.</p>
+
+<p>Para representar os dados acima, eu utilizaria a técnica do <a href="/posts/diga-me-algo-sobre-voce/#metodo-about">Método About()</a>, que iria retornar um XML ou JSON, conforme explicado em 2016…</p>
+
+<p>Há vantagens nessa técnica como ter uma única interface que qualquer classe possa implementar para retornar um XML/JSON. Mas também há desvantagens, como não haver checagem estática do compilador e o <em>overhead</em> em “montar/desmontar” o <em>stream</em> se houver a necessidade de repassar a informação por uma cadeia de objetos.</p>
+
+<p>Nesses ~2 anos, eu diria que muita coisa mudou.</p>
+
+<p>Estou trabalhando em alguns projetos que necessitam de extrema velocidade de processamento, mas nem por isso eles são menos Orientados a Objetos.</p>
+
+<p>Como?</p>
+
+<p>Redescobrindo o tipo Record.</p>
+
+<p>Mas antes eu quero lhe contar por quê eu neglicenciei os Records por muito tempo.</p>
+
+<p>Bem, Records existem desde o Turbo Pascal. Eles representam uma estrutura de dados. Você define uma estrutura e depois define <em>procedures</em> e <em>functions</em> para trabalhar com as estruturas — como ainda fazemos na linguagem C.</p>
+
+<p>Na Orientação a Objetos, nós unimos comportamento aos dados num único artefato chamado objeto.</p>
+
+<p>Então, a ideia de ter um Record com todos os seus dados públicos e funções “soltas” que o utilizam, implementadas muitas vezes em Unidades diferentes, me soa muito “anti-objeto”, muito anti-encapsulamento.</p>
+
+<p>Records, dessa forma, são estruturas para programas procedurais.</p>
+
+<p>Mas, já faz uns anos que os arquitetos da linguagem Object Pascal introduziram métodos em Records.</p>
+
+<p>Sim, métodos, em Records.</p>
+
+<p>Quando eu li isso pela primeira vez, achei que os arquitetos tinham ficado loucos. Métodos em Records? Qual o sentido? Já temos objetos, não precisamos de Records com métodos. Isso não faz o menor sentido! — eu pensava.</p>
+
+<p>Entretanto, hoje em dia, Records podem ter métodos e eles podem ser até mesmo privados, assim como ter <em>fields</em> privados!</p>
+
+<p>Ora, não é isso um objeto?</p>
+
+<p>Não.</p>
+
+<p>Então, não seria melhor utilizar um objeto?</p>
+
+<p>Depende.</p>
+
+<p>Records são estruturas de dados — mesmo que eles tenham métodos — e deveria ser utilizados como tal.</p>
+
+<p>Records são alocados automaticamente pelo compilador na área de memória <em>stack</em>, ao invés da área de memória <em>heap</em>, como fazem os objetos. Utilizar o <em>stack</em> é mais rápido e mais simples para o compilador gerenciar a memória.</p>
+
+<p>Então, se você necessita representar <em>apenas</em> dados, Record é a melhor opção.</p>
+
+<p>Records não podem utilizar herança e muito menos implementar uma interface, então não há polimorfismo — lembre-se, são apenas dados.</p>
+
+<p>Então, se você necessita de polimorfismo e comportamento, objeto é a melhor opção.</p>
+
+<p>Dito isso, por quê métodos em Records pode mudar a maneira em como utilizamos Records em programas Orientados a Objetos?</p>
+
+<p>Quando declaramos um Record, seus campos não são inicializados, como acontece com os atributos de um objeto. Então, podemos definir um método para iniciá-lo, sem ter que fazer isso externamente — mesmo que seus campos sejam públicos — encapsulando a inicialização dos campos na própria estrutura de dados:</p>
+
+<pre><code>TUserData = record
+  login: string;
+  password: string;
+  name: string;
+  procedure Init;
 end;
-</code></pre>
 
-<p>Se ambas as classes implementam interfaces, temos a possibilidade de não utilizar <code>Ref</code> no argumento do construtor de <code>TFoo</code>, chamando apenas o construtor de <code>TBar</code>. Mas, somos “obrigados” a utilizar <code>Ref</code> na chamada mais externa para executar algum método da interface que <code>TFoo</code> implementa, afim de evitar <em>memory leaks</em>, pois não há nenhuma variável (local) para receber a instância da interface.</p>
-
-<p>Agora você deve estar se perguntando, o que isso tem have com o título do artigo?</p>
-
-<p>Tudo.</p>
-
-<p>É padrão da linguagem que, ao trabalharmos com instâncias de interfaces, o compilador utilize um contador de referências para saber quando destruir um objeto, liberando a memória alocada.</p>
-
-<p>Então, se você criar um objeto do tipo de classe e depois utilizar o método <code>Ref</code> ou apenas atribuir a instância a uma variável do tipo interface, você irá “transformar” sua instância de classe em instância de interface, ganhando a contagem de referência e a auto destruição do objeto… de graça.</p>
-
-<p>Vejamos um exemplo completo:</p>
-
-<pre><code>program Project1;
-
-{$mode delphi}
-
-uses
-  SysUtils,
-  Classes;
-
-type
-  IFoo = interface
-  ['{1D26066C-984B-4632-95B2-B25253AF149E}']
-    procedure ShowMsg;
-  end;
-
-type
-  TFoo = class(TInterfacedObject, IFoo)
-  private
-    fText: string;
-  public
-    constructor Create(const aText: string);
-    destructor Destroy; override;
-    function Ref: IFoo;
-    procedure ShowMsg;
-  end;
-
-{ TFoo }
-
-constructor TFoo.Create(const aText: string);
+procedure TUserData.Init;
 begin
-  inherited Create;
-  fText := aText;
-  writeln('Creating '+ FRefCount.ToString);
-end;
-
-destructor TFoo.Destroy;
-begin
-  writeln('Destroing ' + FRefCount.ToString);
-  inherited Destroy;
-end;
-
-function TFoo.Ref: IFoo;
-begin
-  result := self;
-end;
-
-procedure TFoo.ShowMsg;
-begin
-  writeln(fText);
+  login := '';
+  password := '';
+  name := '';
 end;
 
 var
-  f: TFoo; // class, not an interface
+  u: TUserData;
 begin
-  f := TFoo.Create('teste');
-  f.Ref.ShowMsg;
-  // f.Free; &lt;&lt; you don't need it
-end.
+  u.Init;
+end;
 </code></pre>
 
-<p>Execute o código acima e verá que não existe nenhum <em>memory leak</em>, mesmo <code>f</code> sendo do tipo <code>TFoo</code>, uma classe.</p>
+<p>Outra opção é utilizar a função <a href="https://www.freepascal.org/docs-html/rtl/system/default.html">Default()</a> mas o importante é que você tem a opção de fazer o que quiser no procedimento que será como um construtor:</p>
 
-<p>A mágica acontece quando chamamos <code>Ref</code>. Ele retorna um tipo de interface que é o próprio objeto <code>self</code>. Assim, a “nova” instância passa a ter uma contagem de referência e será destruída automaticamente.</p>
-
-<pre><code>c:\temp&gt;project1.exe
-Creating 1
-teste
-Destroing 0
-Heap dump by heaptrc unit of c:\temp\project1.exe
-76 memory blocks allocated : 1967/2120
-76 memory blocks freed     : 1967/2120
-0 unfreed memory blocks : 0
-True heap size : 196608 (80 used in System startup)
-True free heap : 196528
+<pre><code>procedure TUserData.Init;
+begin
+  Default(self);
+end;
 </code></pre>
 
-<p>A linguagem Object Pascal pode parecer simples demais para alguns desenvolvedores (que não conhecem bem a linguagem).</p>
+<p>Se o <em>password</em> precisar ser criptografado/descriptografado, você não precisa de funções externas para isso:</p>
 
-<p>Alguns dizem que é “apenas uma linguagem para aprendizado” ou que não acompanhou as “novas features” das linguagens mais “modernas”.</p>
+<pre><code>function TUserData.EncryptedPassword: string;
+begin
+  result := '&lt;using some algorithm to encrypt&gt;';
+end;
 
-<p>Me diga então, qual linguagem você conhece que nos dá a eficiência em poder liberar nossos objetos no melhor momento que quisermos, mas também ter objetos que se “auto destroem” e ainda conseguir fazer a transição de um tipo para o outro?</p>
+function TUserData.DecryptedPassword: string;
+begin
+  result := '&lt;using some algorithm to decrypt&gt;';
+end;
+</code></pre>
+
+<p>Existem algumas regras a seguir:</p>
+
+<ol>
+  <li>Não implemente métodos que se comportem como objetos, ou seja, trabalhe <em>apenas</em> com os dados do Record, transformando-os;</li>
+  <li>Não retorne instâncias de objetos em seus métodos, com exceção de instâncias de interfaces, mas evite a todo custo;</li>
+  <li>Só utilize campos com tipos primitivos ou gerenciados (ex: strings, Variant, etc), nunca instâncias de objetos;</li>
+</ol>
+
+<p>Faça isso e você estará seguro.</p>
+
+<p>Seu código não será considerado menos Orientado a Objetos por estar utilizando estruturas de dados que representam dados. Records foram criados exatamente para isso e a implementação de métodos apenas facilitaram seu uso.</p>
 
 <p>Até logo.</p>
 
@@ -374,33 +357,33 @@ True free heap : 196528
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/metodo-ref" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/records-antiga-nova-tecnologia" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Como Transformar uma Instância de Classe em Instância de Interface&via=mdbs99;url=http://objectpascalprogramming.com/metodo-ref" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Records - Antiga Nova Tecnologia&via=mdbs99;url=http://objectpascalprogramming.com/records-antiga-nova-tecnologia" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/metodo-ref" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/records-antiga-nova-tecnologia" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/metodo-ref&title=Como Transformar uma Instância de Classe em Instância de Interface" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/metodo-ref&title=Como Transformar uma Instância de Classe em Instância de Interface" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/records-antiga-nova-tecnologia&title=Records - Antiga Nova Tecnologia" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/metodo-ref&t=Como Transformar uma Instância de Classe em Instância de Interface" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/records-antiga-nova-tecnologia&title=Records - Antiga Nova Tecnologia" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/records-antiga-nova-tecnologia&t=Records - Antiga Nova Tecnologia" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -449,18 +432,18 @@ Gostaria de me pagar um café?
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/records-antiga-nova-tecnologia" class="post-link">
+      <a href="/builder-classes-simplificado" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Records - Antiga Nova Tecnologia</li></h4>
+          <h4 class="post-title"><li>Builder Classes Simplificado</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
       </a>
     </div>
   
     <div class="post ml2">
-      <a href="/builder-classes-simplificado" class="post-link">
+      <a href="/metodo-ref" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Builder Classes Simplificado</li></h4>
+          <h4 class="post-title"><li>Como Transformar uma Instância de Classe em Instância de Interface</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
       </a>
@@ -545,8 +528,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/metodo-ref';
-      var disqus_title      = 'Como Transformar uma Instância de Classe em Instância de Interface';
+      var disqus_identifier = '/records-antiga-nova-tecnologia';
+      var disqus_title      = 'Records - Antiga Nova Tecnologia';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

@@ -8,6 +8,160 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Records - Antiga Nova Tecnologia</title>
+        <description>&lt;p&gt;O tipo Record pode ter métodos e até mesmo campos privados. Seria isso considerado uma abominação para um código Orientado a Objetos?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/alvaro-reyes-517391-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;br /&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Alvaro Reyes on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Na programação Orientada a Objetos, utilizamos objetos.&lt;/p&gt;
+
+&lt;p&gt;Se você precisasse de um objeto para representar os &lt;em&gt;dados&lt;/em&gt; de um usuário, apenas login, password e nome, como seria a definição da classe?&lt;/p&gt;
+
+&lt;p&gt;Vamos tentar:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TUserData = class
+private
+  fLogin: string;
+  fPassword: string;
+  fName: string;
+public
+  property Login: string read fLogin write fLogin;
+  property Password: string read fPassword write fPassword;
+  property Name: string read fName write fName;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Esse seria um estilo de implementação que podemos ver em muitos sistemas que se dizem ser Orientados a Objetos.&lt;/p&gt;
+
+&lt;p&gt;No entanto, essa classe irá gerar “objetos” que são mais conhecidos como DTO (Data Transfer Object) o que, por definição, é um conceito errado.&lt;/p&gt;
+
+&lt;p&gt;Objetos não são &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;“baldes de dados”&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Objetos verdadeiros possuem comportamento e &lt;a href=&quot;/encapsulamento&quot;&gt;encapsulam&lt;/a&gt; dados e/ou outros objetos em seu interior. O que está encapsulado não deveria ser visível ou acessado diretamente por outro objeto externo.&lt;/p&gt;
+
+&lt;p&gt;Essa é a &lt;em&gt;teoria&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mas, e se no contexto do seu sistema você realmente não necessitasse de nenhum método para representar os dados de um usuário?&lt;/p&gt;
+
+&lt;p&gt;Por muito tempo eu tenho utilizado objetos para tudo, até mesmo para representar dados, mas sem utilizar objetos anêmicos como esse, no entanto.&lt;/p&gt;
+
+&lt;p&gt;Para representar os dados acima, eu utilizaria a técnica do &lt;a href=&quot;/posts/diga-me-algo-sobre-voce/#metodo-about&quot;&gt;Método About()&lt;/a&gt;, que iria retornar um XML ou JSON, conforme explicado em 2016…&lt;/p&gt;
+
+&lt;p&gt;Há vantagens nessa técnica como ter uma única interface que qualquer classe possa implementar para retornar um XML/JSON. Mas também há desvantagens, como não haver checagem estática do compilador e o &lt;em&gt;overhead&lt;/em&gt; em “montar/desmontar” o &lt;em&gt;stream&lt;/em&gt; se houver a necessidade de repassar a informação por uma cadeia de objetos.&lt;/p&gt;
+
+&lt;p&gt;Nesses ~2 anos, eu diria que muita coisa mudou.&lt;/p&gt;
+
+&lt;p&gt;Estou trabalhando em alguns projetos que necessitam de extrema velocidade de processamento, mas nem por isso eles são menos Orientados a Objetos.&lt;/p&gt;
+
+&lt;p&gt;Como?&lt;/p&gt;
+
+&lt;p&gt;Redescobrindo o tipo Record.&lt;/p&gt;
+
+&lt;p&gt;Mas antes eu quero lhe contar por quê eu neglicenciei os Records por muito tempo.&lt;/p&gt;
+
+&lt;p&gt;Bem, Records existem desde o Turbo Pascal. Eles representam uma estrutura de dados. Você define uma estrutura e depois define &lt;em&gt;procedures&lt;/em&gt; e &lt;em&gt;functions&lt;/em&gt; para trabalhar com as estruturas — como ainda fazemos na linguagem C.&lt;/p&gt;
+
+&lt;p&gt;Na Orientação a Objetos, nós unimos comportamento aos dados num único artefato chamado objeto.&lt;/p&gt;
+
+&lt;p&gt;Então, a ideia de ter um Record com todos os seus dados públicos e funções “soltas” que o utilizam, implementadas muitas vezes em Unidades diferentes, me soa muito “anti-objeto”, muito anti-encapsulamento.&lt;/p&gt;
+
+&lt;p&gt;Records, dessa forma, são estruturas para programas procedurais.&lt;/p&gt;
+
+&lt;p&gt;Mas, já faz uns anos que os arquitetos da linguagem Object Pascal introduziram métodos em Records.&lt;/p&gt;
+
+&lt;p&gt;Sim, métodos, em Records.&lt;/p&gt;
+
+&lt;p&gt;Quando eu li isso pela primeira vez, achei que os arquitetos tinham ficado loucos. Métodos em Records? Qual o sentido? Já temos objetos, não precisamos de Records com métodos. Isso não faz o menor sentido! — eu pensava.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, hoje em dia, Records podem ter métodos e eles podem ser até mesmo privados, assim como ter &lt;em&gt;fields&lt;/em&gt; privados!&lt;/p&gt;
+
+&lt;p&gt;Ora, não é isso um objeto?&lt;/p&gt;
+
+&lt;p&gt;Não.&lt;/p&gt;
+
+&lt;p&gt;Então, não seria melhor utilizar um objeto?&lt;/p&gt;
+
+&lt;p&gt;Depende.&lt;/p&gt;
+
+&lt;p&gt;Records são estruturas de dados — mesmo que eles tenham métodos — e deveria ser utilizados como tal.&lt;/p&gt;
+
+&lt;p&gt;Records são alocados automaticamente pelo compilador na área de memória &lt;em&gt;stack&lt;/em&gt;, ao invés da área de memória &lt;em&gt;heap&lt;/em&gt;, como fazem os objetos. Utilizar o &lt;em&gt;stack&lt;/em&gt; é mais rápido e mais simples para o compilador gerenciar a memória.&lt;/p&gt;
+
+&lt;p&gt;Então, se você necessita representar &lt;em&gt;apenas&lt;/em&gt; dados, Record é a melhor opção.&lt;/p&gt;
+
+&lt;p&gt;Records não podem utilizar herança e muito menos implementar uma interface, então não há polimorfismo — lembre-se, são apenas dados.&lt;/p&gt;
+
+&lt;p&gt;Então, se você necessita de polimorfismo e comportamento, objeto é a melhor opção.&lt;/p&gt;
+
+&lt;p&gt;Dito isso, por quê métodos em Records pode mudar a maneira em como utilizamos Records em programas Orientados a Objetos?&lt;/p&gt;
+
+&lt;p&gt;Quando declaramos um Record, seus campos não são inicializados, como acontece com os atributos de um objeto. Então, podemos definir um método para iniciá-lo, sem ter que fazer isso externamente — mesmo que seus campos sejam públicos — encapsulando a inicialização dos campos na própria estrutura de dados:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TUserData = record
+  login: string;
+  password: string;
+  name: string;
+  procedure Init;
+end;
+
+procedure TUserData.Init;
+begin
+  login := &#39;&#39;;
+  password := &#39;&#39;;
+  name := &#39;&#39;;
+end;
+
+var
+  u: TUserData;
+begin
+  u.Init;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Outra opção é utilizar a função &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/system/default.html&quot;&gt;Default()&lt;/a&gt; mas o importante é que você tem a opção de fazer o que quiser no procedimento que será como um construtor:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure TUserData.Init;
+begin
+  Default(self);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Se o &lt;em&gt;password&lt;/em&gt; precisar ser criptografado/descriptografado, você não precisa de funções externas para isso:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function TUserData.EncryptedPassword: string;
+begin
+  result := &#39;&amp;lt;using some algorithm to encrypt&amp;gt;&#39;;
+end;
+
+function TUserData.DecryptedPassword: string;
+begin
+  result := &#39;&amp;lt;using some algorithm to decrypt&amp;gt;&#39;;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Existem algumas regras a seguir:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Não implemente métodos que se comportem como objetos, ou seja, trabalhe &lt;em&gt;apenas&lt;/em&gt; com os dados do Record, transformando-os;&lt;/li&gt;
+  &lt;li&gt;Não retorne instâncias de objetos em seus métodos, com exceção de instâncias de interfaces, mas evite a todo custo;&lt;/li&gt;
+  &lt;li&gt;Só utilize campos com tipos primitivos ou gerenciados (ex: strings, Variant, etc), nunca instâncias de objetos;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Faça isso e você estará seguro.&lt;/p&gt;
+
+&lt;p&gt;Seu código não será considerado menos Orientado a Objetos por estar utilizando estruturas de dados que representam dados. Records foram criados exatamente para isso e a implementação de métodos apenas facilitaram seu uso.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 22 Oct 2018 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/records-antiga-nova-tecnologia</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/records-antiga-nova-tecnologia</guid>
+      </item>
+    
+      <item>
         <title>Builder Classes Simplificado</title>
         <description>&lt;p&gt;O padrão Builder utiliza no mínimo 2 classes: 1 classe para instância a ser construída e 1 classe para a instância construtora.&lt;/p&gt;
 
@@ -885,179 +1039,6 @@ initialization
         <pubDate>Mon, 28 May 2018 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/fpweb</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/fpweb</guid>
-      </item>
-    
-      <item>
-        <title>Encapsulamento</title>
-        <description>&lt;p&gt;O Encapsulamento é um dos pilares da Orientação a Objetos. Mas você sabe o que realmente significa esse conceito?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/photo-erwan-hesry-166245-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Erwan Hesry on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;De acordo com o dicionário, Encapsulamento significa: colocar ou encerrar em cápsula; capsular.&lt;/p&gt;
-
-&lt;p&gt;Uma cápsula não pode — ou não deveria — ser quebrada. O mundo externo ao objeto não pode saber o que há em seu interior a menos que o objeto queira lhes dizer “com suas próprias palavras”, ou seja, através de métodos que retornam informações mas não necessariamente seu &lt;a href=&quot;/estado-do-objeto&quot;&gt;Estado&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;O mundo externo só deve conhecer os métodos públicos de um objeto. Seus métodos públicos representam sua Interface para fazer o que ele deve fazer. Qualquer método ou atributo interno ao objeto é de propriedade dele e de mais ninguém.&lt;/p&gt;
-
-&lt;p&gt;Atributos e &lt;a href=&quot;/eliminando-metodos-privados&quot;&gt;métodos privados&lt;/a&gt; estão encapsulados no objeto e nunca deveriam ser acessados externamente.&lt;/p&gt;
-
-&lt;p&gt;Essa é a teoria.&lt;/p&gt;
-
-&lt;h2 id=&quot;codigo&quot;&gt;Encapsulamento pelo Código&lt;/h2&gt;
-
-&lt;p&gt;Toda a &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/&quot;&gt;Orientação a Objetos&lt;/a&gt; é sobre encapsulamento e envio de mensagens.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente, ambos os conceitos não são implementados perfeitamente em Object Pascal ou em nenhuma outra linguagem &lt;i&gt;mainstream&lt;/i&gt; do mercado como Java e C#.&lt;/p&gt;
-
-&lt;p&gt;E isso gera muitas dúvidas.&lt;/p&gt;
-
-&lt;p&gt;Vamos falar sobre Encapsulamento e tentar expandir nossas mentes além do código, além dos conceitos pré-concebidos e do básico.&lt;/p&gt;
-
-&lt;p&gt;O que é estar encapsulado? Essa pergunta parece tola, mas veremos que depende do ponto de vista do observador para respondê-la.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo. Um atributo privado está encapsulado no objeto e não pode ser acessado pelo mundo externo, certo?&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TFoo = class
-  private
-     FValue: Integer;
-  public
-     function GetValue: Integer;
-  end;
-
-function TFoo.GetValue: Integer;
-begin
-  Result := FValue;
-end;
-
-procedure TMainForm.ExecButton(Sender: TObject);
-var
-  F: TFoo;
-begin
-  F := TFoo.Create;
-  ShowMessage(F.GetValue.ToString);
-  F.Free;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;No exemplo acima, o mundo externo representado pela instância de  &lt;code&gt;TMainForm&lt;/code&gt; consegue acessar o atributo privado da instância da classe &lt;code&gt;TFoo&lt;/code&gt;?&lt;/p&gt;
-
-&lt;p&gt;Não, você diria.&lt;/p&gt;
-
-&lt;p&gt;O atributo privado está sendo acessado por um método público que o “protege”. Além disso, como o atributo é &lt;a href=&quot;/posts/tipos-primitivos-nos-argumentos/&quot;&gt;primitivo&lt;/a&gt;, ele não é passado por referência. Então, o mundo externo não pode nem mesmo alterá-lo.&lt;/p&gt;
-
-&lt;p&gt;Está correto.&lt;/p&gt;
-
-&lt;p&gt;Então, vamos alterar um pouco o código.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TFoo = class
-  private
-     FValue: TDataValue;
-  public
-     function GetValue: TDataValue;
-  end;
-
-function TFoo.GetValue: TDataValue;
-begin
-  Result := FValue;
-end;
-
-procedure TMainForm.ExecButton(Sender: TObject);
-var
-  F: TFoo;
-begin
-  F := TFoo.Create;
-  F.GetValue.Free;
-  F.Free;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Agora &lt;code&gt;GetValue&lt;/code&gt; retorna uma instância de objeto.&lt;/p&gt;
-
-&lt;p&gt;É possível criar o objeto &lt;code&gt;F&lt;/code&gt;, acessar (indiretamente) seu atributo privado e destruí-lo chamando &lt;code&gt;Free&lt;/code&gt;, pois&lt;code&gt;GetValue&lt;/code&gt; retornar a referência direta do atributo.&lt;/p&gt;
-
-&lt;p&gt;Ora, o atributo não é público! Não temos um &lt;a href=&quot;/posts/getters-e-setters/&quot;&gt;setter&lt;/a&gt; para ele e, mesmo assim, o “mundo externo” consegue destruí-lo? Ele não deveria ser intocável externamente?&lt;/p&gt;
-
-&lt;p&gt;Vejamos agora:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TFoo = class
-  public
-     Value: TDataValue;
-  end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Nessa versão a classe &lt;code&gt;TFoo&lt;/code&gt; tem um atributo público &lt;code&gt;Value&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se o mundo externo acessar esse atributo, estaríamos quebrando o encapsulamento do objeto?&lt;/p&gt;
-
-&lt;p&gt;Na verdade, não.&lt;/p&gt;
-
-&lt;p&gt;Não há nada encapsulado no objeto e, portanto, por definição não há nenhuma quebra de encapsulamento!&lt;/p&gt;
-
-&lt;p&gt;Talvez a linguagem não devesse permitir que atributos fossem públicos, mas esse seria um debate para outro artigo.&lt;/p&gt;
-
-&lt;p&gt;Quer outro exemplo? Imagine que &lt;code&gt;GetValue&lt;/code&gt; agora é &lt;i&gt;privado&lt;/i&gt;. Imagine uma outra classe chamada &lt;code&gt;TBar&lt;/code&gt; com essa definição:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;type
-  TDataValueFunc = function: TDataValue of object; 
-
-  TBar = class
-  private
-     FFunc: TDataValueFunc;
-  public
-     constructor Create(Func: TDataValueFunc);
-     function Data: TDataValue;
-  end;
-
-function TBar.Data: TDataValue;
-begin
-  Result := FFunc;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;E o (novo) construtor de &lt;code&gt;TFoo&lt;/code&gt; seria assim:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;constructor TFoo.Create;
-begin
-  FBar := TBar.Create(@GetValue);
-  FBar.Data;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Não estaria &lt;code&gt;TBar.Data&lt;/code&gt; executando um código privado de &lt;code&gt;TFoo&lt;/code&gt;, mesmo que indiretamente? Um objeto “acessando” um método privado de outro objeto. Seria essa uma quebra de encapsulamento?&lt;/p&gt;
-
-&lt;p&gt;O que eu estou tentando lhe mostrar é que não é apenas o código puramente técnico que irá definir um bom nível de encapsulamento no seu projeto.&lt;/p&gt;
-
-&lt;p&gt;É necessário que você pense em encapsulamento no nível de design do projeto e não apenas na implementação técnica das classes.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Vimos que a linguagem Object Pascal permite-nos acessar atributos e 
-métodos privados, mesmo que indiretamente.&lt;/p&gt;
-
-&lt;p&gt;O mesmo pode ser feito em outras linguagens consideradas “mais” Orientadas a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Então, discutir sobre encapsulamento no nível puramente técnico da linguagem é perda de tempo. Seria muito difícil — mas não impossível — implementar um código onde todos os atributos privados não fossem acessados, de alguma maneira, pelo mundo externo sem perder performance ou complicar o modelo de classes apenas para afirmar que os atributos estão protegidos e intocados.&lt;/p&gt;
-
-&lt;p&gt;No mundo real, sistemas devem ter boa performance e serem simples de manutenção.&lt;/p&gt;
-
-&lt;p&gt;É melhor quebrar algumas regras e deixar as coisas &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; do que ser purista e não ter nenhum benefício real.&lt;/p&gt;
-
-&lt;p&gt;Finalmente, o conceito de Encapsulamento na Orientação Objetos é mais sobre como projetar a comunicação entre os objetos e módulos utilizando o mínimo necessário ao invés de se preocupar unicamente com a sintaxe utilizada.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 16 Apr 2018 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/encapsulamento</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/encapsulamento</guid>
       </item>
     
   </channel>
