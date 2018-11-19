@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Classes de Exceção &#8211; Object Pascal Programming</title>
+    <title>Pascal Deveria ser Modernizado? &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Linguagem">
-    <meta name="keywords" content="exception, exceções, raise exception, delphi, freepascal, lazarus">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/classes-de-excecao/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, inline, var-inline, generics">
+    <link rel="canonical" href="http://objectpascalprogramming.com/pascal-deveria-ser-modernizado">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Classes de Exceção">
-    <meta property="og:description" content="Devemos codificar uma Classe para cada tipo de Exceção ou utilizar apenas um único tipo?">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/classes-de-excecao/">
+    <meta property="og:title" content="Pascal Deveria ser Modernizado?">
+    <meta property="og:description" content="Você acha que estamos modernizando a linguagem Object Pascal?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/pascal-deveria-ser-modernizado">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-hans-eiskonen-136904.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2018/hayes-potter-1054894-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Classes de Exceção" />
+    <meta name="twitter:title" content="Pascal Deveria ser Modernizado?" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/classes-de-excecao/" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/pascal-deveria-ser-modernizado" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -191,74 +191,111 @@
 
 
 <div class="post-header mb2">
-  <h1>Classes de Exceção</h1>
-  <span class="post-meta">Feb 20, 2017</span><br>
+  <h1>Pascal Deveria ser Modernizado?</h1>
+  <span class="post-meta">Nov 19, 2018</span><br>
   
   <span class="post-meta small">
   
-    2 minute read
+    3 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Devemos codificar uma Classe para cada tipo de Exceção ou utilizar apenas um único tipo?</p>
+  <p>Ao longo dos anos, desde Turbo Pascal até as versões mais atuais do Delphi e Lazarus, temos visto muitas mudanças na linguagem.</p>
+
+<p>Você acha que estamos modernizando a linguagem Object Pascal?</p>
 
 <!--more-->
 
-<p><img src="/images/photo-hans-eiskonen-136904.jpg" alt="Unsplash image" /></p>
+<p><img src="/images/2018/hayes-potter-1054894-unsplash.jpg" alt="Unsplash image" />
+<br /><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Hayes Potter on Unsplash</span></p>
 
 <h2 id="introducao">Introdução</h2>
 
-<p>O conceito de Exceção foi criado para simplificar o código, removendo condicionais e verificações, para que o programador fique focado na lógica que o programa deve fazer ao invés de se preocupar em testar cada linha do código.</p>
+<p>É incrível como até hoje eu ainda tenho que responder perguntas sobre os motivos de continuar utilizando a linguagem Object Pascal.</p>
 
-<p>A idéia principal é fazer com que todos os possíveis erros (exceções) sejam concentrados e verificados num ponto em comum.</p>
+<p>Vou desenvolver utilizando Object Pascal — eu digo a um possível cliente.</p>
 
-<p>Esse ponto em comum pode ser único para todo o sistema, mas também pode ser um ponto em comum por Módulo, por <em>Unit</em>, por Classe. Depende. Mas isso é um assunto para outro artigo.</p>
+<ul>
+  <li>Object Pas… Ah, aquela linguagem da Apple? (Objective C)</li>
+  <li>Acho que você quer dizer Delphi, não é?</li>
+  <li>Por quê você continua utilizando “isso”?</li>
+  <li>Por quê não utilizar C# ou Java?</li>
+  <li>Você ainda consegue achar emprego?</li>
+</ul>
 
-<p>Nesse artigo o foco é outro. Vamos ter uma conversa se devemos criar ou não novos tipos de exceção para cada tipo de erro ou problema.</p>
+<p>Eu já escrevi meus <a href="/porque-eu-escolhi-delphi-e-object-pascal#motivos">motivos</a> mas entendo como pode ser difícil para a maioria das pessoas acreditarem.</p>
 
-<h2 id="classes-de-excecao">Classes de Exceção</h2>
+<p>Talvez eles pensem que Object Pascal não é tão <a href="https://castle-engine.io/modern_pascal_introduction.html">moderno</a> quanto as linguagens <em>mainstream</em>.</p>
 
-<p>Divisão por zero. Erro na leitura de um <em>stream</em>. Erro de banco de dados…</p>
+<h2 id="prioridade">Quando o Concorrente é Prioridade</h2>
 
-<p>Temos Classes de Exceção definida para cada um desses erros. Em qualquer linguagem é assim.</p>
+<p>Existem linguagens muito mais “modernas” hoje em dia e escolher uma que “está morta” não parece uma opção razoável <del>para aqueles que só sabem seguir cegamente o que a maioria diz</del>.</p>
 
-<p>Por quê?</p>
+<blockquote>
+  <p>Se você quer chegar onde a maioria não chega, faça o que a maioria não faz — Bill Gates</p>
+</blockquote>
 
-<p>Não é para tomada de decisões, com certeza. Você não deve mudar o fluxo de um programa de acordo com a exceção gerada. Todas as exceções tem um único objetivo: parar o fluxo normal do programa.</p>
+<p>Talvez esse sentimento de modernização está abalando até mesmo os diretores e desenvolvedores do atual Delphi.</p>
 
-<p>Para o usuário não importa o Tipo da Classe, mas sim a <strong>mensagem</strong> que é exibida quando um erro ocorre.</p>
+<p>A “modernização” a que me refiro pode ser simplificada dessa forma:</p>
 
-<p>Uma exceção define um ponto de ruptura no fluxo do código. A execução normal é interrompida e o fluxo vai para o ponto de tratamento das exceções.</p>
+<ul>
+  <li>Se meu concorrente tem tal feature, eu preciso ter também.</li>
+</ul>
 
-<p>Então não haveria necessidade de criar novos tipos de Classes.
-Basta informar ao usuário o que ocorreu. A mensagem.</p>
+<p>E isso pode matar a linguagem.</p>
 
-<p>No entanto… eu vejo um motivo para criar novos Tipos de Exceções: <a href="/posts/codigo-duplicado-talvez-nao/">Reaproveitamento</a> de código.</p>
+<h3 id="inline">Inline Variable Declarations</h3>
 
-<p>Por exemplo, se um arquivo não é encontrado poderíamos gerar uma exceção do tipo <code>Exception</code> — a exceção mais genérica — ou criar uma nova Classe <code>EFileNotFound</code>.</p>
+<p>A alguns dias recebemos a notícia que a linguagem Delphi irá ter <em>Inline Variables</em>.</p>
 
-<p>Para dar a informação ao usuário, as duas exceções abaixo são equivalentes:</p>
+<p>Marco Cantu — respeitado e conceituado no mundo Delphi — já começou a “matar” a sintaxe Pascal clássica de declaração de variáveis quando inicia seu <a href="http://blog.marcocantu.com/blog/2018-october-inline-variables-delphi.html">artigo</a> escrevendo “Old Style Var Blocks”.</p>
 
-<pre><code>raise Exception.CreateFmt('File %s not found', ['foo.txt']);
+<p>Então é oficial, estamos <em>defasados</em>?</p>
 
-raise EFileNotFound.Create('foo.txt');
-</code></pre>
+<p>Na linguagem Object Pascal, declaramos as variáveis em blocos bem definidos e organizados, diferentemente de outras linguagens onde pode-se declarar onde quiser. Entretanto, agora isso parece ser ruim, já que a maioria faz diferente.</p>
 
-<p>A diferença é que <code>EFileNotFound</code> já encapsula a mensagem <em>“File %s not found”</em> e não precisamos repetir a mesma mensagem toda vez que quisermos dizer ao usuário que um arquivo não foi encontrado.</p>
+<p>Solução? Ora, vamos copiar o concorrente!</p>
 
-<p>Assim fica fácil mudar a mensagem num único ponto no código.</p>
+<p>O foco parece ser mais no que o concorrente anda fazendo nos compiladores deles do que nos seus fieis usuários e desenvolvedores Pascal.</p>
+
+<h3 id="inference">Type Inference for Inline Variables</h3>
+
+<p>Na linguagem Pascal, tudo deve ser previamente declarado.</p>
+
+<p>Tudo.</p>
+
+<p>Isso é algo intrínseco a linguagem desde o seu nascimento e é um dos pontos fortes dela, pois minimiza qualquer ambiguidade na declaração de tipos.</p>
+
+<p>Tem quem goste, tem quem odeie. Não importa. Ela foi feita dessa forma e deve ser respeitada.</p>
+
+<p>Mas, agora temos a <em>inferência de tipo</em>.</p>
+
+<p>Isso existe em outras linguagens mas é provável que você conheça através do C#.</p>
+
+<p>E as pessoas “aplaudiram”…</p>
+
+<p>Sim, pode ser considerada uma facilidade. Você irá escrever menos. E 99% dos programadores Object Pascal — especialmente Delphi — adoram uma facilidade sem se preocupar o custo. Sim, o custo, por quê na engenharia nada vem de graça.</p>
+
+<p>A compilação pode ficar mais lenta; pode haver erros de conversão obscuros; o código pode ficar menos legível… além de ir contra a própria filosofia da linguagem, que é declarar tudo antes.</p>
+
+<p>Mesmo assim, se é fácil para escrever e o concorrente tem… por quê não?</p>
 
 <h2 id="conclusao">Conclusão</h2>
 
-<p>Não utilize Tipos de Classes de Exceção para controlar o fluxo do programa. Isso é errado.</p>
+<p>Não há problemas com a declaração de variáveis atual. Esse é o estilo Pascal. Entretanto, parecem que estão mais preocupados em adicionar mais features a linguagem do que corrigir <em>bugs</em>. Bem, cada um sabe o que é melhor para sua empresa.</p>
 
-<p>Toda Exceção <em>deve</em> definir um ponto de ruptura. Algo de muito errado aconteceu. Para tudo. Não importa o Tipo de Classe.</p>
+<p>Trabalho com sistemas de alta performance que ainda utilizam a sintaxe clássica do Delphi 7. Então, posso afirmar que não é isso que irá deixar a linguagem melhor que seus concorrentes.</p>
 
-<p>Para o usuário apenas a mensagem importa. Basta ser bem explicativa.</p>
+<p>Não me entenda mal. Não estou dizendo que não podemos alterar a linguagem. Existem algumas features ou acertos que que seriam muito bem vindos como, por exemplo, a correção da sintaxe <a href="/a-declaracao-with-do-perfeita">WITH-DO</a> ou uma nova sintaxe para para determinar um <a href="/fpc-macros#alias">alias para uma Unit</a>. Esses seriam melhorias que iriam corrigir problemas no design da linguagem, melhorando a leitura do código e tudo de acordo com a filosofia e estilo Pascal.</p>
 
-<p>Devemos criar novas Classe de Exceção apenas para reaproveitar e encapsular informações.</p>
+<p>Não quero um <a href="https://en.wikipedia.org/wiki/Frankenstein">Frankenstein</a> de várias linguagens. Quero um design limpo, <a href="/posts/simplicidade/">simples</a> e eficiente.</p>
+
+<p>Não quero copiar o concorrente. Quero escrever código Object Pascal.</p>
+
+<p>Não faz sentido levar seu BMW clássico ao mecânico dizendo para deixá-lo mais parecido com uma Mercedes-Benz mais moderna. Você acabará ficando <em>nenhum</em> dos dois, apenas sucata.</p>
 
 <p>Até logo.</p>
 
@@ -270,33 +307,33 @@ raise EFileNotFound.Create('foo.txt');
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/classes-de-excecao/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/pascal-deveria-ser-modernizado" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Classes de Exceção&via=mdbs99;url=http://objectpascalprogramming.com/posts/classes-de-excecao/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Pascal Deveria ser Modernizado?&via=mdbs99;url=http://objectpascalprogramming.com/pascal-deveria-ser-modernizado" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/classes-de-excecao/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/pascal-deveria-ser-modernizado" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/classes-de-excecao/&title=Classes de Exceção" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/classes-de-excecao/&title=Classes de Exceção" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/pascal-deveria-ser-modernizado&title=Pascal Deveria ser Modernizado?" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/classes-de-excecao/&t=Classes de Exceção" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/pascal-deveria-ser-modernizado&title=Pascal Deveria ser Modernizado?" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/pascal-deveria-ser-modernizado&t=Pascal Deveria ser Modernizado?" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -343,15 +380,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/pascal-deveria-ser-modernizado" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Pascal Deveria ser Modernizado?</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/records-antiga-nova-tecnologia" class="post-link">
@@ -434,6 +462,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/fpweb" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Desenvolvimento Web com fpWeb Framework</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -441,8 +478,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/classes-de-excecao';
-      var disqus_title      = 'Classes de Exceção';
+      var disqus_identifier = '/pascal-deveria-ser-modernizado';
+      var disqus_title      = 'Pascal Deveria ser Modernizado?';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
