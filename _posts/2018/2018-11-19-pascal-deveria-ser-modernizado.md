@@ -92,7 +92,7 @@ Isso existe em outras linguagens mas é provável que você conheça através do
 
 E as pessoas "aplaudiram"...
 
-Sim, pode ser considerada uma facilidade. Você irá escrever menos. E 99% dos programadores Object Pascal — especialmente Delphi — adoram uma facilidade sem se preocupar o custo. Sim, o custo, por quê na engenharia nada vem de graça. 
+Sim, pode ser considerada uma facilidade. Você irá escrever menos. E 99% dos programadores Object Pascal — especialmente Delphi — adoram uma facilidade sem se preocupar com o custo. Sim, o custo, por quê na engenharia nada vem de graça. 
 
 A compilação pode ficar mais lenta; pode haver erros de conversão obscuros; o código pode ficar menos legível... além de ir contra a própria filosofia da linguagem, que é declarar tudo antes.
 
@@ -110,6 +110,6 @@ Não quero um [Frankenstein](https://en.wikipedia.org/wiki/Frankenstein) de vár
 
 Não quero copiar o concorrente. Quero escrever código Object Pascal.
 
-Não faz sentido levar seu BMW clássico ao mecânico dizendo para deixá-lo mais parecido com uma Mercedes-Benz mais moderna. Você acabará ficando *nenhum* dos dois, apenas sucata.
+Não faz sentido levar seu BMW clássico ao mecânico dizendo para deixá-lo mais parecido com uma Mercedes-Benz mais moderna. Você acabará ficando com  *nenhum* dos dois, apenas sucata.
 
 Até logo.
