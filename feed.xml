@@ -9,7 +9,9 @@
     
       <item>
         <title>Como Dividir e Organizar o Código em Formulários com Muitos Widgets</title>
-        <description>&lt;!--more--&gt;
+        <description>&lt;p&gt;Definir dezenas de métodos em formulários e DataModules parece ser comum entre programadores. Podemos fazer algo para minimizar essa prática?&lt;/p&gt;
+
+&lt;!--more--&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/2018/robert-bye-200739-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
 &lt;br /&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Robert Bye on Unsplash&lt;/span&gt;&lt;/p&gt;
@@ -267,8 +269,8 @@ end;
 &lt;p&gt;Até logo.&lt;/p&gt;
 </description>
         <pubDate>Mon, 19 Nov 2018 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/pascal-deveria-ser-modernizado-Copy</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/pascal-deveria-ser-modernizado-Copy</guid>
+        <link>http://objectpascalprogramming.com/pascal-deveria-ser-modernizado</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/pascal-deveria-ser-modernizado</guid>
       </item>
     
       <item>
