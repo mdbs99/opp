@@ -8,6 +8,166 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Como Dividir e Organizar o Código em Formulários com Muitos Widgets</title>
+        <description>&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/robert-bye-200739-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;br /&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Robert Bye on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Em um formulário com muitos widgets, haveria dezenas de métodos para controlá-los. Esses métodos lidariam com o estado visual (visível, checado, cores,…); com os dados (texto, grids, labels,…); mensagens (dialogs, popups,…) e todo tipo de interação entre os componentes visuais e não-visuais.&lt;/p&gt;
+
+&lt;p&gt;Definir dezenas de métodos em formulários e DataModules parece ser comum. O programador cria um DataModule com queries e componentes relacionados, acrescenta 50 métodos e considera ter feito um ótimo trabalho na reutilização e organização do código — no entanto ele só criou mais uma classe inchada, seguindo o anti-padrão conhecido como a &lt;a href=&quot;http://wiki.c2.com/?GodClass&quot;&gt;síndrome da classe Deus&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Nesse artigo você poderá aprender algumas técnicas para se livrar dessas classes com dezenas de métodos, difíceis de entender e gerenciar.&lt;/p&gt;
+
+&lt;h2 id=&quot;rad&quot;&gt;A culpa é do RAD?&lt;/h2&gt;
+
+&lt;p&gt;Na minha opinião, Delphi sempre foi a melhor IDE para desenvolvimento de aplicações Desktop — até surgirem opções como Lazarus — e grande parte desse sucesso é devido ao conceito e uso do RAD (Rapid Application Development).&lt;/p&gt;
+
+&lt;p&gt;Largue um componente no formulário, defina algumas propriedades, implemente alguns eventos e pronto. Fácil. Rápido. Mas talvez, sujo.&lt;/p&gt;
+
+&lt;p&gt;Para prototipagem é ótimo. Você consegue mostrar ao cliente algo funcionando em minutos. Mas para código real, para a manutenção, esse tipo de design pode se tornar um pesadelo no médio prazo.&lt;/p&gt;
+
+&lt;p&gt;Mas a culpa não é do RAD. Ele é apenas uma ferramenta. Ferramentas sozinhas não fazem mal projetos. Os desenvolvedores fazem.&lt;/p&gt;
+
+&lt;p&gt;RAD foi feito para agilizar o desenvolvimento, especialmente no design de formulários. Mas levaram esse conceito tão longe que muitos desenvolvedores só conhecem esse caminho para o desenvolvimento, desde formulários, regras de negócio, até a persistência.&lt;/p&gt;
+
+&lt;p&gt;RAD significou o sucesso mas também a “desgraça” do Delphi. É por causa do RAD que o Delphi (até hoje) não é bem visto em círculos de desenvolvimento mais voltados a regras de negócio, padrões de projetos, aplicações em camadas, etc.&lt;/p&gt;
+
+&lt;p&gt;Mas, novamente, não é culpa do RAD. Não há nada de errado com RAD. O errado e tentar implementar tudo no modelo RAD, na minha opinião.&lt;/p&gt;
+
+&lt;p&gt;É mais fácil largar componentes no formulário e setar propriedades e eventos, do que pensar em padrões de projeto, orientação a objetos e desenvolvimento em camadas.&lt;/p&gt;
+
+&lt;p&gt;RAD funciona, mas não é sustentável no longo prazo.&lt;/p&gt;
+
+&lt;h2 id=&quot;forms&quot;&gt;Formulários sem Métodos&lt;/h2&gt;
+
+&lt;p&gt;O uso indiscriminado do RAD pode deixar a aplicação tão acoplada que seria muito difícil ter camadas separadas entre GUI, regras de negócio e persistência.&lt;/p&gt;
+
+&lt;p&gt;Acredito que para remover o conceito de “RAD para tudo”, temos que começar com o básico, por exemplo, como desenvolver formulários com uma quantidade mínima de métodos.&lt;/p&gt;
+
+&lt;p&gt;A quantidade de métodos não está relacionado diretamente ao RAD — você pode ter uma classe com 100 métodos em qualquer linguagem, utilizando RAD ou não — no entanto, eu acredito que o RAD “estimula” essa prática, pois se todos os widgets e eventos estão declarados no formulário, onde mais eu iria implementar os métodos para lidar com esses componentes, certo?&lt;/p&gt;
+
+&lt;p&gt;Essa prática e muito comum, porém equivocada. Uma classe deveria ser pequena — menor quantidade de métodos possível — e coesa — todos os seus atributos são utilizados na maior quantidade de métodos possível. E fazer isso em um formulário e praticamente impossível.&lt;/p&gt;
+
+&lt;p&gt;A tendência é que cada novo método trabalhe com poucos widgets; os métodos terão uma nomenclatura tão verbosa quanto uma frase, pois todos irão fazer parte de uma mesma classe e não pode haver ambiguidade ou colisão de nomes.&lt;/p&gt;
+
+&lt;p&gt;Quantas vezes isso já aconteceu com você?&lt;/p&gt;
+
+&lt;p&gt;Seria possível termos formulários com o &lt;a href=&quot;https://objectpascalprogramming.com/posts/menos-e-mais/#metodos&quot;&gt;mínimo de métodos&lt;/a&gt; ou até nenhum e, mesmo assim, capazes de controlar as interações entre todos os widgets e componentes visuais e não-visuais?&lt;/p&gt;
+
+&lt;p&gt;A primeira prática que eu recomendo é separar widgets em frames — disponíveis no Delphi desde as primeiras versões através da classe &lt;code&gt;TFrame&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Muitos formulários possuem &lt;em&gt;tabs&lt;/em&gt; e cada tab pode ser um frame que desconhece completamente o formulário onde ele está contido.&lt;/p&gt;
+
+&lt;p&gt;Cada frame irá ter seu próprio conjunto de widgets, com nomenclatura simplificada, visto que não há colisões de nomes entre outros widgets se tudo estivesse em um mesmo formulário.&lt;/p&gt;
+
+&lt;p&gt;Esse é o &lt;em&gt;primeiro&lt;/em&gt; nível da refatoração.&lt;/p&gt;
+
+&lt;p&gt;Mas isso não elimina a quantidade enorme de métodos que poderão existir, pois o desenvolvedor precisa por ação nos formulários e frames.&lt;/p&gt;
+
+&lt;p&gt;O segundo nível consiste em dividir para conquistar, eliminando quase que totalmente os métodos de um formulário.&lt;/p&gt;
+
+&lt;h2 id=&quot;dividir&quot;&gt;Dividir para Conquistar&lt;/h2&gt;
+
+&lt;p&gt;Independente de ser um formulário, frame ou DataModule, considere todos como sendo &lt;a href=&quot;2016-02-22-datamodule-e-apenas-um-container&quot;&gt;containers&lt;/a&gt; de componentes (visuais ou não).&lt;/p&gt;
+
+&lt;p&gt;O objetivo é dividir os métodos em pequenos objetos que irão fazer uso dos componentes do container.&lt;/p&gt;
+
+&lt;p&gt;Mesmo que esse artigo se refira a formulários complexos, vou lhe dar um exemplo simples, mostrando que com apenas 1 widget, poderíamos adicionar vários métodos ao formulário, erroneamente.&lt;/p&gt;
+
+&lt;p&gt;Considere uma instância de um &lt;code&gt;TStatusBar&lt;/code&gt; para exibir informações da aplicação.&lt;/p&gt;
+
+&lt;p&gt;O usuário precisaria ver a versão da aplicação; o database em uso; o status atual de algum processamento.&lt;/p&gt;
+
+&lt;p&gt;Um StatusBar possui a propriedade &lt;code&gt;Panels[]&lt;/code&gt;que é como um array de objetos de texto — dado um índice, você altera o texto naquela posição.&lt;/p&gt;
+
+&lt;p&gt;Um programador iniciante talvez iria utilizá-lo dessa forma:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;StatusBar1.Panels[0].Text := version;
+StatusBar1.Panels[1].Text := database;
+StatusBar1.Panels[2].Text := &#39;Loading...&#39;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Um programador mais experiente saberia que não se deve utilizar índices arbitrários pelo código — se quisermos mudar a posição de alguma informação, teríamos que percorrer todo o código para mudar os índices para novas posições. Esse programador provavelmente iria criar constantes para cada índice, o que resolveria a manutenção futura, no entanto teríamos constantes (verbosas) no código que estão “desacopladas” do objeto no qual elas atuam, ou seja, o StatusBar.&lt;/p&gt;
+
+&lt;p&gt;O código ficaria dessa forma:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;const
+  STATUSBAR_VERSION = 0;
+  STATUSBAR_DATABASE = 1;
+  STATUSBAR_STATUS = 2;
+
+StatusBar1.Panels[STATUSBAR_VERSION].Text := version;
+StatusBar1.Panels[STATUSBAR_DATABASE].Text := database;
+StatusBar1.Panels[STATUSBAR_STATUS].Text := &#39;Loading...&#39;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Veja o quão é verboso cada constante, pois é (quase) obrigatório utilizar prefixos para deixar claro em qual componente(s) esse  “grupo de constantes” trabalham.&lt;/p&gt;
+
+&lt;p&gt;Outro tipo de desenvolvedor iria utilizar métodos no formulário. O exemplo abaixo pode ser meio extremo, mas considere que eu não poderia dar um exemplo real pois não caberia nesse artigo. Portanto, utilizar tais métodos não estaria tão longe da realidade:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  procedure SetStatusBarVersion(const aValue: string);
+  procedure SetStatusBarDatabase(const aValue: string);
+  procedure SetStatusBarStatus(const aValue: string);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Criando métodos no formulário elimina as constantes e índices, porém incha a classe do formulário.&lt;/p&gt;
+
+&lt;p&gt;Veja, também, o quão é verboso cada método, novamente utilizando prefixos longos e entediantes — nomes longos em métodos e variáveis são sinais de que eles podem não fazer parte da classe onde estão.&lt;/p&gt;
+
+&lt;p&gt;Foram adicionados 3 métodos para lidar com apenas 1 componente que exibe texto.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, um arquiteto de software teria objetivos maiores como: reutilizar os métodos em outro formulário ou projeto; simplificar o formulário, removendo métodos que lidam apenas com poucos componentes; retirar índices e constantes arbitrárias; trabalhar com o StatusBar sem pensar que ele é um StatusBar, abstraindo-o.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TStatusBarWidget = class
+private
+  fOrigin: TStatusBar;
+  fVersion: string;
+  fDatabase: string;
+  fStatus: string;
+public
+  constructor Create(aOrigin: TStatusBar); reintroduce;
+  property Version: string read fVersion;
+  property Database: string read fDatabase;
+  property Status: string read fStatus write fStatus;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Essa classe iria receber a instância do StatusBar real no construtor, inicializada no construtor do formulário; iria obter os dados da versão e database automaticamente, disponibilizando propriedades somente leitura; o status poderia ser atualizado e lido dentro dos eventos do formulário.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;begin
+   fStatusBar.Status := &#39;Loading...&#39;;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Toda a lógica referente ao StatusBar estaria encapsulada dentro da classe &lt;code&gt;TStatusBarWidget&lt;/code&gt;, podendo ser reutilizada em outro lugar.&lt;/p&gt;
+
+&lt;p&gt;Outros programadores que porventura trabalhem no código, não iriam precisar lembrar de índices ou constantes arbitrárias. Eles iriam utilizar apenas um único objeto com métodos bem definidos para cada atividade, abstraindo sobre o que esta acontecendo internamente ao objeto — a atualização do StatusBar.&lt;/p&gt;
+
+&lt;p&gt;O formulário não teria nenhum método (relacionado a StatusBar), contendo apenas um atributo privado do tipo &lt;code&gt;TStatusBarWidget&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;O exemplo é simples, porém acredito que você tenha visualizado que poderá utilizar essa técnica não apenas para encapsular um componente, mas também para todo um conjunto deles, implementando toda a interação entre eles num único objeto.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Toda vez que você nomear um método com nomenclatura composta, pare e pense se esse método deveria estar em outra classe.&lt;/p&gt;
+
+&lt;p&gt;Não implemente vários métodos numa única classe. Separe-os em objetos menores e coesos, mesmo que esses objetos trabalhem diretamente com os componentes do container.&lt;/p&gt;
+
+&lt;p&gt;É melhor ter vários objetos pequenos, mesmo que fortemente acoplados, do que por tudo num único objeto onde a manutenção irá se tornar um caos em pouco tempo.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 17 Dec 2018 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/formularios-e-widgets</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/formularios-e-widgets</guid>
+      </item>
+    
+      <item>
         <title>Pascal Deveria ser Modernizado?</title>
         <description>&lt;p&gt;Ao longo dos anos, desde Turbo Pascal até as versões mais atuais do Delphi e Lazarus, temos visto muitas mudanças na linguagem.&lt;/p&gt;
 
@@ -107,8 +267,8 @@
 &lt;p&gt;Até logo.&lt;/p&gt;
 </description>
         <pubDate>Mon, 19 Nov 2018 00:00:00 +0000</pubDate>
-        <link>http://objectpascalprogramming.com/pascal-deveria-ser-modernizado</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/pascal-deveria-ser-modernizado</guid>
+        <link>http://objectpascalprogramming.com/pascal-deveria-ser-modernizado-Copy</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/pascal-deveria-ser-modernizado-Copy</guid>
       </item>
     
       <item>
@@ -906,156 +1066,6 @@ end;
         <pubDate>Mon, 11 Jun 2018 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/fpweb-memleak</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/fpweb-memleak</guid>
-      </item>
-    
-      <item>
-        <title>Construindo uma Aplicação Básica com fpWeb</title>
-        <description>&lt;p&gt;As vezes, tudo que precisamos é uma aplicação “Alô Mundo”.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/photo-rawpixel-296622-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by rawpixel on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Neste artigo você verá como preparar seu ambiente Lazarus para o desenvolvimento Web com fpWeb.&lt;/p&gt;
-
-&lt;p&gt;Eu estou utilizando a versão mais atual e revisada do Lazarus 1.8.5,  &lt;a href=&quot;https://svn.freepascal.org/svn/lazarus/branches/fixes_1_8&quot;&gt;fixes_1_8&lt;/a&gt;, revisão 58049.&lt;/p&gt;
-
-&lt;p&gt;Para o compilador, também estou utilizando a versão mais atual e revisada do FPC 3.0.5, &lt;a href=&quot;https://svn.freepascal.org/svn/fpc/branches/fixes_3_0&quot;&gt;fixes_3_0&lt;/a&gt;, revisão 38970.&lt;/p&gt;
-
-&lt;p&gt;O artigo presume que você já tem o FPC e Lazarus instalados e funcionando no seu computador.&lt;/p&gt;
-
-&lt;h2 id=&quot;instalando&quot;&gt;Instalando fpWeb&lt;/h2&gt;
-
-&lt;p&gt;A primeira instalação a ser realizada será a do pacote &lt;code&gt;lazwebextra&lt;/code&gt;. Esse pacote adiciona opções para a criação de novos projetos do tipo Web como CGI Application, FastCGI Application e outros.&lt;/p&gt;
-
-&lt;p&gt;Esse pacote não é obrigatório, mas facilita a criação de novos projetos. No entanto, se você não quiser instalá-lo, ainda poderá criar uma aplicação console simples e ir alterando manualmente o código conforme for lendo o artigo.&lt;/p&gt;
-
-&lt;p&gt;Para prosseguir com a instalação, abra o menu &lt;code&gt;Package&amp;gt;Install/Uninstall Packages&lt;/code&gt; e localize o pacote &lt;code&gt;lazwebextra&lt;/code&gt; no box “Available for installation”.&lt;/p&gt;
-
-&lt;p&gt;Na figura abaixo, o pacote é mostrado no box esquerdo, pois já foi instalado no meu computador.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/laz-install-lazwebextra.jpg&quot; alt=&quot;Install/Uninstall Packages&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Clique em “Save e Rebuild IDE”.&lt;/p&gt;
-
-&lt;p&gt;Se tudo deu certo, você poderá seguir para o próximo passo, ou seja, o início da construção de um sistema Web simples.&lt;/p&gt;
-
-&lt;h2 id=&quot;desenvolvimento&quot;&gt;Desenvolvimento&lt;/h2&gt;
-
-&lt;p&gt;Após a instalação do pacote de integração com a IDE, você estará habilitado a construir aplicativos Web utilizando o fpWeb framework.&lt;/p&gt;
-
-&lt;p&gt;Abra o menu &lt;code&gt;File&amp;gt;New&lt;/code&gt; e escolha a opção “FastCGI Application”.&lt;/p&gt;
-
-&lt;p&gt;Apesar de escolhermos essa opção, não iremos criar uma aplicação FastCGI que precisará ser executada em algum servidor Web como Apache ou Microsoft IIS. Ao invés disso, iremos criar um executável Standalone que irá responder as requisições do browser sem a necessidade de existir um servidor.&lt;/p&gt;
-
-&lt;p&gt;Após clicar nessa opção, um novo projeto será criado.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente, nessa versão do Lazarus eles ainda mantém a versão antiga do fpWeb como padrão, ou seja, aquela baseada no modelo Web Broker. No entanto, queremos utilizar a &lt;a href=&quot;/fpweb&quot;&gt;nova&lt;/a&gt; versão e para isso precisaremos fazer algumas modificações manuais.&lt;/p&gt;
-
-&lt;p&gt;Feche a &lt;code&gt;Unit1&lt;/code&gt; sem salvar e remova-a do projeto (&lt;code&gt;lpr&lt;/code&gt;). Salve o projeto, escolhendo um nome — eu digitei &lt;code&gt;hello.lpr&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;program hello;
-
-{$mode objfpc}{$H+}
-
-uses
- fpFCGI;
-
-begin
-  Application.Title := &#39;Hello World&#39;;
-  { Uncomment the port setting here if you want to run the
-    FastCGI application stand-alone (e.g. for NGINX) }
-  // Application.Port:=2015; // For example
-  Application.Initialize;
-  Application.Run;
-end.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Por enquanto esse é todo o projeto. Ele ainda não faz nada de útil. É necessário criar alguma rota que execute alguma ação.&lt;/p&gt;
-
-&lt;p&gt;Como iremos criar uma aplicação Standalone, precisaremos substituir a seção &lt;code&gt;uses&lt;/code&gt; com outras unidades e também definir a porta de acesso que estará em execução quando acessarmos &lt;code&gt;localhost&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;program hello;
-
-{$mode objfpc}{$H+}
-
-uses
-  SysUtils, httpdefs, httproute, fphttpapp;
-
-begin
-  Application.Title := &#39;Hello World&#39;;
-  Application.Port := 8080;
-  Application.Initialize;
-  Application.Run;
-end.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;As duas unidades mais importantes são &lt;code&gt;httproute&lt;/code&gt;, que define os objetos relacionados às rotas e &lt;code&gt;fphttpapp&lt;/code&gt;, que substitui o tipo de projeto de FastCGI para Standalone.&lt;/p&gt;
-
-&lt;p&gt;Feito isso é necessário definir ao menos uma rota para executar alguma ação.&lt;/p&gt;
-
-&lt;p&gt;A maneira mais fácil é implementar uma nova classe, tendo como base a &lt;code&gt;TRouteObject&lt;/code&gt;, padrão do fpWeb. Essa nova classe deverá sobrescrever o método &lt;code&gt;HandleRequest&lt;/code&gt; e retornar algo como resposta.&lt;/p&gt;
-
-&lt;p&gt;Vamos criar uma nova classe chamada &lt;code&gt;THelloRoute&lt;/code&gt;, implementando o método &lt;code&gt;HandleRequest&lt;/code&gt; da forma mais simples possível. Depois, é necessário registrar essa rota em algum lugar, antes da aplicação realmente iniciar — você poderá utilizar as seções &lt;code&gt;initialization&lt;/code&gt; de cada nova unidade que você criar, porém aqui, para manter simples, basta registrar a rota antes de &lt;code&gt;Application.Run&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Abaixo pode-se ver o programa completo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;program hello;
-
-{$mode objfpc}{$H+}
-
-uses
-  SysUtils, httpdefs, httproute, fphttpapp;
-
-type
-  THelloRoute = class(TRouteObject)
-  public
-    procedure HandleRequest(
-      ARequest: TRequest; AResponse: TResponse); override;
-  end;
-
-{ THelloRoute }
-
-procedure THelloRoute.HandleRequest(
-  ARequest: TRequest; AResponse: TResponse);
-begin
-  AResponse.Content := &#39;Hello!&#39;;
-  AResponse.SendResponse;
-end;
-
-begin
-  HTTPRouter.RegisterRoute(&#39;/hello&#39;, rmAll, THelloRoute);
-  Application.Title := &#39;Hello World&#39;;
-  Application.Port := 8080;
-  Application.Initialize;
-  Application.Run;
-end.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Agora execute a aplicação diretamente pela IDE.&lt;/p&gt;
-
-&lt;p&gt;Depois, abra algum browser se sua preferência e digite: &lt;a href=&quot;http://localhost:8080/hello&quot;&gt;http://localhost:8080/hello&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Se tudo deu certo, você estará vendo “Hello!” como resposta.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Esse artigo mostrou como criar uma aplicação Web simples que pode ser executada e testada sem a necessidade de um servidor Web.&lt;/p&gt;
-
-&lt;p&gt;Tenha em mente que “todo esse trabalho” só será feito uma vez. Após criar um projeto de “template”, bastará copiar/colar e renomear o projeto. Todo o restante do trabalho será criando novas unidades e rotas relacionadas às suas regras de negócio.&lt;/p&gt;
-
-&lt;p&gt;Até a data de publicação desse artigo não havia documentação sobre esse novo estilo de desenvolvimento utilizando o fpWeb framework. Então, talvez esse seja um dos primeiros artigos a explicar essa nova tecnologia.&lt;/p&gt;
-
-&lt;p&gt;Espero que você tenha ficado motivado a pesquisar mais a respeito sobre desenvolvimento Web com Free Pascal e Lazarus.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 04 Jun 2018 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/fpweb-hello</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/fpweb-hello</guid>
       </item>
     
   </channel>
