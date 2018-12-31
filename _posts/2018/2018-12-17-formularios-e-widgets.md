@@ -4,7 +4,7 @@ title: "Como Dividir e Organizar o Código em Formulários com Muitos Widgets"
 date: 2018-12-17
 permalink: /:title
 description:
-  Nesse artigo você poderá aprender algumas técnicas para se livrar dessas classes com dezenas de métodos, difíceis de entender e gerenciar
+  Nesse artigo você poderá aprender algumas técnicas para se livrar dessas classes com dezenas de métodos, difíceis de entender e gerenciar.
 image: /images/2018/robert-bye-200739-unsplash.jpg
 tags:
   - Object Pascal
@@ -22,7 +22,7 @@ keywords:
   - datamodules
 ---
 
-
+Definir dezenas de métodos em formulários e DataModules parece ser comum entre programadores. Podemos fazer algo para minimizar essa prática?
 
 <!--more-->
 
@@ -171,3 +171,10 @@ Não implemente vários métodos numa única classe. Separe-os em objetos menore
 
 Até logo.
 
+## Bônus
+
+Eu fiz um Webinar sobre esse artigo.
+
+Você pode baixar os fontes [aqui](/code/webinar-2.zip).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Zvc8Vnv0JnI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
