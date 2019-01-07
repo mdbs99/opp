@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Interfaces e o Método estático New &#8211; Object Pascal Programming</title>
+    <title>Variáveis Locais Deveriam ter Nomes Curtos &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Pascal">
-    <meta name="keywords" content="oop, object pascal, orientação a objetos">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, naming, local variables">
+    <link rel="canonical" href="http://objectpascalprogramming.com/variaveis-locais">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Interfaces e o Método estático New">
-    <meta property="og:description" content="Como implementar seu Garbage Collector no Object Pascal de forma segura">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/">
+    <meta property="og:title" content="Variáveis Locais Deveriam ter Nomes Curtos">
+    <meta property="og:description" content="Já pensou que você pode estar dificultando a leitura do seu código por utilizar nomes mais longos e verbosos em variáveis locais do que utilizando nomes mais curtos?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/variaveis-locais">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/829d24cf.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2019/chuttersnap-413007-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Interfaces e o Método estático New" />
-    <meta name="twitter:description" content="Utilize uma técnica simples para implementar um Garbage Collector sem vazamentos de memória." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/" />
+    <meta name="twitter:title" content="Variáveis Locais Deveriam ter Nomes Curtos" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/variaveis-locais" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -188,180 +190,93 @@
 
 
 <div class="post-header mb2">
-  <h1>Interfaces e o Método estático New</h1>
-  <span class="post-meta">Jan 10, 2016</span><br>
+  <h1>Variáveis Locais Deveriam ter Nomes Curtos</h1>
+  <span class="post-meta">Jan 7, 2019</span><br>
   
   <span class="post-meta small">
   
-    4 minute read
+    3 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>No <a href="/posts/pensando-em-objetos/">post anterior</a> eu mostrei um código
-Orientado a Objetos onde os Objetos eram instanciados utilizando um Método estático chamado <em>New</em>.</p>
-
-<p>Este método <em>New</em> não é padrão da linguagem Object Pascal. Ele também não é um <code>constructor</code>.
-Ele é um <strong>Método de classe</strong> que retorna a mesma Interface que a classe implementa.</p>
-
-<p>A utilização do Método <em>New</em> é um padrão que defini para todos os meus projetos.</p>
+  <p>Já pensou que você pode estar dificultando a leitura do seu código por utilizar nomes mais longos e verbosos em variáveis locais do que utilizando nomes mais curtos?</p>
 
 <!--more-->
 
-<p><img src="/images/829d24cf.jpg" alt="Pensando" /></p>
+<p><img src="/images/2019/chuttersnap-413007-unsplash.jpg" alt="Unsplash image" />
+<br /><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by chuttersnap on Unsplash</span></p>
 
-<h2 id="object-pascal-e-seu-garbage-collector">Object Pascal e seu “<em>Garbage Collector</em>”</h2>
+<p>Nomenclatura é quase uma arte, especialmente no desenvolvimento de software.</p>
 
-<p>Ok. Object Pascal não tem <em>garbage collector</em> como no Java ou C# — e isso é ótimo quando precisamos de performance —
-porém temos algo parecido quando utilizamos Interfaces.</p>
+<p>Escolher bons nomes irá deixar seu código mais legível e isso será imprescindível para a manutenção do mesmo no longo prazo.</p>
 
-<p>Toda variável que tem uma Interface como seu tipo, por padrão, será desalocada da memória assim que
-sair do escopo de execução. Vamos chamar essas variáveis de <strong>variável-interface</strong>.</p>
+<p>Entretanto, um bom nome não quer dizer um nome mais longo e verboso.</p>
 
-<p>No momento que o compilador sabe que a variável-interface não será mais utilizada, ele desaloca a memória
-chamando o <code>destructor</code> da instância.</p>
+<p>Um bom nome irá depender de alguns fatores. Por exemplo: se o nome identificar uma variável de <em>índice</em> para um <em>loop</em>, a maioria dos programadores irá utilizar “i”.</p>
 
-<p>Isso é ótimo para a programação Orientada a Objetos.</p>
+<p>Por quê “i” e não “index”, já que este último é mais explícito?</p>
 
-<p>Significa que, se eu fizer isso corretamente, poderei criar Objetos dentro de Objetos, encadear chamadas de Objetos,
-criar novas instâncias <code>inline</code> para utilizar em argumentos e muito mais… assim como fazem no Java ou C#.</p>
+<p>É claro que haverá todo tipo e código, todo tipo de nomenclatura. Mas, me refiro a maioria. E a maioria utiliza “i” para a nomenclatura de variáveis de índices.</p>
 
-<h2 id="o-problema">O problema</h2>
+<p>E se quisermos nos referir a uma posição na tela? Eu diria que a nomenclatura mais utiliza é “x,y”. Podemos declarar um <em>record</em> ou classe como <code>TPoint</code> mas é bem provável que seus atributos sejam <code>X</code> e <code>Y</code>.</p>
 
-<p>Existe um grande problema em utilizar Interfaces:</p>
+<p>“Convenção” — você diria.</p>
 
-<p>A falta da variável-interface.</p>
+<p>Sim, convenção, porém eu acho que o motivo está além disso.</p>
 
-<p>Se não implementar da forma correta, você terá algumas violações de acesso (<code>Access Violation</code>)
-e/ou vazamentos de memória (<code>memleaks</code>).</p>
+<p>Trata-se de <strong>legibilidade</strong>.</p>
 
-<p>Para que o <em>garbage colletor</em> funcione corretamente você precisa ter uma variável-interface para receber a instância, sempre.</p>
+<p>Quando estamos trabalhando em um contexto bem menor, como a implementação de um método por exemplo, não precisamos de nomes longos e verbosos. Sabemos o que X e Y significam; sabemos que “i” é o índice de um loop; sabemos que “s1” e “s2” (provavelmente) significam <em>strings</em> 1 e 2, respectivamente.</p>
 
-<p>Considere o código abaixo:</p>
+<p>Não me entenda mal. Não estou dizendo que <em>todas</em> as variáveis locais devem ter apenas uma ou duas letras. Depende. E talvez não haja uma regra para determinar qual nomenclatura mais adequada, uma regra que abrange todos os casos possíveis. Mas podemos utilizar o bom senso.</p>
 
-<pre><code>function TFoo.Execute(const Name: string): string;
-begin
-  Result := TAction.Create(TTask.Create(Name)).Execute.ToString;
-end;
+<p>Sugiro que os nomes sejam os menores possíveis, porém sem haver <em>ambiguidades</em>. Por exemplo: seria estranho haver duas variáveis assim:</p>
+
+<pre><code>var
+  s1: string;      
+  s2: TStream;
 </code></pre>
 
-<ol>
-  <li>TTask é uma classe que recebe uma <code>string</code> no construtor;</li>
-  <li>TTask implementa ITask, uma Interface;</li>
-  <li>TAction é uma classe que recebe uma <strong>interface</strong> ITask no construtor;</li>
-  <li>TAction implementa IAction, uma Interface;</li>
-  <li>TAction tem um método Execute que retorna uma interface IResult;</li>
-  <li>IResult tem um método ToString que retorna o resultado no formato <code>string</code>;</li>
-</ol>
+<p>São dois tipos completamente diferentes, porém utilizando a mesma nomenclatura. É ambíguo e confuso. Por quê <code>s2</code> representa o <code>TStream</code> e não <code>s1</code>? Falta lógica.</p>
 
-<p>Quantos vazamentos de memória teremos: 0, 1 ou 2?</p>
+<p>Porém ainda assim, na minha opinião, ainda seriam melhores que isso:</p>
 
-<p>A resposta é 1.</p>
-
-<p>Por quê?</p>
-
-<p>O compilador fará o seguinte (mais ou menos, em termos leigos):</p>
-
-<ol>
-  <li>Executar TTask.Create(Name), criando a instância;</li>
-  <li>A instância criada irá ser passada no argumento, que é do tipo ITask, do construtor de TAction;</li>
-  <li>TAction irá criar uma instância de IResult quando chamar Execute;</li>
-  <li>Utilizando a instância de IResult, o método ToString é chamado e uma <code>string</code> é retornada;</li>
-</ol>
-
-<p>Onde está o erro?</p>
-
-<p>Na chamada <code>TAction.Create</code> porque a instância não é referenciada por nenhuma variável-interface!</p>
-
-<p>O compilador não tem uma referência, então ele não sabe se deve desalocar a memória.</p>
-
-<p>Na chamada <code>TTask.Create(Name)</code> não há problema. O argumento de <code>TAction</code> recebe uma <code>ITask</code>, então o compilador
-sabe que deverá desalocar essa instância logo que não precisar mais dela.</p>
-
-<p>Então vamos acertar o código:</p>
-
-<pre><code>function TFoo.Execute(const Name: string): string;
-var
-  A: IAction;
-begin
-  A := TAction.Create(TTask.Create(Name));
-  Result := A.Execute.ToString;
-end;
+<pre><code>var
+  ClientNameTrimed: string;      
+  ClientReturnedAsStream: TStream;
 </code></pre>
 
-<p>Agora não haverá <code>memleaks</code> porque agora o compilador tem a referência <code>A</code> para <code>TAction</code>. No fim do método
-<code>TFoo.Execute</code> a instância em <code>A</code> será liberada automaticamente.</p>
+<p>O motivo é simples: se você está nomeando suas variáveis de forma tão longa, é por quê o método está fazendo coisas demais e você precisa identificar cada variável — talvez existam mais de cinco — como única para tentar melhorar a legibilidade do método, mas ignorando os indícios de que o método deveria ser refatorado (dividido) em partes menores. Métodos menores poderiam ter menos variáveis, com nomenclatura mais simples.</p>
 
-<p>Se não me falha a memória isso foi implementado no Delphi
-a partir da versão 3 (me corrijam se eu estiver errado).</p>
+<p>Seguindo o primeiro exemplo, podemos refatorar as variáveis:</p>
 
-<p>Tem muito material sobre isso na Internet se quiserem mais detalhes, mas acredito que você já sabia disso
-ou ao menos já leu sobre isso alguma vez.</p>
-
-<h2 id="o-mtodo-new">O método New</h2>
-
-<p>Se você prestou atenção nos códigos acima, vai reparar que está na mão do programador saber quando utilizar
-uma variável-interface para “dizer” ao compilador que a instância deverá ser liberada automaticamente…</p>
-
-<p>E é claro que você vai esquecer disso quando estiver programando… várias vezes! Aconteceu comigo. Centenas de vezes.</p>
-
-<p>Nem precisa ser esquecimento, basta o código mudar numa parte para começar a ter <code>memleaks</code>, exemplo:</p>
-
-<p>Se o argumento é do tipo Interface, não há problema em criar uma instância <code>inline</code>, mas e se o código for
-alterado para receber uma classe concreta (mudou de IAction para TAction o argumento)? 
-O código pode continuar funcionando, porém haverá <code>memleaks</code> porque
-o compilador não irá mais desalocar a instância criada no argumento por não ser mais do tipo Interface.</p>
-
-<p>Ora podemos criar <code>inline</code>, ora não… isso é muito chato!</p>
-
-<h3 id="a-soluo">A Solução</h3>
-
-<p>Todas as novas instâncias terão uma variável-interface para receber a referência.</p>
-
-<p>Eu implemento essa “mágica” de forma muito simples utilizando o método <em>New</em>.</p>
-
-<pre><code>type
-  TAction = class(TInterfacedObject, IAction)
-  public
-    constructor Create(Task: ITask);
-    class function New(Task: ITask): IAction;
-    function Execute: IResult;
-  end;
-  
-class function TAction.New(Task: ITask): IAction;
-begin
-  Result := TAction.Create(Task);
-end;  
-
-{ Implementação de Create e Execute... irrelevantes }  
-
-{ Implementação do método New também para TTask... }
-
-{...}  
-  
-function TFoo.Execute(const Name: string): string;
-begin
-  Result := TAction.New(TTask.New(Name)).Execute.ToString;
-end;
+<pre><code>var
+  str: string;      
+  stm: TStream;
 </code></pre>
 
-<p>Agora nós estamos chamando <code>TAction.New</code> ao invés de <code>TAction.Create</code>.</p>
+<p>Apesar de ainda haver certa ambiguidade — <code>str</code> ainda poderia ser considerada uma abreviação de <code>TStream</code> — a legibilidade é melhor. Poderíamos simplificar, refatorando <code>str</code> para apenas <code>s</code> já que trata-se de um tipo primitivo, aplicando a lógica de que “tipos primitivos estão abaixo de classes” e, portanto, utilizam menos caracteres…</p>
 
-<p>O método <em>New</em> irá retornar uma instância de <code>IAction</code> (interface) diferentemente do construtor
-<code>Create</code> que iria retornar uma instância de <code>TAction</code> (classe).</p>
+<p>O importante é haver alguma <em>lógica de nomenclatura</em> entre a equipe.</p>
 
-<ul>
-  <li>Sem problemas de <code>memleaks</code></li>
-  <li>Código mais limpo, sem variáveis locais</li>
-  <li>Código mais limpo, sem try-finally para desalocar variáveis locais</li>
-</ul>
+<p>Outro exemplo de nomenclatura interessante é dar nomes próprios às variáveis, quando estas são do tipo interface ou classe. Vejamos:</p>
 
-<p>Utilize o método <em>New</em> em todas as suas classes e nunca mais chame o construtor diretamente.
-Assim você não terá o problema da falta da variável-interface, seja por esquecimento ou por
-mudanças no código.</p>
+<pre><code>var
+  bob: TStream;      
+  john: TStream;
+</code></pre>
 
-<p>Tá gostando? Alguma dúvida? Não concorda? Posta aí nos comentários.</p>
+<p>Temos 2 <em>streams</em> e, ao invés de nomear como <code>stm1</code> e <code>stm2</code> ou algo parecido, apenas damos nomes próprios e curtos, de <em>fácil</em> memorização.</p>
+
+<p>Uma vez que seu cérebro já sabe que <code>bob</code> contém a entrada de dados (apenas um exemplo) e <code>john</code> irá conter a saída processada, seria mais difícil esquecer dos nomes comparado a <code>stm1</code> e <code>stm2</code>.</p>
+
+<p>Mantenha os nomes de variáveis locais o mais curto possível.</p>
+
+<p>Essa é a minha sugestão.</p>
+
+<p>Até logo.</p>
 
 </article>
 
@@ -371,33 +286,33 @@ mudanças no código.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/variaveis-locais" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Interfaces e o Método estático New&via=mdbs99;url=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Variáveis Locais Deveriam ter Nomes Curtos&via=mdbs99;url=http://objectpascalprogramming.com/variaveis-locais" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/variaveis-locais" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/&title=Interfaces e o Método estático New" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/&title=Interfaces e o Método estático New" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/variaveis-locais&title=Variáveis Locais Deveriam ter Nomes Curtos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/interfaces-e-o-metodo-estatico-new/&t=Interfaces e o Método estático New" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/variaveis-locais&title=Variáveis Locais Deveriam ter Nomes Curtos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/variaveis-locais&t=Variáveis Locais Deveriam ter Nomes Curtos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -444,15 +359,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/variaveis-locais" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Variáveis Locais Deveriam ter Nomes Curtos</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/formularios-e-widgets" class="post-link">
@@ -535,6 +441,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/fpweb-memleak" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>fpWeb: Verificando Vazamentos de Memória</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -542,8 +457,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/interfaces-e-o-metodo-estatico-new';
-      var disqus_title      = 'Interfaces e o Método estático New';
+      var disqus_identifier = '/variaveis-locais';
+      var disqus_title      = 'Variáveis Locais Deveriam ter Nomes Curtos';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

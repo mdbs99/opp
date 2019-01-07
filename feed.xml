@@ -8,6 +8,90 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Variáveis Locais Deveriam ter Nomes Curtos</title>
+        <description>&lt;p&gt;Já pensou que você pode estar dificultando a leitura do seu código por utilizar nomes mais longos e verbosos em variáveis locais do que utilizando nomes mais curtos?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2019/chuttersnap-413007-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;br /&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by chuttersnap on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Nomenclatura é quase uma arte, especialmente no desenvolvimento de software.&lt;/p&gt;
+
+&lt;p&gt;Escolher bons nomes irá deixar seu código mais legível e isso será imprescindível para a manutenção do mesmo no longo prazo.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, um bom nome não quer dizer um nome mais longo e verboso.&lt;/p&gt;
+
+&lt;p&gt;Um bom nome irá depender de alguns fatores. Por exemplo: se o nome identificar uma variável de &lt;em&gt;índice&lt;/em&gt; para um &lt;em&gt;loop&lt;/em&gt;, a maioria dos programadores irá utilizar “i”.&lt;/p&gt;
+
+&lt;p&gt;Por quê “i” e não “index”, já que este último é mais explícito?&lt;/p&gt;
+
+&lt;p&gt;É claro que haverá todo tipo e código, todo tipo de nomenclatura. Mas, me refiro a maioria. E a maioria utiliza “i” para a nomenclatura de variáveis de índices.&lt;/p&gt;
+
+&lt;p&gt;E se quisermos nos referir a uma posição na tela? Eu diria que a nomenclatura mais utiliza é “x,y”. Podemos declarar um &lt;em&gt;record&lt;/em&gt; ou classe como &lt;code&gt;TPoint&lt;/code&gt; mas é bem provável que seus atributos sejam &lt;code&gt;X&lt;/code&gt; e &lt;code&gt;Y&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;“Convenção” — você diria.&lt;/p&gt;
+
+&lt;p&gt;Sim, convenção, porém eu acho que o motivo está além disso.&lt;/p&gt;
+
+&lt;p&gt;Trata-se de &lt;strong&gt;legibilidade&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Quando estamos trabalhando em um contexto bem menor, como a implementação de um método por exemplo, não precisamos de nomes longos e verbosos. Sabemos o que X e Y significam; sabemos que “i” é o índice de um loop; sabemos que “s1” e “s2” (provavelmente) significam &lt;em&gt;strings&lt;/em&gt; 1 e 2, respectivamente.&lt;/p&gt;
+
+&lt;p&gt;Não me entenda mal. Não estou dizendo que &lt;em&gt;todas&lt;/em&gt; as variáveis locais devem ter apenas uma ou duas letras. Depende. E talvez não haja uma regra para determinar qual nomenclatura mais adequada, uma regra que abrange todos os casos possíveis. Mas podemos utilizar o bom senso.&lt;/p&gt;
+
+&lt;p&gt;Sugiro que os nomes sejam os menores possíveis, porém sem haver &lt;em&gt;ambiguidades&lt;/em&gt;. Por exemplo: seria estranho haver duas variáveis assim:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var
+  s1: string;      
+  s2: TStream;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;São dois tipos completamente diferentes, porém utilizando a mesma nomenclatura. É ambíguo e confuso. Por quê &lt;code&gt;s2&lt;/code&gt; representa o &lt;code&gt;TStream&lt;/code&gt; e não &lt;code&gt;s1&lt;/code&gt;? Falta lógica.&lt;/p&gt;
+
+&lt;p&gt;Porém ainda assim, na minha opinião, ainda seriam melhores que isso:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var
+  ClientNameTrimed: string;      
+  ClientReturnedAsStream: TStream;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O motivo é simples: se você está nomeando suas variáveis de forma tão longa, é por quê o método está fazendo coisas demais e você precisa identificar cada variável — talvez existam mais de cinco — como única para tentar melhorar a legibilidade do método, mas ignorando os indícios de que o método deveria ser refatorado (dividido) em partes menores. Métodos menores poderiam ter menos variáveis, com nomenclatura mais simples.&lt;/p&gt;
+
+&lt;p&gt;Seguindo o primeiro exemplo, podemos refatorar as variáveis:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var
+  str: string;      
+  stm: TStream;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Apesar de ainda haver certa ambiguidade — &lt;code&gt;str&lt;/code&gt; ainda poderia ser considerada uma abreviação de &lt;code&gt;TStream&lt;/code&gt; — a legibilidade é melhor. Poderíamos simplificar, refatorando &lt;code&gt;str&lt;/code&gt; para apenas &lt;code&gt;s&lt;/code&gt; já que trata-se de um tipo primitivo, aplicando a lógica de que “tipos primitivos estão abaixo de classes” e, portanto, utilizam menos caracteres…&lt;/p&gt;
+
+&lt;p&gt;O importante é haver alguma &lt;em&gt;lógica de nomenclatura&lt;/em&gt; entre a equipe.&lt;/p&gt;
+
+&lt;p&gt;Outro exemplo de nomenclatura interessante é dar nomes próprios às variáveis, quando estas são do tipo interface ou classe. Vejamos:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var
+  bob: TStream;      
+  john: TStream;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Temos 2 &lt;em&gt;streams&lt;/em&gt; e, ao invés de nomear como &lt;code&gt;stm1&lt;/code&gt; e &lt;code&gt;stm2&lt;/code&gt; ou algo parecido, apenas damos nomes próprios e curtos, de &lt;em&gt;fácil&lt;/em&gt; memorização.&lt;/p&gt;
+
+&lt;p&gt;Uma vez que seu cérebro já sabe que &lt;code&gt;bob&lt;/code&gt; contém a entrada de dados (apenas um exemplo) e &lt;code&gt;john&lt;/code&gt; irá conter a saída processada, seria mais difícil esquecer dos nomes comparado a &lt;code&gt;stm1&lt;/code&gt; e &lt;code&gt;stm2&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Mantenha os nomes de variáveis locais o mais curto possível.&lt;/p&gt;
+
+&lt;p&gt;Essa é a minha sugestão.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
+        <link>http://objectpascalprogramming.com/variaveis-locais</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/variaveis-locais</guid>
+      </item>
+    
+      <item>
         <title>Como Dividir e Organizar o Código em Formulários com Muitos Widgets</title>
         <description>&lt;p&gt;Definir dezenas de métodos em formulários e DataModules parece ser comum entre programadores. Podemos fazer algo para minimizar essa prática?&lt;/p&gt;
 
@@ -1026,55 +1110,6 @@ var
         <pubDate>Mon, 25 Jun 2018 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/fpc-macros</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/fpc-macros</guid>
-      </item>
-    
-      <item>
-        <title>fpWeb: Verificando Vazamentos de Memória</title>
-        <description>&lt;p&gt;A linguagem Object Pascal, assim como C ou C++, não possui &lt;em&gt;Garbage Collector&lt;/em&gt; para liberar os objetos e recursos da memória automaticamente. Pode ser difícil ter 100% de certeza que todos os objetos estão sendo liberados (manualmente) pelo código. Mas, se algum objeto não for liberado, ocorrerá um vazamento de memória.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/photo-steve-johnson-548294-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Steve Johnson on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Quando utilizamos a linguagem Object Pascal precisamos nos preocupar com &lt;a href=&quot;/posts/interfaces-delegacao-problemas-solucoes/#vazamentos-de-memoria&quot;&gt;vazamentos de memória&lt;/a&gt;, até mesmo nos sistemas mais simples.&lt;/p&gt;
-
-&lt;p&gt;Vazamentos de memória podem ser ainda mais prejudiciais em sistemas Web comparado com sistemas Desktop. Se uma aplicação Desktop tem vazamentos de memória, em algum momento o usuário poderá fechar a aplicação e todo o vazamento será recuperado pelo Sistema Operacional. Mas em aplicações Web, onde podem haver múltiplas requisições por segundo enquanto o servidor mantém em memória cópias do executável (FastCGI), tais vazamentos poderiam diminuir drasticamente com os recursos do servidor.&lt;/p&gt;
-
-&lt;p&gt;No &lt;a href=&quot;/fpweb-hello&quot;&gt;artigo anterior&lt;/a&gt; fizemos um programa simples que responde “Hello!” quando uma determinada URL  acessada.&lt;/p&gt;
-
-&lt;p&gt;Como não há vazamentos de memória nesse programa, teremos que simulá-lo, alterando o método &lt;code&gt;HandleRequest&lt;/code&gt; conforme abaixo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure THelloRoute.HandleRequest(
-  ARequest: TRequest; AResponse: TResponse);
-begin
-  TStringList.Create;
-  AResponse.Content := &#39;Hello!&#39;;
-  AResponse.SendResponse;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Mesmo após compilar o programa com o &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/heaptrc/usage.html&quot;&gt;HeapTrc&lt;/a&gt; habilitado, iniciá-lo e executá-lo utilizando o browser, não será possível ver o vazamento — diferentemente de aplicações Desktop que, ao término do programa, mostra um “relatório” sobre a memória &lt;em&gt;utilizada vs. liberada&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Para ser possível ver o relatório, você tem que finalizar a aplicação apropriadamente. O problema é que, mesmo após finalizada a requisição pelo browser, ela continua em execução aguardando mais e mais requisições.&lt;/p&gt;
-
-&lt;p&gt;Felizmente, há uma maneira de ver o relatório do HeapTrc, alterando o código conforme a seguir:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/90b319e7bcf5d37383c1083179b69546.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;No código acima, foi introduzido um procedimento &lt;code&gt;TerminateCall&lt;/code&gt;, algumas configurações do &lt;code&gt;heaptrc&lt;/code&gt; e a inclusão de uma nova rota &lt;code&gt;/quit&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Compile e execute a aplicação novamente. Depois, faça uma requisição a URL &lt;code&gt;/hello&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então, aponte seu browser para fazer uma requisição a URL &lt;code&gt;/quit&lt;/code&gt;. Nesse momento você verá que a janela da aplicação foi finalizada.&lt;/p&gt;
-
-&lt;p&gt;Finalmente, abra o arquivo &lt;code&gt;log.txt&lt;/code&gt;, localizado no mesmo diretório do executável, para visualizar todos os vazamentos de memória.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 11 Jun 2018 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/fpweb-memleak</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/fpweb-memleak</guid>
       </item>
     
   </channel>
