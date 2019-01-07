@@ -29,7 +29,7 @@ Já pensou que você pode estar dificultando a leitura do seu código por utiliz
 ![Unsplash image]({{ page.image }})
 <br><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by chuttersnap on Unsplash</span>
 
-Nomenclatura é quase uma arte, especialmente no desenvolvimento de software.
+[Nomenclatura]({% post_url 2016-07-25-nomeando-variaveis-e-metodos %}) é quase uma arte, especialmente no desenvolvimento de software.
 
 Escolher bons nomes irá deixar seu código mais legível e isso será imprescindível para a manutenção do mesmo no longo prazo.
 
@@ -67,7 +67,7 @@ Porém ainda assim, na minha opinião, ainda seriam melhores que isso:
       ClientNameTrimed: string;      
       ClientReturnedAsStream: TStream;
 
-O motivo é simples: se você está nomeando suas variáveis de forma tão longa, é por quê o método está fazendo coisas demais e você precisa identificar cada variável — talvez existam mais de cinco — como única para tentar melhorar a legibilidade do método, mas ignorando os indícios de que o método deveria ser refatorado (dividido) em partes menores. Métodos menores poderiam ter menos variáveis, com nomenclatura mais simples.
+O motivo é simples: se você está nomeando suas variáveis de forma tão longa, é por quê o método está fazendo coisas demais e você precisa identificar cada variável — talvez existam [mais de cinco]({% post_url 2016-11-28-menos-e-mais %}#variaveis-locais) — como única para tentar melhorar a legibilidade do método, mas ignorando os indícios de que o método deveria ser refatorado (dividido) em partes menores. Métodos menores poderiam ter menos variáveis, com nomenclatura mais simples.
 
 Seguindo o primeiro exemplo, podemos refatorar as variáveis:
 
