@@ -6,7 +6,7 @@ permalink: /about/
 
 ### O Autor
 
-Engenheiro de Software com mais de 16 anos de experiência em Análise, Arquitetura e Desenvolvimento de Sistemas utilizando Programação Orientada a Objetos. Especialista em Object Pascal e Microsoft SQL Server. CEO da Delfire. Consultor. Revisor Técnico. Blogger.
+Engenheiro de Software com especialização em Arquitetura e Desenvolvimento utilizando programação orientada a objetos. Especialista em Object Pascal(FPC/Lazarus/Delphi), SQL, back-end, microsserviços. Consultor de Software. Autor de vários projetos OpenSource. Revisor técnico de livros. Blogger.
 
 Gostaria de me pagar um café ou ajudar o blog fazendo uma pequena doação?
 
