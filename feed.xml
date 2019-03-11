@@ -8,6 +8,126 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Array de Objetos</title>
+        <description>&lt;p&gt;Quando você precisa de uma simples lista de objetos, qual estrutura você utiliza?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2019/antonio-garcia-339626-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;br /&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Antonio Garcia on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Todo sistema utiliza listas para armazenar desde valores primitivos até instancias de objetos.&lt;/p&gt;
+
+&lt;p&gt;Aqui eu sempre advoguei sobre utilizar objetos em (quase) todos os lugares. Mas temos que ser eficientes e não desperdiçar recursos. Não devemos criar estruturas mais complexas, como classes e interfaces, quando outra estrutura pode resolver o problema, além de simplificar a solução.&lt;/p&gt;
+
+&lt;p&gt;Basicamente uma lista pode ser representada por um array, um &lt;a href=&quot;/listas-genericas-sem-generics&quot;&gt;objeto genérico&lt;/a&gt; (ex: &lt;code&gt;TList&lt;/code&gt;) ou um objeto especializado que possui regras de negócio que irão trabalhar com os elementos de acordo com requisitos &lt;em&gt;específicos&lt;/em&gt; do usuário.&lt;/p&gt;
+
+&lt;p&gt;Se você não precisa de uma lista com &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/#regras-de-negocio&quot;&gt;regras de negócio&lt;/a&gt;, arrays podem ser um boa escolha.&lt;/p&gt;
+
+&lt;h2 id=&quot;vs&quot;&gt;Array vs Lista&lt;/h2&gt;
+
+&lt;p&gt;Poderíamos utilizar lista de objetos em todos os lugares, mas os arrays continuam relevantes.&lt;/p&gt;
+
+&lt;p&gt;Arrays armazenam informações no &lt;em&gt;stack&lt;/em&gt;, enquanto Listas utilizam o &lt;em&gt;heap&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;A utilização do stack tem muito mais performance pois o acesso a esse tipo de memória é muito mais rápido. A alocação da memória é determinada já na compilação do programa, tornando fácil o seu gerenciamento.&lt;/p&gt;
+
+&lt;p&gt;O stack é protegido e mais rápido, pois é mais fácil para o compilador alocar/desalocar memória lá. Entretanto, ele é mais limitado quanto ao espaço, comparado ao heap. O heap é “ilimitado” (pode ocupar toda a memória RAM), porém mais lento. Sendo o heap compartilhado por toda a aplicação, é mais difícil/custoso para o compilador alocar/desalocar a memória. E, sendo esses dados “globais” à aplicação, eles muitas vezes devem ser sincronizados quando os acessamos utilizando multi-threading.&lt;/p&gt;
+
+&lt;p&gt;Então, como escolher entre eles?&lt;/p&gt;
+
+&lt;p&gt;Podemos definir 3 tópicos básicos que você deverá levar em conta, quando for tomar sua decisão: Performance, Regras de Negócio e Transferência de Dados.&lt;/p&gt;
+
+&lt;h3 id=&quot;performance&quot;&gt;Performance&lt;/h3&gt;
+
+&lt;p&gt;Você usa o stack quando souber a quantidade de dados à alocar na memória já em tempo de compilação. No entanto, não deve ser uma massa muito grande de dados—mesmo havendo configurações/diretivas em cada compilador para customização—ou você poderá obter um erro de memória em tempo de execução.&lt;/p&gt;
+
+&lt;p&gt;O heap é utilizado quando você não souber, exatamente, quantos dados irá precisar em tempo de execução ou se houver a tendência de que será uma massa muito grande de dados.&lt;/p&gt;
+
+&lt;p&gt;O stack sempre será mais rápido que o heap. Então, se você necessitar da máxima performance, tenha isso em mente quando tiver instanciando novas listas de objetos.&lt;/p&gt;
+
+&lt;h3 id=&quot;regras&quot;&gt;Regras de Negócio&lt;/h3&gt;
+
+&lt;p&gt;Imagine um sistema de estacionamento de veículos. Se você tem uma classe que representa o estacionamento, então você tem uma lista especializada para armazenar as vagas e carros ou ao menos uma lista genérica dentro da classe especializada.&lt;/p&gt;
+
+&lt;p&gt;Você teria regras de negócios referente ao estacionamento como: horário de entrada/saída, número da vagas, serviço de manobrista, etc. Não vem ao caso pensar em todas as regras de negócio de um estacionamento. O mais importante é sabermos que &lt;em&gt;haveria&lt;/em&gt; regras de negócio para essa &lt;em&gt;lista especializada&lt;/em&gt;, o estacionamento.&lt;/p&gt;
+
+&lt;p&gt;Apesar da maioria dos estacionamentos terem um número limitado de vagas, virtualmente pode-se adicionar mais carros em “vagas não-oficiais”, deixando um total de vagas “em aberto”—se isso não acontece na sua cidade/país, bem, apenas considere a possibilidade.&lt;/p&gt;
+
+&lt;p&gt;Se o número de vagas é bem grande ou incerto, a melhor opção de escolha nesse caso seria uma lista especializada, alocada no heap, com outros métodos adicionais que implementam as regras de negócio.&lt;/p&gt;
+
+&lt;h3 id=&quot;transferencia&quot;&gt;Transferência de Dados&lt;/h3&gt;
+
+&lt;p&gt;Se sua lista existe apenas para armazenar temporariamente objetos ou para passagem de parâmetro entre contextos, por exemplo, um simples array poderia ser utilizado.&lt;/p&gt;
+
+&lt;p&gt;Chamo de transferência de &lt;a href=&quot;/posts/pensando-em-dados/&quot;&gt;dados&lt;/a&gt;, pois você poderá transferir desde elementos simples e primitivos até objetos complexos de listas especializadas, entre contextos distintos. Esse seria o meio-termo entre performance vs especialização. Você pode ter listas de objetos, carregando instâncias de objetos complexos, mas utilizar os arrays para transportar apenas parte desses objetos de forma eficiente.&lt;/p&gt;
+
+&lt;p&gt;Exemplo. A sua lista de vagas acima, o estacionamento, possui um número X de vagas em uso em um determinado momento. Cada vaga pode ser representada por uma instância. Imagine que o usuário selecionou 3 vagas para “deixar livre”. Após a seleção, é necessário fazer algumas operações com essas instâncias (vagas). Essas operações irão receber um “array de vagas” como parâmetro.&lt;/p&gt;
+
+&lt;p&gt;O array seria utilizado por quê você já sabe a quantidade de elementos que ele iria ter—determinado pela seleção do usuário. Criar uma nova lista de vagas (do tipo estacionamento) para adicionar apenas 3 instâncias e então passar como parâmetro seria um desperdício de processamento, além de não fazer muito sentido passar “todo um estacionamento”—uma instância da mesma classe—ou uma cópia da lista oficial com menos registros, apenas para fazer o processamento da liberação das vagas.&lt;/p&gt;
+
+&lt;p&gt;Um array seria a escolha mais simples. No entanto, não há só um tipo de array.&lt;/p&gt;
+
+&lt;h2 id=&quot;utilizando&quot;&gt;Utilizando Arrays Dinâmicos&lt;/h2&gt;
+
+&lt;p&gt;Existem alguns tipos de arrays como estáticos, constantes, dinâmicos, multi-dimensionais, etc.&lt;/p&gt;
+
+&lt;p&gt;Para esse artigo, iremos utilizar os &lt;em&gt;arrays dinâmicos&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Utilizar arrays dinâmicos no Object Pascal é relativamente fácil, porém temos que prestar atenção em duas regras principais:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;O índice do primeiro elemento sempre será 0 (zero);&lt;/li&gt;
+  &lt;li&gt;É necessário determinar o tamanho do array antes de inserir seus elementos;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;O índice&lt;/strong&gt; do primeiro elemento sempre será zero, diferentemente de arrays contantes, por exemplo, onde você pode informar outro valor para o primeiro elemento. Tenha sempre isso em mente quando utilizar o array em loops.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O tamanho&lt;/strong&gt; de um array é determinado pela função &lt;code&gt;SetLength(array, size)&lt;/code&gt; padrão.&lt;/p&gt;
+
+&lt;p&gt;Abaixo um exemplo do uso da função e a carga de um &lt;code&gt;array of Integer&lt;/code&gt; com valores:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var
+  a: array of Integer;
+begin
+  SetLength(a, 10); // from 0 to 9 positions
+  for i := 0 to 10 do
+    a[i] := i;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Diferentemente de classes e interfaces, para definir um array para armazenar elementos de um determinado tipo, basta apenas uma linha de código, como visto acima.&lt;/p&gt;
+
+&lt;p&gt;Foi definido um array para &lt;code&gt;Integer&lt;/code&gt;, mas a mesma sintaxe vale para tipos de classes ou interfaces. Se estivermos trabalhando com Vagas—instâncias da interface &lt;code&gt;ISpot&lt;/code&gt;, por exemplo—poderíamos definir um array dessa forma:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TSpotArray = array of ISpot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Não precisamos nos preocupar com herança, métodos ou sobrescrita de métodos, caso estivéssemos definindo uma nova classe.&lt;/p&gt;
+
+&lt;p&gt;Apenas uma única linha define um novo &lt;em&gt;container&lt;/em&gt; dinâmico de instâncias de &lt;code&gt;ISpot&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Utilizando uma variação do algoritmo acima, você é capaz de inicializar o array e adicionar os 3 itens que o usuário selecionou, passando-o como um parâmetro para o algoritmo que irá desalocar as vagas.&lt;/p&gt;
+
+&lt;p&gt;Não há necessidade de se preocupar com o desalocamento de memória, pois tudo será feito automaticamente pelo compilador.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Arrays são ótimas opções para trabalhar com objetos em memória e passagem de dados entre contextos.&lt;/p&gt;
+
+&lt;p&gt;Eles são &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt;, gerenciados pelo compilador no stack e muito mais rápidos que listas de objetos.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 11 Mar 2019 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/array-de-objetos</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/array-de-objetos</guid>
+      </item>
+    
+      <item>
         <title>Variáveis Locais Deveriam ter Nomes Curtos</title>
         <description>&lt;p&gt;Já pensou que você pode estar dificultando a leitura do seu código por utilizar nomes mais longos e verbosos em variáveis locais do que utilizando nomes mais curtos?&lt;/p&gt;
 
@@ -958,158 +1078,6 @@ end;
         <pubDate>Mon, 02 Jul 2018 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/quem-libera-os-objetos</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/quem-libera-os-objetos</guid>
-      </item>
-    
-      <item>
-        <title>Free Pascal Macros</title>
-        <description>&lt;p&gt;Uma linguagem simples e com um design elegante como Object Pascal não necessitaria de suporte a macros como existem em C/C++. No entanto, Free Pascal as tem. Devemos utilizá-las?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/remi-jacquaint-441559-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Rémi Jacquaint on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;O uso de &lt;a href=&quot;https://en.wikipedia.org/wiki/Macro_(computer_science)&quot;&gt;macros&lt;/a&gt; já existe no Free Pascal faz tempo, porém nunca havia pensando utilizar tal feature.&lt;/p&gt;
-
-&lt;p&gt;Se você é leitor assíduo do blog já deve ter percebido que eu prefiro ter um bom design e consistência no código do que utilizar “hacks” para escrever menos, porém com a perda da legibilidade e da manutenibilidade.&lt;/p&gt;
-
-&lt;p&gt;Na minha opinião, macros são &lt;em&gt;hacks&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Bem, talvez a maioria…&lt;/p&gt;
-
-&lt;p&gt;Não acho que o suporte a macros não tenha sido implementado com o objetivo de melhorar o design e legibilidade do código.&lt;/p&gt;
-
-&lt;p&gt;No entanto, acredito que podemos tirar proveito dessa feature.&lt;/p&gt;
-
-&lt;h2 id=&quot;macros&quot;&gt;Macros&lt;/h2&gt;
-
-&lt;p&gt;No código Pascal podemos definir macros que serão pré-processadas pelo compilador. Esse processamento irá gerar um resultado, que será como uma constante. Mas, essa constante pode representar uma expressão, um algorítimo, uma unidade, etc.&lt;/p&gt;
-
-&lt;p&gt;Vejamos um exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{$macro on}
-{$define VALUE := A+B}
-
-function Sum(A, B: Integer): Integer;
-begin
-  Result := VALUE;
-end;
-
-function Concat(const A, B: string): string;
-begin
-  Result := VALUE;
-end;
-{ TForm1 }
-
-procedure TForm1.Button1Click(Sender: TObject);
-begin
-  ShowMessage(Sum(1,2).ToString); // 3
-  ShowMessage(Concat(&#39;A&#39;,&#39;B&#39;));   // &#39;AB&#39;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A primeira coisa a se fazer é ativar o uso de macros utilizando a diretiva &lt;code&gt;{$macro on}&lt;/code&gt;, pois macros não são ativadas por padrão. Outra maneira de ativá-as para todas as unidades é passando o argumento &lt;code&gt;-Sm&lt;/code&gt; para o compilador.&lt;/p&gt;
-
-&lt;p&gt;O exemplo acima não faz muito sentido, pois para se fazer uma soma não é necessário o uso de macros. No entanto, serviu para lhe mostrar o que é possível fazer com elas.&lt;/p&gt;
-
-&lt;p&gt;Repare que &lt;code&gt;A&lt;/code&gt; e &lt;code&gt;B&lt;/code&gt; são definidos na macro como 2 identificadores que ainda não existem. Esses identificadores virão do contexto onde as macros serão chamadas, ou seja, as funções &lt;code&gt;Sum&lt;/code&gt; e &lt;code&gt;Concat&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Para a macro, não importa o tipo de &lt;code&gt;A&lt;/code&gt; e &lt;code&gt;B&lt;/code&gt;. Então, elas funcionam como &lt;em&gt;Generics&lt;/em&gt;, o que já é bem legal.&lt;/p&gt;
-
-&lt;p&gt;Mas &lt;em&gt;Generics&lt;/em&gt; são muito mais poderosos do que isso, então não pense em macros como substitutos aos Generics.&lt;/p&gt;
-
-&lt;p&gt;Vamos a outro exemplo onde Generics não ajudam em nada:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{$macro on}
-{$ifdef debug}
-  {$define foo := foo.debug}
-{$else}
-  {$define foo := foo.run}
-{$endif}
-
-uses
-  foo;
-begin
-  foo.SomeFunc;
-end.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Nesse exemplo acima, há um teste se a diretiva &lt;code&gt;debug&lt;/code&gt; foi definida. Se for verdadeiro, definimos uma macro &lt;code&gt;foo&lt;/code&gt; com o nome da unidade &lt;code&gt;foo.debug&lt;/code&gt;, senão definimos &lt;code&gt;foo&lt;/code&gt; como &lt;code&gt;foo.run&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Repare que na cláusula &lt;code&gt;uses&lt;/code&gt; há somente &lt;code&gt;foo&lt;/code&gt;. Imagine agora por as diretivas em outro lugar, talvez arquivos &lt;code&gt;.inc&lt;/code&gt;, e teremos uma unidade com o código limpo que irá utilizar as classes corretas dependendo da diretiva escolhida.&lt;/p&gt;
-
-&lt;p&gt;Bem legal, não é?&lt;/p&gt;
-
-&lt;p&gt;Entretanto, isso também não foi o que mais me chamou atenção no uso das macros. Pois, para fazer o mesmo que no exemplo acima, não é preciso macros. Basta você ter unidades como o mesmo nome, porém em diretórios diferentes, e passar o path correspondente ao compilador dependendo se há ou não a diretiva &lt;code&gt;debug&lt;/code&gt;. O Lazarus IDE lhe dá essa opção.&lt;/p&gt;
-
-&lt;p&gt;Se há outras alternativas na própria linguagem para o uso de macros, por quê então utilizá-las?&lt;/p&gt;
-
-&lt;h2 id=&quot;alias&quot;&gt;Unit Alias&lt;/h2&gt;
-
-&lt;p&gt;Faz muito tempo que solicitei a implementação de uma nova sintaxe à equipe Free Pascal para ser possível &lt;a href=&quot;/redeclarando-classes&quot;&gt;redeclarar&lt;/a&gt; uma unidade diretamente no código. A linguagem C# tem isso, assim como Python.&lt;/p&gt;
-
-&lt;p&gt;A razão para esse pedido é poder declarar unidades com nomes longos no código, mas dar-lhes um apelido curto para servir de prefixo a algumas classes que tem nomes iguais em unidades diferentes.&lt;/p&gt;
-
-&lt;p&gt;Então pensei numa alternativa que chamei de &lt;a href=&quot;/api-unit&quot;&gt;API Unit&lt;/a&gt;. As vantagens e desvantagens estão no artigo.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente essa ideia não se mostrou muito eficaz para projetos com muitas unidades, já que é necessário redeclarar todas as unidades, suas classes e interfaces em um único arquivo.&lt;/p&gt;
-
-&lt;p&gt;Mas com macros, tudo muda.&lt;/p&gt;
-
-&lt;p&gt;Hipoteticamente, vamos supor que as unidades &lt;code&gt;Windows&lt;/code&gt; e &lt;code&gt;Graphics&lt;/code&gt; pertencem ao namespace &lt;code&gt;FPC.RTL.&lt;/code&gt;, ou seja, um “nome longo”.&lt;/p&gt;
-
-&lt;p&gt;Então, minha proposta (antiga) seria utilizar essa sintaxe:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;uses
-  FPC.RTL.Windows as Win,
-  FPC.RTL.Graphics as Graph;
-var
-  B1: Win.TBitmap;
-  B2: Graph.TBitmap;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Eu não estou me referindo aqui o uso de namespaces do Delphi — que já foi implementado no Free Pascal — onde poderíamos definir um &lt;code&gt;NS=&quot;FPC.RTL&quot;&lt;/code&gt; e declarar apenas &lt;code&gt;Windows&lt;/code&gt; e &lt;code&gt;Graphics&lt;/code&gt; respectivamente.&lt;/p&gt;
-
-&lt;p&gt;Não é isso.&lt;/p&gt;
-
-&lt;p&gt;Utilizando essa sintaxe, teríamos o &lt;em&gt;controle local&lt;/em&gt; sobre a nomenclatura das unidades.&lt;/p&gt;
-
-&lt;p&gt;Quando solicitei isso na época, eu pensava que iria exigir mudanças no parser da linguagem, que daria muito trabalho, etc.&lt;/p&gt;
-
-&lt;p&gt;Não era prioridade.&lt;/p&gt;
-
-&lt;p&gt;Porém, veja que com o uso de macros, bastaria o compilador substituir os &lt;code&gt;uses&lt;/code&gt; acima, que utiliza a palavra reservada &lt;code&gt;as&lt;/code&gt;, pelo código abaixo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;uses
-  {$macro on}
-  FPC.RTL.Windows,
-  {$define Win := FPC.RTL.Windows}
-  FPC.RTL.Graphics;
-  {$define Graph := FPC.RTL.Graphics}
-var
-  B1: Win.TBitmap;
-  B2: Graph.TBitmap;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;E então eu poderia “renomear” as unidades com nomes longos como &lt;code&gt;Acme.SysFoo.Finances.Billing.Utils.Classes&lt;/code&gt; para apenas &lt;code&gt;Billing&lt;/code&gt;. Porém, em outra unidade, eu poderia renomear para &lt;code&gt;Utils&lt;/code&gt; se assim o desejasse.&lt;/p&gt;
-
-&lt;p&gt;Teríamos a possibilidade de definir um apelido local (por unidade) a cada unidade. Perfeito.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;A resposta a pergunta inicial é, sim. O uso de macros, quando bem utilizado, pode melhorar muito a legibilidade e design do código.&lt;/p&gt;
-
-&lt;p&gt;Não temos (ainda?) a sintaxe com o uso de &lt;code&gt;as&lt;/code&gt;, que seria apenas uma &lt;em&gt;syntax sugar&lt;/em&gt; para o uso de macros, porém já podemos renomear unidades localmente. O que é um grande avanço, na minha opinião.&lt;/p&gt;
-
-&lt;p&gt;O único contra que eu vejo é que, infelizmente, essa feature não existe no Delphi… por enquanto?&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 25 Jun 2018 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/fpc-macros</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/fpc-macros</guid>
       </item>
     
   </channel>

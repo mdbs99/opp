@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Construtores da Classe, Primário e Secundários &#8211; Object Pascal Programming</title>
+    <title>Array de Objetos &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Como Utilizar Construtores Primários e Secundários.">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
-    <meta name="keywords" content="Pascal">
-    <meta name="keywords" content="construtores, primário, primary, secundário, secondary, constructor, create, builder">
-    <link rel="canonical" href="http://objectpascalprogramming.com/posts/construtores-da-classe-primario-secundarios/">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, array, dynamic array">
+    <link rel="canonical" href="http://objectpascalprogramming.com/array-de-objetos">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -30,21 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Construtores da Classe, Primário e Secundários">
-    <meta property="og:description" content="Como Utilizar Construtores Primários e Secundários.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/posts/construtores-da-classe-primario-secundarios/">
+    <meta property="og:title" content="Array de Objetos">
+    <meta property="og:description" content="Arrays são ótimas opções para trabalhar com objetos em memória e passagem de dados entre contextos.">
+    <meta property="og:url" content="http://objectpascalprogramming.com/array-de-objetos">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/photo-1457803097035-3ace37af34a7.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2019/antonio-garcia-339626-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Construtores da Classe, Primário e Secundários" />
-    <meta name="twitter:description" content="Como Utilizar Construtores Primários e Secundários." />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/posts/construtores-da-classe-primario-secundarios/" />
+    <meta name="twitter:title" content="Array de Objetos" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/array-de-objetos" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -188,143 +190,129 @@
 
 
 <div class="post-header mb2">
-  <h1>Construtores da Classe, Primário e Secundários</h1>
-  <span class="post-meta">Mar 21, 2016</span><br>
+  <h1>Array de Objetos</h1>
+  <span class="post-meta">Mar 11, 2019</span><br>
   
   <span class="post-meta small">
   
-    2 minute read
+    6 minute read
   
   </span>
 </div>
 
 <article class="post-content">
-  <p>Você pode implementar dezenas de Construtores para uma única Classe, porém apenas um deles 
-deverá ser o <strong>Primário</strong> enquanto os demais deverão ser apenas <strong>Secundários</strong>.</p>
-
-<p>Todos os construtores Secundários deverão fazer uma chamada ao construtor Primário.</p>
+  <p>Quando você precisa de uma simples lista de objetos, qual estrutura você utiliza?</p>
 
 <!--more-->
 
-<p><img src="/images/photo-1457803097035-3ace37af34a7.jpg" alt="Imagem" /></p>
+<p><img src="/images/2019/antonio-garcia-339626-unsplash.jpg" alt="Unsplash image" />
+<br /><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Antonio Garcia on Unsplash</span></p>
 
-<p>Os <a href="https://en.wikipedia.org/wiki/Constructor_(object-oriented_programming)">Construtores de Classes</a> são 
-utilizados para criar instâncias de Objetos.</p>
+<h2 id="introducao">Introdução</h2>
 
-<p>Uma Classe pode ter vários construtores, mas somente o <strong>Primário</strong> deverá retornar uma instância de um Objeto.</p>
+<p>Todo sistema utiliza listas para armazenar desde valores primitivos até instancias de objetos.</p>
 
-<p>Os demais construtores são apenas <strong>Secundários</strong>, pois irão fazer uso do construtor Primário.</p>
+<p>Aqui eu sempre advoguei sobre utilizar objetos em (quase) todos os lugares. Mas temos que ser eficientes e não desperdiçar recursos. Não devemos criar estruturas mais complexas, como classes e interfaces, quando outra estrutura pode resolver o problema, além de simplificar a solução.</p>
 
-<p>O construtor Primário, na maioria das vezes, sempre será aquele com mais parâmetros.</p>
+<p>Basicamente uma lista pode ser representada por um array, um <a href="/listas-genericas-sem-generics">objeto genérico</a> (ex: <code>TList</code>) ou um objeto especializado que possui regras de negócio que irão trabalhar com os elementos de acordo com requisitos <em>específicos</em> do usuário.</p>
 
-<p>Vamos a um exemplo.</p>
+<p>Se você não precisa de uma lista com <a href="/posts/codigo-duplicado-talvez-nao/#regras-de-negocio">regras de negócio</a>, arrays podem ser um boa escolha.</p>
+
+<h2 id="vs">Array vs Lista</h2>
+
+<p>Poderíamos utilizar lista de objetos em todos os lugares, mas os arrays continuam relevantes.</p>
+
+<p>Arrays armazenam informações no <em>stack</em>, enquanto Listas utilizam o <em>heap</em>.</p>
+
+<p>A utilização do stack tem muito mais performance pois o acesso a esse tipo de memória é muito mais rápido. A alocação da memória é determinada já na compilação do programa, tornando fácil o seu gerenciamento.</p>
+
+<p>O stack é protegido e mais rápido, pois é mais fácil para o compilador alocar/desalocar memória lá. Entretanto, ele é mais limitado quanto ao espaço, comparado ao heap. O heap é “ilimitado” (pode ocupar toda a memória RAM), porém mais lento. Sendo o heap compartilhado por toda a aplicação, é mais difícil/custoso para o compilador alocar/desalocar a memória. E, sendo esses dados “globais” à aplicação, eles muitas vezes devem ser sincronizados quando os acessamos utilizando multi-threading.</p>
+
+<p>Então, como escolher entre eles?</p>
+
+<p>Podemos definir 3 tópicos básicos que você deverá levar em conta, quando for tomar sua decisão: Performance, Regras de Negócio e Transferência de Dados.</p>
+
+<h3 id="performance">Performance</h3>
+
+<p>Você usa o stack quando souber a quantidade de dados à alocar na memória já em tempo de compilação. No entanto, não deve ser uma massa muito grande de dados—mesmo havendo configurações/diretivas em cada compilador para customização—ou você poderá obter um erro de memória em tempo de execução.</p>
+
+<p>O heap é utilizado quando você não souber, exatamente, quantos dados irá precisar em tempo de execução ou se houver a tendência de que será uma massa muito grande de dados.</p>
+
+<p>O stack sempre será mais rápido que o heap. Então, se você necessitar da máxima performance, tenha isso em mente quando tiver instanciando novas listas de objetos.</p>
+
+<h3 id="regras">Regras de Negócio</h3>
+
+<p>Imagine um sistema de estacionamento de veículos. Se você tem uma classe que representa o estacionamento, então você tem uma lista especializada para armazenar as vagas e carros ou ao menos uma lista genérica dentro da classe especializada.</p>
+
+<p>Você teria regras de negócios referente ao estacionamento como: horário de entrada/saída, número da vagas, serviço de manobrista, etc. Não vem ao caso pensar em todas as regras de negócio de um estacionamento. O mais importante é sabermos que <em>haveria</em> regras de negócio para essa <em>lista especializada</em>, o estacionamento.</p>
+
+<p>Apesar da maioria dos estacionamentos terem um número limitado de vagas, virtualmente pode-se adicionar mais carros em “vagas não-oficiais”, deixando um total de vagas “em aberto”—se isso não acontece na sua cidade/país, bem, apenas considere a possibilidade.</p>
+
+<p>Se o número de vagas é bem grande ou incerto, a melhor opção de escolha nesse caso seria uma lista especializada, alocada no heap, com outros métodos adicionais que implementam as regras de negócio.</p>
+
+<h3 id="transferencia">Transferência de Dados</h3>
+
+<p>Se sua lista existe apenas para armazenar temporariamente objetos ou para passagem de parâmetro entre contextos, por exemplo, um simples array poderia ser utilizado.</p>
+
+<p>Chamo de transferência de <a href="/posts/pensando-em-dados/">dados</a>, pois você poderá transferir desde elementos simples e primitivos até objetos complexos de listas especializadas, entre contextos distintos. Esse seria o meio-termo entre performance vs especialização. Você pode ter listas de objetos, carregando instâncias de objetos complexos, mas utilizar os arrays para transportar apenas parte desses objetos de forma eficiente.</p>
+
+<p>Exemplo. A sua lista de vagas acima, o estacionamento, possui um número X de vagas em uso em um determinado momento. Cada vaga pode ser representada por uma instância. Imagine que o usuário selecionou 3 vagas para “deixar livre”. Após a seleção, é necessário fazer algumas operações com essas instâncias (vagas). Essas operações irão receber um “array de vagas” como parâmetro.</p>
+
+<p>O array seria utilizado por quê você já sabe a quantidade de elementos que ele iria ter—determinado pela seleção do usuário. Criar uma nova lista de vagas (do tipo estacionamento) para adicionar apenas 3 instâncias e então passar como parâmetro seria um desperdício de processamento, além de não fazer muito sentido passar “todo um estacionamento”—uma instância da mesma classe—ou uma cópia da lista oficial com menos registros, apenas para fazer o processamento da liberação das vagas.</p>
+
+<p>Um array seria a escolha mais simples. No entanto, não há só um tipo de array.</p>
+
+<h2 id="utilizando">Utilizando Arrays Dinâmicos</h2>
+
+<p>Existem alguns tipos de arrays como estáticos, constantes, dinâmicos, multi-dimensionais, etc.</p>
+
+<p>Para esse artigo, iremos utilizar os <em>arrays dinâmicos</em>.</p>
+
+<p>Utilizar arrays dinâmicos no Object Pascal é relativamente fácil, porém temos que prestar atenção em duas regras principais:</p>
+
+<ol>
+  <li>O índice do primeiro elemento sempre será 0 (zero);</li>
+  <li>É necessário determinar o tamanho do array antes de inserir seus elementos;</li>
+</ol>
+
+<p><strong>O índice</strong> do primeiro elemento sempre será zero, diferentemente de arrays contantes, por exemplo, onde você pode informar outro valor para o primeiro elemento. Tenha sempre isso em mente quando utilizar o array em loops.</p>
+
+<p><strong>O tamanho</strong> de um array é determinado pela função <code>SetLength(array, size)</code> padrão.</p>
+
+<p>Abaixo um exemplo do uso da função e a carga de um <code>array of Integer</code> com valores:</p>
+
+<pre><code>var
+  a: array of Integer;
+begin
+  SetLength(a, 10); // from 0 to 9 positions
+  for i := 0 to 10 do
+    a[i] := i;
+end;
+</code></pre>
+
+<p>Diferentemente de classes e interfaces, para definir um array para armazenar elementos de um determinado tipo, basta apenas uma linha de código, como visto acima.</p>
+
+<p>Foi definido um array para <code>Integer</code>, mas a mesma sintaxe vale para tipos de classes ou interfaces. Se estivermos trabalhando com Vagas—instâncias da interface <code>ISpot</code>, por exemplo—poderíamos definir um array dessa forma:</p>
 
 <pre><code>type
-  TUser = class
-  private
-    FLogin: string;
-    FPassword: string;
-  public
-    constructor Create(const Login, Password: string);
-    constructor Create(const Login: string); 
-    function Login: string;
-    function Password: string;
-  end;
-  
-implementation
-
-constructor TUser.Create(const Login, Password: string);
-begin
-  inherited Create;
-  FLogin := Login;
-  FPassword := Password;
-end;
-
-constructor TUser.Create(const Login: string);
-begin
-  Create(Login, '123456');
-end;
-
-function TUser.Login: string;
-begin
-  Result := FLogin;
-end;
-
-function TUser.Password: string;
-begin
-  Result := FPassword;
-end;
+  TSpotArray = array of ISpot;
 </code></pre>
 
-<p>A Classe <code>TUser</code> tem 2 construtores.</p>
+<p>Não precisamos nos preocupar com herança, métodos ou sobrescrita de métodos, caso estivéssemos definindo uma nova classe.</p>
 
-<p>O segundo construtor chama o primeiro, passando um valor <em>default</em> para o argumento <em>Password</em>.</p>
+<p>Apenas uma única linha define um novo <em>container</em> dinâmico de instâncias de <code>ISpot</code>.</p>
 
-<p>Qualquer inicialização de atributos, sejam eles passados em argumentos pelo construtor ou não, deverá
-ser executado em apenas um local, ou seja, o construtor Primário.</p>
+<p>Utilizando uma variação do algoritmo acima, você é capaz de inicializar o array e adicionar os 3 itens que o usuário selecionou, passando-o como um parâmetro para o algoritmo que irá desalocar as vagas.</p>
 
-<p>Este é um padrão que eu sigo em meus projetos.</p>
+<p>Não há necessidade de se preocupar com o desalocamento de memória, pois tudo será feito automaticamente pelo compilador.</p>
 
-<p>Esse padrão simplifica muito quando quero saber sobre tudo que um Objeto utiliza, inicializa ou encapsula, 
-bastando olhar no seu construtor Primário. Esse construtor sempre será o primeiro da lista de métodos.</p>
+<h2 id="conclusao">Conclusão</h2>
 
-<h2 id="argumentos-default">Argumentos <em>Default</em></h2>
+<p>Arrays são ótimas opções para trabalhar com objetos em memória e passagem de dados entre contextos.</p>
 
-<p>A linguagem Pascal permite que funções e métodos tenham argumentos <em>default</em>. O exemplo acima poderia ser
-reescrito com apenas 1 construtor, desse jeito:</p>
+<p>Eles são <a href="/posts/simplicidade/">simples</a>, gerenciados pelo compilador no stack e muito mais rápidos que listas de objetos.</p>
 
-<pre><code>constructor Create(const Login, Password: string = '123456');
-</code></pre>
-
-<p>Apesar de escrever menos, eu não recomendo utilizar argumentos <em>default</em>.</p>
-
-<p>O primeiro motivo é que não podemos nomear os argumentos. Quando temos mais de um argumento <em>default</em>, 
-essa “vantagem de escrever menos” não faz muito sentido.</p>
-
-<p>O segundo motivo é que eu prefiro gerar os valores <em>default</em> em <em>runtime</em>. Se eu quisesse
-gerar uma senha aleatória, por exemplo, bastaria criar um método <code>RandomPassword</code> e chamá-lo no construtor 
-secundário, ou seja, a implementação do construtor Secundário poderia ser reescrita assim:</p>
-
-<pre><code>constructor TUser.Create(const Login: string);
-begin
-  Create(Login, RandomPassword);
-end;
-</code></pre>
-
-<h2 id="construtores-secundrios-e-mtodo-new">Construtores Secundários e Método New()</h2>
-
-<p>O uso do <a href="/posts/interfaces-e-o-metodo-estatico-new/">Método New()</a> pode ser considerado um substituto de 
-construtores Secundários.
-Se sua Classe implementa uma ou mais <a href="/posts/interfaces-em-todo-lugar/">Interfaces</a>, não haveria motivos de 
-implementar construtores Secundários e Métodos New() com a mesma assinatura.</p>
-
-<p>Ao invés de criar novos construtores Secundários, basta criar novas variações de Métodos <code>New()</code>.</p>
-
-<p>Exemplo:</p>
-
-<pre><code>type
-  IUser = interface
-    function Login: string;
-    function Password: string;
-  end;
-
-  TUser = class(TInterfacedObject, IUser)
-  private
-    FLogin: string;
-    FPassword: string;
-  public
-    constructor Create(const Login, Password: string);
-    class function New(const Login, Password: string): IUser;
-    class function New(const Login: string): IUser;
-    function Login: string;
-    function Password: string;
-  end;
-</code></pre>
-
-<p>Assim a implementação de suas Classes ficam ainda mais simples, pois teriam apenas 1 construtor
-onde todos os argumentos são inicializados.</p>
-
-<p>E você, como implementa seus construtores?</p>
+<p>Até logo.</p>
 
 </article>
 
@@ -334,33 +322,33 @@ onde todos os argumentos são inicializados.</p>
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/posts/construtores-da-classe-primario-secundarios/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/array-de-objetos" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Construtores da Classe, Primário e Secundários&via=mdbs99;url=http://objectpascalprogramming.com/posts/construtores-da-classe-primario-secundarios/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Array de Objetos&via=mdbs99;url=http://objectpascalprogramming.com/array-de-objetos" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/posts/construtores-da-classe-primario-secundarios/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/array-de-objetos" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/posts/construtores-da-classe-primario-secundarios/&title=Construtores da Classe, Primário e Secundários" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/posts/construtores-da-classe-primario-secundarios/&title=Construtores da Classe, Primário e Secundários" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/array-de-objetos&title=Array de Objetos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/posts/construtores-da-classe-primario-secundarios/&t=Construtores da Classe, Primário e Secundários" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/array-de-objetos&title=Array de Objetos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/array-de-objetos&t=Array de Objetos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -407,15 +395,6 @@ Gostaria de me pagar um café?
 
 
   <h3 class="related-post-title">Posts Relacionados</h3>
-  
-    <div class="post ml2">
-      <a href="/array-de-objetos" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Array de Objetos</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
   
     <div class="post ml2">
       <a href="/variaveis-locais" class="post-link">
@@ -498,6 +477,15 @@ Gostaria de me pagar um café?
       </a>
     </div>
   
+    <div class="post ml2">
+      <a href="/fpc-macros" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Free Pascal Macros</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
 
 
 
@@ -505,8 +493,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/posts/construtores-da-classe-primario-secundarios';
-      var disqus_title      = 'Construtores da Classe, Primário e Secundários';
+      var disqus_identifier = '/array-de-objetos';
+      var disqus_title      = 'Array de Objetos';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
