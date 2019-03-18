@@ -8,6 +8,72 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Tipo object Continua Vivo</title>
+        <description>&lt;p&gt;Existe uma estrutura no Object Pascal que foi o precursor das classes.&lt;/p&gt;
+
+&lt;p&gt;Você conhece o tipo &lt;code&gt;object&lt;/code&gt;?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2019/namroud-gorguis-253765-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;br /&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Namroud Gorguis on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Em um &lt;a href=&quot;/formularios-e-widgets&quot;&gt;artigo&lt;/a&gt; anterior eu expliquei com dividir o código de um formulário em diferentes objetos, organizando os widgets em diferentes classes para dividir as responsabilidades em diferentes objetos.&lt;/p&gt;
+
+&lt;p&gt;Separar partes do código em classes distintas melhoram a legibilidade e manutenção do código. Mas você pode implementar o mesmo conceito sem utilizar classes.&lt;/p&gt;
+
+&lt;p&gt;Muitas vezes eu utilizo o tipo &lt;code&gt;object&lt;/code&gt; como um &lt;em&gt;helper&lt;/em&gt; para um widget ou conjunto deles.&lt;/p&gt;
+
+&lt;p&gt;De fato, essa técnica pode ser utilizada não só na implementação de formulários, mas em &lt;em&gt;qualquer&lt;/em&gt; parte do código.&lt;/p&gt;
+
+&lt;p&gt;Não confunda com os tipos Helpers que &lt;em&gt;adiciona&lt;/em&gt; comportamento a tipos já existentes. Existe uma sintaxe especial para declara-los, estendendo outros tipos sem utilizar herança… mas não é deles que estou falando.&lt;/p&gt;
+
+&lt;p&gt;Se você não gosta de nomenclatura &lt;em&gt;helper&lt;/em&gt;, poderíamos chamá-los de &lt;em&gt;ferramentas&lt;/em&gt;, pois eles &lt;a href=&quot;/posts/objetos-representam-entidades/&quot;&gt;não representam&lt;/a&gt; uma entidade e não implementam uma &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;interface&lt;/a&gt;. São apenas ferramentas que serão utilizadas pelos verdadeiros objetos.&lt;/p&gt;
+
+&lt;p&gt;Não representar uma entidade é um bom motivo para utilizar o tipo &lt;code&gt;object&lt;/code&gt;, mas há outras vantagens.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Performance&lt;/strong&gt;, por utilizar o stack ou invés do heap na alocação de memória.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Utiliza menos memória&lt;/strong&gt;, pois são estruturas mais simples, comparadas às classes.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Uso de herança&lt;/strong&gt; é possível.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Determinar um escopo&lt;/strong&gt; para um conjunto de funções utilitárias, genéricas e reutilizáveis, ao invés de declarar funções e procedimentos diretamente no escopo da unit.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Simplicidade&lt;/strong&gt;, sempre será um ótimo motivo para tomar decisões na arquitetura. Por exemplo: não é necessário o uso de &lt;code&gt;try..finally&lt;/code&gt;, tornando o código menos verboso.&lt;/p&gt;
+
+&lt;p&gt;Uma &lt;strong&gt;desvantagem&lt;/strong&gt;, entretanto, é não existir um [construtor] e por isso não tem como garantir uma inicialização adequada dos campos privados. Diferentemente de uma classe, onde é &lt;em&gt;obrigatório&lt;/em&gt; o uso de seu construtor, um tipo &lt;code&gt;object&lt;/code&gt; pode ser utilizado diretamente como qualquer outra variável primitiva.&lt;/p&gt;
+
+&lt;p&gt;Além disso, a Embarcadero descontinuou o uso do tipo &lt;code&gt;object&lt;/code&gt; desde o Delphi 2010, sugerindo o uso de “records com métodos” em seu lugar—uma decisão equivocada, na minha opinião, e &lt;a href=&quot;http://blog.synopse.info/post/2013/10/09/Good-old-object-is-not-to-be-deprecated-it-is-the-future&quot;&gt;não estou sozinho&lt;/a&gt; nesse pensamento. Além de perder a compatibilidade com o código legado, introduzir métodos em records é, no mínimo, duvidoso.&lt;/p&gt;
+
+&lt;p&gt;Já tínhamos o tipo &lt;code&gt;object&lt;/code&gt; e ninguém solicitou pela sua descontinuidade, &lt;a href=&quot;http://blog.synopse.info/post/2010/08/06/Save-object%2C-stop-class-hegemony%21&quot;&gt;por quê não mantê-lo&lt;/a&gt;?&lt;/p&gt;
+
+&lt;p&gt;E para aqueles que não conhecem a sintaxe do seu uso, aqui está um simples exemplo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type
+  TMsg = object
+    procedure Show(const aText: string);
+  end;
+{...}
+var
+  msg: TMsg;
+begin
+  msg.Show;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Simples, direto, sem &lt;code&gt;try..finally&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Felizmente o tipo &lt;code&gt;object&lt;/code&gt; continua vivo no Free Pascal.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 18 Mar 2019 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/tipo-object-vivo</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/tipo-object-vivo</guid>
+      </item>
+    
+      <item>
         <title>Array de Objetos</title>
         <description>&lt;p&gt;Quando você precisa de uma simples lista de objetos, qual estrutura você utiliza?&lt;/p&gt;
 
@@ -1006,78 +1072,6 @@ True free heap : 196528
         <pubDate>Mon, 09 Jul 2018 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/libraries-sem-pacotes</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/libraries-sem-pacotes</guid>
-      </item>
-    
-      <item>
-        <title>Quem é o Responsável por Liberar os Objetos?</title>
-        <description>&lt;p&gt;Você consideraria um bom design para seu projeto, ter métodos ou funções que criam objetos que serão liberados em outro local, por outro objeto ou função?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/w-a-t-a-r-i-535375-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by W A T A R I on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Em linguagens onde a liberação de memória e recursos é algo manual que depende do desenvolvedor, ter funções ou métodos (vamos nos referir apenas a métodos de agora em diante) que criam novos objetos para que “alguém”, em algum lugar, faça a limpeza da memória é uma má ideia.&lt;/p&gt;
-
-&lt;p&gt;Ao longo dos anos tenho visto código como esse:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function TFoo.Build(const Name: string; Value: Integer): TBar;
-begin
-  Result := TBar.Create;
-  Result.Name := Name;
-  Result.Value := Value;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Uma classe &lt;code&gt;TFoo&lt;/code&gt; que, através do método &lt;code&gt;Build&lt;/code&gt;, retorna uma nova instância de &lt;code&gt;TBar&lt;/code&gt; sem manter uma referência para o objeto criado.&lt;/p&gt;
-
-&lt;p&gt;Acredito que esses tipos de métodos são criados com a intenção de “facilitar” a codificação. Ao invés de criar um objeto &lt;code&gt;TBar&lt;/code&gt; e ter que iniciar suas propriedades em muitos lugares no código, cria-se um método que &lt;a href=&quot;/encapsulamento&quot;&gt;encapsula&lt;/a&gt; a criação do objeto sem ter que &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/&quot;&gt;duplicar o código&lt;/a&gt; em outros lugares.&lt;/p&gt;
-
-&lt;p&gt;Parece bom?&lt;/p&gt;
-
-&lt;p&gt;Eu considero essa abordagem &lt;em&gt;péssima&lt;/em&gt;, pois é o início para ocorrer eventuais vazamentos de memória.&lt;/p&gt;
-
-&lt;p&gt;A linguagem Object Pascal não obriga o desenvolvedor a armazenar o retorno de um método em alguma variável — assim como Java e C#. Então, se não tivermos uma referência através de um variável, o objeto não seria liberado, gerando um vazamento de memória.&lt;/p&gt;
-
-&lt;p&gt;Mas você poderia dizer que não há sentido em criar um objeto e não fazer nada com ele, então o desenvolvedor iria ter uma variável… bem, nem sempre. Mas no caso acima, eu concordo.&lt;/p&gt;
-
-&lt;p&gt;Então, digamos que o desenvolvedor armazena o objeto em uma variável.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente, isso também não garante que ele irá liberar a memória após seu uso.&lt;/p&gt;
-
-&lt;p&gt;OK. Esse não é um problema. Sei que isso é intrínseco ao design da linguagem: O desenvolvedor deve liberar os objetos chamando os destrutores.&lt;/p&gt;
-
-&lt;p&gt;No entanto, há uma grande diferença.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo: Quando temos objetos que possuem objetos, naturalmente não nos preocupamos quem irá liberar a memória alocada. Sabemos que alguém irá liberá-los. O motivo é simples: &lt;em&gt;não fomos nós que os criamos&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Então, temos uma regra aqui:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Aquele que cria é também o responsável por destruir a instância e/ou liberar o recurso.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Mas, quando utilizamos métodos que retornam objetos, como saber se devemos ou não liberar os recursos manualmente?&lt;/p&gt;
-
-&lt;p&gt;Será que o próprio objeto irá fazer o trabalho?&lt;/p&gt;
-
-&lt;p&gt;Como o desenvolvedor iria saber?&lt;/p&gt;
-
-&lt;p&gt;Só lendo a documentação ou código da classe, o que é um péssimo design de projeto.&lt;/p&gt;
-
-&lt;p&gt;Ao voltarmos para o nosso primeiro exemplo, a instância da classe &lt;code&gt;TFoo&lt;/code&gt; seria, então, responsável por liberar quaisquer objetos que porventura tenha criado para estar de acordo com a regra acima. O que não é o caso.&lt;/p&gt;
-
-&lt;p&gt;O que fazer?&lt;/p&gt;
-
-&lt;p&gt;Existe alguma técnica que nos permite criar e retornar novos objetos sem ter de nos preocupar (muito) quem irá liberar a memória?&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Sim&lt;/em&gt;, contanto que você utilize &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;interfaces&lt;/a&gt; ao invés de instâncias de classes. Para esses casos eu proponho a técnica do &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;método estático New&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 02 Jul 2018 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/quem-libera-os-objetos</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/quem-libera-os-objetos</guid>
       </item>
     
   </channel>
