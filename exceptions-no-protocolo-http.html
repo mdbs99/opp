@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tipo object Continua Vivo &#8211; Object Pascal Programming</title>
+    <title>Trabalhando com Exceções em Requisições HTTP &#8211; Object Pascal Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 ">
     <meta name="author" content="Marcos Douglas B. Santos">
     <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
     <meta name="keywords" content="">
-    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, object">
-    <link rel="canonical" href="http://objectpascalprogramming.com/tipo-object-vivo">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, http, exception">
+    <link rel="canonical" href="http://objectpascalprogramming.com/exceptions-no-protocolo-http">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -31,22 +31,22 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Tipo object Continua Vivo">
-    <meta property="og:description" content="Existe uma estrutura no Object Pascal que foi o precursor das classes.">
-    <meta property="og:url" content="http://objectpascalprogramming.com/tipo-object-vivo">
+    <meta property="og:title" content="Trabalhando com Exceções em Requisições HTTP">
+    <meta property="og:description" content="Em requisições HTTP, devemos levantar uma exceção quando recebermos, por exemplo, um código 500?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/exceptions-no-protocolo-http">
     <meta property="og:site_name" content="Object Pascal Programming">
     
-    <meta property="og:image"content="http://objectpascalprogramming.com/images/2019/namroud-gorguis-253765-unsplash.jpg" >
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2019/nathan-dumlao-744702-unsplash.jpg" >
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
         <meta name="twitter:site" content="@mdbs99" />
     
-    <meta name="twitter:title" content="Tipo object Continua Vivo" />
+    <meta name="twitter:title" content="Trabalhando com Exceções em Requisições HTTP" />
     <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
 " />
-    <meta name="twitter:url" content="http://objectpascalprogramming.com/tipo-object-vivo" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/exceptions-no-protocolo-http" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -190,8 +190,8 @@
 
 
 <div class="post-header mb2">
-  <h1>Tipo object Continua Vivo</h1>
-  <span class="post-meta">Mar 18, 2019</span><br>
+  <h1>Trabalhando com Exceções em Requisições HTTP</h1>
+  <span class="post-meta">Apr 1, 2019</span><br>
   
   <span class="post-meta small">
   
@@ -201,64 +201,79 @@
 </div>
 
 <article class="post-content">
-  <p>Existe uma estrutura no Object Pascal que foi o precursor das classes.</p>
-
-<p>Você conhece o tipo <code>object</code>?</p>
+  <p>Em requisições HTTP, devemos levantar uma exceção quando recebermos, por exemplo, um código 500?</p>
 
 <!--more-->
 
-<p><img src="/images/2019/namroud-gorguis-253765-unsplash.jpg" alt="Unsplash image" />
-<br /><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Namroud Gorguis on Unsplash</span></p>
+<p><img src="/images/2019/nathan-dumlao-744702-unsplash.jpg" alt="Unsplash image" />
+<br /><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Nathan Dumlao on Unsplash</span></p>
 
-<p>Em um <a href="/formularios-e-widgets">artigo</a> anterior eu expliquei com dividir o código de um formulário em diferentes objetos, organizando os widgets em diferentes classes para dividir as responsabilidades em diferentes objetos.</p>
+<p>Tivemos uma discussão em um grupo do <a href="https://telegram.org/">Telegram</a> sobre utilizar ou não exceções em requisições HTTP, o que me inspirou a escrever esse artigo.</p>
 
-<p>Separar partes do código em classes distintas melhoram a legibilidade e manutenção do código. Mas você pode implementar o mesmo conceito sem utilizar classes.</p>
+<p>Como todos sabemos, o <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">protocolo HTTP</a> é baseado em texto simples.</p>
 
-<p>Muitas vezes eu utilizo o tipo <code>object</code> como um <em>helper</em> para um widget ou conjunto deles.</p>
+<p>Cada requisição do cliente é composto por um cabeçalho e um corpo (opcional):</p>
 
-<p>De fato, essa técnica pode ser utilizada não só na implementação de formulários, mas em <em>qualquer</em> parte do código.</p>
-
-<p>Não confunda com os tipos Helpers que <em>adiciona</em> comportamento a tipos já existentes. Existe uma sintaxe especial para declara-los, estendendo outros tipos sem utilizar herança… mas não é deles que estou falando.</p>
-
-<p>Se você não gosta de nomenclatura <em>helper</em>, poderíamos chamá-los de <em>ferramentas</em>, pois eles <a href="/posts/objetos-representam-entidades/">não representam</a> uma entidade e não implementam uma <a href="/posts/interfaces-em-todo-lugar/">interface</a>. São apenas ferramentas que serão utilizadas pelos verdadeiros objetos.</p>
-
-<p>Não representar uma entidade é um bom motivo para utilizar o tipo <code>object</code>, mas há outras vantagens.</p>
-
-<p><strong>Performance</strong>, por utilizar o stack ou invés do heap na alocação de memória.</p>
-
-<p><strong>Utiliza menos memória</strong>, pois são estruturas mais simples, comparadas às classes.</p>
-
-<p><strong>Uso de herança</strong> é possível.</p>
-
-<p><strong>Determinar um escopo</strong> para um conjunto de funções utilitárias, genéricas e reutilizáveis, ao invés de declarar funções e procedimentos diretamente no escopo da unit.</p>
-
-<p><strong>Simplicidade</strong>, sempre será um ótimo motivo para tomar decisões na arquitetura. Por exemplo: não é necessário o uso de <code>try..finally</code>, tornando o código menos verboso.</p>
-
-<p>Uma <strong>desvantagem</strong>, entretanto, é não existir um [construtor] e por isso não tem como garantir uma inicialização adequada dos campos privados. Diferentemente de uma classe, onde é <em>obrigatório</em> o uso de seu construtor, um tipo <code>object</code> pode ser utilizado diretamente como qualquer outra variável primitiva.</p>
-
-<p>Além disso, a Embarcadero descontinuou o uso do tipo <code>object</code> desde o Delphi 2010, sugerindo o uso de “records com métodos” em seu lugar—uma decisão equivocada, na minha opinião, e <a href="http://blog.synopse.info/post/2013/10/09/Good-old-object-is-not-to-be-deprecated-it-is-the-future">não estou sozinho</a> nesse pensamento. Além de perder a compatibilidade com o código legado, introduzir métodos em records é, no mínimo, duvidoso.</p>
-
-<p>Já tínhamos o tipo <code>object</code> e ninguém solicitou pela sua descontinuidade, <a href="http://blog.synopse.info/post/2010/08/06/Save-object%2C-stop-class-hegemony%21">por quê não mantê-lo</a>?</p>
-
-<p>E para aqueles que não conhecem a sintaxe do seu uso, aqui está um simples exemplo:</p>
-
-<pre><code>type
-  TMsg = object
-    procedure Show(const aText: string);
-  end;
-{...}
-var
-  msg: TMsg;
-begin
-  msg.Show;
-end;
+<pre><code>GET /index.html HTTP/1.1
+Host: www.example.com
 </code></pre>
 
-<p>Simples, direto, sem <code>try..finally</code>.</p>
+<p>A resposta do servidor segue o mesmo protocolo, contendo um cabeçalho e um corpo (também opcional) de resposta:</p>
 
-<p>Felizmente o tipo <code>object</code> continua vivo no Free Pascal.</p>
+<pre><code>HTTP/1.1 200 OK
+Date: Mon, 23 May 2005 22:38:34 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 138
+Last-Modified: Wed, 08 Jan 2003 23:11:55 GMT
+Server: Apache/1.3.3.7 (Unix) (Red-Hat/Linux)
+ETag: "3f80f-1b6-3e1cb03b"
+Accept-Ranges: bytes
+Connection: close
+
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;An Example Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  Hello World, this is a very simple HTML document.
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>A beleza desse protocolo é que mesmo seres humanos, não apenas máquinas, podem ler entender (a maioria do) seu conteúdo.</p>
+
+<p>Então podemos perceber que há um padrão em ambas as mensagens acima, identificado na primeira linha, indicando o sucesso ou erro da requisição ou resposta.</p>
+
+<p>O padrão é determinado por um par de <em>código</em> e <em>texto</em> no qual identificaremos por <em>status</em>.</p>
+
+<p>No exemplo acima, o status é determinado pelo código 200 e o texto “OK”. Mostrando uma resposta padrão de <em>sucesso</em>.</p>
+
+<p>Há uma <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">grande lista</a> de códigos pré-determinados e toda aplicação deveria respeitá-los em todas as  requisições e respostas.</p>
+
+<p>Agora, repare que não existem objetos e tão pouco <em>objetos de exceções</em>.</p>
+
+<p>No início do artigo eu disse que a dúvida que gerou a discussão foi utilizar ou não exceções, ou seja, objetos <code>Exception</code> e derivados em clientes HTTP.</p>
+
+<p>Minha resposta?</p>
+
+<p><em>Você não deveria utilizar exceções em clientes HTTP, somente nas suas classes de negócio.</em></p>
+
+<p>Se o protocolo não tem exceções, por quê implementá-lo na classe mais básica, ou seja, a que faz a ponte entre o seu sistema e a requisição HTTP?</p>
+
+<p>Para mim, não faz sentido.</p>
+
+<p>É verdade que existem vários frameworks que implementam clientes HTTP como, por exemplo, <a href="https://www.indyproject.org/">Indy</a>, <a href="http://www.ararat.cz/synapse/doku.php/start">Synapse</a> ou até mesmo os clientes padrão da linguagem.</p>
+
+<p>Talvez esses clientes podem gerar uma exceção quando recebem um código 500 ou talvez não. Não importa. Você deveria encapsular essas classes de terceiros em suas próprias classes de acesso HTTP. Assim, você poderia mudar de framework apenas alterando essas classes.</p>
+
+<p>Pense apenas em um cliente HTTP genérico, cru, que implementa o protocolo como ele deve ser: envio e recebimento de mensagens no formato texto. A partir dele você constrói classes de negócio que utilizam o cliente, adicionando comportamento referente as regras de negócio.</p>
+
+<p>Na <a href="/posts/microservices-delphi-parte-final/">parte final</a> da série “Microservices com Delphi” você poderá ver mais um exemplo de como fazer o tratamento de códigos de retorno do cliente HTTP. Esse é apenas mais um exemplo e não um padrão. Tudo irá depender da sua aplicação, quais códigos verificar e o que fazer quando recebê-los.</p>
+
+<p>Apenas mantenha os clientes o mais simples possível.</p>
 
 <p>Até logo.</p>
+
 
 </article>
 
@@ -268,33 +283,33 @@ end;
 
   <div class="share-links">
     
-      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/tipo-object-vivo" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/exceptions-no-protocolo-http" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
-      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Tipo object Continua Vivo&via=mdbs99;url=http://objectpascalprogramming.com/tipo-object-vivo" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Trabalhando com Exceções em Requisições HTTP&via=mdbs99;url=http://objectpascalprogramming.com/exceptions-no-protocolo-http" rel="nofollow" target="_blank" title="Share on Twitter"></a>
     
 
     
-      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/tipo-object-vivo" rel="nofollow" target="_blank" title="Share on Google+"></a>
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/exceptions-no-protocolo-http" rel="nofollow" target="_blank" title="Share on Google+"></a>
     
 
     
-      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/tipo-object-vivo&title=Tipo object Continua Vivo" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
-    
-
-    
-
-    
-
-    
-      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/tipo-object-vivo&title=Tipo object Continua Vivo" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/exceptions-no-protocolo-http&title=Trabalhando com Exceções em Requisições HTTP" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
 
     
-      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/tipo-object-vivo&t=Tipo object Continua Vivo" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/exceptions-no-protocolo-http&title=Trabalhando com Exceções em Requisições HTTP" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/exceptions-no-protocolo-http&t=Trabalhando com Exceções em Requisições HTTP" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
     
 
     <p />
@@ -343,9 +358,9 @@ Gostaria de me pagar um café?
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
-      <a href="/exceptions-no-protocolo-http" class="post-link">
+      <a href="/tipo-object-vivo" class="post-link">
         <ul>
-          <h4 class="post-title"><li>Trabalhando com Exceções em Requisições HTTP</li></h4>
+          <h4 class="post-title"><li>Tipo object Continua Vivo</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
       </a>
@@ -439,8 +454,8 @@ Gostaria de me pagar um café?
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = 'objectpascalprogramming';
-      var disqus_identifier = '/tipo-object-vivo';
-      var disqus_title      = 'Tipo object Continua Vivo';
+      var disqus_identifier = '/exceptions-no-protocolo-http';
+      var disqus_title      = 'Trabalhando com Exceções em Requisições HTTP';
       (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
