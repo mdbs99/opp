@@ -4,7 +4,7 @@ title: Diretivas de Compilação
 date: 2017-07-24
 permalink: /:title
 description:
-  Diretivas de Compilação podem lhe ajudar a tornar seu código multi-plataform ou até mesmo cross-compiled.
+  Diretivas de Compilação podem lhe ajudar a tornar seu código multiplatform ou até mesmo cross-compiled.
 image: /images/2017/photo-mathyas-kurmann-102977.jpg
 tags:
   - pascal
@@ -25,7 +25,7 @@ keywords:
   - compiler directive
 ---
 
-Diretivas de Compilação podem lhe ajudar a tornar seu código *multi-plataform* ou até mesmo *cross-compiled*.
+Diretivas de Compilação podem lhe ajudar a tornar seu código *multiplatform* ou até mesmo *cross-compiled*.
 
 <!--more-->
 
@@ -67,9 +67,9 @@ Bem legal.
 
 Entretanto, veja que o código ficou bem "poluído" e também temos um [acoplamento temporal]({% post_url 2016-07-04-objetos-imutaveis %}#acoplamento-temporal), pois as  constantes precisam ser definidas numa ordem específica.
 
-Diretivas e Definições de constantes que serão utilizadas em apenas numa única [Unidade]({% post_url 2017-07-17-declarando-unidades %}) pode até ser gerenciável, mas e se tivermos trabalhando com dezenas ou até centenas de Unidades que irão utilizar as mesmas diretivas e definições, ainda acha que essa abordagem é a melhor escolha para a arquitetura do seu projeto com a finalidade de construí-lo como *multi-plataform* ou *cross-compiled*?
+Diretivas e Definições de constantes que serão utilizadas em apenas numa única [Unidade]({% post_url 2017-07-17-declarando-unidades %}) podem até ser gerenciáveis, mas e se tivermos trabalhando com dezenas ou até centenas de Unidades que irão utilizar as mesmas diretivas e definições, ainda acha que essa abordagem é a melhor escolha para a arquitetura do seu projeto com a finalidade de construí-lo como *multiplatform* ou *cross-compiled*?
 
-Eu acho que *não* e é por isso que no [Projeto James](https://github.com/mdbs99/james) estamos utilizando uma abordagem diferente.
+Eu acho que *não*, e é por isso que no [Projeto James](https://github.com/mdbs99/james) estamos utilizando uma abordagem diferente.
 
 ## Encapsulando Diretivas {#encapsulando}
 
@@ -133,3 +133,13 @@ Para cada diretiva condicional que você queira adicionar no código de implemen
 Seu código ficará mais limpo e sustentável.
 
 Até logo.
+
+---
+
+EDIT 2019-04-15:
+
+- Não estamos mais utilizando essa abordagem — procure o artigo "Usando Paths ao invés de Diretivas de Compilação".
+- Classes de XML não fazem mais parte do James — veja [Xavier](https://github.com/mdbs99/xavier).
+
+---
+
