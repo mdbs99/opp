@@ -15,7 +15,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201904011534" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201904151906" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -32,7 +32,7 @@
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Diretivas de Compilação">
-    <meta property="og:description" content="Diretivas de Compilação podem lhe ajudar a tornar seu código multi-plataform ou até mesmo cross-compiled.">
+    <meta property="og:description" content="Diretivas de Compilação podem lhe ajudar a tornar seu código multiplatform ou até mesmo cross-compiled.">
     <meta property="og:url" content="http://objectpascalprogramming.com/diretivas-de-compilacao">
     <meta property="og:site_name" content="Object Pascal Programming">
     
@@ -201,7 +201,7 @@
 </div>
 
 <article class="post-content">
-  <p>Diretivas de Compilação podem lhe ajudar a tornar seu código <em>multi-plataform</em> ou até mesmo <em>cross-compiled</em>.</p>
+  <p>Diretivas de Compilação podem lhe ajudar a tornar seu código <em>multiplatform</em> ou até mesmo <em>cross-compiled</em>.</p>
 
 <!--more-->
 
@@ -245,9 +245,9 @@
 
 <p>Entretanto, veja que o código ficou bem “poluído” e também temos um <a href="/posts/objetos-imutaveis/#acoplamento-temporal">acoplamento temporal</a>, pois as  constantes precisam ser definidas numa ordem específica.</p>
 
-<p>Diretivas e Definições de constantes que serão utilizadas em apenas numa única <a href="/declarando-unidades">Unidade</a> pode até ser gerenciável, mas e se tivermos trabalhando com dezenas ou até centenas de Unidades que irão utilizar as mesmas diretivas e definições, ainda acha que essa abordagem é a melhor escolha para a arquitetura do seu projeto com a finalidade de construí-lo como <em>multi-plataform</em> ou <em>cross-compiled</em>?</p>
+<p>Diretivas e Definições de constantes que serão utilizadas em apenas numa única <a href="/declarando-unidades">Unidade</a> podem até ser gerenciáveis, mas e se tivermos trabalhando com dezenas ou até centenas de Unidades que irão utilizar as mesmas diretivas e definições, ainda acha que essa abordagem é a melhor escolha para a arquitetura do seu projeto com a finalidade de construí-lo como <em>multiplatform</em> ou <em>cross-compiled</em>?</p>
 
-<p>Eu acho que <em>não</em> e é por isso que no <a href="https://github.com/mdbs99/james">Projeto James</a> estamos utilizando uma abordagem diferente.</p>
+<p>Eu acho que <em>não</em>, e é por isso que no <a href="https://github.com/mdbs99/james">Projeto James</a> estamos utilizando uma abordagem diferente.</p>
 
 <h2 id="encapsulando">Encapsulando Diretivas</h2>
 
@@ -311,6 +311,18 @@ Uma para Free Pascal e outra para o Delphi.</p>
 <p>Seu código ficará mais limpo e sustentável.</p>
 
 <p>Até logo.</p>
+
+<hr />
+
+<p>EDIT 2019-04-15:</p>
+
+<ul>
+  <li>Não estamos mais utilizando essa abordagem — procure o artigo “Usando Paths ao invés de Diretivas de Compilação”.</li>
+  <li>Classes de XML não fazem mais parte do James — veja <a href="https://github.com/mdbs99/xavier">Xavier</a>.</li>
+</ul>
+
+<hr />
+
 
 </article>
 
@@ -395,6 +407,15 @@ Gostaria de me pagar um café?
   <h3 class="related-post-title">Posts Relacionados</h3>
   
     <div class="post ml2">
+      <a href="/usando-paths-ao-inves-de-diretivas" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Usando Paths ao invés de Diretivas de Compilação</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
       <a href="/exceptions-no-protocolo-http" class="post-link">
         <ul>
           <h4 class="post-title"><li>Trabalhando com Exceções em Requisições HTTP</li></h4>
@@ -470,15 +491,6 @@ Gostaria de me pagar um café?
       <a href="/metodo-ref" class="post-link">
         <ul>
           <h4 class="post-title"><li>Como Transformar uma Instância de Classe em Instância de Interface</li></h4>
-        </ul>
-        <!--<p class="post-summary"></p>-->
-      </a>
-    </div>
-  
-    <div class="post ml2">
-      <a href="/interfaces-e-casting" class="post-link">
-        <ul>
-          <h4 class="post-title"><li>Interfaces e Casting</li></h4>
         </ul>
         <!--<p class="post-summary"></p>-->
       </a>

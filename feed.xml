@@ -8,6 +8,63 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Usando Paths ao invés de Diretivas de Compilação</title>
+        <description>&lt;p&gt;Já pensou em utilizar paths, ao invés de diretivas de compilação, para compilar seu projeto em diferentes plataformas?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2019/claudio-hirschberger-1326178-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;br /&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Nathan Dumlao on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Em meados de 2017 eu escrevi um &lt;a href=&quot;/diretivas-de-compilacao&quot;&gt;artigo&lt;/a&gt; sobre Diretivas de Compilação, explicando como poderíamos encapsulá-las para ajudar a tornar o código &lt;em&gt;multiplatform&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Basicamente teríamos uma unidade comum a todas as plataformas (FPC e Delphi) e outra(s) unidade(s) específica(s) para cada uma delas.&lt;/p&gt;
+
+&lt;p&gt;Por exemplo: uma unidade &lt;code&gt;FooFuncs&lt;/code&gt; seria a principal enquanto &lt;code&gt;FooFuncsFPC&lt;/code&gt; e &lt;code&gt;FooFuncsDelphi&lt;/code&gt; seriam as especializadas.&lt;/p&gt;
+
+&lt;p&gt;A unidade &lt;code&gt;FooFuncs&lt;/code&gt; utilizaria as unidades especializadas e seus identificadores—interfaces e classes—seriam &lt;a href=&quot;/redeclarando-classes&quot;&gt;redefinidos&lt;/a&gt; utilizando uma nomenclatura mais genérica para toda a lib ou projeto e sem dependências com qualquer plataforma.&lt;/p&gt;
+
+&lt;p&gt;Após quase 2 anos, eu mudei esse conceito para um modelo que considero ainda mais simples e sem utilizar diretivas de compilação: utilização de apenas &lt;em&gt;paths&lt;/em&gt; para cada plataforma.&lt;/p&gt;
+
+&lt;center&gt;&lt;span style=&quot;font-size: 1.0em;&quot;&gt;* * *&lt;/span&gt;&lt;/center&gt;
+
+&lt;p&gt;Veja o projeto &lt;a href=&quot;https://github.com/mdbs99/xavier&quot;&gt;Xavier lib&lt;/a&gt;, por exemplo.&lt;/p&gt;
+
+&lt;p&gt;Dentro do diretório &lt;code&gt;xavier/src/&lt;/code&gt; podemos ver dois subdiretórios: &lt;code&gt;fpc&lt;/code&gt; e &lt;code&gt;delphi&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Cada diretório possui 1 unidade com o mesmo nome: &lt;code&gt;XavierCorePlatform&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Sabemos que um projeto não pode ter unidades duplicadas, então como isso funciona?&lt;/p&gt;
+
+&lt;p&gt;Basta aplicar o path por plataforma, ou seja, apenas 1 unidade será utilizada por projeto. Se você está utilizando o Delphi, irá utilizar apenas o path &lt;code&gt;src\delphi&lt;/code&gt;, por exemplo.&lt;/p&gt;
+
+&lt;p&gt;E é só isso.&lt;/p&gt;
+
+&lt;p&gt;As &lt;em&gt;vantagens&lt;/em&gt; são visíveis em relação a abordagem anterior que utilizava diretivas:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;sem necessidade de diretivas de compilação&lt;/li&gt;
+  &lt;li&gt;não é necessário redeclarar identificadores de unidades especializadas&lt;/li&gt;
+  &lt;li&gt;não é necessário haver uma unidade genérica—ex: &lt;code&gt;FooFuncs&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;basta 1 unidade por plataforma&lt;/li&gt;
+  &lt;li&gt;menos código&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;No entanto, você poderia considerar a (possível) &lt;a href=&quot;/posts/codigo-duplicado-talvez-nao/&quot;&gt;duplicação de código&lt;/a&gt; como uma desvantagem, visto que haverá implementações de classes, com o mesmo nome, em unidades por plataforma. No projeto Xavier, por exemplo, vemos que há algumas linhas muito similares… mas isso não é um problema real.&lt;/p&gt;
+
+&lt;p&gt;A implementação por plataforma pode ser muito diferente uma da outra. Existir algumas linhas similares—ou mesmo iguais—é um preço mínimo a se pagar, na minha humilde opinião.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, repare que todo código comum entre as plataformas devem estar em outras unidades—no caso do Xavier, tais códigos compartilhados estão em &lt;code&gt;XavierCore&lt;/code&gt; e &lt;code&gt;XavierAdapters&lt;/code&gt;, utilizados pelas respectivas &lt;code&gt;XavierCorePlatform&lt;/code&gt; em cada plataforma.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 15 Apr 2019 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/usando-paths-ao-inves-de-diretivas</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/usando-paths-ao-inves-de-diretivas</guid>
+      </item>
+    
+      <item>
         <title>Trabalhando com Exceções em Requisições HTTP</title>
         <description>&lt;p&gt;Em requisições HTTP, devemos levantar uma exceção quando recebermos, por exemplo, um código 500?&lt;/p&gt;
 
@@ -1048,63 +1105,6 @@ True free heap : 196528
         <pubDate>Mon, 13 Aug 2018 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/metodo-ref</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/metodo-ref</guid>
-      </item>
-    
-      <item>
-        <title>Interfaces e Casting</title>
-        <description>&lt;p&gt;Seria um anti-padrão verificar se um objeto implementa determinada(s) interface(s)? Seria essa prática considerada o mesmo que &lt;em&gt;casting&lt;/em&gt;?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/stefan-stefancik-257625-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Štefan Štefančík on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Já faz mais de 2 anos que &lt;a href=&quot;/posts/nao-utilize-casting/&quot;&gt;escrevi&lt;/a&gt; que não devemos utilizar casting.&lt;/p&gt;
-
-&lt;p&gt;Essa pode ser uma afirmação difícil de acreditar, se você não por sua mente no contexto certo antes.&lt;/p&gt;
-
-&lt;p&gt;Alguns desenvolvedores tem me perguntado, como é possível fazer uma aplicação sem haver &lt;em&gt;casting&lt;/em&gt;?&lt;/p&gt;
-
-&lt;p&gt;Bem, em uma aplicação de médio tamanho eu diria que pode ser até difícil, mas não impossível. Entretanto, irá depender do &lt;em&gt;tipo&lt;/em&gt; de casting que estamos tratando.&lt;/p&gt;
-
-&lt;p&gt;Na programação orientada a objetos só haverá objetos. Então vamos esquecer os tipos primitivos. Um cast de uma &lt;em&gt;string&lt;/em&gt; em um &lt;em&gt;Integer&lt;/em&gt;, por exemplo, é algo &lt;em&gt;necessário&lt;/em&gt; em linguagens que possuem tipos primitivos.&lt;/p&gt;
-
-&lt;p&gt;Esse não é o problema.&lt;/p&gt;
-
-&lt;p&gt;O casting a que me refiro é sobre &lt;em&gt;objetos&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Passar um parâmetro para um método com o tipo &lt;code&gt;TObject&lt;/code&gt; para, então, fazer um casting interno para outro objeto é como ter um “pré-conceito” sobre o objeto que irá fazer o trabalho.&lt;/p&gt;
-
-&lt;p&gt;O objeto em si não é suficiente?&lt;/p&gt;
-
-&lt;p&gt;Se você está verificando o &lt;em&gt;tipo&lt;/em&gt; do objeto para fazer o trabalho, é pré-conceito.&lt;/p&gt;
-
-&lt;p&gt;Você não confia nele. Você tem sempre que &lt;em&gt;gerenciá-lo&lt;/em&gt;, dizendo quem ele deve &lt;em&gt;representar&lt;/em&gt; em cada parte do código.&lt;/p&gt;
-
-&lt;p&gt;Mas, há alguma maneira de trabalhar com objetos sem utilizar casting?&lt;/p&gt;
-
-&lt;p&gt;O “segredo” está nas &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;Interfaces&lt;/a&gt;. Uma interface é um contrato entre o cliente (sistema) e o trabalhador (objeto).&lt;/p&gt;
-
-&lt;p&gt;No entanto, um objeto pode implementar mais de uma interface, tendo muitas &lt;em&gt;especialidades&lt;/em&gt; por assim dizer.&lt;/p&gt;
-
-&lt;p&gt;Então, é possível que um mesmo objeto possa trabalhar em muitas especialidades diferentes. Mas a única maneira de saber isso é &lt;em&gt;perguntar&lt;/em&gt; ao próprio objeto se ele &lt;em&gt;sabe&lt;/em&gt; fazer o serviço especializado.&lt;/p&gt;
-
-&lt;p&gt;Vejamos um exemplo:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/mdbs99/e8312b8e539ac0e1b1baac28be18efe3.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;O mesmo empregado pode ser um analista e/ou programador.&lt;/p&gt;
-
-&lt;p&gt;A função &lt;a href=&quot;/supports-traicoeira&quot;&gt;Supports&lt;/a&gt; “pergunta” ao objeto se ele também sabe fazer um “outro trabalho”, determinado pelo “contrato” no segundo parâmetro da função.&lt;/p&gt;
-
-&lt;p&gt;A diferença é sutil, mas importante: Tentar transformar um objeto em outro é equivocado, mas perguntar à ele se tem uma determinada especialidade, não.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 23 Jul 2018 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/interfaces-e-casting</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/interfaces-e-casting</guid>
       </item>
     
   </channel>
