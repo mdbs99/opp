@@ -66,7 +66,7 @@ No entanto, você poderia considerar a (possível) [duplicação de código]({% 
 
 A implementação por plataforma pode ser muito diferente uma da outra. Existir algumas linhas similares—ou mesmo iguais—é um preço mínimo a se pagar, na minha humilde opinião.
 
-Finalmente, repare que todo código comum entre as plataformas devem estar em outras unidades—no caso do Xavier, tais códigos compartilhados estão em `XavierCore` e `XavierAdapters`, utilizados pelas respectivas `XavierCorePlatform` em cada plataforma.
+Finalmente, repare que todo código comum entre as plataformas devem estar em outras unidades compartilhadas. No caso do Xavier, tais códigos compartilhados estão nas unidades `XavierCore` e `XavierAdapters`. Ambas são utilizadas pelas unidades `XavierCorePlatform` referente a cada plataforma.
 
 Até logo.
 
