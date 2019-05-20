@@ -28,7 +28,7 @@ Como implementar em uma única classe, duas ou mais interfaces que tenham métod
 
 Talvez o pensamento mais natural à essa pergunta seria: "por quê eu iria querer fazer isso?".
 
-Se você nunca precisou implementar essa situação antes, pode ser difícil imaginar tal cenário agora. Mas vou lhe mostrar que ele existe e que não é só possível implementá-lo como também é um requisito você conhecê-lo.
+Se você nunca precisou implementar essa situação antes, pode ser difícil imaginar tal cenário agora. Mas vou lhe mostrar que ele existe e que não é só possível implementá-lo como também é uma ótima técnica para conhecer.
 
 <!--more-->
 
