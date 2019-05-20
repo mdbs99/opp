@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Implementando Interfaces Utilizando Diferente Assinaturas de Métodos &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, interfaces, multiple-interfaces, inheritance, herança múltipla">
+    <link rel="canonical" href="http://objectpascalprogramming.com/multiplas-interfaces">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201905200309" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Implementando Interfaces Utilizando Diferente Assinaturas de Métodos">
+    <meta property="og:description" content="Como implementar em uma única classe, duas ou mais interfaces que tenham métodos com o mesmo nome e argumentos?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/multiplas-interfaces">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2019/raka-rachgo-276831-unsplash.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Implementando Interfaces Utilizando Diferente Assinaturas de Métodos" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/multiplas-interfaces" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>E-Book</a>
+<a href="/archive/">Arquivo</a>
+<a href="/testimonials/">Testemunhos</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+            
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Implementando Interfaces Utilizando Diferente Assinaturas de Métodos</h1>
+  <span class="post-meta">May 20, 2019</span><br>
+  
+  <span class="post-meta small">
+  
+    8 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Como implementar em uma única classe, duas ou mais interfaces que tenham métodos com o mesmo nome e argumentos?</p>
+
+<p>Talvez o pensamento mais natural à essa pergunta seria: “por quê eu iria querer fazer isso?”.</p>
+
+<p>Se você nunca precisou implementar essa situação antes, pode ser difícil imaginar tal cenário agora. Mas vou lhe mostrar que ele existe e que não é só possível implementá-lo como também é uma ótima técnica para conhecer.</p>
+
+<!--more-->
+
+<p><img src="/images/2019/raka-rachgo-276831-unsplash.jpg" alt="Unsplash image" />
+<br /><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Raka Rachgo on Unsplash</span></p>
+
+<p>Estávamos conversando sobre orientação a objetos em um chat privado entre amigos quando uma dúvida pairou no ar.</p>
+
+<p>Não era exatamente uma dúvida, mas mais um desdém sobre como a linguagem C++ consegue implementar herança múltipla sem ser um caos total.</p>
+
+<p>Como a maioria dos desenvolvedores lá utilizam Java, e como essa linguagem implementa herança simples — assim como Object Pascal — não conseguiram visualizar um cenário onde seria possível duas classes terem um método com o mesmo nome e argumentos, enquanto uma terceira classe deveria herdar de ambas.</p>
+
+<p>Nesse momento eu me lembrei de alguns casos de implementação em Object Pascal, onde essa situação é totalmente possível quando implementamos múltiplas interfaces.</p>
+
+<p>Object Pascal não tem herança múltipla como C++, mas podemos implementar mais de uma interface na mesma classe e é bem possível que uma ou mais interfaces tenham nomes e argumentos idênticos.</p>
+
+<p>Como você codificaria esse cenário?</p>
+
+<p>Pelo que eu pude entender lá na discussão, assim como também <a href="https://stackoverflow.com/questions/2801878/implementing-two-interfaces-in-a-class-with-same-method-which-interface-method">pesquisando na internet</a>, Java não tem suporte no nível da linguagem para fazer tal construção ou diferenciação de métodos de interface com o mesmo nome e argumentos — e acho incrível ninguém falar sobre isso.</p>
+
+<p>É também interessante que praticamente todas as respostas a essa dúvida, no meio Java, tenham a mesma convicção que poderia ser resumida assim: se duas interfaces tem o mesmo nome, elas <em>não</em> deveriam ter implementação diferenciada nas classes que as implementam.</p>
+
+<p>Eles estão enganados.</p>
+
+<p>Nomes de métodos iguais, mesmo com argumentos iguais, podem exigir implementação diferenciada devido a <em>semântica das interfaces</em> e não devido a assinatura de seus métodos.</p>
+
+<p>Quando estamos definindo uma interface, deveríamos pensar apenas no contrato que ela representa e não como iremos implementá-la em classes mais tarde. Dessa forma, em teoria, não deveríamos nos preocupar se haveria algum conflito de nomenclatura na implementação das classes, pois isso é apenas um <em>detalhe da implementação</em>.</p>
+
+<p>Felizmente, fazer essa diferenciação e implementação utilizando a linguagem Object Pascal não é só possível como também existe uma sintaxe <em>específica</em> para a codificação.</p>
+
+<p>A Embarcadero chama essa sintaxe de <em><a href="http://docwiki.embarcadero.com/RADStudio/Rio/en/Implementing_Interfaces#Method_Resolution_Clause">Method Resolution Clause</a></em>.</p>
+
+<p>Agora que você sabe a sintaxe, consegue imaginar cenários para sua utilização?</p>
+
+<p>Vamos enumerar alguns possíveis cenários:</p>
+
+<p><strong>O primeiro cenário</strong> está no próprio exemplo da Embarcadero, e mesmo não tendo nada haver com herança múltipla de interfaces, ainda é um necessário válido.</p>
+
+<p>Lá, a explicação é que a interface <code>IMalloc</code>  possui os métodos <code>Alloc</code> e <code>Free</code> e precisamos implementá-la na classe <code>TMemoryManager</code>.</p>
+
+<p>Poderíamos implementar um método <code>Alloc</code> — mesma nomenclatura da interface — ao invés do <code>Allocate</code> sugerido no exemplo. E tudo bem.</p>
+
+<p>Mas não poderíamos definir <code>Free</code> — o mesmo da interface — pois esse é um método existente na classe <code>TObject</code>, a classe de onde todas as outras herdam.</p>
+
+<p>O método <code>Free</code> libera o próprio objeto, chamando seu destrutor. Seria esse o objetivo do programador que definiu <code>IMalloc</code> em primeiro lugar, ou seja, desalocar a própria instância?</p>
+
+<p>Se a resposta for <em>sim</em>, então não teríamos problemas pois <code>Free</code> já está implementado em todas as classes. Feito.</p>
+
+<p>Mas se a resposta for <em>não</em>, teríamos que fazer o que a documentação da Embarcadero sugere, definindo um novo <em>método de implementação</em> para implementar o <em>método da interface</em> afim de não chamar o <code>Free</code> padrão de <code>TObject</code>.</p>
+
+<p><strong>Um segundo cenário</strong> é sobre reutilização de classes legadas que existiam antes da introdução de alguma interface no código.</p>
+
+<p>Imagine que você tem uma classe que define alguns métodos que implementam mensagens para o usuário em um programa Desktop:</p>
+
+<pre><code>TUserMessages = class
+public
+  procedure MsgWarning(const aText: string);
+  procedure MsgError(const aText: string);
+  function MsgQuestion(const aText: string): boolean;
+end;
+</code></pre>
+
+<p>Os métodos <code>MsgWarning</code> e <code>MsgError</code> apenas exibem uma mensagem ao usuário com os respectivos ícones de aviso ou erro. Já o método <code>MsgQuestion</code> retorna <code>true</code> ou <code>false</code> dependendo da escolha do usuário.</p>
+
+<p>Então o sistema evoluiu. Começaram a pensar em introduzir TDD para codificar os testes de regressões. Seria necessário introduzir uma interface para essas interfaces, pois não iriam querer visualizar tais mensagens ao executar os testes automatizados. Seria necessário criar uma classe <em>fake</em> para essas mensagens, implementando uma nova interface:</p>
+
+<pre><code>IUserMessages = interface
+  procedure Warning(const aText: string);
+  procedure Error(const aText: string);
+  function Question(const aText: string): boolean;
+end;
+</code></pre>
+
+<p>Repare que os nomes dos métodos ficaram menos redundantes, pois eles não tem mais o prefixo “Msg” como os da classe original.</p>
+
+<p>Enquanto essa nova interface vai sendo introduzida no código, aos poucos, o que antes estava funcionando deve continuar assim. Isso significa que várias partes do código ainda continuarão utilizando a classe <code>TUserMessages</code> original até a completa refatoração.</p>
+
+<p>Isso quer dizer que não podemos utilizar a classe original para implementar a nova interface fazendo, assim, que essa classe possa trabalhar tanto no código “antigo” como também no “novo”?</p>
+
+<p>Claro que podemos:</p>
+
+<pre><code>TUserMessages = class(TInterfacedObject, IUserMessages)
+private
+  procedure IUserMessages.Warning = MsgWarning;
+  procedure IUserMessages.Error = MsgError;
+  function IUserMessages.Question = MsgQuestion;
+public
+  procedure MsgWarning(const aText: string);
+  procedure MsgError(const aText: string);
+  function MsgQuestion(const aText: string): boolean;
+end;
+</code></pre>
+
+<p>Dessa forma <code>TUserMessages</code> pode continuar a ser utilizada para construir instâncias da classe e continuar utilizando os métodos (antigos) com prefixo “Msg”, assim como pode ser utilizada no novo código como uma instância da interface <code>IUserMessages</code>.</p>
+
+<p><strong>Um terceiro cenário</strong> é sobre a implementação de múltiplas interfaces.</p>
+
+<p>A sintaxe para fazer isso você, agora, já sabe. Mas talvez ainda possa lhe faltar a imaginação onde esse cenário seria adequado ou mesmo requerido.</p>
+
+<p>Por quê, você diria, eu iria querer implementar 2 ou mais interfaces utilizando diferentes assinaturas de métodos?</p>
+
+<p>A resposta irá depender da sutil diferença semântica das interfaces que serão implementadas.</p>
+
+<p>Imagine que tenhamos que criar 2 interfaces que são <em>similares</em>, porém <em>diferentes</em>. Uma interface irá representar um Avião (<code>IPlane</code>) e outra um Planador (<code>IGlider</code>).</p>
+
+<p>Eu não entendo tanto assim de aviação, porém podemos enumerar algumas diferenças entre ambos:</p>
+
+<ul>
+  <li>o avião tem motor; o planador não;</li>
+  <li>o avião é muito mais pesado que o planador;</li>
+  <li>o avião pode levantar voo por ele mesmo; o planador precisa de outro avião para rebocá-lo ao ar;</li>
+</ul>
+
+<p>Agora imagine que uma empresa revolucionária acaba de lançar uma máquina que pode ser utilizada tanto como um avião como um planador.</p>
+
+<p>Incrível? Nem tanto, eu acho.</p>
+
+<p>Esses híbridos nascem o tempo todo: carros elétricos mas que também utilizam combustível fóssil; carros que andam na terra, mas num clique de um botão viram uma espécie de lancha para andar na água; até mesmo um <a href="https://www.youtube.com/watch?v=_v1wc0bD_Cg">carro/helicóptero</a> já foi inventado; skates com motor a combustão ou elétrico; bicicletas elétricas, mas você pode continuar pedalando; etc.</p>
+
+<p>Na minha imaginação, essa nova máquina — será que já existe? — teria alguns requisitos básicos:</p>
+
+<ul>
+  <li>ser feita de fibra de carbono para ser o mais leve e resistente possível;</li>
+  <li>possibilidade de acoplar um motor plug-n-play para se transformar num avião;</li>
+  <li>ter configurações diferentes para o “modo avião” vs “modo planador”;</li>
+  <li>no modo avião, levantar voo sozinha sendo auto-propulsionada;</li>
+</ul>
+
+<p>Pensando no código, vamos retornar as interfaces e defini-las:</p>
+
+<pre><code>IPlane = interface
+  procedure Fly;
+end;
+
+IGlider = interface
+  procedure Fly;
+end;
+</code></pre>
+
+<p>É isso. Não vamos complicar. São duas interfaces com apenas um método. Ambos são idênticos, ou seja, mesma assinatura.</p>
+
+<p>Nosso novo, incrível e imaginável veículo, representado por uma classe, deveria implementar o método <code>Fly()</code> apenas uma única vez?</p>
+
+<p>Minha resposta é sonoro <em>não</em>. Mas se você continua achando que sim, como uma única classe iria implementar os dois modos de voos tão distintos?</p>
+
+<p>Como explicado acima, o veículo pode ser tanto um avião como um planador. O usuário pode ou não utilizar um motor e, assim sendo, utilizar configurações de voo completamente diferentes.</p>
+
+<p>Apesar do avião e do planador voarem, ambos fazem de maneira completamente diferentes, ou seja, com <em>implementações</em> diferentes.</p>
+
+<p>Precisamos de um nome para esse incrível veículo. Então sugiro batizar essa invenção de “OnePlane”.</p>
+
+<p>Então teríamos a implementação da classe:</p>
+
+<pre><code>TOnePlane = class(TInterfacedObject, IPlane, IGlider)
+private
+  // real flying implementation methods
+  procedure FlyAsPlane;
+  procedure FlyAsGlider;
+  // method resolution clause
+  procedure IPlane.Fly = FlyAsPlane;
+  procedure IGlider.Fly = FlyAsGlider;
+public
+  // will initialize the instance as a plane or glider
+  constructor Create(asPlane: boolean = true); reintroduce;
+end;
+</code></pre>
+
+<p>A classe acima exemplifica como implementar 2 métodos idênticos de interfaces distintas em uma mesma classe utilizando implementações completamente diferentes.</p>
+
+<p>A sintaxe é tão simples e explícita que até mesmo desenvolvedores de outras linguagens, como Java, poderão entender essa implementação sem problemas, eu acredito.</p>
+
+<p>Apesar da linguagem Object Pascal ter <a href="/posts/delegacao-de-implementacao-de-interfaces/">outra sintaxe</a> ainda mais <em>limpa</em> para implementar mais de uma interface em uma mesma classe, ainda assim esse código parece perfeitamente razoável pra mim. Iniciaríamos a implementação utilizando <a href="/posts/metodos-privados/">métodos privados</a> que depois poderiam ser convertido em novas classes, se necessário.</p>
+
+<p>Finalmente, essa sintaxe não é novidade no Free Pascal nem no Delphi. Acredito que ela foi implementada quando surgiram as interfaces. Mas tenho certeza que você poderá utilizá-la perfeitamente na versão Delphi 7 de 2002 em diante, como eu continuo utilizando em vários projetos até hoje.</p>
+
+<p>Até logo.</p>
+
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/multiplas-interfaces" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Implementando Interfaces Utilizando Diferente Assinaturas de Métodos&via=mdbs99;url=http://objectpascalprogramming.com/multiplas-interfaces" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/multiplas-interfaces" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/multiplas-interfaces&title=Implementando Interfaces Utilizando Diferente Assinaturas de Métodos" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/multiplas-interfaces&title=Implementando Interfaces Utilizando Diferente Assinaturas de Métodos" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/multiplas-interfaces&t=Implementando Interfaces Utilizando Diferente Assinaturas de Métodos" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+
+Gostaria de me pagar um café?  
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="WQ9SBWT3CM2SC">
+<input type="image" src="https://www.paypalobjects.com/pt_BR/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - A maneira fácil e segura de enviar pagamentos online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif" width="1" height="1">
+</form>
+  
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/usando-paths-ao-inves-de-diretivas" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Usando Paths ao invés de Diretivas de Compilação</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/exceptions-no-protocolo-http" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Trabalhando com Exceções em Requisições HTTP</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/tipo-object-vivo" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Tipo object Continua Vivo</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/array-de-objetos" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Array de Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/variaveis-locais" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Variáveis Locais Deveriam ter Nomes Curtos</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/formularios-e-widgets" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Como Dividir e Organizar o Código em Formulários com Muitos Widgets</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/pascal-deveria-ser-modernizado" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pascal Deveria ser Modernizado?</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/records-antiga-nova-tecnologia" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Records - Antiga Nova Tecnologia</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/builder-classes-simplificado" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Builder Classes Simplificado</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/metodo-ref" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Como Transformar uma Instância de Classe em Instância de Interface</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/multiplas-interfaces';
+      var disqus_title      = 'Implementando Interfaces Utilizando Diferente Assinaturas de Métodos';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -8,6 +8,196 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Implementando Interfaces Utilizando Diferente Assinaturas de Métodos</title>
+        <description>&lt;p&gt;Como implementar em uma única classe, duas ou mais interfaces que tenham métodos com o mesmo nome e argumentos?&lt;/p&gt;
+
+&lt;p&gt;Talvez o pensamento mais natural à essa pergunta seria: “por quê eu iria querer fazer isso?”.&lt;/p&gt;
+
+&lt;p&gt;Se você nunca precisou implementar essa situação antes, pode ser difícil imaginar tal cenário agora. Mas vou lhe mostrar que ele existe e que não é só possível implementá-lo como também é uma ótima técnica para conhecer.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2019/raka-rachgo-276831-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;br /&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Raka Rachgo on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Estávamos conversando sobre orientação a objetos em um chat privado entre amigos quando uma dúvida pairou no ar.&lt;/p&gt;
+
+&lt;p&gt;Não era exatamente uma dúvida, mas mais um desdém sobre como a linguagem C++ consegue implementar herança múltipla sem ser um caos total.&lt;/p&gt;
+
+&lt;p&gt;Como a maioria dos desenvolvedores lá utilizam Java, e como essa linguagem implementa herança simples — assim como Object Pascal — não conseguiram visualizar um cenário onde seria possível duas classes terem um método com o mesmo nome e argumentos, enquanto uma terceira classe deveria herdar de ambas.&lt;/p&gt;
+
+&lt;p&gt;Nesse momento eu me lembrei de alguns casos de implementação em Object Pascal, onde essa situação é totalmente possível quando implementamos múltiplas interfaces.&lt;/p&gt;
+
+&lt;p&gt;Object Pascal não tem herança múltipla como C++, mas podemos implementar mais de uma interface na mesma classe e é bem possível que uma ou mais interfaces tenham nomes e argumentos idênticos.&lt;/p&gt;
+
+&lt;p&gt;Como você codificaria esse cenário?&lt;/p&gt;
+
+&lt;p&gt;Pelo que eu pude entender lá na discussão, assim como também &lt;a href=&quot;https://stackoverflow.com/questions/2801878/implementing-two-interfaces-in-a-class-with-same-method-which-interface-method&quot;&gt;pesquisando na internet&lt;/a&gt;, Java não tem suporte no nível da linguagem para fazer tal construção ou diferenciação de métodos de interface com o mesmo nome e argumentos — e acho incrível ninguém falar sobre isso.&lt;/p&gt;
+
+&lt;p&gt;É também interessante que praticamente todas as respostas a essa dúvida, no meio Java, tenham a mesma convicção que poderia ser resumida assim: se duas interfaces tem o mesmo nome, elas &lt;em&gt;não&lt;/em&gt; deveriam ter implementação diferenciada nas classes que as implementam.&lt;/p&gt;
+
+&lt;p&gt;Eles estão enganados.&lt;/p&gt;
+
+&lt;p&gt;Nomes de métodos iguais, mesmo com argumentos iguais, podem exigir implementação diferenciada devido a &lt;em&gt;semântica das interfaces&lt;/em&gt; e não devido a assinatura de seus métodos.&lt;/p&gt;
+
+&lt;p&gt;Quando estamos definindo uma interface, deveríamos pensar apenas no contrato que ela representa e não como iremos implementá-la em classes mais tarde. Dessa forma, em teoria, não deveríamos nos preocupar se haveria algum conflito de nomenclatura na implementação das classes, pois isso é apenas um &lt;em&gt;detalhe da implementação&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Felizmente, fazer essa diferenciação e implementação utilizando a linguagem Object Pascal não é só possível como também existe uma sintaxe &lt;em&gt;específica&lt;/em&gt; para a codificação.&lt;/p&gt;
+
+&lt;p&gt;A Embarcadero chama essa sintaxe de &lt;em&gt;&lt;a href=&quot;http://docwiki.embarcadero.com/RADStudio/Rio/en/Implementing_Interfaces#Method_Resolution_Clause&quot;&gt;Method Resolution Clause&lt;/a&gt;&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Agora que você sabe a sintaxe, consegue imaginar cenários para sua utilização?&lt;/p&gt;
+
+&lt;p&gt;Vamos enumerar alguns possíveis cenários:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O primeiro cenário&lt;/strong&gt; está no próprio exemplo da Embarcadero, e mesmo não tendo nada haver com herança múltipla de interfaces, ainda é um necessário válido.&lt;/p&gt;
+
+&lt;p&gt;Lá, a explicação é que a interface &lt;code&gt;IMalloc&lt;/code&gt;  possui os métodos &lt;code&gt;Alloc&lt;/code&gt; e &lt;code&gt;Free&lt;/code&gt; e precisamos implementá-la na classe &lt;code&gt;TMemoryManager&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Poderíamos implementar um método &lt;code&gt;Alloc&lt;/code&gt; — mesma nomenclatura da interface — ao invés do &lt;code&gt;Allocate&lt;/code&gt; sugerido no exemplo. E tudo bem.&lt;/p&gt;
+
+&lt;p&gt;Mas não poderíamos definir &lt;code&gt;Free&lt;/code&gt; — o mesmo da interface — pois esse é um método existente na classe &lt;code&gt;TObject&lt;/code&gt;, a classe de onde todas as outras herdam.&lt;/p&gt;
+
+&lt;p&gt;O método &lt;code&gt;Free&lt;/code&gt; libera o próprio objeto, chamando seu destrutor. Seria esse o objetivo do programador que definiu &lt;code&gt;IMalloc&lt;/code&gt; em primeiro lugar, ou seja, desalocar a própria instância?&lt;/p&gt;
+
+&lt;p&gt;Se a resposta for &lt;em&gt;sim&lt;/em&gt;, então não teríamos problemas pois &lt;code&gt;Free&lt;/code&gt; já está implementado em todas as classes. Feito.&lt;/p&gt;
+
+&lt;p&gt;Mas se a resposta for &lt;em&gt;não&lt;/em&gt;, teríamos que fazer o que a documentação da Embarcadero sugere, definindo um novo &lt;em&gt;método de implementação&lt;/em&gt; para implementar o &lt;em&gt;método da interface&lt;/em&gt; afim de não chamar o &lt;code&gt;Free&lt;/code&gt; padrão de &lt;code&gt;TObject&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Um segundo cenário&lt;/strong&gt; é sobre reutilização de classes legadas que existiam antes da introdução de alguma interface no código.&lt;/p&gt;
+
+&lt;p&gt;Imagine que você tem uma classe que define alguns métodos que implementam mensagens para o usuário em um programa Desktop:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TUserMessages = class
+public
+  procedure MsgWarning(const aText: string);
+  procedure MsgError(const aText: string);
+  function MsgQuestion(const aText: string): boolean;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Os métodos &lt;code&gt;MsgWarning&lt;/code&gt; e &lt;code&gt;MsgError&lt;/code&gt; apenas exibem uma mensagem ao usuário com os respectivos ícones de aviso ou erro. Já o método &lt;code&gt;MsgQuestion&lt;/code&gt; retorna &lt;code&gt;true&lt;/code&gt; ou &lt;code&gt;false&lt;/code&gt; dependendo da escolha do usuário.&lt;/p&gt;
+
+&lt;p&gt;Então o sistema evoluiu. Começaram a pensar em introduzir TDD para codificar os testes de regressões. Seria necessário introduzir uma interface para essas interfaces, pois não iriam querer visualizar tais mensagens ao executar os testes automatizados. Seria necessário criar uma classe &lt;em&gt;fake&lt;/em&gt; para essas mensagens, implementando uma nova interface:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;IUserMessages = interface
+  procedure Warning(const aText: string);
+  procedure Error(const aText: string);
+  function Question(const aText: string): boolean;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Repare que os nomes dos métodos ficaram menos redundantes, pois eles não tem mais o prefixo “Msg” como os da classe original.&lt;/p&gt;
+
+&lt;p&gt;Enquanto essa nova interface vai sendo introduzida no código, aos poucos, o que antes estava funcionando deve continuar assim. Isso significa que várias partes do código ainda continuarão utilizando a classe &lt;code&gt;TUserMessages&lt;/code&gt; original até a completa refatoração.&lt;/p&gt;
+
+&lt;p&gt;Isso quer dizer que não podemos utilizar a classe original para implementar a nova interface fazendo, assim, que essa classe possa trabalhar tanto no código “antigo” como também no “novo”?&lt;/p&gt;
+
+&lt;p&gt;Claro que podemos:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TUserMessages = class(TInterfacedObject, IUserMessages)
+private
+  procedure IUserMessages.Warning = MsgWarning;
+  procedure IUserMessages.Error = MsgError;
+  function IUserMessages.Question = MsgQuestion;
+public
+  procedure MsgWarning(const aText: string);
+  procedure MsgError(const aText: string);
+  function MsgQuestion(const aText: string): boolean;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Dessa forma &lt;code&gt;TUserMessages&lt;/code&gt; pode continuar a ser utilizada para construir instâncias da classe e continuar utilizando os métodos (antigos) com prefixo “Msg”, assim como pode ser utilizada no novo código como uma instância da interface &lt;code&gt;IUserMessages&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Um terceiro cenário&lt;/strong&gt; é sobre a implementação de múltiplas interfaces.&lt;/p&gt;
+
+&lt;p&gt;A sintaxe para fazer isso você, agora, já sabe. Mas talvez ainda possa lhe faltar a imaginação onde esse cenário seria adequado ou mesmo requerido.&lt;/p&gt;
+
+&lt;p&gt;Por quê, você diria, eu iria querer implementar 2 ou mais interfaces utilizando diferentes assinaturas de métodos?&lt;/p&gt;
+
+&lt;p&gt;A resposta irá depender da sutil diferença semântica das interfaces que serão implementadas.&lt;/p&gt;
+
+&lt;p&gt;Imagine que tenhamos que criar 2 interfaces que são &lt;em&gt;similares&lt;/em&gt;, porém &lt;em&gt;diferentes&lt;/em&gt;. Uma interface irá representar um Avião (&lt;code&gt;IPlane&lt;/code&gt;) e outra um Planador (&lt;code&gt;IGlider&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Eu não entendo tanto assim de aviação, porém podemos enumerar algumas diferenças entre ambos:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;o avião tem motor; o planador não;&lt;/li&gt;
+  &lt;li&gt;o avião é muito mais pesado que o planador;&lt;/li&gt;
+  &lt;li&gt;o avião pode levantar voo por ele mesmo; o planador precisa de outro avião para rebocá-lo ao ar;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Agora imagine que uma empresa revolucionária acaba de lançar uma máquina que pode ser utilizada tanto como um avião como um planador.&lt;/p&gt;
+
+&lt;p&gt;Incrível? Nem tanto, eu acho.&lt;/p&gt;
+
+&lt;p&gt;Esses híbridos nascem o tempo todo: carros elétricos mas que também utilizam combustível fóssil; carros que andam na terra, mas num clique de um botão viram uma espécie de lancha para andar na água; até mesmo um &lt;a href=&quot;https://www.youtube.com/watch?v=_v1wc0bD_Cg&quot;&gt;carro/helicóptero&lt;/a&gt; já foi inventado; skates com motor a combustão ou elétrico; bicicletas elétricas, mas você pode continuar pedalando; etc.&lt;/p&gt;
+
+&lt;p&gt;Na minha imaginação, essa nova máquina — será que já existe? — teria alguns requisitos básicos:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ser feita de fibra de carbono para ser o mais leve e resistente possível;&lt;/li&gt;
+  &lt;li&gt;possibilidade de acoplar um motor plug-n-play para se transformar num avião;&lt;/li&gt;
+  &lt;li&gt;ter configurações diferentes para o “modo avião” vs “modo planador”;&lt;/li&gt;
+  &lt;li&gt;no modo avião, levantar voo sozinha sendo auto-propulsionada;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Pensando no código, vamos retornar as interfaces e defini-las:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;IPlane = interface
+  procedure Fly;
+end;
+
+IGlider = interface
+  procedure Fly;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;É isso. Não vamos complicar. São duas interfaces com apenas um método. Ambos são idênticos, ou seja, mesma assinatura.&lt;/p&gt;
+
+&lt;p&gt;Nosso novo, incrível e imaginável veículo, representado por uma classe, deveria implementar o método &lt;code&gt;Fly()&lt;/code&gt; apenas uma única vez?&lt;/p&gt;
+
+&lt;p&gt;Minha resposta é sonoro &lt;em&gt;não&lt;/em&gt;. Mas se você continua achando que sim, como uma única classe iria implementar os dois modos de voos tão distintos?&lt;/p&gt;
+
+&lt;p&gt;Como explicado acima, o veículo pode ser tanto um avião como um planador. O usuário pode ou não utilizar um motor e, assim sendo, utilizar configurações de voo completamente diferentes.&lt;/p&gt;
+
+&lt;p&gt;Apesar do avião e do planador voarem, ambos fazem de maneira completamente diferentes, ou seja, com &lt;em&gt;implementações&lt;/em&gt; diferentes.&lt;/p&gt;
+
+&lt;p&gt;Precisamos de um nome para esse incrível veículo. Então sugiro batizar essa invenção de “OnePlane”.&lt;/p&gt;
+
+&lt;p&gt;Então teríamos a implementação da classe:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TOnePlane = class(TInterfacedObject, IPlane, IGlider)
+private
+  // real flying implementation methods
+  procedure FlyAsPlane;
+  procedure FlyAsGlider;
+  // method resolution clause
+  procedure IPlane.Fly = FlyAsPlane;
+  procedure IGlider.Fly = FlyAsGlider;
+public
+  // will initialize the instance as a plane or glider
+  constructor Create(asPlane: boolean = true); reintroduce;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A classe acima exemplifica como implementar 2 métodos idênticos de interfaces distintas em uma mesma classe utilizando implementações completamente diferentes.&lt;/p&gt;
+
+&lt;p&gt;A sintaxe é tão simples e explícita que até mesmo desenvolvedores de outras linguagens, como Java, poderão entender essa implementação sem problemas, eu acredito.&lt;/p&gt;
+
+&lt;p&gt;Apesar da linguagem Object Pascal ter &lt;a href=&quot;/posts/delegacao-de-implementacao-de-interfaces/&quot;&gt;outra sintaxe&lt;/a&gt; ainda mais &lt;em&gt;limpa&lt;/em&gt; para implementar mais de uma interface em uma mesma classe, ainda assim esse código parece perfeitamente razoável pra mim. Iniciaríamos a implementação utilizando &lt;a href=&quot;/posts/metodos-privados/&quot;&gt;métodos privados&lt;/a&gt; que depois poderiam ser convertido em novas classes, se necessário.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, essa sintaxe não é novidade no Free Pascal nem no Delphi. Acredito que ela foi implementada quando surgiram as interfaces. Mas tenho certeza que você poderá utilizá-la perfeitamente na versão Delphi 7 de 2002 em diante, como eu continuo utilizando em vários projetos até hoje.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 20 May 2019 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/multiplas-interfaces</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/multiplas-interfaces</guid>
+      </item>
+    
+      <item>
         <title>Usando Paths ao invés de Diretivas de Compilação</title>
         <description>&lt;p&gt;Já pensou em utilizar paths, ao invés de diretivas de compilação, para compilar seu projeto em diferentes plataformas?&lt;/p&gt;
 
@@ -54,7 +244,7 @@
 
 &lt;p&gt;A implementação por plataforma pode ser muito diferente uma da outra. Existir algumas linhas similares—ou mesmo iguais—é um preço mínimo a se pagar, na minha humilde opinião.&lt;/p&gt;
 
-&lt;p&gt;Finalmente, repare que todo código comum entre as plataformas devem estar em outras unidades—no caso do Xavier, tais códigos compartilhados estão em &lt;code&gt;XavierCore&lt;/code&gt; e &lt;code&gt;XavierAdapters&lt;/code&gt;, utilizados pelas respectivas &lt;code&gt;XavierCorePlatform&lt;/code&gt; em cada plataforma.&lt;/p&gt;
+&lt;p&gt;Finalmente, repare que todo código comum entre as plataformas devem estar em outras unidades compartilhadas. No caso do Xavier, tais códigos compartilhados estão nas unidades &lt;code&gt;XavierCore&lt;/code&gt; e &lt;code&gt;XavierAdapters&lt;/code&gt;. Ambas são utilizadas pelas unidades &lt;code&gt;XavierCorePlatform&lt;/code&gt; referente a cada plataforma.&lt;/p&gt;
 
 &lt;p&gt;Até logo.&lt;/p&gt;
 
@@ -934,177 +1124,6 @@ end;
         <pubDate>Tue, 11 Sep 2018 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/builder-classes-simplificado</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/builder-classes-simplificado</guid>
-      </item>
-    
-      <item>
-        <title>Como Transformar uma Instância de Classe em Instância de Interface</title>
-        <description>&lt;p&gt;E se a linguagem Object Pascal nos permitisse codificar uma instância de classe que se auto destrói quando não mais precisamos dela?&lt;/p&gt;
-
-&lt;p&gt;É possível transformar uma instância de classe para se comportar como uma instância de interface?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/julie-north-720719-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Julie North on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Há alguns dias eu acompanhei alguns desenvolvedores solicitarem algumas “novas features” para o compilador Free Pascal..&lt;/p&gt;
-
-&lt;p&gt;Uma dessas features é a possibilidade de fazer um &lt;em&gt;“auto free”&lt;/em&gt; de uma instância de classe. Sim, como no Java ou C#, onde um objeto do tipo de uma classe é liberado automaticamente quando a VM acha que deve fazê-lo.&lt;/p&gt;
-
-&lt;p&gt;No entanto, devemos lembrar dos princípios da linguagem Object Pascal antes de solicitar tais mudanças. A linguagem Object Pascal não possui uma VM, portanto não temos um “robozinho” para ficar monitorando nossos objetos. Devemos liberar nossos objetos “manualmente” chamando &lt;code&gt;obj.Free&lt;/code&gt; na maioria dos casos.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/posts/simplicidade/&quot;&gt;Simples&lt;/a&gt; e eficiente.&lt;/p&gt;
-
-&lt;p&gt;Mas eu posso entender o motivo de tal solicitação: É muito cômodo declarar objetos sem se preocupar em liberá-los da memória… e eu tenho feito isso há anos utilizando a “técnica” do &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New&lt;/a&gt; em conjunto com instâncias de interfaces.&lt;/p&gt;
-
-&lt;p&gt;O tipo de &lt;a href=&quot;/posts/interfaces-em-todo-lugar/&quot;&gt;interface&lt;/a&gt; é liberado automaticamente pelo compilador quando a variável sai do escopo. Mas isso não existe para instâncias de classe, proposto no pedido da nova feature.&lt;/p&gt;
-
-&lt;p&gt;Então, se houvesse um jeito de liberar automaticamente as instâncias de classes, “convertendo-as” em instâncias de interfaces, sem utilizar nenhum tipo de &lt;a href=&quot;/posts/nao-utilize-casting/&quot;&gt;casting&lt;/a&gt;, teríamos a liberação automática sem que fosse necessária alterações no compilador.&lt;/p&gt;
-
-&lt;p&gt;Bem, o que vou lhe apresentar agora pode já estar sendo utilizando por muitos desenvolvedores ao redor do mundo, e é algo tão simples que podemos até mesmo substituir o &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New&lt;/a&gt; — tão difundido na comunidade brasileira e mundo afora — por essa simples “técnica” que mostrarei mais abaixo.&lt;/p&gt;
-
-&lt;p&gt;Mas antes, o que há de errado com o &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New&lt;/a&gt;?&lt;/p&gt;
-
-&lt;p&gt;Esse método foi criado com o intuito de implementar a liberação automática da instância, sem haver a necessidade de declarar uma variável local para incrementar a contagem de referência.&lt;/p&gt;
-
-&lt;p&gt;Funciona.&lt;/p&gt;
-
-&lt;p&gt;No entanto, há alguns problemas com essa abordagem.&lt;/p&gt;
-
-&lt;p&gt;Primeiro, ele é um método estático da classe. Deveríamos &lt;del&gt;não utilizar&lt;/del&gt; evitar métodos de classe a todo custo, dando [preferência] em utilizar instâncias de interfaces, onde não existem métodos estáticos.&lt;/p&gt;
-
-&lt;p&gt;Segundo, é redundante ter que codificar sempre os mesmos parâmetros da(s) mesma(s) assinatura do(s) construtor(es). Isso, além de ser no mínimo chato, é um pouco custoso para a manutenção pois (quase sempre) haverá 2 lugares para alterar os argumentos.&lt;/p&gt;
-
-&lt;p&gt;Terceiro, o método não impede que um programador que não conheça a técnica, chame diretamente o construtor da classe, &lt;em&gt;by passing&lt;/em&gt; o método estático. Isso pode gerar &lt;em&gt;memory leaks&lt;/em&gt;, como já foi explicado em alguns outros artigos aqui do blog.&lt;/p&gt;
-
-&lt;p&gt;Embora haja todos esses problemas, a utilização do &lt;a href=&quot;/posts/interfaces-e-o-metodo-estatico-new/&quot;&gt;Método New&lt;/a&gt; se mostrou eficiente, melhorando e simplificando a base de código em muitos projetos.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, a técnica a seguir traz todas as vantagens do &lt;code&gt;New&lt;/code&gt; porém sem as desvantagens.&lt;/p&gt;
-
-&lt;p&gt;Você pode fazer essa “mágica” adicionando mais um método na classe.&lt;/p&gt;
-
-&lt;p&gt;Eu o chamo de Método &lt;code&gt;Ref&lt;/code&gt;, que significa &lt;em&gt;reference for&lt;/em&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function TFoo.Ref: ISomething;
-begin
-  result := self;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Sim, é só isso.&lt;/p&gt;
-
-&lt;p&gt;Um método que retorna &lt;code&gt;self&lt;/code&gt;, sendo o tipo do retorno a interface que a classe implementa.&lt;/p&gt;
-
-&lt;p&gt;Diferentemente do &lt;code&gt;New&lt;/code&gt;, o método &lt;code&gt;Ref&lt;/code&gt; não é estático e não duplica a assinatura do(s) construtor(s), eliminando as primeiras duas desvantagens.&lt;/p&gt;
-
-&lt;p&gt;Sim, há a possibilidade do desenvolvedor esquecer de utilizá-lo ao chamar o construtor da classe diretamente ao invés do &lt;code&gt;New&lt;/code&gt;e isso poderia ocasionar &lt;em&gt;memory leaks&lt;/em&gt;. Mas sua vantagem é que você tem a &lt;em&gt;opção&lt;/em&gt; em não utilizá-lo para aumentar a performance na criação dos objetos &lt;em&gt;by passing&lt;/em&gt; um método de classe (o método &lt;code&gt;New&lt;/code&gt;) antes de chegar ao construtor, ganhando, talvez, alguns milionésimos de segundos.&lt;/p&gt;
-
-&lt;p&gt;Veja um exemplo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure DoIt;
-begin
-  TFoo.Create(TBar.Create).Ref.Execute;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Se ambas as classes implementam interfaces, temos a possibilidade de não utilizar &lt;code&gt;Ref&lt;/code&gt; no argumento do construtor de &lt;code&gt;TFoo&lt;/code&gt;, chamando apenas o construtor de &lt;code&gt;TBar&lt;/code&gt;. Mas, somos “obrigados” a utilizar &lt;code&gt;Ref&lt;/code&gt; na chamada mais externa para executar algum método da interface que &lt;code&gt;TFoo&lt;/code&gt; implementa, afim de evitar &lt;em&gt;memory leaks&lt;/em&gt;, pois não há nenhuma variável (local) para receber a instância da interface.&lt;/p&gt;
-
-&lt;p&gt;Agora você deve estar se perguntando, o que isso tem have com o título do artigo?&lt;/p&gt;
-
-&lt;p&gt;Tudo.&lt;/p&gt;
-
-&lt;p&gt;É padrão da linguagem que, ao trabalharmos com instâncias de interfaces, o compilador utilize um contador de referências para saber quando destruir um objeto, liberando a memória alocada.&lt;/p&gt;
-
-&lt;p&gt;Então, se você criar um objeto do tipo de classe e depois utilizar o método &lt;code&gt;Ref&lt;/code&gt; ou apenas atribuir a instância a uma variável do tipo interface, você irá “transformar” sua instância de classe em instância de interface, ganhando a contagem de referência e a auto destruição do objeto… de graça.&lt;/p&gt;
-
-&lt;p&gt;Vejamos um exemplo completo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;program Project1;
-
-{$mode delphi}
-
-uses
-  SysUtils,
-  Classes;
-
-type
-  IFoo = interface
-  [&#39;{1D26066C-984B-4632-95B2-B25253AF149E}&#39;]
-    procedure ShowMsg;
-  end;
-
-type
-  TFoo = class(TInterfacedObject, IFoo)
-  private
-    fText: string;
-  public
-    constructor Create(const aText: string);
-    destructor Destroy; override;
-    function Ref: IFoo;
-    procedure ShowMsg;
-  end;
-
-{ TFoo }
-
-constructor TFoo.Create(const aText: string);
-begin
-  inherited Create;
-  fText := aText;
-  writeln(&#39;Creating &#39;+ FRefCount.ToString);
-end;
-
-destructor TFoo.Destroy;
-begin
-  writeln(&#39;Destroing &#39; + FRefCount.ToString);
-  inherited Destroy;
-end;
-
-function TFoo.Ref: IFoo;
-begin
-  result := self;
-end;
-
-procedure TFoo.ShowMsg;
-begin
-  writeln(fText);
-end;
-
-var
-  f: TFoo; // class, not an interface
-begin
-  f := TFoo.Create(&#39;teste&#39;);
-  f.Ref.ShowMsg;
-  // f.Free; &amp;lt;&amp;lt; you don&#39;t need it
-end.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Execute o código acima e verá que não existe nenhum &lt;em&gt;memory leak&lt;/em&gt;, mesmo &lt;code&gt;f&lt;/code&gt; sendo do tipo &lt;code&gt;TFoo&lt;/code&gt;, uma classe.&lt;/p&gt;
-
-&lt;p&gt;A mágica acontece quando chamamos &lt;code&gt;Ref&lt;/code&gt;. Ele retorna um tipo de interface que é o próprio objeto &lt;code&gt;self&lt;/code&gt;. Assim, a “nova” instância passa a ter uma contagem de referência e será destruída automaticamente.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;c:\temp&amp;gt;project1.exe
-Creating 1
-teste
-Destroing 0
-Heap dump by heaptrc unit of c:\temp\project1.exe
-76 memory blocks allocated : 1967/2120
-76 memory blocks freed     : 1967/2120
-0 unfreed memory blocks : 0
-True heap size : 196608 (80 used in System startup)
-True free heap : 196528
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A linguagem Object Pascal pode parecer simples demais para alguns desenvolvedores (que não conhecem bem a linguagem).&lt;/p&gt;
-
-&lt;p&gt;Alguns dizem que é “apenas uma linguagem para aprendizado” ou que não acompanhou as “novas features” das linguagens mais “modernas”.&lt;/p&gt;
-
-&lt;p&gt;Me diga então, qual linguagem você conhece que nos dá a eficiência em poder liberar nossos objetos no melhor momento que quisermos, mas também ter objetos que se “auto destroem” e ainda conseguir fazer a transição de um tipo para o outro?&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 13 Aug 2018 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/metodo-ref</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/metodo-ref</guid>
       </item>
     
   </channel>
