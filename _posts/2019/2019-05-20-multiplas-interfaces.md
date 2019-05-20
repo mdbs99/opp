@@ -37,7 +37,7 @@ Se você nunca precisou implementar essa situação antes, pode ser difícil ima
 
 Estávamos conversando sobre orientação a objetos em um chat privado entre amigos quando uma dúvida pairou no ar.
 
-Não era exatamente uma dúvida, mas mais um desdém sobre como a linguagem C++ consegue implementar herança múltipla sem ser caos total.
+Não era exatamente uma dúvida, mas mais um desdém sobre como a linguagem C++ consegue implementar herança múltipla sem ser um caos total.
 
 Como a maioria dos desenvolvedores lá utilizam Java, e como essa linguagem implementa herança simples — assim como Object Pascal — não conseguiram visualizar um cenário onde seria possível duas classes terem um método com o mesmo nome e argumentos, enquanto uma terceira classe deveria herdar de ambas.
 
