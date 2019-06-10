@@ -8,6 +8,269 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Classes Mutáveis vs Objetos Imutáveis</title>
+        <description>&lt;p&gt;É possível ter a comodidade em utilizar classes mutáveis para construir os objetos aos poucos, configurando propriedades e opções de execução além do uso dos construtores, porém com a vantagem de obter instâncias imutáveis no final do processo.&lt;/p&gt;
+
+&lt;p&gt;E eu não estou falando do padrão Builder. Aliás você não deveria precisar construir uma classe para criar uma instância de outra classe…&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2019/djim-loic-69263-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;br /&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Djim Loic on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Os seres na natureza &lt;em&gt;não&lt;/em&gt; são criados num único instante.&lt;/p&gt;
+
+&lt;p&gt;Um ser dentro do ventre de sua progenitora é “construído” aos poucos, parte por parte.&lt;/p&gt;
+
+&lt;p&gt;Imagine todos os órgãos crescendo em um desenvolvimento constante.&lt;/p&gt;
+
+&lt;p&gt;Mas mesmo que esse ser ainda não tenha nascido, ele já existe.&lt;/p&gt;
+
+&lt;p&gt;Ele ocupa espaço.&lt;/p&gt;
+
+&lt;p&gt;Ele interage com o mundo através do corpo de sua mãe…&lt;/p&gt;
+
+&lt;p&gt;Porém ele ainda não é uma entidade 100% concluída ou estável.&lt;/p&gt;
+
+&lt;p&gt;O mesmo pode acontecer com um objeto no software.&lt;/p&gt;
+
+&lt;p&gt;O objeto pode não ter sido totalmente formado, mas ele já existe quando obtemos uma nova instância a partir do construtor de sua classe.&lt;/p&gt;
+
+&lt;p&gt;O objeto já existe mas pode não estar pronto para uso.&lt;/p&gt;
+
+&lt;p&gt;Faz sentido?&lt;/p&gt;
+
+&lt;h2 id=&quot;mutavel-vs-imutavel&quot;&gt;Mutável vs Imutável&lt;/h2&gt;
+
+&lt;p&gt;Na internet muito tem se falado sobre utilizar objetos imutáveis considerando seus prós e contras.&lt;/p&gt;
+
+&lt;p&gt;Eu mesmo sou um defensor de &lt;a href=&quot;/posts/objetos-imutaveis/&quot;&gt;objetos imutáveis&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Porém há casos onde os objetos, apesar de já ter “nascido”, ainda não estão 100% pronto para uso.&lt;/p&gt;
+
+&lt;p&gt;Você pode estar pensando: “se podemos ter um objeto mutável, e se isso parece até estar de acordo com a natureza e de como o mundo realmente funciona, por quê eu iria querer ter um objeto imutável afinal?”&lt;/p&gt;
+
+&lt;p&gt;Objetos imutáveis são muito mais previsíveis, seguros e simples de usar. Isso é um fato.&lt;/p&gt;
+
+&lt;p&gt;No entanto, também haverá casos onde nem todos os objetos em um software poderão ser imutáveis. Vide &lt;em&gt;widgets&lt;/em&gt; de formulários Desktop, por exemplo. Os Edits, Memos, Grids… todos são mutáveis.&lt;/p&gt;
+
+&lt;p&gt;Apesar da imutabilidade ser o ideal a seguir, ela não é uma verdade absoluta.&lt;/p&gt;
+
+&lt;p&gt;Então, se mutabilidade e imutabilidade tem seus prós e contras, e eventualmente iremos trabalhar com ambos, como decidir entre um e outro quando isso já não for pré-determinado?&lt;/p&gt;
+
+&lt;p&gt;Eu diria para utilizarmos classes mutáveis em conjunto com objetos imutáveis.&lt;/p&gt;
+
+&lt;h2 id=&quot;praticando&quot;&gt;Na Prática&lt;/h2&gt;
+
+&lt;p&gt;Uma classe é a construtora de seus objetos — a progenitora.&lt;/p&gt;
+
+&lt;p&gt;Um objeto deveria ser uma entidade 100% pronta para uso.&lt;/p&gt;
+
+&lt;p&gt;Entretanto, assim como uma criatura ainda está sendo formada no ventre, um objeto ainda pode estar sendo construído.&lt;/p&gt;
+
+&lt;p&gt;Mas o programador pode determinar quando essa construção termina em um momento especial: quando a &lt;em&gt;instância objeto&lt;/em&gt; se transforma em &lt;em&gt;instância de interface&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se você não tiver nenhum método na interface que promova a mutabilidade do objeto, você poderá construir seus objetos aos poucos utilizando a mutabilidade dos métodos da classe, porém com a vantagem de ter uma instância final imutável que só implementa métodos imutáveis da interface.&lt;/p&gt;
+
+&lt;p&gt;É como ter o melhor dos dois mundos.&lt;/p&gt;
+
+&lt;p&gt;Imagine uma classe que faz um processamento de Faturas — &lt;code&gt;TInvoiceMaker&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Tal classe necessitaria de uma “configuração especial” sobre como fazer o processamento.&lt;/p&gt;
+
+&lt;p&gt;Essa configuração poderia depender de muitos fatores, como período do ano, tipos de contrato, tipos de produtos, promoções, se é apenas um teste ou se está executando em produção.&lt;/p&gt;
+
+&lt;p&gt;Estamos apenas especulando as opções.&lt;/p&gt;
+
+&lt;p&gt;Primeiro, iniciamos com a definição de uma interface que &lt;code&gt;TInvoiceMaker&lt;/code&gt; deverá implementar:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;IDataMaker = interface
+  procedure Make;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Veja que não há métodos que promovem a mutabilidade, ou seja, não há [Setters].&lt;/p&gt;
+
+&lt;p&gt;Uma instância &lt;code&gt;IDataMaker&lt;/code&gt; seria passada como argumento para algum objeto/rotina “big process” que recebe um “maker”, não importando quem:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;BigProcess(const aMaker: IDataMaker);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Internamente &lt;code&gt;aMaker.Make&lt;/code&gt; será chamado.&lt;/p&gt;
+
+&lt;h2 id=&quot;imutavel&quot;&gt;Modelo Imutável&lt;/h2&gt;
+
+&lt;p&gt;Então, vamos pensar como poderia ser essa implementação no “modelo imutável”:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TInvoiceMaker = class(TInterfacedObject, IDataMaker)
+public
+   constructor Create(aPeriod: TPeriod; 
+     aContracts: TContractTypes;
+     aProducts: TProductTypes;  
+     aPromotions: TPromotionArray); reintroduce;
+   procedure Make;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O construtor da classe deverá ter &lt;em&gt;todas&lt;/em&gt; as dependências injetadas no construtor.&lt;/p&gt;
+
+&lt;p&gt;Esse é um modelo sólido. Não há setters. Após o objeto ter sido construído, ele estará 100% pronto para uso.&lt;/p&gt;
+
+&lt;p&gt;Esse seria um modelo de implementação ideal.&lt;/p&gt;
+
+&lt;p&gt;A classe é pequena; não há muitos argumentos no construtor; fácil de instanciar; imutável.&lt;/p&gt;
+
+&lt;p&gt;Agora imagine essa classe seja utilizada em muitos lugares no código e que, na maioria das vezes, seus argumentos serão sempre os mesmos.&lt;/p&gt;
+
+&lt;p&gt;Mesmo que haja poucos argumentos no construtor, a repetição deles torna o código verboso e chato para o programador.&lt;/p&gt;
+
+&lt;p&gt;Se os contratos são os mesmos, os produtos os mesmos, promoções… por quê não definir valores padrão para tais atributos?&lt;/p&gt;
+
+&lt;p&gt;Então implementamos mais um [construtor secundário] que irá chamar o primário:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TInvoiceMaker = class(TInterfacedObject, IDataMaker)
+public
+   constructor Create(aPeriod: TPeriod; 
+     aContracts: TContractTypes;
+     aProducts: TProductTypes;
+     aPromotions: TPromotionArray); reintroduce; overload;
+   constructor Create(aPeriod: TPeriod); overload;
+   procedure Make;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O construtor secundário irá passar valores padrão para os argumentos &lt;code&gt;aContracts, aProducts, aPromotions&lt;/code&gt;. Apenas o período deverá sempre ser informado, por exemplo.&lt;/p&gt;
+
+&lt;p&gt;E, novamente, temos um design limpo e sólido.&lt;/p&gt;
+
+&lt;p&gt;Mas sabemos como é a vida de um desenvolvedor: os requisitos mudam; modelos mudam; não há tempo suficiente.&lt;/p&gt;
+
+&lt;p&gt;E se, agora, o desenvolvedor precisar informar o período e, também, os contratos? Não há um &lt;em&gt;overload&lt;/em&gt; de construtor para informar apenas esses dois parâmetros.&lt;/p&gt;
+
+&lt;p&gt;Seguindo o método acima, o desenvolvedor tem duas opções: a) criar um novo construtor ou b) utilizar o construtor principal passando todos os parâmetros — o que eu vejo acontecer bastante em códigos de terceiros onde tais parâmetros são dispostos, por exemplo, assim &lt;code&gt;foo(true, true, &#39;&#39;, &#39;&#39;, false, &#39;&#39;, 1)&lt;/code&gt;, que é difícil de ler/entender.&lt;/p&gt;
+
+&lt;p&gt;Há os argumentos com valores padrão no Pascal. Mas eles não ajudariam muito se quisermos passar apenas 1 dos valores “no meio”. Nesses casos você terá que digitar os valores padrão até chegar na posição do argumento que você deseja informar.&lt;/p&gt;
+
+&lt;p&gt;Voltando ao problema, o mais “correto”, seguindo o modelo imutável, seria implementar um novo construtor:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TInvoiceMaker = class(TInterfacedObject, IDataMaker)
+public
+   constructor Create(aPeriod: TPeriod; 
+     aContracts: TContractTypes;
+     aProducts: TProductTypes;  
+     aPromotions: TPromotionArray); reintroduce; overload;
+   constructor Create(aPeriod: TPeriod; 
+     aContracts: TContractTypes); overload;
+   constructor Create(aPeriod: TPeriod); overload;
+   procedure Make;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Infelizmente essa abordagem pode não ser estável no longo prazo, dependendo das mudanças.&lt;/p&gt;
+
+&lt;p&gt;Se os argumentos ou a &lt;em&gt;combinação&lt;/em&gt; deles aumentarem, teria de haver muitos outros construtores com inúmeras combinações.&lt;/p&gt;
+
+&lt;p&gt;Esse é uma abordagem que funciona com classes estáveis com poucas mudanças, não sendo o ideal para classes que tem a tendência de mudar muito.&lt;/p&gt;
+
+&lt;h2 id=&quot;mutavel&quot;&gt;Modelo Mutável&lt;/h2&gt;
+
+&lt;p&gt;Então, vamos pensar como poderia ser essa implementação no “modelo mutável”:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TInvoiceMaker = class(TInterfacedObject, IDataMaker)
+private
+   fPeriod: TPeriod;
+   fContracts: TContractTypes;
+   fProducts: TProductTypes;
+   fPromotions: TPromotionArray;
+public
+   constructor Create(aPeriod: TPeriod); reintroduce;
+   procedure Make;
+   property Contracts: TContractTypes 
+     read fContracts write fContracts;
+   property Products: TProductTypes 
+     read fProducts write fProducts;
+   property Promotions: TPromotionArray 
+     read aPromotions write fPromotions;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A classe tem um construtor primário que solicita o essencial: um período.&lt;/p&gt;
+
+&lt;p&gt;Todos os outros atributos que podem ter um valor padrão, poderiam ser implementados como propriedades.&lt;/p&gt;
+
+&lt;p&gt;A vantagem é óbvia: não precisamos construir inúmeros construtores com inúmeras combinações. Além disso, podemos adicionar mais propriedades a qualquer momento, com tanto que cada uma tenha um valor padrão que será inicializado no construtor primário.&lt;/p&gt;
+
+&lt;p&gt;Esse também é um um modelo limpo e (de certa forma) sólido.&lt;/p&gt;
+
+&lt;p&gt;Muitos desenvolvedores acham que a classe deve ter apenas os mesmos métodos que a interface que implementam. Ledo engano.&lt;/p&gt;
+
+&lt;p&gt;Há setters através das propriedades, porém cada uma delas terá um valor padrão definido no construtor. Então, o desenvolvedor não é obrigado a passar cada uma das propriedades.&lt;/p&gt;
+
+&lt;p&gt;Após o objeto ter sido construído, ele estará 100% pronto para uso.&lt;/p&gt;
+
+&lt;p&gt;Mas, como manter a imutabilidade utilizando essa classe?&lt;/p&gt;
+
+&lt;p&gt;Na verdade, a instância será virtualmente imutável quando você transformá-la em instância de interface.&lt;/p&gt;
+
+&lt;p&gt;Lembre-se que precisamos de uma instância &lt;code&gt;IDataMaker&lt;/code&gt; para passar a uma rotina:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/// imutable version
+procedure Execute(aPeriod: TPeriod);
+var
+  maker: IDataMaker;  // interface
+begin
+  maker := TInvoiceMaker.Create(
+    aPeriod, TDefContracts.Create, 
+    TDefProducts.Create, []);
+  BigProcess(maker);
+end;
+
+/// mutable version
+procedure Execute(aPeriod: TPeriod);
+var
+  maker: TInvoiceMaker; // class
+begin
+  maker := TInvoiceMaker.Create(aPeriod);
+  // changing default TDefProducts instance
+  maker.Products := TOtherProducts.Create;
+  BigProcess(maker);
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Você pode ainda utilizar uma construção sem ter que definir uma variável, utilizando WITH and &lt;a href=&quot;/metodo-ref&quot;&gt;REF&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/// mutable version using WITH
+procedure Execute(aPeriod: TPeriod);
+begin
+  with TInvoiceMaker.Create(aPeriod) do
+  begin
+    // changing default TDefProducts instance
+    Products := TOtherProducts.Create;
+    BigProcess(Ref);  // obj.Ref
+  end;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;A rotina &lt;code&gt;BigProcess&lt;/code&gt; só sabe o que é um &lt;code&gt;IDataMaker&lt;/code&gt; com apenas o único método &lt;code&gt;Maker&lt;/code&gt;. É irrelevante para o processo se &lt;code&gt;aMaker&lt;/code&gt; é mutável com propriedades ou totalmente imutável, implementando somente o único método da interface.&lt;/p&gt;
+
+&lt;p&gt;Dessa forma você teria classes mutáveis com outras propriedades e métodos gerando instâncias de objetos mutáveis.&lt;/p&gt;
+
+&lt;p&gt;Porém, após as instâncias serem convertidas para instâncias de interface, você teria instâncias virtualmente imutáveis, provenientes de classes mutáveis.&lt;/p&gt;
+
+&lt;p&gt;Combinar classes mutáveis com objetos imutáveis pode ser uma escolha poderosa no design de sua aplicação, trazendo a flexibilidade da construção de instâncias mutáveis com a segurança das instâncias imutáveis, após serem convertidas.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 10 Jun 2019 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/classe-mutavel-vs-objeto-imutavel</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/classe-mutavel-vs-objeto-imutavel</guid>
+      </item>
+    
+      <item>
         <title>Implementando Interfaces Utilizando Diferente Assinaturas de Métodos</title>
         <description>&lt;p&gt;Como implementar em uma única classe, duas ou mais interfaces que tenham métodos com o mesmo nome e argumentos?&lt;/p&gt;
 
@@ -1030,100 +1293,6 @@ end;
         <pubDate>Mon, 22 Oct 2018 00:00:00 +0100</pubDate>
         <link>http://objectpascalprogramming.com/records-antiga-nova-tecnologia</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/records-antiga-nova-tecnologia</guid>
-      </item>
-    
-      <item>
-        <title>Builder Classes Simplificado</title>
-        <description>&lt;p&gt;O padrão Builder utiliza no mínimo 2 classes: 1 classe para instância a ser construída e 1 classe para a instância construtora.&lt;/p&gt;
-
-&lt;p&gt;Nesse artigo irei utilizar um Builder simplificado, que irá utilizar a mesma classe tanto para construir como para representar a instância final.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/christopher-burns-360244-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Christopher Burns on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;O padrão &lt;a href=&quot;https://en.wikipedia.org/wiki/Builder_pattern&quot;&gt;Builder&lt;/a&gt; já é muito conhecido e utilizado mundo afora.&lt;/p&gt;
-
-&lt;p&gt;Esse artigo não tem a pretensão de ensiná-lo para que serve esse padrão — há milhares de artigos sobre isso na Internet, com implementação em várias linguagens diferentes.&lt;/p&gt;
-
-&lt;p&gt;No entanto, um bom resumo é encontrado na Wikipedia:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“Separar a construção de um objeto complexo da sua representação de modo que o mesmo processo de construção possa criar diferentes representações.”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Como podemos ver nos exemplos em C# da Wikipedia, foi utilizado uma classe &lt;code&gt;Car&lt;/code&gt; e uma interface &lt;code&gt;ICarBuilder&lt;/code&gt;. Depois, temos uma implementação dessa interface com a definição da classe &lt;code&gt;FerrariBuilder&lt;/code&gt; e, finalmente, outra classe para customizar a Ferrari chamada &lt;code&gt;SportsCarBuildDirector&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Podemos simplificar esse exemplo?&lt;/p&gt;
-
-&lt;p&gt;Primeiramente, &lt;code&gt;Car&lt;/code&gt; poderia ser uma interface &lt;code&gt;ICar&lt;/code&gt; e não uma classe. Então, poderíamos ter a classe &lt;code&gt;TFerrari&lt;/code&gt; que implementa &lt;code&gt;ICar&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Na minha opinião, o único &lt;code&gt;Builder&lt;/code&gt; do exemplo é a classe &lt;code&gt;TSportsCarBuildDirector&lt;/code&gt; que customiza uma Ferrari para diretores. No entanto, eu também não concordo com sua existência e acho que podemos simplificar ainda mais esse exemplo — veja mais abaixo.&lt;/p&gt;
-
-&lt;p&gt;Vamos começar pela primeira interface, mantendo-a &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt;, retornando tipos primitivos:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ICar = interface
-  function Model: string;
-  function NumDoors: Integer;
-  function Color: TColor;
-  procedure Run;
-end;      
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Depois, codificamos a classe &lt;code&gt;TFerrari&lt;/code&gt;, que implementa &lt;code&gt;ICar&lt;/code&gt;. Veja que essa classe não é um Builder, mas sim apenas uma classe comum.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;TFerrari = class(TInterfacedObject, ICar)
-private
-  fModel: string;
-  fNumDoors: Integer;
-  fColor: TColor;
-public
-  constructor Create(const aModel: string;
-    aNumDoors: Integer; aColor: TColor);
-  function Model: string;
-  function NumDoors: Integer;
-  function Color: TColor;
-  procedure Run;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Como disse acima, não acho necessidade de haver um &lt;code&gt;Builder&lt;/code&gt; chamado &lt;code&gt;TSportsCarBuildDirector&lt;/code&gt;. Para implementar essa classe seria necessário implementar uma nova interface &lt;code&gt;ICarBuilder&lt;/code&gt; além da própria classe, o que seria desnecessário.&lt;/p&gt;
-
-&lt;p&gt;Podemos simplificar esse exemplo utilizando &lt;a href=&quot;/posts/como-utilizar-heranca-apropriadamente/&quot;&gt;herança&lt;/a&gt; dessa forma:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;TDirectorSportCar = class(TFerrari)
-public
-  constructor Create(aColor: TColor); reintroduce;
-end;
-
-constructor TDirectorSportCar.Create(aColor: TColor);
-begin
-  inherited Create(&#39;488 Spider&#39;, 2, aColor);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Acabamos de criar um Builder mas utilizando a própria classe que irá representar um &lt;code&gt;ICar&lt;/code&gt;, ou seja, a &lt;code&gt;TDirectorSportCar&lt;/code&gt;. Não precisamos de mais uma interface abstrata como &lt;code&gt;ICarBuilder&lt;/code&gt; ou sua implementação.&lt;/p&gt;
-
-&lt;p&gt;Para demonstrar o código, poderíamos ter algo assim:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure DoSomethingWithCars;
-var
-  car: ICar;
-begin
-  car := TDirectorSportCar.Create(clRed);
-  car.Run;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Sem Builders (aparentes), sem o método “Construct”, sem o método “GetResult”, e utilizando objetos &lt;a href=&quot;/posts/objetos-imutaveis/&quot;&gt;imutáveis&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 11 Sep 2018 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/builder-classes-simplificado</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/builder-classes-simplificado</guid>
       </item>
     
   </channel>
