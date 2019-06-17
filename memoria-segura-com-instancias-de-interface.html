@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Memória Segura Utilizando Instâncias de Interfaces &#8211; Object Pascal Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+">
+    <meta name="author" content="Marcos Douglas B. Santos">
+    <meta name="keywords" content="pascal, object pascal, delphi, freepascal, fpc, lazarus, marcos douglas blog, orientação a objetos, object oriented, oop, poo, software development blog, programming blog, quality of software, software blog, high quality programming">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="freepascal, fpc, delphi, lazarus, pascal, object pascal, object-oriented, oop, mdbs99, interfaces">
+    <link rel="canonical" href="http://objectpascalprogramming.com/memoria-segura-com-instancias-de-interface">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201906170433" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Memória Segura Utilizando Instâncias de Interfaces">
+    <meta property="og:description" content="A utilização de instâncias de interfaces pode ser inseguras?">
+    <meta property="og:url" content="http://objectpascalprogramming.com/memoria-segura-com-instancias-de-interface">
+    <meta property="og:site_name" content="Object Pascal Programming">
+    
+    <meta property="og:image"content="http://objectpascalprogramming.com/images/2019/gabriel-gurrola-424227-unsplash.jpg" >
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@mdbs99" />
+    
+    <meta name="twitter:title" content="Memória Segura Utilizando Instâncias de Interfaces" />
+    <meta name="twitter:description" content="Sacadas sobre Programação Orientada a Objetos e Object Pascal.
+" />
+    <meta name="twitter:url" content="http://objectpascalprogramming.com/memoria-segura-com-instancias-de-interface" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+      
+      <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72532239-1', 'auto');
+        ga('send', 'pageview');
+      </script>
+      
+    
+    
+    <script type="text/javascript">
+      var trackcmp_email = '';
+      var trackcmp = document.createElement("script");
+      trackcmp.async = true;
+      trackcmp.type = 'text/javascript';
+      trackcmp.src = '//trackcmp.net/visit?actid=89113404&e='+encodeURIComponent(trackcmp_email)+'&r='+encodeURIComponent(document.referrer)+'&u='+encodeURIComponent(window.location.href);
+      var trackcmp_s = document.getElementsByTagName("script");
+      if (trackcmp_s.length) {
+        trackcmp_s[0].parentNode.appendChild(trackcmp);
+      } else {
+        var trackcmp_h = document.getElementsByTagName("head");
+        trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp);
+      }
+    </script>
+</head>
+
+<body class="site animated fade-in-down">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://objectpascalprogramming.com" class="site-title">Object Pascal Programming</a><br/>
+      <nav class="site-nav">
+        <a href="/lista-vip/" target=_blank>E-Book</a>
+<a href="/archive/">Arquivo</a>
+<a href="/testimonials/">Testemunhos</a>
+<a href="/contact/">Contato</a>
+<a href="/about/">Sobre</a>
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-center">
+    
+      <a class="fa fa-github" href="https://github.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-gitlab" href="https://gitlab.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-bitbucket" href="https://bitbucket.org/mdbs99"></a>
+    
+    
+      <a class="fa fa-facebook" href="https://www.facebook.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-twitter" href="https://twitter.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-instagram" href="https://www.instagram.com/mdbs99"></a>
+    
+    
+      <a class="fa fa-youtube" href="https://www.youtube.com/c/mdbs99"></a>
+    
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/+mdbs99/posts"></a>
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/mdbs99"></a>
+    
+    
+      <a class="fa fa-medium" href="https://medium.com/@mdbs99"></a>
+    
+    
+      <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/4330138"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:opp@delfire.net"></a>
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+            
+      <div id="search" class="social-icons-center">
+        <form method="get" action="https://www.google.com/search" style="position:relative">
+          <input name="sitesearch" value="objectpascalprogramming.com" type="hidden"/>
+          <input id="search-query" class="field field-text"
+            onfocus="$('#google').css('display', 'inline-block');"
+            name="q" placeholder="Pesquisar" autocomplete="off"/>
+          <span class="desktop-only">
+            <input type="image" src="/images/google-search-icon.svg" id="google" title="search via Google"
+              style="height:2.4em;display:none;position:absolute;top:.3em;margin-left:1em;" alt="search via Google"/>
+          </span>
+        </form>
+        <div id="search-results" style="display: none;">
+          <div class="entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+      <!--<hr size="1" width="100%" align="center" noshade>-->
+        
+
+
+<div class="post-header mb2">
+  <h1>Memória Segura Utilizando Instâncias de Interfaces</h1>
+  <span class="post-meta">Jun 17, 2019</span><br>
+  
+  <span class="post-meta small">
+  
+    8 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>Você sabe que ao utilizar instâncias de interfaces não é necessário destruir o objeto manualmente, utilizando o método <code>Free</code>.</p>
+
+<p>Isso ocorre por quê instâncias de interfaces possuem uma contagem de referência e, assim, o compilador sabe quando desalocar a instância automaticamente.</p>
+
+<p>Mas e se se ocorrer uma exceção dentro de um método de uma instância, numa composição de instâncias de interfaces, seria seguro não utilizar <code>try-finally</code> para ter a certeza que todos os objetos serão desalocados, atribuindo <code>nil</code> as instâncias?</p>
+
+<!--more-->
+
+<p><img src="/images/2019/gabriel-gurrola-424227-unsplash.jpg" alt="Unsplash image" />
+<br /><span style="font-family: 'Bebas Neue'; font-size: 0.7em;">Photo by Gabriel Gurrola on Unsplash</span></p>
+
+<h2 id="introducao">Introdução</h2>
+
+<p>Na semana passada eu recebi um email de um leitor do blog, o Carlos, e ele me questionou sobre ter ou não segurança na desalocação apropriada de memória quando utilizamos instâncias de interfaces.</p>
+
+<p>A dúvida dele é interessante.</p>
+
+<p>Segundo Carlos, utilizar instancias de interfaces seria inseguro em comparação com instâncias de classes, pois “se uma exceção ocorrer dentro de algum método, você não terá a chance de desalocar as variáveis de interfaces como fazemos com o <code>try-finally</code> e instâncias de classes” — ele escreveu.</p>
+
+<p>Então ele me enviou um projeto de teste que “provaria” que instâncias de interfaces poderiam ser inseguras e que não há vantagem em relação às instâncias de classes no quesito desalocação de memória pois, segundo ele, seríamos obrigados a utilizar o <code>try-finally</code> para estarmos “100% seguro”.</p>
+
+<p>O exemplo era um pouco mais complexo do que deveria, então eu o reescrevi e enviei à ele. Ele concordou que ficou mais <a href="/posts/simplicidade/">simples</a> de entender mas, o novo exemplo ainda demonstrava que ele estava certo — ele afirmou — pois ainda haviam os vazamentos de memória no final da execução do programa.</p>
+
+<p>Mas até aquele momento, eu só queria ter uma base de código mais simples para, então, mostrar-lhe uma segunda opinião.</p>
+
+<h2 id="codigo">Código</h2>
+
+<p>O código original foi reescrito, porém a nova versão contem todos os “problemas” apontados por ele e, consequentemente, a mesma saída no final da execução.</p>
+
+<p>Esse é o código completo:</p>
+
+<pre><code>program Project1;
+
+{$mode delphi}
+
+uses
+  SysUtils, Classes;
+
+type
+  IFoo = interface
+    procedure Execute;
+  end;
+
+  IBar = interface
+    procedure Execute;
+  end;
+
+  TFoo = class(TInterfacedObject, IFoo)
+  private
+    fBar: IBar;
+  public
+    constructor Create(const aBar: IBar);
+    procedure Execute;
+  end;
+
+  TBar = class(TInterfacedObject, IBar)
+  public
+    procedure Execute;
+  end;
+
+{ TFoo }
+
+constructor TFoo.Create(const aBar: IBar);
+begin
+  inherited Create;
+  fBar := aBar;
+end;
+
+procedure TFoo.Execute;
+begin
+  fBar.Execute;
+end;
+
+{ TBar }
+
+procedure TBar.Execute;
+begin
+  raise Exception.Create('exception!!!');
+end;
+
+var
+  foo: IFoo;
+begin
+  foo := TFoo.Create(TBar.Create);
+  foo.Execute;
+end.
+</code></pre>
+
+<p>É um aplicativo de linha-de-comando.</p>
+
+<p>Crie um novo projeto e não se esqueça de marcar a opção para ver o resultado da memória — se você estiver utilizando Lazarus, marque a opção “Use Heaptrc…” em Project Options, debugging.</p>
+
+<p>O término do programa deverá ser algo parecido com isso:</p>
+
+<pre><code>&gt; project1.exe
+An unhandled exception occurred at $004017DA:
+Exception: exception!!!
+  $004017DA  TBAR__EXECUTE,  line 46 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004017C8  TFOO__EXECUTE,  line 40 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004018D2  main,  line 54 of W:/md/dev/proj/test/ide/projects/project1.lpr
+
+Heap dump by heaptrc unit of W:\md\dev\proj\test\ide\projects\project1.exe
+74 memory blocks allocated : 2075/2232
+71 memory blocks freed     : 1975/2128
+3 unfreed memory blocks : 100
+True heap size : 262144 (112 used in System startup)
+True free heap : 261600
+Should be : 261640
+Call trace for block $014D7628 size 64
+  $0040A1AC
+  $004017FA  TBAR__EXECUTE,  line 47 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004017C8  TFOO__EXECUTE,  line 40 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004018D2  main,  line 54 of W:/md/dev/proj/test/ide/projects/project1.lpr
+Call trace for block $014A8D70 size 24
+  $0040A1AC
+  $004017FA  TBAR__EXECUTE,  line 47 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004017C8  TFOO__EXECUTE,  line 40 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004018D2  main,  line 54 of W:/md/dev/proj/test/ide/projects/project1.lpr
+Call trace for block $014A8CF0 size 12
+  $004017EE  TBAR__EXECUTE,  line 47 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004017C8  TFOO__EXECUTE,  line 40 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004018D2  main,  line 54 of W:/md/dev/proj/test/ide/projects/project1.lpr
+</code></pre>
+
+<p>Não importando as diferenças na finalização do programa entre Lazarus e Delphi, apenas tenha atenção nessa linha:</p>
+
+<pre><code>3 unfreed memory blocks
+</code></pre>
+
+<p>O código não tem nenhum <code>try-finally</code> e estamos utilizando instâncias de interfaces, como <code>IFoo</code> e <code>IBar</code>, e a saída são 3 blocos de memória não liberados, devido ter ocorrido uma exceção em <code>TBar.Execute</code>. Do contrário, não haveria nenhum vazamento de memória — você pode verificar isso comentando a linha que gera a exceção.</p>
+
+<p>Isso prova que interfaces são inseguras se exceções ocorrem, certo?</p>
+
+<p>Bem, não tão rápido.</p>
+
+<p>Primeiro de tudo, sugiro que você leia o código, linha a linha, e veja se consegue descobrir o que há de errado.</p>
+
+<h2 id="detalhes">O Diabo Mora nos Detalhes</h2>
+
+<p>Para começar, o vazamento de memória acima não tem nada haver com instâncias de interfaces. Na verdade, você pode remover as interfaces completamente, adicionar <code>try-finally</code> para desalocar a memória manualmente e, mesmo assim, a saída do Heaptrc irá continuar a mesma.</p>
+
+<p>Não acredita?</p>
+
+<p>Tente você:</p>
+
+<pre><code>program Project1;
+
+{$mode delphi}
+
+uses
+  SysUtils, Classes;
+
+type
+  TBar = class;
+
+  TFoo = class
+  private
+    fBar: TBar;
+  public
+    constructor Create(const aBar: TBar);
+    procedure Execute;
+  end;
+
+  TBar = class
+  public
+    procedure Execute;
+  end;
+
+{ TFoo }
+
+constructor TFoo.Create(const aBar: TBar);
+begin
+  inherited Create;
+  fBar := aBar;
+end;
+
+procedure TFoo.Execute;
+begin
+  fBar.Execute;
+end;
+
+{ TBar }
+
+procedure TBar.Execute;
+begin
+  raise Exception.Create('exception!!!');
+end;
+
+var
+  bar: TBar;
+  foo: TFoo;
+begin
+  bar := TBar.Create;
+  foo := TFoo.Create(bar);
+  try
+    foo.Execute;
+  finally
+    bar.Free;
+    foo.Free;
+  end;
+end.
+</code></pre>
+
+<p>Se você compilou e executou essa versão, viu que a saída do programa com o relatório do Heaptrc (ou similar) é praticamente o mesmo.</p>
+
+<p>Os 3 vazamentos de memória continuam, provando que o “problema” não são as interfaces.</p>
+
+<p>Será um problema no compilador?</p>
+
+<h2 id="solucao">Solução</h2>
+
+<p>Primeiramente, vamos separar o código principal em uma unidade para ser utilizada tanto em uma aplicação Console como GUI.</p>
+
+<p>Assim vou conseguir demostrar um ponto importante, futuramente.</p>
+
+<p>Aqui está o código refatorado, ou seja, apenas as interfaces e classes separadas em uma nova unidade chamada <code>MyClasses</code>.</p>
+
+<pre><code>unit MyClasses;
+
+{$mode delphi}
+
+interface
+
+uses
+  SysUtils, Classes;
+
+type
+  IFoo = interface
+    procedure Execute;
+  end;
+
+  IBar = interface
+    procedure Execute;
+  end;
+
+  TFoo = class(TInterfacedObject, IFoo)
+  private
+    fBar: IBar;
+  public
+    constructor Create(const aBar: IBar);
+    procedure Execute;
+  end;
+
+  TBar = class(TInterfacedObject, IBar)
+  public
+    procedure Execute;
+  end;
+
+implementation
+
+{ TFoo }
+
+constructor TFoo.Create(const aBar: IBar);
+begin
+  inherited Create;
+  fBar := aBar;
+end;
+
+procedure TFoo.Execute;
+begin
+  fBar.Execute;
+end;
+
+{ TBar }
+
+procedure TBar.Execute;
+begin
+  raise Exception.Create('exception!!!');
+end;
+
+end.
+</code></pre>
+
+<p>Agora, crie um novo projeto GUI. Adicione um Form. Depois um botão nesse Form.</p>
+
+<p>Novamente, se você estiver utilizando Lazarus, marque a opção “Use Heaptrc…” em Project Options, debugging.</p>
+
+<p>Adicione <code>MyClasses</code> ao projeto e ao <code>uses</code> do Form.</p>
+
+<p>No click do botão, codifique:</p>
+
+<pre><code>procedure TForm1.Button1Click(Sender: TObject);
+var
+  foo: IFoo;
+begin
+  foo := TFoo.Create(TBar.Create);
+  foo.Execute;
+end;
+</code></pre>
+
+<p>Ao executar o projeto e clicar no botão, você verá a mensagem de exceção:</p>
+
+<pre><code>Project project1 raised exception class 'Exception' with message: exception!!!
+In file 'MyClasses.pas' at line 51
+</code></pre>
+
+<p>Clique em continuar para ver a verdadeira exceção e depois em OK.</p>
+
+<p>Finalmente, feche o programa.</p>
+
+<p>Se você não esqueceu de marcar o Heaptrc, um <code>ShowMessage</code> será mostrado:</p>
+
+<pre><code>Heap dump by heaptrc unit of W:\md\dev\proj\test\ide\projects\project1.exe
+1764 memory blocks allocated : 1804912/1810440
+1764 memory blocks freed     : 1804912/1810440
+0 unfreed memory blocks : 0
+True heap size : 688128 (112 used in System startup)
+True free heap : 688016
+</code></pre>
+
+<p>Nenhum vazamento de memória, utilizando o mesmo código do início do artigo.</p>
+
+<p>O que está acontecendo aqui?</p>
+
+<p>O verdadeiro problema é não capturar a exceção em <em>nenhum</em> lugar do programa.</p>
+
+<p>Mas um programa GUI, por padrão, captura todas as exceções caso o programador não o faça deliberadamente.</p>
+
+<p>E isso faz com que o programa continue em execução “mais ou menos” no ponto onde a exceção foi gerada, ou seja, o programa continua em execução.</p>
+
+<p>E aqui entra uma vantagem das instâncias de interfaces: o compilador adiciona um <code>try-finally</code> implícito para que suas contagens de referência sejam decrementadas.</p>
+
+<p>Sabemos que um <code>try-finally</code> sempre será executado, independentemente de houve uma exceção dentro do seu bloco.</p>
+
+<p>Por isso as instâncias de <code>IFoo</code> e <code>IBar</code> são decrementadas e, consequentemente, destruídas mesmo após ter ocorrido uma exceção.</p>
+
+<p>Vamos voltar ao programa de linha-de-comando.</p>
+
+<p>Crie um novo programa e adicione a unidade <code>MyClasses</code>.</p>
+
+<p>O código é similar ao código do botão, porém é necessário um <code>try-except</code>, pois aplicações console (por padrão) não tem um <em>handle</em> de exceções:</p>
+
+<pre><code>program Project1;
+
+{$mode delphi}
+
+uses
+  SysUtils, Classes, MyClasses;
+
+var
+  foo: IFoo;
+begin
+  foo := TFoo.Create(TBar.Create);
+  try
+    foo.Execute;
+  except
+    on e: Exception do
+       writeln(e.Message);
+  end;
+end.
+</code></pre>
+
+<p>Compile e execute.</p>
+
+<p>Veja que não há mais vazamentos de memória.</p>
+
+<pre><code>&gt; project1.exe
+exception!!!
+Heap dump by heaptrc unit of W:/md/dev/proj/test/ide/projects/project1.exe
+72 memory blocks allocated : 1916/2064
+72 memory blocks freed     : 1916/2064
+0 unfreed memory blocks : 0
+True heap size : 196608 (112 used in System startup)
+True free heap : 196496
+</code></pre>
+
+<p>Mesmo sem o <code>try-finally</code> as instâncias de <code>IBar</code> e <code>IFoo</code> foram destruídas automaticamente pelo compilador.</p>
+
+<h2 id="conclusao">Conclusão</h2>
+
+<p>A utilização de instâncias de interface é, de certa forma, mais segura do que instância de classes.</p>
+
+<p>No entanto, se você começar a brincar com ponteiros, cast entre instâncias de classe vs interface, <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/">referência circular</a>, etc, sem saber o que está fazendo, será grande a chance de haver vazamentos de memória.</p>
+
+<p>Porém, utilizando o código padrão para instanciar objetos do tipo interface, seu código estará mais seguro contra vazamentos de memória, pois o compilador sempre irá desalocar as instâncias, caso você já as tenha feito atribuindo <code>nil</code> as variáveis.</p>
+
+<p>Até logo.</p>
+
+</article>
+
+
+  <div class="share-page">
+  Compartilhe
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://objectpascalprogramming.com/memoria-segura-com-instancias-de-interface" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Memória Segura Utilizando Instâncias de Interfaces&via=mdbs99;url=http://objectpascalprogramming.com/memoria-segura-com-instancias-de-interface" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://objectpascalprogramming.com/memoria-segura-com-instancias-de-interface" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://objectpascalprogramming.com/memoria-segura-com-instancias-de-interface&title=Memória Segura Utilizando Instâncias de Interfaces" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://objectpascalprogramming.com/memoria-segura-com-instancias-de-interface&title=Memória Segura Utilizando Instâncias de Interfaces" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class = "fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://objectpascalprogramming.com/memoria-segura-com-instancias-de-interface&t=Memória Segura Utilizando Instâncias de Interfaces" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+
+    <p />
+
+  </div>
+</div>
+
+
+
+
+  <div class="py2 post-footer">
+  <hr />
+  <a href="/lista-vip/"> <img src="/images/ebook-p.jpg" alt="10 Regras da Orientação a Objetos" /> </a>
+  <p>
+   Inscreva-se na minha <strong>Lista VIP</strong> e receba um link para o meu <strong>e-Book Gratuito</strong> com as <strong>10 Regras da Programação Orientada a Objetos</strong>,
+   após você confirmar seu cadastro. 
+   <br/>
+  </p>
+  <div class="py2">
+    <form id="form" class="form-stacked" method="post" action="http://delfire.activehosted.com/proc.php">
+      <input type="email" name="email" class="field-light" placeholder="Seu e-mail">
+      <input type="hidden" name="f" value="14">
+      <input type="hidden" name="s" value="">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="nlbox[]" value="1">
+      <button type="submit" class="button button-blue button-big mobile-block">Cadastrar</button>
+    </form>
+  </div>
+  </p>
+
+Gostaria de me pagar um café?  
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="WQ9SBWT3CM2SC">
+<input type="image" src="https://www.paypalobjects.com/pt_BR/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - A maneira fácil e segura de enviar pagamentos online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif" width="1" height="1">
+</form>
+  
+</div>
+
+
+
+
+  <h3 class="related-post-title">Posts Relacionados</h3>
+  
+    <div class="post ml2">
+      <a href="/classe-mutavel-vs-objeto-imutavel" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Classes Mutáveis vs Objetos Imutáveis</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/multiplas-interfaces" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Implementando Interfaces Utilizando Diferente Assinaturas de Métodos</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/usando-paths-ao-inves-de-diretivas" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Usando Paths ao invés de Diretivas de Compilação</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/exceptions-no-protocolo-http" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Trabalhando com Exceções em Requisições HTTP</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/tipo-object-vivo" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Tipo object Continua Vivo</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/array-de-objetos" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Array de Objetos</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/variaveis-locais" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Variáveis Locais Deveriam ter Nomes Curtos</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/formularios-e-widgets" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Como Dividir e Organizar o Código em Formulários com Muitos Widgets</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/pascal-deveria-ser-modernizado" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Pascal Deveria ser Modernizado?</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+    <div class="post ml2">
+      <a href="/records-antiga-nova-tecnologia" class="post-link">
+        <ul>
+          <h4 class="post-title"><li>Records - Antiga Nova Tecnologia</li></h4>
+        </ul>
+        <!--<p class="post-summary"></p>-->
+      </a>
+    </div>
+  
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'objectpascalprogramming';
+      var disqus_identifier = '/memoria-segura-com-instancias-de-interface';
+      var disqus_title      = 'Memória Segura Utilizando Instâncias de Interfaces';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+    <footer class="center">
+  <div class="measure">
+    <small>
+      <strong>Object Pascal Programming</strong> by <a href="/about/">Marcos Douglas</a>
+      <p/>
+      Theme by <a href="http://johnotander.com">John Otander</a>
+      <br>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

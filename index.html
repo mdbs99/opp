@@ -15,7 +15,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Object Pascal Programming" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201906101202" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201906170433" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -188,6 +188,27 @@
         <div class="home">
 
   <div class="posts">
+    
+      <div class="post py3">
+        <p class="post-meta">Jun 17, 2019</p>
+        <a href="/memoria-segura-com-instancias-de-interface" class="post-link"><h3 class="h1 post-title">Memória Segura Utilizando Instâncias de Interfaces</h3></a>
+        <p class="post-summary">
+          
+            <p>Você sabe que ao utilizar instâncias de interfaces não é necessário destruir o objeto manualmente, utilizando o método <code>Free</code>.</p>
+
+<p>Isso ocorre por quê instâncias de interfaces possuem uma contagem de referência e, assim, o compilador sabe quando desalocar a instância automaticamente.</p>
+
+<p>Mas e se se ocorrer uma exceção dentro de um método de uma instância, numa composição de instâncias de interfaces, seria seguro não utilizar <code>try-finally</code> para ter a certeza que todos os objetos serão desalocados, atribuindo <code>nil</code> as instâncias?</p>
+
+
+          
+          <p>
+            <a href="/memoria-segura-com-instancias-de-interface">
+            Continue →
+            </a>
+          </p>
+          </p>
+      </div>
     
       <div class="post py3">
         <p class="post-meta">Jun 10, 2019</p>
@@ -435,23 +456,6 @@
           
           <p>
             <a href="/libraries-sem-pacotes">
-            Continue →
-            </a>
-          </p>
-          </p>
-      </div>
-    
-      <div class="post py3">
-        <p class="post-meta">Jul 2, 2018</p>
-        <a href="/quem-libera-os-objetos" class="post-link"><h3 class="h1 post-title">Quem é o Responsável por Liberar os Objetos?</h3></a>
-        <p class="post-summary">
-          
-            <p>Você consideraria um bom design para seu projeto, ter métodos ou funções que criam objetos que serão liberados em outro local, por outro objeto ou função?</p>
-
-
-          
-          <p>
-            <a href="/quem-libera-os-objetos">
             Continue →
             </a>
           </p>

@@ -8,6 +8,391 @@
     <atom:link href="http://objectpascalprogramming.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Memória Segura Utilizando Instâncias de Interfaces</title>
+        <description>&lt;p&gt;Você sabe que ao utilizar instâncias de interfaces não é necessário destruir o objeto manualmente, utilizando o método &lt;code&gt;Free&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Isso ocorre por quê instâncias de interfaces possuem uma contagem de referência e, assim, o compilador sabe quando desalocar a instância automaticamente.&lt;/p&gt;
+
+&lt;p&gt;Mas e se se ocorrer uma exceção dentro de um método de uma instância, numa composição de instâncias de interfaces, seria seguro não utilizar &lt;code&gt;try-finally&lt;/code&gt; para ter a certeza que todos os objetos serão desalocados, atribuindo &lt;code&gt;nil&lt;/code&gt; as instâncias?&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2019/gabriel-gurrola-424227-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
+&lt;br /&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Gabriel Gurrola on Unsplash&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introducao&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Na semana passada eu recebi um email de um leitor do blog, o Carlos, e ele me questionou sobre ter ou não segurança na desalocação apropriada de memória quando utilizamos instâncias de interfaces.&lt;/p&gt;
+
+&lt;p&gt;A dúvida dele é interessante.&lt;/p&gt;
+
+&lt;p&gt;Segundo Carlos, utilizar instancias de interfaces seria inseguro em comparação com instâncias de classes, pois “se uma exceção ocorrer dentro de algum método, você não terá a chance de desalocar as variáveis de interfaces como fazemos com o &lt;code&gt;try-finally&lt;/code&gt; e instâncias de classes” — ele escreveu.&lt;/p&gt;
+
+&lt;p&gt;Então ele me enviou um projeto de teste que “provaria” que instâncias de interfaces poderiam ser inseguras e que não há vantagem em relação às instâncias de classes no quesito desalocação de memória pois, segundo ele, seríamos obrigados a utilizar o &lt;code&gt;try-finally&lt;/code&gt; para estarmos “100% seguro”.&lt;/p&gt;
+
+&lt;p&gt;O exemplo era um pouco mais complexo do que deveria, então eu o reescrevi e enviei à ele. Ele concordou que ficou mais &lt;a href=&quot;/posts/simplicidade/&quot;&gt;simples&lt;/a&gt; de entender mas, o novo exemplo ainda demonstrava que ele estava certo — ele afirmou — pois ainda haviam os vazamentos de memória no final da execução do programa.&lt;/p&gt;
+
+&lt;p&gt;Mas até aquele momento, eu só queria ter uma base de código mais simples para, então, mostrar-lhe uma segunda opinião.&lt;/p&gt;
+
+&lt;h2 id=&quot;codigo&quot;&gt;Código&lt;/h2&gt;
+
+&lt;p&gt;O código original foi reescrito, porém a nova versão contem todos os “problemas” apontados por ele e, consequentemente, a mesma saída no final da execução.&lt;/p&gt;
+
+&lt;p&gt;Esse é o código completo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;program Project1;
+
+{$mode delphi}
+
+uses
+  SysUtils, Classes;
+
+type
+  IFoo = interface
+    procedure Execute;
+  end;
+
+  IBar = interface
+    procedure Execute;
+  end;
+
+  TFoo = class(TInterfacedObject, IFoo)
+  private
+    fBar: IBar;
+  public
+    constructor Create(const aBar: IBar);
+    procedure Execute;
+  end;
+
+  TBar = class(TInterfacedObject, IBar)
+  public
+    procedure Execute;
+  end;
+
+{ TFoo }
+
+constructor TFoo.Create(const aBar: IBar);
+begin
+  inherited Create;
+  fBar := aBar;
+end;
+
+procedure TFoo.Execute;
+begin
+  fBar.Execute;
+end;
+
+{ TBar }
+
+procedure TBar.Execute;
+begin
+  raise Exception.Create(&#39;exception!!!&#39;);
+end;
+
+var
+  foo: IFoo;
+begin
+  foo := TFoo.Create(TBar.Create);
+  foo.Execute;
+end.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;É um aplicativo de linha-de-comando.&lt;/p&gt;
+
+&lt;p&gt;Crie um novo projeto e não se esqueça de marcar a opção para ver o resultado da memória — se você estiver utilizando Lazarus, marque a opção “Use Heaptrc…” em Project Options, debugging.&lt;/p&gt;
+
+&lt;p&gt;O término do programa deverá ser algo parecido com isso:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt; project1.exe
+An unhandled exception occurred at $004017DA:
+Exception: exception!!!
+  $004017DA  TBAR__EXECUTE,  line 46 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004017C8  TFOO__EXECUTE,  line 40 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004018D2  main,  line 54 of W:/md/dev/proj/test/ide/projects/project1.lpr
+
+Heap dump by heaptrc unit of W:\md\dev\proj\test\ide\projects\project1.exe
+74 memory blocks allocated : 2075/2232
+71 memory blocks freed     : 1975/2128
+3 unfreed memory blocks : 100
+True heap size : 262144 (112 used in System startup)
+True free heap : 261600
+Should be : 261640
+Call trace for block $014D7628 size 64
+  $0040A1AC
+  $004017FA  TBAR__EXECUTE,  line 47 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004017C8  TFOO__EXECUTE,  line 40 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004018D2  main,  line 54 of W:/md/dev/proj/test/ide/projects/project1.lpr
+Call trace for block $014A8D70 size 24
+  $0040A1AC
+  $004017FA  TBAR__EXECUTE,  line 47 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004017C8  TFOO__EXECUTE,  line 40 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004018D2  main,  line 54 of W:/md/dev/proj/test/ide/projects/project1.lpr
+Call trace for block $014A8CF0 size 12
+  $004017EE  TBAR__EXECUTE,  line 47 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004017C8  TFOO__EXECUTE,  line 40 of W:/md/dev/proj/test/ide/projects/project1.lpr
+  $004018D2  main,  line 54 of W:/md/dev/proj/test/ide/projects/project1.lpr
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Não importando as diferenças na finalização do programa entre Lazarus e Delphi, apenas tenha atenção nessa linha:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;3 unfreed memory blocks
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;O código não tem nenhum &lt;code&gt;try-finally&lt;/code&gt; e estamos utilizando instâncias de interfaces, como &lt;code&gt;IFoo&lt;/code&gt; e &lt;code&gt;IBar&lt;/code&gt;, e a saída são 3 blocos de memória não liberados, devido ter ocorrido uma exceção em &lt;code&gt;TBar.Execute&lt;/code&gt;. Do contrário, não haveria nenhum vazamento de memória — você pode verificar isso comentando a linha que gera a exceção.&lt;/p&gt;
+
+&lt;p&gt;Isso prova que interfaces são inseguras se exceções ocorrem, certo?&lt;/p&gt;
+
+&lt;p&gt;Bem, não tão rápido.&lt;/p&gt;
+
+&lt;p&gt;Primeiro de tudo, sugiro que você leia o código, linha a linha, e veja se consegue descobrir o que há de errado.&lt;/p&gt;
+
+&lt;h2 id=&quot;detalhes&quot;&gt;O Diabo Mora nos Detalhes&lt;/h2&gt;
+
+&lt;p&gt;Para começar, o vazamento de memória acima não tem nada haver com instâncias de interfaces. Na verdade, você pode remover as interfaces completamente, adicionar &lt;code&gt;try-finally&lt;/code&gt; para desalocar a memória manualmente e, mesmo assim, a saída do Heaptrc irá continuar a mesma.&lt;/p&gt;
+
+&lt;p&gt;Não acredita?&lt;/p&gt;
+
+&lt;p&gt;Tente você:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;program Project1;
+
+{$mode delphi}
+
+uses
+  SysUtils, Classes;
+
+type
+  TBar = class;
+
+  TFoo = class
+  private
+    fBar: TBar;
+  public
+    constructor Create(const aBar: TBar);
+    procedure Execute;
+  end;
+
+  TBar = class
+  public
+    procedure Execute;
+  end;
+
+{ TFoo }
+
+constructor TFoo.Create(const aBar: TBar);
+begin
+  inherited Create;
+  fBar := aBar;
+end;
+
+procedure TFoo.Execute;
+begin
+  fBar.Execute;
+end;
+
+{ TBar }
+
+procedure TBar.Execute;
+begin
+  raise Exception.Create(&#39;exception!!!&#39;);
+end;
+
+var
+  bar: TBar;
+  foo: TFoo;
+begin
+  bar := TBar.Create;
+  foo := TFoo.Create(bar);
+  try
+    foo.Execute;
+  finally
+    bar.Free;
+    foo.Free;
+  end;
+end.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Se você compilou e executou essa versão, viu que a saída do programa com o relatório do Heaptrc (ou similar) é praticamente o mesmo.&lt;/p&gt;
+
+&lt;p&gt;Os 3 vazamentos de memória continuam, provando que o “problema” não são as interfaces.&lt;/p&gt;
+
+&lt;p&gt;Será um problema no compilador?&lt;/p&gt;
+
+&lt;h2 id=&quot;solucao&quot;&gt;Solução&lt;/h2&gt;
+
+&lt;p&gt;Primeiramente, vamos separar o código principal em uma unidade para ser utilizada tanto em uma aplicação Console como GUI.&lt;/p&gt;
+
+&lt;p&gt;Assim vou conseguir demostrar um ponto importante, futuramente.&lt;/p&gt;
+
+&lt;p&gt;Aqui está o código refatorado, ou seja, apenas as interfaces e classes separadas em uma nova unidade chamada &lt;code&gt;MyClasses&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit MyClasses;
+
+{$mode delphi}
+
+interface
+
+uses
+  SysUtils, Classes;
+
+type
+  IFoo = interface
+    procedure Execute;
+  end;
+
+  IBar = interface
+    procedure Execute;
+  end;
+
+  TFoo = class(TInterfacedObject, IFoo)
+  private
+    fBar: IBar;
+  public
+    constructor Create(const aBar: IBar);
+    procedure Execute;
+  end;
+
+  TBar = class(TInterfacedObject, IBar)
+  public
+    procedure Execute;
+  end;
+
+implementation
+
+{ TFoo }
+
+constructor TFoo.Create(const aBar: IBar);
+begin
+  inherited Create;
+  fBar := aBar;
+end;
+
+procedure TFoo.Execute;
+begin
+  fBar.Execute;
+end;
+
+{ TBar }
+
+procedure TBar.Execute;
+begin
+  raise Exception.Create(&#39;exception!!!&#39;);
+end;
+
+end.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Agora, crie um novo projeto GUI. Adicione um Form. Depois um botão nesse Form.&lt;/p&gt;
+
+&lt;p&gt;Novamente, se você estiver utilizando Lazarus, marque a opção “Use Heaptrc…” em Project Options, debugging.&lt;/p&gt;
+
+&lt;p&gt;Adicione &lt;code&gt;MyClasses&lt;/code&gt; ao projeto e ao &lt;code&gt;uses&lt;/code&gt; do Form.&lt;/p&gt;
+
+&lt;p&gt;No click do botão, codifique:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;procedure TForm1.Button1Click(Sender: TObject);
+var
+  foo: IFoo;
+begin
+  foo := TFoo.Create(TBar.Create);
+  foo.Execute;
+end;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ao executar o projeto e clicar no botão, você verá a mensagem de exceção:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Project project1 raised exception class &#39;Exception&#39; with message: exception!!!
+In file &#39;MyClasses.pas&#39; at line 51
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Clique em continuar para ver a verdadeira exceção e depois em OK.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, feche o programa.&lt;/p&gt;
+
+&lt;p&gt;Se você não esqueceu de marcar o Heaptrc, um &lt;code&gt;ShowMessage&lt;/code&gt; será mostrado:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Heap dump by heaptrc unit of W:\md\dev\proj\test\ide\projects\project1.exe
+1764 memory blocks allocated : 1804912/1810440
+1764 memory blocks freed     : 1804912/1810440
+0 unfreed memory blocks : 0
+True heap size : 688128 (112 used in System startup)
+True free heap : 688016
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nenhum vazamento de memória, utilizando o mesmo código do início do artigo.&lt;/p&gt;
+
+&lt;p&gt;O que está acontecendo aqui?&lt;/p&gt;
+
+&lt;p&gt;O verdadeiro problema é não capturar a exceção em &lt;em&gt;nenhum&lt;/em&gt; lugar do programa.&lt;/p&gt;
+
+&lt;p&gt;Mas um programa GUI, por padrão, captura todas as exceções caso o programador não o faça deliberadamente.&lt;/p&gt;
+
+&lt;p&gt;E isso faz com que o programa continue em execução “mais ou menos” no ponto onde a exceção foi gerada, ou seja, o programa continua em execução.&lt;/p&gt;
+
+&lt;p&gt;E aqui entra uma vantagem das instâncias de interfaces: o compilador adiciona um &lt;code&gt;try-finally&lt;/code&gt; implícito para que suas contagens de referência sejam decrementadas.&lt;/p&gt;
+
+&lt;p&gt;Sabemos que um &lt;code&gt;try-finally&lt;/code&gt; sempre será executado, independentemente de houve uma exceção dentro do seu bloco.&lt;/p&gt;
+
+&lt;p&gt;Por isso as instâncias de &lt;code&gt;IFoo&lt;/code&gt; e &lt;code&gt;IBar&lt;/code&gt; são decrementadas e, consequentemente, destruídas mesmo após ter ocorrido uma exceção.&lt;/p&gt;
+
+&lt;p&gt;Vamos voltar ao programa de linha-de-comando.&lt;/p&gt;
+
+&lt;p&gt;Crie um novo programa e adicione a unidade &lt;code&gt;MyClasses&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;O código é similar ao código do botão, porém é necessário um &lt;code&gt;try-except&lt;/code&gt;, pois aplicações console (por padrão) não tem um &lt;em&gt;handle&lt;/em&gt; de exceções:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;program Project1;
+
+{$mode delphi}
+
+uses
+  SysUtils, Classes, MyClasses;
+
+var
+  foo: IFoo;
+begin
+  foo := TFoo.Create(TBar.Create);
+  try
+    foo.Execute;
+  except
+    on e: Exception do
+       writeln(e.Message);
+  end;
+end.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Compile e execute.&lt;/p&gt;
+
+&lt;p&gt;Veja que não há mais vazamentos de memória.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt; project1.exe
+exception!!!
+Heap dump by heaptrc unit of W:/md/dev/proj/test/ide/projects/project1.exe
+72 memory blocks allocated : 1916/2064
+72 memory blocks freed     : 1916/2064
+0 unfreed memory blocks : 0
+True heap size : 196608 (112 used in System startup)
+True free heap : 196496
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Mesmo sem o &lt;code&gt;try-finally&lt;/code&gt; as instâncias de &lt;code&gt;IBar&lt;/code&gt; e &lt;code&gt;IFoo&lt;/code&gt; foram destruídas automaticamente pelo compilador.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusao&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;A utilização de instâncias de interface é, de certa forma, mais segura do que instância de classes.&lt;/p&gt;
+
+&lt;p&gt;No entanto, se você começar a brincar com ponteiros, cast entre instâncias de classe vs interface, &lt;a href=&quot;/posts/interfaces-e-a-referencia-circular-entre-objetos/&quot;&gt;referência circular&lt;/a&gt;, etc, sem saber o que está fazendo, será grande a chance de haver vazamentos de memória.&lt;/p&gt;
+
+&lt;p&gt;Porém, utilizando o código padrão para instanciar objetos do tipo interface, seu código estará mais seguro contra vazamentos de memória, pois o compilador sempre irá desalocar as instâncias, caso você já as tenha feito atribuindo &lt;code&gt;nil&lt;/code&gt; as variáveis.&lt;/p&gt;
+
+&lt;p&gt;Até logo.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 17 Jun 2019 00:00:00 +0100</pubDate>
+        <link>http://objectpascalprogramming.com/memoria-segura-com-instancias-de-interface</link>
+        <guid isPermaLink="true">http://objectpascalprogramming.com/memoria-segura-com-instancias-de-interface</guid>
+      </item>
+    
+      <item>
         <title>Classes Mutáveis vs Objetos Imutáveis</title>
         <description>&lt;p&gt;É possível ter a comodidade em utilizar classes mutáveis para construir os objetos aos poucos, configurando propriedades e opções de execução além do uso dos construtores, porém com a vantagem de obter instâncias imutáveis no final do processo.&lt;/p&gt;
 
@@ -1139,160 +1524,6 @@ end;
         <pubDate>Mon, 19 Nov 2018 00:00:00 +0000</pubDate>
         <link>http://objectpascalprogramming.com/pascal-deveria-ser-modernizado</link>
         <guid isPermaLink="true">http://objectpascalprogramming.com/pascal-deveria-ser-modernizado</guid>
-      </item>
-    
-      <item>
-        <title>Records - Antiga Nova Tecnologia</title>
-        <description>&lt;p&gt;O tipo Record pode ter métodos e até mesmo campos privados. Seria isso considerado uma abominação para um código Orientado a Objetos?&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2018/alvaro-reyes-517391-unsplash.jpg&quot; alt=&quot;Unsplash image&quot; /&gt;
-&lt;br /&gt;&lt;span style=&quot;font-family: &#39;Bebas Neue&#39;; font-size: 0.7em;&quot;&gt;Photo by Alvaro Reyes on Unsplash&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Na programação Orientada a Objetos, utilizamos objetos.&lt;/p&gt;
-
-&lt;p&gt;Se você precisasse de um objeto para representar os &lt;em&gt;dados&lt;/em&gt; de um usuário, apenas login, password e nome, como seria a definição da classe?&lt;/p&gt;
-
-&lt;p&gt;Vamos tentar:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;TUserData = class
-private
-  fLogin: string;
-  fPassword: string;
-  fName: string;
-public
-  property Login: string read fLogin write fLogin;
-  property Password: string read fPassword write fPassword;
-  property Name: string read fName write fName;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Esse seria um estilo de implementação que podemos ver em muitos sistemas que se dizem ser Orientados a Objetos.&lt;/p&gt;
-
-&lt;p&gt;No entanto, essa classe irá gerar “objetos” que são mais conhecidos como DTO (Data Transfer Object) o que, por definição, é um conceito errado.&lt;/p&gt;
-
-&lt;p&gt;Objetos não são &lt;a href=&quot;/posts/o-que-e-orientacao-a-objetos/#objeto-nao-e-um-balde-de-funcoes-e-dados&quot;&gt;“baldes de dados”&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Objetos verdadeiros possuem comportamento e &lt;a href=&quot;/encapsulamento&quot;&gt;encapsulam&lt;/a&gt; dados e/ou outros objetos em seu interior. O que está encapsulado não deveria ser visível ou acessado diretamente por outro objeto externo.&lt;/p&gt;
-
-&lt;p&gt;Essa é a &lt;em&gt;teoria&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Mas, e se no contexto do seu sistema você realmente não necessitasse de nenhum método para representar os dados de um usuário?&lt;/p&gt;
-
-&lt;p&gt;Por muito tempo eu tenho utilizado objetos para tudo, até mesmo para representar dados, mas sem utilizar objetos anêmicos como esse, no entanto.&lt;/p&gt;
-
-&lt;p&gt;Para representar os dados acima, eu utilizaria a técnica do &lt;a href=&quot;/posts/diga-me-algo-sobre-voce/#metodo-about&quot;&gt;Método About()&lt;/a&gt;, que iria retornar um XML ou JSON, conforme explicado em 2016…&lt;/p&gt;
-
-&lt;p&gt;Há vantagens nessa técnica como ter uma única interface que qualquer classe possa implementar para retornar um XML/JSON. Mas também há desvantagens, como não haver checagem estática do compilador e o &lt;em&gt;overhead&lt;/em&gt; em “montar/desmontar” o &lt;em&gt;stream&lt;/em&gt; se houver a necessidade de repassar a informação por uma cadeia de objetos.&lt;/p&gt;
-
-&lt;p&gt;Nesses ~2 anos, eu diria que muita coisa mudou.&lt;/p&gt;
-
-&lt;p&gt;Estou trabalhando em alguns projetos que necessitam de extrema velocidade de processamento, mas nem por isso eles são menos Orientados a Objetos.&lt;/p&gt;
-
-&lt;p&gt;Como?&lt;/p&gt;
-
-&lt;p&gt;Redescobrindo o tipo Record.&lt;/p&gt;
-
-&lt;p&gt;Mas antes eu quero lhe contar por quê eu neglicenciei os Records por muito tempo.&lt;/p&gt;
-
-&lt;p&gt;Bem, Records existem desde o Turbo Pascal. Eles representam uma estrutura de dados. Você define uma estrutura e depois define &lt;em&gt;procedures&lt;/em&gt; e &lt;em&gt;functions&lt;/em&gt; para trabalhar com as estruturas — como ainda fazemos na linguagem C.&lt;/p&gt;
-
-&lt;p&gt;Na Orientação a Objetos, nós unimos comportamento aos dados num único artefato chamado objeto.&lt;/p&gt;
-
-&lt;p&gt;Então, a ideia de ter um Record com todos os seus dados públicos e funções “soltas” que o utilizam, implementadas muitas vezes em Unidades diferentes, me soa muito “anti-objeto”, muito anti-encapsulamento.&lt;/p&gt;
-
-&lt;p&gt;Records, dessa forma, são estruturas para programas procedurais.&lt;/p&gt;
-
-&lt;p&gt;Mas, já faz uns anos que os arquitetos da linguagem Object Pascal introduziram métodos em Records.&lt;/p&gt;
-
-&lt;p&gt;Sim, métodos, em Records.&lt;/p&gt;
-
-&lt;p&gt;Quando eu li isso pela primeira vez, achei que os arquitetos tinham ficado loucos. Métodos em Records? Qual o sentido? Já temos objetos, não precisamos de Records com métodos. Isso não faz o menor sentido! — eu pensava.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, hoje em dia, Records podem ter métodos e eles podem ser até mesmo privados, assim como ter &lt;em&gt;fields&lt;/em&gt; privados!&lt;/p&gt;
-
-&lt;p&gt;Ora, não é isso um objeto?&lt;/p&gt;
-
-&lt;p&gt;Não.&lt;/p&gt;
-
-&lt;p&gt;Então, não seria melhor utilizar um objeto?&lt;/p&gt;
-
-&lt;p&gt;Depende.&lt;/p&gt;
-
-&lt;p&gt;Records são estruturas de dados — mesmo que eles tenham métodos — e deveria ser utilizados como tal.&lt;/p&gt;
-
-&lt;p&gt;Records são alocados automaticamente pelo compilador na área de memória &lt;em&gt;stack&lt;/em&gt;, ao invés da área de memória &lt;em&gt;heap&lt;/em&gt;, como fazem os objetos. Utilizar o &lt;em&gt;stack&lt;/em&gt; é mais rápido e mais simples para o compilador gerenciar a memória.&lt;/p&gt;
-
-&lt;p&gt;Então, se você necessita representar &lt;em&gt;apenas&lt;/em&gt; dados, Record é a melhor opção.&lt;/p&gt;
-
-&lt;p&gt;Records não podem utilizar herança e muito menos implementar uma interface, então não há polimorfismo — lembre-se, são apenas dados.&lt;/p&gt;
-
-&lt;p&gt;Então, se você necessita de polimorfismo e comportamento, objeto é a melhor opção.&lt;/p&gt;
-
-&lt;p&gt;Dito isso, por quê métodos em Records pode mudar a maneira em como utilizamos Records em programas Orientados a Objetos?&lt;/p&gt;
-
-&lt;p&gt;Quando declaramos um Record, seus campos não são inicializados, como acontece com os atributos de um objeto. Então, podemos definir um método para iniciá-lo, sem ter que fazer isso externamente — mesmo que seus campos sejam públicos — encapsulando a inicialização dos campos na própria estrutura de dados:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;TUserData = record
-  login: string;
-  password: string;
-  name: string;
-  procedure Init;
-end;
-
-procedure TUserData.Init;
-begin
-  login := &#39;&#39;;
-  password := &#39;&#39;;
-  name := &#39;&#39;;
-end;
-
-var
-  u: TUserData;
-begin
-  u.Init;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Outra opção é utilizar a função &lt;a href=&quot;https://www.freepascal.org/docs-html/rtl/system/default.html&quot;&gt;Default()&lt;/a&gt; mas o importante é que você tem a opção de fazer o que quiser no procedimento que será como um construtor:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procedure TUserData.Init;
-begin
-  Default(self);
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Se o &lt;em&gt;password&lt;/em&gt; precisar ser criptografado/descriptografado, você não precisa de funções externas para isso:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function TUserData.EncryptedPassword: string;
-begin
-  result := &#39;&amp;lt;using some algorithm to encrypt&amp;gt;&#39;;
-end;
-
-function TUserData.DecryptedPassword: string;
-begin
-  result := &#39;&amp;lt;using some algorithm to decrypt&amp;gt;&#39;;
-end;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Existem algumas regras a seguir:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Não implemente métodos que se comportem como objetos, ou seja, trabalhe &lt;em&gt;apenas&lt;/em&gt; com os dados do Record, transformando-os;&lt;/li&gt;
-  &lt;li&gt;Não retorne instâncias de objetos em seus métodos, com exceção de instâncias de interfaces, mas evite a todo custo;&lt;/li&gt;
-  &lt;li&gt;Só utilize campos com tipos primitivos ou gerenciados (ex: strings, Variant, etc), nunca instâncias de objetos;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Faça isso e você estará seguro.&lt;/p&gt;
-
-&lt;p&gt;Seu código não será considerado menos Orientado a Objetos por estar utilizando estruturas de dados que representam dados. Records foram criados exatamente para isso e a implementação de métodos apenas facilitaram seu uso.&lt;/p&gt;
-
-&lt;p&gt;Até logo.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 22 Oct 2018 00:00:00 +0100</pubDate>
-        <link>http://objectpascalprogramming.com/records-antiga-nova-tecnologia</link>
-        <guid isPermaLink="true">http://objectpascalprogramming.com/records-antiga-nova-tecnologia</guid>
       </item>
     
   </channel>
