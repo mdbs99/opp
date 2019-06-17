@@ -575,7 +575,7 @@ True free heap : 196496
 
 <p>No entanto, se você começar a brincar com ponteiros, cast entre instâncias de classe vs interface, <a href="/posts/interfaces-e-a-referencia-circular-entre-objetos/">referência circular</a>, etc, sem saber o que está fazendo, será grande a chance de haver vazamentos de memória.</p>
 
-<p>Porém, utilizando o código padrão para instanciar objetos do tipo interface, seu código estará mais seguro contra vazamentos de memória, pois o compilador sempre irá desalocar as instâncias, caso você já as tenha feito atribuindo <code>nil</code> as variáveis.</p>
+<p>Porém, utilizando o código padrão para instanciar objetos do tipo interface, seu código estará mais seguro contra vazamentos de memória, pois o compilador sempre irá desalocar as instâncias.</p>
 
 <p>Até logo.</p>
 
